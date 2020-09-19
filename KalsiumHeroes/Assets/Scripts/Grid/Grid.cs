@@ -10,16 +10,10 @@ public class Grid : MonoBehaviour {
 
 
   [SerializeField, HideInInspector]
-  Hex[,] _hexes;
-  ReadOnlyCollection<ReadOnlyCollection<Hex>> hexes;
+  Dictionary<Vector3Int, Hex> _hexes;
+  ReadOnlyDictionary<Vector3Int, Hex> hexes;
 
   void OnValidate() {
-    _hexes = new Hex[size.x, size.y];
-    for (int x = 0; x < size.x; x++) {
-      for (int y = 0; y < size.y; y++) {
-        _hexes[x, y] = new Hex(x, y);
-      }
-    }
   }
 
   void Start() {

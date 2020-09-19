@@ -10,8 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d8265dd074da63419efd331b9a61664, type: 3}
-  m_Name: t_MeleeAttack
+  m_Name: Test_MeleeAttack
   m_EditorClassIdentifier: 
   abilityName: Test Attack
+  abilityDescription: 
   abilityClass: 0
+  abilityBaseDamage: 0
   abilityCooldown: 0
+  abilityRadius: 1
+  abilityReady: 1
+  abilityUses: 0
