@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-struct FractHex {
+public struct FractHex {
 
   public FractHex(float x, float y, float z) {
     this.x = x;
