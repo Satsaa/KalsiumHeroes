@@ -5,7 +5,7 @@ using Muc.Extensions;
 using UnityEngine;
 
 [Serializable]
-public static class HexExtensions {
+public static class HexUtil {
 
   public static Hex GetNeighbor(this Hex a, int index) {
     return Add(a, Hex.neighbors[index]);
@@ -19,7 +19,7 @@ public static class HexExtensions {
     return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y) + Mathf.Abs(a.z - b.z) / 2;
   }
 
-  public static IEnumerable<Hex> Linedraw(this Hex a, Hex b) {
+  public static IEnumerable<Hex> GetLine(this Hex a, Hex b) {
     int fist = a.Distance(b);
     var a_nudge = new FractHex(a.x + 1e-06f, a.y + 1e-06f, a.z - 2e-06f);
     var b_nudge = new FractHex(b.x + 1e-06f, b.y + 1e-06f, b.z - 2e-06f);
