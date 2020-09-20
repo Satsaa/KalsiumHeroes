@@ -13,7 +13,8 @@ public abstract class AbilityBase : ScriptableObject
     [Tooltip("The type of the ability. Physical = Disabled by 'Disarm', applicable damage reduced by the 'Defense' stat. Spell = Disabled by 'Silence', applicable damage reduced by 'Resistance' stat.")]
     public AbilityClass abilityClass;
 
-    public TargetFlags targetConstraints;
+    [Tooltip("What, if any, status the ability inflicts")]
+    public UnitStatus abilityStatus;
 
     [Tooltip("How much damage does the ability do? If the ability isn't meant to do damage, leave this at 0.")]
     public float abilityBaseDamage;
@@ -26,6 +27,8 @@ public abstract class AbilityBase : ScriptableObject
     public bool abilityReady = true;
     [Tooltip("How many limited uses does the ability have. 0 = Unlimited uses")]
     public int abilityUses;
+
+    public Animation abilityAnimation;
 
 
     public abstract void TriggerAbility();
