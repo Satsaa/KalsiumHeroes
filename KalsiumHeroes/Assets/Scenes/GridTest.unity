@@ -175,7 +175,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -206,6 +206,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1026851273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28ae27b501c97b40bd96fc04dedd812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <hex>k__BackingField:
+    <x>k__BackingField: 4
+    <y>k__BackingField: -2
+    <z>k__BackingField: -2
+  <center>k__BackingField: {x: 6, y: 0, z: 0}
+  <corners>k__BackingField:
+  - {x: 7, y: 0, z: 0}
+  - {x: 6.5, y: 0, z: -0.86602545}
+  - {x: 5.5, y: 0, z: -0.8660254}
+  - {x: 5, y: 0, z: 0.00000008742278}
+  - {x: 5.5, y: 0, z: 0.86602545}
+  - {x: 6.5, y: 0, z: 0.86602545}
+  <downRight>k__BackingField: {fileID: 0}
+  <down>k__BackingField: {fileID: 0}
+  <downLeft>k__BackingField: {fileID: 0}
+  <upLeft>k__BackingField: {fileID: 0}
+  <up>k__BackingField: {fileID: 0}
+  <upRight>k__BackingField: {fileID: 0}
+--- !u!114 &1526856924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28ae27b501c97b40bd96fc04dedd812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <hex>k__BackingField:
+    <x>k__BackingField: 10
+    <y>k__BackingField: -5
+    <z>k__BackingField: -5
+  <center>k__BackingField: {x: 15, y: 0, z: 0}
+  <corners>k__BackingField:
+  - {x: 16, y: 0, z: 0}
+  - {x: 15.5, y: 0, z: -0.86602545}
+  - {x: 14.5, y: 0, z: -0.8660254}
+  - {x: 14, y: 0, z: 0.00000008742278}
+  - {x: 14.5, y: 0, z: 0.86602545}
+  - {x: 15.5, y: 0, z: 0.86602545}
+  <downRight>k__BackingField: {fileID: 0}
+  <down>k__BackingField: {fileID: 0}
+  <downLeft>k__BackingField: {fileID: 0}
+  <upLeft>k__BackingField: {fileID: 0}
+  <up>k__BackingField: {fileID: 0}
+  <upRight>k__BackingField: {fileID: 0}
 --- !u!1 &1581440100
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1581440101}
   - component: {fileID: 1581440102}
+  - component: {fileID: 1581440103}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -246,7 +307,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581440100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5b23af785750640a301a999cc6a466, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b5ccd2d79d55354290619996ab8da28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <size>k__BackingField: {x: 5, y: 16}
+  <size>k__BackingField: {x: 17, y: 9}
+--- !u!114 &1581440103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581440100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beaa264d3546c0d46bb8a909c6863e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <grid>k__BackingField: {fileID: 1581440102}
+  main: {fileID: 1026851273}
+  hover: {fileID: 1526856924}
+  drawLine: 0

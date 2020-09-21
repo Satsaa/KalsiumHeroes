@@ -1,0 +1,15 @@
+{
+    "name": "GameGrid",
+    "references": [
+        "GUID:a865139009ca33c4aac0edf33b3ccb22"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
