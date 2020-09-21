@@ -7,7 +7,7 @@ namespace GameGrid {
   using UnityEngine;
   using HexGrid;
 
-  [System.Serializable]
+  [Serializable]
   /// <summary>
   /// Use the static method Create to create GameHexes.
   /// </summary>
@@ -22,8 +22,7 @@ namespace GameGrid {
       return instance;
     }
 
-    // Content property 
-    // [field: SerializeField] public HexContent content { get; private set; }
+    [field: SerializeField] public HexContent[] content { get; private set; }
 
     [field: SerializeField] internal Hex hex { get; private set; }
 
@@ -37,7 +36,7 @@ namespace GameGrid {
     [field: SerializeField] public GameHex up { get; internal set; }
     [field: SerializeField] public GameHex upRight { get; internal set; }
 
-    public enum Neighbor {
+    public enum Dir {
       downRight,
       Down,
       DownLeft,
@@ -46,17 +45,26 @@ namespace GameGrid {
       UpRight,
     }
 
-    public readonly int asd = 3;
-
-    public GameHex GetNeighbor(Neighbor neighbor) {
-      switch (neighbor) {
-        case Neighbor.downRight: return downRight;
-        case Neighbor.Down: return down;
-        case Neighbor.DownLeft: return downLeft;
-        case Neighbor.UpLeft: return upLeft;
-        case Neighbor.Up: return up;
-        case Neighbor.UpRight: return upRight;
+    public GameHex GetNeighbor(Dir direction) {
+      switch (direction) {
+        case Dir.downRight: return downRight;
+        case Dir.Down: return down;
+        case Dir.DownLeft: return downLeft;
+        case Dir.UpLeft: return upLeft;
+        case Dir.Up: return up;
+        case Dir.UpRight: return upRight;
         default: return null;
+      }
+    }
+
+    internal void SetNeighbor(Dir direction, GameHex value) {
+      switch (direction) {
+        case Dir.downRight: downRight = value; break;
+        case Dir.Down: down = value; break;
+        case Dir.DownLeft: downLeft = value; break;
+        case Dir.UpLeft: upLeft = value; break;
+        case Dir.Up: up = value; break;
+        case Dir.UpRight: upRight = value; break;
       }
     }
 
@@ -69,7 +77,8 @@ namespace GameGrid {
       if (upRight != null) yield return upRight;
     }
 
-    public IEnumerable<GameHex> Direction(Neighbor neighbor) {
+    /// <summary> Iterates in a direction until a null GameHex is reached </summary>
+    public IEnumerable<GameHex> Direction(Dir neighbor) {
       var current = this;
       while (current != null) {
         yield return current;

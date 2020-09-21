@@ -1,4 +1,5 @@
 
+
 namespace GameGrid {
 
   using System.Collections.Generic;
@@ -31,7 +32,6 @@ namespace GameGrid {
     void Update() {
 
     }
-
   }
 }
 
@@ -94,12 +94,12 @@ namespace GameGrid {
       t.highlights.Clear();
 
       using (new EditorGUILayout.HorizontalScope()) {
-        if (GUILayout.Button(nameof(t.main.down))) t.main = t.main.down ? t.main.down : t.main;
-        if (GUILayout.Button(nameof(t.main.downLeft))) t.main = t.main.downLeft ? t.main.downLeft : t.main;
-        if (GUILayout.Button(nameof(t.main.downRight))) t.main = t.main.downRight ? t.main.downRight : t.main;
-        if (GUILayout.Button(nameof(t.main.up))) t.main = t.main.up ? t.main.up : t.main;
-        if (GUILayout.Button(nameof(t.main.upRight))) t.main = t.main.upRight ? t.main.upRight : t.main;
-        if (GUILayout.Button(nameof(t.main.upLeft))) t.main = t.main.upLeft ? t.main.upLeft : t.main;
+        using (new EditorGUI.DisabledGroupScope(t.main.down == null)) if (GUILayout.Button(nameof(t.main.down))) t.main = t.main.down ? t.main.down : t.main;
+        using (new EditorGUI.DisabledGroupScope(t.main.downLeft == null)) if (GUILayout.Button(nameof(t.main.downLeft))) t.main = t.main.downLeft ? t.main.downLeft : t.main;
+        using (new EditorGUI.DisabledGroupScope(t.main.downRight == null)) if (GUILayout.Button(nameof(t.main.downRight))) t.main = t.main.downRight ? t.main.downRight : t.main;
+        using (new EditorGUI.DisabledGroupScope(t.main.up == null)) if (GUILayout.Button(nameof(t.main.up))) t.main = t.main.up ? t.main.up : t.main;
+        using (new EditorGUI.DisabledGroupScope(t.main.upRight == null)) if (GUILayout.Button(nameof(t.main.upRight))) t.main = t.main.upRight ? t.main.upRight : t.main;
+        using (new EditorGUI.DisabledGroupScope(t.main.upLeft == null)) if (GUILayout.Button(nameof(t.main.upLeft))) t.main = t.main.upLeft ? t.main.upLeft : t.main;
       }
 
       EditorGUILayout.Space();
