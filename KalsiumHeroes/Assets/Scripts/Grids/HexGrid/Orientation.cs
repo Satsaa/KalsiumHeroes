@@ -1,6 +1,6 @@
 
 
-namespace GameGrid.HexGrid {
+namespace Grids.HexGrid {
 
   using UnityEngine;
 

@@ -1,6 +1,6 @@
 
 
-namespace GameGrid.HexGrid {
+namespace Grids.HexGrid {
 
   using System;
   using System.Collections.Generic;
@@ -57,14 +57,15 @@ namespace GameGrid.HexGrid {
       return (Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y) + Mathf.Abs(a.z - b.z)) / 2;
     }
 
-    public static IEnumerable<Hex> GetLine(Hex a, Hex b) {
+    public static IEnumerable<(Hex, FractHex)> GetLine(Hex a, Hex b) {
       int dist = Distance(a, b);
       FractHex aNudge = new FractHex(a.x + 1e-06f, a.y + 1e-06f, a.z + -2e-06f);
       FractHex bNudge = new FractHex(b.x + 1e-06f, b.y + 1e-06f, b.z + -2e-06f);
       for (int i = 0; i < dist; i++) {
-        yield return Hex.Lerp(aNudge, bNudge, 1f / dist * i).Round();
+        var res = Hex.Lerp(aNudge, bNudge, 1f / dist * i);
+        yield return (res.Round(), res);
       }
-      yield return b;
+      yield return (b, b.ToFract());
     }
 
     public static IEnumerable<Hex> Radius(Hex a, int dist) {

@@ -1,5 +1,5 @@
 
-namespace GameGrid {
+namespace Grids {
 
   using System.Linq;
   using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace GameGrid {
       for (int x = 0; x < size.x; x++) {
         int yOffset = Mathf.FloorToInt(x / 2);
         for (int y = -yOffset; y < size.y - yOffset; y++) {
-          var hex = new Hex(x, y);
+          var hex = new Hex(x, y); // 
           hexes.Add(hex.pos, GameHex.Create(hex));
           hex = new Hex(x, y);
         }
@@ -69,7 +69,7 @@ namespace GameGrid {
 }
 
 #if UNITY_EDITOR
-namespace GameGrid {
+namespace Grids {
 
   using System.Linq;
   using UnityEngine;

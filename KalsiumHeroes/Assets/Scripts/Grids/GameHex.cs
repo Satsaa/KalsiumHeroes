@@ -1,5 +1,5 @@
 
-namespace GameGrid {
+namespace Grids {
 
   using System;
   using System.Linq;
