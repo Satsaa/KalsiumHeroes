@@ -13,8 +13,8 @@ public abstract class AbilityBase : ScriptableObject
     [Tooltip("The type of the ability. Physical = Disabled by 'Disarm', applicable damage reduced by the 'Defense' stat. Spell = Disabled by 'Silence', applicable damage reduced by 'Resistance' stat.")]
     public AbilityClass abilityClass;
 
-    [Tooltip("What, if any, status the ability inflicts")]
-    public UnitStatus abilityStatus;
+    [Tooltip("What, if any, statuses the ability inflicts")]
+    public StatusBase abilityStatus;
 
     [Tooltip("How much damage does the ability do? If the ability isn't meant to do damage, leave this at 0.")]
     public float abilityBaseDamage;

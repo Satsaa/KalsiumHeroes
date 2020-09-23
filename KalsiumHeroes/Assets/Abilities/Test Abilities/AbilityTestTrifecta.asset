@@ -9,22 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d8265dd074da63419efd331b9a61664, type: 3}
-  m_Name: Test_Poison
+  m_Script: {fileID: 11500000, guid: 942869b79be341241a4b0ea3f5cc6474, type: 3}
+  m_Name: AbilityTestTrifecta
   m_EditorClassIdentifier: 
-  abilityName: Test Poison
-  abilityDescription: This kills the man
-  abilityClass: 2
-  abilityStatus: {fileID: 11400000, guid: eb2579c95aba4074ca8ae59fafc37d4c, type: 2}
+  abilityName: Status Trifecta
+  abilityDescription: Afflict a unit with Root for 1 turn, then Silence for 1 turn,
+    and then Disarm for 1 turn
+  abilityClass: 1
+  abilityStatus: {fileID: 11400000, guid: 0cad8f53b2bb0ed4e8a095889f7aa241, type: 2}
   abilityBaseDamage: 0
   abilityCooldown: 0
   abilityRadius: 1
   abilityReady: 1
   abilityUses: 0
   abilityAnimation: {fileID: 0}
-  targetConstraints:
-    allies: 0
-    enemies: 0
-    ground: 0
-    self: 0
-    abilityRange: 0

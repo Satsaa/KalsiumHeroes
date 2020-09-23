@@ -40,27 +40,13 @@ public class UnitAttributes
     public int movement;
 }
 
-//The different statuses each unit can 
-[System.Serializable]
-public class UnitImmunity //IF YOU MODIFY THIS, REMEMBER TO MODIFY STATUSMANAGER CHECKIMMUNITY() AS WELL
+public enum ImmunityFlags
 {
-    public bool root;
-    public bool disarm;
-    public bool silence;
-    public bool bleed;
-    public bool poison;
-}
-
-[System.Serializable]
-public class UnitStatus
-{
-    public UnitImmunity status;
-    public int duration;
-
-    public UnitStatus(UnitImmunity status, int duration)
-    {
-        this.status = status;
-        this.duration = duration;
-    }
+    Disarm,
+    Root,
+    Silence,
+    Bleed,
+    Poison,
+    Plague
 }
 

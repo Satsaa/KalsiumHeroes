@@ -194,14 +194,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 605622311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8569510f562aaca4f98370cc2938f825, type: 3}
+  m_Script: {fileID: 11500000, guid: 00c41796e49662045a2b5e91d5ed244a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bleeding: 0
-  disarmed: 0
-  poisoned: 0
-  rooted: 0
-  silenced: 0
+  unitCanCast: 1
+  unitCanAttack: 1
+  unitCanMove: 1
+  activeStatus: []
+  queue: []
 --- !u!114 &605622316
 MonoBehaviour:
   m_ObjectHideFlags: 0
