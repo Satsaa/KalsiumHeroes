@@ -26,14 +26,16 @@ public class HealthManager : MonoBehaviour
         {
             if (type == AbilityClass.Weaponskill)
             {
-                var damageReduction = (aM.defense / 100) * amount;
+                float damageReduction = (aM.defense / 100f) * amount;
                 amount -= damageReduction;
+                amount = Mathf.Clamp(amount, 0, 999);
                 health -= amount;
             }
             if (type == AbilityClass.Spell)
             {
-                var damageReduction = (aM.resistance / 100) * amount;
+                var damageReduction = (aM.resistance / 100f) * amount;
                 amount -= damageReduction;
+                amount = Mathf.Clamp(amount, 0, 999);
                 health -= amount;
             }
             if (type == AbilityClass.Skill)
