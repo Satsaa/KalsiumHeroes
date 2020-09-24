@@ -10,6 +10,8 @@ public abstract class StatusBase : ScriptableObject
 
     public int duration;
 
+    public abstract void OnStatusStart(StatusManager smanager); //What happens when the status is first set on a unit (e.g. changing attributes)
+
     public abstract void StatusRoundBegin(StatusManager smanager); //What the status does when the unit's turn begins (e.g. if the status is a silence, the unit cannot cast spells)
 
     public abstract void StatusRoundEnd(StatusManager smanager); //What the status does when the unit's turn ends (e.g. damage over time effects)

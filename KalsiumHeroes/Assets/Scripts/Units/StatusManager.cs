@@ -31,6 +31,7 @@ public class StatusManager : MonoBehaviour
     public void AddStatusQueue(StatusBase status)
     {
         queue.Add(status);
+        status.OnStatusStart(this);
     }
 
     public void CheckStatusStart()

@@ -16,3 +16,4 @@ MonoBehaviour:
   description: It poisons you, which then kills the man
   duration: 3
   damageOverTime: 15
+  defReduction: -10

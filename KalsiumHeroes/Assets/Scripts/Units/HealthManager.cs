@@ -5,20 +5,18 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour
 {
     UnitBase unitBase;
+    AttributesManager aM;
     
     public float health;
     float maxHealth;
-    public float defense;
-    public float resistance;
 
 
     void Start()
     {
         unitBase = GetComponent<UnitIdentifier>().unit;
+        aM = GetComponent<AttributesManager>();
         health = unitBase.attributes.health;
         maxHealth = health;
-        defense = unitBase.attributes.defense;
-        resistance = unitBase.attributes.resistance;
     }
 
 
@@ -28,13 +26,13 @@ public class HealthManager : MonoBehaviour
         {
             if (type == AbilityClass.Weaponskill)
             {
-                var damageReduction = (defense / 100) * amount;
+                var damageReduction = (aM.defense / 100) * amount;
                 amount -= damageReduction;
                 health -= amount;
             }
             if (type == AbilityClass.Spell)
             {
-                var damageReduction = (resistance / 100) * amount;
+                var damageReduction = (aM.resistance / 100) * amount;
                 amount -= damageReduction;
                 health -= amount;
             }

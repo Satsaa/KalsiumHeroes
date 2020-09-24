@@ -6,9 +6,15 @@ using UnityEngine;
 public class status_poison : StatusBase
 {
     public float damageOverTime = 15;
+    public int defReduction = -10;
+
+    public override void OnStatusStart(StatusManager smanager)
+    {
+        smanager.GetComponent<AttributesManager>().ChangeDefense(defReduction);
+    }
     public override void OnStatusEnd(StatusManager smanager)
     {
-        return;
+        smanager.GetComponent<AttributesManager>().ChangeDefense(-defReduction);
     }
 
     public override void StatusRoundBegin(StatusManager smanager)

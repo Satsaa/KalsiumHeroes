@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatusTrifectaDisarm", menuName = "KalsiumHeroes/Statuses/TrifectaDisarm", order = 0)]
 public class statusTrifectaDisarm : StatusBase
 {
+    public override void OnStatusStart(StatusManager smanager)
+    {
+        throw new System.NotImplementedException();
+    }
     public override void OnStatusEnd(StatusManager smanager)
     {
         smanager.unitCanAttack = true;
