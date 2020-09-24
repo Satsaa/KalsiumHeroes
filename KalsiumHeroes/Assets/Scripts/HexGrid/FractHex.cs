@@ -1,5 +1,5 @@
 
-namespace Grids.HexGrid {
+namespace HexGrid {
 
   using System;
   using UnityEngine;

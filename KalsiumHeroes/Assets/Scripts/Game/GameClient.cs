@@ -1,17 +1,15 @@
 
+using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameClient : ScriptableObject {
+[Serializable]
+public class GameClient {
 
-  public int eventNum;
-  public GameEvents ge;
-
-  void Awake() {
-    if (ge == null) ge = ScriptableObject.CreateInstance<GameEvents>();
-  }
+  public int eventNum = 0;
+  public GameEvents ge = new GameEvents();
 
   public void PostEvent(GameEvent e) {
     e.eventNum = eventNum++;

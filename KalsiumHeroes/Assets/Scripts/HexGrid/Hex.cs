@@ -1,6 +1,6 @@
 
 
-namespace Grids.HexGrid {
+namespace HexGrid {
 
   using System;
   using System.Collections.Generic;
@@ -24,13 +24,13 @@ namespace Grids.HexGrid {
     [field: SerializeField] public int z { get; private set; }
     public Vector3Int pos => new Vector3Int(x, y, z);
 
-    public Hex up => new Hex(x, y + 1, z - 1);
-    public Hex down => new Hex(x, y - 1, z + 1);
+    public Hex _up => new Hex(x, y + 1, z - 1);
+    public Hex _down => new Hex(x, y - 1, z + 1);
 
-    public Hex upRight => new Hex(x - 1, y + 1, z);
-    public Hex downRight => new Hex(x - 1, y, z + 1);
-    public Hex upLeft => new Hex(x + 1, y, z - 1);
-    public Hex downLeft => new Hex(x + 1, y - 1, z);
+    public Hex _upRight => new Hex(x - 1, y + 1, z);
+    public Hex _downRight => new Hex(x - 1, y, z + 1);
+    public Hex _upLeft => new Hex(x + 1, y, z - 1);
+    public Hex _downLeft => new Hex(x + 1, y - 1, z);
 
     public Hex GetNeighbor(int index) {
       return Add(this, Hex.neighbors[index]);

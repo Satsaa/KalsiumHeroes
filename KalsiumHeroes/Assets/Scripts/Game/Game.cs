@@ -1,39 +1,70 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Grids;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
-[ExecuteAlways]
+[RequireComponent(typeof(GameGrid))]
 public class Game : MonoBehaviour {
 
-  public static Game Instance { get { return _instance; } }
+  public static Game instance => _instance;
   private static Game _instance;
 
-  [SerializeField] public GameClient client;
+  public static GameClient client => instance._client;
+  public static GameGrid grid => instance._grid;
 
-  [SerializeField] public LogicAPI logic;
-  [SerializeField] public AnimationAPI anim;
+  public static Logic logic => instance._logic;
+  public static Anims anims => instance._anims;
 
-  [SerializeReference] public List<object> _animationStack = new List<object>();
-  [SerializeField] public int currentAnimationIndex;
-  [SerializeField] public GameEvent currentAnimation => (GameEvent)_animationStack[currentAnimationIndex];
+  [SerializeField] private GameClient _client = new GameClient();
+  [SerializeField] private GameGrid _grid;
 
+  [SerializeField] private Logic _logic = new Logic();
+  [SerializeField] private Anims _anims = new Anims();
 
-  private void Reset() => Awake();
+  private void OnValidate() => Awake();
   private void Awake() {
 
     if (_instance != null && _instance != this) {
-      Debug.LogError($"Multiple {nameof(Game)} managers.");
-      DestroyImmediate(this.gameObject);
+      Debug.LogError($"Multiple {nameof(Game)} managers. Exterminating.");
+      Destroy(this);
       return;
     }
 
-    if (client == null) client = GameClient.CreateInstance<GameClient>();
-    if (logic == null) logic = LogicAPI.CreateInstance<LogicAPI>();
-    if (anim == null) anim = AnimationAPI.CreateInstance<AnimationAPI>();
-
     _instance = this;
+    if (_grid == null) _grid = GetComponent<GameGrid>();
+  }
+
+  void Update() {
+    // TryRunNextAnim();
+  }
+
+  public bool TryRunNextAnim() => anims.TryRunNextAnim();
+
+}
+
+
+
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(Game))]
+public class GameEditor : Editor {
+
+  Game t => (Game)target;
+
+
+  public override void OnInspectorGUI() {
+
+    DrawDefaultInspector();
+
+    if (GUILayout.Button(nameof(t.TryRunNextAnim))) {
+      var res = t.TryRunNextAnim();
+      Debug.Log($"{nameof(t.TryRunNextAnim)} => {res}");
+    }
   }
 
 }
+#endif
