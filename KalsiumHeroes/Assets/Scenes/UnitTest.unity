@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 605622314}
   - component: {fileID: 605622313}
+  - component: {fileID: 605622317}
   - component: {fileID: 605622312}
   - component: {fileID: 605622315}
   - component: {fileID: 605622316}
@@ -156,8 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  defense: 0
-  resistance: 0
 --- !u!114 &605622313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +220,22 @@ MonoBehaviour:
   melee: {fileID: 11400000, guid: 55abe4d7d25c3594caf33c40bd8c578e, type: 2}
   meleeKey: 275
   nextTurnKey: 276
+--- !u!114 &605622317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605622311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ff3cfa22f9e7749be9bcfb40634675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  movement: 0
+  defense: 0
+  resistance: 0
 --- !u!1 &621795814
 GameObject:
   m_ObjectHideFlags: 0

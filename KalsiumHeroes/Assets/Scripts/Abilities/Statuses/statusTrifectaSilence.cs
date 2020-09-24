@@ -6,6 +6,11 @@ using UnityEngine;
 public class statusTrifectaSilence : StatusBase
 {
     public StatusBase nextStatus;
+
+    public override void OnStatusStart(StatusManager smanager)
+    {
+        throw new System.NotImplementedException();
+    }
     public override void OnStatusEnd(StatusManager smanager)
     {
         smanager.unitCanCast = true;
