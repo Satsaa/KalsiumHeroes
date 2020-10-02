@@ -1,5 +1,5 @@
 
-export function parse(data: string): Cmd {
+export function parse(data: string): Command {
   const space = data.indexOf(' ')
   if (space === -1) throw new Error('Invalid data')
 
@@ -9,13 +9,13 @@ export function parse(data: string): Cmd {
   return {
     cmd,
     cmdData,
-  } as unknown as Cmd
+  } as unknown as Command
 }
 
-export type Cmd = GameEvent | GameCreate | GameCreated | GameMissing | GameConnect | Unknown | Invalid
+export type Command = GameEvent | GameCreate | GameCreated | GameMissing | GameConnect | Unknown | Invalid
 
 export interface GameEvent {
-  cmd: 'game_event'
+  command: 'game_event'
   data: {
     code: string
     eventNum: number
@@ -25,40 +25,41 @@ export interface GameEvent {
 }
 
 export interface GameCreate {
-  cmd: 'game_create'
+  command: 'game_create'
   data: {}
 }
 
 export interface GameCreated {
-  cmd: 'game_created'
+  command: 'game_created'
   data: {
     code: string
   }
 }
 
 export interface GameMissing {
-  cmd: 'game_missing'
+  command: 'game_missing'
   data: {
     message?: string
   }
 }
 
 export interface GameConnect {
-  cmd: 'game_connect'
+  command: 'game_connect'
   data: {
     code: string
+    player?: 1 | 2
   }
 }
 
 export interface Unknown {
-  cmd: 'unknown'
+  command: 'unknown'
   data: {
     message?: string
   }
 }
 
 export interface Invalid {
-  cmd: 'invalid'
+  command: 'invalid'
   data: {
     message?: string
   }

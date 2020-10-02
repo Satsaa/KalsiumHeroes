@@ -58,6 +58,13 @@ export default class Server {
     wss.on('connection', this.onConnection)
   }
 
+  private sendCmd(ws: WebSocket, cmd: cmds.Command) {
+    ws.send(cmd)
+  }
+  private gameNotFound(ws: WebSocket) {
+    this.sendCmd(ws, { command: 'game_missing', data: { message: 'Game not found.' } })
+  }
+
   private createGame(): Game {
     const id = this.makeid()
     const game = new Game(id)
@@ -76,46 +83,51 @@ export default class Server {
     return result
   }
 
-  private onConnection(ws: WebSocket, req: http.IncomingMessage) {
+  private onConnection(ws: WebSocket, req: http.IncomingMessage): void {
     ws.on('message', this.onMessage)
   }
 
-  private onMessage(ws: WebSocket, message: string) {
+  private onMessage(ws: WebSocket, message: string): void {
     try {
       const cmd = cmds.parse(message)
-      switch (cmd.cmd) {
+      switch (cmd.command) {
         case 'game_create': {
           const game = this.createGame()
-          const data: cmds.GameCreated = { cmd: 'game_created', data: { code: game.code } }
-          ws.send(data)
+          this.sendCmd(ws, { command: 'game_created', data: { code: game.code } })
           break
         }
 
         case 'game_event': {
           const game = this.activeGames[cmd.data.code]
-          if (!game) {
-            const data: cmds.GameMissing = { cmd: 'game_missing', data: { message: 'Game not found.' } }
-            ws.send(data)
-            break
-          }
+          if (!game) return this.gameNotFound(ws)
 
           // Event is sent to all connected viewers which includes the players
           for (const viewer of game.viewers) {
             if (viewer.readyState !== WebSocket.OPEN) continue
-            viewer.send(cmd)
+            this.sendCmd(ws, cmd)
+          }
+          break
+        }
+
+        case 'game_connect': {
+          const game = this.activeGames[cmd.data.code]
+          if (!game) return this.gameNotFound(ws)
+          if (cmd.data.player) {
+            if (cmd.data.player === 1) game.player1 = ws
+            if (cmd.data.player === 2) game.player2 = ws
+          } else if (!game.viewers.includes(ws)) {
+            game.viewers.push(ws)
           }
           break
         }
 
         default: {
-          const data: cmds.Unknown = { cmd: 'unknown', data: { message: `Unknown command: "${cmd.cmd}"` } }
-          ws.send(data)
+          this.sendCmd(ws, { command: 'unknown', data: { message: `Unknown command: "${cmd.command}"` } })
           break
         }
       }
     } catch (error) {
-      const data: cmds.Invalid = { cmd: 'invalid', data: { message: 'Malformed message' } }
-      ws.send(data)
+      this.sendCmd(ws, { command: 'invalid', data: { message: 'Malformed message' } })
     }
   }
 }
