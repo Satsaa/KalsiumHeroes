@@ -55,11 +55,11 @@ export default class Server {
     this.emit = emitter.emit
 
     const wss = new WebSocket.Server({ port: 8080 })
-    wss.on('connection', this.onConnection)
+    wss.on('connection', this.onConnection.bind(this))
   }
 
   private sendCmd(ws: WebSocket, cmd: cmds.Command) {
-    ws.send(cmd)
+    ws.send(JSON.stringify(cmd))
   }
   private gameNotFound(ws: WebSocket) {
     this.sendCmd(ws, { command: 'game_missing', data: { message: 'Game not found.' } })
@@ -83,11 +83,15 @@ export default class Server {
     return result
   }
 
-  private onConnection(ws: WebSocket, req: http.IncomingMessage): void {
-    ws.on('message', this.onMessage)
+  private onConnection(this: Server, ws: WebSocket, req: http.IncomingMessage): void {
+    ws.on('message', this.onMessage.bind(this, ws))
   }
 
-  private onMessage(ws: WebSocket, message: string): void {
+  private onMessage(this: Server, ws: WebSocket, message: string): void {
+    if (typeof message !== 'string') {
+      this.sendCmd(ws, { command: 'invalid', data: { message: 'Message must be a string' } })
+      return
+    }
     try {
       const cmd = cmds.parse(message)
       switch (cmd.command) {
