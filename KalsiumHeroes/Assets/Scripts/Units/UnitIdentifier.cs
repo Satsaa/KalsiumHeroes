@@ -5,10 +5,7 @@ using UnityEngine;
 public class UnitIdentifier : MonoBehaviour
 {
     public UnitBase unit;
+    public int playerId;
+    //TODO: Add public position info (hexagon coordinate)
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

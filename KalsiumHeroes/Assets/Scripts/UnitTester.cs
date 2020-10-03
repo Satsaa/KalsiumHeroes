@@ -49,7 +49,7 @@ public class UnitTester : MonoBehaviour
         if (Input.GetKeyDown(nextTurnKey))
         {
             var oldHP = hM.health;
-            TurnManager.PassTurn();
+            //TurnManager.PassTurn();
             sM.CheckStatusEnd();
             var newHP = hM.health;
             if (oldHP > newHP)
