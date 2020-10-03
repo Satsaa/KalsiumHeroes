@@ -35,7 +35,7 @@ public class TurnManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.H))  //For testing purposes!
         {
             PassTurn();
         }
@@ -43,7 +43,6 @@ public class TurnManager : MonoBehaviour
 
     public void PassTurn()
     {
-        //TODO: UnitController gives turn to unit
         if (units.Count > 0 && units.Count != 1)
         {
             units.Remove(nextUnit);
@@ -78,11 +77,12 @@ public class TurnManager : MonoBehaviour
         units.Sort(SortBySpeed);
         nextUnit = units[0];
         //print(nextUnit.GetComponent<UnitIdentifier>().unit.unitName + " is the first unit!"); //Purely for testing purposes
+        //TODO: UnitController gives turn to unit
     }
 
     static int SortBySpeed(GameObject u1, GameObject u2)
     {
-        return u2.GetComponent<UnitIdentifier>().unit.attributes.speed.CompareTo(u1.GetComponent<UnitIdentifier>().unit.attributes.speed);
+        return u2.GetComponent<AttributesManager>().speed.CompareTo(u1.GetComponent<AttributesManager>().speed);
     }
 }
 

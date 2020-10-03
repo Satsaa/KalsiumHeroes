@@ -27,8 +27,10 @@ public abstract class AbilityBase : ScriptableObject {
   [Tooltip("How many limited uses does the ability have. 0 = Unlimited uses")]
   public int abilityUses;
 
-  public Animation abilityAnimation;
 
-
+  public virtual void TargetAbility()
+    {
+        //
+    }
   public abstract void TriggerAbility();
 }

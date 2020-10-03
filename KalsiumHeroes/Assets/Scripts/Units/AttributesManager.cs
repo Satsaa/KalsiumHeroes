@@ -20,7 +20,7 @@ public class AttributesManager : MonoBehaviour
         GetAttributes();
     }
 
-    public void ChangeSpeed(int value)
+    public void AddSpeed(int value)
     {
         speed += value;
     }
@@ -30,12 +30,12 @@ public class AttributesManager : MonoBehaviour
         speed = value;
     }
 
-    public void ResetSpeed(int value)
+    public void ResetSpeed()
     {
         speed = baseSpeed;
     }
 
-    public void ChangeMovement(int value)
+    public void AddMovement(int value)
     {
         movement += value;
     }
@@ -45,12 +45,12 @@ public class AttributesManager : MonoBehaviour
         movement = value;
     }
 
-    public void ResetMovement(int value)
+    public void ResetMovement()
     {
         movement = baseMovement;
     }
 
-    public void ChangeDefense(int value)
+    public void AddDefense(int value)
     {
         defense += value;
     }
@@ -60,12 +60,12 @@ public class AttributesManager : MonoBehaviour
         defense = value;
     }
 
-    public void ResetDefense(int value)
+    public void ResetDefense()
     {
         defense = baseDefense;
     }
 
-    public void ChangeResistance(int value)
+    public void AddResistance(int value)
     {
         resistance += value;
     }
@@ -75,7 +75,7 @@ public class AttributesManager : MonoBehaviour
         resistance = value;
     }
 
-    public void ResetResistance(int value)
+    public void ResetResistance()
     {
         resistance = baseResistance;
     }

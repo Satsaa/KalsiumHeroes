@@ -10,11 +10,11 @@ public class status_poison : StatusBase
 
     public override void OnStatusStart(StatusManager smanager)
     {
-        smanager.GetComponent<AttributesManager>().ChangeDefense(defReduction);
+        smanager.GetComponent<AttributesManager>().AddDefense(defReduction);
     }
     public override void OnStatusEnd(StatusManager smanager)
     {
-        smanager.GetComponent<AttributesManager>().ChangeDefense(-defReduction);
+        smanager.GetComponent<AttributesManager>().AddDefense(-defReduction);
     }
 
     public override void StatusRoundBegin(StatusManager smanager)

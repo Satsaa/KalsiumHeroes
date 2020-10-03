@@ -42,6 +42,7 @@ public class UnitAttributes
 
 public enum ImmunityFlags
 {
+    None,
     Disarm,
     Root,
     Silence,
