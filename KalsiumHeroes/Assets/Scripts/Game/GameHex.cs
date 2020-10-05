@@ -20,8 +20,7 @@ public class GameHex : ScriptableObject {
     return instance;
   }
 
-  [field: SerializeField] public LogicHexContent logicContent { get; private set; }
-  [field: SerializeField] public AnimsHexContent animsContent { get; private set; }
+  [field: SerializeField] public Unit unit { get; set; }
 
   [field: SerializeField] internal Hex hex { get; private set; }
 

@@ -11,19 +11,14 @@ using UnityEditor;
 public class Game : MonoBehaviour {
 
   public static Game instance => _instance;
-  private static Game _instance;
-
-  public static GameClient client => instance._client;
+  public static Client client => instance._client;
   public static GameGrid grid => instance._grid;
+  public static Events events => instance._events;
 
-  public static Logic logic => instance._logic;
-  public static Anims anims => instance._anims;
-
-  [SerializeField] private GameClient _client = new GameClient();
+  private static Game _instance;
+  [SerializeField] private Client _client = new Client();
   [SerializeField] private GameGrid _grid;
-
-  [SerializeField] private Logic _logic = new Logic();
-  [SerializeField] private Anims _anims = new Anims();
+  [SerializeField] private Events _events = new Events();
 
   private void OnValidate() => Awake();
   private void Awake() {
@@ -42,7 +37,7 @@ public class Game : MonoBehaviour {
     // TryRunNextAnim();
   }
 
-  public bool TryRunNextAnim() => anims.TryRunNextAnim();
+  public bool TryNextEvent() => events.NextEvent();
 
 }
 
@@ -60,9 +55,9 @@ public class GameEditor : Editor {
 
     DrawDefaultInspector();
 
-    if (GUILayout.Button(nameof(t.TryRunNextAnim))) {
-      var res = t.TryRunNextAnim();
-      Debug.Log($"{nameof(t.TryRunNextAnim)} => {res}");
+    if (GUILayout.Button(nameof(t.TryNextEvent))) {
+      var res = t.TryNextEvent();
+      Debug.Log($"{nameof(t.TryNextEvent)} => {res}");
     }
   }
 
