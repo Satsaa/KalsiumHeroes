@@ -14,11 +14,13 @@ public class Game : MonoBehaviour {
   public static Client client => instance._client;
   public static GameGrid grid => instance._grid;
   public static Events events => instance._events;
+  public static RoundManager rounds => instance._rounds;
 
   private static Game _instance;
   [SerializeField] private Client _client = new Client();
   [SerializeField] private GameGrid _grid;
   [SerializeField] private Events _events = new Events();
+  [SerializeField] private RoundManager _rounds = default;
 
   private void OnValidate() => Awake();
   private void Awake() {

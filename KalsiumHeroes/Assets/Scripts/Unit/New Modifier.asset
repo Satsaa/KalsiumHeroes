@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f9cd980a5fc1845b7149896dda501a, type: 3}
   m_Name: New Modifier
   m_EditorClassIdentifier: 
-  displayName: lol
+  displayName: 
+  debuffType: 0
+  positive: 1
+  dispellable: 1
+  unit: {fileID: 0}
