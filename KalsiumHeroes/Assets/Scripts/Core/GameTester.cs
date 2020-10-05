@@ -41,8 +41,9 @@ public class GameTesterEditor : Editor {
   public override bool RequiresConstantRepaint() => true;
 
   public int index => t.index;
-  string[] names = Events.events.Keys.ToArray();
   Type[] types = Events.events.Values.ToArray();
+  string[] names = Events.events.Values.Select(
+    t => $"{t.Name}{(t.FullName.Contains($"{nameof(Events)}+{nameof(Events.Control)}") ? " (Control Event)" : "")}").ToArray();
 
 
   public override void OnInspectorGUI() {

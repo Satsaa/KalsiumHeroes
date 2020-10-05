@@ -40,6 +40,6 @@ public abstract class Ability : ScriptableObject, IEventHandler<Events.Ability> 
 
 
   public abstract bool EventIsFinished();
-  public abstract void SkipEvent();
+  public abstract bool SkipEvent();
   public abstract void StartEvent(Events.Ability data);
 }

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoundManager : ScriptableObject {
+[System.Serializable]
+public class RoundManager {
 
   [SerializeField, HideInInspector] List<Unit> units = new List<Unit>();
 

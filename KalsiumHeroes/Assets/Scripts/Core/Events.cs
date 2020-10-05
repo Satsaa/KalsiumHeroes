@@ -82,6 +82,14 @@ public class Events {
     }
   }
 
+  [Serializable]
+  public class Turn : GameEvent {
+    public override void Handle() {
+      Debug.Log($"{this.GetType().Name}: Called");
+    }
+  }
+
+
 
   /// <summary> Contains control events. Used to directly change things. </summary>
   public static class Control {
