@@ -12,17 +12,17 @@ public abstract class Ability : ScriptableObject, IEventHandler<Events.Ability> 
   public AbilityType type;
 
   [Tooltip("What types of targets can this ability target?"), EnumMask]
-  public TargetType targetTypes;
+  public TargetType targetType;
+  [Tooltip("The cast range of the ability.")]
+  public Attribute<int> range = new Attribute<int>(1);
+
   [Tooltip("The shapes of the area this ability affects."), EnumMask]
-  public TargetShape targetShapes;
-  public Attribute<int> targetShapeSize = new Attribute<int>(1);
-  public Attribute<int> targetShapeDistance = new Attribute<int>(1);
+  public EffectShape effectShape;
+  public Attribute<int> effectShapeSize = new Attribute<int>(1);
+  public Attribute<int> effectShapeDistance = new Attribute<int>(1);
 
   [Tooltip("How many turns it takes for this ability to be usable again.")]
   public Attribute<int> cooldown;
-
-  [Tooltip("The radius of the ability.")]
-  public Attribute<int> castRadius = new Attribute<int>(1);
 
   [Tooltip("How many limited uses does the ability have. -1 = Unlimited uses")]
   public Attribute<int> uses = new Attribute<int>(-1);

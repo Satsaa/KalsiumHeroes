@@ -11,7 +11,10 @@ using HexGrid;
 /// </summary>
 public class GameHex : ScriptableObject {
 
-  internal static GameHex Create(Hex hex) {
+  public bool blocked;
+  public int moveCost;
+
+  public static GameHex Create(Hex hex) {
     var instance = ScriptableObject.CreateInstance<GameHex>();
     instance.hex = hex;
     var pix = Layout.HexToPixel(hex);
@@ -22,7 +25,7 @@ public class GameHex : ScriptableObject {
 
   [field: SerializeField] public Unit unit { get; set; }
 
-  [field: SerializeField] internal Hex hex { get; private set; }
+  [field: SerializeField] public Hex hex { get; private set; }
 
   [field: SerializeField] public Vector3 center { get; private set; }
   [field: SerializeField] public Vector3[] corners { get; private set; }
@@ -55,7 +58,7 @@ public class GameHex : ScriptableObject {
     }
   }
 
-  internal void SetNeighbor(Dir direction, GameHex value) {
+  public void SetNeighbor(Dir direction, GameHex value) {
     switch (direction) {
       case Dir.DownRight: downRight = value; break;
       case Dir.DownLeft: downLeft = value; break;
@@ -73,15 +76,5 @@ public class GameHex : ScriptableObject {
     if (upLeft != null) yield return upLeft;
     if (upRight != null) yield return upRight;
     if (right != null) yield return right;
-  }
-
-  /// <summary> Iterates in a direction until a null GameHex is reached </summary>
-  public IEnumerable<GameHex> Direction(Dir neighbor) {
-    var current = this;
-    while (current != null) {
-      yield return current;
-      current = current.GetNeighbor(neighbor);
-    }
-
   }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Muc.Extensions;
 using HexGrid;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -37,8 +38,53 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     }
   }
 
-  public GameHex RaycastHex(Ray ray) {
-    var plane = new Plane(Vector3.up, Vector3.zero);
+  /// <summary> Iterates in a radius around a GameHex. </summary>
+  public IEnumerable<GameHex> Radius(GameHex hex, int radius) {
+    for (int x = -radius; x <= radius; x++) {
+      for (int y = Mathf.Max(-radius, -x - radius); y <= Mathf.Min(+radius, -x + radius); y++) {
+        var pos = hex.hex.pos + new Vector3Int(x, y, -x - y);
+        if (hexes.TryGetValue(pos, out var res)) yield return res;
+      }
+    }
+  }
+
+  /// <summary> Iterates in a Ring around a GameHex. </summary>
+  public IEnumerable<GameHex> Ring(GameHex hex, int radius) {
+    if (radius <= 0) {
+      if (radius == 0) {
+        yield return hex;
+        yield break;
+      }
+      throw new ArgumentOutOfRangeException(nameof(radius));
+    }
+
+    var pos = hex.hex.pos + new Vector3Int(0, radius, -radius);
+    for (int i = 0; i < 6; i++) {
+      for (int j = 0; j < radius; j++) {
+        if (hexes.TryGetValue(pos, out var res)) yield return res;
+        pos = new Hex(pos).GetNeighbor(i).pos;
+      }
+    }
+  }
+
+  /// <summary> Iterates in a direction until a null GameHex is reached </summary>
+  public IEnumerable<GameHex> Direction(GameHex hex, GameHex.Dir direction) {
+    var current = hex;
+    while (current != null) {
+      yield return current;
+      current = current.GetNeighbor(direction);
+    }
+  }
+
+  /// <summary> Finds the fastest path from a GameHex to another </summary>
+  /*
+  public IEnumerable<GameHex> Path(GameHex hex, GameHex hex) {
+  }
+  */
+
+
+  public GameHex RaycastHex(Ray ray, float planeHeight = 0) {
+    var plane = new Plane(Vector3.up, new Vector3(0, planeHeight, 0));
     if (plane.Raycast(ray, out float enter)) {
       var point = (ray.origin + ray.direction * enter).xz();
       var hex = Layout.PixelToHex(point).Round();

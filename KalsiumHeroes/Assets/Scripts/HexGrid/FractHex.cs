@@ -5,7 +5,7 @@ namespace HexGrid {
   using UnityEngine;
 
   [System.Serializable]
-  internal struct FractHex {
+  public struct FractHex {
 
     public FractHex(Hex hex) : this(hex.x, hex.y, hex.z) { }
     public FractHex(Vector2 pos) : this(pos.x, pos.y, -pos.y - pos.x) { }

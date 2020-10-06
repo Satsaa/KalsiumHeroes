@@ -14,7 +14,8 @@ public abstract class GameEvent {
 public class Events {
 
   [SerializeReference] public List<object> stack = new List<object>();
-  [SerializeField] public GameEvent first => (GameEvent)stack[0];
+  public GameEvent first => (GameEvent)stack[0];
+  public bool finished => stack.Count == 0 && (provider == null || provider.EventIsFinished());
 
   IEventHandler provider = null;
 

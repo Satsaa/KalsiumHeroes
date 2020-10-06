@@ -7,7 +7,7 @@ namespace HexGrid {
   using UnityEngine;
 
   [Serializable]
-  internal struct Hex {
+  public struct Hex {
 
     public Hex(Vector2Int pos) : this(pos.x, pos.y, -pos.y - pos.x) { }
     public Hex(Vector3Int pos) : this(pos.x, pos.y, pos.z) { }
