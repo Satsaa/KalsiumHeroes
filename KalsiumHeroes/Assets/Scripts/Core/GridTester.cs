@@ -3,14 +3,14 @@
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
+using System.Diagnostics;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Muc.Numerics;
 using Muc.Extensions;
 using HexGrid;
 using System;
+using System.Linq;
+using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(GameGrid))]
 public class GridTester : MonoBehaviour {
@@ -19,20 +19,45 @@ public class GridTester : MonoBehaviour {
   public GameGrid grid { get; private set; }
 
   // Editor
-  public HashSet<GameHex> highlights = new HashSet<GameHex>();
   public GameHex main;
   public GameHex hover;
+
+  [Space]
+
   public bool drawLine;
   public bool drawRadius;
   public bool drawRing;
-  public bool drawPath;
-  public bool painting;
-  public PaintType paintType;
-  public int max;
+  public bool drawVision;
+
+  [Space]
+
+  public bool drawCostField;
+  public bool drawDistanceField;
+
+  [Space]
+
+  public bool drawArea;
+  public bool drawFlood;
+
+  [Space]
+
+  public bool drawCheapestPath;
+  public bool drawShortestPath;
+  public bool drawFirstPath;
+
+  [Space]
+
+  public PaintType paint;
 
   public enum PaintType {
     None,
+    NoWall,
     Wall,
+    PositivinessN2,
+    PositivinessN1,
+    Positiviness0,
+    Positiviness1,
+    Positiviness2,
     MoveCost0,
     MoveCost1,
     MoveCost2,
@@ -74,6 +99,9 @@ public class GridTesterEditor : Editor {
 
   protected virtual void OnSceneGUI() {
 
+    var distance = Hex.Distance(t.hover.hex, t.main.hex);
+    var lightBlue = ChangeAlpha(Color.blue, 0.25f);
+
     // Draw selection
     if (grid != null) {
       DrawHex(t.main, ChangeAlpha(Color.red, 0.25f));
@@ -89,24 +117,12 @@ public class GridTesterEditor : Editor {
       if (e.type == EventType.MouseDown && e.button == 0) { t.main = t.hover; e.Use(); }
     }
 
-    // Draw blockages
-    foreach (var hex in grid.hexes.Values) {
-      if (hex.blocked) DrawHex(hex, Color.black);
-    }
-
-
-    // Draw highlights
-    foreach (var hex in t.highlights) {
-      DrawHex(hex, Color.green);
-    }
-
     if (t.drawLine) {
+      foreach (var hex in grid.Line(t.main, t.hover)) {
+        DrawHex(hex, lightBlue);
+      }
       foreach (var pair in Hex.GetLine(t.main.hex, t.hover.hex)) {
-        var hex = pair.Item1;
         var fractHex = pair.Item2;
-
-        var gameHex = grid.hexes[hex.pos];
-        DrawHex(gameHex, ChangeAlpha(Color.blue, 0.25f));
         var ws = Layout.HexToPixel(fractHex);
         var spherePos = new Vector3(ws.x, 0, ws.y);
         Handles.SphereHandleCap(0, spherePos, Quaternion.identity, 0.25f, EventType.Repaint);
@@ -114,45 +130,85 @@ public class GridTesterEditor : Editor {
     }
 
     if (t.drawRadius) {
-      foreach (var gameHex in grid.Radius(t.main, Hex.Distance(t.hover.hex, t.main.hex))) {
-        DrawHex(gameHex, ChangeAlpha(Color.blue, 0.25f));
+      foreach (var hex in grid.Radius(t.main, distance)) {
+        DrawHex(hex, lightBlue);
       }
     }
 
     if (t.drawRing) {
-      foreach (var gameHex in grid.Ring(t.main, Hex.Distance(t.hover.hex, t.main.hex))) {
-        DrawHex(gameHex, ChangeAlpha(Color.blue, 0.25f));
+      foreach (var hex in grid.Ring(t.main, distance)) {
+        DrawHex(hex, lightBlue);
       }
     }
 
-    if (t.painting) {
-      switch (t.paintType) {
-        case GridTester.PaintType.None: t.main.blocked = false; break;
-        case GridTester.PaintType.Wall: t.main.blocked = true; break;
-        case GridTester.PaintType.MoveCost0: t.main.moveCost = 0; break;
-        case GridTester.PaintType.MoveCost1: t.main.moveCost = 1; break;
-        case GridTester.PaintType.MoveCost2: t.main.moveCost = 2; break;
-        case GridTester.PaintType.MoveCost3: t.main.moveCost = 3; break;
-        case GridTester.PaintType.MoveCost4: t.main.moveCost = 4; break;
-        case GridTester.PaintType.MoveCost5: t.main.moveCost = 5; break;
-        case GridTester.PaintType.MoveCost6: t.main.moveCost = 6; break;
-        case GridTester.PaintType.MoveCost7: t.main.moveCost = 7; break;
-        case GridTester.PaintType.MoveCost8: t.main.moveCost = 8; break;
-        case GridTester.PaintType.MoveCost9: t.main.moveCost = 9; break;
-        case GridTester.PaintType.MoveCost10: t.main.moveCost = 10; break;
+    if (t.drawVision) {
+      foreach (var hex in grid.Vision(t.main, distance)) {
+        DrawHex(hex, lightBlue);
       }
     }
 
-    if (t.drawPath) {
-      DrawPath();
+    switch (t.paint) {
+      case GridTester.PaintType.NoWall: t.main.blocked = false; break;
+      case GridTester.PaintType.Wall: t.main.blocked = true; break;
+      case GridTester.PaintType.PositivinessN2: t.main.positiviness = -2; break;
+      case GridTester.PaintType.PositivinessN1: t.main.positiviness = -1; break;
+      case GridTester.PaintType.Positiviness0: t.main.positiviness = 0; break;
+      case GridTester.PaintType.Positiviness1: t.main.positiviness = 1; break;
+      case GridTester.PaintType.Positiviness2: t.main.positiviness = 2; break;
+      case GridTester.PaintType.MoveCost0: t.main.moveCost = 0; break;
+      case GridTester.PaintType.MoveCost1: t.main.moveCost = 1; break;
+      case GridTester.PaintType.MoveCost2: t.main.moveCost = 2; break;
+      case GridTester.PaintType.MoveCost3: t.main.moveCost = 3; break;
+      case GridTester.PaintType.MoveCost4: t.main.moveCost = 4; break;
+      case GridTester.PaintType.MoveCost5: t.main.moveCost = 5; break;
+      case GridTester.PaintType.MoveCost6: t.main.moveCost = 6; break;
+      case GridTester.PaintType.MoveCost7: t.main.moveCost = 7; break;
+      case GridTester.PaintType.MoveCost8: t.main.moveCost = 8; break;
+      case GridTester.PaintType.MoveCost9: t.main.moveCost = 9; break;
+      case GridTester.PaintType.MoveCost10: t.main.moveCost = 10; break;
+    }
+
+    if (t.drawCostField) {
+      var field = grid.GetCostField(t.main);
+      foreach (var kv in field.costs) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+    }
+    if (t.drawDistanceField) {
+      var field = grid.GetDistanceField(t.main);
+      foreach (var kv in field.distances) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+    }
+
+    if (t.drawFlood) {
+      foreach (var hex in grid.Flood(t.main)) DrawHex(hex, lightBlue);
+    }
+    if (t.drawArea) {
+      var areas = grid.GetAreas();
+      foreach (var area in areas) {
+        var r = new System.Random(area.Value);
+        var color = new Color(r.Next(64, 256) / 256f, r.Next(64, 256) / 256f, r.Next(64, 256) / 256f);
+        DrawHex(area.Key, color);
+      }
+    }
+
+    if (t.drawCheapestPath) {
+      grid.CheapestPath(t.main, t.hover, out var path, out var field);
+      foreach (var kv in field.scores) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+      foreach (var segment in path) DrawHex(segment, Color.blue);
+    }
+    if (t.drawShortestPath) {
+      grid.ShortestPath(t.main, t.hover, out var path, out var field);
+      foreach (var kv in field.scores) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+      foreach (var segment in path) DrawHex(segment, Color.blue);
+    }
+    if (t.drawFirstPath) {
+      grid.FirstPath(t.main, t.hover, out var path, out var field);
+      foreach (var kv in field.scores) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+      foreach (var segment in path) DrawHex(segment, Color.blue);
     }
   }
 
   public override void OnInspectorGUI() {
 
     DrawDefaultInspector();
-
-    t.highlights.Clear();
 
     using (new EditorGUILayout.HorizontalScope()) {
       using (new EditorGUI.DisabledGroupScope(t.main.upLeft == null)) if (GUILayout.Button(nameof(t.main.upLeft))) t.main = t.main.upLeft ? t.main.upLeft : t.main;
@@ -210,42 +266,6 @@ public class GridTesterEditor : Editor {
     public void Dispose() {
       if (onDispose != null)
         onDispose();
-    }
-  }
-
-  private void DrawPath() {
-    var total = 0;
-
-    var costs = new Dictionary<GameHex, int>() { { t.main, 0 } };
-    var sources = new Dictionary<GameHex, GameHex>() { { t.main, null } };
-
-    var fringes = new Dictionary<int, List<GameHex>>() { { 0, new List<GameHex>() { t.main } } };
-    for (var k = 0; fringes[k].Count > 0; k++) {
-      fringes[k + 1] = new List<GameHex>();
-      foreach (var hex in fringes[k]) {
-        foreach (var neighbor in hex.Neighbors()) {
-          var cost = costs[hex] + neighbor.moveCost;
-          if (!neighbor.blocked && (!costs.TryGetValue(neighbor, out var otherCost) || otherCost > cost)) {
-            if (total++ >= t.max) goto skip;
-            costs[neighbor] = cost;
-            sources[neighbor] = hex;
-            fringes[k + 1].Add(neighbor);
-          }
-        }
-      }
-    }
-  skip:
-    foreach (var kv in costs) {
-      DrawHex(kv.Key, Color.Lerp(ChangeAlpha(Color.green, 0.25f), Color.red, kv.Value / 15f));
-    }
-    var drawn = new HashSet<GameHex>() { t.hover };
-    DrawHex(t.hover, ChangeAlpha(Color.blue, 0.25f));
-    if (sources.TryGetValue(t.hover, out var current)) {
-      while (current != null && !drawn.Contains(current)) {
-        DrawHex(current, ChangeAlpha(Color.blue, 0.25f));
-        drawn.Add(current);
-        sources.TryGetValue(current, out current);
-      }
     }
   }
 }

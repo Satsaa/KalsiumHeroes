@@ -12,7 +12,8 @@ using HexGrid;
 public class GameHex : ScriptableObject {
 
   public bool blocked;
-  public int moveCost;
+  public float moveCost;
+  public float positiviness;
 
   public static GameHex Create(Hex hex) {
     var instance = ScriptableObject.CreateInstance<GameHex>();
