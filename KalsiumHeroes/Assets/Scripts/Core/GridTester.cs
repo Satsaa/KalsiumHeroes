@@ -211,16 +211,16 @@ public class GridTesterEditor : Editor {
     DrawDefaultInspector();
 
     using (new EditorGUILayout.HorizontalScope()) {
-      using (new EditorGUI.DisabledGroupScope(t.main.upLeft == null)) if (GUILayout.Button(nameof(t.main.upLeft))) t.main = t.main.upLeft ? t.main.upLeft : t.main;
-      using (new EditorGUI.DisabledGroupScope(t.main.upRight == null)) if (GUILayout.Button(nameof(t.main.upRight))) t.main = t.main.upRight ? t.main.upRight : t.main;
+      using (new EditorGUI.DisabledGroupScope(!t.main || t.main.upLeft == null)) if (GUILayout.Button(nameof(t.main.upLeft))) t.main = t.main.upLeft ? t.main.upLeft : t.main;
+      using (new EditorGUI.DisabledGroupScope(!t.main || t.main.upRight == null)) if (GUILayout.Button(nameof(t.main.upRight))) t.main = t.main.upRight ? t.main.upRight : t.main;
     }
     using (new EditorGUILayout.HorizontalScope()) {
-      using (new EditorGUI.DisabledGroupScope(t.main.left == null)) if (GUILayout.Button(nameof(t.main.left))) t.main = t.main.left ? t.main.left : t.main;
-      using (new EditorGUI.DisabledGroupScope(t.main.right == null)) if (GUILayout.Button(nameof(t.main.right))) t.main = t.main.right ? t.main.right : t.main;
+      using (new EditorGUI.DisabledGroupScope(!t.main || t.main.left == null)) if (GUILayout.Button(nameof(t.main.left))) t.main = t.main.left ? t.main.left : t.main;
+      using (new EditorGUI.DisabledGroupScope(!t.main || t.main.right == null)) if (GUILayout.Button(nameof(t.main.right))) t.main = t.main.right ? t.main.right : t.main;
     }
     using (new EditorGUILayout.HorizontalScope()) {
-      using (new EditorGUI.DisabledGroupScope(t.main.downLeft == null)) if (GUILayout.Button(nameof(t.main.downLeft))) t.main = t.main.downLeft ? t.main.downLeft : t.main;
-      using (new EditorGUI.DisabledGroupScope(t.main.downRight == null)) if (GUILayout.Button(nameof(t.main.downRight))) t.main = t.main.downRight ? t.main.downRight : t.main;
+      using (new EditorGUI.DisabledGroupScope(!t.main || t.main.downLeft == null)) if (GUILayout.Button(nameof(t.main.downLeft))) t.main = t.main.downLeft ? t.main.downLeft : t.main;
+      using (new EditorGUI.DisabledGroupScope(!t.main || t.main.downRight == null)) if (GUILayout.Button(nameof(t.main.downRight))) t.main = t.main.downRight ? t.main.downRight : t.main;
     }
 
     EditorGUILayout.Space();

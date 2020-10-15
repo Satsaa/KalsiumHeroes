@@ -4,41 +4,67 @@ using System.Linq;
 using UnityEngine;
 using Muc.Systems.Values;
 
-[CreateAssetMenu(fileName = "New Modifier", menuName = "KalsiumHeroes/Modifiers/Empty")]
-public class Modifier : ScriptableObject {
+[RequireComponent(typeof(Unit))]
+public class UnitModifier : MonoBehaviour {
 
+  [Tooltip("Name displayed to users")]
   public string displayName;
-  public DebuffType debuffType = DebuffType.None;
-  public bool positive = true;
-  public bool dispellable = true;
-  public Attribute<int> turnDuration = new Attribute<int>(-1);
+  [Tooltip("String identifier of this Ability")]
+  public string identifier;
+  [Tooltip("Description displayed to users")]
+  public string description;
 
-  [SerializeField] Unit unit;
+  public Unit unit;
 
-  public virtual void OnAdd(Unit unit) { this.unit = unit; }
+  protected void Awake() {
+    if (!TryGetComponent<Unit>(out unit)) {
+      Debug.LogWarning($"You added a {nameof(UnitModifier)} to an object which does not have a {nameof(Unit)} component. {nameof(UnitModifier)}s are designed for {nameof(Unit)}s only.");
+    }
+    OnAdd();
+    foreach (var other in unit.modifiers.Where(mod => mod != this)) {
+      other.OnAdd(this);
+    }
+  }
+
+  protected void OnDestroy() {
+    OnRemove();
+    foreach (var other in unit.modifiers.Where(mod => mod != this)) {
+      other.OnRemove(this);
+    }
+  }
+
+  /// <summary> When this UnitModifier is being added. </summary>
+  public virtual void OnAdd() { }
+  /// <summary> When this UnitModifier is being removed. </summary>
   public virtual void OnRemove() { }
+
+  /// <summary> When any other UnitModifier is being added. </summary>
+  public virtual void OnAdd(UnitModifier modifier) { }
+  /// <summary> When any other UnitModifier is being removed. </summary>
+  public virtual void OnRemove(UnitModifier modifier) { }
 
   public virtual int OnGetSpeed(int value) => value;
   public virtual int OnGetMovement(int value) => value;
-  public virtual int OnGetdefense(int value) => value;
+  public virtual int OnGetDefense(int value) => value;
   public virtual int OnGetResistance(int value) => value;
-
   public virtual float OnGetHealth(float value) => value;
+
   public virtual float OnHeal(float value) => value;
   public virtual float OnDamage(float value, DamageType type) => value;
-
-  public virtual void OnModifierAdd(Modifier modifier) { }
-  public virtual void OnModifierRemove(Modifier modifier) { }
-
-  public virtual void OnUnitDispell() { }
-  public virtual void OnPurge() { }
 
   public virtual void OnRoundStart() { }
   public virtual void OnRoundEnd() { }
 
+  /// <summary> When this Unit's turn starts. </summary>
   public virtual void OnTurnStart() { }
-  public virtual void OnTurnEnd() { if (turnDuration.baseValue != -1 && --turnDuration.value <= 0) unit.RemoveModifier(this); }
+  /// <summary> When this Unit's turn ends. </summary>
+  public virtual void OnTurnEnd() { }
 
+  /// <summary> When this Unit dies. </summary>
   public virtual void OnKill() { }
+  /// <summary> When this Unit spawns. </summary>
   public virtual void OnSpawn() { }
+
+  /// <summary> When this Unit casts an Ability. </summary>
+  public virtual void OnAbilityCast() { }
 }

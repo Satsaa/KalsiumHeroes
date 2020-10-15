@@ -13,12 +13,12 @@ public class RoundManager {
 
   public void Next() {
     if (units.Count <= 1) {
-      ResetTurnList();
+      NextTurn();
       return;
     }
     units.RemoveAt(units.Count - 1);
     if (units.Count <= 0) {
-      ResetTurnList();
+      NextTurn();
       return;
     }
   }
@@ -27,7 +27,8 @@ public class RoundManager {
     units.Sort((a, b) => b.GetSpeed() - a.GetSpeed());
   }
 
-  private void ResetTurnList() {
+  private void NextTurn() {
+    round++;
     units = Game.grid.hexes.Values.Where(v => v.unit != null).Select(v => v.unit).ToList();
     Sort();
   }

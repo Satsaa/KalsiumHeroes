@@ -13,7 +13,7 @@ public class Client {
   public void PostEvent(GameEvent e) {
     e.eventNum = eventNum++;
 
-    var packet = new GameEventPacket(e.GetType().Name, JsonUtility.ToJson(e));
+    var packet = new GameEventPacket(e.GetType().Name, e);
     var fullJson = JsonUtility.ToJson(packet);
 
     // Send to server
@@ -28,6 +28,10 @@ public class Client {
 }
 
 public class GameEventPacket {
+  public GameEventPacket(string name, GameEvent e) {
+    this.name = name;
+    this.json = JsonUtility.ToJson(e);
+  }
   public GameEventPacket(string name, string json) {
     this.name = name;
     this.json = json;

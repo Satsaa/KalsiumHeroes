@@ -15,13 +15,18 @@ public class Events {
 
   [SerializeReference] public List<object> stack = new List<object>();
   public GameEvent first => (GameEvent)stack[0];
-  public bool finished => stack.Count == 0 && (provider == null || provider.EventIsFinished());
+  public bool finished => stack.Count == 0 && (eHandler == null || eHandler.EventIsFinished());
 
-  IEventHandler provider = null;
+  IEventHandler eHandler = null;
 
   public bool NextEvent() {
-    if (stack.Count > 0 && (provider == null || provider.EventIsFinished())) {
-      first.Handle();
+    if (stack.Count > 0 && (eHandler == null || eHandler.EventIsFinished())) {
+      try {
+        first.Handle();
+      } catch (System.Exception e) {
+        stack.RemoveAt(0);
+        throw e;
+      }
       stack.RemoveAt(0);
       return true;
     } else {
@@ -61,6 +66,10 @@ public class Events {
     public Vector3Int target;
     public override void Handle() {
       Debug.Log($"{this.GetType().Name}: Called");
+      var unit = Game.grid.hexes[this.unit].unit;
+      IEventHandler<Move> asHandler = unit;
+      Game.events.eHandler = asHandler;
+      asHandler.StartEvent(this);
     }
   }
 
@@ -71,6 +80,12 @@ public class Events {
     public Vector3Int target;
     public override void Handle() {
       Debug.Log($"{this.GetType().Name}: Called");
+      var unit = Game.grid.hexes[this.unit].unit;
+      var ability = unit.abilities.FirstOrDefault(a => a.identifier == this.ability);
+      if (ability == null) return;
+      IEventHandler<Ability> asHandler = ability;
+      Game.events.eHandler = asHandler;
+      asHandler.StartEvent(this);
     }
   }
 
@@ -86,7 +101,8 @@ public class Events {
   [Serializable]
   public class Turn : GameEvent {
     public override void Handle() {
-      Debug.Log($"{this.GetType().Name}: Called");
+      Game.rounds.Next();
+      Debug.Log($"Next round");
     }
   }
 
