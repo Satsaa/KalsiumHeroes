@@ -8,28 +8,35 @@ public class RoundManager {
 
   [SerializeField, HideInInspector] List<Unit> units = new List<Unit>();
 
-  public Unit current => units.Count <= 0 ? null : units[units.Count - 1];
+  public Unit current {
+    get {
+      var res = units.LastOrDefault();
+      if (!res) {
+        Gather();
+        res = units.LastOrDefault();
+      }
+      return res;
+    }
+  }
+
   [field: SerializeField] public int round { get; private set; }
 
   public void Next() {
     if (units.Count <= 1) {
-      NextTurn();
+      round++;
+      Gather();
       return;
     }
     units.RemoveAt(units.Count - 1);
-    if (units.Count <= 0) {
-      NextTurn();
-      return;
-    }
+  }
+
+
+  void Gather() {
+    units = Game.grid.hexes.Values.Where(v => v.unit != null).Select(v => v.unit).ToList();
+    Sort();
   }
 
   public void Sort() {
     units.Sort((a, b) => b.GetSpeed() - a.GetSpeed());
-  }
-
-  private void NextTurn() {
-    round++;
-    units = Game.grid.hexes.Values.Where(v => v.unit != null).Select(v => v.unit).ToList();
-    Sort();
   }
 }

@@ -6,10 +6,11 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using Muc.Editor;
 using UnityEngine;
 
 public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
+
+  public Sprite sprite;
 
   [Tooltip("The type of the ability. Physical = Disabled by 'Disarm', applicable damage reduced by the 'Defense' stat. Spell = Disabled by 'Silence', applicable damage reduced by 'Resistance' stat.")]
   public AbilityType type;

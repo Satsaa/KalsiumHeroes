@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Muc.Systems.Values;
 
 [RequireComponent(typeof(Unit))]
 public class UnitModifier : MonoBehaviour {
@@ -48,6 +47,7 @@ public class UnitModifier : MonoBehaviour {
   public virtual int OnGetDefense(int value) => value;
   public virtual int OnGetResistance(int value) => value;
   public virtual float OnGetHealth(float value) => value;
+  public virtual float OnGetMaxHealth(float value) => value;
 
   public virtual float OnHeal(float value) => value;
   public virtual float OnDamage(float value, DamageType type) => value;

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Muc.Editor;
 using static UnityEngine.Mathf;
 
 public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
@@ -14,8 +13,11 @@ public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
   [Tooltip("Determines how many tiles any unit can move per turn."), SerializeField]
   protected Attribute<int> movement = new Attribute<int>(1);
 
-  [Tooltip("The base health of the unit. Reach 0 and the unit dies."), SerializeField]
+  [Tooltip("The health of the unit. Reach 0 and the unit dies."), SerializeField]
   protected Attribute<float> health = new Attribute<float>(100);
+
+  [Tooltip("The maximum health of the unit."), SerializeField]
+  protected Attribute<float> maxHealth = new Attribute<float>(100);
 
   [Tooltip("The amount of resistance to physical damage the unit posesses."), SerializeField]
   protected Attribute<int> defense;
@@ -31,8 +33,15 @@ public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
   public StatusEffect[] effects => GetComponents<StatusEffect>();
 
 
+  protected void OnValidate() {
+    if (hex && hex.unit == null) {
+      hex.unit = this;
+      transform.position = hex.center;
+    }
+  }
+
   protected void Awake() {
-    if (hex) {
+    if (hex && (hex.unit == this || hex.unit == null)) {
       hex.unit = this;
       transform.position = hex.center;
     } else {
@@ -52,28 +61,38 @@ public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
   public int Getdefense() => modifiers.Aggregate(defense.value, (cur, v) => v.OnGetDefense(cur));
   public int GetResistance() => modifiers.Aggregate(resistance.value, (cur, v) => v.OnGetResistance(cur));
   public float GetHealth() => modifiers.Aggregate(health.value, (cur, v) => v.OnGetHealth(cur));
+  public float GetMaxHealth() => modifiers.Aggregate(maxHealth.value, (cur, v) => v.OnGetMaxHealth(cur));
 
-  public void Heal(float value) => health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
+  public void Heal(float value) {
+    health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
+    MaxHealth();
+  }
   public void Damage(float value, DamageType type) {
     var total = modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnDamage(cur, type)));
 
     switch (type) {
       case DamageType.Physical:
         health.value -= (1 - defense.value / 100f) * total;
+        MaxHealth();
         break;
       case DamageType.Magical:
         health.value -= (1 - resistance.value / 100f) * total;
+        MaxHealth();
         break;
       case DamageType.Pure:
         health.value -= total;
+        MaxHealth();
         break;
       case DamageType.None:
       default:
         health.value -= total;
+        MaxHealth();
         Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
         break;
     }
   }
+
+  void MaxHealth() => health.value = Mathf.Min(health.value, maxHealth.value);
 
   public void Dispell() {
     foreach (var effect in effects) {
