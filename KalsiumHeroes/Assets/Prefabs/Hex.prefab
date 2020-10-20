@@ -64,7 +64,8 @@ MonoBehaviour:
   moveCost: 1
   positiviness: 0
   highlighter: {fileID: 4396451538871721220}
-  _unit: {fileID: 0}
+  unit: {fileID: 0}
+  graveYard: []
   <hex>k__BackingField:
     <x>k__BackingField: 0
     <y>k__BackingField: 0
@@ -104,7 +105,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: af7438c37f3a6bb4eb26c9d43152018e, type: 3}
+  - {fileID: 2100000, guid: c69b2adbc6672d94a9a36c0b754362f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

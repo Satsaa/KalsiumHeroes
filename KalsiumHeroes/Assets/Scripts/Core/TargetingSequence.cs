@@ -13,7 +13,8 @@ public abstract class TargetingSequence {
   public Action<TargetingSequence> onComplete;
   public Action<TargetingSequence> onCancel;
 
-  protected Color targetColor => new Color(0.25f, 1, 0.25f, 0.5f);
+  protected Color targetColor => new Color(0.25f, 0.75f, 0.25f);
+  protected Color selectionColor => new Color(0.25f, 0.25f, 1f);
 
   public abstract bool IsCompleted();
   public abstract void RefreshTargets();
@@ -21,7 +22,7 @@ public abstract class TargetingSequence {
   public virtual void RefreshHighlights() {
     highlights.Clear();
     foreach (var target in targets) {
-      highlights.Add(target, targetColor);
+      highlights[target] = targetColor;
     }
   }
 
@@ -74,5 +75,28 @@ public class AbilityTargetingSequence : TargetingSequence {
 
   public override void RefreshTargets() {
     targets = ability.GetTargets();
+  }
+}
+
+public class ConfirmHexAbilityTargetingSequence : AbilityTargetingSequence {
+
+  public bool confirmed;
+
+  public ConfirmHexAbilityTargetingSequence(Unit unit, Ability ability, Action<TargetingSequence> onComplete, Action<TargetingSequence> onCancel)
+    : base(unit, ability, onComplete, onCancel) { }
+
+  public override bool IsCompleted() {
+    return (selection.Count > 0 && confirmed);
+  }
+
+  public override bool Select(GameHex hex) {
+    var prevSelection = selection.FirstOrDefault();
+    if (prevSelection == hex) {
+      confirmed = true;
+      return true;
+    } else {
+      selection.Clear();
+      return base.Select(hex);
+    }
   }
 }

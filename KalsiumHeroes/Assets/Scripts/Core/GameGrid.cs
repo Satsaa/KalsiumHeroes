@@ -262,7 +262,8 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   private GameHex[] BuildPath(Dictionary<GameHex, GameHex> sources, GameHex closest) {
     var res = new List<GameHex>();
     var current = closest;
-    while (current != null) {
+    var i = 0;
+    while (current != null && i++ < 1000) {
       res.Add(current);
       sources.TryGetValue(current, out var source);
       current = source;
@@ -346,28 +347,30 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     var frontier = new ComparisonPriorityQueue<TriplePriorityNode>(hexes.Count, new TripleComparer());
     frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.moveCost);
 
-    while (frontier.Count != 0) {
-      var hex = frontier.Dequeue().hex;
-      foreach (var neighbor in hex.Neighbors()) {
-        var cost = costs[hex] + neighbor.moveCost;
-        if (neighbor == target) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          path = BuildPath(sources, neighbor);
-          return true;
-        }
-        if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          var dist = Distance(neighbor, target);
-          float priority = cost;
-          frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.positiviness, dist), priority);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = neighbor;
-            if (minDist <= targetDistance) {
-              path = BuildPath(sources, closest);
-              return false;
+    if (start != target) {
+      while (frontier.Count != 0) {
+        var hex = frontier.Dequeue().hex;
+        foreach (var neighbor in hex.Neighbors()) {
+          var cost = costs[hex] + neighbor.moveCost;
+          if (neighbor == target) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            path = BuildPath(sources, neighbor);
+            return true;
+          }
+          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            var dist = Distance(neighbor, target);
+            float priority = cost;
+            frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.positiviness, dist), priority);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = neighbor;
+              if (minDist <= targetDistance) {
+                path = BuildPath(sources, closest);
+                return false;
+              }
             }
           }
         }
@@ -408,30 +411,32 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     var frontier = new ComparisonPriorityQueue<TriplePriorityNode>(hexes.Count, new TripleComparer());
     frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.moveCost);
 
-    while (frontier.Count != 0) {
-      var hex = frontier.Dequeue().hex;
-      foreach (var neighbor in hex.Neighbors()) {
-        var cost = costs[hex] + neighbor.moveCost;
-        if (neighbor == target) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          field = new PathField<float>(costs, sources, neighbor);
-          path = BuildPath(sources, neighbor);
-          return true;
-        }
-        if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          var dist = Distance(neighbor, target);
-          float priority = cost;
-          frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.positiviness, dist), priority);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = neighbor;
-            if (minDist <= targetDistance) {
-              field = new PathField<float>(costs, sources, hex);
-              path = BuildPath(sources, closest);
-              return false;
+    if (start != target) {
+      while (frontier.Count != 0) {
+        var hex = frontier.Dequeue().hex;
+        foreach (var neighbor in hex.Neighbors()) {
+          var cost = costs[hex] + neighbor.moveCost;
+          if (neighbor == target) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            field = new PathField<float>(costs, sources, neighbor);
+            path = BuildPath(sources, neighbor);
+            return true;
+          }
+          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            var dist = Distance(neighbor, target);
+            float priority = cost;
+            frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.positiviness, dist), priority);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = neighbor;
+              if (minDist <= targetDistance) {
+                field = new PathField<float>(costs, sources, hex);
+                path = BuildPath(sources, closest);
+                return false;
+              }
             }
           }
         }
@@ -462,28 +467,30 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     var frontier = new ComparisonPriorityQueue<DoublePriorityNode>(hexes.Count, new DoubleComparer());
     frontier.Enqueue(new DoublePriorityNode(start, start.positiviness), 1);
 
-    while (frontier.Count != 0) {
-      var hex = frontier.Dequeue().hex;
-      foreach (var neighbor in hex.Neighbors()) {
-        var cost = costs[hex] + 1;
-        if (neighbor == target) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          path = BuildPath(sources, neighbor);
-          return true;
-        }
-        if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          var dist = Distance(neighbor, target);
-          var priority = dist + cost;
-          frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.positiviness), priority);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = neighbor;
-            if (minDist <= targetDistance) {
-              path = BuildPath(sources, closest);
-              return false;
+    if (start != target) {
+      while (frontier.Count != 0) {
+        var hex = frontier.Dequeue().hex;
+        foreach (var neighbor in hex.Neighbors()) {
+          var cost = costs[hex] + 1;
+          if (neighbor == target) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            path = BuildPath(sources, neighbor);
+            return true;
+          }
+          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            var dist = Distance(neighbor, target);
+            var priority = dist + cost;
+            frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.positiviness), priority);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = neighbor;
+              if (minDist <= targetDistance) {
+                path = BuildPath(sources, closest);
+                return false;
+              }
             }
           }
         }
@@ -513,30 +520,32 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     var frontier = new ComparisonPriorityQueue<DoublePriorityNode>(hexes.Count, new DoubleComparer());
     frontier.Enqueue(new DoublePriorityNode(start, start.positiviness), 1);
 
-    while (frontier.Count != 0) {
-      var hex = frontier.Dequeue().hex;
-      foreach (var neighbor in hex.Neighbors()) {
-        var cost = costs[hex] + 1;
-        if (neighbor == target) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          field = new PathField<int>(costs, sources, neighbor);
-          path = BuildPath(sources, neighbor);
-          return true;
-        }
-        if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          var dist = Distance(neighbor, target);
-          var priority = dist + cost;
-          frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.positiviness), priority);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = neighbor;
-            if (minDist <= targetDistance) {
-              field = new PathField<int>(costs, sources, hex);
-              path = BuildPath(sources, closest);
-              return false;
+    if (start != target) {
+      while (frontier.Count != 0) {
+        var hex = frontier.Dequeue().hex;
+        foreach (var neighbor in hex.Neighbors()) {
+          var cost = costs[hex] + 1;
+          if (neighbor == target) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            field = new PathField<int>(costs, sources, neighbor);
+            path = BuildPath(sources, neighbor);
+            return true;
+          }
+          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            var dist = Distance(neighbor, target);
+            var priority = dist + cost;
+            frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.positiviness), priority);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = neighbor;
+              if (minDist <= targetDistance) {
+                field = new PathField<int>(costs, sources, hex);
+                path = BuildPath(sources, closest);
+                return false;
+              }
             }
           }
         }
@@ -568,28 +577,30 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     var frontier = new FastPriorityQueue<SinglePriorityNode>(hexes.Count);
     frontier.Enqueue(new SinglePriorityNode(start), 1);
 
-    while (frontier.Count != 0) {
-      var hex = frontier.Dequeue().hex;
-      foreach (var neighbor in hex.Neighbors()) {
-        var cost = costs[hex] + 1;
-        if (neighbor == target) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          path = BuildPath(sources, neighbor);
-          return true;
-        }
-        if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other))) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          var dist = Distance(neighbor, target);
-          var priority = dist;
-          frontier.Enqueue(new SinglePriorityNode(neighbor), priority);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = neighbor;
-            if (minDist <= targetDistance) {
-              path = BuildPath(sources, closest);
-              return false;
+    if (start != target) {
+      while (frontier.Count != 0) {
+        var hex = frontier.Dequeue().hex;
+        foreach (var neighbor in hex.Neighbors()) {
+          var cost = costs[hex] + 1;
+          if (neighbor == target) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            path = BuildPath(sources, neighbor);
+            return true;
+          }
+          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other))) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            var dist = Distance(neighbor, target);
+            var priority = dist;
+            frontier.Enqueue(new SinglePriorityNode(neighbor), priority);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = neighbor;
+              if (minDist <= targetDistance) {
+                path = BuildPath(sources, closest);
+                return false;
+              }
             }
           }
         }
@@ -620,30 +631,32 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     var frontier = new FastPriorityQueue<SinglePriorityNode>(hexes.Count);
     frontier.Enqueue(new SinglePriorityNode(start), 1);
 
-    while (frontier.Count != 0) {
-      var hex = frontier.Dequeue().hex;
-      foreach (var neighbor in hex.Neighbors()) {
-        var cost = costs[hex] + 1;
-        if (neighbor == target) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          field = new PathField<int>(costs, sources, neighbor);
-          path = BuildPath(sources, neighbor);
-          return true;
-        }
-        if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other))) {
-          costs[neighbor] = cost;
-          sources[neighbor] = hex;
-          var dist = Distance(neighbor, target);
-          var priority = dist;
-          frontier.Enqueue(new SinglePriorityNode(neighbor), priority);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = neighbor;
-            if (minDist <= targetDistance) {
-              field = new PathField<int>(costs, sources, hex);
-              path = BuildPath(sources, closest);
-              return false;
+    if (start != target) {
+      while (frontier.Count != 0) {
+        var hex = frontier.Dequeue().hex;
+        foreach (var neighbor in hex.Neighbors()) {
+          var cost = costs[hex] + 1;
+          if (neighbor == target) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            field = new PathField<int>(costs, sources, neighbor);
+            path = BuildPath(sources, neighbor);
+            return true;
+          }
+          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other))) {
+            costs[neighbor] = cost;
+            sources[neighbor] = hex;
+            var dist = Distance(neighbor, target);
+            var priority = dist;
+            frontier.Enqueue(new SinglePriorityNode(neighbor), priority);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = neighbor;
+              if (minDist <= targetDistance) {
+                field = new PathField<int>(costs, sources, hex);
+                path = BuildPath(sources, closest);
+                return false;
+              }
             }
           }
         }

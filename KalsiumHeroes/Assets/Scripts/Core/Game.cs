@@ -26,7 +26,20 @@ public class Game : MonoBehaviour {
   [SerializeField] private RoundManager _rounds = new RoundManager();
   [SerializeField] private ModifierTracker _modifiers = new ModifierTracker();
 
-  private void OnValidate() => Awake();
+  private void OnValidate() {
+
+    if (_instance != null && _instance != this) {
+      Debug.LogError($"Multiple {nameof(Game)} managers. Exterminating.");
+      DestroyImmediate(this);
+      return;
+    }
+
+    _instance = this;
+    if (_grid == null) _grid = GetComponent<GameGrid>();
+    if (_targeting == null) _targeting = GetComponent<Targeting>();
+    modifiers.ResetModifiers();
+  }
+
   private void Awake() {
 
     if (_instance != null && _instance != this) {
@@ -37,6 +50,7 @@ public class Game : MonoBehaviour {
 
     _instance = this;
     if (_grid == null) _grid = GetComponent<GameGrid>();
+    if (_targeting == null) _targeting = GetComponent<Targeting>();
     modifiers.ResetModifiers();
     _rounds.OnGameStart();
   }

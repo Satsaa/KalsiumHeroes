@@ -10,6 +10,8 @@ public class MoveAbility : Ability {
   [SerializeField, HideInInspector] GameHex target;
   [SerializeField, HideInInspector] GameHex[] path;
 
+  #region Anim
+
   void Update() {
     if (animating) {
       animTime += Time.deltaTime;
@@ -51,5 +53,23 @@ public class MoveAbility : Ability {
       animTime = 0;
       unit.MovePosition(target, false);
     }
+  }
+
+  #endregion
+
+  public override TargetingSequence GetTargetingSequence() {
+    return new MoveAbilityTargetingSequence(unit, this,
+      onComplete: (seq) => {
+        Debug.Log("Move sequence complete! Posting event.");
+        Game.client.PostEvent(new Events.Ability() {
+          ability = data.identifier,
+          target = seq.selection[0].hex.pos,
+          unit = unit.hex.hex.pos
+        });
+      },
+      onCancel: (seq) => {
+        Debug.Log("We got cancelled :(");
+      }
+    );
   }
 }

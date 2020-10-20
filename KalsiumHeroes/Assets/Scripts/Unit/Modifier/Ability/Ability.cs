@@ -51,7 +51,7 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
         break;
     }
 
-    // If ground not included. When ground is included all range results are valid, so we need no filtering.
+    // If ground not included. When ground is included all hexes in range are valid, so we need no filtering.
     if ((abilityData.targetType & TargetType.Ground) == 0) {
 
       bool self = (abilityData.targetType & TargetType.Self) != 0;
