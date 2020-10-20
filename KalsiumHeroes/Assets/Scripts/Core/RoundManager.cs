@@ -2,6 +2,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 [System.Serializable]
 public class RoundManager {
@@ -23,11 +25,16 @@ public class RoundManager {
 
   public void Next() {
     if (units.Count <= 1) {
+      foreach (var modifier in current.modifiers) modifier.OnTurnEnd();
       round++;
       Gather();
+      foreach (var modifier in Game.modifiers.GetModifiers()) modifier.OnRoundStart();
+      foreach (var modifier in current.modifiers) modifier.OnTurnStart();
       return;
     }
+    foreach (var modifier in current.modifiers) modifier.OnTurnEnd();
     units.RemoveAt(units.Count - 1);
+    foreach (var modifier in current.modifiers) modifier.OnTurnStart();
   }
 
 
@@ -38,5 +45,12 @@ public class RoundManager {
 
   public void Sort() {
     units.Sort((a, b) => b.GetSpeed() - a.GetSpeed());
+  }
+
+  public void OnGameStart() {
+    round++;
+    Gather();
+    foreach (var modifier in Game.modifiers.GetModifiers()) modifier.OnRoundStart();
+    foreach (var modifier in current.modifiers) modifier.OnTurnStart();
   }
 }

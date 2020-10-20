@@ -22,20 +22,8 @@ public class GameHex : MonoBehaviour {
     corners = Layout.PolygonCorners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
   }
 
-  public Unit unit {
-    get => _unit;
-    set {
-      if (value != null) {
-        if (value.hex != null) {
-          value.hex._unit = null;
-        }
-        value.hex = this;
-      }
-      _unit = value;
-    }
-  }
-  /// <summary> Internal. Use property unit instead. </summary>
-  public Unit _unit;
+  public Unit unit;
+  public List<Unit> graveYard;
 
   [field: SerializeField] public Hex hex { get; private set; }
 

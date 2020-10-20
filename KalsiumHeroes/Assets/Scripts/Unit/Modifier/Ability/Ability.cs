@@ -10,29 +10,7 @@ using UnityEngine;
 
 public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
 
-  public Sprite sprite;
-
-  [Tooltip("The type of the ability. Physical = Disabled by 'Disarm', applicable damage reduced by the 'Defense' stat. Spell = Disabled by 'Silence', applicable damage reduced by 'Resistance' stat.")]
-  public AbilityType type;
-
-  [Space(5)]
-
-  [Tooltip("What types of targets can this ability target?")]
-  public TargetType targetType;
-  [Tooltip("The cast range of the ability.")]
-  public Attribute<int> range = new Attribute<int>(1);
-  [Tooltip("How the range is determined.")]
-  public RangeMode rangeMode;
-  [Tooltip("Need vision of target hex to cast?")]
-  public bool requiresVision = false;
-
-  [Space(5)]
-
-  [Tooltip("How many turns it takes for this ability to be usable again.")]
-  public ToggleAttribute<int> cooldown = new ToggleAttribute<int>(false);
-
-  [Tooltip("How many limited uses does the ability have.")]
-  public ToggleAttribute<int> uses = new ToggleAttribute<int>(false);
+  public AbilityData abilityData => (AbilityData)data;
 
 
   public abstract bool EventIsFinished();
@@ -41,8 +19,8 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
 
   /// <summary> Is the Ability castable at the moment? </summary>
   public virtual bool IsReady() {
-    if (uses && uses.value <= 0) return false;
-    if (cooldown && cooldown.value > 0) return false;
+    if (abilityData.uses && abilityData.uses.value <= 0) return false;
+    if (abilityData.cooldown && abilityData.cooldown.value > 0) return false;
 
     return true;
   }
@@ -60,26 +38,26 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
     var hex = unit.hex;
 
     IEnumerable<GameHex> res = new List<GameHex>(0);
-    switch (rangeMode) {
+    switch (abilityData.rangeMode) {
       default:
       case RangeMode.Distance:
-        res = Game.grid.Radius(hex, this.range.value);
+        res = Game.grid.Radius(hex, abilityData.range.value);
         break;
       case RangeMode.PathDistance:
-        res = Game.grid.GetDistanceField(hex, distance: this.range.value).distances.Keys;
+        res = Game.grid.GetDistanceField(hex, distance: abilityData.range.value).distances.Keys;
         break;
       case RangeMode.PathCost:
-        res = Game.grid.GetCostField(hex, maxCost: this.range.value).costs.Keys;
+        res = Game.grid.GetCostField(hex, maxCost: abilityData.range.value).costs.Keys;
         break;
     }
 
     // If ground not included. When ground is included all range results are valid, so we need no filtering.
-    if ((targetType & TargetType.Ground) == 0) {
+    if ((abilityData.targetType & TargetType.Ground) == 0) {
 
-      bool self = (targetType & TargetType.Self) != 0;
-      bool ally = (targetType & TargetType.Ally) != 0;
-      bool enemy = (targetType & TargetType.Enemy) != 0;
-      bool neutral = (targetType & TargetType.Neutral) != 0;
+      bool self = (abilityData.targetType & TargetType.Self) != 0;
+      bool ally = (abilityData.targetType & TargetType.Ally) != 0;
+      bool enemy = (abilityData.targetType & TargetType.Enemy) != 0;
+      bool neutral = (abilityData.targetType & TargetType.Neutral) != 0;
 
       if (self || ally || enemy) {
         res = res.Where(h => {
@@ -94,7 +72,7 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
       }
     }
 
-    if (requiresVision) {
+    if (abilityData.requiresVision) {
       res.Where(h => Game.grid.HasSight(hex, h));
     }
 
@@ -108,7 +86,7 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
       onComplete: (seq) => {
         Debug.Log("Sequence complete! Posting event.");
         Game.client.PostEvent(new Events.Ability() {
-          ability = identifier,
+          ability = data.identifier,
           target = seq.selection[0].hex.pos,
           unit = unit.hex.hex.pos
         });

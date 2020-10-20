@@ -6,19 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(Unit))]
 public class UnitModifier : MonoBehaviour {
 
-  [Tooltip("Name displayed to users")]
-  public string displayName;
-  [Tooltip("String identifier of this Ability")]
-  public string identifier;
-  [Tooltip("Description displayed to users")]
-  public string description;
+  [SerializeField] protected UnitModifierData source;
+  public UnitModifierData data;
 
-  public Unit unit;
+
+  [HideInInspector] public Unit unit;
+
+  protected void OnValidate() {
+    if (source) data = Instantiate(source);
+    if (!unit) unit = GetComponent<Unit>();
+  }
 
   protected void Awake() {
-    if (!TryGetComponent<Unit>(out unit)) {
-      Debug.LogWarning($"You added a {nameof(UnitModifier)} to an object which does not have a {nameof(Unit)} component. {nameof(UnitModifier)}s are designed for {nameof(Unit)}s only.");
-    }
+    data = Instantiate(source);
+    unit = GetComponent<Unit>();
+    Game.modifiers.RegisterModifier(this);
     OnAdd();
     foreach (var other in unit.modifiers.Where(mod => mod != this)) {
       other.OnAdd(this);
@@ -52,8 +54,8 @@ public class UnitModifier : MonoBehaviour {
   public virtual float OnHeal(float value) => value;
   public virtual float OnDamage(float value, DamageType type) => value;
 
+  /// <summary> When a new round starts. </summary>
   public virtual void OnRoundStart() { }
-  public virtual void OnRoundEnd() { }
 
   /// <summary> When this Unit's turn starts. </summary>
   public virtual void OnTurnStart() { }

@@ -80,8 +80,8 @@ public class UnitAbilityUI : MonoBehaviour {
         var button = item.GetComponent<Button>();
 
         if (abilitiesChanged) {
-          image.sprite = ability.sprite;
-          item.GetComponentInChildren<Text>().text = ability.displayName;
+          image.sprite = ability.data.sprite;
+          item.GetComponentInChildren<Text>().text = ability.data.displayName;
         }
 
         button.onClick.RemoveAllListeners();

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    baseValue: 1
+    value: 1
+  movement:
+    baseValue: 3
+    value: 3
+  health:
+    baseValue: 100
+    value: 100
+  maxHealth:
+    baseValue: 100
+    value: 100
+  defense:
+    baseValue: 0
+    value: 0
+  resistance:
+    baseValue: 0
+    value: 0

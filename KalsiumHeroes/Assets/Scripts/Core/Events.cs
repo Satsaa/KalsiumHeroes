@@ -81,7 +81,7 @@ public class Events {
     public override void Handle() {
       Debug.Log($"{this.GetType().Name}: Called");
       var unit = Game.grid.hexes[this.unit].unit;
-      var ability = unit.abilities.FirstOrDefault(a => a.identifier == this.ability);
+      var ability = unit.abilities.FirstOrDefault(a => a.data.identifier == this.ability);
       if (ability == null) return;
       IEventHandler<Ability> asHandler = ability;
       Game.events.eHandler = asHandler;

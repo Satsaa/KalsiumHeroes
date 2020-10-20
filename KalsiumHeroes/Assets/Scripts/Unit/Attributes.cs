@@ -24,6 +24,11 @@ public class Attribute<T> {
     this.value = value;
   }
 
+  /// <summary> Sets the value to the baseValue </summary>
+  public virtual void Reset() {
+    value = baseValue;
+  }
+
   public bool ValueEquals(Attribute<T> b) => b != null && value.Equals(b.value);
 }
 
@@ -46,9 +51,6 @@ public class ToggleAttribute<T> : Attribute<T> {
 
 [CustomPropertyDrawer(typeof(Attribute<>))]
 internal class AttributeDrawer : PropertyDrawer {
-
-  public void OnEnable() {
-  }
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
     using (new EditorGUI.PropertyScope(position, label, property)) {

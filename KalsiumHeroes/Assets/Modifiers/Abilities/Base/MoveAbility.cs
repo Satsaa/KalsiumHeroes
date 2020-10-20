@@ -49,7 +49,7 @@ public class MoveAbility : Ability {
       this.path = path;
       animating = true;
       animTime = 0;
-      target.unit = unit;
+      unit.MovePosition(target, false);
     }
   }
 }
