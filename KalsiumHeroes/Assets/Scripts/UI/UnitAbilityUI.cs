@@ -48,7 +48,6 @@ public class UnitAbilityUI : MonoBehaviour {
 
     if (prefab && parent) {
 
-
       var abilities = unit.abilities;
       if (items.Any(v => !v)) {
         foreach (var item in items) {

@@ -22,7 +22,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 
   /// <summary>
   /// Builds a new grid with default values.
-  /// </summary>
+  /// </summary>'
   public void ResetGrid() {
 
     DestroyHexes();
