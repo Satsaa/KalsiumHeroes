@@ -10,11 +10,11 @@ public class Targeting : MonoBehaviour {
   private Events e => Game.events;
   private bool finished => e.finished;
 
-  TargetingSequence seq;
+  Targeter seq;
   [SerializeField] new Camera camera;
 
 
-  public bool TryStartSequence(TargetingSequence sequence) {
+  public bool TryStartSequence(Targeter sequence) {
     if (seq != null) return false;
     seq = sequence;
     Refresh();

@@ -14,8 +14,8 @@ public class MoveAbility : Ability {
     if (animating) UpdateAnim();
   }
 
-  public override TargetingSequence GetTargetingSequence() {
-    return new MoveAbilityTargetingSequence(unit, this,
+  public override Targeter GetTargeter() {
+    return new MoveAbilityTargeter(unit, this,
       onComplete: (seq) => {
         Debug.Log("Move sequence complete! Posting event.");
         Game.client.PostEvent(new Events.Ability() {

@@ -4,14 +4,14 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public abstract class TargetingSequence {
+public abstract class Targeter {
 
   public IEnumerable<GameHex> targets = new List<GameHex>(0);
   public List<GameHex> selection = new List<GameHex>(0);
   public Dictionary<GameHex, Color> highlights = new Dictionary<GameHex, Color>();
 
-  public Action<TargetingSequence> onComplete;
-  public Action<TargetingSequence> onCancel;
+  public Action<Targeter> onComplete;
+  public Action<Targeter> onCancel;
 
   protected Color targetColor => new Color(0.25f, 0.75f, 0.25f);
   protected Color selectionColor => new Color(0.25f, 0.25f, 1f);
@@ -28,7 +28,7 @@ public abstract class TargetingSequence {
 
   /// <summary> Attempt to select a hex. Return true if the selection is accepted. </summary>
   public virtual bool Select(GameHex hex) {
-    if (IsCompleted()) throw new InvalidOperationException($"Attempted to select after the {nameof(TargetingSequence)} was completed.");
+    if (IsCompleted()) throw new InvalidOperationException($"Attempted to select after the {nameof(Targeter)} was completed.");
     if (targets.Contains(hex)) {
       selection.Add(hex);
       return true;

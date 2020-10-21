@@ -4,9 +4,9 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class InstantTargetingSequence : TargetingSequence {
+public class InstantTargeter : Targeter {
 
-  public InstantTargetingSequence(Action<TargetingSequence> onComplete, Action<TargetingSequence> onCancel) {
+  public InstantTargeter(Action<Targeter> onComplete, Action<Targeter> onCancel) {
     this.onComplete = onComplete;
     this.onCancel = onCancel;
   }

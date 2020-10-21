@@ -81,8 +81,8 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
 
 
   /// <summary> Returns a targeting sequence with onComplete and onCancel callbacks </summary>
-  public virtual TargetingSequence GetTargetingSequence() {
-    return new AbilityTargetingSequence(unit, this,
+  public virtual Targeter GetTargeter() {
+    return new AbilityTargeter(unit, this,
       onComplete: (seq) => {
         Debug.Log("Sequence complete! Posting event.");
         Game.client.PostEvent(new Events.Ability() {
@@ -115,7 +115,7 @@ public class AbilityEditor : Editor {
 
     using (new EditorGUI.DisabledGroupScope(!Game.events.finished)) {
       if (GUILayout.Button($"Cast")) {
-        Debug.Log($"Success: {Game.targeting.TryStartSequence(t.GetTargetingSequence())}");
+        Debug.Log($"Success: {Game.targeting.TryStartSequence(t.GetTargeter())}");
       }
     }
 

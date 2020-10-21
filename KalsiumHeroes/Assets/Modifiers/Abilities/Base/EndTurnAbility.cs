@@ -16,8 +16,8 @@ public class EndTurnAbility : Ability {
     throw new System.Exception("This ability is not animateable. It sends an end turn event and no ability event should refer to this ability.");
   }
 
-  public override TargetingSequence GetTargetingSequence() {
-    return new InstantTargetingSequence(
+  public override Targeter GetTargeter() {
+    return new InstantTargeter(
       onComplete: (seq) => {
         Debug.Log("Posting end turn event.");
         Game.client.PostEvent(new Events.Turn());
