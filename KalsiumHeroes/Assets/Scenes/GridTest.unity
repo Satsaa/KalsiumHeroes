@@ -2333,6 +2333,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &143599975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  identifier: ability_end_turn
+  description: Ends the turn.
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 0
+  range:
+    value: 0
+    enabled: 0
+  rangeMode: 0
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!1001 &149063585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2856,7 +2886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &202159325
+--- !u!114 &214064792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2865,28 +2895,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
+  m_Name: DotTest(Clone)
   m_EditorClassIdentifier: 
-  displayName: End Turn
-  identifier: ability_end_turn
-  description: Ends the turn.
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 0
-  range:
-    baseValue: 1
-    value: 1
-  rangeMode: 0
-  requiresVision: 0
-  cooldown:
-    baseValue: 0
+  displayName: Simple Damage Over Time
+  identifier: ability_dot_test
+  description: Deals an amount of damage at the end of the turn.
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType: 4
+  positive: 0
+  dispellable: 1
+  turnDuration:
     value: 0
     enabled: 0
-  uses:
-    baseValue: 0
+  damage:
     value: 0
-    enabled: 0
+  damageType: 3
 --- !u!1001 &218792557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4936,7 +4960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &344737679
+--- !u!114 &349422561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4945,24 +4969,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
-  m_Name: DotTest(Clone)
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  identifier: ability_dot_test
-  description: Deals an amount of damage at the end of the turn.
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
-  positive: 0
-  dispellable: 1
-  turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
-  damage:
-    baseValue: 10
-    value: 10
-  damageType: 3
+  displayName: End Turn
+  identifier: ability_end_turn
+  description: Ends the turn.
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 0
+  range:
+    value: 0
+    enabled: 0
+  rangeMode: 0
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!4 &350979372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -4979,6 +5006,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &353489141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  identifier: ability_move
+  description: Moves the unit.
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 1
+  range:
+    value: 1
+    enabled: 0
+  rangeMode: 2
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!1001 &375513843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5309,37 +5366,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &386756824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  identifier: ability_move
-  description: Moves the unit.
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 1
-  range:
-    baseValue: 5
-    value: 5
-  rangeMode: 2
-  requiresVision: 0
-  cooldown:
-    baseValue: 1
-    value: 1
-    enabled: 1
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!114 &388745158 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -5366,7 +5392,7 @@ PrefabInstance:
     - target: {fileID: 195340285, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 2121224154}
+      objectReference: {fileID: 214064792}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (1)
@@ -5374,7 +5400,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 2011802382}
+      objectReference: {fileID: 1355416706}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -5426,22 +5452,22 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1533684137}
+      objectReference: {fileID: 2023160936}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 903697482}
+      objectReference: {fileID: 1116310153}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalPosition.z
       value: 20.311987
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -260.65533
+      value: -262.2038
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.126938
+      value: -34.15146
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5449,11 +5475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -260.65533
+      value: -262.2038
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 15.873047
+      value: 15.848541
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -7525,39 +7551,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1453109123}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &523391219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  identifier: unit_test
-  description: A unit for testing purposes.
-  speed:
-    baseValue: 1
-    value: 1
-  movement:
-    baseValue: 3
-    value: 3
-  health:
-    baseValue: 100
-    value: 100
-  maxHealth:
-    baseValue: 100
-    value: 100
-  defense:
-    baseValue: 0
-    value: 0
-  resistance:
-    baseValue: 0
-    value: 0
 --- !u!114 &529613689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -7574,37 +7567,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1571673481}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &530471059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  identifier: ability_end_turn
-  description: Ends the turn.
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 0
-  range:
-    baseValue: 1
-    value: 1
-  rangeMode: 0
-  requiresVision: 0
-  cooldown:
-    baseValue: 0
-    value: 0
-    enabled: 0
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!114 &539212510 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -8100,37 +8062,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &575635896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  identifier: ability_move
-  description: Moves the unit.
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 1
-  range:
-    baseValue: 5
-    value: 5
-  rangeMode: 2
-  requiresVision: 0
-  cooldown:
-    baseValue: 1
-    value: 1
-    enabled: 1
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!1001 &583380380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8976,39 +8907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &621409471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  identifier: unit_test
-  description: A unit for testing purposes.
-  speed:
-    baseValue: 1
-    value: 1
-  movement:
-    baseValue: 3
-    value: 3
-  health:
-    baseValue: 100
-    value: 100
-  maxHealth:
-    baseValue: 100
-    value: 100
-  defense:
-    baseValue: 0
-    value: 0
-  resistance:
-    baseValue: 0
-    value: 0
 --- !u!1001 &628968585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9343,6 +9241,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 158673874}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &652285988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  identifier: ability_end_turn
+  description: Ends the turn.
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 0
+  range:
+    value: 0
+    enabled: 0
+  rangeMode: 0
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!1001 &658751920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11238,6 +11166,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 755915289}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &802379489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
+  m_Name: DotTest(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Simple Damage Over Time
+  identifier: ability_dot_test
+  description: Deals an amount of damage at the end of the turn.
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType: 4
+  positive: 0
+  dispellable: 1
+  turnDuration:
+    value: 0
+    enabled: 0
+  damage:
+    value: 0
+  damageType: 3
 --- !u!1001 &803991752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12353,37 +12306,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &903697482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  identifier: ability_end_turn
-  description: Ends the turn.
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 0
-  range:
-    baseValue: 1
-    value: 1
-  rangeMode: 0
-  requiresVision: 0
-  cooldown:
-    baseValue: 0
-    value: 0
-    enabled: 0
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!1001 &909914347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12537,37 +12459,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &914571635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  identifier: ability_end_turn
-  description: Ends the turn.
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 0
-  range:
-    baseValue: 1
-    value: 1
-  rangeMode: 0
-  requiresVision: 0
-  cooldown:
-    baseValue: 0
-    value: 0
-    enabled: 0
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!1001 &915632746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13675,64 +13566,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 2114314468}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &987774411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
-  m_Name: DotTest(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  identifier: ability_dot_test
-  description: Deals an amount of damage at the end of the turn.
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
-  positive: 0
-  dispellable: 1
-  turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
-  damage:
-    baseValue: 10
-    value: 10
-  damageType: 3
---- !u!114 &994601851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  identifier: ability_move
-  description: Moves the unit.
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 1
-  range:
-    baseValue: 5
-    value: 5
-  rangeMode: 2
-  requiresVision: 0
-  cooldown:
-    baseValue: 1
-    value: 1
-    enabled: 1
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!1001 &994817404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14610,6 +14443,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1757316411}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1026910272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    value: 2
+  movement:
+    value: 5
+  health:
+    value: 100
+  maxHealth:
+    value: 100
+  defense:
+    value: 0
+  resistance:
+    value: 0
 --- !u!1001 &1027581440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15954,6 +15814,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1006724933}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1116310153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  identifier: ability_end_turn
+  description: Ends the turn.
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 0
+  range:
+    value: 0
+    enabled: 0
+  rangeMode: 0
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!1001 &1116657979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16429,39 +16319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1127565137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  identifier: unit_test
-  description: A unit for testing purposes.
-  speed:
-    baseValue: 1
-    value: 1
-  movement:
-    baseValue: 3
-    value: 3
-  health:
-    baseValue: 100
-    value: 100
-  maxHealth:
-    baseValue: 100
-    value: 100
-  defense:
-    baseValue: 0
-    value: 0
-  resistance:
-    baseValue: 0
-    value: 0
 --- !u!4 &1129171092 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -16526,6 +16383,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 791310326}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1141131297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    value: 2
+  movement:
+    value: 5
+  health:
+    value: 100
+  maxHealth:
+    value: 100
+  defense:
+    value: 0
+  resistance:
+    value: 0
 --- !u!114 &1141290251 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -16727,6 +16611,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1175306684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
+  m_Name: DotTest(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Simple Damage Over Time
+  identifier: ability_dot_test
+  description: Deals an amount of damage at the end of the turn.
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType: 4
+  positive: 0
+  dispellable: 1
+  turnDuration:
+    value: 0
+    enabled: 0
+  damage:
+    value: 0
+  damageType: 3
 --- !u!1001 &1178922996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17459,6 +17368,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1042286060}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1252263233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
+  m_Name: DotTest(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Simple Damage Over Time
+  identifier: ability_dot_test
+  description: Deals an amount of damage at the end of the turn.
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType: 4
+  positive: 0
+  dispellable: 1
+  turnDuration:
+    value: 0
+    enabled: 0
+  damage:
+    value: 0
+  damageType: 3
 --- !u!1001 &1259757748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17680,7 +17614,7 @@ MonoBehaviour:
   game: {fileID: 1270279096}
   tester: {fileID: 1270279095}
   index: 0
-  currentPos: {x: -1, y: 2, z: -1}
+  currentPos: {x: 0, y: 0, z: 0}
   data:
     id: 0
   references:
@@ -17705,7 +17639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <grid>k__BackingField: {fileID: 1270279097}
   main: {fileID: 811830178}
-  hover: {fileID: 811830178}
+  hover: {fileID: 1270738557}
   drawLine: 0
   drawRadius: 0
   drawRing: 0
@@ -18278,10 +18212,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1270279093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6acf26ebc948a9f41852d58658ea2530, type: 3}
+  m_Script: {fileID: 11500000, guid: 024da1c6db660324bb45f0241d5f2bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  camera: {fileID: 519420031}
 --- !u!114 &1270738557 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -18451,6 +18385,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1287132008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  identifier: ability_move
+  description: Moves the unit.
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 1
+  range:
+    value: 1
+    enabled: 0
+  rangeMode: 2
+  requiresVision: 0
+  cooldown:
+    value: 3
+    other: 3
+    enabled: 0
+  uses:
+    value: 2
+    enabled: 0
 --- !u!1001 &1287485096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19820,6 +19784,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1355416706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    value: 2
+  movement:
+    value: 1
+  health:
+    value: 100
+  maxHealth:
+    value: 100
+  defense:
+    value: 0
+  resistance:
+    value: 0
 --- !u!4 &1355988003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -19852,6 +19843,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1369592464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    value: 2
+  movement:
+    value: 5
+  health:
+    value: 100
+  maxHealth:
+    value: 100
+  defense:
+    value: 0
+  resistance:
+    value: 0
 --- !u!114 &1378885138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -20037,99 +20055,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1399106024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  identifier: unit_test
-  description: A unit for testing purposes.
-  speed:
-    baseValue: 1
-    value: 1
-  movement:
-    baseValue: 3
-    value: 3
-  health:
-    baseValue: 100
-    value: 100
-  maxHealth:
-    baseValue: 100
-    value: 100
-  defense:
-    baseValue: 0
-    value: 0
-  resistance:
-    baseValue: 0
-    value: 0
---- !u!114 &1403638906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
-  m_Name: DotTest(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  identifier: ability_dot_test
-  description: Deals an amount of damage at the end of the turn.
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
-  positive: 0
-  dispellable: 1
-  turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
-  damage:
-    baseValue: 10
-    value: 10
-  damageType: 3
---- !u!114 &1405123062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  identifier: unit_test
-  description: A unit for testing purposes.
-  speed:
-    baseValue: 1
-    value: 1
-  movement:
-    baseValue: 3
-    value: 3
-  health:
-    baseValue: 100
-    value: 100
-  maxHealth:
-    baseValue: 100
-    value: 100
-  defense:
-    baseValue: 0
-    value: 0
-  resistance:
-    baseValue: 0
-    value: 0
 --- !u!1001 &1405896670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20640,6 +20565,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1459090628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  identifier: ability_move
+  description: Moves the unit.
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 1
+  range:
+    value: 1
+    enabled: 0
+  rangeMode: 2
+  requiresVision: 0
+  cooldown:
+    value: 3
+    other: 3
+    enabled: 0
+  uses:
+    value: 2
+    enabled: 0
 --- !u!1001 &1459943512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20803,7 +20758,15 @@ PrefabInstance:
     - target: {fileID: 195340285, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 2025042517}
+      objectReference: {fileID: 802379489}
+    - target: {fileID: 3395150930401371289, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384751739618155487, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit
@@ -20811,7 +20774,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 523391219}
+      objectReference: {fileID: 2071443005}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -20863,22 +20826,22 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 386756824}
+      objectReference: {fileID: 1947449328}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 914571635}
+      objectReference: {fileID: 1842010993}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalPosition.z
       value: 20.311987
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.39743042
+      value: 0.39974976
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.126938
+      value: -34.15146
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20886,11 +20849,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.39743042
+      value: 0.39974976
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 15.873047
+      value: 15.848541
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -21047,6 +21010,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1480275546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  identifier: ability_move
+  description: Moves the unit.
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 1
+  range:
+    value: 1
+    enabled: 0
+  rangeMode: 2
+  requiresVision: 0
+  cooldown:
+    value: 3
+    other: 3
+    enabled: 0
+  uses:
+    value: 2
+    enabled: 0
 --- !u!1001 &1481302429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22369,37 +22362,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1533684137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  identifier: ability_move
-  description: Moves the unit.
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 1
-  range:
-    baseValue: 5
-    value: 5
-  rangeMode: 2
-  requiresVision: 0
-  cooldown:
-    baseValue: 1
-    value: 1
-    enabled: 1
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!114 &1536441923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -23657,7 +23619,7 @@ PrefabInstance:
     - target: {fileID: 195340285, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 344737679}
+      objectReference: {fileID: 1787408643}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (2)
@@ -23665,7 +23627,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1127565137}
+      objectReference: {fileID: 1835050040}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -23717,22 +23679,22 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 994601851}
+      objectReference: {fileID: 353489141}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1885092942}
+      objectReference: {fileID: 349422561}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalPosition.z
       value: 21.061987
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -197.42575
+      value: -198.59856
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.0060425
+      value: -6.869446
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23740,11 +23702,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -197.42575
+      value: -198.59856
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 42.993958
+      value: 43.130554
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -24605,6 +24567,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 31171133}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1720826133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  identifier: ability_end_turn
+  description: Ends the turn.
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 0
+  range:
+    value: 0
+    enabled: 0
+  rangeMode: 0
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!114 &1724530813 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -24637,33 +24629,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 659887766}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1748683703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
-  m_Name: DotTest(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  identifier: ability_dot_test
-  description: Deals an amount of damage at the end of the turn.
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
-  positive: 0
-  dispellable: 1
-  turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
-  damage:
-    baseValue: 10
-    value: 10
-  damageType: 3
 --- !u!114 &1755472816 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -24881,7 +24846,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 2070286589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1775018382
+--- !u!114 &1787408643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24890,28 +24855,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
+  m_Name: DotTest(Clone)
   m_EditorClassIdentifier: 
-  displayName: Move
-  identifier: ability_move
-  description: Moves the unit.
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 1
-  range:
-    baseValue: 5
-    value: 5
-  rangeMode: 2
-  requiresVision: 0
-  cooldown:
-    baseValue: 1
-    value: 1
-    enabled: 1
-  uses:
-    baseValue: 0
+  displayName: Simple Damage Over Time
+  identifier: ability_dot_test
+  description: Deals an amount of damage at the end of the turn.
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType: 4
+  positive: 0
+  dispellable: 1
+  turnDuration:
     value: 0
     enabled: 0
+  damage:
+    value: 0
+  damageType: 3
 --- !u!1 &1796706707
 GameObject:
   m_ObjectHideFlags: 0
@@ -25700,6 +25659,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1835050040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    value: 2
+  movement:
+    value: 1
+  health:
+    value: 100
+  maxHealth:
+    value: 100
+  defense:
+    value: 0
+  resistance:
+    value: 0
+--- !u!114 &1842010993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  identifier: ability_end_turn
+  description: Ends the turn.
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 0
+  range:
+    value: 0
+    enabled: 0
+  rangeMode: 0
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!1 &1858343094
 GameObject:
   m_ObjectHideFlags: 0
@@ -26290,37 +26306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1885092942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  identifier: ability_end_turn
-  description: Ends the turn.
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 0
-  range:
-    baseValue: 1
-    value: 1
-  rangeMode: 0
-  requiresVision: 0
-  cooldown:
-    baseValue: 0
-    value: 0
-    enabled: 0
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!1001 &1896217053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26832,6 +26817,61 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1943679954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
+  m_Name: DotTest(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Simple Damage Over Time
+  identifier: ability_dot_test
+  description: Deals an amount of damage at the end of the turn.
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType: 4
+  positive: 0
+  dispellable: 1
+  turnDuration:
+    value: 0
+    enabled: 0
+  damage:
+    value: 0
+  damageType: 3
+--- !u!114 &1947449328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  identifier: ability_move
+  description: Moves the unit.
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 1
+  range:
+    value: 1
+    enabled: 0
+  rangeMode: 2
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!114 &1957241087 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -27484,39 +27524,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &2011802382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  identifier: unit_test
-  description: A unit for testing purposes.
-  speed:
-    baseValue: 1
-    value: 1
-  movement:
-    baseValue: 3
-    value: 3
-  health:
-    baseValue: 100
-    value: 100
-  maxHealth:
-    baseValue: 100
-    value: 100
-  defense:
-    baseValue: 0
-    value: 0
-  resistance:
-    baseValue: 0
-    value: 0
 --- !u!114 &2022906521 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -27533,7 +27540,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 491814653}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2025042517
+--- !u!114 &2023160936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27542,24 +27549,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
-  m_Name: DotTest(Clone)
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  identifier: ability_dot_test
-  description: Deals an amount of damage at the end of the turn.
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
-  positive: 0
-  dispellable: 1
-  turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
-  damage:
-    baseValue: 10
-    value: 10
-  damageType: 3
+  displayName: Move
+  identifier: ability_move
+  description: Moves the unit.
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  type: 1
+  targetType: 1
+  range:
+    value: 1
+    enabled: 0
+  rangeMode: 2
+  requiresVision: 0
+  cooldown:
+    value: 0
+    other: 0
+    enabled: 0
+  uses:
+    value: 0
+    enabled: 0
 --- !u!1001 &2031336150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27882,37 +27892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2061661379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  identifier: ability_end_turn
-  description: Ends the turn.
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 0
-  range:
-    baseValue: 1
-    value: 1
-  rangeMode: 0
-  requiresVision: 0
-  cooldown:
-    baseValue: 0
-    value: 0
-    enabled: 0
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!1001 &2070286589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28219,6 +28198,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &2071443005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974925d5263db3947a33e4b08f9f4923, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  identifier: unit_test
+  description: A unit for testing purposes.
+  speed:
+    value: 2
+  movement:
+    value: 1
+  health:
+    value: 100
+  maxHealth:
+    value: 100
+  defense:
+    value: 0
+  resistance:
+    value: 0
 --- !u!1001 &2082712164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29282,33 +29288,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118014339}
   m_CullTransparentMesh: 0
---- !u!114 &2121224154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 647aabdb20d397144b488004dd08ce50, type: 3}
-  m_Name: DotTest(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  identifier: ability_dot_test
-  description: Deals an amount of damage at the end of the turn.
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
-  positive: 0
-  dispellable: 1
-  turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
-  damage:
-    baseValue: 10
-    value: 10
-  damageType: 3
 --- !u!1001 &2124393825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29615,37 +29594,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &2127016850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  identifier: ability_move
-  description: Moves the unit.
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  type: 0
-  targetType: 1
-  range:
-    baseValue: 5
-    value: 5
-  rangeMode: 2
-  requiresVision: 0
-  cooldown:
-    baseValue: 1
-    value: 1
-    enabled: 1
-  uses:
-    baseValue: 0
-    value: 0
-    enabled: 0
 --- !u!114 &2142028917 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}

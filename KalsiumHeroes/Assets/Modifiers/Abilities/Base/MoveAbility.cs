@@ -10,23 +10,30 @@ public class MoveAbility : Ability {
   [SerializeField, HideInInspector] GameHex target;
   [SerializeField, HideInInspector] GameHex[] path;
 
+  [SerializeField, HideInInspector] float remainingMovement;
+
   void Update() {
     if (animating) UpdateAnim();
   }
 
+  public override bool IsReady() {
+    return remainingMovement > 0 && base.IsReady();
+  }
+
+  protected override IEnumerable<GameHex> GetRangeTargets(GameHex hex) {
+    var res = Game.grid.GetCostField(hex, maxCost: remainingMovement).costs.Keys;
+    return res;
+  }
+
+  public override void OnTurnStart() {
+    remainingMovement = unit.GetMovement();
+    base.OnTurnStart();
+  }
+
   public override Targeter GetTargeter() {
-    return new MoveAbilityTargeter(unit, this,
-      onComplete: (seq) => {
-        Debug.Log("Move sequence complete! Posting event.");
-        Game.client.PostEvent(new Events.Ability() {
-          ability = data.identifier,
-          target = seq.selection[0].hex.pos,
-          unit = unit.hex.hex.pos
-        });
-      },
-      onCancel: (seq) => {
-        Debug.Log("We got cancelled :(");
-      }
+    return new PathConfirmAbilityTargeter(unit, this,
+      onComplete: OnTargeterComplete,
+      onCancel: OnTargeterCancel
     );
   }
 
@@ -65,7 +72,9 @@ public class MoveAbility : Ability {
     if (target.unit || target.blocked) {
       Debug.LogError("Target hex is occupied!");
     } else {
-      Game.grid.CheapestPath(start, target, out var path);
+      Game.grid.CheapestPath(start, target, out var path, out var field);
+      var cost = field.scores[field.closest];
+      remainingMovement -= cost;
       this.path = path;
       animating = true;
       animTime = 0;

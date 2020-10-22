@@ -16,11 +16,11 @@ public class AbilityTargeter : Targeter {
     this.onCancel = onCancel;
   }
 
-public override bool IsCompleted() {
-  return (selection.Count > 0);
-}
+  public override bool IsCompleted() {
+    return (selection.Count > 0);
+  }
 
-public override void RefreshTargets() {
-  targets = ability.GetTargets();
-}
+  public override void RefreshTargets() {
+    targets = ability.GetTargets();
+  }
 }

@@ -35,8 +35,8 @@ public class Game : MonoBehaviour {
     }
 
     _instance = this;
-    if (_grid == null) _grid = GetComponent<GameGrid>();
-    if (_targeting == null) _targeting = GetComponent<Targeting>();
+    if (_grid == null && (_grid = GetComponent<GameGrid>()) == null) Debug.LogError($"No {nameof(GameGrid)} Component!");
+    if (_targeting == null && (_targeting = GetComponent<Targeting>()) == null) Debug.LogError($"No {nameof(Targeting)} Component!");
     modifiers.ResetModifiers();
   }
 

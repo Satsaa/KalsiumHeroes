@@ -23,7 +23,7 @@ public class GameHex : MonoBehaviour {
   }
 
   public Unit unit;
-  public List<Unit> graveYard;
+  public List<UnitData> graveYard;
 
   [field: SerializeField] public Hex hex { get; private set; }
 

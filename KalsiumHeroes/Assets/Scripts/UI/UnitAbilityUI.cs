@@ -84,24 +84,25 @@ public class UnitAbilityUI : MonoBehaviour {
         }
 
         button.onClick.RemoveAllListeners();
-        if (unit == Game.rounds.current && Game.events.finished) {
+        if (unit == Game.rounds.current && Game.events.finished && ability.IsReady()) {
           image.color = enabledColor;
           button.onClick.AddListener(() => {
-            Game.targeting.TryStartSequence(ability.GetTargeter()); });
+            Game.targeting.TryStartSequence(ability.GetTargeter());
+          });
         } else {
-            image.color = disabledColor;
-          }
+          image.color = disabledColor;
         }
+      }
 
-        var minX = -distance * (abilities.Length - 1) / 2f;
-        for (int i = 0; i < items.Count; i++) {
-          var item = items[i];
-          var rt = item.GetComponent<RectTransform>();
+      var minX = -distance * (abilities.Length - 1) / 2f;
+      for (int i = 0; i < items.Count; i++) {
+        var item = items[i];
+        var rt = item.GetComponent<RectTransform>();
 
-          var pos = rt.localPosition;
-          pos.x = minX + i * distance;
-          rt.localPosition = pos;
-        }
+        var pos = rt.localPosition;
+        pos.x = minX + i * distance;
+        rt.localPosition = pos;
       }
     }
   }
+}

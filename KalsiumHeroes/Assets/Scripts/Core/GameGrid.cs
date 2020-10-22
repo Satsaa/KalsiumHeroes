@@ -35,8 +35,11 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
         // Cut right edge for symmetry
         var yOddRow = y / 2 + 1;
         if (y % 2 == 1 && x + yOddRow == size.x) continue;
-
+#if UNITY_EDITOR
         var go = Application.isPlaying ? Instantiate(hexPrefab, transform) : (GameObject)PrefabUtility.InstantiatePrefab(hexPrefab, transform);
+#else
+        var go = Instantiate(hexPrefab, transform);
+#endif
         var comp = go.GetComponent<GameHex>();
         if (comp == null) comp = go.AddComponent<GameHex>();
         comp.Init(hex);

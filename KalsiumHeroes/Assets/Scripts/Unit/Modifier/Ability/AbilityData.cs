@@ -10,16 +10,16 @@ public class AbilityData : UnitModifierData {
   [Tooltip("What types of targets can this ability target?")]
   public TargetType targetType;
   [Tooltip("The cast range of the ability.")]
-  public Attribute<int> range = new Attribute<int>(1);
+  public ToggleAttribute<int> range = new ToggleAttribute<int>(1, true);
   [Tooltip("How the range is determined.")]
   public RangeMode rangeMode;
   [Tooltip("Need vision of target hex to cast?")]
   public bool requiresVision = false;
 
   [Tooltip("How many turns it takes for this ability to be usable again.")]
-  public ToggleAttribute<int> cooldown = new ToggleAttribute<int>(false);
+  public ToggleDualAttribute<int> cooldown = new ToggleDualAttribute<int>(false);
 
-  [Tooltip("How many limited uses does the ability have.")]
+  [Tooltip("How many times can the ability be cast.")]
   public ToggleAttribute<int> uses = new ToggleAttribute<int>(false);
 
 }

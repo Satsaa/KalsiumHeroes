@@ -20,10 +20,8 @@ MonoBehaviour:
   positive: 0
   dispellable: 1
   turnDuration:
-    baseValue: 5
-    value: 5
-    enabled: 1
+    value: 0
+    enabled: 0
   damage:
-    baseValue: 10
-    value: 10
+    value: 0
   damageType: 3

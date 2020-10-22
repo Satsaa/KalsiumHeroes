@@ -18,13 +18,16 @@ public class EndTurnAbility : Ability {
 
   public override Targeter GetTargeter() {
     return new InstantTargeter(
-      onComplete: (seq) => {
-        Debug.Log("Posting end turn event.");
-        Game.client.PostEvent(new Events.Turn());
-      },
-      onCancel: (seq) => {
-        Debug.Log("We got cancelled? :(");
-      }
+      onComplete: OnTargeterComplete,
+      onCancel: OnTargeterCancel
     );
+  }
+
+  protected override void OnTargeterComplete(Targeter targeter) {
+    PostEvent(null);
+  }
+
+  protected override void PostEvent(GameHex hex) {
+    Game.client.PostEvent(new Events.Turn());
   }
 }

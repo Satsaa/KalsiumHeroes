@@ -16,20 +16,14 @@ MonoBehaviour:
   identifier: unit_test
   description: A unit for testing purposes.
   speed:
-    baseValue: 1
-    value: 1
+    value: 2
   movement:
-    baseValue: 3
-    value: 3
+    value: 5
   health:
-    baseValue: 100
     value: 100
   maxHealth:
-    baseValue: 100
     value: 100
   defense:
-    baseValue: 0
     value: 0
   resistance:
-    baseValue: 0
     value: 0
