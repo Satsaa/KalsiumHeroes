@@ -6,7 +6,7 @@ using System.Linq;
 
 public class InstantTargeter : Targeter {
 
-  public InstantTargeter(Action<Targeter> onComplete, Action<Targeter> onCancel) {
+  public InstantTargeter(Action<Targeter> onComplete, Action<Targeter> onCancel = null) {
     this.onComplete = onComplete;
     this.onCancel = onCancel;
   }

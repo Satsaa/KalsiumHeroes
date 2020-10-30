@@ -30,7 +30,6 @@ public class Events {
       stack.RemoveAt(0);
       return true;
     } else {
-      // Animation is currently running...
       return false;
     }
   }
@@ -85,6 +84,7 @@ public class Events {
       if (ability == null) return;
       IEventHandler<Ability> asHandler = ability;
       Game.events.eHandler = asHandler;
+      ability.OnCast();
       asHandler.StartEvent(this);
     }
   }

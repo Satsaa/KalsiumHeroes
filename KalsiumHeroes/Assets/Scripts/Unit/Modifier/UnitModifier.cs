@@ -1,16 +1,25 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Muc.Editor;
 
 [RequireComponent(typeof(Unit))]
 public class UnitModifier : MonoBehaviour {
 
-  [SerializeField] protected UnitModifierData source;
+  public UnitModifierData source;
+  [ShowEditorAttribute]
   public UnitModifierData data;
 
-
   [HideInInspector] public Unit unit;
+
+  /// <summary> Override to restrict the required data type. </summary>
+  public virtual Type dataType => typeof(UnitModifierData);
 
   protected void OnValidate() {
     if (source) data = Instantiate(source);
@@ -34,9 +43,9 @@ public class UnitModifier : MonoBehaviour {
     }
   }
 
-  /// <summary> When this UnitModifier is being added. </summary>
+  /// <summary> When this UnitModifier is being added (instantiated). </summary>
   public virtual void OnAdd() { }
-  /// <summary> When this UnitModifier is being removed. </summary>
+  /// <summary> When this UnitModifier is being removed (destroyed). </summary>
   public virtual void OnRemove() { }
 
   /// <summary> When any other UnitModifier is being added. </summary>
@@ -44,29 +53,51 @@ public class UnitModifier : MonoBehaviour {
   /// <summary> When any other UnitModifier is being removed. </summary>
   public virtual void OnRemove(UnitModifier modifier) { }
 
-  public virtual int OnGetSpeed(int value) => value;
-  public virtual int OnGetMovement(int value) => value;
-  public virtual int OnGetDefense(int value) => value;
-  public virtual int OnGetResistance(int value) => value;
-  public virtual float OnGetHealth(float value) => value;
-  public virtual float OnGetMaxHealth(float value) => value;
-
   public virtual float OnHeal(float value) => value;
   public virtual float OnDamage(float value, DamageType type) => value;
 
-  /// <summary> When a new round starts. </summary>
+  /// <summary> When a round starts. </summary>
   public virtual void OnRoundStart() { }
-
-  /// <summary> When this Unit's turn starts. </summary>
+  /// <summary> When the Unit's turn starts. </summary>
   public virtual void OnTurnStart() { }
-  /// <summary> When this Unit's turn ends. </summary>
+  /// <summary> When the Unit's turn ends. </summary>
   public virtual void OnTurnEnd() { }
 
-  /// <summary> When this Unit dies. </summary>
-  public virtual void OnKill() { }
-  /// <summary> When this Unit spawns. </summary>
-  public virtual void OnSpawn() { }
+  /// <summary> When the Unit dies. </summary>
+  public virtual void OnDeath() { }
 
-  /// <summary> When this Unit casts an Ability. </summary>
-  public virtual void OnAbilityCast() { }
+  /// <summary> When the Unit casts an Ability. </summary>
+  public virtual void OnAbilityCast(Ability ability) { }
 }
+
+
+#if UNITY_EDITOR
+[CanEditMultipleObjects]
+[CustomEditor(typeof(UnitModifier), true)]
+public class UnitModifierEditor : Editor {
+
+  SerializedProperty source;
+  SerializedProperty data;
+
+  UnitModifier t => (UnitModifier)target;
+
+  void OnEnable() {
+    source = serializedObject.FindProperty(nameof(UnitModifier.source));
+    data = serializedObject.FindProperty(nameof(UnitModifier.data));
+  }
+
+  public override void OnInspectorGUI() {
+    serializedObject.Update();
+
+    using (EditorUtil.DisabledScope(v => Application.isPlaying))
+      EditorGUILayout.ObjectField(source, t.dataType);
+
+    using (EditorUtil.DisabledScope(v => !Application.isPlaying))
+      EditorGUILayout.PropertyField(data);
+
+    DrawPropertiesExcluding(serializedObject, nameof(UnitModifier.source), nameof(UnitModifier.data), "m_Script");
+
+    serializedObject.ApplyModifiedProperties();
+  }
+}
+#endif

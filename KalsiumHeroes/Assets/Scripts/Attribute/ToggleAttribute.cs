@@ -1,9 +1,12 @@
 
 #if UNITY_EDITOR
 using UnityEditor;
+using static Muc.Editor.PropertyUtil;
+using static Muc.Editor.EditorUtil;
 #endif
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -25,44 +28,39 @@ public class ToggleAttribute<T> : Attribute<T> {
 
 
 #if UNITY_EDITOR
-
 [CustomPropertyDrawer(typeof(ToggleAttribute<>))]
 internal class ToggleAttributeDrawer : PropertyDrawer {
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-    using (new EditorGUI.PropertyScope(position, label, property)) {
 
-      var originalLabelWidth = EditorGUIUtility.labelWidth;
-      var originalFieldWidth = EditorGUIUtility.fieldWidth;
+    using (PropertyScope(position, label, property, out label))
+    using (LabelWidthScope())
+    using (FieldWidthScope()) {
 
       var enabledProperty = property.FindPropertyRelative(nameof(ToggleAttribute<int>.enabled));
       var valueProperty = property.FindPropertyRelative(nameof(Attribute<int>.value));
 
+      var fieldInfo = GetFieldInfo(property);
+      var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
+
       var noLabel = label.text is "" && label.image is null;
+      var pos = position;
+      pos.width = noLabel ? 0 : EditorGUIUtility.labelWidth;
+      if (!noLabel) EditorGUI.LabelField(pos, label);
 
-      var labelRect = position;
-      labelRect.width = noLabel ? 0 : EditorGUIUtility.labelWidth;
-      if (!noLabel) EditorGUI.LabelField(labelRect, label);
+      using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
+        pos.xMin = pos.xMax + spacing;
+        pos.width = 15 + spacing;
+        EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
 
-      var padding = EditorGUIUtility.standardVerticalSpacing;
+        pos.xMin = pos.xMax + spacing;
+        pos.xMax = position.xMax;
+        EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
+      }
 
-      var enabledRect = position;
-      enabledRect.xMin = labelRect.xMax + padding;
-      enabledRect.width = 15 + padding;
-      EditorGUI.PropertyField(enabledRect, enabledProperty, GUIContent.none);
-
-      EditorGUIUtility.labelWidth = 35;
-      var valuePos = position;
-      valuePos.xMin = enabledRect.xMax + padding;
-      valuePos.xMax = position.xMax;
-      if (noLabel) valuePos.xMin = enabledRect.xMax + padding;
-      EditorGUI.PropertyField(valuePos, valueProperty, new GUIContent("Value"));
-
-      EditorGUIUtility.labelWidth = originalLabelWidth;
-      EditorGUIUtility.fieldWidth = originalFieldWidth;
     }
+
   }
 
 }
-
 #endif

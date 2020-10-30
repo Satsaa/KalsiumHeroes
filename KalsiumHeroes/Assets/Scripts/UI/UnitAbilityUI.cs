@@ -78,27 +78,34 @@ public class UnitAbilityUI : MonoBehaviour {
         var image = item.GetComponent<Image>();
         var button = item.GetComponent<Button>();
 
+        if (!ability.data) continue;
+
         if (abilitiesChanged) {
           image.sprite = ability.data.sprite;
           item.GetComponentInChildren<Text>().text = ability.data.displayName;
         }
 
-        button.onClick.RemoveAllListeners();
-        if (unit == Game.rounds.current && Game.events.finished && ability.IsReady()) {
-          image.color = enabledColor;
-          button.onClick.AddListener(() => {
-            Game.targeting.TryStartSequence(ability.GetTargeter());
-          });
+        if (unit != Game.rounds.current) {
+          uiTransform.gameObject.SetActive(false);
         } else {
-          image.color = disabledColor;
+          uiTransform.gameObject.SetActive(true);
+          button.onClick.RemoveAllListeners();
+          if (Game.events.finished && ability.IsReady()) {
+            image.color = enabledColor;
+            button.onClick.AddListener(() => {
+              Game.targeting.TryStartSequence(ability.GetTargeter());
+            });
+          } else {
+            image.color = disabledColor;
+          }
         }
       }
 
       var minX = -distance * (abilities.Length - 1) / 2f;
       for (int i = 0; i < items.Count; i++) {
         var item = items[i];
+        if (!item.activeSelf) continue;
         var rt = item.GetComponent<RectTransform>();
-
         var pos = rt.localPosition;
         pos.x = minX + i * distance;
         rt.localPosition = pos;

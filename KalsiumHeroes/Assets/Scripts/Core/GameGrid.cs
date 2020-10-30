@@ -170,8 +170,11 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <note> The hex and target is sampled and <c>Distance(hex, target) - 1</c> amount of samples are taken between hex and target. </note>
   /// <param name="hex">The sighting GameHex</param>
   /// <param name="target">The sighted GameHex</param>
+  /// <param name="target">The sighted GameHex</param>
+  /// <param name="seeThrough">Predicate which determines if a hex can be seen through.</param>
   /// <returns>Whether or not hex has sight of target</returns>
-  public bool HasSight(GameHex hex, GameHex target) {
+  public bool HasSight(GameHex hex, GameHex target, Predicate<GameHex> seeThrough = null) {
+    seeThrough = seeThrough ?? (h => !h.blocked);
     int nudge = 0;
     var lineA = Line(hex, target, false).GetEnumerator();
     var lineB = Line(hex, target, true).GetEnumerator();
@@ -181,16 +184,16 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
       var b = lineB.Current;
       switch (nudge) {
         case 1: {
-            if (Passable(a)) continue;
+            if (SeeThrough(a)) continue;
             else return false;
           }
         case 2: {
-            if (Passable(b)) continue;
+            if (SeeThrough(b)) continue;
             else return false;
           }
         default: {
-            var aPass = Passable(a);
-            var bPass = Passable(b);
+            var aPass = SeeThrough(a);
+            var bPass = SeeThrough(b);
             if (aPass) {
               if (!bPass) nudge = 1;
               continue;
@@ -204,32 +207,35 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     }
     return true;
 
-    bool Passable(GameHex a) {
-      return a != null && !a.blocked;
+    bool SeeThrough(GameHex a) {
+      return a != null && seeThrough(a);
     }
   }
 
   /// <summary>
   /// Iterates around the hex and yields visible hexes. 
   /// </summary>
-  public IEnumerable<GameHex> Vision(GameHex hex, int range) {
+  /// <param name="seeThrough">Predicate which determines if a hex can be seen through.</param>
+  public IEnumerable<GameHex> Vision(GameHex hex, int range, Predicate<GameHex> seeThrough = null) {
     var radius = Radius(hex, range);
     var visible = new HashSet<GameHex>();
     foreach (var radiusHex in radius) {
-      if (HasSight(hex, radiusHex) && visible.Add(radiusHex)) yield return radiusHex;
+      if (HasSight(hex, radiusHex, seeThrough) && visible.Add(radiusHex)) yield return radiusHex;
     }
   }
 
   /// <summary>
   /// Divides blocked of areas and returns the area id for all hexes.
   /// </summary>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>Dictionary of hex areas. Key: GameHex, Value: Area id</returns>
-  public Dictionary<GameHex, int> GetAreas() {
+  public Dictionary<GameHex, int> GetAreas(Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var results = new Dictionary<GameHex, int>(hexes.Count);
     var id = 0;
 
     foreach (var hex in hexes.Values) {
-      if (hex.blocked || results.ContainsKey(hex)) continue;
+      if (!passable(hex) || results.ContainsKey(hex)) continue;
       foreach (var flooded in Flood(hex)) {
         results.Add(flooded, id);
       }
@@ -241,7 +247,9 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <summary>
   /// Iterates the passable hexes around source GameHex.
   /// </summary>
-  public IEnumerable<GameHex> Flood(GameHex source) {
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
+  public IEnumerable<GameHex> Flood(GameHex source, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var frontier = new Queue<GameHex>();
     yield return source;
     frontier.Enqueue(source);
@@ -251,7 +259,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
       var hex = frontier.Dequeue();
       foreach (var neighbor in hex.Neighbors()) {
         if (reached.Add(neighbor)) {
-          if (neighbor.blocked) continue;
+          if (!passable(neighbor)) continue;
           yield return neighbor;
           frontier.Enqueue(neighbor);
         }
@@ -337,13 +345,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="start">Starting hex</param>
   /// <param name="target">Target hex</param>
   /// <param name="path">Array of hexes starting from start, representing the path.</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>True if target was reached</returns>
-  public bool CheapestPath(GameHex start, GameHex target, out GameHex[] path) {
+  public bool CheapestPath(GameHex start, GameHex target, out GameHex[] path, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var minDist = Distance(start, target);
     var closest = start;
 
     // Prevents needless expansion of search area when the target is unreachable
-    var targetDistance = target.blocked ? 1 : 0;
+    var targetDistance = passable(target) ? 0 : 1;
 
     var costs = new Dictionary<GameHex, float>() { { start, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { start, null } };
@@ -361,7 +371,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
             path = BuildPath(sources, neighbor);
             return true;
           }
-          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             var dist = Distance(neighbor, target);
@@ -401,13 +411,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="target">Target hex</param>
   /// <param name="path">Array of hexes starting from start, representing the path.</param>
   /// <param name="field">Field containing the costs and sources of traversed hexed.</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>True if target was reached</returns>
-  public bool CheapestPath(GameHex start, GameHex target, out GameHex[] path, out PathField<float> field) {
+  public bool CheapestPath(GameHex start, GameHex target, out GameHex[] path, out PathField<float> field, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var minDist = Distance(start, target);
     var closest = start;
 
     // Prevents needless expansion of search area when the target is unreachable
-    var targetDistance = target.blocked ? 1 : 0;
+    var targetDistance = passable(target) ? 0 : 1;
 
     var costs = new Dictionary<GameHex, float>() { { start, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { start, null } };
@@ -426,7 +438,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
             path = BuildPath(sources, neighbor);
             return true;
           }
-          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             var dist = Distance(neighbor, target);
@@ -457,13 +469,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="start">Starting hex</param>
   /// <param name="target">Target hex</param>
   /// <param name="path">Array of hexes starting from start, representing the path.</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>True if target was reached</returns>
-  public bool ShortestPath(GameHex start, GameHex target, out GameHex[] path) {
+  public bool ShortestPath(GameHex start, GameHex target, out GameHex[] path, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var minDist = Distance(start, target);
     var closest = start;
 
     // Prevents needless expansion of search area when the target is unreachable
-    var targetDistance = target.blocked ? 1 : 0;
+    var targetDistance = passable(target) ? 0 : 1;
 
     var costs = new Dictionary<GameHex, int>() { { start, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { start, null } };
@@ -481,7 +495,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
             path = BuildPath(sources, neighbor);
             return true;
           }
-          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             var dist = Distance(neighbor, target);
@@ -510,13 +524,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="target">Target hex</param>
   /// <param name="path">Array of hexes starting from start, representing the path.</param>
   /// <param name="field">Field containing the distances and sources of traversed hexed. (contains inaccuracies).</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>True if target was reached</returns>
-  public bool ShortestPath(GameHex start, GameHex target, out GameHex[] path, out PathField<int> field) {
+  public bool ShortestPath(GameHex start, GameHex target, out GameHex[] path, out PathField<int> field, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var minDist = Distance(start, target);
     var closest = start;
 
     // Prevents needless expansion of search area when the target is unreachable
-    var targetDistance = target.blocked ? 1 : 0;
+    var targetDistance = passable(target) ? 0 : 1;
 
     var costs = new Dictionary<GameHex, int>() { { start, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { start, null } };
@@ -535,7 +551,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
             path = BuildPath(sources, neighbor);
             return true;
           }
-          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             var dist = Distance(neighbor, target);
@@ -567,13 +583,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="start">Starting hex</param>
   /// <param name="target">Target hex</param>
   /// <param name="path">Array of hexes starting from start, representing the path.</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>True if target was reached</returns>
-  public bool FirstPath(GameHex start, GameHex target, out GameHex[] path) {
+  public bool FirstPath(GameHex start, GameHex target, out GameHex[] path, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var minDist = Distance(start, target);
     var closest = start;
 
     // Prevents needless expansion of search area when the target is unreachable
-    var targetDistance = target.blocked ? 1 : 0;
+    var targetDistance = passable(target) ? 0 : 1;
 
     var costs = new Dictionary<GameHex, float>() { { start, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { start, null } };
@@ -591,7 +609,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
             path = BuildPath(sources, neighbor);
             return true;
           }
-          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other))) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other))) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             var dist = Distance(neighbor, target);
@@ -621,13 +639,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="target">Target hex</param>
   /// <param name="path">Array of hexes starting from start, representing the path.</param>
   /// <param name="field">Field containing the costs and sources of traversed hexed. (Contains inaccuracies).</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>True if target was reached</returns>
-  public bool FirstPath(GameHex start, GameHex target, out GameHex[] path, out PathField<int> field) {
+  public bool FirstPath(GameHex start, GameHex target, out GameHex[] path, out PathField<int> field, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var minDist = Distance(start, target);
     var closest = start;
 
     // Prevents needless expansion of search area when the target is unreachable
-    var targetDistance = target.blocked ? 1 : 0;
+    var targetDistance = passable(target) ? 0 : 1;
 
     var costs = new Dictionary<GameHex, int>() { { start, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { start, null } };
@@ -646,7 +666,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
             path = BuildPath(sources, neighbor);
             return true;
           }
-          if ((!neighbor.blocked) && (!costs.TryGetValue(neighbor, out var other))) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other))) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             var dist = Distance(neighbor, target);
@@ -690,8 +710,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// <param name="source">Cost is calculated from this hex.</param>
   /// <param name="distance">Maximum distance of returned hexes</param>
   /// <param name="maxCost">Maximum cost of returned hexes</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>Field containing the costs and sources of traversed hexed</returns>
-  public CostField GetCostField(GameHex source, int distance = int.MaxValue, float maxCost = float.PositiveInfinity) {
+  public CostField GetCostField(GameHex source, int distance = int.MaxValue, float maxCost = float.PositiveInfinity, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var costs = new Dictionary<GameHex, float>() { { source, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { source, null } };
     var edges = new Dictionary<float, List<GameHex>>() { { 0, new List<GameHex>() { source } } };
@@ -703,7 +725,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
         foreach (var neighbor in hex.Neighbors()) {
           var cost = costs[hex] + neighbor.moveCost;
           if (cost > maxCost) continue;
-          if (!neighbor.blocked && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
+          if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
             costs[neighbor] = cost;
             sources[neighbor] = hex;
             edges[i + 1].Add(neighbor);
@@ -730,8 +752,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   /// </summary>
   /// <param name="source">Cost is calculated from this hex.</param>
   /// <param name="maxCost">Maximum cost of returned hexes</param>
+  /// <param name="passable">Predicate which determines if a hex is passable.</param>
   /// <returns>Field containing the distances and sources of traversed hexed</returns>
-  public DistanceField GetDistanceField(GameHex source, int distance = int.MaxValue) {
+  public DistanceField GetDistanceField(GameHex source, int distance = int.MaxValue, Predicate<GameHex> passable = null) {
+    passable = passable ?? (h => !h.blocked);
     var dists = new Dictionary<GameHex, float>() { { source, 0 } };
     var sources = new Dictionary<GameHex, GameHex>() { { source, null } };
     var edges = new Dictionary<float, List<GameHex>>() { { 0, new List<GameHex>() { source } } };
@@ -741,7 +765,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
       edges[i + 1] = new List<GameHex>();
       foreach (var hex in edges[i]) {
         foreach (var neighbor in hex.Neighbors()) {
-          if (!neighbor.blocked && !dists.ContainsKey(neighbor)) {
+          if (passable(neighbor) && !dists.ContainsKey(neighbor)) {
             dists[neighbor] = i + 1;
             sources[neighbor] = hex;
             edges[i + 1].Add(neighbor);

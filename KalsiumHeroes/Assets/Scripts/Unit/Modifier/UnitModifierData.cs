@@ -1,4 +1,5 @@
 
+using Muc.Editor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(UnitModifierData), menuName = "DataSources/" + nameof(UnitModifierData))]
@@ -12,4 +13,5 @@ public class UnitModifierData : ScriptableObject {
   public string description;
   [Tooltip("Displayed image")]
   public Sprite sprite;
+
 }

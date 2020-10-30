@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class MoveAbility : Ability {
 
   [SerializeField, HideInInspector] float remainingMovement;
 
+  Predicate<GameHex> passablePredicate = h => !h.blocked && !h.unit;
+
   void Update() {
     if (animating) UpdateAnim();
   }
@@ -20,27 +23,27 @@ public class MoveAbility : Ability {
     return remainingMovement > 0 && base.IsReady();
   }
 
-  protected override IEnumerable<GameHex> GetRangeTargets(GameHex hex) {
-    var res = Game.grid.GetCostField(hex, maxCost: remainingMovement).costs.Keys;
+  protected override IEnumerable<GameHex> GetTargets_GetRangeTargets(GameHex hex) {
+    var res = Game.grid.GetCostField(hex, maxCost: remainingMovement, passable: (h => !h.blocked && !h.unit)).costs.Keys;
     return res;
   }
 
   public override void OnTurnStart() {
-    remainingMovement = unit.GetMovement();
+    remainingMovement = unit.data.movement.value;
     base.OnTurnStart();
   }
 
   public override Targeter GetTargeter() {
     return new PathConfirmAbilityTargeter(unit, this,
-      onComplete: OnTargeterComplete,
-      onCancel: OnTargeterCancel
-    );
+      onComplete: t => PostDefaultAbilityEvent(t.selection[0])
+    ) { passable = passablePredicate };
   }
+
 
   #region Anim
 
   void UpdateAnim() {
-    animTime += Time.deltaTime;
+    animTime += Time.deltaTime * 3;
     if (animTime > path.Length - 1) {
       EndEvent();
       return;
@@ -72,7 +75,7 @@ public class MoveAbility : Ability {
     if (target.unit || target.blocked) {
       Debug.LogError("Target hex is occupied!");
     } else {
-      Game.grid.CheapestPath(start, target, out var path, out var field);
+      Game.grid.CheapestPath(start, target, out var path, out var field, passablePredicate);
       var cost = field.scores[field.closest];
       remainingMovement -= cost;
       this.path = path;

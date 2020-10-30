@@ -10,6 +10,8 @@ public class Targeting : MonoBehaviour {
   private Events e => Game.events;
   private bool finished => e.finished;
 
+  private GameHex prevHoverHex;
+
   Targeter seq;
   [SerializeField] new Camera camera;
 
@@ -18,6 +20,7 @@ public class Targeting : MonoBehaviour {
     if (seq != null) return false;
     seq = sequence;
     Refresh();
+    seq.RefreshTargets();
     return true;
   }
 
@@ -29,16 +32,24 @@ public class Targeting : MonoBehaviour {
   void Update() {
     if (seq != null) {
       if (!TryComplete()) {
+        var hex = Game.grid.RaycastHex(camera.ScreenPointToRay(Input.mousePosition));
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
-          var hex = Game.grid.RaycastHex(camera.ScreenPointToRay(Input.mousePosition));
           if (hex == null) {
             TryCancel();
             return;
           }
           if (seq.Select(hex)) {
-            if (!TryComplete()) Refresh();
+            if (!TryComplete()) {
+              Refresh();
+            }
           } else {
             TryCancel();
+          }
+        } else {
+          if (prevHoverHex != hex && hex != null) {
+            prevHoverHex = hex;
+            seq.Hover(hex);
+            Refresh();
           }
         }
       }
@@ -76,12 +87,12 @@ public class Targeting : MonoBehaviour {
 
   void Remove() {
     seq = null;
+    prevHoverHex = null;
     ClearHighlights();
   }
 
 
   void Refresh() {
-    seq.RefreshTargets();
     seq.RefreshHighlights();
 
     ClearHighlights();

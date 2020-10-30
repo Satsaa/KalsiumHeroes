@@ -1,11 +1,13 @@
 
 #if UNITY_EDITOR
 using UnityEditor;
+using static Muc.Editor.EditorUtil;
+using static Muc.Editor.PropertyUtil;
 #endif
 
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 [System.Serializable]
 public class Attribute<T> {
@@ -22,37 +24,35 @@ public class Attribute<T> {
 
 
 #if UNITY_EDITOR
-
 [CustomPropertyDrawer(typeof(Attribute<>))]
 internal class AttributeDrawer : PropertyDrawer {
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-    using (new EditorGUI.PropertyScope(position, label, property)) {
 
-      var originalLabelWidth = EditorGUIUtility.labelWidth;
-      var originalFieldWidth = EditorGUIUtility.fieldWidth;
+    using (PropertyScope(position, label, property, out label))
+    using (LabelWidthScope())
+    using (FieldWidthScope()) {
 
       var valueProperty = property.FindPropertyRelative(nameof(Attribute<int>.value));
 
+      var fieldInfo = GetFieldInfo(property);
+      var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
+
       var noLabel = label.text is "" && label.image is null;
+      var pos = position;
+      pos.width = noLabel ? 0 : EditorGUIUtility.labelWidth;
+      if (!noLabel) EditorGUI.LabelField(pos, label);
 
-      var labelRect = position;
-      labelRect.width = noLabel ? 0 : EditorGUIUtility.labelWidth;
-      if (!noLabel) EditorGUI.LabelField(labelRect, label);
+      using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
+        EditorGUIUtility.labelWidth = 35;
+        pos.xMin = pos.xMax + spacing;
+        pos.xMax = position.xMax;
+        EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
+      }
 
-      var padding = EditorGUIUtility.standardVerticalSpacing;
-
-      EditorGUIUtility.labelWidth = 35;
-      var propPos = position;
-      propPos.xMin = labelRect.xMax + padding;
-      propPos.xMax = position.xMax;
-      EditorGUI.PropertyField(propPos, valueProperty, new GUIContent("Value"));
-
-      EditorGUIUtility.labelWidth = originalLabelWidth;
-      EditorGUIUtility.fieldWidth = originalFieldWidth;
     }
+
   }
 
 }
-
 #endif

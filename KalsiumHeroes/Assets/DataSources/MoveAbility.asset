@@ -14,19 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Move
   identifier: ability_move
-  description: Moves the unit.
+  description: Moves to the target tile.
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   type: 1
+  passive:
+    value: 0
   targetType: 1
   range:
-    value: 1
+    value: 0
     enabled: 0
-  rangeMode: 2
-  requiresVision: 0
+  rangeMode: 3
+  requiresVision:
+    value: 0
   cooldown:
-    value: 3
-    other: 3
-    enabled: 0
+    value: 0
+    other: 0
+  charges:
+    value: 1
+    other: 1
   uses:
-    value: 2
+    value: 0
     enabled: 0
