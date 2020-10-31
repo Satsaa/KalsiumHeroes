@@ -40,7 +40,7 @@ public class UnitStatsUI : MonoBehaviour {
 
   void LateUpdate() {
     if (uiTransform) uiTransform.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
-    if (hpBar && hpFgRt) hpFgRt.sizeDelta = new Vector2((unit.data.health.value / unit.data.health.other * hpFullWidth), hpFgRt.sizeDelta.y);
-    if (hpText) hpText.text = $"{Mathf.Ceil(unit.data.health.value)}/{Mathf.Ceil(unit.data.health.other)}";
+    if (hpBar && hpFgRt) hpFgRt.sizeDelta = new Vector2((unit.unitData.health.value / unit.unitData.health.other * hpFullWidth), hpFgRt.sizeDelta.y);
+    if (hpText) hpText.text = $"{Mathf.Ceil(unit.unitData.health.value)}/{Mathf.Ceil(unit.unitData.health.other)}";
   }
 }

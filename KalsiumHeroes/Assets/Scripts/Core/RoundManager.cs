@@ -44,7 +44,7 @@ public class RoundManager {
   }
 
   public void Sort() {
-    units.Sort((a, b) => b.data.speed.value - a.data.speed.value);
+    units.Sort((a, b) => b.unitData.speed.value - a.unitData.speed.value);
   }
 
   public void OnGameStart() {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using UnityEngine;
 public abstract class StatusEffect : UnitModifier {
 
   public StatusEffectData statusEffectData => (StatusEffectData)data;
-
+  public override Type dataType => typeof(StatusEffectData);
 
   public override void OnTurnEnd() {
     if (statusEffectData.turnDuration && --statusEffectData.turnDuration.value <= 0) {

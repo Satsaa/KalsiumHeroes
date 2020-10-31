@@ -14,8 +14,9 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = nameof(AbilityData), menuName = "DataSources/" + nameof(AbilityData))]
 public class AbilityData : UnitModifierData {
 
+  [Header("Ability Data")]
   [Tooltip("Type of the ability.")]
-  public AbilityType type;
+  public AbilityType abilityType;
 
   [Tooltip("Passive abilities cannot be cast.")]
   public Attribute<bool> passive = new Attribute<bool>(false);

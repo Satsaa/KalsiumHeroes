@@ -848,7 +848,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!114 &9047958664919704069
 MonoBehaviour:
@@ -980,6 +980,7 @@ GameObject:
   - component: {fileID: 9047958665005421622}
   - component: {fileID: 195340285}
   - component: {fileID: 1534457735}
+  - component: {fileID: 3160065927684488123}
   m_Layer: 0
   m_Name: TestUnit
   m_TagString: Untagged
@@ -1132,6 +1133,20 @@ MonoBehaviour:
   source: {fileID: 11400000, guid: 65405924ca6997c4b9e43104a1b03747, type: 2}
   data: {fileID: 0}
   unit: {fileID: 9047958665005421618}
+--- !u!114 &3160065927684488123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047958665005421617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60da0f985015cf84b9e261ef0b1c2731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  canvas: {fileID: 9047958664919704070}
 --- !u!1 &9047958665225754102
 GameObject:
   m_ObjectHideFlags: 0

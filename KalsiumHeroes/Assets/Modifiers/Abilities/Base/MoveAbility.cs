@@ -29,7 +29,7 @@ public class MoveAbility : Ability {
   }
 
   public override void OnTurnStart() {
-    remainingMovement = unit.data.movement.value;
+    remainingMovement = unit.unitData.movement.value;
     base.OnTurnStart();
   }
 

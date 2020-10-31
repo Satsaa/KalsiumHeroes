@@ -81,7 +81,7 @@ public class UnitAbilityUI : MonoBehaviour {
         if (!ability.data) continue;
 
         if (abilitiesChanged) {
-          image.sprite = ability.data.sprite;
+          image.sprite = ability.abilityData.sprite;
           item.GetComponentInChildren<Text>().text = ability.data.displayName;
         }
 
@@ -90,13 +90,17 @@ public class UnitAbilityUI : MonoBehaviour {
         } else {
           uiTransform.gameObject.SetActive(true);
           button.onClick.RemoveAllListeners();
-          if (Game.events.finished && ability.IsReady()) {
+          if (ability.abilityData.passive.value) {
             image.color = enabledColor;
-            button.onClick.AddListener(() => {
-              Game.targeting.TryStartSequence(ability.GetTargeter());
-            });
           } else {
-            image.color = disabledColor;
+            if (Game.events.finished && ability.IsReady()) {
+              image.color = enabledColor;
+              button.onClick.AddListener(() => {
+                Game.targeting.TryStartSequence(ability.GetTargeter());
+              });
+            } else {
+              image.color = disabledColor;
+            }
           }
         }
       }

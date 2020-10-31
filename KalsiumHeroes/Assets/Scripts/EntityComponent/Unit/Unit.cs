@@ -6,15 +6,15 @@ using UnityEngine;
 using Muc.Editor;
 using static UnityEngine.Mathf;
 
-public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
+public class Unit : EntityComponent, IEventHandler<Events.Move> {
 
-  public UnitData source;
-  [ShowEditor]
-  public UnitData data;
+  public UnitData unitData => (UnitData)data;
+  public override Type dataType => typeof(UnitData);
 
   public UnitModifier[] modifiers => GetComponents<UnitModifier>();
   public Ability[] abilities => GetComponents<Ability>();
   public StatusEffect[] effects => GetComponents<StatusEffect>();
+
 
   public Team team;
   public GameHex hex;
@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
   }
 
   public void Heal(float value) {
-    data.health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
+    unitData.health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
     MaxHealth();
   }
 
@@ -51,38 +51,38 @@ public class Unit : MonoBehaviour, IEventHandler<Events.Move> {
 
     switch (type) {
       case DamageType.Physical:
-        data.health.value -= (1 - data.defense.value / 100f) * total;
+        unitData.health.value -= (1 - unitData.defense.value / 100f) * total;
         MaxHealth();
         break;
       case DamageType.Magical:
-        data.health.value -= (1 - data.resistance.value / 100f) * total;
+        unitData.health.value -= (1 - unitData.resistance.value / 100f) * total;
         MaxHealth();
         break;
       case DamageType.Pure:
-        data.health.value -= total;
+        unitData.health.value -= total;
         MaxHealth();
         break;
       case DamageType.None:
       default:
-        data.health.value -= total;
+        unitData.health.value -= total;
         MaxHealth();
         Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
         break;
     }
 
-    if (data.health.value <= 0) {
+    if (unitData.health.value <= 0) {
       foreach (var modifier in Game.modifiers.GetModifiers()) {
         modifier.OnDeath();
       }
       // Health still deadly?
-      if (data.health.value <= 0) {
+      if (unitData.health.value <= 0) {
         hex.graveYard.Add(new GraveUnit(this));
         Destroy(gameObject);
       }
     }
   }
 
-  void MaxHealth() => data.health.value = Mathf.Min(data.health.value, data.health.other);
+  void MaxHealth() => unitData.health.value = Mathf.Min(unitData.health.value, unitData.health.other);
 
   public void Dispell() {
     foreach (var effect in effects) {

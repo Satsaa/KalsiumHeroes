@@ -10,16 +10,13 @@ using UnityEngine;
 using Muc.Editor;
 
 [RequireComponent(typeof(Unit))]
-public class UnitModifier : MonoBehaviour {
+public class UnitModifier : EntityComponent {
 
-  public UnitModifierData source;
-  [ShowEditorAttribute]
-  public UnitModifierData data;
+  public UnitModifierData unitModifierData => (UnitModifierData)data;
+  public override Type dataType => typeof(UnitModifierData);
 
   [HideInInspector] public Unit unit;
 
-  /// <summary> Override to restrict the required data type. </summary>
-  public virtual Type dataType => typeof(UnitModifierData);
 
   protected void OnValidate() {
     if (source) data = Instantiate(source);
