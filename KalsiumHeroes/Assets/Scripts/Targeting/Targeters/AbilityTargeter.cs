@@ -28,7 +28,7 @@ public class AbilityTargeter : Targeter {
     var inRange = base.Hover(hex);
     if (inRange) {
       hovers.Clear();
-      hovers.UnionWith(ability.GetAreaOfEffect(hex));
+      hovers.UnionWith(ability.GetAffectedArea(hex));
     }
     return inRange;
   }

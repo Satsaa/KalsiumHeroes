@@ -38,7 +38,7 @@ public class DualAttribute<T> : Attribute<T> {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(DualAttribute<>))]
-internal class DualAttributeDrawer : PropertyDrawer {
+public class DualAttributeDrawer : PropertyDrawer {
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

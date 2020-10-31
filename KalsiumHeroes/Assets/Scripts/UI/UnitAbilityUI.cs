@@ -5,7 +5,6 @@ using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteAlways]
 [RequireComponent(typeof(Unit))]
 public class UnitAbilityUI : MonoBehaviour {
 
@@ -49,6 +48,8 @@ public class UnitAbilityUI : MonoBehaviour {
     if (prefab && parent) {
 
       var abilities = unit.abilities;
+      var passives = unit.passives;
+
       if (items.Any(v => !v)) {
         foreach (var item in items) {
           if (item) {
@@ -59,13 +60,14 @@ public class UnitAbilityUI : MonoBehaviour {
         items.Clear();
       }
 
-      var abilitiesChanged = abilities.Length != items.Count;
+      var total = abilities.Length + passives.Length;
+      var totalChanged = total != items.Count;
 
-      if (abilitiesChanged) {
-        while (abilities.Length > items.Count) {
+      if (totalChanged) {
+        while (total > items.Count) {
           items.Add(Instantiate(prefab, parent.transform));
         }
-        while (abilities.Length < items.Count) {
+        while (total < items.Count) {
           var last = items[items.Count - 1];
           items.RemoveAt(items.Count - 1);
           Destroy(last);
@@ -80,7 +82,7 @@ public class UnitAbilityUI : MonoBehaviour {
 
         if (!ability.data) continue;
 
-        if (abilitiesChanged) {
+        if (totalChanged) {
           image.sprite = ability.abilityData.sprite;
           item.GetComponentInChildren<Text>().text = ability.data.displayName;
         }
@@ -90,18 +92,34 @@ public class UnitAbilityUI : MonoBehaviour {
         } else {
           uiTransform.gameObject.SetActive(true);
           button.onClick.RemoveAllListeners();
-          if (ability.abilityData.passive.value) {
+          if (Game.events.finished && ability.IsReady()) {
             image.color = enabledColor;
+            button.onClick.AddListener(() => {
+              Game.targeting.TryStartSequence(ability.GetTargeter());
+            });
           } else {
-            if (Game.events.finished && ability.IsReady()) {
-              image.color = enabledColor;
-              button.onClick.AddListener(() => {
-                Game.targeting.TryStartSequence(ability.GetTargeter());
-              });
-            } else {
-              image.color = disabledColor;
-            }
+            image.color = disabledColor;
           }
+        }
+      }
+
+      for (int i = 0; i < passives.Length; i++) {
+        var passive = passives[i];
+        var item = items[i];
+        var image = item.GetComponent<Image>();
+        var button = item.GetComponent<Button>();
+
+        if (!passive.data) continue;
+
+        if (totalChanged) {
+          image.sprite = passive.abilityData.sprite;
+          item.GetComponentInChildren<Text>().text = passive.data.displayName;
+        }
+
+        if (unit != Game.rounds.current) {
+          uiTransform.gameObject.SetActive(false);
+        } else {
+          uiTransform.gameObject.SetActive(true);
         }
       }
 

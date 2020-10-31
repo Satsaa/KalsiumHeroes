@@ -12,8 +12,6 @@ using UnityEngine;
 [System.Serializable]
 public class ToggleAttribute<T> : Attribute<T> {
 
-  public static implicit operator bool(ToggleAttribute<T> a) => !object.ReferenceEquals(a, null) && a.enabled;
-
   [Tooltip("Attribute is enabled?")]
   public bool enabled;
 
@@ -29,7 +27,7 @@ public class ToggleAttribute<T> : Attribute<T> {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ToggleAttribute<>))]
-internal class ToggleAttributeDrawer : PropertyDrawer {
+public class ToggleAttributeDrawer : PropertyDrawer {
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

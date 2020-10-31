@@ -9,14 +9,14 @@ using UnityEngine.Serialization;
 [Serializable]
 public class GraveUnit {
   public UnitData unitData;
-  public UnitModifierData[] modifierData;
+  public ModifierData[] modifierData;
 
-  public GraveUnit(UnitData unitData, IEnumerable<UnitModifierData> modifierData) {
+  public GraveUnit(UnitData unitData, IEnumerable<ModifierData> modifierData) {
     this.unitData = ScriptableObject.Instantiate(unitData);
     this.modifierData = modifierData.Select(v => ScriptableObject.Instantiate(v)).ToArray();
   }
   public GraveUnit(Unit unit) {
     this.unitData = ScriptableObject.Instantiate(unit.unitData);
-    this.modifierData = unit.modifiers.Select(v => ScriptableObject.Instantiate(v.unitModifierData)).ToArray();
+    this.modifierData = unit.modifiers.Select(v => ScriptableObject.Instantiate(v.ModifierData)).ToArray();
   }
 }

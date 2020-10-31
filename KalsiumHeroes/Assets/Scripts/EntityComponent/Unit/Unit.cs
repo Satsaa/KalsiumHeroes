@@ -11,10 +11,18 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
   public UnitData unitData => (UnitData)data;
   public override Type dataType => typeof(UnitData);
 
-  public UnitModifier[] modifiers => GetComponents<UnitModifier>();
+  public Modifier[] modifiers => GetComponents<Modifier>();
   public Ability[] abilities => GetComponents<Ability>();
+  public Passive[] passives => GetComponents<Passive>();
   public StatusEffect[] effects => GetComponents<StatusEffect>();
 
+
+  [HideInInspector]
+  [Tooltip("Unit is silenced? It cannot cast spells.")] // TODO: MAKE REAL
+  public Attribute<bool> silenced;
+  [HideInInspector]
+  [Tooltip("Unit is silenced? It cannot cast weapon skills.")] // TODO: MAKE REAL
+  public Attribute<bool> disarmed;
 
   public Team team;
   public GameHex hex;
@@ -43,7 +51,7 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
 
   public void Heal(float value) {
     unitData.health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
-    MaxHealth();
+    LimitHealth();
   }
 
   public void Damage(float value, DamageType type) {
@@ -52,20 +60,20 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
     switch (type) {
       case DamageType.Physical:
         unitData.health.value -= (1 - unitData.defense.value / 100f) * total;
-        MaxHealth();
+        LimitHealth();
         break;
       case DamageType.Magical:
         unitData.health.value -= (1 - unitData.resistance.value / 100f) * total;
-        MaxHealth();
+        LimitHealth();
         break;
       case DamageType.Pure:
         unitData.health.value -= total;
-        MaxHealth();
+        LimitHealth();
         break;
       case DamageType.None:
       default:
         unitData.health.value -= total;
-        MaxHealth();
+        LimitHealth();
         Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
         break;
     }
@@ -82,7 +90,7 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
     }
   }
 
-  void MaxHealth() => unitData.health.value = Mathf.Min(unitData.health.value, unitData.health.other);
+  void LimitHealth() => unitData.health.value = Mathf.Min(unitData.health.value, unitData.health.other);
 
   public void Dispell() {
     foreach (var effect in effects) {
@@ -92,7 +100,7 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
 
   public bool MovePosition(GameHex hex, bool reposition = true) {
     if (hex.unit == null) {
-      this.hex.unit = null;
+      if (this.hex) this.hex.unit = null;
       hex.unit = this;
       this.hex = hex;
       if (reposition) transform.position = hex.center;

@@ -25,7 +25,7 @@ public class Attribute<T> {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(Attribute<>))]
-internal class AttributeDrawer : PropertyDrawer {
+public class AttributeDrawer : PropertyDrawer {
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

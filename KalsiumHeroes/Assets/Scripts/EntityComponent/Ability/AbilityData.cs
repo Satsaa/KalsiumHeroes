@@ -12,14 +12,12 @@ using System.Linq;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = nameof(AbilityData), menuName = "DataSources/" + nameof(AbilityData))]
-public class AbilityData : UnitModifierData {
+public class AbilityData : ModifierData {
 
   [Header("Ability Data")]
+
   [Tooltip("Type of the ability.")]
   public AbilityType abilityType;
-
-  [Tooltip("Passive abilities cannot be cast.")]
-  public Attribute<bool> passive = new Attribute<bool>(false);
 
   [Tooltip("Types of valid targets.")]
   public TargetType targetType;
@@ -29,6 +27,9 @@ public class AbilityData : UnitModifierData {
 
   [Tooltip("How the range is determined.")]
   public RangeMode rangeMode;
+
+  [Tooltip("Radius of the affected tiles around the target.")]
+  public Attribute<int> radius = new Attribute<int>(0);
 
   [Tooltip("Only directly visible hexes are valid in range?")]
   public Attribute<bool> requiresVision = new Attribute<bool>(false);
@@ -44,45 +45,7 @@ public class AbilityData : UnitModifierData {
   [Tooltip("How many times can the ability be cast in total.")]
   public ToggleAttribute<int> uses = new ToggleAttribute<int>(false);
 
+  [Tooltip("Can the ability be cast after other abilities?")]
+  public Attribute<bool> alwaysCastable = new Attribute<bool>(false);
+
 }
-
-
-#if UNITY_EDITOR
-[CanEditMultipleObjects]
-[CustomEditor(typeof(AbilityData), true)]
-public class AbilityDataEditor : Editor {
-
-  SerializedProperty passive;
-  SerializedProperty script;
-
-  AbilityData t => (AbilityData)target;
-  IEnumerable<AbilityData> ts => targets.Cast<AbilityData>();
-
-  void OnEnable() {
-    passive = serializedObject.FindProperty(nameof(AbilityData.passive));
-    script = serializedObject.FindProperty("m_Script");
-  }
-
-  public override void OnInspectorGUI() {
-    serializedObject.Update();
-
-    if (ts.All(t => t.passive.value)) {
-      using (DisabledScope(v => true)) EditorGUILayout.PropertyField(script);
-      DrawPropertiesExcluding(
-        serializedObject,
-        nameof(AbilityData.targetType),
-        nameof(AbilityData.range),
-        nameof(AbilityData.rangeMode),
-        nameof(AbilityData.requiresVision),
-        nameof(AbilityData.cooldown),
-        nameof(AbilityData.charges),
-        nameof(AbilityData.uses),
-        "m_Script"
-      );
-    } else {
-      DrawDefaultInspector();
-    }
-    serializedObject.ApplyModifiedProperties();
-  }
-}
-#endif

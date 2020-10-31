@@ -10,10 +10,10 @@ using UnityEngine;
 using Muc.Editor;
 
 [RequireComponent(typeof(Unit))]
-public class UnitModifier : EntityComponent {
+public class Modifier : EntityComponent {
 
-  public UnitModifierData unitModifierData => (UnitModifierData)data;
-  public override Type dataType => typeof(UnitModifierData);
+  public ModifierData ModifierData => (ModifierData)data;
+  public override Type dataType => typeof(ModifierData);
 
   [HideInInspector] public Unit unit;
 
@@ -40,15 +40,15 @@ public class UnitModifier : EntityComponent {
     }
   }
 
-  /// <summary> When this UnitModifier is being added (instantiated). </summary>
+  /// <summary> When this Modifier is being added (instantiated). </summary>
   public virtual void OnAdd() { }
-  /// <summary> When this UnitModifier is being removed (destroyed). </summary>
+  /// <summary> When this Modifier is being removed (destroyed). </summary>
   public virtual void OnRemove() { }
 
-  /// <summary> When any other UnitModifier is being added. </summary>
-  public virtual void OnAdd(UnitModifier modifier) { }
-  /// <summary> When any other UnitModifier is being removed. </summary>
-  public virtual void OnRemove(UnitModifier modifier) { }
+  /// <summary> When any other Modifier is being added. </summary>
+  public virtual void OnAdd(Modifier modifier) { }
+  /// <summary> When any other Modifier is being removed. </summary>
+  public virtual void OnRemove(Modifier modifier) { }
 
   public virtual float OnHeal(float value) => value;
   public virtual float OnDamage(float value, DamageType type) => value;
@@ -63,24 +63,27 @@ public class UnitModifier : EntityComponent {
   /// <summary> When the Unit dies. </summary>
   public virtual void OnDeath() { }
 
-  /// <summary> When the Unit casts an Ability. </summary>
+  /// <summary> When the Unit casts an Ability that is not a base Ability. </summary>
   public virtual void OnAbilityCast(Ability ability) { }
+
+  /// <summary> When the Unit casts a base Ability. </summary>
+  public virtual void OnBaseAbilityCast(Ability ability) { }
 }
 
 
 #if UNITY_EDITOR
 [CanEditMultipleObjects]
-[CustomEditor(typeof(UnitModifier), true)]
-public class UnitModifierEditor : Editor {
+[CustomEditor(typeof(Modifier), true)]
+public class ModifierEditor : Editor {
 
   SerializedProperty source;
   SerializedProperty data;
 
-  UnitModifier t => (UnitModifier)target;
+  Modifier t => (Modifier)target;
 
   void OnEnable() {
-    source = serializedObject.FindProperty(nameof(UnitModifier.source));
-    data = serializedObject.FindProperty(nameof(UnitModifier.data));
+    source = serializedObject.FindProperty(nameof(Modifier.source));
+    data = serializedObject.FindProperty(nameof(Modifier.data));
   }
 
   public override void OnInspectorGUI() {
@@ -92,7 +95,7 @@ public class UnitModifierEditor : Editor {
     using (EditorUtil.DisabledScope(v => !Application.isPlaying))
       EditorGUILayout.PropertyField(data);
 
-    DrawPropertiesExcluding(serializedObject, nameof(UnitModifier.source), nameof(UnitModifier.data), "m_Script");
+    DrawPropertiesExcluding(serializedObject, nameof(Modifier.source), nameof(Modifier.data), "m_Script");
 
     serializedObject.ApplyModifiedProperties();
   }

@@ -9,11 +9,11 @@ using UnityEngine;
 [System.Serializable]
 public class ModifierTracker {
 
-  [SerializeField] private HashSet<UnitModifier> modifiers = new HashSet<UnitModifier>();
+  [SerializeField] private HashSet<Modifier> modifiers = new HashSet<Modifier>();
   [SerializeField] private HashSet<Ability> abilities = new HashSet<Ability>();
   [SerializeField] private HashSet<StatusEffect> statuses = new HashSet<StatusEffect>();
 
-  public IEnumerable<UnitModifier> GetModifiers(bool includeInactive = false) {
+  public IEnumerable<Modifier> GetModifiers(bool includeInactive = false) {
     return EnumerateModifiers(includeInactive);
   }
   public IEnumerable<Ability> GetAbilities(bool includeInactive = false) {
@@ -29,21 +29,21 @@ public class ModifierTracker {
     abilities.Clear();
     statuses.Clear();
 
-    var sceneItems = GameObject.FindObjectsOfType<UnitModifier>(true);
+    var sceneItems = GameObject.FindObjectsOfType<Modifier>(true);
     modifiers.UnionWith(sceneItems);
     abilities.UnionWith(sceneItems.Where(v => v is Ability).Cast<Ability>());
     statuses.UnionWith(sceneItems.Where(v => v is StatusEffect).Cast<StatusEffect>());
   }
 
   /// <summary> Adds the Modifier to the pool of modifiers </summary>
-  public void RegisterModifier<T>(T modifier) where T : UnitModifier {
+  public void RegisterModifier<T>(T modifier) where T : Modifier {
     modifiers.Add(modifier);
     if (modifier is Ability ability) abilities.Add(ability);
     if (modifier is StatusEffect status) statuses.Add(status);
   }
 
-  private IEnumerable<UnitModifier> EnumerateModifiers(bool includeInactive) {
-    var toRemove = new List<UnitModifier>();
+  private IEnumerable<Modifier> EnumerateModifiers(bool includeInactive) {
+    var toRemove = new List<Modifier>();
     foreach (var mod in modifiers) {
       if (mod == null) {
         toRemove.Add(mod);

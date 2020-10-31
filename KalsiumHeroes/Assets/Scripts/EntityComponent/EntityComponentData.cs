@@ -13,7 +13,7 @@ public abstract class EntityComponentData : ScriptableObject {
   [Tooltip("String identifier of this entity component. (\"unit_oracle\")")]
   public string identifier;
 
-  [Tooltip("The c# type that this data belongs to.")]
-  public string type;
+  [Tooltip("Instantiate this Type of EntityComponent for this data.")]
+  public SerializedType<EntityComponent> componentType;
 
 }

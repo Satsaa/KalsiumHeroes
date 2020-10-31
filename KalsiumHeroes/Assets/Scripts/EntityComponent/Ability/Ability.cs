@@ -5,11 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
+public abstract class Ability : Modifier, IEventHandler<Events.Ability> {
 
   public AbilityData abilityData => (AbilityData)data;
   public override Type dataType => typeof(AbilityData);
 
+  [HideInInspector]
+  public bool castBlocked = false;
 
   public abstract bool EventIsFinished();
   public abstract bool SkipEvent();
@@ -18,6 +20,7 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
 
   public override void OnTurnStart() {
     base.OnTurnStart();
+    castBlocked = false;
     abilityData.cooldown.value--;
     if (abilityData.cooldown.value <= 0) {
       abilityData.charges.value++;
@@ -27,15 +30,23 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
     }
   }
 
+  public override void OnAbilityCast(Ability ability) {
+    base.OnAbilityCast(ability);
+    if (!abilityData.alwaysCastable.value) {
+      castBlocked = true;
+    }
+  }
+
   /// <summary> Called when the ability is actually cast. </summary>
   public virtual void OnCast() {
-    if (abilityData.uses) abilityData.uses.value--;
+    if (abilityData.uses.enabled) abilityData.uses.value--;
     if (abilityData.charges.value == abilityData.charges.other) abilityData.cooldown.ResetValue();
     if (abilityData.cooldown.value <= 0 && abilityData.cooldown.other <= 0) abilityData.charges.ResetValue();
     else abilityData.charges.value--;
-    foreach (var modifier in unit.modifiers) {
-      modifier.OnAbilityCast(this);
-    }
+
+    var isBase = abilityData.abilityType != AbilityType.Base;
+    if (isBase) foreach (var modifier in unit.modifiers) modifier.OnAbilityCast(this);
+    else foreach (var modifier in unit.modifiers) modifier.OnBaseAbilityCast(this);
   }
 
 
@@ -43,8 +54,10 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
 
   /// <summary> Is the Ability castable at the moment? </summary>
   public virtual bool IsReady() {
-    if (abilityData.passive.value) return false;
-    if (abilityData.uses && abilityData.uses.value <= 0) return false;
+    if (castBlocked) return false;
+    if (abilityData.uses.enabled && abilityData.uses.value <= 0) return false;
+    if (abilityData.abilityType == AbilityType.Spell && unit.silenced.value) return false;
+    if (abilityData.abilityType == AbilityType.WeaponSkill && unit.disarmed.value) return false;
     if (abilityData.charges.value > 0) return true;
     return false;
   }
@@ -55,8 +68,8 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
   /// Returns a list of affected tiles if the Ability is cast on hex.
   /// Used for highlighting and should be used when casting the ability (ensures equivalency).
   /// </summary>
-  public virtual IEnumerable<GameHex> GetAreaOfEffect(GameHex hex) {
-    yield return hex;
+  public virtual IEnumerable<GameHex> GetAffectedArea(GameHex hex) {
+    return Game.grid.Radius(hex, abilityData.radius.value);
   }
 
   #region GetTargets
@@ -70,7 +83,7 @@ public abstract class Ability : UnitModifier, IEventHandler<Events.Ability> {
 
   /// <summary> Get the target hexes in range with this method. Call the base implementation for default behaviour. </summary>
   protected virtual IEnumerable<GameHex> GetTargets_GetRangeTargets(GameHex hex) {
-    if (abilityData.range) {
+    if (abilityData.range.enabled) {
       switch (abilityData.rangeMode) {
         default:
         case RangeMode.Distance:

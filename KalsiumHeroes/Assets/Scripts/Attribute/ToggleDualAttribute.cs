@@ -12,8 +12,6 @@ using System.Linq;
 [System.Serializable]
 public class ToggleDualAttribute<T> : DualAttribute<T> {
 
-  public static implicit operator bool(ToggleDualAttribute<T> a) => !object.ReferenceEquals(a, null) && a.enabled;
-
   [Tooltip("Attribute is enabled?")]
   public bool enabled;
 
@@ -28,7 +26,7 @@ public class ToggleDualAttribute<T> : DualAttribute<T> {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ToggleDualAttribute<>))]
-internal class ToggleDualAttributeDrawer : PropertyDrawer {
+public class ToggleDualAttributeDrawer : PropertyDrawer {
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

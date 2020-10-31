@@ -4,7 +4,6 @@ using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteAlways]
 [RequireComponent(typeof(Unit))]
 public class UnitStatsUI : MonoBehaviour {
 
