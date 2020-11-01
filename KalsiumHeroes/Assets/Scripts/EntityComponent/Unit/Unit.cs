@@ -18,10 +18,10 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
 
 
   [HideInInspector]
-  [Tooltip("Unit is silenced? It cannot cast spells.")] // TODO: MAKE REAL
+  [Tooltip("Unit is silenced? It cannot cast spells.")]
   public Attribute<bool> silenced;
   [HideInInspector]
-  [Tooltip("Unit is silenced? It cannot cast weapon skills.")] // TODO: MAKE REAL
+  [Tooltip("Unit is silenced? It cannot cast weapon skills.")]
   public Attribute<bool> disarmed;
 
   public Team team;

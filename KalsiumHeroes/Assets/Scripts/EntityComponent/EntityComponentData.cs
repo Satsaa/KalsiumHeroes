@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using Muc.Data;
 
 public abstract class EntityComponentData : ScriptableObject {
 
