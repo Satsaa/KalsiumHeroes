@@ -27,28 +27,28 @@ namespace Muc.Editor {
     }
 
     /// <summary>
-    /// Get the value of the serialized property.
+    /// Gets the first value of a SerializedProperty.
     /// </summary>
-    public static object GetValue(SerializedProperty property) {
+    public static T GetFirstValue<T>(SerializedProperty property) {
       string propertyPath = property.propertyPath;
       object value = property.serializedObject.targetObject;
       int cursor = 0;
       while (NextPathComponent(propertyPath, ref cursor, out var token))
         value = GetPathComponentValue(value, token);
-      return value;
+      return (T)value;
     }
 
     /// <summary>
-    /// Gets the values of the serialized property. Use to get values for multi-editing.
+    /// Gets all the values of a SerializedProperty.
     /// </summary>
-    public static IEnumerable<object> GetValues(SerializedProperty property) {
+    public static IEnumerable<T> GetValues<T>(SerializedProperty property) {
       string propertyPath = property.propertyPath;
       foreach (var targetObject in property.serializedObject.targetObjects) {
         object value = targetObject;
         int cursor = 0;
         while (NextPathComponent(propertyPath, ref cursor, out var token))
           value = GetPathComponentValue(value, token);
-        yield return value;
+        yield return (T)value;
       }
     }
 
@@ -56,11 +56,10 @@ namespace Muc.Editor {
     /// Set the value of the serialized property in all target Objects.
     /// </summary>
     public static void SetValue(SerializedProperty property, object value) {
-      foreach (var targetObject in property.serializedObject.targetObjects) {
-        Undo.RecordObject(property.serializedObject.targetObject, $"Set {property.name}");
-        SetValueNoRecord(property, targetObject, value);
-      }
-      EditorUtility.SetDirty(property.serializedObject.targetObject);
+      var targets = property.serializedObject.targetObjects;
+      foreach (var targetObject in targets) Undo.RecordObject(targetObject, $"Set {property.name}");
+      SetValueNoRecord(property, value);
+      foreach (var targetObject in targets) EditorUtility.SetDirty(targetObject);
       property.serializedObject.ApplyModifiedProperties();
     }
 
@@ -68,18 +67,21 @@ namespace Muc.Editor {
     /// Set the value of the serialized property, but do not record the change.
     /// The change will not be persisted unless you call SetDirty and ApplyModifiedProperties.
     /// </summary>
-    public static void SetValueNoRecord(SerializedProperty property, Object targetObject, object value) {
+    public static void SetValueNoRecord(SerializedProperty property, object value) {
       string propertyPath = property.propertyPath;
-      object container = property.serializedObject.targetObject;
+      var targets = property.serializedObject.targetObjects;
+      foreach (var target in targets) {
+        object container = target;
 
-      int cursor = 0;
-      NextPathComponent(propertyPath, ref cursor, out var deferredToken);
-      while (NextPathComponent(propertyPath, ref cursor, out var token)) {
-        container = GetPathComponentValue(container, deferredToken);
-        deferredToken = token;
+        int cursor = 0;
+        NextPathComponent(propertyPath, ref cursor, out var pathComponent);
+        while (NextPathComponent(propertyPath, ref cursor, out var token)) {
+          container = GetPathComponentValue(container, pathComponent);
+          pathComponent = token;
+        }
+        Debug.Assert(!container.GetType().IsValueType, $"Cannot use SerializedObject.SetValue on a struct object, as the result will be set on a temporary.  Either change {container.GetType().Name} to a class, or use SetValue with a parent member.");
+        SetPathComponentValue(container, pathComponent, value);
       }
-      Debug.Assert(!container.GetType().IsValueType, $"Cannot use SerializedObject.SetValue on a struct object, as the result will be set on a temporary.  Either change {container.GetType().Name} to a class, or use SetValue with a parent member.");
-      SetPathComponentValue(container, deferredToken, value);
     }
 
     // Union type representing either a property name or array element index.  The element

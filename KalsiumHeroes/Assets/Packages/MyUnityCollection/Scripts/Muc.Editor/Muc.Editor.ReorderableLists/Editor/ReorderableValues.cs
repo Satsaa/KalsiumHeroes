@@ -13,6 +13,8 @@ namespace Muc.Editor.ReorderableLists {
   using UnityEditorInternal;
   using UnityEngine;
 
+  using static PropertyUtil;
+
 
   internal class ReorderableValues : ReorderableList {
 
@@ -238,16 +240,28 @@ namespace Muc.Editor.ReorderableLists {
       DeleteElement(elementIndex);
     }
 
-    private bool CanPaste(ClipboardContent clipboardContent) {
+    private bool CanCopy(int elementIndex) {
+      var minLength = int.MaxValue;
+      foreach (var array in serializedProperties) minLength = Mathf.Max(minLength, array.arraySize);
+      for (int i = 0; i < minLength; i++) {
+        foreach (var array in serializedProperties) {
+
+        }
+      }
+      return true;
+    }
+
+    private bool CanPaste(ClipboardContent clipboardContent, int elementIndex) {
       if (clipboardContent == null) return false;
 
-      var arrayIndex = 0;
       var arrayCount = serializedProperties.Length;
-      foreach (var array in serializedProperties) {
+      for (int i = 0; i < arrayCount; i++) {
+        var array = serializedProperties[i];
+        if (elementIndex > array.arraySize) return false;
         var arrayObj = (IList)array.GetObject();
         var arrayType = arrayObj.GetType();
         var elementType = arrayType.IsArray ? arrayType.GetElementType() : arrayType.GetGenericArguments()[0];
-        var clipboardElement = clipboardContent.elements[arrayIndex++];
+        var clipboardElement = clipboardContent.elements[i];
         var clipboardType = Type.GetType(clipboardElement.assemblyQualifiedName);
         if (!elementType.IsAssignableFrom(clipboardType)) return false;
       }
@@ -271,16 +285,16 @@ namespace Muc.Editor.ReorderableLists {
           array.arraySize = elementIndex + 1;
 
         var clipboardElement = clipboardContent.elements[arrayIndex++];
-        var arrayObj = (IList)array.GetObject();
+        var arrayObjs = GetValues<IList>(array);
         var arrayType = array.GetObject().GetType();
-        var elementObj = arrayObj[elementIndex];
+        var elementProperty = array.GetArrayElementAtIndex(elementIndex);
         var elementType = arrayType.IsArray ? arrayType.GetElementType() : arrayType.GetGenericArguments()[0];
         var elementJson = clipboardElement.json;
         var elementInstanceId = clipboardElement.instanceId;
 
         if (elementType.IsPrimitive || elementType == typeof(string)) {
           object newValue;
-          switch (elementObj) {
+          switch (GetFirstValue<object>(elementProperty)) {
             case String _:
               newValue = elementJson;
               break;
@@ -302,13 +316,14 @@ namespace Muc.Editor.ReorderableLists {
               newValue = Int64.Parse(elementJson);
               break;
           }
-          arrayObj[elementIndex] = Convert.ChangeType(newValue, elementType);
+          var converted = Convert.ChangeType(newValue, elementType);
+          SetValueNoRecord(elementProperty, converted);
         } else if (typeof(UnityEngine.Object).IsAssignableFrom(elementType)) {
           var fromId = EditorUtility.InstanceIDToObject(elementInstanceId);
-          if (fromId != null) arrayObj[elementIndex] = fromId;
+          if (fromId != null) SetValueNoRecord(elementProperty, fromId);
         } else {
           var fromJson = JsonUtility.FromJson(elementJson, elementType);
-          if (fromJson != null) arrayObj[elementIndex] = fromJson;
+          if (fromJson != null) SetValueNoRecord(elementProperty, fromJson);
         }
       }
       serializedObject.Update();
@@ -316,15 +331,6 @@ namespace Muc.Editor.ReorderableLists {
     }
 
     //======================================================================
-
-    protected static MemberInfo[] GetFirstMemberInHierarchy(Type type, string name, BindingFlags bindingAttr) {
-      MemberInfo[] res;
-      do {
-        res = type.GetMember(name, bindingAttr);
-        if (res.Length != 0) return res;
-      } while ((type = type.BaseType) != null);
-      return res;
-    }
 
     private static MemberInfo[] GetFirstMemberInHierarchy(Type type, string name, MemberTypes memberTypes, BindingFlags bindingAttr) {
       MemberInfo[] res;
@@ -335,91 +341,6 @@ namespace Muc.Editor.ReorderableLists {
       return res;
     }
 
-    object GetMemberValue(object container, string name) {
-      if (container == null) return null;
-      var type = container.GetType();
-      var members = GetFirstMemberInHierarchy(type, name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-      for (int i = 0; i < members.Length; ++i) {
-        if (members[i] is FieldInfo field)
-          return field.GetValue(container);
-        else if (members[i] is PropertyInfo property)
-          return property.GetValue(container);
-      }
-      return null;
-    }
-
-    void SetMemberValue(object container, string name, object value) {
-      var type = container.GetType();
-      var members = GetFirstMemberInHierarchy(type, name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-      for (int i = 0; i < members.Length; ++i) {
-        if (members[i] is FieldInfo field) {
-          field.SetValue(container, value);
-          return;
-        } else if (members[i] is PropertyInfo property) {
-          property.SetValue(container, value);
-          return;
-        }
-      }
-    }
-
-    object GetPathComponentValue(object container, PropertyPathComponent component) {
-      if (component.propertyName == null)
-        return ((IList)container)[component.elementIndex];
-      else
-        return GetMemberValue(container, component.propertyName);
-    }
-
-    void SetPathComponentValue(object container, PropertyPathComponent component, object value) {
-      if (component.propertyName == null)
-        ((IList)container)[component.elementIndex] = value;
-      else
-        SetMemberValue(container, component.propertyName, value);
-    }
-
-    Regex arrayElementRegex = new Regex(@"\GArray\.data\[(\d+)\]", RegexOptions.Compiled);
-
-    struct PropertyPathComponent {
-      public string propertyName;
-      public int elementIndex;
-    }
-
-    bool NextPathComponent(string propertyPath, ref int index, out PropertyPathComponent component) {
-      component = new PropertyPathComponent();
-
-      if (index >= propertyPath.Length) return false;
-
-      var arrayElementMatch = arrayElementRegex.Match(propertyPath, index);
-      if (arrayElementMatch.Success) {
-        index += arrayElementMatch.Length + 1; // Skip past next '.'
-        component.elementIndex = int.Parse(arrayElementMatch.Groups[1].Value);
-        return true;
-      }
-
-      int dot = propertyPath.IndexOf('.', index);
-      if (dot == -1) {
-        component.propertyName = propertyPath.Substring(index);
-        index = propertyPath.Length;
-      } else {
-        component.propertyName = propertyPath.Substring(index, dot - index);
-        index = dot + 1; // Skip past next '.'
-      }
-
-      return true;
-    }
-
-    public void SetValueNoRecord(SerializedProperty property, object value) {
-      string propertyPath = property.propertyPath;
-      object container = property.serializedObject.targetObject;
-
-      int i = 0;
-      NextPathComponent(propertyPath, ref i, out var deferredToken);
-      while (NextPathComponent(propertyPath, ref i, out var token)) {
-        container = GetPathComponentValue(container, deferredToken);
-        deferredToken = token;
-      }
-      Debug.Assert(!container.GetType().IsValueType, $"Cannot use SerializedObject.SetValue on a struct object, as the result will be set on a temporary. Either change {container.GetType().Name} to a class, or use SetValue with a parent member.");
-      SetPathComponentValue(container, deferredToken, value);
-    }
 
     protected static Type GetManagedReferenceType(SerializedProperty property) {
       var typeStrings = property.managedReferenceFullTypename.Split(' ');
@@ -582,8 +503,6 @@ namespace Muc.Editor.ReorderableLists {
 
     //======================================================================
 
-    protected static readonly GUIStyle elementBackgroundStyle = "RL Background";
-
     private void DrawElementBackground(Rect position, SerializedProperty element, int elementIndex, bool isActive, bool isFocused) {
       defaultBehaviours.DrawElementBackground(position, elementIndex, isActive, isFocused, draggable: true);
 
@@ -607,11 +526,16 @@ namespace Muc.Editor.ReorderableLists {
     protected virtual void PopulateElementContextMenu(GenericMenu menu, int elementIndex) {
       var serializedProperty = this.serializedProperty;
       var serializedObject = serializedProperty.serializedObject;
-
-      menu.AddItem(cutLabel, false, () => OnNextGUIFrame(() => CutElement(elementIndex)));
-      menu.AddItem(copyLabel, false, () => CopyElementToClipboard(elementIndex));
+      var canCopy = CanCopy(elementIndex);
+      if (canCopy) {
+        menu.AddItem(cutLabel, false, () => OnNextGUIFrame(() => CutElement(elementIndex)));
+        menu.AddItem(copyLabel, false, () => CopyElementToClipboard(elementIndex));
+      } else {
+        menu.AddDisabledItem(cutLabel);
+        menu.AddDisabledItem(copyLabel);
+      }
       var content = ClipboardContent.Deserialize(EditorGUIUtility.systemCopyBuffer);
-      var canPaste = CanPaste(content);
+      var canPaste = CanPaste(content, elementIndex);
       if (canPaste) menu.AddItem(pasteLabel, false, () => OnNextGUIFrame(() => PasteElement(elementIndex, content)));
       else menu.AddDisabledItem(pasteLabel);
 
@@ -673,7 +597,6 @@ namespace Muc.Editor.ReorderableLists {
     private static GUIContent iconToolbarPlusMore = EditorGUIUtility.TrIconContent("Toolbar Plus More", "Choose to add to list");
     private static GUIContent iconToolbarMinus = EditorGUIUtility.TrIconContent("Toolbar Minus", "Remove selection or last element from list");
     private readonly GUIStyle preButton = "RL FooterButton";
-    private readonly GUIStyle footerBackground = "RL Footer";
 
     // draw the default footer
     public void DrawFooter(Rect rect, ReorderableList list) {

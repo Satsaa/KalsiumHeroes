@@ -89,7 +89,7 @@ namespace Muc.Editor {
 
             using (new EditorGUI.IndentLevelScope()) {
 
-              SerializedObject serializedObject = new SerializedObject(GetValues(property).Cast<Object>().ToArray());
+              SerializedObject serializedObject = new SerializedObject(GetValues<Object>(property).ToArray());
 
               // Iterate over all the values and draw them
               SerializedProperty prop = serializedObject.GetIterator();

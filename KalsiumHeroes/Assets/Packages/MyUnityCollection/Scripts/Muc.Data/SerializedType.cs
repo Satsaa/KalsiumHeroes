@@ -7,14 +7,14 @@ namespace Muc.Data {
   using System.Linq;
 
   [Serializable]
-  public class SerializedType {
+  public class SerializedType : ISerializationCallbackReceiver {
 
     public static implicit operator Type(SerializedType t) => t?.type;
 
     [NonSerialized]
     protected bool updated = false;
 
-    [HideInInspector, SerializeField]
+    [SerializeField]
     protected string _name;
     public string name {
       get {
@@ -50,6 +50,8 @@ namespace Muc.Data {
         .Where(v => v.IsClass || v.IsInterface || v.IsValueType);
     }
 
+    void ISerializationCallbackReceiver.OnBeforeSerialize() { }
+    void ISerializationCallbackReceiver.OnAfterDeserialize() => Update();
   }
 
   [Serializable]
@@ -87,6 +89,7 @@ namespace Muc.Data {
   using static Muc.Editor.PropertyUtil;
   using static Muc.Editor.EditorUtil;
 
+  [CanEditMultipleObjects]
   [CustomPropertyDrawer(typeof(SerializedType), true)]
   public class SerializedTypeDrawer : PropertyDrawer {
 
@@ -94,33 +97,27 @@ namespace Muc.Data {
 
       var noLabel = label.text is "" && label.image is null;
 
-      if (property.serializedObject.isEditingMultipleObjects) {
-        var nameProperty = property.FindPropertyRelative("_name");
-        using (DisabledScope(v => true))
-        using (PropertyScope(position, label, property, out label)) {
-          EditorGUI.TextField(position, label, nameProperty.stringValue);
-        }
-        return;
-      }
-
-      var value = (SerializedType)GetValue(property);
+      var values = GetValues<SerializedType>(property);
+      var value = values.First();
 
       using (PropertyScope(position, label, property, out label)) {
-        var hint = new GUIContent(label);
-        hint.text = value.type == null ? "null" : $"{value.type.ToString()} ({value.type.Assembly.GetName().Name})";
+        // Label
         if (!noLabel) {
           EditorGUI.LabelField(position, label);
           position.xMin += EditorGUIUtility.labelWidth + spacing;
         }
-        if (EditorGUI.DropdownButton(position, hint, FocusType.Keyboard)) {
+        // Dropdown
+        var hint = new GUIContent(label); // Inherit state from label
+        hint.text = value.type == null ? "null" : $"{value.type.ToString()} ({value.type.Assembly.GetName().Name})";
+        if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
           var types = value.GetValidTypes();
-          var menu = BuildMenu(property, types.ToList(), value);
+          var menu = BuildMenu(property, types.ToList(), values);
           menu.DropDown(position);
         }
       }
     }
 
-    private static GenericMenu BuildMenu(SerializedProperty property, List<Type> types, SerializedType target) {
+    private static GenericMenu BuildMenu(SerializedProperty property, List<Type> types, IEnumerable<SerializedType> targets) {
       var menu = new GenericMenu();
 
       if (types.Count > 50) {
@@ -130,7 +127,7 @@ namespace Muc.Data {
         if (firstNoNamespace != -1) {
           var type = types[firstNoNamespace];
           var content = new GUIContent($"No Namespace/{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
-          menu.AddItem(content, type == (Type)target, () => { OnSelect(property, type); });
+          menu.AddItem(content, targets.Any(t => type == t.type), () => { OnSelect(property, type); });
         }
 
         for (int i = 0; i < types.Count; i++) {
@@ -143,14 +140,14 @@ namespace Muc.Data {
           } else {
             content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
           }
-          menu.AddItem(content, type == (Type)target, () => { OnSelect(property, type); });
+          menu.AddItem(content, targets.Any(t => type == t.type), () => { OnSelect(property, type); });
         }
 
       } else {
 
         foreach (var type in types) {
           var content = new GUIContent($"{type.ToString()} ({type.Assembly.GetName().Name})");
-          menu.AddItem(content, type == (Type)target, () => { OnSelect(property, type); });
+          menu.AddItem(content, targets.Any(t => type == t.type), () => { OnSelect(property, type); });
         }
 
       }
@@ -159,10 +156,11 @@ namespace Muc.Data {
     }
 
     private static void OnSelect(SerializedProperty property, Type type) {
-      var value = (SerializedType)GetValue(property);
-      value.type = type;
-      EditorUtility.SetDirty(property.serializedObject.targetObject);
-      property.serializedObject.ApplyModifiedProperties();
+      var values = GetValues<SerializedType>(property);
+      Undo.RecordObjects(property.serializedObject.targetObjects, $"Set {property.name}");
+      foreach (var value in values) value.type = type;
+      foreach (var target in property.serializedObject.targetObjects) EditorUtility.SetDirty(target);
+      property.serializedObject.ApplyModifiedPropertiesWithoutUndo();
     }
 
   }
