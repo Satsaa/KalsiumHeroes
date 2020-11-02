@@ -22,7 +22,7 @@ namespace Muc.Editor.ReorderableLists {
       this.arrayDrawer = arrayDrawer;
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public sealed override bool CanCacheInspectorGUI(SerializedProperty property) {
       ResolveFieldInfo(property);
@@ -39,7 +39,7 @@ namespace Muc.Editor.ReorderableLists {
       arrayDrawer.OnGUI(position, property, label);
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     private void ResolveFieldInfo(SerializedProperty property) {
       if (arrayDrawer.fieldInfo == null) {

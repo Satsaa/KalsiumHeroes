@@ -49,11 +49,6 @@ namespace Muc.Editor {
 
     #region Scopes
 
-    public static Deferred DisabledScope() {
-      var prev = GUI.enabled;
-      return new Deferred(() => GUI.enabled = prev);
-    }
-
     public static Deferred DisabledScope(Func<bool, bool> modifier) {
       var prev = GUI.enabled;
       GUI.enabled = !modifier(!prev);

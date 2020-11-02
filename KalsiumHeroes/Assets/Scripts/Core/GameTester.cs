@@ -42,8 +42,7 @@ public class GameTesterEditor : Editor {
 
   public int index => t.index;
   Type[] types = Events.events.Values.ToArray();
-  string[] names = Events.events.Values.Select(
-    t => $"{t.Name}{(t.FullName.Contains($"{nameof(Events)}+{nameof(Events.Control)}") ? " (Control Event)" : "")}").ToArray();
+  string[] names = Events.events.Values.Select(t => $"{t.Name}").ToArray();
 
 
   public override void OnInspectorGUI() {

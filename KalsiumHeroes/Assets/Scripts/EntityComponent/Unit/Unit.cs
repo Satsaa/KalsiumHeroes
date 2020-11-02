@@ -6,7 +6,7 @@ using UnityEngine;
 using Muc.Editor;
 using static UnityEngine.Mathf;
 
-public class Unit : EntityComponent, IEventHandler<Events.Move> {
+public class Unit : EntityComponent {
 
   public UnitData unitData => (UnitData)data;
   public override Type dataType => typeof(UnitData);
@@ -132,17 +132,4 @@ public class Unit : EntityComponent, IEventHandler<Events.Move> {
     }
   }
 
-  void IEventHandler<Events.Move>.StartEvent(Events.Move data) {
-    var source = this.hex;
-    var target = Game.grid.hexes[data.target];
-    SwapPosition(target);
-  }
-
-  bool IEventHandler.EventIsFinished() {
-    return true;
-  }
-
-  bool IEventHandler.SkipEvent() {
-    return true;
-  }
 }

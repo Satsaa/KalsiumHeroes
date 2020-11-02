@@ -14,9 +14,9 @@ namespace Muc.Editor.ReorderableLists {
 
     protected float idealLabelWidth;
 
-    public ReorderableStructures(ReorderableAttribute attribute, SerializedProperty property, Type listType, Type elementType, bool editable) : base(attribute, property, listType, elementType, editable) { }
+    public ReorderableStructures(SerializedProperty property, Type listType, Type elementType) : base(property, listType, elementType) { }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     protected override float GetElementHeight(SerializedProperty element, int elementIndex) {
       var properties = element.EnumerateChildProperties();
@@ -50,16 +50,12 @@ namespace Muc.Editor.ReorderableLists {
       return height;
     }
 
-    //----------------------------------------------------------------------
-
-    // original = 12; 15 is real indent width. Shifts elements so that expand arrows cannot overlap with the drag handle
-    protected override float drawElementIndent => 0;
+    //======================================================================
 
     protected override void DrawElement(Rect position, SerializedProperty element, int elementIndex, bool isActive) {
       var properties = element.EnumerateChildProperties();
       DrawElements(position, properties, elementIndex, isActive);
-      if (elementIndex > 0)
-        DrawHorizontalLine(position);
+      if (elementIndex > 0) DrawHorizontalLine(position);
     }
 
     private static readonly GUIStyle eyeDropperHorizontalLine = "EyeDropperHorizontalLine";
@@ -68,14 +64,13 @@ namespace Muc.Editor.ReorderableLists {
       if (IsRepaint()) {
         var style = eyeDropperHorizontalLine;
         position.yMin -= 3;
+        position.xMin -= 15;
         position.height = 1;
-        using (ColorScope(new Color(1, 1, 1, 0.75f))) {
-          style.Draw(position, false, false, false, false);
-        }
+        style.Draw(position, false, false, false, false);
       }
     }
 
-    protected override float borderHeight => 3;
+    protected override float extraSpacing => 3;
 
     protected void DrawElements(Rect position, IEnumerable<SerializedProperty> properties, int elementIndex, bool isActive) {
       var spacing = EditorGUIUtility.standardVerticalSpacing;
@@ -84,7 +79,7 @@ namespace Muc.Editor.ReorderableLists {
         position.y += headerHeight + spacing;
       }
 
-      using (LabelWidthScope(EditorGUIUtility.labelWidth - position.xMin + 19)) {
+      using (EditorUtil.LabelWidthScope(v => EditorGUIUtility.labelWidth - position.xMin + 19)) {
         var propertyCount = 0;
         foreach (var property in properties) {
           if (propertyCount++ > 0)
@@ -97,12 +92,11 @@ namespace Muc.Editor.ReorderableLists {
       }
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     protected static readonly GUIStyle HeaderBackgroundStyle = "RL Header";
 
     private void DrawElementHeader(Rect position, int elementIndex, bool isActive) {
-      position.xMin -= drawElementIndent;
       position.height = headerHeight;
 
       var titleContent = base.titleContent;

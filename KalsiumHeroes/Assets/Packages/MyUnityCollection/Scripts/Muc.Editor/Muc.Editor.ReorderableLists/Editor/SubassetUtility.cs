@@ -37,7 +37,7 @@ namespace Muc.Editor.ReorderableLists {
       return null;
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public static void AddSubasset(this Object asset, Object subasset) {
       var assetPath = asset.GetAssetPath();
@@ -46,7 +46,7 @@ namespace Muc.Editor.ReorderableLists {
       AssetDatabase.ImportAsset(assetPath);
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public static void TryDestroyImmediate(this Object asset) {
       try {
@@ -57,7 +57,7 @@ namespace Muc.Editor.ReorderableLists {
       }
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public static HashSet<Object> FindReferencedSubassets(this SerializedProperty property) {
       var propertyAsset = property.serializedObject.targetObject;
@@ -72,7 +72,7 @@ namespace Muc.Editor.ReorderableLists {
       return FindReferencedSubassets(property).Any();
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public static void DestroyUnreferencedSubassets(this SerializedObject serializedObject, IEnumerable<Object> candidateSubassets) {
       var targetObject = serializedObject.targetObject;
@@ -87,7 +87,7 @@ namespace Muc.Editor.ReorderableLists {
       AssetDatabase.ImportAsset(assetPath);
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public static void DestroyAllUnreferencedSubassetsInAsset(this Object asset) {
       var assetPath = AssetDatabase.GetAssetPath(asset);
@@ -100,7 +100,7 @@ namespace Muc.Editor.ReorderableLists {
         TryDestroyImmediate(unreferencedAsset);
     }
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     private static void AddReferencedSubassets(HashSet<Object> referencedSubassets, Object[] allSubassets, Object asset) {
       if (asset == null)

@@ -41,10 +41,8 @@ public class Events {
   private static Dictionary<string, Type> BuildEventTypes() {
     _events = new Dictionary<string, Type>();
     var nested = typeof(Events).GetNestedTypes().Where(t => t.BaseType == typeof(GameEvent));
-    nested = nested.Concat(typeof(Events.Control).GetNestedTypes().Where(t => t.BaseType == typeof(GameEvent)));
     foreach (var type in nested) {
       _events.Add(type.Name, type);
-      // Debug.Log(type.FullName);
     }
     return _events;
   }
@@ -56,27 +54,14 @@ public class Events {
 
 
   // DO NOT CHANGE CLASS NAMES OF DEPLOYED GameEvents
-  // GameEvents APPLY TO UNITS UNLESS SPECIFIED OTHERWISE
-
-
-  [Serializable]
-  public class Move : GameEvent {
-    public Vector3Int unit;
-    public Vector3Int target;
-    public override void Handle() {
-      Debug.Log($"{this.GetType().Name}: Called");
-      var unit = Game.grid.hexes[this.unit].unit;
-      IEventHandler<Move> asHandler = unit;
-      Game.events.eHandler = asHandler;
-      asHandler.StartEvent(this);
-    }
-  }
 
   [Serializable]
   public class Ability : GameEvent {
+
     public string ability;
     public Vector3Int unit;
     public Vector3Int target;
+
     public override void Handle() {
       Debug.Log($"{this.GetType().Name}: Called");
       var unit = Game.grid.hexes[this.unit].unit;
@@ -90,61 +75,12 @@ public class Events {
   }
 
   [Serializable]
-  public class Spawn : GameEvent {
-    public string unit;
-    public Vector3Int target;
-    public override void Handle() {
-      Debug.Log($"{this.GetType().Name}: Called");
-    }
-  }
-
-  [Serializable]
   public class Turn : GameEvent {
+
     public override void Handle() {
-      Game.rounds.Next();
-      Debug.Log($"Next round");
+      Game.rounds.NextTurn();
+      Debug.Log($"Next turn");
     }
   }
 
-
-
-  /// <summary> Contains control events. Used to directly change things. </summary>
-  public static class Control {
-
-    [Serializable]
-    public class Kill : GameEvent {
-      public Vector3Int target;
-      public override void Handle() {
-        Debug.Log($"{this.GetType().Name}: Called");
-      }
-    }
-
-    [Serializable]
-    public class Health : GameEvent {
-      public Vector3Int unit;
-      public int health;
-      public override void Handle() {
-        Debug.Log($"{this.GetType().Name}: Called");
-      }
-    }
-
-    [Serializable]
-    public class Damage : GameEvent {
-      public Vector3Int unit;
-      public int health;
-      public override void Handle() {
-        Debug.Log($"{this.GetType().Name}: Called");
-      }
-    }
-
-    [Serializable]
-    public class Heal : GameEvent {
-      public Vector3Int unit;
-      public int health;
-      public override void Handle() {
-        Debug.Log($"{this.GetType().Name}: Called");
-      }
-    }
-
-  }
 }

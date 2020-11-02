@@ -40,32 +40,7 @@ namespace Muc.Editor.ReorderableLists {
       }
     }
 
-    //----------------------------------------------------------------------
-
-    public static SerializedProperty FindParentProperty(this SerializedProperty property) {
-      var serializedObject = property.serializedObject;
-      var propertyPath = property.propertyPath;
-      var propertyKeys = ParsePropertyPath(propertyPath).ToArray();
-      var propertyKeyCount = propertyKeys.Length;
-      if (propertyKeyCount == 1) {
-        return null; // parent is serialized object
-      }
-      var lastPropertyKey = propertyKeys[propertyKeyCount - 1];
-      if (lastPropertyKey is int) {
-        // parent is an array, drop [Array,data,N] from path
-        var parentKeys = propertyKeys.Take(propertyKeyCount - 3);
-        var parentPath = JoinPropertyPath(parentKeys);
-        return serializedObject.FindProperty(parentPath);
-      } else {
-        // parent is a structure, drop [name] from path
-        Debug.Assert(lastPropertyKey is string);
-        var parentKeys = propertyKeys.Take(propertyKeyCount - 1);
-        var parentPath = JoinPropertyPath(parentKeys);
-        return serializedObject.FindProperty(parentPath);
-      }
-    }
-
-    //----------------------------------------------------------------------
+    //======================================================================
 
     public static object FindObject(this object obj, IEnumerable<object> path) {
       foreach (var key in path) {
@@ -98,24 +73,7 @@ namespace Muc.Editor.ReorderableLists {
       return new KeyNotFoundException($"{type}.{fieldName} not found");
     }
 
-    //----------------------------------------------------------------------
-
-    public static bool IsArrayOrList(this SerializedProperty property) {
-      return (
-        property.propertyType == SerializedPropertyType.Generic
-        && property.isArray == true
-      );
-    }
-
-    public static bool IsStructure(this SerializedProperty property) {
-      return (
-        property.propertyType == SerializedPropertyType.Generic
-        && property.isArray == false
-        && property.hasChildren == true
-      );
-    }
-
-    //----------------------------------------------------------------------
+    //======================================================================
 
     private static FieldInfo FindFieldInfo(this Type type, string fieldName) {
       const BindingFlags bindingFlags = BindingFlags.FlattenHierarchy | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
@@ -130,21 +88,7 @@ namespace Muc.Editor.ReorderableLists {
       return FindFieldInfo(baseType, fieldName);
     }
 
-    //----------------------------------------------------------------------
-
-    private static IEnumerable<object> ParsePropertyPath(SerializedProperty property) {
-      return ParsePropertyPath(property.propertyPath);
-    }
-
-    private static IEnumerable<object> ParsePropertyPath(string propertyPath) {
-      return ParseValuePath(propertyPath);
-    }
-
-    public static string JoinPropertyPath(IEnumerable<object> keys) {
-      return JoinValuePath(keys);
-    }
-
-    //----------------------------------------------------------------------
+    //======================================================================
 
     private static string GetValuePath(SerializedProperty property) {
       return property.propertyPath.Replace(".Array.data[", "[");
@@ -188,28 +132,7 @@ namespace Muc.Editor.ReorderableLists {
       }
     }
 
-    public static string JoinValuePath(IEnumerable<object> keys) {
-      var builder = new StringBuilder();
-      foreach (var key in keys) {
-        if (key is string) {
-          if (builder.Length > 0) {
-            builder.Append('.');
-          }
-          builder.Append((string)key);
-          continue;
-        }
-        if (key is int) {
-          builder.Append('[');
-          builder.Append((int)key);
-          builder.Append(']');
-          continue;
-        }
-        throw new Exception($"invalid key: {key}");
-      }
-      return builder.ToString();
-    }
-
-    //----------------------------------------------------------------------
+    //======================================================================
 
     private static readonly Regex elementIdentifier = new Regex(@"^[_a-zA-Z][_a-zA-Z0-9]*(\[[0-9]*\])+$");
     // e.g. "foo[0][1]"
@@ -219,7 +142,7 @@ namespace Muc.Editor.ReorderableLists {
     private static readonly Regex memberIdentifier = new Regex(@"^[_a-zA-Z][_a-zA-Z0-9]*$");
     // e.g. "foo"
 
-    //----------------------------------------------------------------------
+    //======================================================================
 
     private static bool IsElementIdentifier(this string s) {
       return elementIdentifier.IsMatch(s);
@@ -231,41 +154,6 @@ namespace Muc.Editor.ReorderableLists {
 
     private static bool IsMemberIdentifier(this string s) {
       return memberIdentifier.IsMatch(s);
-    }
-
-    //======================================================================
-
-    private static System.Exception UnsupportedValue(SerializedProperty property, object value) {
-      var serializedObject = property.serializedObject;
-      var targetObject = serializedObject.targetObject;
-      var targetType = targetObject.GetType();
-      var targetTypeName = targetType.Name;
-      var propertyPath = property.propertyPath;
-      return new System.Exception($"unsupported value {value} for {targetTypeName}.{propertyPath}");
-    }
-
-    private static System.Exception UnsupportedValue(SerializedProperty property, object value, string expected) {
-      var serializedObject = property.serializedObject;
-      var targetObject = serializedObject.targetObject;
-      var targetType = targetObject.GetType();
-      var targetTypeName = targetType.Name;
-      var propertyPath = property.propertyPath;
-      if (value == null) {
-        value = "null";
-      } else {
-        value = "'{value}'";
-      }
-      return new System.Exception($"unsupported value {value} for {targetTypeName}.{propertyPath}, expected {expected}");
-    }
-
-    private static System.Exception UnsupportedValueType(SerializedProperty property) {
-      var serializedObject = property.serializedObject;
-      var targetObject = serializedObject.targetObject;
-      var targetType = targetObject.GetType();
-      var targetTypeName = targetType.Name;
-      var valueTypeName = property.propertyType.ToString();
-      var propertyPath = property.propertyPath;
-      return new System.Exception($"unsupported value type {valueTypeName} for {targetTypeName}.{propertyPath}");
     }
 
   }

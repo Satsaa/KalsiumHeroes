@@ -32,7 +32,7 @@ public class RoundManager {
     Sort();
   }
 
-  public void Next() {
+  public void NextTurn() {
     if (units.Count <= 1) {
       OnTurnEnds();
       round++;
