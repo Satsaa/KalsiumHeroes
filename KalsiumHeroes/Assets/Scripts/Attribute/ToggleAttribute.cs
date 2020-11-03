@@ -32,8 +32,8 @@ public class ToggleAttributeDrawer : PropertyDrawer {
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
     using (PropertyScope(position, label, property, out label))
-    using (LabelWidthScope())
-    using (FieldWidthScope()) {
+    using (RestoreLabelWidthScope())
+    using (RestoreFieldWidthScope()) {
 
       var enabledProperty = property.FindPropertyRelative(nameof(ToggleAttribute<int>.enabled));
       var valueProperty = property.FindPropertyRelative(nameof(Attribute<int>.value));

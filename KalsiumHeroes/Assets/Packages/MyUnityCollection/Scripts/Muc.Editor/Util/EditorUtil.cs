@@ -49,6 +49,18 @@ namespace Muc.Editor {
 
     #region Scopes
 
+    public static Deferred RestoreDisabledScope() {
+      var prev = GUI.enabled;
+      return new Deferred(() => GUI.enabled = prev);
+    }
+
+    /// <remarks> Does not enable if already disabled. </remarks>
+    public static Deferred DisabledScope(bool disable = true) {
+      var prev = GUI.enabled;
+      GUI.enabled &= !disable;
+      return new Deferred(() => GUI.enabled = prev);
+    }
+
     public static Deferred DisabledScope(Func<bool, bool> modifier) {
       var prev = GUI.enabled;
       GUI.enabled = !modifier(!prev);
@@ -56,11 +68,19 @@ namespace Muc.Editor {
     }
 
 
-    public static Deferred LabelWidthScope() {
+    public static Deferred RestoreLabelWidthScope() {
       var prev = EditorGUIUtility.labelWidth;
       return new Deferred(() => EditorGUIUtility.labelWidth = prev);
     }
 
+    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
+    public static Deferred LabelWidthScope(float width) {
+      var prev = EditorGUIUtility.labelWidth;
+      EditorGUIUtility.labelWidth = width;
+      return new Deferred(() => EditorGUIUtility.labelWidth = prev);
+    }
+
+    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
     public static Deferred LabelWidthScope(Func<float, float> modifier) {
       var prev = EditorGUIUtility.labelWidth;
       EditorGUIUtility.labelWidth = modifier(prev);
@@ -68,11 +88,19 @@ namespace Muc.Editor {
     }
 
 
-    public static Deferred FieldWidthScope() {
+    public static Deferred RestoreFieldWidthScope() {
       var prev = EditorGUIUtility.fieldWidth;
       return new Deferred(() => EditorGUIUtility.fieldWidth = prev);
     }
 
+    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
+    public static Deferred FieldWidthScope(float width) {
+      var prev = EditorGUIUtility.fieldWidth;
+      EditorGUIUtility.fieldWidth = width;
+      return new Deferred(() => EditorGUIUtility.fieldWidth = prev);
+    }
+
+    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
     public static Deferred FieldWidthScope(Func<float, float> modifier) {
       var prev = EditorGUIUtility.fieldWidth;
       EditorGUIUtility.fieldWidth = modifier(prev);
@@ -80,8 +108,14 @@ namespace Muc.Editor {
     }
 
 
-    public static Deferred IndentScope() {
+    public static Deferred RestoreIndentScope() {
       var prev = EditorGUI.indentLevel;
+      return new Deferred(() => EditorGUI.indentLevel = prev);
+    }
+
+    public static Deferred IndentScope(int additionIndentation = 1) {
+      var prev = EditorGUI.indentLevel;
+      EditorGUI.indentLevel += additionIndentation;
       return new Deferred(() => EditorGUI.indentLevel = prev);
     }
 
@@ -90,6 +124,80 @@ namespace Muc.Editor {
       EditorGUI.indentLevel = modifier(prev);
       return new Deferred(() => EditorGUI.indentLevel = prev);
     }
+
+
+    public static Deferred RestoreMixedValueScope() {
+      var prev = EditorGUI.showMixedValue;
+      return new Deferred(() => EditorGUI.showMixedValue = prev);
+    }
+
+    public static Deferred MixedValueScope(bool mixed = true) {
+      var prev = EditorGUI.showMixedValue;
+      EditorGUI.showMixedValue |= mixed;
+      return new Deferred(() => EditorGUI.showMixedValue = prev);
+    }
+
+    public static Deferred MixedValueScope(Func<bool, bool> modifier) {
+      var prev = EditorGUI.showMixedValue;
+      EditorGUI.showMixedValue = modifier(prev);
+      return new Deferred(() => EditorGUI.showMixedValue = prev);
+    }
+
+
+    public static Deferred RestoreBackgroundColorScope() {
+      var prev = GUI.backgroundColor;
+      return new Deferred(() => GUI.backgroundColor = prev);
+    }
+
+    public static Deferred BackgroundColorScope(Color color) {
+      var prev = GUI.backgroundColor;
+      GUI.backgroundColor = color;
+      return new Deferred(() => GUI.backgroundColor = prev);
+    }
+
+    public static Deferred BackgroundColorScope(Func<Color, Color> modifier) {
+      var prev = GUI.backgroundColor;
+      GUI.backgroundColor = modifier(prev);
+      return new Deferred(() => GUI.backgroundColor = prev);
+    }
+
+
+    public static Deferred RestoreColorScope() {
+      var prev = GUI.color;
+      return new Deferred(() => GUI.color = prev);
+    }
+
+    public static Deferred ColorScope(Color color) {
+      var prev = GUI.color;
+      GUI.color = color;
+      return new Deferred(() => GUI.color = prev);
+    }
+
+    public static Deferred ColorScope(Func<Color, Color> modifier) {
+      var prev = GUI.color;
+      GUI.color = modifier(prev);
+      return new Deferred(() => GUI.color = prev);
+    }
+
+
+
+    public static Deferred RestoreTextColorScope() {
+      var prev = GUI.contentColor;
+      return new Deferred(() => GUI.contentColor = prev);
+    }
+
+    public static Deferred TextColorScope(Color color) {
+      var prev = GUI.contentColor;
+      GUI.contentColor = color;
+      return new Deferred(() => GUI.contentColor = prev);
+    }
+
+    public static Deferred TextColorScope(Func<Color, Color> modifier) {
+      var prev = GUI.contentColor;
+      GUI.contentColor = modifier(prev);
+      return new Deferred(() => GUI.contentColor = prev);
+    }
+
 
 
     public static Deferred PropertyScope(Rect totalPosition, GUIContent label, SerializedProperty property) {

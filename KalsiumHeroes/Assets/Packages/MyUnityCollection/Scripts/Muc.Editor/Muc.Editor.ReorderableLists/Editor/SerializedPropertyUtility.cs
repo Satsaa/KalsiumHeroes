@@ -28,7 +28,12 @@ namespace Muc.Editor.ReorderableLists {
 
     public static IEnumerable<SerializedProperty> EnumerateChildProperties(this SerializedProperty property) {
       var iterator = property.Copy();
-      var end = iterator.GetEndProperty();
+      SerializedProperty end;
+      try { // GetEndProperty throws when ManagedReference arrays are different during multi edit
+        end = iterator.GetEndProperty();
+      } catch (InvalidOperationException) {
+        yield break;
+      }
       if (iterator.NextVisible(enterChildren: true)) {
         do {
           if (SerializedProperty.EqualContents(iterator, end))

@@ -31,8 +31,8 @@ public class ToggleDualAttributeDrawer : PropertyDrawer {
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
     using (PropertyScope(position, label, property, out label))
-    using (LabelWidthScope())
-    using (FieldWidthScope()) {
+    using (RestoreLabelWidthScope())
+    using (RestoreFieldWidthScope()) {
 
       var enabledProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.enabled));
       var valueProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.value));

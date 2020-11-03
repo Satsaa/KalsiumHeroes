@@ -43,8 +43,8 @@ public class DualAttributeDrawer : PropertyDrawer {
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
     using (PropertyScope(position, label, property, out label))
-    using (LabelWidthScope())
-    using (FieldWidthScope()) {
+    using (RestoreLabelWidthScope())
+    using (RestoreFieldWidthScope()) {
 
       var valueProperty = property.FindPropertyRelative(nameof(DualAttribute<int>.value));
       var baseProperty = property.FindPropertyRelative(nameof(DualAttribute<int>.other));

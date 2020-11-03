@@ -14,7 +14,7 @@ namespace Muc.Editor.ReorderableLists {
 
     protected float idealLabelWidth;
 
-    public ReorderableStructures(SerializedProperty property, Type listType, Type elementType) : base(property, listType, elementType) { }
+    public ReorderableStructures(SerializedProperty property) : base(property) { }
 
     //======================================================================
 
@@ -26,10 +26,6 @@ namespace Muc.Editor.ReorderableLists {
     protected float GetElementHeight(IEnumerable<SerializedProperty> properties) {
       var spacing = EditorGUIUtility.standardVerticalSpacing;
       var height = 0f;
-
-      if (showElementHeader) {
-        height += headerHeight + spacing;
-      }
 
       idealLabelWidth = 0f;
       var labelStyle = EditorStyles.label;
@@ -74,11 +70,6 @@ namespace Muc.Editor.ReorderableLists {
 
     protected void DrawElements(Rect position, IEnumerable<SerializedProperty> properties, int elementIndex, bool isActive) {
       var spacing = EditorGUIUtility.standardVerticalSpacing;
-      if (showElementHeader) {
-        DrawElementHeader(position, elementIndex, isActive);
-        position.y += headerHeight + spacing;
-      }
-
       using (EditorUtil.LabelWidthScope(v => EditorGUIUtility.labelWidth - position.xMin + 19)) {
         var propertyCount = 0;
         foreach (var property in properties) {
@@ -89,52 +80,6 @@ namespace Muc.Editor.ReorderableLists {
           PropertyField(position, property);
           position.y += position.height;
         }
-      }
-    }
-
-    //======================================================================
-
-    protected static readonly GUIStyle HeaderBackgroundStyle = "RL Header";
-
-    private void DrawElementHeader(Rect position, int elementIndex, bool isActive) {
-      position.height = headerHeight;
-
-      var titleContent = base.titleContent;
-
-      titleContent.text = elementIndex.ToString();
-
-      var titleStyle = EditorStyles.boldLabel;
-
-      var titleWidth = titleStyle.CalcSize(titleContent).x;
-
-      if (IsRepaint()) {
-        var fillRect = position;
-        fillRect.xMin -= draggable ? 18 : 4;
-        fillRect.xMax += 4;
-        fillRect.y -= 2;
-
-        var fillStyle = HeaderBackgroundStyle;
-
-        using (ColorAlphaScope(0.75f)) {
-          fillStyle.Draw(fillRect, false, false, false, false);
-        }
-
-        var embossStyle = EditorStyles.whiteBoldLabel;
-        var embossRect = position;
-        embossRect.yMin -= 0;
-        using (new EditorGUI.DisabledScope(true)) {
-          embossStyle.Draw(embossRect, titleContent, false, false, false, false);
-        }
-
-        var titleRect = position;
-        titleRect.yMin -= 1;
-        titleRect.width = titleWidth;
-        titleStyle.Draw(titleRect, titleContent, false, false, false, false);
-
-        var menuRect = position;
-        menuRect.xMin = menuRect.xMax - 16;
-        menuRect.yMin += 4;
-        ContextMenuButtonStyle.Draw(menuRect, false, false, false, false);
       }
     }
 

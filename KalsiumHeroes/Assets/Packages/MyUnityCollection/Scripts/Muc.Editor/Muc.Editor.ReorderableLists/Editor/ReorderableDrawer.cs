@@ -121,13 +121,13 @@ namespace Muc.Editor.ReorderableLists {
           elementType == typeof(BoundsInt);
 
       if (elementIsValue) {
-        return new ReorderableValues(property, listType, elementType);
+        return new ReorderableValues(property);
       }
 
       var elementIsUnityEngineObject = typeof(UnityEngine.Object).IsAssignableFrom(elementType);
 
       if (elementIsUnityEngineObject) {
-        return new ReorderableValues(property, listType, elementType);
+        return new ReorderableValues(property);
       }
 
       var elementPropertyDrawerType = GetDrawerTypeForType(elementType);
@@ -140,11 +140,11 @@ namespace Muc.Editor.ReorderableLists {
         var elementIsClass = elementType.IsClass;
 
         if (elementIsStruct || elementIsClass) {
-          return new ReorderableStructures(property, listType, elementType);
+          return new ReorderableStructures(property);
         }
       }
 
-      return new ReorderableValues(property, listType, elementType);
+      return new ReorderableValues(property);
 
     }
 
