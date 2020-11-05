@@ -49,8 +49,8 @@ namespace Muc.Editor.ReorderableLists {
 
       primaryProperty.serializedObject.Update();
 
-      var value = GetFirstValue<IList>(primaryProperty);
-      listType = value.GetType();
+      var field = GetFieldInfo(primaryProperty);
+      listType = field.FieldType;
       elementBaseType = listType.IsArray ? listType.GetElementType() : listType.GetGenericArguments()[0];
       isUnityObjectList = typeof(UnityEngine.Object).IsAssignableFrom(elementBaseType);
 

@@ -17,6 +17,8 @@ public class Modifier : EntityComponent {
 
   [HideInInspector] public Unit unit;
 
+  private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
+
 
   protected void OnValidate() {
     if (source) data = Instantiate(source);
@@ -31,6 +33,9 @@ public class Modifier : EntityComponent {
     foreach (var other in unit.modifiers.Where(mod => mod != this)) {
       other.OnAdd(this);
     }
+    using (AttributeBase.ConfigurationScope(altererKeys)) {
+      OnRegisterAlterers();
+    }
   }
 
   protected void OnDestroy() {
@@ -38,7 +43,26 @@ public class Modifier : EntityComponent {
     foreach (var other in unit.modifiers.Where(mod => mod != this)) {
       other.OnRemove(this);
     }
+    using (AttributeBase.ConfigurationScope(altererKeys)) {
+      AttributeBase.RemoveAlterers();
+    }
   }
+
+#if UNITY_EDITOR
+  [UnityEditor.Callbacks.DidReloadScripts]
+  private static void OnReload() {
+    if (Application.isPlaying) {
+      foreach (var mod in Game.modifiers.GetModifiers(true)) {
+        using (AttributeBase.ConfigurationScope(mod.altererKeys)) {
+          mod.OnRegisterAlterers();
+        }
+      }
+    }
+  }
+#endif
+
+  /// <summary> Register attribute alterers. This is the only place to do so. Alterers are automatically removed and added. </summary>
+  protected virtual void OnRegisterAlterers() { }
 
   /// <summary> When this Modifier is being added (instantiated). </summary>
   public virtual void OnAdd() { }

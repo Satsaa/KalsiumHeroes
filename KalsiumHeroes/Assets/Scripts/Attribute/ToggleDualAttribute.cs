@@ -8,6 +8,10 @@ using static Muc.Editor.PropertyUtil;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Serialization;
+using System;
+using System.Security;
+using Muc;
 
 [System.Serializable]
 public class ToggleDualAttribute<T> : DualAttribute<T> {
@@ -15,11 +19,30 @@ public class ToggleDualAttribute<T> : DualAttribute<T> {
   [Tooltip("Attribute is enabled?")]
   public bool enabled;
 
+  protected Dictionary<object, Func<bool, bool>> enabledAlterers = new Dictionary<object, Func<bool, bool>>();
+
+
   public ToggleDualAttribute(bool enabled = true) {
     this.enabled = enabled;
   }
-  public ToggleDualAttribute(T value, T baseValue, bool enabled = true) : base(value, baseValue) {
+  public ToggleDualAttribute(T value, T other, bool enabled = true) : base(value, other) {
     this.enabled = enabled;
+  }
+
+
+  internal void RegisterEnabledAlterer(Func<bool, bool> alterer) {
+    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    var keyObject = new object();
+    enabledAlterers.Add(keyObject, alterer);
+    AttributeBase.keyTarget.Add(keyObject, this);
+  }
+
+  /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
+  public override void RemoveAlterer(object key) {
+    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    alterers.Remove(key);
+    otherAlterers.Remove(key);
+    enabledAlterers.Remove(key);
   }
 }
 
@@ -35,8 +58,8 @@ public class ToggleDualAttributeDrawer : PropertyDrawer {
     using (RestoreFieldWidthScope()) {
 
       var enabledProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.enabled));
-      var valueProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.value));
-      var baseProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.other));
+      var valueProperty = property.FindPropertyRelative("_value");
+      var otherProperty = property.FindPropertyRelative("_other");
 
       var fieldInfo = GetFieldInfo(property);
       var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
@@ -61,7 +84,7 @@ public class ToggleDualAttributeDrawer : PropertyDrawer {
         EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
-        EditorGUI.PropertyField(pos, baseProperty, baseLabel);
+        EditorGUI.PropertyField(pos, otherProperty, baseLabel);
       }
 
     }

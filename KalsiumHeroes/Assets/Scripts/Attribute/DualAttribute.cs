@@ -1,25 +1,53 @@
 ﻿
 #if UNITY_EDITOR
 using UnityEditor;
-using static Muc.Editor.PropertyUtil;
 using static Muc.Editor.EditorUtil;
+using static Muc.Editor.PropertyUtil;
 #endif
 
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Serialization;
 using System;
+using System.Security;
+using Muc;
 
 [System.Serializable]
 public class DualAttribute<T> : Attribute<T> {
 
-  [Tooltip("Other value")]
-  public T other;
+  [SerializeField]
+  [FormerlySerializedAs(nameof(other))]
+  [Tooltip("Secondary value")]
+  protected T _other;
+
+  public virtual T other {
+    get => otherAlterers.Values.Aggregate(_other, (current, alt) => alt(current));
+    set => _other = value;
+  }
+
+  protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
+
 
   public DualAttribute() { }
-
   public DualAttribute(T value, T other) : base(value) {
-    this.other = other;
+    this._other = other;
+  }
+
+
+  /// <summary> Registers a function that alters what the other property returns. </summary>
+  public void RegisterSecondaryAlterer(Func<T, T> alterer) {
+    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    var keyObject = new object();
+    otherAlterers.Add(keyObject, alterer);
+    AttributeBase.keyTarget.Add(keyObject, this);
+  }
+
+  /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
+  public override void RemoveAlterer(object key) {
+    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    alterers.Remove(key);
+    otherAlterers.Remove(key);
   }
 
   /// <summary> Sets value to other. </summary>
@@ -33,6 +61,7 @@ public class DualAttribute<T> : Attribute<T> {
       value = other;
     }
   }
+
 }
 
 
@@ -46,8 +75,8 @@ public class DualAttributeDrawer : PropertyDrawer {
     using (RestoreLabelWidthScope())
     using (RestoreFieldWidthScope()) {
 
-      var valueProperty = property.FindPropertyRelative(nameof(DualAttribute<int>.value));
-      var baseProperty = property.FindPropertyRelative(nameof(DualAttribute<int>.other));
+      var valueProperty = property.FindPropertyRelative("_value");
+      var otherProperty = property.FindPropertyRelative("_other");
 
       var fieldInfo = GetFieldInfo(property);
       var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
@@ -58,7 +87,7 @@ public class DualAttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
-        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Value");
+        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Seed");
         EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.width = (position.xMax - pos.xMin) / 2 - spacing;
@@ -68,7 +97,7 @@ public class DualAttributeDrawer : PropertyDrawer {
         EditorGUIUtility.labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
-        EditorGUI.PropertyField(pos, baseProperty, baseLabel);
+        EditorGUI.PropertyField(pos, otherProperty, baseLabel);
       }
 
     }

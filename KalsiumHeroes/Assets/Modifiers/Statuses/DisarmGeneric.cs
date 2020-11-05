@@ -9,13 +9,10 @@ public class DisarmGeneric : StatusEffect
 
     public override Type dataType => typeof(DisarmGenericData);
 
-    public override void OnTurnStart() {
-        unit.disarmed.value = true;
-        base.OnTurnStart();
+    protected override void OnRegisterAlterers()
+    {
+        // Removed automatically when the component is destroyed
+        unit.disarmed.RegisterAlterer(v => true);
     }
 
-    public override void OnTurnEnd() {
-        unit.disarmed.value = false;
-        base.OnTurnEnd();
-    }
 }

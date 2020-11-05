@@ -20,6 +20,7 @@ public class MoveAbility : Ability {
   }
 
   public override bool IsReady() {
+    if (unit.rooted.value) return false;
     return remainingMovement > 0 && base.IsReady();
   }
 

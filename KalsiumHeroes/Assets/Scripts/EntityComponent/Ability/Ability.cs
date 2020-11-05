@@ -117,9 +117,9 @@ public abstract class Ability : Modifier, IEventHandler<Events.Ability> {
         targets = targets.Where(h => {
           if (h.unit != null) {
             if (self && h.unit == unit) return true;
-            if (ally && h.unit.team == unit.team) return true;
+            if (ally && h.unit.team == unit.team && h.unit != this.unit) return true;
             if (enemy && h.unit.team != unit.team) return true;
-            if (neutral && h.unit.team == Team.Neutral) return true;
+            if (neutral && h.unit.team == Team.Neutral && h.unit != this.unit) return true;
           }
           return false;
         });

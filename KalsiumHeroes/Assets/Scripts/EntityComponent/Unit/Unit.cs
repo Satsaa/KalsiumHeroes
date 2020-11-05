@@ -19,10 +19,15 @@ public class Unit : EntityComponent {
 
   [HideInInspector]
   [Tooltip("Unit is silenced? It cannot cast spells.")]
-  public Attribute<bool> silenced;
+  public SeededAttribute<bool> silenced;
+
   [HideInInspector]
   [Tooltip("Unit is disarmed? It cannot cast weapon skills.")]
-  public Attribute<bool> disarmed;
+  public SeededAttribute<bool> disarmed;
+
+  [HideInInspector]
+  [Tooltip("Unit is rooted? It cannot move.")]
+  public SeededAttribute<bool> rooted;
 
   public Team team;
   public GameHex hex;

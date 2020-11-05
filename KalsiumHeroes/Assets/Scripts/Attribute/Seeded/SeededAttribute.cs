@@ -13,24 +13,25 @@ using System;
 using System.Security;
 using Muc;
 
-[System.Serializable]
-public class Attribute<T> : AttributeBase {
+
+[Serializable]
+// Just 
+public class SeededAttribute<T> : AttributeBase {
 
   [SerializeField]
   [FormerlySerializedAs(nameof(value))]
-  [Tooltip("Primary value")]
+  [Tooltip("Seed value")]
   protected T _value;
 
   public virtual T value {
     get => alterers.Values.Aggregate(_value, (current, alt) => alt(current));
-    set => _value = value;
   }
 
   protected Dictionary<object, Func<T, T>> alterers = new Dictionary<object, Func<T, T>>();
 
 
-  public Attribute() { }
-  public Attribute(T value) {
+  public SeededAttribute() { }
+  public SeededAttribute(T value) {
     this._value = value;
   }
 
@@ -53,35 +54,8 @@ public class Attribute<T> : AttributeBase {
 
 
 #if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(Attribute<>))]
-public class AttributeDrawer : PropertyDrawer {
-
-  public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-
-    using (PropertyScope(position, label, property, out label))
-    using (RestoreLabelWidthScope())
-    using (RestoreFieldWidthScope()) {
-
-      var valueProperty = property.FindPropertyRelative("_value");
-
-      var fieldInfo = GetFieldInfo(property);
-      var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
-
-      var noLabel = label.text is "" && label.image is null;
-      var pos = position;
-      pos.width = noLabel ? 0 : EditorGUIUtility.labelWidth;
-      if (!noLabel) EditorGUI.LabelField(pos, label);
-
-      using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
-        EditorGUIUtility.labelWidth = 35;
-        pos.xMin = pos.xMax + spacing;
-        pos.xMax = position.xMax;
-        EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
-      }
-
-    }
-
-  }
+[CustomPropertyDrawer(typeof(SeededAttribute<>))]
+public class SeededAttributeDrawer : AttributeDrawer {
 
 }
 #endif

@@ -10,17 +10,10 @@ public class RootGeneric : StatusEffect
 
     public override Type dataType => typeof(RootGenericData);
 
-    public override void OnAdd() {
-        normalMovement = unit.unitData.movement;
-        base.OnAdd();
-    }
-    public override void OnTurnStart() {
-        unit.unitData.movement.value = 0;
-        base.OnTurnStart();
+    protected override void OnRegisterAlterers()
+    {
+        // Removed automatically when the component is destroyed
+        unit.unitData.movement.RegisterAlterer(v => 0);
     }
 
-    public override void OnTurnEnd() {
-        unit.unitData.movement = normalMovement;
-        base.OnTurnEnd();
-    }
 }

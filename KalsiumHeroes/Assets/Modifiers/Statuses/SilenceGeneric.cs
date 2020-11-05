@@ -9,13 +9,10 @@ public class SilenceGeneric : StatusEffect
 
     public override Type dataType => typeof(SilenceGenericData);
 
-    public override void OnTurnStart() {
-        unit.silenced.value = true;
-        base.OnTurnStart();
+    protected override void OnRegisterAlterers()
+    {
+        // Removed automatically when the component is destroyed
+        unit.silenced.RegisterAlterer(v => true);
     }
 
-    public override void OnTurnEnd() {
-        unit.silenced.value = false;
-        base.OnTurnEnd();
-    }
 }
