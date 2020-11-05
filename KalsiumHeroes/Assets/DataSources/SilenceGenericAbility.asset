@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility
   m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
   targetType: 28
   range:
-    value: 1
+    value: 4
     enabled: 1
   rangeMode: 0
   radius:
@@ -31,7 +31,7 @@ MonoBehaviour:
     value: 0
   cooldown:
     value: 0
-    other: 1
+    other: 3
   charges:
     value: 1
     other: 1
@@ -40,6 +40,5 @@ MonoBehaviour:
     enabled: 0
   alwaysCastable:
     value: 0
-  damage:
-    value: 30
-  damageType: 1
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}

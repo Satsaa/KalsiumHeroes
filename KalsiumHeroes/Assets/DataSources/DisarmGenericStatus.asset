@@ -9,21 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9ef48133379c34fbceee66c10573c8, type: 3}
-  m_Name: DotTestStatus
+  m_Script: {fileID: 11500000, guid: a048e5852712933428974a03f98c834b, type: 3}
+  m_Name: DisarmGenericStatus
   m_EditorClassIdentifier: 
-  displayName: Simple Damage Over Time
-  description: Deals an amount of damage at the end of the turn.
-  identifier: status_dot_test
+  displayName: Disarm
+  description: Unit is disarmed for 2 turns
+  identifier: status_disarm_generic
   componentType:
-    _name: DotTestStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: DisarmGeneric, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 4
+  debuffType: 2
   positive: 0
   dispellable: 1
   turnDuration:
     value: 2
     enabled: 1
-  damage:
-    value: 25
-  damageType: 3
