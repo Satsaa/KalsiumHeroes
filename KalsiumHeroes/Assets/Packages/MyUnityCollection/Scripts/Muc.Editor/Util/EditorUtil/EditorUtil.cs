@@ -19,9 +19,9 @@ namespace Muc.Editor {
 
     public static float spacing => EditorGUIUtility.standardVerticalSpacing; // kControlVerticalSpacing
 
-    public static int indentLevel => EditorGUI.indentLevel;
-    public static float labelWidth => EditorGUIUtility.labelWidth;
-    public static float fieldWidth => EditorGUIUtility.fieldWidth;
+    public static int indentLevel { get => EditorGUI.indentLevel; set => EditorGUI.indentLevel = value; }
+    public static float labelWidth { get => EditorGUIUtility.labelWidth; set => EditorGUIUtility.labelWidth = value; }
+    public static float fieldWidth { get => EditorGUIUtility.fieldWidth; set => EditorGUIUtility.fieldWidth = value; }
 
     #endregion
 

@@ -50,7 +50,39 @@ public class SeededToggleAttribute<T> : SeededAttribute<T> {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(SeededToggleAttribute<>))]
-public class SeededToggleAttribute : ToggleAttributeDrawer {
+public class SeededToggleAttribute : PropertyDrawer {
+
+  public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+
+    using (PropertyScope(position, label, property, out label))
+    using (RestoreLabelWidthScope())
+    using (RestoreFieldWidthScope()) {
+
+      var enabledProperty = property.FindPropertyRelative(nameof(ToggleAttribute<int>.enabled));
+      var valueProperty = property.FindPropertyRelative("_value");
+
+      var fieldInfo = GetFieldInfo(property);
+      var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
+
+      var noLabel = label.text is "" && label.image is null;
+      var pos = position;
+      pos.width = noLabel ? 0 : labelWidth;
+      if (!noLabel) EditorGUI.LabelField(pos, label);
+
+      using (IndentScope(v => 0)) {
+        pos.xMin = pos.xMax + spacing;
+        pos.width = 15 + spacing;
+        EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
+
+        pos.xMin = pos.xMax + spacing;
+        pos.xMax = position.xMax;
+        using (DisabledScope(v => Application.isPlaying))
+          EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
+      }
+
+    }
+
+  }
 
 }
 #endif

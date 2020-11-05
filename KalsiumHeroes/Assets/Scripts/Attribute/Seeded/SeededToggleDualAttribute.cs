@@ -51,7 +51,49 @@ public class SeededToggleDualAttribute<T> : SeededDualAttribute<T> {
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(SeededToggleDualAttribute<>))]
-public class SeededToggleDualAttributeDrawer : ToggleDualAttributeDrawer {
+public class SeededToggleDualAttributeDrawer : PropertyDrawer {
+
+  public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+
+    using (PropertyScope(position, label, property, out label))
+    using (RestoreLabelWidthScope())
+    using (RestoreFieldWidthScope()) {
+
+      var enabledProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.enabled));
+      var valueProperty = property.FindPropertyRelative("_value");
+      var otherProperty = property.FindPropertyRelative("_other");
+
+      var fieldInfo = GetFieldInfo(property);
+      var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
+
+      var noLabel = label.text is "" && label.image is null;
+      var pos = position;
+      pos.width = noLabel ? 0 : labelWidth;
+      if (!noLabel) EditorGUI.LabelField(pos, label);
+
+      using (IndentScope(v => 0)) {
+        pos.xMin = pos.xMax + spacing;
+        pos.width = 15 + spacing;
+        EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
+
+        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Value");
+        labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
+        pos.xMin = pos.xMax + spacing;
+        pos.width = (position.xMax - pos.xMin - 15 - spacing * 2) / 2 - spacing;
+        using (DisabledScope(v => Application.isPlaying))
+          EditorGUI.PropertyField(pos, valueProperty, valueLabel);
+
+        var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? "Other");
+        labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
+        pos.xMin = pos.xMax + spacing;
+        pos.xMax = position.xMax;
+        using (DisabledScope(v => Application.isPlaying))
+          EditorGUI.PropertyField(pos, otherProperty, baseLabel);
+      }
+
+    }
+
+  }
 
 }
 #endif

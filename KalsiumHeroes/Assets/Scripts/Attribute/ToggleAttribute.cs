@@ -64,10 +64,10 @@ public class ToggleAttributeDrawer : PropertyDrawer {
 
       var noLabel = label.text is "" && label.image is null;
       var pos = position;
-      pos.width = noLabel ? 0 : EditorGUIUtility.labelWidth;
+      pos.width = noLabel ? 0 : labelWidth;
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
-      using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
+      using (IndentScope(v => 0)) {
         pos.xMin = pos.xMax + spacing;
         pos.width = 15 + spacing;
         EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
