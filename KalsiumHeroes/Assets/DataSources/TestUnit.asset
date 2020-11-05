@@ -16,7 +16,7 @@ MonoBehaviour:
   description: A unit for testing purposes.
   identifier: unit_test
   componentType:
-    _name: Modifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   speed:
     value: 2
   movement:
@@ -25,6 +25,6 @@ MonoBehaviour:
     value: 100
     other: 100
   defense:
-    value: 0
+    value: 20
   resistance:
-    value: 0
+    value: 20

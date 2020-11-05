@@ -9,29 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility
+  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Name: AreaDamageSpellGeneric
   m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
+  displayName: AoE Spell
+  description: Damage a unit for 25 damage and the units around it for 15.
+  identifier: ability_aoe_generic
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
+  abilityType: 3
+  targetType: -1
   range:
-    value: 1
+    value: 4
     enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    value: 1
   requiresVision:
     value: 0
   cooldown:
     value: 0
-    other: 1
+    other: 2
   charges:
     value: 1
     other: 1
@@ -40,6 +40,8 @@ MonoBehaviour:
     enabled: 0
   alwaysCastable:
     value: 0
-  damage:
-    value: 30
-  damageType: 1
+  primaryDamage:
+    value: 15
+  secondaryDamage:
+    value: 10
+  damageType: 2

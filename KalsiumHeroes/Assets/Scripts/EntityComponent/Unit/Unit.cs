@@ -21,7 +21,7 @@ public class Unit : EntityComponent {
   [Tooltip("Unit is silenced? It cannot cast spells.")]
   public Attribute<bool> silenced;
   [HideInInspector]
-  [Tooltip("Unit is silenced? It cannot cast weapon skills.")]
+  [Tooltip("Unit is disarmed? It cannot cast weapon skills.")]
   public Attribute<bool> disarmed;
 
   public Team team;

@@ -9,29 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: AddUselessAbilitiesAbility
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric
   m_EditorClassIdentifier: 
-  displayName: Add abilities.
-  description: Adds a bunch of useless abilities.
-  identifier: ability_add_useless_abilities
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 4
-  targetType: 28
+  abilityType: 3
+  targetType: 14
   range:
-    value: 5
+    value: 4
     enabled: 1
   rangeMode: 0
   radius:
     value: 0
   requiresVision:
-    value: 0
+    value: 1
   cooldown:
     value: 0
-    other: 0
+    other: 2
   charges:
     value: 1
     other: 1
@@ -40,6 +40,5 @@ MonoBehaviour:
     enabled: 0
   alwaysCastable:
     value: 0
-  components:
-  - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
-  - {fileID: 11400000, guid: 65405924ca6997c4b9e43104a1b03747, type: 2}
+  heal:
+    value: 25
