@@ -22,7 +22,7 @@ public class UnitAbilityUI : MonoBehaviour {
 
   [Header("Ability Buttons")]
 
-  [Tooltip("A UI element with a Button and an Image component")]
+  [Tooltip("A prefab with AbilityButton component")]
   public GameObject prefab;
   public GameObject parent;
 
@@ -30,7 +30,7 @@ public class UnitAbilityUI : MonoBehaviour {
   public Color enabledColor = Color.white;
 
   public float distance = 74;
-  public List<GameObject> items;
+  public List<AbilityButton> items;
 
   void OnValidate() => Init();
   void Reset() => Init();
@@ -65,7 +65,7 @@ public class UnitAbilityUI : MonoBehaviour {
 
       if (totalChanged) {
         while (total > items.Count) {
-          items.Add(Instantiate(prefab, parent.transform));
+          items.Add(Instantiate(prefab, parent.transform).GetComponent<AbilityButton>());
         }
         while (total < items.Count) {
           var last = items[items.Count - 1];
@@ -77,28 +77,38 @@ public class UnitAbilityUI : MonoBehaviour {
       for (int i = 0; i < abilities.Length; i++) {
         var ability = abilities[i];
         var item = items[i];
-        var image = item.GetComponent<Image>();
-        var button = item.GetComponent<Button>();
 
         if (!ability.data) continue;
 
         if (totalChanged) {
-          image.sprite = ability.abilityData.sprite;
-          item.GetComponentInChildren<Text>().text = ability.data.displayName;
+          item.fgImage.sprite = item.bgImage.sprite = ability.abilityData.sprite;
+          item.bgImage.color = disabledColor;
+          item.abilityText.text = ability.data.displayName;
+          item.cooldownText.text = ability.abilityData.cooldown.value > 0 ? ability.abilityData.cooldown.value.ToString() : "";
+          item.fgImage.fillAmount = 1;
         }
 
         if (unit != Game.rounds.current) {
           uiTransform.gameObject.SetActive(false);
         } else {
           uiTransform.gameObject.SetActive(true);
-          button.onClick.RemoveAllListeners();
+          item.chargeText.text = GetChargeText(ability.abilityData);
+          item.abilityButton.onClick.RemoveAllListeners();
           if (Game.events.finished && ability.IsReady()) {
-            image.color = enabledColor;
-            button.onClick.AddListener(() => {
-              Game.targeting.TryStartSequence(ability.GetTargeter());
-            });
+            item.fgImage.fillAmount = 1;
+            item.cooldownText.text = "";
+            item.fgImage.color = enabledColor;
+            item.abilityButton.onClick.AddListener(() => { Game.targeting.TryStartSequence(ability.GetTargeter()); });
           } else {
-            image.color = disabledColor;
+            if (ability.abilityData.cooldown.other > 0 && ability.abilityData.charges.value <= 0) {
+              item.fgImage.fillAmount = 1 - (float)ability.abilityData.cooldown.value / (float)ability.abilityData.cooldown.other;
+              item.cooldownText.text = ability.abilityData.cooldown.value > 0 ? ability.abilityData.cooldown.value.ToString() : "";
+              item.fgImage.color = enabledColor;
+            } else {
+              item.fgImage.color = disabledColor;
+              item.fgImage.fillAmount = 1;
+              item.cooldownText.text = "";
+            }
           }
         }
       }
@@ -106,14 +116,15 @@ public class UnitAbilityUI : MonoBehaviour {
       for (int i = 0; i < passives.Length; i++) {
         var passive = passives[i];
         var item = items[i];
-        var image = item.GetComponent<Image>();
-        var button = item.GetComponent<Button>();
 
         if (!passive.data) continue;
 
         if (totalChanged) {
-          image.sprite = passive.abilityData.sprite;
-          item.GetComponentInChildren<Text>().text = passive.data.displayName;
+          item.fgImage.sprite = item.bgImage.sprite = passive.passiveData.sprite;
+          item.bgImage.color = enabledColor;
+          item.abilityText.text = passive.data.displayName;
+          item.cooldownText.text = "";
+          item.fgImage.fillAmount = 1;
         }
 
         if (unit != Game.rounds.current) {
@@ -123,15 +134,27 @@ public class UnitAbilityUI : MonoBehaviour {
         }
       }
 
-      var minX = -distance * (abilities.Length - 1) / 2f;
-      for (int i = 0; i < items.Count; i++) {
-        var item = items[i];
-        if (!item.activeSelf) continue;
-        var rt = item.GetComponent<RectTransform>();
-        var pos = rt.localPosition;
-        pos.x = minX + i * distance;
-        rt.localPosition = pos;
+      // Layout
+      if (totalChanged) {
+        var minX = -distance * (abilities.Length - 1) / 2f;
+        for (int i = 0; i < items.Count; i++) {
+          var item = items[i];
+          var rt = item.GetComponent<RectTransform>();
+          var pos = rt.localPosition;
+          pos.x = minX + i * distance;
+          rt.localPosition = pos;
+        }
       }
     }
+  }
+
+  public bool ShowCharges(AbilityData abilityData) {
+    if (abilityData.charges.other <= 1) return false;
+    if (abilityData.cooldown.other <= 1) return false;
+    return true;
+  }
+
+  public string GetChargeText(AbilityData abilityData) {
+    return ShowCharges(abilityData) ? abilityData.charges.value.ToString() : "";
   }
 }

@@ -445,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &17409469
+--- !u!114 &11979148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,39 +454,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: SilenceGenericAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: Silence
-  description: Silence unit for 2 turns
-  identifier: ability_silence_generic
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
   range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
+    _value: 0
+    enabled: 0
+  rangeMode: 3
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 3
+    _value: 0
+    _other: 0
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
+    _value: 0
 --- !u!1001 &18940908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1286,7 +1283,7 @@ PrefabInstance:
     - target: {fileID: 445236898, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1119365522}
+      objectReference: {fileID: 764594771}
     - target: {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
@@ -1307,10 +1304,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -38
       objectReference: {fileID: 0}
-    - target: {fileID: 9047958664919704070, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_SortingOrder
-      value: -587
-      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (3)
@@ -1322,7 +1315,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1660152445}
+      objectReference: {fileID: 872524871}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -1378,11 +1371,11 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 773658474}
+      objectReference: {fileID: 11979148}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 421449950}
+      objectReference: {fileID: 1709904758}
     - target: {fileID: 9047958665225754105, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1419,7 +1412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
-  data: {fileID: 2005893672}
+  data: {fileID: 478014868}
   unit: {fileID: 1441245360}
   castBlocked: 0
 --- !u!114 &45899792
@@ -1435,7 +1428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: f8bba39654d436547ba2b9d85a8c4a98, type: 2}
-  data: {fileID: 1582066155}
+  data: {fileID: 95335921}
   unit: {fileID: 45899789}
   castBlocked: 0
 --- !u!114 &45899793
@@ -1451,7 +1444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 2101298095cdc9048ba712714abd8c3d, type: 2}
-  data: {fileID: 1717699921}
+  data: {fileID: 633129384}
   unit: {fileID: 45899789}
   castBlocked: 0
 --- !u!114 &45899794
@@ -1467,7 +1460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  data: {fileID: 780830744}
+  data: {fileID: 537891824}
   unit: {fileID: 45899789}
   castBlocked: 0
 --- !u!114 &47786447 stripped
@@ -1486,91 +1479,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1459943512}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &62992768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: DisarmGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Disarm
-  description: Disarm a unit for 2 turns.
-  identifier: ability_disarm_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
---- !u!114 &65784202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!1001 &65888775
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1877,6 +1785,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 18940908}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &95335921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
+  componentType:
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 14
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 1
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  heal:
+    _value: 25
 --- !u!1001 &96129924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2364,6 +2314,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &117079084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
+  componentType:
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
 --- !u!114 &124156272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,24 +2374,24 @@ MonoBehaviour:
   abilityType: 3
   targetType: 1
   range:
-    value: 5
+    _value: 5
     enabled: 1
   rangeMode: 0
   radius:
-    value: 1
+    _value: 1
   requiresVision:
-    value: 1
+    _value: 1
   cooldown:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
 --- !u!1001 &131771893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2693,6 +2682,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &136133154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!1001 &149063585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2862,6 +2890,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 617463205}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &157343639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!114 &158004446 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -3031,49 +3087,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &158819041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!114 &165085755 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -3090,87 +3103,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1571198065}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &166131710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
-  componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 3
-    other: 3
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 1
---- !u!114 &183739975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: DisarmGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Disarm
-  description: Disarm a unit for 2 turns.
-  identifier: ability_disarm_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
 --- !u!1001 &192308023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3324,6 +3256,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &198896876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!4 &199614652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -3340,45 +3300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &215247579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!1001 &218792557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3685,7 +3606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &233331834
+--- !u!114 &227097653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3694,42 +3615,78 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
-  m_Name: AreaDamageSpellGeneric(Clone)
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: AoE Spell
-  description: Damage a unit for 25 damage and the units around it for 15.
-  identifier: ability_aoe_generic
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
   componentType:
-    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: -1
+  abilityType: 1
+  targetType: 1
   range:
-    value: 4
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+--- !u!114 &231850275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
+  componentType:
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 14
+  range:
+    _value: 4
     enabled: 1
   rangeMode: 0
   radius:
-    value: 1
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 1
   cooldown:
-    value: 0
-    other: 2
+    _value: 0
+    _other: 2
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
-  primaryDamage:
-    value: 15
-  secondaryDamage:
-    value: 10
-  damageType: 2
+    _value: 0
+  heal:
+    _value: 25
 --- !u!1001 &236349812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4008,48 +3965,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &238360403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: SilenceGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Silence
-  description: Silence unit for 2 turns
-  identifier: ability_silence_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!114 &241489663 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -4420,48 +4335,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &277422973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Heal
-  description: Heal a unit for 25 health
-  identifier: ability_heal_generic
-  componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 14
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 1
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  heal:
-    value: 25
 --- !u!4 &280200887 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -4784,7 +4657,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &302916320
+--- !u!114 &286316171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
+--- !u!114 &286581385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4794,35 +4709,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
+  m_Name: MoveAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
   componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 1
   targetType: 1
   range:
-    value: 0
+    _value: 0
     enabled: 0
-  rangeMode: 0
+  rangeMode: 3
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 3
-    other: 3
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 1
+    _value: 0
 --- !u!1001 &304137944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5596,49 +5511,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &337380303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!4 &350979372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -5655,7 +5527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &362843574
+--- !u!114 &372637607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5664,36 +5536,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric(Clone)
   m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
   componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
+  abilityType: 3
+  targetType: 14
   range:
-    value: 0
-    enabled: 0
+    _value: 4
+    enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 1
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 2
   charges:
-    value: 3
-    other: 3
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 1
+    _value: 0
+  heal:
+    _value: 25
 --- !u!1001 &375513843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6040,6 +5915,131 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 2070387939}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &389028824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
+--- !u!114 &397998836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
+  componentType:
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+--- !u!114 &401781830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!4 &405947034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -6209,7 +6209,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 709934506}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &421449950
+--- !u!114 &419124472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6219,35 +6219,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
+  m_Name: MoveAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
   componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 1
   targetType: 1
   range:
-    value: 0
+    _value: 0
     enabled: 0
-  rangeMode: 0
+  rangeMode: 3
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 3
-    other: 3
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 1
+    _value: 0
 --- !u!114 &422713608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -6862,7 +6862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
-  data: {fileID: 17409469}
+  data: {fileID: 621478608}
   unit: {fileID: 1441245360}
   castBlocked: 0
 --- !u!114 &445236899
@@ -6878,7 +6878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  data: {fileID: 1375681478}
+  data: {fileID: 1439979541}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &445236905
@@ -6894,7 +6894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 2101298095cdc9048ba712714abd8c3d, type: 2}
-  data: {fileID: 62992768}
+  data: {fileID: 684221311}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &445236907
@@ -6910,7 +6910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: f8bba39654d436547ba2b9d85a8c4a98, type: 2}
-  data: {fileID: 1372832973}
+  data: {fileID: 586301244}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!4 &448120139 stripped
@@ -7239,7 +7239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &477847097
+--- !u!114 &478014868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7248,40 +7248,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
   targetType: 28
   range:
-    value: 1
+    _value: 4
     enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 1
+    _value: 0
+    _other: 3
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!1001 &479132697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7584,6 +7583,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &488720493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
+  componentType:
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
 --- !u!1001 &491814653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8088,24 +8126,24 @@ MonoBehaviour:
   abilityType: 3
   targetType: 1
   range:
-    value: 5
+    _value: 5
     enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 1
+    _value: 1
   cooldown:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -8282,6 +8320,51 @@ MonoBehaviour:
   zoomSmooth: 0.85
   rotSmooth: 0.85
   displacementSmooth: 0.85
+--- !u!114 &521535333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Name: AreaDamageSpellGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: AoE Spell
+  description: Damage a unit for 25 damage and the units around it for 15.
+  identifier: ability_aoe_generic
+  componentType:
+    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: -1
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 1
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  primaryDamage:
+    _value: 15
+  secondaryDamage:
+    _value: 10
+  damageType: 2
 --- !u!114 &521898424 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -8298,66 +8381,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1453109123}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &527008048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
---- !u!114 &529613689 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  m_PrefabInstance: {fileID: 1571673481}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &529613693 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  m_PrefabInstance: {fileID: 1571673481}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &537452592
+--- !u!114 &524233389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8375,16 +8399,77 @@ MonoBehaviour:
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   speed:
-    value: 2
+    _value: 2
   movement:
-    value: 5
+    _value: 5
   health:
-    value: 100
-    other: 100
+    _value: 100
+    _other: 100
   defense:
-    value: 20
+    _value: 20
   resistance:
-    value: 20
+    _value: 20
+--- !u!114 &529613689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  m_PrefabInstance: {fileID: 1571673481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &529613693 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  m_PrefabInstance: {fileID: 1571673481}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &537891824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Name: AreaDamageSpellGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: AoE Spell
+  description: Damage a unit for 25 damage and the units around it for 15.
+  identifier: ability_aoe_generic
+  componentType:
+    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: -1
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 1
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  primaryDamage:
+    _value: 15
+  secondaryDamage:
+    _value: 10
+  damageType: 2
 --- !u!114 &539212510 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -8880,6 +8965,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &579157560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!1001 &583380380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9218,7 +9342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &586525456
+--- !u!114 &586301244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9227,25 +9351,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric(Clone)
   m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
   componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 14
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 1
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  heal:
+    _value: 25
 --- !u!1001 &592138828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9568,6 +9706,115 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &597518213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: DisarmGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Disarm
+  description: Disarm a unit for 2 turns.
+  identifier: ability_disarm_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
+--- !u!114 &600953821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
+--- !u!114 &601631402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!114 &605818569 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -9584,6 +9831,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1101049729}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &609164835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &617463205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9753,6 +10043,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &621478608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
+--- !u!114 &627548827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: DisarmGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Disarm
+  description: Disarm a unit for 2 turns.
+  identifier: ability_disarm_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
 --- !u!1001 &628968585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9902,6 +10276,133 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &633129384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: DisarmGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Disarm
+  description: Disarm a unit for 2 turns.
+  identifier: ability_disarm_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
+--- !u!114 &633537922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
+--- !u!114 &634448680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: DisarmGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Disarm
+  description: Disarm a unit for 2 turns.
+  identifier: ability_disarm_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
 --- !u!1001 &635011724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10055,6 +10556,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &635889708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!4 &636643010 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -10089,7 +10629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: f8bba39654d436547ba2b9d85a8c4a98, type: 2}
-  data: {fileID: 1051923335}
+  data: {fileID: 917788477}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &637367406
@@ -10105,7 +10645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  data: {fileID: 233331834}
+  data: {fileID: 521535333}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &637367407
@@ -10121,7 +10661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 2101298095cdc9048ba712714abd8c3d, type: 2}
-  data: {fileID: 2076170159}
+  data: {fileID: 1254289545}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &637367413
@@ -10137,7 +10677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
-  data: {fileID: 1750998010}
+  data: {fileID: 286316171}
   unit: {fileID: 1441245360}
   castBlocked: 0
 --- !u!114 &641981755 stripped
@@ -10491,24 +11031,109 @@ MonoBehaviour:
   abilityType: 3
   targetType: 1
   range:
-    value: 5
+    _value: 5
     enabled: 1
   rangeMode: 0
   radius:
-    value: 1
+    _value: 1
   requiresVision:
-    value: 1
+    _value: 1
   cooldown:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
+--- !u!114 &684221311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: DisarmGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Disarm
+  description: Disarm a unit for 2 turns.
+  identifier: ability_disarm_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
+--- !u!114 &687538339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &697026905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10847,6 +11472,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &710049545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
+  componentType:
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
 --- !u!4 &712325718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -10879,6 +11543,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &713153749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!1001 &721188696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11233,93 +11936,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 113252731}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &740745547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: SilenceGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Silence
-  description: Silence unit for 2 turns
-  identifier: ability_silence_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
---- !u!114 &742381937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
-  m_Name: AreaDamageSpellGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: AoE Spell
-  description: Damage a unit for 25 damage and the units around it for 15.
-  identifier: ability_aoe_generic
-  componentType:
-    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: -1
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  primaryDamage:
-    value: 15
-  secondaryDamage:
-    value: 10
-  damageType: 2
 --- !u!114 &747611917 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -11521,45 +12137,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &757636508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
-  componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 3
-    other: 3
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 1
 --- !u!114 &762459005 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -11576,6 +12153,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1487468398}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &764594771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &767006026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11745,7 +12365,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 539531800}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &769869282
+--- !u!114 &769776284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11766,24 +12386,24 @@ MonoBehaviour:
   abilityType: 1
   targetType: 1
   range:
-    value: 0
+    _value: 0
     enabled: 0
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 1
+    _value: 1
 --- !u!114 &771371334 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -11800,45 +12420,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 767006026}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &773658474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!1001 &777813681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11976,90 +12557,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &780830744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
-  m_Name: AreaDamageSpellGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: AoE Spell
-  description: Damage a unit for 25 damage and the units around it for 15.
-  identifier: ability_aoe_generic
-  componentType:
-    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: -1
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  primaryDamage:
-    value: 15
-  secondaryDamage:
-    value: 10
-  damageType: 2
---- !u!114 &784571610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
-  componentType:
-    _name: EndTurnAbility, Assembly-CSharp
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 0
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 3
-    other: 3
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 1
 --- !u!1001 &791310326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12362,6 +12859,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &794716266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!114 &796727633 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -12378,6 +12917,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 755915289}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &799445036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!1001 &803991752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12684,6 +13251,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &811575930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!114 &811830178 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -12861,6 +13456,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &836140524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &838382357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12871,7 +13509,7 @@ PrefabInstance:
     - target: {fileID: 445236898, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 963487628}
+      objectReference: {fileID: 389028824}
     - target: {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
@@ -12908,10 +13546,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -38
       objectReference: {fileID: 0}
-    - target: {fileID: 9047958664919704070, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_SortingOrder
-      value: -607
-      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (1)
@@ -12919,7 +13553,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1651483675}
+      objectReference: {fileID: 524233389}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -12958,7 +13592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421619, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421619, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12975,43 +13609,15 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 215247579}
+      objectReference: {fileID: 419124472}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1567936336}
+      objectReference: {fileID: 136133154}
     - target: {fileID: 9047958665225754105, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c58e0732f8bb8e14b9ae1933b542f6f6, type: 2}
-    - target: {fileID: 9047958665418756380, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.311987
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75.42938
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -34.15146
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.311987
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75.42938
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 15.848541
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -13463,6 +14069,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &872524871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!114 &880880015 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -13938,6 +14572,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &917788477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
+  componentType:
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 14
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 1
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  heal:
+    _value: 25
 --- !u!1001 &921634198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14445,6 +15121,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 436821572}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &944871512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &956994225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14590,45 +15309,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &957215917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!1001 &957290706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14778,48 +15458,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &963487628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageData(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Punch
-  description: Deals some damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: -1
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 3
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 100
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 99
-  damageType: 1
 --- !u!1001 &967066468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14973,7 +15611,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 219365316}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &973274551
+--- !u!114 &976865791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  m_PrefabInstance: {fileID: 2114314468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &976865792 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  m_PrefabInstance: {fileID: 2114314468}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &986859532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14994,68 +15648,24 @@ MonoBehaviour:
   abilityType: 1
   targetType: 1
   range:
-    value: 0
+    _value: 0
     enabled: 0
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 1
---- !u!114 &976865791 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  m_PrefabInstance: {fileID: 2114314468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &976865792 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  m_PrefabInstance: {fileID: 2114314468}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &994341125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
+    _value: 1
 --- !u!1001 &994817404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15660,6 +16270,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1015335358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!4 &1021336329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -15766,7 +16419,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1021881585
 PrefabInstance:
@@ -16086,6 +16739,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1036066335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!1001 &1038734258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16384,87 +17065,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1045794509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
-  componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 3
-    other: 3
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 1
---- !u!114 &1051923335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Heal
-  description: Heal a unit for 25 health
-  identifier: ability_heal_generic
-  componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 14
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 1
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  heal:
-    value: 25
 --- !u!114 &1055035466 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -16835,45 +17435,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1001664142}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1071857534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!114 &1082747874 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -17059,49 +17620,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 2007479476}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1097848496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!1001 &1101049729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17440,48 +17958,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1006724933}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1115344099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Heal
-  description: Heal a unit for 25 health
-  identifier: ability_heal_generic
-  componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 14
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 1
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  heal:
-    value: 25
 --- !u!1001 &1116657979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17772,49 +18248,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1119365522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!1001 &1121163531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18096,6 +18529,45 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 131771893}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1145852392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
+  componentType:
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
 --- !u!1001 &1159241270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18249,45 +18721,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1169606865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!4 &1169671399 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -18455,7 +18888,7 @@ PrefabInstance:
     - target: {fileID: 445236898, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 65784202}
+      objectReference: {fileID: 687538339}
     - target: {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
@@ -18492,18 +18925,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -38
       objectReference: {fileID: 0}
-    - target: {fileID: 9047958664919704070, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_SortingOrder
-      value: -533
-      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 537452592}
+      objectReference: {fileID: 157343639}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -18559,43 +18992,15 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1766455956}
+      objectReference: {fileID: 488720493}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1945678600}
+      objectReference: {fileID: 601631402}
     - target: {fileID: 9047958665225754105, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c58e0732f8bb8e14b9ae1933b542f6f6, type: 2}
-    - target: {fileID: 9047958665418756380, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.311987
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75.42938
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -34.15146
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.311987
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75.42938
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 15.848541
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -18629,7 +19034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: f8bba39654d436547ba2b9d85a8c4a98, type: 2}
-  data: {fileID: 1911238473}
+  data: {fileID: 231850275}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &1183135269
@@ -18645,7 +19050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  data: {fileID: 1694756631}
+  data: {fileID: 1202777369}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &1183135270
@@ -18661,7 +19066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 2101298095cdc9048ba712714abd8c3d, type: 2}
-  data: {fileID: 183739975}
+  data: {fileID: 627548827}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &1183135271
@@ -18677,10 +19082,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
-  data: {fileID: 238360403}
+  data: {fileID: 1380591585}
   unit: {fileID: 1183135266}
   castBlocked: 0
---- !u!114 &1186205838
+--- !u!114 &1202777369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18689,39 +19094,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: DisarmGenericAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Name: AreaDamageSpellGeneric(Clone)
   m_EditorClassIdentifier: 
-  displayName: Disarm
-  description: Disarm a unit for 2 turns.
-  identifier: ability_disarm_generic
+  displayName: AoE Spell
+  description: Damage a unit for 25 damage and the units around it for 15.
+  identifier: ability_aoe_generic
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
-  targetType: 28
+  targetType: -1
   range:
-    value: 4
+    _value: 4
     enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 1
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 3
+    _value: 0
+    _other: 2
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
+    _value: 0
+  primaryDamage:
+    _value: 15
+  secondaryDamage:
+    _value: 10
+  damageType: 2
 --- !u!1001 &1204904952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18923,35 +19331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1232579571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
---- !u!114 &1232582426
+--- !u!114 &1228049668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18972,24 +19352,24 @@ MonoBehaviour:
   abilityType: 1
   targetType: 1
   range:
-    value: 0
+    _value: 0
     enabled: 0
   rangeMode: 3
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
 --- !u!4 &1232633396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -19211,6 +19591,45 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 236349812}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1248609655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!1001 &1250078903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19364,45 +19783,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1250317205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!114 &1250495642 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -19419,6 +19799,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1042286060}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1254289545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: DisarmGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Disarm
+  description: Disarm a unit for 2 turns.
+  identifier: ability_disarm_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
 --- !u!1001 &1259757748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20227,7 +20649,7 @@ Transform:
   - {fileID: 521898425}
   - {fileID: 1680556006}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1270279099
 MonoBehaviour:
@@ -20258,45 +20680,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1352878285}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1281986285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!1001 &1282812709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21231,45 +21614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1332678419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!1001 &1335171416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21721,6 +22065,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1351046027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &1352878285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21874,45 +22261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1356613048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!4 &1364668404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -21929,93 +22277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1372832973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Heal
-  description: Heal a unit for 25 health
-  identifier: ability_heal_generic
-  componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 14
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 1
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  heal:
-    value: 25
---- !u!114 &1375681478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
-  m_Name: AreaDamageSpellGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: AoE Spell
-  description: Damage a unit for 25 damage and the units around it for 15.
-  identifier: ability_aoe_generic
-  componentType:
-    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: -1
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  primaryDamage:
-    value: 15
-  secondaryDamage:
-    value: 10
-  damageType: 2
 --- !u!114 &1378885138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -22032,6 +22293,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 192308023}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1380591585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!4 &1389115610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -22201,45 +22504,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1394631972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!1001 &1405896670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22420,45 +22684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1422930097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
-  componentType:
-    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 3
-    other: 3
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 1
 --- !u!114 &1424676599 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -22628,6 +22853,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1439979541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Name: AreaDamageSpellGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: AoE Spell
+  description: Damage a unit for 25 damage and the units around it for 15.
+  identifier: ability_aoe_generic
+  componentType:
+    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: -1
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 1
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  primaryDamage:
+    _value: 15
+  secondaryDamage:
+    _value: 10
+  damageType: 2
 --- !u!114 &1441245360 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -22963,7 +23233,7 @@ PrefabInstance:
     - target: {fileID: 445236898, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1703281222}
+      objectReference: {fileID: 2042505317}
     - target: {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
@@ -22984,10 +23254,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -38
       objectReference: {fileID: 0}
-    - target: {fileID: 9047958664919704070, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_SortingOrder
-      value: -651
-      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit
@@ -22999,7 +23265,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1919723570}
+      objectReference: {fileID: 1952954847}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -23038,7 +23304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421619, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421619, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -23055,11 +23321,11 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1356613048}
+      objectReference: {fileID: 710049545}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 784571610}
+      objectReference: {fileID: 769776284}
     - target: {fileID: 9047958665225754105, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -24540,7 +24806,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1536441923 stripped
 MonoBehaviour:
@@ -24737,7 +25003,7 @@ PrefabInstance:
     - target: {fileID: 445236898, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1619573425}
+      objectReference: {fileID: 2138747390}
     - target: {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
@@ -24774,10 +25040,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -38
       objectReference: {fileID: 0}
-    - target: {fileID: 9047958664919704070, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_SortingOrder
-      value: -538
-      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (5)
@@ -24785,7 +25047,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1976381610}
+      objectReference: {fileID: 799445036}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -24841,43 +25103,15 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 957215917}
+      objectReference: {fileID: 117079084}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1045794509}
+      objectReference: {fileID: 635889708}
     - target: {fileID: 9047958665225754105, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c58e0732f8bb8e14b9ae1933b542f6f6, type: 2}
-    - target: {fileID: 9047958665418756380, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.311987
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75.42938
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665418756381, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -34.15146
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.311987
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 75.42938
-      objectReference: {fileID: 0}
-    - target: {fileID: 9047958665996003042, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 15.848541
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
@@ -24911,7 +25145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: f8bba39654d436547ba2b9d85a8c4a98, type: 2}
-  data: {fileID: 277422973}
+  data: {fileID: 372637607}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &1549058959
@@ -24927,7 +25161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  data: {fileID: 742381937}
+  data: {fileID: 1695619458}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &1549058960
@@ -24943,7 +25177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 2101298095cdc9048ba712714abd8c3d, type: 2}
-  data: {fileID: 1816771431}
+  data: {fileID: 597518213}
   unit: {fileID: 1410276922}
   castBlocked: 0
 --- !u!114 &1549058961
@@ -24959,9 +25193,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
-  data: {fileID: 2104148402}
+  data: {fileID: 794716266}
   unit: {fileID: 1549058957}
   castBlocked: 0
+--- !u!114 &1550371883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
+  m_Name: SilenceGenericAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Silence
+  description: Silence unit for 2 turns
+  identifier: ability_silence_generic
+  componentType:
+    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 28
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 3
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  components:
+  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!1001 &1551398652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25147,45 +25423,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1250078903}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1567936336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: EndTurnAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: End Turn
-  description: Ends the turn.
-  identifier: ability_end_turn
-  componentType:
-    _name: EndTurnAbility, Assembly-CSharp
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 0
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 3
-    other: 3
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 1
 --- !u!1001 &1571198065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25645,48 +25882,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1582066155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Heal
-  description: Heal a unit for 25 health
-  identifier: ability_heal_generic
-  componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 14
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 1
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  heal:
-    value: 25
 --- !u!114 &1583553933 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -26105,49 +26300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1619573425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!4 &1623605973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -26164,62 +26316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1640015911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
---- !u!114 &1645597984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
 --- !u!1001 &1647936777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26373,34 +26469,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1651483675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
 --- !u!114 &1654345069 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -26570,34 +26638,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1660152445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
 --- !u!114 &1680556005 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -26630,7 +26670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1692882927
+--- !u!114 &1695619458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26652,73 +26692,28 @@ MonoBehaviour:
   abilityType: 3
   targetType: -1
   range:
-    value: 4
+    _value: 4
     enabled: 1
   rangeMode: 0
   radius:
-    value: 1
+    _value: 1
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 2
+    _value: 0
+    _other: 2
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   primaryDamage:
-    value: 15
+    _value: 15
   secondaryDamage:
-    value: 10
-  damageType: 2
---- !u!114 &1694756631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
-  m_Name: AreaDamageSpellGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: AoE Spell
-  description: Damage a unit for 25 damage and the units around it for 15.
-  identifier: ability_aoe_generic
-  componentType:
-    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: -1
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 1
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  primaryDamage:
-    value: 15
-  secondaryDamage:
-    value: 10
+    _value: 10
   damageType: 2
 --- !u!114 &1696236632 stripped
 MonoBehaviour:
@@ -26736,48 +26731,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 721188696}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1703281222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageData(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Punch
-  description: Deals some damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: -1
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 3
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 100
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 99
-  damageType: 1
 --- !u!1001 &1703637430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26931,6 +26884,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1706434765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!1001 &1706455586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27233,6 +27214,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &1709904758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!114 &1714934236 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -27249,48 +27269,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 31171133}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1717699921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: DisarmGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Disarm
-  description: Disarm a unit for 2 turns.
-  identifier: ability_disarm_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
 --- !u!114 &1724530813 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -27323,48 +27301,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 659887766}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1750998010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: SilenceGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Silence
-  description: Silence unit for 2 turns
-  identifier: ability_silence_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!114 &1755472816 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -27550,45 +27486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1766455956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: MoveAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Move
-  description: Moves to the target tile.
-  identifier: ability_move
-  componentType:
-    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 1
-  targetType: 1
-  range:
-    value: 0
-    enabled: 0
-  rangeMode: 3
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 0
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
 --- !u!4 &1773382561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -27621,49 +27518,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 2070286589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1788255750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
-  componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
 --- !u!1 &1796706707
 GameObject:
   m_ObjectHideFlags: 0
@@ -27774,7 +27628,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1798826870
 PrefabInstance:
@@ -28130,7 +27984,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 1825748506}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1815932305
+--- !u!114 &1819011680
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28139,82 +27993,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
-  m_Name: MeleeRangeDamageAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Name: AreaDamageSpellGeneric(Clone)
   m_EditorClassIdentifier: 
-  displayName: Melee
-  description: Deals 30 Physical damage to a unit.
-  identifier: ability_melee_range_damage
+  displayName: AoE Spell
+  description: Damage a unit for 25 damage and the units around it for 15.
+  identifier: ability_aoe_generic
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
-  targetType: 28
-  range:
-    value: 1
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 1
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  damage:
-    value: 30
-  damageType: 1
---- !u!114 &1816771431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: DisarmGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Disarm
-  description: Disarm a unit for 2 turns.
-  identifier: ability_disarm_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
-  targetType: 28
+  targetType: -1
   range:
-    value: 4
+    _value: 4
     enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 1
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 3
+    _value: 0
+    _other: 2
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
+    _value: 0
+  primaryDamage:
+    _value: 15
+  secondaryDamage:
+    _value: 10
+  damageType: 2
 --- !u!114 &1823209661 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -28629,7 +28443,7 @@ RectTransform:
   m_Children:
   - {fileID: 2118014340}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -29280,34 +29094,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1903987813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
 --- !u!114 &1904337418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29329,94 +29115,24 @@ MonoBehaviour:
   abilityType: 3
   targetType: 1
   range:
-    value: 5
+    _value: 5
     enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 1
+    _value: 1
   cooldown:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
---- !u!114 &1911238473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Heal
-  description: Heal a unit for 25 health
-  identifier: ability_heal_generic
-  componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 14
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 1
-  cooldown:
-    value: 0
-    other: 2
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  heal:
-    value: 25
---- !u!114 &1919723570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
+    _value: 0
 --- !u!114 &1921584610 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -29775,7 +29491,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &1945678600
+--- !u!114 &1952954847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
+--- !u!114 &1957241087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  m_PrefabInstance: {fileID: 236753581}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1957241091 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  m_PrefabInstance: {fileID: 236753581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1957922219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29796,40 +29556,24 @@ MonoBehaviour:
   abilityType: 1
   targetType: 1
   range:
-    value: 0
+    _value: 0
     enabled: 0
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 1
---- !u!114 &1957241087 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  m_PrefabInstance: {fileID: 236753581}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1957241091 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  m_PrefabInstance: {fileID: 236753581}
-  m_PrefabAsset: {fileID: 0}
+    _value: 1
 --- !u!1001 &1964492464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30015,34 +29759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1976381610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: TestUnit(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Test Unit
-  description: A unit for testing purposes.
-  identifier: unit_test
-  componentType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  speed:
-    value: 2
-  movement:
-    value: 5
-  health:
-    value: 100
-    other: 100
-  defense:
-    value: 20
-  resistance:
-    value: 20
 --- !u!114 &1976437697 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -30196,7 +29912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &2005893672
+--- !u!114 &1989886597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30205,39 +29921,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: SilenceGenericAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: TestUnit(Clone)
   m_EditorClassIdentifier: 
-  displayName: Silence
-  description: Silence unit for 2 turns
-  identifier: ability_silence_generic
+  displayName: Test Unit
+  description: A unit for testing purposes.
+  identifier: unit_test
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  speed:
+    _value: 2
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 20
+  resistance:
+    _value: 20
 --- !u!1001 &2006674548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30536,7 +30238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &2012587157
+--- !u!114 &2022897453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30554,16 +30256,16 @@ MonoBehaviour:
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   speed:
-    value: 2
+    _value: 2
   movement:
-    value: 5
+    _value: 5
   health:
-    value: 100
-    other: 100
+    _value: 100
+    _other: 100
   defense:
-    value: 20
+    _value: 20
   resistance:
-    value: 20
+    _value: 20
 --- !u!114 &2022906521 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -30733,6 +30435,88 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &2040474087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
+--- !u!114 &2042505317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!1001 &2046991651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30902,6 +30686,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2064153904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
+  componentType:
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 3
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
 --- !u!1001 &2070286589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31065,7 +30888,7 @@ PrefabInstance:
     - target: {fileID: 445236898, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1788255750}
+      objectReference: {fileID: 401781830}
     - target: {fileID: 1534457735, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
@@ -31086,10 +30909,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -38
       objectReference: {fileID: 0}
-    - target: {fileID: 9047958664919704070, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
-      propertyPath: m_SortingOrder
-      value: -573
-      objectReference: {fileID: 0}
     - target: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Name
       value: TestUnit (2)
@@ -31101,7 +30920,7 @@ PrefabInstance:
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1645597984}
+      objectReference: {fileID: 600953821}
     - target: {fileID: 9047958665005421618, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: hex
       value: 
@@ -31157,11 +30976,11 @@ PrefabInstance:
     - target: {fileID: 9047958665005421620, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 1394631972}
+      objectReference: {fileID: 1145852392}
     - target: {fileID: 9047958665005421621, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 302916320}
+      objectReference: {fileID: 713153749}
     - target: {fileID: 9047958665225754105, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -31198,7 +31017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
-  data: {fileID: 740745547}
+  data: {fileID: 1550371883}
   unit: {fileID: 1441245360}
   castBlocked: 0
 --- !u!114 &2070331755
@@ -31214,7 +31033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: f8bba39654d436547ba2b9d85a8c4a98, type: 2}
-  data: {fileID: 1115344099}
+  data: {fileID: 2145612801}
   unit: {fileID: 2070331752}
   castBlocked: 0
 --- !u!114 &2070331756
@@ -31230,7 +31049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 2101298095cdc9048ba712714abd8c3d, type: 2}
-  data: {fileID: 1186205838}
+  data: {fileID: 634448680}
   unit: {fileID: 2070331752}
   castBlocked: 0
 --- !u!114 &2070331757
@@ -31246,7 +31065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  data: {fileID: 1692882927}
+  data: {fileID: 1819011680}
   unit: {fileID: 2070331752}
   castBlocked: 0
 --- !u!1001 &2070387939
@@ -31402,7 +31221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &2076170159
+--- !u!114 &2071941032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31411,39 +31230,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: DisarmGenericAbility(Clone)
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: MoveAbility(Clone)
   m_EditorClassIdentifier: 
-  displayName: Disarm
-  description: Disarm a unit for 2 turns.
-  identifier: ability_disarm_generic
+  displayName: Move
+  description: Moves to the target tile.
+  identifier: ability_move
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
+    _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
   range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
+    _value: 0
+    enabled: 0
+  rangeMode: 3
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 3
+    _value: 0
+    _other: 0
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
+    _value: 0
     enabled: 0
   alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
+    _value: 0
 --- !u!1001 &2082712164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31766,6 +31582,45 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8045842600534042514, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   m_PrefabInstance: {fileID: 921634198}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2088098598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Name: EndTurnAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: End Turn
+  description: Ends the turn.
+  identifier: ability_end_turn
+  componentType:
+    _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 1
+  targetType: 1
+  range:
+    _value: 0
+    enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 3
+    _other: 3
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 1
 --- !u!114 &2094567962 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -31935,48 +31790,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
---- !u!114 &2104148402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45bb96ba749f9ae4da8f1f91cbc41658, type: 3}
-  m_Name: SilenceGenericAbility(Clone)
-  m_EditorClassIdentifier: 
-  displayName: Silence
-  description: Silence unit for 2 turns
-  identifier: ability_silence_generic
-  componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
-  targetType: 28
-  range:
-    value: 4
-    enabled: 1
-  rangeMode: 0
-  radius:
-    value: 0
-  requiresVision:
-    value: 0
-  cooldown:
-    value: 0
-    other: 3
-  charges:
-    value: 1
-    other: 1
-  uses:
-    value: 0
-    enabled: 0
-  alwaysCastable:
-    value: 0
-  components:
-  - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
 --- !u!1001 &2107728646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32855,6 +32668,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+--- !u!114 &2138747390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeRangeDamageAbility(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Melee
+  description: Deals 30 Physical damage to a unit.
+  identifier: ability_melee_range_damage
+  componentType:
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 1
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1
 --- !u!114 &2142028917 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
@@ -32887,6 +32743,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1ab006c3287874190499c384e3d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2145612801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
+  m_Name: HealGeneric(Clone)
+  m_EditorClassIdentifier: 
+  displayName: Heal
+  description: Heal a unit for 25 health
+  identifier: ability_heal_generic
+  componentType:
+    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 3
+  targetType: 14
+  range:
+    _value: 4
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 1
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  heal:
+    _value: 25
 --- !u!114 &2145795364 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5021845314000482199, guid: 741552137c685484a85dcdd7b8204340, type: 3}
