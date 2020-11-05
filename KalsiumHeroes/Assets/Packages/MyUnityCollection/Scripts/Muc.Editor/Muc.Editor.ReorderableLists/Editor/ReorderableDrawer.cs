@@ -11,7 +11,7 @@ namespace Muc.Editor.ReorderableLists {
   using UnityEditorInternal;
   using UnityEngine;
 
-  using static Muc.Editor.EditorUtil;
+  using static EditorUtil;
 
 
   public class ReorderableDrawer : ArrayDrawer {
@@ -99,26 +99,12 @@ namespace Muc.Editor.ReorderableLists {
     private ReorderableValues CreateReorderableList(FieldInfo fieldInfo, SerializedProperty property) {
       var listType = fieldInfo.FieldType;
 
-      var elementType = GetArrayOrListElementType(listType);
+      var elementType = getArrayOrListElementType(listType);
+      var elementIsValue = EditorUtil.TypeIsBasic(elementType);
 
-      var elementIsValue =
-          elementType.IsEnum ||
-          elementType.IsPrimitive ||
-          elementType == typeof(string) ||
-          elementType == typeof(Color) ||
-          elementType == typeof(LayerMask) ||
-          elementType == typeof(Vector2) ||
-          elementType == typeof(Vector3) ||
-          elementType == typeof(Vector4) ||
-          elementType == typeof(Rect) ||
-          elementType == typeof(AnimationCurve) ||
-          elementType == typeof(Bounds) ||
-          elementType == typeof(Gradient) ||
-          elementType == typeof(Quaternion) ||
-          elementType == typeof(Vector2Int) ||
-          elementType == typeof(Vector3Int) ||
-          elementType == typeof(RectInt) ||
-          elementType == typeof(BoundsInt);
+      if (property.arrayElementType == "managedReference<>") {
+        return new ReorderableReferences(property);
+      }
 
       if (elementIsValue) {
         return new ReorderableValues(property);
@@ -130,7 +116,7 @@ namespace Muc.Editor.ReorderableLists {
         return new ReorderableValues(property);
       }
 
-      var elementPropertyDrawerType = GetDrawerTypeForType(elementType);
+      var elementPropertyDrawerType = getDrawerTypeForType(elementType);
       if (elementPropertyDrawerType == null) {
         var elementIsStruct =
             elementType.IsValueType &&
@@ -152,7 +138,7 @@ namespace Muc.Editor.ReorderableLists {
 
     private delegate Type GetArrayOrListElementTypeDelegate(Type listType);
 
-    private static readonly GetArrayOrListElementTypeDelegate GetArrayOrListElementType =
+    private static readonly GetArrayOrListElementTypeDelegate getArrayOrListElementType =
       (GetArrayOrListElementTypeDelegate)Delegate.CreateDelegate(
         typeof(GetArrayOrListElementTypeDelegate),
         null,
@@ -169,7 +155,7 @@ namespace Muc.Editor.ReorderableLists {
 
     private delegate Type GetDrawerTypeForTypeDelegate(Type type);
 
-    private static readonly GetDrawerTypeForTypeDelegate GetDrawerTypeForType =
+    private static readonly GetDrawerTypeForTypeDelegate getDrawerTypeForType =
       (GetDrawerTypeForTypeDelegate)Delegate.CreateDelegate(
         typeof(GetDrawerTypeForTypeDelegate),
         null,

@@ -26,12 +26,28 @@ namespace Muc.Editor.ReorderableLists {
     public readonly bool isReferenceList;
     public readonly bool isUnityObjectList;
 
+    public new int count { // The base implementation throws with some cases with SerializeReference
+      get {
+        if (!prop.hasMultipleDifferentValues) return prop.arraySize;
+        int smallestSize = prop.arraySize;
+        foreach (var targetObject in prop.serializedObject.targetObjects) {
+          using (var serializedObject = new SerializedObject(targetObject)) {
+            var property = serializedObject.FindProperty(prop.propertyPath);
+            if (property != null) smallestSize = Math.Min(property.arraySize, smallestSize);
+          }
+        }
+        return smallestSize;
+      }
+    }
+
     protected static readonly new Defaults defaultBehaviours = new Defaults();
 
     //======================================================================
 
     public ReorderableValues(SerializedProperty primaryProperty)
       : base(primaryProperty.serializedObject, primaryProperty.Copy(), true, true, true, true) {
+
+      primaryProperty.serializedObject.Update();
 
       var value = GetFirstValue<IList>(primaryProperty);
       listType = value.GetType();
@@ -65,12 +81,8 @@ namespace Muc.Editor.ReorderableLists {
     }
 
     public virtual void DoGUI(Rect position) {
-      onNextGUIFrame?.Invoke();
-      onNextGUIFrame = null;
-
       position = EditorGUI.IndentedRect(position);
-
-      using (new EditorGUI.IndentLevelScope(-EditorGUI.indentLevel)) {
+      using (IndentScope(v => 0)) {
         try {
           if (prop.isExpanded) {
             if (count < 1) {
@@ -96,26 +108,18 @@ namespace Muc.Editor.ReorderableLists {
     //======================================================================
 
     protected int ClampIndex(int index, int plusMax = -1) {
-      var max = Mathf.Max(0, prop.arraySize + plusMax);
+      var max = Mathf.Max(0, count + plusMax);
       return Mathf.Clamp(index, 0, max);
     }
 
     //======================================================================
 
-    protected bool HasMultipleArraySizes() {
+    protected bool HasDifferentSizes() {
+      if (!prop.hasMultipleDifferentValues) return false;
       var vals = GetValues<IList>(prop);
       var firstLength = vals.First().Count;
       var sameLengths = vals.Aggregate(true, (b, v) => v == null ? b : b && v.Count == firstLength);
-      return sameLengths;
-    }
-
-    //======================================================================
-
-    protected IEnumerable<int> GetMultipleArraySizes() {
-      var vals = GetValues<IList>(prop);
-      foreach (var val in vals) {
-        yield return val.Count;
-      }
+      return !sameLengths;
     }
 
     //======================================================================
@@ -124,7 +128,7 @@ namespace Muc.Editor.ReorderableLists {
       var headerRect = position;
       headerRect.height = headerHeight;
 
-      if (showDefaultBackground && IsRepaint()) {
+      if (showDefaultBackground && Event.current.type == EventType.Repaint) {
         defaultBehaviours.DrawHeaderBackground(headerRect);
       }
     }
@@ -133,7 +137,7 @@ namespace Muc.Editor.ReorderableLists {
 
     private bool CanAdd(ReorderableList list) {
       if (!prop.serializedObject.isEditingMultipleObjects) return true;
-      return HasMultipleArraySizes();
+      return !prop.hasMultipleDifferentValues && !HasDifferentSizes();
     }
 
     private void OnAddCallback(ReorderableList list) {
@@ -171,16 +175,23 @@ namespace Muc.Editor.ReorderableLists {
       }
     }
 
+    private void CopyElementToClipboard(int elementIndex) {
+      if (elementIndex < 0 || elementIndex >= count) return;
+      EditorGUIUtility.systemCopyBuffer = CopyElementContent(elementIndex).Serialize();
+    }
+
     private ClipboardElement CopyElementContent(int elementIndex) {
-      if (elementIndex < 0) throw new IndexOutOfRangeException("Index must be non-negative.");
+      elementIndex = ClampIndex(elementIndex);
 
       var arrayObj = (IList)prop.GetObject();
       var elementObj = arrayObj[elementIndex];
-      var elementType = elementObj.GetType();
+      var elementType = elementObj?.GetType() ?? elementBaseType;
       var elementJson =
-        elementType.IsPrimitive || elementType == typeof(string) ?
-        elementObj.ToString() :
-        JsonUtility.ToJson(elementObj);
+        elementObj == null ? "null" : (
+          elementType.IsPrimitive || elementType == typeof(string) ?
+          elementObj.ToString() :
+          JsonUtility.ToJson(elementObj)
+        );
 
       var clipboardElement = new ClipboardElement();
       clipboardElement.type = elementType.FullName;
@@ -190,53 +201,39 @@ namespace Muc.Editor.ReorderableLists {
       return clipboardElement;
     }
 
-    private void CopyElementToClipboard(int elementIndex) {
-      if (elementIndex < 0) return;
-      EditorGUIUtility.systemCopyBuffer = CopyElementContent(elementIndex).Serialize();
-    }
-
     private void CutElement(int elementIndex) {
-      if (elementIndex < 0) return;
+      if (elementIndex < 0 || elementIndex >= count) return;
 
       CopyElementToClipboard(elementIndex);
       DeleteElement(elementIndex);
     }
 
     private bool CanCopy(int elementIndex) {
+      if (elementIndex < 0 || elementIndex >= count) return false;
       var elementProperty = prop.GetArrayElementAtIndex(elementIndex);
       return !elementProperty.hasMultipleDifferentValues;
     }
 
     private bool CanPaste(ClipboardElement clipboardElement, int elementIndex) {
       if (clipboardElement == null) return false;
-      if (elementIndex > prop.arraySize) return false;
-      var arrayObj = (IList)prop.GetObject();
-      var arrayType = arrayObj.GetType();
-      var elementType = arrayType.IsArray ? arrayType.GetElementType() : arrayType.GetGenericArguments()[0];
+      if (elementIndex < 0 || elementIndex >= count) return false;
       var clipboardType = Type.GetType(clipboardElement.assemblyQualifiedName);
-      return elementType.IsAssignableFrom(clipboardType);
+      return elementBaseType.IsAssignableFrom(clipboardType);
     }
 
     private void PasteElement(int elementIndex, ClipboardElement clipboardElement) {
-      if (elementIndex < 0) return;
-
+      if (elementIndex < 0 || elementIndex >= count) return;
       if (clipboardElement == null) return;
 
-      var serializedObject = prop.serializedObject;
-      var targetObject = serializedObject.targetObject;
-      Undo.RecordObject(targetObject, "Paste value");
+      foreach (var targetObject in prop.serializedObject.targetObjects) {
+        Undo.RecordObject(targetObject, "Paste value");
+      }
 
-      if (elementIndex >= prop.arraySize)
-        prop.arraySize = elementIndex + 1;
-
-      var arrayObjs = GetValues<IList>(prop);
-      var arrayType = prop.GetObject().GetType();
       var elementProperty = prop.GetArrayElementAtIndex(elementIndex);
-      var elementType = arrayType.IsArray ? arrayType.GetElementType() : arrayType.GetGenericArguments()[0];
       var elementJson = clipboardElement.json;
       var elementInstanceId = clipboardElement.instanceId;
 
-      if (elementType.IsPrimitive || elementType == typeof(string)) {
+      if (elementBaseType.IsPrimitive || elementBaseType == typeof(string)) {
         object newValue;
         switch (GetFirstValue<object>(elementProperty)) {
           case String _:
@@ -260,17 +257,17 @@ namespace Muc.Editor.ReorderableLists {
             newValue = Int64.Parse(elementJson);
             break;
         }
-        var converted = Convert.ChangeType(newValue, elementType);
+        var converted = Convert.ChangeType(newValue, elementBaseType);
         SetValueNoRecord(elementProperty, converted);
-      } else if (typeof(UnityEngine.Object).IsAssignableFrom(elementType)) {
+      } else if (typeof(UnityEngine.Object).IsAssignableFrom(elementBaseType)) {
         var fromId = EditorUtility.InstanceIDToObject(elementInstanceId);
         if (fromId != null) SetValueNoRecord(elementProperty, fromId);
       } else {
-        var fromJson = JsonUtility.FromJson(elementJson, elementType);
+        var fromJson = JsonUtility.FromJson(elementJson, elementBaseType);
         if (fromJson != null) SetValueNoRecord(elementProperty, fromJson);
       }
 
-      serializedObject.Update();
+      prop.serializedObject.Update();
       GUI.changed = true;
     }
 
@@ -295,27 +292,23 @@ namespace Muc.Editor.ReorderableLists {
       return type;
     }
 
-    protected virtual void InsertElement(int elementIndex) {
+    protected virtual void InsertElement(int elementIndex, Type type = null) {
       elementIndex = ClampIndex(elementIndex);
 
       var serializedObject = prop.serializedObject;
       prop.InsertArrayElementAtIndex(elementIndex);
 
-      var type = prop.arrayElementType;
-
       // Set correct default values for first element
-      if (prop.arraySize == 1) {
+      if (count == 1) {
         var element = prop.GetArrayElementAtIndex(elementIndex);
-        var elPropType = element.propertyType;
         if (isReferenceList) {
-
-          var instance = InstaniateType(elementBaseType);
+          var instance = InstaniateType(type ?? elementBaseType);
           if (instance != null) {
             serializedObject.ApplyModifiedProperties();
             element.managedReferenceValue = instance;
           }
-        } else if (elPropType == SerializedPropertyType.Generic) {
-          var instance = InstaniateType(elementBaseType);
+        } else if (element.propertyType == SerializedPropertyType.Generic) {
+          var instance = InstaniateType(type ?? elementBaseType);
           if (instance != null) {
             serializedObject.ApplyModifiedProperties();
             SetValueNoRecord(element, instance);
@@ -329,7 +322,7 @@ namespace Muc.Editor.ReorderableLists {
         var copyElement = prop.GetArrayElementAtIndex(copyIndex);
         var copyElementType = GetManagedReferenceType(copyElement);
 
-        object instance = InstaniateType(copyElementType);
+        object instance = InstaniateType(type ?? copyElementType);
         if (instance != null) {
           serializedObject.ApplyModifiedProperties();
           element.managedReferenceValue = instance;
@@ -401,22 +394,15 @@ namespace Muc.Editor.ReorderableLists {
       var serializedObject = prop.serializedObject;
 
       var element = prop.GetArrayElementAtIndex(elementIndex);
-      var oldSubassets = element.FindReferencedSubassets();
-      var preDelSize = prop.arraySize;
+      var preDelSize = count;
       prop.DeleteArrayElementAtIndex(elementIndex);
-      if (isUnityObjectList && preDelSize == prop.arraySize) { // Unity Objects get set to none first...
+      if (isUnityObjectList && preDelSize == count) { // Unity Objects get set to none first...
         prop.DeleteArrayElementAtIndex(elementIndex);
       }
-      if (preDelSize != prop.arraySize) { // Make sure deletion actually happened
-        index = Math.Min(elementIndex, prop.arraySize - 1);
-        if (oldSubassets.Any()) {
-          Debug.Log("Had sub assets!");
-          serializedObject.ApplyModifiedPropertiesWithoutUndo();
-          serializedObject.DestroyUnreferencedSubassets(oldSubassets);
-        } else {
-          serializedObject.ApplyModifiedProperties();
-          serializedObject.Update();
-        }
+      if (preDelSize != count) { // Make sure deletion actually happened
+        index = Math.Min(elementIndex, count - 1);
+        serializedObject.ApplyModifiedProperties();
+        serializedObject.Update();
       }
       elementIndex = ClampIndex(elementIndex);
       GUI.changed = true;
@@ -425,26 +411,17 @@ namespace Muc.Editor.ReorderableLists {
     //======================================================================
 
     protected virtual float GetElementHeight(SerializedProperty element, int elementIndex) {
-      return GetPropertyHeight(element, GUIContent.none);
+      return EditorGUI.GetPropertyHeight(element, GUIContent.none);
     }
 
     protected virtual void DrawElement(Rect position, SerializedProperty element, int elementIndex, bool isActive) {
-      PropertyField(position, element, GUIContent.none);
+      EditorGUI.PropertyField(position, element, GUIContent.none);
     }
 
     //======================================================================
 
     private void DrawElementBackground(Rect position, SerializedProperty element, int elementIndex, bool isActive, bool isFocused) {
-      defaultBehaviours.DrawElementBackground(position, elementIndex, isActive, isFocused, draggable: true);
-
-    }
-
-    //======================================================================
-
-    private Action onNextGUIFrame;
-
-    protected void OnNextGUIFrame(Action action) {
-      onNextGUIFrame += action;
+      defaultBehaviours.DrawElementBackground(position, elementIndex, isActive, isFocused, true);
     }
 
     //======================================================================
@@ -459,7 +436,7 @@ namespace Muc.Editor.ReorderableLists {
       var serializedObject = prop.serializedObject;
       var canCopy = CanCopy(elementIndex);
       if (canCopy) {
-        menu.AddItem(cutLabel, false, () => OnNextGUIFrame(() => CutElement(elementIndex)));
+        menu.AddItem(cutLabel, false, () => CutElement(elementIndex));
         menu.AddItem(copyLabel, false, () => CopyElementToClipboard(elementIndex));
       } else {
         menu.AddDisabledItem(cutLabel);
@@ -467,38 +444,13 @@ namespace Muc.Editor.ReorderableLists {
       }
       var content = ClipboardElement.Deserialize(EditorGUIUtility.systemCopyBuffer);
       var canPaste = CanPaste(content, elementIndex);
-      if (canPaste) menu.AddItem(pasteLabel, false, () => OnNextGUIFrame(() => PasteElement(elementIndex, content)));
+      if (canPaste) menu.AddItem(pasteLabel, false, () => PasteElement(elementIndex, content));
       else menu.AddDisabledItem(pasteLabel);
     }
 
     //======================================================================
 
-    protected float GetPropertyHeight(SerializedProperty property) {
-      return EditorGUI.GetPropertyHeight(property, includeChildren: true);
-    }
-
-    protected float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-      return EditorGUI.GetPropertyHeight(property, label, includeChildren: true);
-    }
-
-    //======================================================================
-
-    protected void PropertyField(Rect position, SerializedProperty property) {
-      EditorGUI.PropertyField(position, property, includeChildren: true);
-    }
-
-    protected void PropertyField(Rect position, SerializedProperty property, GUIContent label) {
-      EditorGUI.PropertyField(position, property, label, includeChildren: true);
-    }
-
-    //======================================================================
-
     protected static readonly GUIStyle ContextMenuButtonStyle = "Button";
-
-    protected static bool IsRepaint() {
-      var current = Event.current;
-      return current != null && current.type == EventType.Repaint;
-    }
 
     //======================================================================
 
@@ -507,7 +459,7 @@ namespace Muc.Editor.ReorderableLists {
 
       var foldoutRect = position;
       foldoutRect.y++;
-      foldoutRect.xMin += 15;
+      foldoutRect.xMin += indentSize;
       foldoutRect.height = lineHeight;
       foldoutRect.width -= 50;
       prop.isExpanded = EditorGUI.Foldout(foldoutRect, prop.isExpanded, label, true);
@@ -524,10 +476,7 @@ namespace Muc.Editor.ReorderableLists {
       var elementContentRect = position;
 
       // draw the background
-      if (drawElementBackgroundCallback == null)
-        defaultBehaviours.DrawElementBackground(elementRect, -1, false, false, false);
-      else
-        drawElementBackgroundCallback(elementRect, -1, false, false);
+      DrawElementBackgroundCallback(elementRect, -1, false, false);
 
       elementContentRect = elementRect;
       elementContentRect.xMin += Defaults.padding;
@@ -594,7 +543,7 @@ namespace Muc.Editor.ReorderableLists {
       this.label.image = source.image;
       this.label.tooltip = string.IsNullOrEmpty(source.tooltip) ? prop.tooltip : source.tooltip;
       if (prop.serializedObject.isEditingMultipleObjects) {
-        if (!HasMultipleArraySizes()) {
+        if (HasDifferentSizes()) {
           var vals = GetValues<IList>(prop);
           var lengthString = vals.Aggregate("", (b, v) => v == null ? b : b + $"{v.Count}, ");
           lengthString = lengthString.Substring(0, lengthString.Length - 2);
@@ -602,7 +551,7 @@ namespace Muc.Editor.ReorderableLists {
           return;
         }
       }
-      this.label.text = $"{source.text ?? string.Empty} ({prop.arraySize})";
+      this.label.text = $"{source.text ?? string.Empty} ({count})";
     }
 
     //======================================================================
@@ -610,20 +559,16 @@ namespace Muc.Editor.ReorderableLists {
     private readonly List<float> elementHeights = new List<float>();
 
     private void UpdateElementHeights() {
-      var arraySize = GetMultipleArraySizes().Min();
+      var count = this.count;
       elementHeights.Clear();
-      elementHeights.Capacity = arraySize;
-      for (int i = 0; i < arraySize; i++) elementHeights.Add(0);
+      elementHeights.Capacity = count;
+      for (int i = 0; i < count; i++) elementHeights.Add(0);
 
       if (prop.isExpanded) {
-        for (int i = 0; i < arraySize; i++) {
+        for (int i = 0; i < count; i++) {
           var element = prop.GetArrayElementAtIndex(i);
           var elementHeight = GetElementHeight(element, i);
-          elementHeights[i] += elementHeight;
-        }
-        for (int i = 0; i < arraySize; i++) {
-          var elementHeight = elementHeights[i];
-          elementHeights[i] = AddElementPadding(elementHeight);
+          elementHeights[i] += AddElementPadding(elementHeight);
         }
       }
     }
@@ -646,23 +591,21 @@ namespace Muc.Editor.ReorderableLists {
     private void DrawElementCallback(Rect position, int elementIndex, bool isActive, bool isFocused) {
       var primaryProperty = prop;
       if (primaryProperty.isExpanded) {
-        RemoveElementPadding(ref position);
-        DrawElementRows(position, elementIndex, isActive);
+        position = RemoveElementPadding(position);
+        DrawElement(position, elementIndex, isActive);
       }
     }
 
-    private void DrawElementRows(Rect position, int elementIndex, bool isActive) {
+    private void DrawElement(Rect position, int elementIndex, bool isActive) {
       var element = prop.GetArrayElementAtIndex(elementIndex);
-      position.height = GetElementHeight(element, elementIndex);
       DrawElement(position, element, elementIndex, isActive);
-      position.y += position.height;
     }
 
     private void DrawElementBackgroundCallback(Rect position, int elementIndex, bool isActive, bool isFocused) {
       if (prop.isExpanded == false)
         return;
 
-      var length = prop.arraySize;
+      var length = count;
       var element = default(SerializedProperty);
 
       var activeIndex = base.index;
@@ -687,7 +630,7 @@ namespace Muc.Editor.ReorderableLists {
     }
 
     private void DrawEmptyElementCallback(Rect position) {
-      using (DisabledScope(v => true)) {
+      using (DisabledScope()) {
         EditorGUI.LabelField(position, "List is Empty");
       }
     }
@@ -755,10 +698,11 @@ namespace Muc.Editor.ReorderableLists {
         + elementHeight;
     }
 
-    private void RemoveElementPadding(ref Rect position) {
+    private Rect RemoveElementPadding(Rect position) {
       var verticalSpacing = EditorGUIUtility.standardVerticalSpacing;
-      position.yMin += (extraSpacing + verticalSpacing) / 2;
-      position.yMax -= (extraSpacing + verticalSpacing) / 2;
+      position.yMin += extraSpacing + verticalSpacing / 2;
+      position.yMax -= (verticalSpacing) / 2;
+      return position;
     }
 
     //======================================================================

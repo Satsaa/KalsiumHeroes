@@ -111,49 +111,12 @@ namespace Muc.Data {
         hint.text = value.type == null ? "null" : $"{value.type.ToString()} ({value.type.Assembly.GetName().Name})";
         if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
           var types = value.GetValidTypes();
-          var menu = BuildMenu(property, types.ToList(), values);
+          var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(property, type));
           menu.DropDown(position);
         }
       }
     }
 
-    private static GenericMenu BuildMenu(SerializedProperty property, List<Type> types, IEnumerable<SerializedType> targets) {
-      var menu = new GenericMenu();
-
-      if (types.Count > 50) {
-
-        // Ensure "No Namespace" comes first if it is used.
-        var firstNoNamespace = types.FindIndex(v => v.Namespace == null && !v.FullName.Contains("<PrivateImplementationDetails>"));
-        if (firstNoNamespace != -1) {
-          var type = types[firstNoNamespace];
-          var content = new GUIContent($"No Namespace/{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
-          menu.AddItem(content, targets.Any(t => type == t.type), () => { OnSelect(property, type); });
-        }
-
-        for (int i = 0; i < types.Count; i++) {
-          if (i == firstNoNamespace) continue;
-          var type = types[i];
-          if (type.FullName.Contains("<PrivateImplementationDetails>")) continue;
-          UnityEngine.GUIContent content;
-          if (type.Namespace == null) {
-            content = new GUIContent($"No Namespace/{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
-          } else {
-            content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
-          }
-          menu.AddItem(content, targets.Any(t => type == t.type), () => { OnSelect(property, type); });
-        }
-
-      } else {
-
-        foreach (var type in types) {
-          var content = new GUIContent($"{type.ToString()} ({type.Assembly.GetName().Name})");
-          menu.AddItem(content, targets.Any(t => type == t.type), () => { OnSelect(property, type); });
-        }
-
-      }
-
-      return menu;
-    }
 
     private static void OnSelect(SerializedProperty property, Type type) {
       var values = GetValues<SerializedType>(property);

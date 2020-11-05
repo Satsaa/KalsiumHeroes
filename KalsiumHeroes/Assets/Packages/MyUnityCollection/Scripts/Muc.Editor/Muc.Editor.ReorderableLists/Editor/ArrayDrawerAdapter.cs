@@ -53,7 +53,7 @@ namespace Muc.Editor.ReorderableLists {
 
     private delegate FieldInfo GetFieldInfoFromPropertyDelegate(SerializedProperty property, out Type propertyType);
 
-    private static readonly GetFieldInfoFromPropertyDelegate s_GetFieldInfoFromProperty =
+    private static readonly GetFieldInfoFromPropertyDelegate getFieldInfoFromProperty =
       (GetFieldInfoFromPropertyDelegate)Delegate.CreateDelegate(
         typeof(GetFieldInfoFromPropertyDelegate),
         null,
@@ -65,11 +65,8 @@ namespace Muc.Editor.ReorderableLists {
 
     internal static FieldInfo GetFieldInfo(SerializedProperty property) {
       Type propertyType;
-      var fieldInfo = s_GetFieldInfoFromProperty(property, out propertyType);
-
-      if (fieldInfo == null)
-        Debug.LogFormat("GetFieldInfo({0}) == null", property.propertyPath);
-
+      var fieldInfo = getFieldInfoFromProperty(property, out propertyType);
+      if (fieldInfo == null) Debug.LogFormat("GetFieldInfo({0}) == null", property.propertyPath);
       return fieldInfo;
     }
 

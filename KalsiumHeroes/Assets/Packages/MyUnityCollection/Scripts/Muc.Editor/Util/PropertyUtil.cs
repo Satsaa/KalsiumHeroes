@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 namespace Muc.Editor {
 
+  using System;
   using System.Collections;
   using System.Collections.Generic;
   using System.Reflection;
@@ -27,15 +28,18 @@ namespace Muc.Editor {
     }
 
     /// <summary>
-    /// Gets the first value of a SerializedProperty.
+    /// Gets the first valid value of a SerializedProperty.
     /// </summary>
     public static T GetFirstValue<T>(SerializedProperty property) {
       string propertyPath = property.propertyPath;
-      object value = property.serializedObject.targetObject;
-      int cursor = 0;
-      while (NextPathComponent(propertyPath, ref cursor, out var token))
-        value = GetPathComponentValue(value, token);
-      return (T)value;
+      foreach (object targetObject in property.serializedObject.targetObjects) {
+        var value = targetObject;
+        int cursor = 0;
+        while (NextPathComponent(propertyPath, ref cursor, out var token))
+          value = GetPathComponentValue(value, token);
+        if (value != null) return (T)value;
+      }
+      return default;
     }
 
     /// <summary>

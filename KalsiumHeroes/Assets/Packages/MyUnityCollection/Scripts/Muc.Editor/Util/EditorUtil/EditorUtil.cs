@@ -2,12 +2,14 @@
 namespace Muc.Editor {
 
   using System;
+  using System.Collections.Generic;
+  using System.Linq;
   using System.Reflection;
   using UnityEditor;
   using UnityEngine;
 
 
-  public static class EditorUtil {
+  public static partial class EditorUtil {
 
     #region Variables
 
@@ -42,6 +44,34 @@ namespace Muc.Editor {
       res.width = fieldWidth;
       res.height = height;
       return res;
+    }
+
+    #endregion
+
+
+    #region Utility
+
+    /// <summary>
+    /// Basic? I don't know what that means... simple Types that Unity renders on a single line.
+    /// </summary>
+    public static bool TypeIsBasic(Type type) {
+      return type.IsEnum ||
+        type.IsPrimitive ||
+        type == typeof(string) ||
+        type == typeof(Color) ||
+        type == typeof(LayerMask) ||
+        type == typeof(Vector2) ||
+        type == typeof(Vector3) ||
+        type == typeof(Vector4) ||
+        type == typeof(Rect) ||
+        type == typeof(AnimationCurve) ||
+        type == typeof(Bounds) ||
+        type == typeof(Gradient) ||
+        type == typeof(Quaternion) ||
+        type == typeof(Vector2Int) ||
+        type == typeof(Vector3Int) ||
+        type == typeof(RectInt) ||
+        type == typeof(BoundsInt);
     }
 
     #endregion
