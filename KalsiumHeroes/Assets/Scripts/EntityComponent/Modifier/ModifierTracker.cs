@@ -13,6 +13,11 @@ public class ModifierTracker {
   [SerializeField] private HashSet<Ability> abilities = new HashSet<Ability>();
   [SerializeField] private HashSet<StatusEffect> statuses = new HashSet<StatusEffect>();
 
+  public IEnumerable<T> GetModifiers<T>(bool includeInactive = false) {
+    foreach (var modifier in EnumerateModifiers(includeInactive)) {
+      if (modifier is T res) yield return res;
+    }
+  }
   public IEnumerable<Modifier> GetModifiers(bool includeInactive = false) {
     return EnumerateModifiers(includeInactive);
   }

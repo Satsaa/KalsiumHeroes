@@ -26,7 +26,7 @@ public class Modifier : EntityComponent {
   }
 
   protected void Awake() {
-    data = Instantiate(source);
+    if (source) data = Instantiate(source);
     unit = GetComponent<Unit>();
     Game.modifiers.RegisterModifier(this);
     OnAdd();
@@ -50,7 +50,7 @@ public class Modifier : EntityComponent {
 
 #if UNITY_EDITOR
   [UnityEditor.Callbacks.DidReloadScripts]
-  private static void OnReload() {
+  private static void OnReloadScripts() {
     if (Application.isPlaying) {
       foreach (var mod in Game.modifiers.GetModifiers(true)) {
         using (AttributeBase.ConfigurationScope(mod.altererKeys)) {

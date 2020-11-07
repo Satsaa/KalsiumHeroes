@@ -1,0 +1,261 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Muc.Extensions;
+using UnityEngine;
+
+public class AbilityUIModifier : Modifier {
+
+  [Header("General")]
+
+  public Camera cam;
+  [Tooltip("World space offset")]
+  public Vector3 wsOffset;
+  [Tooltip("Screen space offs et")]
+  public Vector2 ssOffset;
+
+
+  [Header("Ability Buttons")]
+
+  [Tooltip("A prefab with AbilityIcon component.")]
+  public GameObject abilityPrefab;
+
+  [Tooltip("A prefab with PassiveIcon component.")]
+  public GameObject passivePrefab;
+
+  [Tooltip("Will be disabled or enabled depending on the turn.")]
+  public GameObject parent;
+
+  public Canvas canvas;
+
+  public float padding;
+
+  [SerializeField, HideInInspector] private List<AbilityIcon> aIcons = default;
+  [SerializeField, HideInInspector] private List<PassiveIcon> pIcons = default;
+
+  [SerializeField, HideInInspector] float width;
+  [SerializeField, HideInInspector] float height;
+
+  [SerializeField, HideInInspector] bool hibernated;
+  [SerializeField, HideInInspector] bool doEventsCheck;
+  void LateUpdate() {
+    if (hibernated) {
+      RefreshPosition();
+      if (doEventsCheck && Game.events.finished) {
+        doEventsCheck = false;
+        RefreshValues();
+      }
+    }
+  }
+
+  new void Awake() {
+    if (!canvas) canvas = GetComponentInChildren<Canvas>();
+    if (!cam) cam = Camera.main;
+    if (!cam) FindObjectOfType<Camera>();
+    base.Awake();
+  }
+
+#if UNITY_EDITOR
+  [UnityEditor.Callbacks.DidReloadScripts]
+  static void OnReloadScripts() {
+    if (!Application.isPlaying) return;
+    foreach (var uiMod in Game.modifiers.GetModifiers<AbilityUIModifier>()) uiMod.RefreshValues();
+  }
+#endif
+
+  void AddIcon(Ability ability) {
+    var icon = Instantiate(abilityPrefab).GetComponent<AbilityIcon>();
+    icon.transform.SetParent(parent.transform);
+    aIcons.Add(icon);
+    icon.ability = ability;
+    icon.abilityText.text = ability.data.displayName;
+    icon.cooldownText.text = "";
+    icon.chargeText.text = "";
+    icon.fgImage.enabled = true;
+    icon.bgImage.enabled = false;
+    RefreshLayout();
+    RefreshValues();
+  }
+  void AddIcon(Passive passive) {
+    var icon = Instantiate(passivePrefab).GetComponent<PassiveIcon>();
+    pIcons.Add(icon);
+    icon.passive = passive;
+    icon.abilityText.text = passive.data.displayName;
+    RefreshLayout();
+  }
+
+
+  void RemoveIcon(Ability ability) {
+    var index = aIcons.FindIndex(v => v.ability == ability);
+    Destroy(aIcons[index]);
+    aIcons.RemoveAt(index);
+    RefreshLayout();
+  }
+  void RemoveIcon(Passive passive) {
+    var index = pIcons.FindIndex(v => v.passive == passive);
+    Destroy(pIcons[index]);
+    pIcons.RemoveAt(index);
+    RefreshLayout();
+  }
+
+
+  public void RefreshLayout() {
+    var total = aIcons.Count + pIcons.Count;
+    if (total == 0) return;
+
+    var rts = aIcons.Select(v => v.GetComponent<RectTransform>())
+      .Concat(pIcons.Select(v => v.GetComponent<RectTransform>()));
+
+    var unpaddedDistance = rts.Aggregate(0f, (acc, rt) => acc + rt.rect.width);
+    height = rts.Aggregate(0f, (acc, rt) => Mathf.Max(acc, rt.rect.height));
+    width = unpaddedDistance + (total - 1) * padding;
+    var centerToCenterWidth = width - (rts.First().rect.width / 2f + rts.Last().rect.width / 2f);
+    var startX = centerToCenterWidth / -2f;
+
+    var currentX = startX;
+    foreach (var rt in rts) {
+      rt.localPosition = new Vector3(currentX, 0, rt.localPosition.z);
+      currentX += rt.rect.width + padding;
+    }
+  }
+
+  public void RefreshPosition() {
+    parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
+
+    // Clamp left
+    var minX = parent.transform.position.x - width / 2f;
+    if (minX < 0) {
+      parent.transform.position = parent.transform.position.SetX(width / 2f);
+    }
+    // Clamp right
+    var maxX = parent.transform.position.x + width / 2f;
+    if (maxX > canvas.pixelRect.width) {
+      parent.transform.position = parent.transform.position.SetX(canvas.pixelRect.width - width / 2f);
+    }
+    // Clamp top
+    var minY = parent.transform.position.y - height / 2f;
+    if (minY < 0) {
+      parent.transform.position = parent.transform.position.SetY(height / 2f);
+    }
+    // Clamp bottom
+    var maxY = parent.transform.position.y + height / 2f;
+    if (maxY > canvas.pixelRect.height) {
+      parent.transform.position = parent.transform.position.SetY(canvas.pixelRect.height - height / 2f);
+    }
+  }
+
+
+  public void RefreshValues() {
+
+    bool ShowCharges(AbilityData abilityData) {
+      if (abilityData.charges.other <= 1) return false;
+      if (abilityData.cooldown.other <= 1) return false;
+      return true;
+    }
+
+    string GetChargeText(AbilityData abilityData) {
+      return ShowCharges(abilityData) ? abilityData.charges.value.ToString() : "";
+    }
+
+    foreach (var icon in aIcons) {
+      var ability = icon.ability;
+      var abilityData = ability.abilityData;
+
+      var fgImage = icon.fgImage;
+      var bgImage = icon.bgImage;
+      var abilityButton = icon.abilityButton;
+
+      var abilityText = icon.abilityText;
+      var chargeText = icon.chargeText;
+      var cooldownText = icon.cooldownText;
+
+
+      chargeText.text = GetChargeText(abilityData);
+      abilityButton.onClick.RemoveAllListeners();
+      if (Game.events.finished && ability.IsReady()) {
+        fgImage.fillAmount = 1;
+        cooldownText.text = "";
+        fgImage.enabled = true;
+        bgImage.enabled = false;
+        abilityButton.onClick.AddListener(() => {
+          if (ability.IsReady()) {
+            Game.targeting.TryStartSequence(ability.GetTargeter());
+            RefreshValues();
+          }
+        });
+      } else {
+        if (!Game.events.finished) {
+          doEventsCheck = true;
+        }
+        if (abilityData.cooldown.other > 0 && abilityData.charges.value <= 0) {
+          cooldownText.text = abilityData.cooldown.value > 0 ? abilityData.cooldown.value.ToString() : "";
+          fgImage.fillAmount = 1 - (float)abilityData.cooldown.value / (float)abilityData.cooldown.other;
+          fgImage.enabled = true;
+          bgImage.enabled = true;
+        } else {
+          cooldownText.text = "";
+          fgImage.fillAmount = 1;
+          fgImage.enabled = false;
+          bgImage.enabled = true;
+        }
+      }
+    }
+
+
+  }
+
+
+  void Wake() {
+    hibernated = true;
+    parent.SetActive(true);
+    RefreshValues();
+    RefreshPosition();
+  }
+
+  void Hibernate() {
+    hibernated = false;
+    parent.SetActive(false);
+  }
+
+
+
+  public override void OnAdd(Modifier modifier) {
+    base.OnAdd(modifier);
+    switch (modifier) {
+      case Ability ability: AddIcon(ability); break;
+      case Passive passive: AddIcon(passive); break;
+    }
+  }
+
+  public override void OnRemove(Modifier modifier) {
+    base.OnRemove(modifier);
+    switch (modifier) {
+      case Ability ability: AddIcon(ability); break;
+      case Passive passive: AddIcon(passive); break;
+    }
+  }
+
+
+  public override void OnBaseAbilityCast(Ability ability) {
+    base.OnBaseAbilityCast(ability);
+    RefreshValues();
+  }
+
+  public override void OnAbilityCast(Ability ability) {
+    base.OnAbilityCast(ability);
+    RefreshValues();
+  }
+
+
+  public override void OnTurnStart() {
+    base.OnTurnStart();
+    Wake();
+  }
+
+  public override void OnTurnEnd() {
+    base.OnTurnEnd();
+    Hibernate();
+  }
+
+}

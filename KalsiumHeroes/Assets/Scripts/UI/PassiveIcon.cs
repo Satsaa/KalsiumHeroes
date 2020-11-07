@@ -5,14 +5,13 @@ using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilityButton : MonoBehaviour {
+public class PassiveIcon : MonoBehaviour {
 
-  public Button abilityButton;
+  [HideInInspector]
+  public Passive passive;
+
   public Text abilityText;
-  public Text cooldownText;
-  public Text chargeText;
 
-  public Image fgImage;
-  public Image bgImage;
+  public Image image;
 
 }
