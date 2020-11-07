@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability : Modifier, IEventHandler<Events.Ability> {
+public abstract class Ability : Modifier {
 
   public AbilityData abilityData => (AbilityData)data;
   public override Type dataType => typeof(AbilityData);
@@ -13,10 +13,7 @@ public abstract class Ability : Modifier, IEventHandler<Events.Ability> {
   [HideInInspector]
   public bool castBlocked = false;
 
-  public abstract bool EventIsFinished();
-  public abstract bool SkipEvent();
-  public abstract void StartEvent(Events.Ability data);
-
+  public abstract EventHandler<Events.Ability> CreateEventHandler(Events.Ability data);
 
   public override void OnTurnStart() {
     base.OnTurnStart();

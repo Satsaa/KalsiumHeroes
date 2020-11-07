@@ -15,11 +15,12 @@ public abstract class StatusEffect : Modifier {
     }
   }
 
-  /// <summary> When the Unit got dispelled </summary>
+  /// <summary> When the Unit got dispelled. </summary>
   public virtual void OnDispell() {
     if (statusEffectData.dispellable) Destroy(this);
   }
-  /// <summary> When this Modifier expires because of duration was reached </summary>
+
+  /// <summary> When this Modifier expires because the duration was reached. </summary>
   public virtual void OnExpire() {
     Destroy(this);
   }

@@ -76,7 +76,7 @@ public class SeededToggleDualAttributeDrawer : PropertyDrawer {
         pos.width = 15 + spacing;
         EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
 
-        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Value");
+        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Seed");
         labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.width = (position.xMax - pos.xMin - 15 - spacing * 2) / 2 - spacing;

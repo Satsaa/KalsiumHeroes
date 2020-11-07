@@ -11,10 +11,10 @@ public class Unit : EntityComponent {
   public UnitData unitData => (UnitData)data;
   public override Type dataType => typeof(UnitData);
 
-  public Modifier[] modifiers => GetComponents<Modifier>();
-  public Ability[] abilities => GetComponents<Ability>();
-  public Passive[] passives => GetComponents<Passive>();
-  public StatusEffect[] effects => GetComponents<StatusEffect>();
+  [field: SerializeField] public List<Modifier> modifiers { get; private set; } = new List<Modifier>();
+  [field: SerializeField] public List<Ability> abilities { get; private set; } = new List<Ability>();
+  [field: SerializeField] public List<Passive> passives { get; private set; } = new List<Passive>();
+  [field: SerializeField] public List<StatusEffect> statuses { get; private set; } = new List<StatusEffect>();
 
 
   [HideInInspector]
@@ -54,9 +54,24 @@ public class Unit : EntityComponent {
     }
   }
 
+  public void RegisterModifier(Modifier modifier) {
+    modifiers.Add(modifier);
+    if (modifier is Ability ability) abilities.Add(ability);
+    if (modifier is Passive passive) passives.Add(passive);
+    if (modifier is StatusEffect status) statuses.Add(status);
+  }
+
+  void ClampHealth() {
+    if (unitData.health.value < 0) {
+      unitData.health.value = 0;
+      return;
+    }
+    unitData.health.LimitValue();
+  }
+
   public void Heal(float value) {
     unitData.health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
-    LimitHealth();
+    ClampHealth();
   }
 
   public void Damage(float value, DamageType type) {
@@ -65,20 +80,20 @@ public class Unit : EntityComponent {
     switch (type) {
       case DamageType.Physical:
         unitData.health.value -= (1 - unitData.defense.value / 100f) * total;
-        LimitHealth();
+        ClampHealth();
         break;
       case DamageType.Magical:
         unitData.health.value -= (1 - unitData.resistance.value / 100f) * total;
-        LimitHealth();
+        ClampHealth();
         break;
       case DamageType.Pure:
         unitData.health.value -= total;
-        LimitHealth();
+        ClampHealth();
         break;
       case DamageType.None:
       default:
         unitData.health.value -= total;
-        LimitHealth();
+        ClampHealth();
         Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
         break;
     }
@@ -95,10 +110,8 @@ public class Unit : EntityComponent {
     }
   }
 
-  void LimitHealth() => unitData.health.value = Mathf.Min(unitData.health.value, unitData.health.other);
-
   public void Dispell() {
-    foreach (var effect in effects) {
+    foreach (var effect in statuses) {
       effect.OnDispell();
     }
   }

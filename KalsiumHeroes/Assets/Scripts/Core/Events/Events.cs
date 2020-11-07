@@ -7,7 +7,7 @@ using System.Linq;
 [Serializable]
 public abstract class GameEvent {
   public int eventNum;
-  public abstract void Handle();
+  public abstract EventHandler GetHandler();
 }
 
 [Serializable]
@@ -15,22 +15,36 @@ public class Events {
 
   [SerializeReference] public List<object> stack = new List<object>();
   public GameEvent first => (GameEvent)stack[0];
-  public bool finished => stack.Count == 0 && (eHandler == null || eHandler.EventIsFinished());
 
-  IEventHandler eHandler = null;
+  /// <summary> When an event handler has ended. </summary>
+  public event Action onFinish;
+  /// <summary> When an event handler is created and starts. </summary>
+  public event Action onStart;
+  public bool finished => eventHandler == null;
 
-  public bool NextEvent() {
-    if (stack.Count > 0 && (eHandler == null || eHandler.EventIsFinished())) {
-      try {
-        first.Handle();
-      } catch (System.Exception e) {
-        stack.RemoveAt(0);
-        throw e;
+  [SerializeReference]
+  private EventHandler eventHandler = null;
+
+  public void Update() {
+    if (eventHandler != null) {
+      if (eventHandler.EventHasEnded()) {
+        eventHandler = null;
+        onFinish?.Invoke();
+      } else {
+        eventHandler.Update();
+        return;
       }
-      stack.RemoveAt(0);
-      return true;
-    } else {
-      return false;
+    }
+    if (stack.Count > 0) {
+      try {
+        eventHandler = first.GetHandler();
+        onStart?.Invoke();
+      } catch (System.Exception e) {
+        onFinish?.Invoke();
+        throw e;
+      } finally {
+        stack.RemoveAt(0);
+      }
     }
   }
 
@@ -62,24 +76,22 @@ public class Events {
     public Vector3Int unit;
     public Vector3Int target;
 
-    public override void Handle() {
+    public override EventHandler GetHandler() {
       Debug.Log($"{this.GetType().Name}: Called");
       var unit = Game.grid.hexes[this.unit].unit;
-      var ability = unit.abilities.FirstOrDefault(a => a.data.identifier == this.ability);
-      if (ability == null) return;
-      IEventHandler<Ability> asHandler = ability;
-      Game.events.eHandler = asHandler;
+      var ability = unit.abilities.First(a => a.data.identifier == this.ability);
+      EventHandler<Ability> abilityHandler = ability.CreateEventHandler(this);
       ability.OnCast();
-      asHandler.StartEvent(this);
+      return abilityHandler as EventHandler;
     }
   }
 
   [Serializable]
   public class Turn : GameEvent {
 
-    public override void Handle() {
+    public override EventHandler GetHandler() {
       Game.rounds.NextTurn();
-      Debug.Log($"Next turn");
+      return null;
     }
   }
 

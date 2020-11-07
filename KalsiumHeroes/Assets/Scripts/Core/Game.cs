@@ -56,6 +56,6 @@ public class Game : MonoBehaviour {
   }
 
   void Update() {
-    _events.NextEvent();
+    _events.Update();
   }
 }

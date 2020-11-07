@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9f47d0eb1c133b4695fae5386965424, type: 3}
+  m_Script: {fileID: 11500000, guid: 5269718c91e67fa459255c747639973f, type: 3}
   m_Name: CreateUnitAbility
   m_EditorClassIdentifier: 
   displayName: Spawn Servant

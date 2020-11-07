@@ -7,8 +7,7 @@ using UnityEngine;
 
 public class AbilityUIModifier : Modifier {
 
-  [Header("General")]
-
+  public Canvas canvas;
   public Camera cam;
   [Tooltip("World space offset")]
   public Vector3 wsOffset;
@@ -16,18 +15,14 @@ public class AbilityUIModifier : Modifier {
   public Vector2 ssOffset;
 
 
-  [Header("Ability Buttons")]
+  [Space()]
 
+  [Tooltip("Will be moved, and disabled or enabled depending on the turn.")]
+  public GameObject parent;
   [Tooltip("A prefab with AbilityIcon component.")]
   public GameObject abilityPrefab;
-
   [Tooltip("A prefab with PassiveIcon component.")]
   public GameObject passivePrefab;
-
-  [Tooltip("Will be disabled or enabled depending on the turn.")]
-  public GameObject parent;
-
-  public Canvas canvas;
 
   public float padding;
 
@@ -38,14 +33,12 @@ public class AbilityUIModifier : Modifier {
   [SerializeField, HideInInspector] float height;
 
   [SerializeField, HideInInspector] bool hibernated;
-  [SerializeField, HideInInspector] bool doEventsCheck;
+  Action nextFrame;
   void LateUpdate() {
-    if (hibernated) {
+    if (!hibernated) {
       RefreshPosition();
-      if (doEventsCheck && Game.events.finished) {
-        doEventsCheck = false;
-        RefreshValues();
-      }
+      nextFrame?.Invoke();
+      nextFrame = null;
     }
   }
 
@@ -54,6 +47,9 @@ public class AbilityUIModifier : Modifier {
     if (!cam) cam = Camera.main;
     if (!cam) FindObjectOfType<Camera>();
     base.Awake();
+    foreach (var ability in unit.abilities) AddIcon(ability);
+    foreach (var passive in unit.passives) AddIcon(passive);
+
   }
 
 #if UNITY_EDITOR
@@ -104,6 +100,17 @@ public class AbilityUIModifier : Modifier {
     var total = aIcons.Count + pIcons.Count;
     if (total == 0) return;
 
+    var compAbilties = unit.GetComponents<Ability>();
+    var compPassives = unit.GetComponents<Passive>();
+    aIcons.Sort((a, b) =>
+      Array.FindIndex(compAbilties, v => v == a.ability).CompareTo(
+      Array.FindIndex(compAbilties, v => v == b.ability)
+    ));
+    pIcons.Sort((a, b) =>
+      Array.FindIndex(compPassives, v => v == a.passive).CompareTo(
+      Array.FindIndex(compPassives, v => v == b.passive)
+    ));
+
     var rts = aIcons.Select(v => v.GetComponent<RectTransform>())
       .Concat(pIcons.Select(v => v.GetComponent<RectTransform>()));
 
@@ -146,29 +153,14 @@ public class AbilityUIModifier : Modifier {
   }
 
 
+  bool ShowCharges(AbilityData abilityData) => abilityData.charges.other > 1 && abilityData.cooldown.other >= 1;
+  string GetChargeText(AbilityData abilityData) => ShowCharges(abilityData) ? abilityData.charges.value.ToString() : "";
+
   public void RefreshValues() {
 
-    bool ShowCharges(AbilityData abilityData) {
-      if (abilityData.charges.other <= 1) return false;
-      if (abilityData.cooldown.other <= 1) return false;
-      return true;
-    }
-
-    string GetChargeText(AbilityData abilityData) {
-      return ShowCharges(abilityData) ? abilityData.charges.value.ToString() : "";
-    }
-
     foreach (var icon in aIcons) {
-      var ability = icon.ability;
+      var (ability, abilityButton, abilityText, cooldownText, chargeText, fgImage, bgImage) = icon;
       var abilityData = ability.abilityData;
-
-      var fgImage = icon.fgImage;
-      var bgImage = icon.bgImage;
-      var abilityButton = icon.abilityButton;
-
-      var abilityText = icon.abilityText;
-      var chargeText = icon.chargeText;
-      var cooldownText = icon.cooldownText;
 
 
       chargeText.text = GetChargeText(abilityData);
@@ -181,13 +173,9 @@ public class AbilityUIModifier : Modifier {
         abilityButton.onClick.AddListener(() => {
           if (ability.IsReady()) {
             Game.targeting.TryStartSequence(ability.GetTargeter());
-            RefreshValues();
           }
         });
       } else {
-        if (!Game.events.finished) {
-          doEventsCheck = true;
-        }
         if (abilityData.cooldown.other > 0 && abilityData.charges.value <= 0) {
           cooldownText.text = abilityData.cooldown.value > 0 ? abilityData.cooldown.value.ToString() : "";
           fgImage.fillAmount = 1 - (float)abilityData.cooldown.value / (float)abilityData.cooldown.other;
@@ -202,22 +190,41 @@ public class AbilityUIModifier : Modifier {
       }
     }
 
-
   }
 
 
   void Wake() {
-    hibernated = true;
+    hibernated = false;
     parent.SetActive(true);
-    RefreshValues();
     RefreshPosition();
+    nextFrame += RefreshValues;
   }
 
   void Hibernate() {
-    hibernated = false;
+    hibernated = true;
     parent.SetActive(false);
   }
 
+
+  private void OnFinish() {
+    RefreshValues();
+  }
+
+  private void OnStart() {
+    RefreshValues();
+  }
+
+  protected override void OnLoadNonpersistent() {
+    base.OnLoadNonpersistent();
+    Game.events.onFinish += OnFinish;
+    Game.events.onStart += OnStart;
+  }
+
+  protected override void OnUnloadNonpersistent() {
+    base.OnLoadNonpersistent();
+    Game.events.onFinish -= OnFinish;
+    Game.events.onStart -= OnStart;
+  }
 
 
   public override void OnAdd(Modifier modifier) {

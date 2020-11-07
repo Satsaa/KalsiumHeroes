@@ -28,6 +28,7 @@ public class Modifier : EntityComponent {
   protected void Awake() {
     if (source) data = Instantiate(source);
     unit = GetComponent<Unit>();
+    unit.RegisterModifier(this);
     Game.modifiers.RegisterModifier(this);
     OnAdd();
     foreach (var other in unit.modifiers.Where(mod => mod != this)) {
@@ -36,6 +37,7 @@ public class Modifier : EntityComponent {
     using (AttributeBase.ConfigurationScope(altererKeys)) {
       OnRegisterAlterers();
     }
+    OnLoadNonpersistent();
   }
 
   protected void OnDestroy() {
@@ -56,6 +58,7 @@ public class Modifier : EntityComponent {
         using (AttributeBase.ConfigurationScope(mod.altererKeys)) {
           mod.OnRegisterAlterers();
         }
+        mod.OnLoadNonpersistent();
       }
     }
   }
@@ -63,6 +66,12 @@ public class Modifier : EntityComponent {
 
   /// <summary> Register attribute alterers. This is the only place to do so. Alterers are automatically removed and added. </summary>
   protected virtual void OnRegisterAlterers() { }
+
+  /// <summary> When the Modifier is instantiated or the scripts are reloaded. Place to add non-persistent event listeners for example. </summary>
+  protected virtual void OnLoadNonpersistent() { }
+
+  /// <summary> Same as OnRemove but exists for naming. </summary>
+  protected virtual void OnUnloadNonpersistent() { }
 
   /// <summary> When this Modifier is being added (instantiated). </summary>
   public virtual void OnAdd() { }
@@ -113,10 +122,10 @@ public class ModifierEditor : Editor {
   public override void OnInspectorGUI() {
     serializedObject.Update();
 
-    using (EditorUtil.DisabledScope(v => Application.isPlaying))
+    using (EditorUtil.DisabledScope(Application.isPlaying))
       EditorGUILayout.ObjectField(source, t.dataType);
 
-    using (EditorUtil.DisabledScope(v => !Application.isPlaying))
+    using (EditorUtil.DisabledScope(!Application.isPlaying))
       EditorGUILayout.PropertyField(data);
 
     DrawPropertiesExcluding(serializedObject, nameof(Modifier.source), nameof(Modifier.data), "m_Script");

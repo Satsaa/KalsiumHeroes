@@ -5,22 +5,21 @@ using UnityEngine;
 
 public class AddEntityComponentAbility : Ability {
 
-  public AddEntityComponentAbilityData createUnitAbilityData => (AddEntityComponentAbilityData)data;
-  public override Type dataType => typeof(AddEntityComponentAbilityData);
+  public AddEntityComponentData createUnitAbilityData => (AddEntityComponentData)data;
+  public override Type dataType => typeof(AddEntityComponentData);
 
-  public override bool EventIsFinished() => true;
-  public override bool SkipEvent() => true;
-  public override void StartEvent(Events.Ability data) {
-    var target = Game.grid.hexes[data.target];
-    var aoe = GetAffectedArea(target);
-    foreach (var hex in aoe) {
-      if (hex.unit) {
-        foreach (var component in createUnitAbilityData.components) {
-          hex.unit.gameObject.AddEntityComponent(component);
+  public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
+    return new InstantAbilityHandler(data, this, (ability) => {
+      var target = Game.grid.hexes[data.target];
+      var aoe = GetAffectedArea(target);
+      foreach (var hex in aoe) {
+        if (hex.unit) {
+          foreach (var component in createUnitAbilityData.components) {
+            hex.unit.gameObject.AddEntityComponent(component);
+          }
         }
       }
-    }
+    });
   }
-
 
 }
