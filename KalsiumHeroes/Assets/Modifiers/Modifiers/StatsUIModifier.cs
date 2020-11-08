@@ -24,13 +24,13 @@ public class StatsUIModifier : Modifier {
 
   void LateUpdate() {
     parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
-    hpRect.sizeDelta = new Vector2((unit.unitData.health.value / unit.unitData.health.other * hpFullWidth), hpRect.sizeDelta.y);
+    hpRect.sizeDelta = new Vector2(unit.unitData.health.value / unit.unitData.health.other * hpFullWidth, hpRect.sizeDelta.y);
     hpText.text = $"{Mathf.Ceil(unit.unitData.health.value)}/{Mathf.Ceil(unit.unitData.health.other)}";
   }
 
   new void Awake() {
     if (!cam) cam = Camera.main;
-    if (!cam) FindObjectOfType<Camera>();
+    if (!cam) cam = FindObjectOfType<Camera>();
     hpFullWidth = hpRect.sizeDelta.x;
     base.Awake();
   }

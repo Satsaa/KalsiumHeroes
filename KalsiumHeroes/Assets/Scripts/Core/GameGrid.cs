@@ -213,7 +213,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
   }
 
   /// <summary>
-  /// Iterates around the hex and yields visible hexes. 
+  /// Iterates around the hex and yields visible hexes.
   /// </summary>
   /// <param name="seeThrough">Predicate which determines if a hex can be seen through.</param>
   public IEnumerable<GameHex> Vision(GameHex hex, int range, Predicate<GameHex> seeThrough = null) {
@@ -283,13 +283,6 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
     return res.ToArray();
   }
 
-  private float BitwiseAdd(float target, int bitIncrement) {
-    byte[] bytes = BitConverter.GetBytes(target);
-    int targetAsInt = BitConverter.ToInt32(bytes, 0);
-    bytes = BitConverter.GetBytes(targetAsInt + bitIncrement);
-    return BitConverter.ToSingle(bytes, 0);
-  }
-
 
   private class SinglePriorityNode : FastPriorityQueueNode {
     public GameHex hex;
@@ -324,7 +317,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
       var a = x.Priority.CompareTo(y.Priority);
       if (a != 0) return a;
       var b = x.secondary.CompareTo(y.secondary);
-      return b; ;
+      return b;
     }
   }
 
@@ -847,9 +840,7 @@ public class GameGridEditor : Editor {
   private Deferred ColorScope(Color color) {
     var prevColor = Handles.color;
     Handles.color = color;
-    return new Deferred(() => {
-      Handles.color = prevColor;
-    });
+    return new Deferred(() => Handles.color = prevColor);
   }
 
   private struct Deferred : IDisposable {
@@ -860,8 +851,7 @@ public class GameGridEditor : Editor {
     }
 
     public void Dispose() {
-      if (onDispose != null)
-        onDispose();
+      onDispose?.Invoke();
     }
   }
 }

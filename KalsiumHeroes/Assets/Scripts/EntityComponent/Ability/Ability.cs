@@ -86,11 +86,11 @@ public abstract class Ability : Modifier {
         case RangeMode.Distance:
           return Game.grid.Radius(hex, abilityData.range.value);
         case RangeMode.PathDistance:
-          return Game.grid.GetDistanceField(hex, abilityData.range.value, (h => !h.blocked && !h.unit)).distances.Keys;
+          return Game.grid.GetDistanceField(hex, abilityData.range.value, h => !h.blocked && !h.unit).distances.Keys;
         case RangeMode.PathDistancePassThrough:
           return Game.grid.GetDistanceField(hex, abilityData.range.value).distances.Keys;
         case RangeMode.PathCost:
-          return Game.grid.GetCostField(hex, maxCost: abilityData.range.value, passable: (h => !h.blocked && !h.unit)).costs.Keys;
+          return Game.grid.GetCostField(hex, maxCost: abilityData.range.value, passable: h => !h.blocked && !h.unit).costs.Keys;
         case RangeMode.PathCostPassThrough:
           return Game.grid.GetCostField(hex, maxCost: abilityData.range.value).costs.Keys;
       }

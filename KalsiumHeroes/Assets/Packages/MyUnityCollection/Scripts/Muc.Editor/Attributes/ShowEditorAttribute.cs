@@ -9,11 +9,8 @@ namespace Muc.Editor {
 
   public class ShowEditorAttribute : PropertyAttribute {
 
-    private readonly bool readOnly;
+    public ShowEditorAttribute() { }
 
-    public ShowEditorAttribute(bool readOnly = false) {
-      this.readOnly = readOnly;
-    }
   }
 }
 
@@ -60,8 +57,6 @@ namespace Muc.Editor {
       }
       return totalHeight;
     }
-
-    static readonly List<string> ignoreClassFullNames = new List<string> { "TMPro.TMP_FontAsset" };
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
       using (new EditorGUI.PropertyScope(position, label, property)) {

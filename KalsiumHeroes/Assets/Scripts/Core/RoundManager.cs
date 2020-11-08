@@ -33,7 +33,7 @@ public class RoundManager {
   }
 
   public void NextTurn() {
-    Debug.Log($"Next turn");
+    Debug.Log("Next turn");
     if (units.Count <= 1) {
       OnTurnEnds();
       round++;

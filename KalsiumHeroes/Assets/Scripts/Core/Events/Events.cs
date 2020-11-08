@@ -39,9 +39,9 @@ public class Events {
       try {
         eventHandler = first.GetHandler();
         onStart?.Invoke();
-      } catch (System.Exception e) {
+      } catch (System.Exception) {
         onFinish?.Invoke();
-        throw e;
+        throw;
       } finally {
         stack.RemoveAt(0);
       }

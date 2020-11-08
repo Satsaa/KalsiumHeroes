@@ -193,10 +193,11 @@ namespace Muc.Editor.ReorderableLists {
           JsonUtility.ToJson(elementObj)
         );
 
-      var clipboardElement = new ClipboardElement();
-      clipboardElement.type = elementType.FullName;
-      clipboardElement.assemblyQualifiedName = elementType.AssemblyQualifiedName;
-      clipboardElement.json = elementJson;
+      var clipboardElement = new ClipboardElement {
+        type = elementType.FullName,
+        assemblyQualifiedName = elementType.AssemblyQualifiedName,
+        json = elementJson
+      };
       if (elementObj is UnityEngine.Object unityObject) clipboardElement.instanceId = unityObject.GetInstanceID();
       return clipboardElement;
     }
@@ -273,16 +274,6 @@ namespace Muc.Editor.ReorderableLists {
 
     //======================================================================
 
-    private static MemberInfo[] GetFirstMemberInHierarchy(Type type, string name, MemberTypes memberTypes, BindingFlags bindingAttr) {
-      MemberInfo[] res;
-      do {
-        res = type.GetMember(name, memberTypes, bindingAttr);
-        if (res.Length != 0) return res;
-      } while ((type = type.BaseType) != null);
-      return res;
-    }
-
-
     protected static Type GetManagedReferenceType(SerializedProperty property) {
       var typeStrings = property.managedReferenceFullTypename.Split(' ');
       var fullTypeName = typeStrings[1];
@@ -349,42 +340,6 @@ namespace Muc.Editor.ReorderableLists {
       return instance;
     }
 
-    private static Type GetSerializedPropertyType(SerializedProperty property) {
-      var parentType = property.serializedObject.targetObject.GetType();
-      return GetTypeByPath(parentType, property.propertyPath);
-    }
-
-    private static Type GetTypeByPath(Type type, string path) {
-      path = path.Replace(".Array.data[", "[");
-      var currentType = type;
-      FieldInfo field = null;
-      foreach (var token in path.Split('.')) {
-        if (token.Contains("[")) {
-          var elementName = token.Substring(0, token.IndexOf("["));
-          var bracketPos = token.IndexOf("[");
-          var index = System.Convert.ToInt32(token.Substring(bracketPos + 1, token.Length - (bracketPos + 2)));
-
-          field = GetFirstMemberInHierarchy(currentType, elementName, MemberTypes.Field, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).FirstOrDefault() as FieldInfo;
-
-          if (field is null) return null;
-          var listType = field.FieldType;
-          if (listType.IsArray) {
-            currentType = listType.GetElementType();
-          } else {
-            currentType = listType.GenericTypeArguments[0];
-          }
-
-        } else {
-          field = currentType.GetField(token);
-
-          if (field is null) return null;
-          currentType = field.FieldType;
-        }
-      }
-      if (field is null) return null;
-      return currentType;
-    }
-
     //======================================================================
 
     protected virtual void DeleteElement(int elementIndex) {
@@ -393,7 +348,6 @@ namespace Muc.Editor.ReorderableLists {
       var prop = this.prop;
       var serializedObject = prop.serializedObject;
 
-      var element = prop.GetArrayElementAtIndex(elementIndex);
       var preDelSize = count;
       prop.DeleteArrayElementAtIndex(elementIndex);
       if (isUnityObjectList && preDelSize == count) { // Unity Objects get set to none first...
@@ -404,7 +358,6 @@ namespace Muc.Editor.ReorderableLists {
         serializedObject.ApplyModifiedProperties();
         serializedObject.Update();
       }
-      elementIndex = ClampIndex(elementIndex);
       GUI.changed = true;
     }
 
@@ -472,13 +425,10 @@ namespace Muc.Editor.ReorderableLists {
       if (showDefaultBackground && Event.current.type == EventType.Repaint)
         defaultBehaviours.boxBackground.Draw(position, false, false, false, false);
 
-      var elementRect = position;
-      var elementContentRect = position;
-
       // draw the background
-      DrawElementBackgroundCallback(elementRect, -1, false, false);
+      DrawElementBackgroundCallback(position, -1, false, false);
 
-      elementContentRect = elementRect;
+      var elementContentRect = position;
       elementContentRect.xMin += Defaults.padding;
       elementContentRect.xMax -= Defaults.padding;
       elementContentRect.y += 10;
@@ -487,9 +437,9 @@ namespace Muc.Editor.ReorderableLists {
 
     //======================================================================
 
-    private static GUIContent iconToolbarPlus = EditorGUIUtility.TrIconContent("Toolbar Plus", "Add to list");
-    private static GUIContent iconToolbarPlusMore = EditorGUIUtility.TrIconContent("Toolbar Plus More", "Choose to add to list");
-    private static GUIContent iconToolbarMinus = EditorGUIUtility.TrIconContent("Toolbar Minus", "Remove selection or last element from list");
+    private readonly static GUIContent iconToolbarPlus = EditorGUIUtility.TrIconContent("Toolbar Plus", "Add to list");
+    private readonly static GUIContent iconToolbarPlusMore = EditorGUIUtility.TrIconContent("Toolbar Plus More", "Choose to add to list");
+    private readonly static GUIContent iconToolbarMinus = EditorGUIUtility.TrIconContent("Toolbar Minus", "Remove selection or last element from list");
     private readonly GUIStyle preButton = "RL FooterButton";
 
     // draw the default footer
@@ -526,8 +476,9 @@ namespace Muc.Editor.ReorderableLists {
           if (GUI.Button(removeRect, iconToolbarMinus, preButton)) {
             if (list.onRemoveCallback == null) {
               DeleteElement(index);
-            } else
+            } else {
               list.onRemoveCallback(list);
+            }
 
             list.onChangedCallback?.Invoke(list);
           }
@@ -537,7 +488,7 @@ namespace Muc.Editor.ReorderableLists {
 
     //======================================================================
 
-    private GUIContent label = new GUIContent();
+    private readonly GUIContent label = new GUIContent();
 
     internal void UpdateLabel(GUIContent source) {
       this.label.image = source.image;
@@ -602,14 +553,14 @@ namespace Muc.Editor.ReorderableLists {
     }
 
     private void DrawElementBackgroundCallback(Rect position, int elementIndex, bool isActive, bool isFocused) {
-      if (prop.isExpanded == false)
+      if (!prop.isExpanded)
         return;
 
       var length = count;
       var element = default(SerializedProperty);
 
       var activeIndex = base.index;
-      if (activeIndex == elementIndex && isActive == false) {
+      if (activeIndex == elementIndex && !isActive) {
         // HACK: ReorderableList invokes this callback with the wrong elementIndex.
         if (nonDragTargetIndices != null) {
           elementIndex = nonDragTargetIndices[elementIndex];
@@ -684,9 +635,7 @@ namespace Muc.Editor.ReorderableLists {
 
     private static readonly FieldInfo m_NonDragTargetIndicesField = typeof(ReorderableList).GetField("m_NonDragTargetIndices", BindingFlags.Instance | BindingFlags.NonPublic);
 
-    private List<int> nonDragTargetIndices {
-      get => (List<int>)m_NonDragTargetIndicesField.GetValue(this);
-    }
+    private List<int> nonDragTargetIndices => (List<int>)m_NonDragTargetIndicesField.GetValue(this);
 
     //======================================================================
 
@@ -701,7 +650,7 @@ namespace Muc.Editor.ReorderableLists {
     private Rect RemoveElementPadding(Rect position) {
       var verticalSpacing = EditorGUIUtility.standardVerticalSpacing;
       position.yMin += extraSpacing + verticalSpacing / 2;
-      position.yMax -= (verticalSpacing) / 2;
+      position.yMax -= verticalSpacing / 2;
       return position;
     }
 

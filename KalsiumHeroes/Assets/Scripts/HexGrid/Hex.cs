@@ -72,7 +72,7 @@ namespace HexGrid {
       for (int x = -dist; x < dist; x++) {
         for (int y = Mathf.Max(-dist, -x - dist); y < Mathf.Min(+dist, -x + dist); y++) {
           var z = -x - y;
-          yield return (Add(a, new Hex(x, y, z)));
+          yield return Add(a, new Hex(x, y, z));
         }
       }
 

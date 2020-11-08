@@ -36,8 +36,8 @@ public class ModifierTracker {
 
     var sceneItems = GameObject.FindObjectsOfType<Modifier>(true);
     modifiers.UnionWith(sceneItems);
-    abilities.UnionWith(sceneItems.Where(v => v is Ability).Cast<Ability>());
-    statuses.UnionWith(sceneItems.Where(v => v is StatusEffect).Cast<StatusEffect>());
+    abilities.UnionWith(sceneItems.OfType<Ability>());
+    statuses.UnionWith(sceneItems.OfType<StatusEffect>());
   }
 
   /// <summary> Adds the Modifier to the pool of modifiers </summary>

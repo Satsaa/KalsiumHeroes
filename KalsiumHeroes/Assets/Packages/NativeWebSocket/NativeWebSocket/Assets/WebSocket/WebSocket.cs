@@ -628,9 +628,7 @@ namespace NativeWebSocket
     }
 #endif
 
-    ///
-    /// Factory
-    ///
+    // Factory
 
     /// <summary>
     /// Class providing static access methods to work with JSLIB WebSocket or WebSocketSharp interface

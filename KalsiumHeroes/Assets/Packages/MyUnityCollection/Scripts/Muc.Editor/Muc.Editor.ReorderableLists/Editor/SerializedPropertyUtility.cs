@@ -49,17 +49,17 @@ namespace Muc.Editor.ReorderableLists {
 
     public static object FindObject(this object obj, IEnumerable<object> path) {
       foreach (var key in path) {
-        if (key is string) {
+        if (key is string stringKey) {
           var objType = obj.GetType();
-          var fieldName = (string)key;
+          var fieldName = stringKey;
           var fieldInfo = objType.FindFieldInfo(fieldName);
           if (fieldInfo == null)
             throw FieldNotFoundException(objType, fieldName);
           obj = fieldInfo.GetValue(obj);
           continue;
         }
-        if (key is int) {
-          var elementIndex = (int)key;
+        if (key is int intKey) {
+          var elementIndex = intKey;
           var array = (IList)obj;
           obj = array[elementIndex];
           continue;

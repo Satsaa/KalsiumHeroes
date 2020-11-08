@@ -53,16 +53,14 @@ namespace Muc.Editor.ReorderableLists {
     //======================================================================
 
     private void OnSelectCallback(ReorderableList list) {
-      var array = list.serializedProperty;
-      var index = list.index;
+
     }
 
     //======================================================================
 
     private class ReorderableListMap : Dictionary<string, ReorderableValues> {
       public ReorderableValues Find(string key) {
-        var reorderableList = default(ReorderableValues);
-        base.TryGetValue(key, out reorderableList);
+        base.TryGetValue(key, out ReorderableValues reorderableList);
         return reorderableList;
       }
     }

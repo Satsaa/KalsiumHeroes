@@ -49,7 +49,6 @@ public class AbilityUIModifier : Modifier {
     base.Awake();
     foreach (var ability in unit.abilities) AddIcon(ability);
     foreach (var passive in unit.passives) AddIcon(passive);
-
   }
 
 #if UNITY_EDITOR

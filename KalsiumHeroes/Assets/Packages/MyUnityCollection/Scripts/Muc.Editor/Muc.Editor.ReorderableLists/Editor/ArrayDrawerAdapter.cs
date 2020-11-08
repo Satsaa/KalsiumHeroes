@@ -64,8 +64,7 @@ namespace Muc.Editor.ReorderableLists {
       );
 
     internal static FieldInfo GetFieldInfo(SerializedProperty property) {
-      Type propertyType;
-      var fieldInfo = getFieldInfoFromProperty(property, out propertyType);
+      var fieldInfo = getFieldInfoFromProperty(property, out Type propertyType);
       if (fieldInfo == null) Debug.LogFormat("GetFieldInfo({0}) == null", property.propertyPath);
       return fieldInfo;
     }

@@ -80,7 +80,7 @@ public class Targeting : MonoBehaviour {
   }
 
   void Cancel() {
-    if (seq.onCancel != null) seq.onCancel(seq);
+    seq.onCancel?.Invoke(seq);
     Remove();
   }
 

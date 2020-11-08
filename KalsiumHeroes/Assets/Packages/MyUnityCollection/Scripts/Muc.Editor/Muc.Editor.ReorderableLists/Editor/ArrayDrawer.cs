@@ -58,7 +58,7 @@ namespace Muc.Editor.ReorderableLists {
     //======================================================================
 
     protected static IEnumerable<SerializedProperty> EnumerateChildProperties(SerializedProperty parentProperty) {
-      return SerializedPropertyUtility.EnumerateChildProperties(parentProperty);
+      return parentProperty.EnumerateChildProperties();
     }
 
     //======================================================================

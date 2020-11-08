@@ -41,7 +41,7 @@ namespace Muc.Editor {
       }
 
       public TypeMenuNode GetCreateBranch(string ns, TypeMenuNode source) {
-        var res = branches.FirstOrDefault(v => v.ns == ns);
+        var res = branches.Find(v => v.ns == ns);
         if (res != null) return res;
         res = new TypeMenuNode(ns, source);
         branches.Add(res);
@@ -131,19 +131,19 @@ namespace Muc.Editor {
           var menu = new GenericMenu();
           if (node.source != null) {
             if (count++ >= maxCount) return menu;
-            GenericMenu.MenuFunction cb = () => { EditorApplication.delayCall = () => { NodeMenu(node.source).DropDown(new Rect(GUIUtility.ScreenToGUIPoint(position), Vector2.one)); }; };
             menu.AddItem(new GUIContent("<-"), false, cb);
+            void cb() { EditorApplication.delayCall = () => NodeMenu(node.source).DropDown(new Rect(GUIUtility.ScreenToGUIPoint(position), Vector2.one)); }
           }
           foreach (var branch in node.branches) {
             if (count++ >= maxCount) return menu;
             var content = new GUIContent($"{branch.ns} ->");
-            GenericMenu.MenuFunction cb = () => { EditorApplication.delayCall = () => { NodeMenu(branch).DropDown(new Rect(GUIUtility.ScreenToGUIPoint(position), Vector2.one)); }; };
             menu.AddItem(content, false, cb);
+            void cb() => EditorApplication.delayCall = () => NodeMenu(branch).DropDown(new Rect(GUIUtility.ScreenToGUIPoint(position), Vector2.one));
           }
           foreach (var type in node.types) {
             if (count++ >= maxCount) return menu;
-            var content = new GUIContent($"{type.ToString()} ({type.Assembly.GetName().Name})");
-            menu.AddItem(content, selected != null && selected.Any(t => t == type), () => { onSelect(type); });
+            var content = new GUIContent($"{type} ({type.Assembly.GetName().Name})");
+            menu.AddItem(content, selected != null && selected.Any(t => t == type), () => onSelect(type));
           }
           return menu;
         }
@@ -152,9 +152,8 @@ namespace Muc.Editor {
 
         var menu = new GenericMenu();
         foreach (var type in types) {
-          UnityEngine.GUIContent content;
-          content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
-          menu.AddItem(content, selected != null && selected.Any(t => t == type), () => { onSelect(type); });
+          UnityEngine.GUIContent content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
+          menu.AddItem(content, selected != null && selected.Any(t => t == type), () => onSelect(type));
         }
         return menu;
 
@@ -162,8 +161,8 @@ namespace Muc.Editor {
 
         var menu = new GenericMenu();
         foreach (var type in types) {
-          var content = new GUIContent($"{type.ToString()} ({type.Assembly.GetName().Name})");
-          menu.AddItem(content, selected != null && selected.Any(t => t == type), () => { onSelect(type); });
+          var content = new GUIContent($"{type} ({type.Assembly.GetName().Name})");
+          menu.AddItem(content, selected != null && selected.Any(t => t == type), () => onSelect(type));
         }
         return menu;
       }

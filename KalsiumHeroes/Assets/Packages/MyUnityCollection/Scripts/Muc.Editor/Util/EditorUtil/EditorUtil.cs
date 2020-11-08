@@ -84,7 +84,7 @@ namespace Muc.Editor {
       return new Deferred(() => GUI.enabled = prev);
     }
 
-    /// <remarks> Does not enable if already disabled. </remarks>
+    /// <summary> <remarks> Does not enable if already disabled. </remarks> </summary>
     public static Deferred DisabledScope(bool disable = true) {
       var prev = GUI.enabled;
       GUI.enabled &= !disable;
@@ -103,14 +103,14 @@ namespace Muc.Editor {
       return new Deferred(() => EditorGUIUtility.labelWidth = prev);
     }
 
-    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
+    /// <summary> <remarks> Setting width to 0 will reset it to the default value. </remarks> </summary>
     public static Deferred LabelWidthScope(float width) {
       var prev = EditorGUIUtility.labelWidth;
       EditorGUIUtility.labelWidth = width;
       return new Deferred(() => EditorGUIUtility.labelWidth = prev);
     }
 
-    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
+    /// <summary> <remarks> Setting width to 0 will reset it to the default value. </remarks> </summary>
     public static Deferred LabelWidthScope(Func<float, float> modifier) {
       var prev = EditorGUIUtility.labelWidth;
       EditorGUIUtility.labelWidth = modifier(prev);
@@ -123,14 +123,14 @@ namespace Muc.Editor {
       return new Deferred(() => EditorGUIUtility.fieldWidth = prev);
     }
 
-    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
+    /// <summary> <remarks> Setting width to 0 will reset it to the default value. </remarks> </summary>
     public static Deferred FieldWidthScope(float width) {
       var prev = EditorGUIUtility.fieldWidth;
       EditorGUIUtility.fieldWidth = width;
       return new Deferred(() => EditorGUIUtility.fieldWidth = prev);
     }
 
-    /// <remarks> Setting width to 0 will reset it to the default value. </remarks>
+    /// <summary> <remarks> Setting width to 0 will reset it to the default value. </remarks> </summary>
     public static Deferred FieldWidthScope(Func<float, float> modifier) {
       var prev = EditorGUIUtility.fieldWidth;
       EditorGUIUtility.fieldWidth = modifier(prev);

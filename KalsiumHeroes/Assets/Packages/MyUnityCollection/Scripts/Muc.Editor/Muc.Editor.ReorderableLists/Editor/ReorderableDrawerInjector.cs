@@ -7,6 +7,7 @@ namespace Muc.Editor.ReorderableLists {
   using System.Collections;
   using System.Collections.Generic;
   using System.Diagnostics;
+  using System.Linq;
   using System.Reflection;
   using UnityEditor;
 
@@ -31,34 +32,32 @@ namespace Muc.Editor.ReorderableLists {
       var objAssemblyFullName = objAssembly.FullName;
 
       var visited = new HashSet<Type>();
-      foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-        if (AssemblyDependsOn(assembly, objAssemblyFullName))
-          foreach (var type in assembly.GetTypes())
-            if (type.IsClass && type.IsAbstract == false && objType.IsAssignableFrom(type))
+      foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+        if (AssemblyDependsOn(assembly, objAssemblyFullName)) {
+          foreach (var type in assembly.GetTypes()) {
+            if (type.IsClass && !type.IsAbstract && objType.IsAssignableFrom(type)) {
               ApplyToArraysAndListsInType(visited, type);
+            }
+          }
+        }
+      }
     }
 
     //======================================================================
 
     private static bool AssemblyDependsOn(Assembly assembly, string dependencyFullName) {
-      if (assembly.FullName == dependencyFullName)
-        return true;
-
-      foreach (var reference in assembly.GetReferencedAssemblies())
-        if (reference.FullName == dependencyFullName)
-          return true;
-
-      return false;
+      if (assembly.FullName == dependencyFullName) return true;
+      return assembly.GetReferencedAssemblies().Any(v => v.FullName == dependencyFullName);
     }
 
     //======================================================================
 
     private static void ApplyToArraysAndListsInType(HashSet<Type> visited, Type type) {
-      if (visited.Add(type) == false)
+      if (!visited.Add(type))
         return;
 
       if (type.IsArray) {
-        if (drawerKeySetDictionary.Contains(type) == false)
+        if (!drawerKeySetDictionary.Contains(type))
           drawerKeySetDictionary.Add(type, drawerKeySet);
 
         ApplyToArraysAndListsInType(visited, type.GetElementType());
@@ -66,7 +65,7 @@ namespace Muc.Editor.ReorderableLists {
       }
 
       if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>)) {
-        if (drawerKeySetDictionary.Contains(type) == false)
+        if (!drawerKeySetDictionary.Contains(type))
           drawerKeySetDictionary.Add(type, drawerKeySet);
 
         ApplyToArraysAndListsInType(visited, type.GetGenericArguments()[0]);
@@ -74,9 +73,11 @@ namespace Muc.Editor.ReorderableLists {
       }
 
       const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-      for (; type != null; type = type.BaseType)
-        foreach (var field in type.GetFields(bindingFlags))
+      for (; type != null; type = type.BaseType) {
+        foreach (var field in type.GetFields(bindingFlags)) {
           ApplyToArraysAndListsInType(visited, field.FieldType);
+        }
+      }
     }
 
     //======================================================================

@@ -14,7 +14,7 @@ public class RoundHint : MonoBehaviour {
 
   void Update() {
     if (text && Game.instance) {
-      text.text = $"Round: {Game.rounds.round.ToString()}";
+      text.text = $"Round: {Game.rounds.round}";
     }
   }
 }

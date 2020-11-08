@@ -38,7 +38,7 @@ namespace HexGrid {
 
 
     public static List<Vector2> PolygonCorners(Hex h) {
-      List<Vector2> corners = new List<Vector2> { };
+      List<Vector2> corners = new List<Vector2>();
       Vector2 center = HexToPixel(h);
       for (int i = 0; i < 6; i++) {
         Vector2 offset = HexCornerOffset(i);

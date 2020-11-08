@@ -20,7 +20,7 @@ public class MoveAbility : Ability {
   }
 
   protected override IEnumerable<GameHex> GetTargets_GetRangeTargets(GameHex hex) {
-    var res = Game.grid.GetCostField(hex, maxCost: remainingMovement, passable: (h => !h.blocked && !h.unit)).costs.Keys;
+    var res = Game.grid.GetCostField(hex, maxCost: remainingMovement, passable: h => !h.blocked && !h.unit).costs.Keys;
     return res;
   }
 

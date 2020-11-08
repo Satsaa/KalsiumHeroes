@@ -17,7 +17,7 @@ public class AbilityTargeter : Targeter {
   }
 
   public override bool IsCompleted() {
-    return (selection.Count > 0);
+    return selection.Count > 0;
   }
 
   public override void RefreshTargets() {

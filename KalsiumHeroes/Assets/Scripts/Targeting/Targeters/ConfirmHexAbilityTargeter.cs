@@ -12,7 +12,7 @@ public class ConfirmHexAbilityTargeter : AbilityTargeter {
       : base(unit, ability, onComplete, onCancel) { }
 
   public override bool IsCompleted() {
-    return (selection.Count > 0 && confirmed);
+    return selection.Count > 0 && confirmed;
   }
 
   public override bool Select(GameHex hex) {

@@ -75,15 +75,6 @@ public class GridTester : MonoBehaviour {
     if (main == null || !grid.hexes.ContainsValue(main)) main = grid.hexes.First().Value;
     if (hover == null || !grid.hexes.ContainsValue(hover)) hover = grid.hexes.First().Value;
   }
-
-
-  void Start() {
-
-  }
-
-  void Update() {
-
-  }
 }
 
 
@@ -245,9 +236,7 @@ public class GridTesterEditor : Editor {
   private Deferred ColorScope(Color color) {
     var prevColor = Handles.color;
     Handles.color = color;
-    return new Deferred(() => {
-      Handles.color = prevColor;
-    });
+    return new Deferred(() => Handles.color = prevColor);
   }
 
   private Color ChangeAlpha(Color color, float alpha) {
@@ -263,8 +252,7 @@ public class GridTesterEditor : Editor {
     }
 
     public void Dispose() {
-      if (onDispose != null)
-        onDispose();
+      onDispose?.Invoke();
     }
   }
 }

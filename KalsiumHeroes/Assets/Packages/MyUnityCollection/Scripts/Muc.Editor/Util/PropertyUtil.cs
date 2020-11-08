@@ -97,7 +97,7 @@ namespace Muc.Editor {
       public PropertyPathComponent(int elementIndex) : this() => this.elementIndex = elementIndex;
     }
 
-    static Regex arrayElementRegex = new Regex(@"\GArray\.data\[(\d+)\]", RegexOptions.Compiled);
+    static readonly Regex arrayElementRegex = new Regex(@"\GArray\.data\[(\d+)\]", RegexOptions.Compiled);
 
     // Parse the next path component from a SerializedProperty.propertyPath.  For simple field/property access,
     // this is just tokenizing on '.' and returning each field/property name.  Array/list access is via
