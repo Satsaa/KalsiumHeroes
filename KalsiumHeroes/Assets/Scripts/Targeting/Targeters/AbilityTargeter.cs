@@ -25,11 +25,11 @@ public class AbilityTargeter : Targeter {
   }
 
   public override bool Hover(GameHex hex) {
-    var inRange = base.Hover(hex);
-    if (inRange) {
+    var valid = base.Hover(hex);
+    if (valid) {
       hovers.Clear();
       hovers.UnionWith(ability.GetAffectedArea(hex));
     }
-    return inRange;
+    return valid;
   }
 }

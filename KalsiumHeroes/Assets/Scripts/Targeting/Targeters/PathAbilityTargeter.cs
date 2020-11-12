@@ -31,13 +31,13 @@ public class PathConfirmAbilityTargeter : AbilityTargeter {
 
 
   public override bool Hover(GameHex hex) {
-    var inRange = base.Hover(hex);
-    if (inRange) {
+    var valid = base.Hover(hex);
+    if (valid) {
       Game.grid.CheapestPath(unit.hex, hex, out var path, passable);
       foreach (var segment in path) {
         hovers.Add(segment);
       }
     }
-    return inRange;
+    return valid;
   }
 }

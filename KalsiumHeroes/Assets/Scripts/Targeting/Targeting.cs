@@ -12,15 +12,21 @@ public class Targeting : MonoBehaviour {
 
   private GameHex prevHoverHex;
 
-  Targeter seq;
+  Targeter targeter;
   [SerializeField] new Camera camera;
 
+  public event Action onTargeterStart;
+  public event Action onTargeterEnd;
 
-  public bool TryStartSequence(Targeter sequence) {
-    if (seq != null) return false;
-    seq = sequence;
-    Refresh();
-    seq.RefreshTargets();
+
+  public bool TryStartTargeter(Targeter targeter) {
+    if (this.targeter != null) return false;
+    this.targeter = targeter;
+    prevHoverHex = null;
+    this.targeter.RefreshTargets();
+    this.targeter.Hover(null);
+    RefreshHighlights();
+    onTargeterStart?.Invoke();
     return true;
   }
 
@@ -30,7 +36,7 @@ public class Targeting : MonoBehaviour {
   }
 
   void Update() {
-    if (seq != null) {
+    if (targeter != null) {
       if (!TryComplete()) {
         var hex = Game.grid.RaycastHex(camera.ScreenPointToRay(Input.mousePosition));
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
@@ -38,18 +44,21 @@ public class Targeting : MonoBehaviour {
             TryCancel();
             return;
           }
-          if (seq.Select(hex)) {
+          if (targeter.Select(hex)) {
             if (!TryComplete()) {
-              Refresh();
+              RefreshHighlights();
             }
           } else {
             TryCancel();
           }
+        } else if (Input.GetKeyDown(KeyCode.Mouse1)) {
+          TryCancel();
+          return;
         } else {
-          if (prevHoverHex != hex && hex != null) {
+          if (prevHoverHex != hex) {
             prevHoverHex = hex;
-            seq.Hover(hex);
-            Refresh();
+            targeter.Hover(hex);
+            RefreshHighlights();
           }
         }
       }
@@ -58,7 +67,7 @@ public class Targeting : MonoBehaviour {
 
 
   bool TryComplete() {
-    if (seq.IsCompleted()) {
+    if (targeter.IsCompleted()) {
       Complete();
       return true;
     }
@@ -66,13 +75,13 @@ public class Targeting : MonoBehaviour {
   }
 
   void Complete() {
-    seq.onComplete(seq);
-    Remove();
+    targeter.onComplete(targeter);
+    End();
   }
 
 
   bool TryCancel() {
-    if (seq.Cancel()) {
+    if (targeter.Cancel()) {
       Cancel();
       return true;
     }
@@ -80,24 +89,25 @@ public class Targeting : MonoBehaviour {
   }
 
   void Cancel() {
-    seq.onCancel?.Invoke(seq);
-    Remove();
+    targeter.onCancel?.Invoke(targeter);
+    End();
   }
 
 
-  void Remove() {
-    seq = null;
+  void End() {
+    targeter = null;
     prevHoverHex = null;
     ClearHighlights();
+    onTargeterEnd?.Invoke();
   }
 
 
-  void Refresh() {
-    seq.RefreshHighlights();
+  void RefreshHighlights() {
+    targeter.RefreshHighlights();
 
     ClearHighlights();
 
-    foreach (var kv in seq.highlights) {
+    foreach (var kv in targeter.highlights) {
       var hex = kv.Key;
       var color = kv.Value;
       hex.highlighter.Highlight(color);

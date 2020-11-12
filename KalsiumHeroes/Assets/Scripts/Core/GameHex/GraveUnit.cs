@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HexGrid;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class GraveUnit {
@@ -12,11 +13,11 @@ public class GraveUnit {
   public ModifierData[] modifierData;
 
   public GraveUnit(UnitData unitData, IEnumerable<ModifierData> modifierData) {
-    this.unitData = ScriptableObject.Instantiate(unitData);
-    this.modifierData = modifierData.Select(v => ScriptableObject.Instantiate(v)).ToArray();
+    this.unitData = Object.Instantiate(unitData);
+    this.modifierData = modifierData.Select(v => Object.Instantiate(v)).ToArray();
   }
   public GraveUnit(Unit unit) {
-    this.unitData = ScriptableObject.Instantiate(unit.unitData);
-    this.modifierData = unit.modifiers.Select(v => ScriptableObject.Instantiate(v.ModifierData)).ToArray();
+    unitData = Object.Instantiate(unit.unitData);
+    modifierData = unit.modifiers.Select(v => Object.Instantiate(v.ModifierData)).ToArray();
   }
 }

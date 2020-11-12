@@ -26,7 +26,7 @@ public class Modifier : EntityComponent {
   }
 
   protected void Awake() {
-    if (source) data = Instantiate(source);
+    data = Instantiate(source);
     unit = GetComponent<Unit>();
     unit.RegisterModifier(this);
     Game.modifiers.RegisterModifier(this);
@@ -48,6 +48,7 @@ public class Modifier : EntityComponent {
     using (AttributeBase.ConfigurationScope(altererKeys)) {
       AttributeBase.RemoveAlterers();
     }
+    OnUnloadNonpersistent();
   }
 
 #if UNITY_EDITOR

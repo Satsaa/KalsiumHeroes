@@ -19,6 +19,8 @@ public class AbilityUIModifier : Modifier {
 
   [Tooltip("Will be moved, and disabled or enabled depending on the turn.")]
   public GameObject parent;
+  [Tooltip("CanvasGroup Component (probably on the parent object). Fades out the abilities when casting.")]
+  public CanvasGroup group;
   [Tooltip("A prefab with AbilityIcon component.")]
   public GameObject abilityPrefab;
   [Tooltip("A prefab with PassiveIcon component.")]
@@ -32,14 +34,32 @@ public class AbilityUIModifier : Modifier {
   [SerializeField, HideInInspector] float width;
   [SerializeField, HideInInspector] float height;
 
+  [SerializeField, Range(0, 1)] float fadeAlpha = 0.15f;
+  [SerializeField] float alphaFadeSpeed = 5f;
+  [SerializeField, HideInInspector] float currentAlpha = 1;
+  [SerializeField, HideInInspector] float targetAlpha = 1;
+
   [SerializeField, HideInInspector] bool hibernated;
   Action nextFrame;
+
   void LateUpdate() {
     if (!hibernated) {
+      if (currentAlpha != targetAlpha) {
+        var sign = Mathf.Sign(targetAlpha - currentAlpha);
+        currentAlpha += alphaFadeSpeed * Time.deltaTime * sign;
+        if (sign > 0) currentAlpha = Mathf.Clamp(currentAlpha, 0, targetAlpha);
+        else currentAlpha = Mathf.Clamp(currentAlpha, targetAlpha, 1);
+        group.alpha = currentAlpha;
+      }
       RefreshPosition();
       nextFrame?.Invoke();
       nextFrame = null;
     }
+  }
+
+  new void OnValidate() {
+    base.OnValidate();
+    if (!group && parent) group = parent.GetComponent<CanvasGroup>();
   }
 
   new void Awake() {
@@ -171,7 +191,7 @@ public class AbilityUIModifier : Modifier {
         bgImage.enabled = false;
         abilityButton.onClick.AddListener(() => {
           if (ability.IsReady()) {
-            Game.targeting.TryStartSequence(ability.GetTargeter());
+            Game.targeting.TryStartTargeter(ability.GetTargeter());
           }
         });
       } else {
@@ -205,24 +225,39 @@ public class AbilityUIModifier : Modifier {
   }
 
 
-  private void OnFinish() {
+  private void OnEventStart() {
+    targetAlpha = fadeAlpha;
+    RefreshValues();
+  }
+  private void OnEventFinish() {
+    targetAlpha = 1;
     RefreshValues();
   }
 
-  private void OnStart() {
-    RefreshValues();
+  private void OnTargeterStart() {
+    if (!hibernated) {
+      targetAlpha = fadeAlpha;
+    }
   }
+  private void OnTargeterEnd() {
+    targetAlpha = 1;
+  }
+
 
   protected override void OnLoadNonpersistent() {
     base.OnLoadNonpersistent();
-    Game.events.onFinish += OnFinish;
-    Game.events.onStart += OnStart;
+    Game.events.onFinish += OnEventFinish;
+    Game.events.onStart += OnEventStart;
+    Game.targeting.onTargeterStart += OnTargeterStart;
+    Game.targeting.onTargeterEnd += OnTargeterEnd;
   }
 
   protected override void OnUnloadNonpersistent() {
     base.OnLoadNonpersistent();
-    Game.events.onFinish -= OnFinish;
-    Game.events.onStart -= OnStart;
+    Game.events.onFinish -= OnEventFinish;
+    Game.events.onStart -= OnEventStart;
+    Game.targeting.onTargeterStart -= OnTargeterStart;
+    Game.targeting.onTargeterEnd -= OnTargeterEnd;
   }
 
 

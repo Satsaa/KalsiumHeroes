@@ -39,7 +39,7 @@ public class Events {
       try {
         eventHandler = first.GetHandler();
         onStart?.Invoke();
-      } catch (System.Exception) {
+      } catch (Exception) {
         onFinish?.Invoke();
         throw;
       } finally {
@@ -82,7 +82,7 @@ public class Events {
       var ability = unit.abilities.First(a => a.data.identifier == this.ability);
       EventHandler<Ability> abilityHandler = ability.CreateEventHandler(this);
       ability.OnCast();
-      return abilityHandler as EventHandler;
+      return abilityHandler;
     }
   }
 

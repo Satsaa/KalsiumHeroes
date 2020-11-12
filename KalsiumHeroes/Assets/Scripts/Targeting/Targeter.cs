@@ -38,9 +38,10 @@ public abstract class Targeter {
     return false;
   }
 
-  /// <summary> Hover over a hex. Add it to hovers and additional hexes around it its aoe. </summary>
+  /// <summary> Hover over a hex or nothing/null. Add it to hovers and additional hexes around it its aoe. </summary>
   public virtual bool Hover(GameHex hex) {
     hovers.Clear();
+    if (hex == null) return false;
     if (targets.Contains(hex)) {
       hovers.Add(hex);
       return true;
