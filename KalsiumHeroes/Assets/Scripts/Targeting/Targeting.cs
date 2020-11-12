@@ -27,6 +27,7 @@ public class Targeting : MonoBehaviour {
     this.targeter.Hover(null);
     RefreshHighlights();
     onTargeterStart?.Invoke();
+    TryComplete();
     return true;
   }
 

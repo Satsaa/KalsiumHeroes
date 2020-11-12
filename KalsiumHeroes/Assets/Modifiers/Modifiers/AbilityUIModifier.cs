@@ -44,7 +44,7 @@ public class AbilityUIModifier : Modifier {
 
   void LateUpdate() {
     if (!hibernated) {
-      if (currentAlpha != targetAlpha) {
+      if (true) {
         var sign = Mathf.Sign(targetAlpha - currentAlpha);
         currentAlpha += alphaFadeSpeed * Time.deltaTime * sign;
         if (sign > 0) currentAlpha = Mathf.Clamp(currentAlpha, 0, targetAlpha);
@@ -153,21 +153,23 @@ public class AbilityUIModifier : Modifier {
     var minX = parent.transform.position.x - width / 2f;
     if (minX < 0) {
       parent.transform.position = parent.transform.position.SetX(width / 2f);
-    }
-    // Clamp right
-    var maxX = parent.transform.position.x + width / 2f;
-    if (maxX > canvas.pixelRect.width) {
-      parent.transform.position = parent.transform.position.SetX(canvas.pixelRect.width - width / 2f);
+    } else {
+      // Clamp right
+      var maxX = parent.transform.position.x + width / 2f;
+      if (maxX > canvas.pixelRect.width) {
+        parent.transform.position = parent.transform.position.SetX(canvas.pixelRect.width - width / 2f);
+      }
     }
     // Clamp top
     var minY = parent.transform.position.y - height / 2f;
     if (minY < 0) {
       parent.transform.position = parent.transform.position.SetY(height / 2f);
-    }
-    // Clamp bottom
-    var maxY = parent.transform.position.y + height / 2f;
-    if (maxY > canvas.pixelRect.height) {
-      parent.transform.position = parent.transform.position.SetY(canvas.pixelRect.height - height / 2f);
+    } else {
+      // Clamp bottom
+      var maxY = parent.transform.position.y + height / 2f;
+      if (maxY > canvas.pixelRect.height) {
+        parent.transform.position = parent.transform.position.SetY(canvas.pixelRect.height - height / 2f);
+      }
     }
   }
 
@@ -227,37 +229,41 @@ public class AbilityUIModifier : Modifier {
 
   private void OnEventStart() {
     targetAlpha = fadeAlpha;
-    RefreshValues();
+    if (Game.rounds.current == unit) RefreshValues();
   }
   private void OnEventFinish() {
     targetAlpha = 1;
-    RefreshValues();
+    if (Game.rounds.current == unit) RefreshValues();
   }
 
   private void OnTargeterStart() {
-    if (!hibernated) {
-      targetAlpha = fadeAlpha;
+    targetAlpha = fadeAlpha;
+    if (Game.rounds.current == unit) {
+      foreach (var icon in aIcons) icon.abilityButton.enabled = false;
     }
   }
   private void OnTargeterEnd() {
     targetAlpha = 1;
+    if (Game.rounds.current == unit) {
+      foreach (var icon in aIcons) icon.abilityButton.enabled = true;
+    }
   }
 
 
   protected override void OnLoadNonpersistent() {
     base.OnLoadNonpersistent();
-    Game.events.onFinish += OnEventFinish;
     Game.events.onStart += OnEventStart;
-    Game.targeting.onTargeterStart += OnTargeterStart;
+    Game.events.onFinish += OnEventFinish;
     Game.targeting.onTargeterEnd += OnTargeterEnd;
+    Game.targeting.onTargeterStart += OnTargeterStart;
   }
 
   protected override void OnUnloadNonpersistent() {
     base.OnLoadNonpersistent();
-    Game.events.onFinish -= OnEventFinish;
     Game.events.onStart -= OnEventStart;
-    Game.targeting.onTargeterStart -= OnTargeterStart;
+    Game.events.onFinish -= OnEventFinish;
     Game.targeting.onTargeterEnd -= OnTargeterEnd;
+    Game.targeting.onTargeterStart -= OnTargeterStart;
   }
 
 

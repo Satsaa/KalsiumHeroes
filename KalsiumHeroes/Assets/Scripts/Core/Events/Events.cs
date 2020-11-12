@@ -38,7 +38,7 @@ public class Events {
     if (stack.Count > 0) {
       try {
         eventHandler = first.GetHandler();
-        onStart?.Invoke();
+        if (eventHandler != null) onStart?.Invoke();
       } catch (Exception) {
         onFinish?.Invoke();
         throw;
