@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class is used to track the modifiers in the scene. It enables efficient enumeration of modifiers as GameObject.FindObjectsOfType is not used.
+/// This class is used to cache the modifiers in the scene. It enables efficient enumeration of modifiers as GameObject.FindObjectsOfType is not used.
 /// </summary>
 [System.Serializable]
-public class ModifierTracker {
+public class ModifierCache {
 
   [SerializeField] private HashSet<Modifier> modifiers = new HashSet<Modifier>();
   [SerializeField] private HashSet<Ability> abilities = new HashSet<Ability>();
+  [SerializeField] private HashSet<Passive> passives = new HashSet<Passive>();
   [SerializeField] private HashSet<StatusEffect> statuses = new HashSet<StatusEffect>();
 
   public IEnumerable<T> GetModifiers<T>(bool includeInactive = false) {
@@ -29,22 +30,24 @@ public class ModifierTracker {
   }
 
   /// <summary> Finds all loaded Modifiers and their subtypes </summary>
-  public void ResetModifiers() {
+  public void BuildCache() {
     modifiers.Clear();
     abilities.Clear();
     statuses.Clear();
 
-    var sceneItems = GameObject.FindObjectsOfType<Modifier>(true);
-    modifiers.UnionWith(sceneItems);
-    abilities.UnionWith(sceneItems.OfType<Ability>());
-    statuses.UnionWith(sceneItems.OfType<StatusEffect>());
+    var units = GameObject.FindObjectsOfType<Unit>(true);
+    modifiers.UnionWith(units.SelectMany(v => v.modifiers));
+    abilities.UnionWith(units.SelectMany(v => v.abilities));
+    statuses.UnionWith(units.SelectMany(v => v.statuses));
   }
 
-  /// <summary> Adds the Modifier to the pool of modifiers </summary>
+
+  /// <summary> Adds the Modifier to the pool of modifiers. Modifiers are removed during enumeration if they are null. </summary>
   public void RegisterModifier<T>(T modifier) where T : Modifier {
     modifiers.Add(modifier);
     if (modifier is Ability ability) abilities.Add(ability);
     if (modifier is StatusEffect status) statuses.Add(status);
+    if (modifier is Passive passive) passives.Add(passive);
   }
 
   private IEnumerable<Modifier> EnumerateModifiers(bool includeInactive) {

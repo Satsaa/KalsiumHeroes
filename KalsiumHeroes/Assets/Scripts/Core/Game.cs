@@ -16,7 +16,7 @@ public class Game : MonoBehaviour {
   public static Events events => instance._events;
   public static Targeting targeting => instance._targeting;
   public static RoundManager rounds => instance._rounds;
-  public static ModifierTracker modifiers => instance._modifiers;
+  public static ModifierCache modifiers => instance._modifiers;
 
   private static Game _instance;
   [SerializeField] private GameGrid _grid;
@@ -24,7 +24,7 @@ public class Game : MonoBehaviour {
   [SerializeField] private Events _events = new Events();
   [SerializeField] private Targeting _targeting = default;
   [SerializeField] private RoundManager _rounds = new RoundManager();
-  [SerializeField] private ModifierTracker _modifiers = new ModifierTracker();
+  [SerializeField] private ModifierCache _modifiers = new ModifierCache();
 
   private void OnValidate() {
 
@@ -37,7 +37,7 @@ public class Game : MonoBehaviour {
     _instance = this;
     if (_grid == null && (_grid = GetComponent<GameGrid>()) == null) Debug.LogError($"No {nameof(GameGrid)} Component!");
     if (_targeting == null && (_targeting = GetComponent<Targeting>()) == null) Debug.LogError($"No {nameof(Targeting)} Component!");
-    modifiers.ResetModifiers();
+    modifiers.BuildCache();
   }
 
   private void Awake() {
@@ -51,7 +51,7 @@ public class Game : MonoBehaviour {
     _instance = this;
     if (_grid == null) _grid = GetComponent<GameGrid>();
     if (_targeting == null) _targeting = GetComponent<Targeting>();
-    modifiers.ResetModifiers();
+    modifiers.BuildCache();
     _rounds.OnGameStart();
   }
 
