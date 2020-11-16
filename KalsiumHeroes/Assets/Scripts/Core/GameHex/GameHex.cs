@@ -14,7 +14,13 @@ public class GameHex : MonoBehaviour {
   public float positiviness;
   public Highlighter highlighter;
 
-  public void Init(Hex hex) {
+    public void Awake() {
+        var ob = gameObject.transform.Find("Obstacle");
+        if (blocked) {
+            ob.gameObject.SetActive(true);
+        } else ob.gameObject.SetActive(false);
+    }
+    public void Init(Hex hex) {
     this.hex = hex;
     var pix = Layout.HexToPixel(hex);
     center = new Vector3(pix.x, 0, pix.y);
