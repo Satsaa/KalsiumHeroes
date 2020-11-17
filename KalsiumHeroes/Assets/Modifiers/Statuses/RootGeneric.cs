@@ -13,7 +13,7 @@ public class RootGeneric : StatusEffect
     protected override void OnRegisterAlterers()
     {
         // Removed automatically when the component is destroyed
-        unit.unitData.movement.RegisterAlterer(v => 0);
+        unit.rooted.RegisterAlterer(v => true);
     }
 
 }
