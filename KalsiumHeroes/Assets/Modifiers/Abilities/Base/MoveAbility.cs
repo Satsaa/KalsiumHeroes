@@ -7,7 +7,7 @@ public class MoveAbility : Ability {
 
   public static Predicate<GameHex> passablePredicate = h => !h.blocked && !h.unit;
 
-  [HideInInspector] public float remainingMovement;
+  [HideInInspector] public float usedMovement;
 
 
   public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
@@ -16,16 +16,17 @@ public class MoveAbility : Ability {
 
   public override bool IsReady() {
     if (unit.rooted.value) return false;
-    return remainingMovement > 0 && base.IsReady();
+    return usedMovement < unit.unitData.movement.value && base.IsReady();
   }
 
   protected override IEnumerable<GameHex> GetTargets_GetRangeTargets(GameHex hex) {
-    var res = Game.grid.GetCostField(hex, maxCost: remainingMovement, passable: h => !h.blocked && !h.unit).costs.Keys;
+    var maxCost = unit.unitData.movement.value - usedMovement;
+    var res = Game.grid.GetCostField(hex, maxCost: maxCost, passable: h => !h.blocked && !h.unit).costs.Keys;
     return res;
   }
 
   public override void OnTurnStart() {
-    remainingMovement = unit.unitData.movement.value;
+    usedMovement = 0;
     base.OnTurnStart();
   }
 

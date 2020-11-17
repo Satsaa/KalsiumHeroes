@@ -23,7 +23,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
     } else {
       Game.grid.CheapestPath(start, target, out var path, out var field, MoveAbility.passablePredicate);
       var cost = field.scores[field.closest];
-      creator.remainingMovement -= cost;
+      creator.usedMovement += cost;
       this.path = path;
       animating = true;
       animTime = 0;
