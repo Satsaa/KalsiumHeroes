@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e61deeb55bec58499399bdde0259120, type: 3}
+  m_Name: ShoveAbility
+  m_EditorClassIdentifier: 
+  displayName: Shove
+  description: Shove a unit. The targeted unit is moved back until it hits something,
+    and is rooted for 1 turn.
+  identifier: ability_shove
+  componentType:
+    _name: ShoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  abilityType: 4
+  targetType: 12
+  range:
+    _value: 1
+    enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    enabled: 0
+  alwaysCastable:
+    _value: 0
+  rootModifier: {fileID: 11400000, guid: 90fc7f84233e52446b3d2c46fd688605, type: 2}

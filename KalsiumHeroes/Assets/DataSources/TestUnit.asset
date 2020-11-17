@@ -18,13 +18,13 @@ MonoBehaviour:
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   speed:
-    value: 2
+    _value: 2
   movement:
-    value: 5
+    _value: 5
   health:
-    value: 100
-    other: 100
+    _value: 100
+    _other: 100
   defense:
-    value: 20
+    _value: 0
   resistance:
-    value: 20
+    _value: 20

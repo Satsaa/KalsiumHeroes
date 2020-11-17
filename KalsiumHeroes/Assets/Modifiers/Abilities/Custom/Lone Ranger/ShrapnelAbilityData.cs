@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(ShrapnelAbilityData), menuName = "DataSources/" + nameof(ShrapnelAbilityData))]
+[CreateAssetMenu(fileName = nameof(ShrapnelAbilityData), menuName = "DataSources/Units/Lone Ranger/" + nameof(ShrapnelAbilityData))]
 public class ShrapnelAbilityData : AbilityData {
 
   [Header("Shrapnel Ability Data")]
