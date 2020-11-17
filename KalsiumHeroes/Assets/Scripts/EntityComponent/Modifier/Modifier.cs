@@ -1,6 +1,3 @@
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 using System;
 using System.Collections;
@@ -104,34 +101,3 @@ public class Modifier : EntityComponent {
   public virtual void OnBaseAbilityCast(Ability ability) { }
 }
 
-
-#if UNITY_EDITOR
-[CanEditMultipleObjects]
-[CustomEditor(typeof(Modifier), true)]
-public class ModifierEditor : Editor {
-
-  SerializedProperty source;
-  SerializedProperty data;
-
-  Modifier t => (Modifier)target;
-
-  void OnEnable() {
-    source = serializedObject.FindProperty(nameof(Modifier.source));
-    data = serializedObject.FindProperty(nameof(Modifier.data));
-  }
-
-  public override void OnInspectorGUI() {
-    serializedObject.Update();
-
-    using (EditorUtil.DisabledScope(Application.isPlaying))
-      EditorGUILayout.ObjectField(source, t.dataType);
-
-    using (EditorUtil.DisabledScope(!Application.isPlaying))
-      EditorGUILayout.PropertyField(data);
-
-    DrawPropertiesExcluding(serializedObject, nameof(Modifier.source), nameof(Modifier.data), "m_Script");
-
-    serializedObject.ApplyModifiedProperties();
-  }
-}
-#endif

@@ -1,3 +1,6 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 using System;
 using Muc.Editor;
@@ -31,3 +34,34 @@ public abstract class EntityComponent : MonoBehaviour {
   public abstract Type dataType { get; }
 
 }
+
+#if UNITY_EDITOR
+[CanEditMultipleObjects]
+[CustomEditor(typeof(EntityComponent), true)]
+public class ModifierEditor : Editor {
+
+  SerializedProperty source;
+  SerializedProperty data;
+
+  EntityComponent t => (EntityComponent)target;
+
+  void OnEnable() {
+    source = serializedObject.FindProperty(nameof(EntityComponent.source));
+    data = serializedObject.FindProperty(nameof(EntityComponent.data));
+  }
+
+  public override void OnInspectorGUI() {
+    serializedObject.Update();
+
+    using (EditorUtil.DisabledScope(Application.isPlaying))
+      EditorGUILayout.ObjectField(source, t.dataType);
+
+    using (EditorUtil.DisabledScope(!Application.isPlaying))
+      EditorGUILayout.PropertyField(data);
+
+    DrawPropertiesExcluding(serializedObject, nameof(EntityComponent.source), nameof(EntityComponent.data), "m_Script");
+
+    serializedObject.ApplyModifiedProperties();
+  }
+}
+#endif

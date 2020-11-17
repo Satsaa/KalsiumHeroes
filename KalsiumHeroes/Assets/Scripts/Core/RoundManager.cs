@@ -24,7 +24,7 @@ public class RoundManager {
   [field: SerializeField] public int round { get; private set; }
 
   public void Sort() {
-    units.Sort((a, b) => b.unitData.speed.value - a.unitData.speed.value);
+    units.Sort((a, b) => a.unitData.speed.value.CompareTo(b.unitData.speed.value));
   }
 
   void Gather() {
