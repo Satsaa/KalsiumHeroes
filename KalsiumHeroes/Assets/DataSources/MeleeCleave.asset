@@ -9,26 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7b7b9add516b534b862b8cefd976a1b, type: 3}
-  m_Name: PickOffAbility
+  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Name: MeleeCleave
   m_EditorClassIdentifier: 
-  displayName: Pick Off
-  description: Deal global damage depending on how many units are nearby to the Lone
-    Ranger
-  identifier: ability_pickoff
+  displayName: MeleeCleave
+  description: Cleaves 30 dmg around unit
+  identifier: ability_melee_cleave
   componentType:
-    _name: PickOffAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sprite: {fileID: 0}
   abilityType: 2
-  targetType: 12
+  targetType: -1
   range:
     _value: 1
-    enabled: 0
+    enabled: 1
   rangeMode: 0
   radius:
-    _value: 0
-  requiresVision:
     _value: 1
+  requiresVision:
+    _value: 0
   cooldown:
     _value: 0
     _other: 0
@@ -42,9 +42,4 @@ MonoBehaviour:
     _value: 0
   damage:
     _value: 30
-  bonusDamageMultipliers:
-  - 1.1
-  - 1.25
-  - 1.5
-  - 2
   damageType: 1
