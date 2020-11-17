@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 916a8e778dd62164e9746101339a6d22, type: 3}
-  m_Name: ShrapnelAbilityData
+  m_Name: ShrapnelAbility
   m_EditorClassIdentifier: 
   displayName: Shrapnel
   description: Deals damage on the next turn of this unit at the target area.
   identifier: ability_shrapnel
   componentType:
     _name: ShrapnelAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  sprite: {fileID: 0}
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 0
   targetType: 0
   range:
     _value: 9
-    enabled: 1
+    enabled: 0
   rangeMode: 0
   radius:
-    _value: 5
+    _value: 2
   requiresVision:
     _value: 0
   cooldown:
@@ -40,6 +40,6 @@ MonoBehaviour:
   alwaysCastable:
     _value: 0
   damage:
-    _value: 99
-  damageType: 3
+    _value: 40
+  damageType: 1
   shrapnelModifierData: {fileID: 11400000, guid: 9509dbf183a19fc45aef68decfb3b966, type: 2}
