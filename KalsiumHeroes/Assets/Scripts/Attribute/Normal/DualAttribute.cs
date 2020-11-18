@@ -7,22 +7,19 @@ using System;
 using System.Security;
 
 [Serializable]
-public class SeededDualAttribute<T> : SeededAttribute<T> {
+public class DualAttribute<T> : Attribute<T> {
 
 	[SerializeField]
 	[FormerlySerializedAs(nameof(other))]
 	[Tooltip("Secondary value")]
 	protected T _other;
-	public virtual T other => otherAlterers.Values.Aggregate(_other, (current, alt) => alt(current));
 
-	protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
-
-
-	public SeededDualAttribute() { }
-	public SeededDualAttribute(T value, T other) : base(value) {
-		this._other = other;
+	public virtual T other {
+		get => otherAlterers.Values.Aggregate(_other, (current, alt) => alt(current));
+		set => _other = value;
 	}
 
+	protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
 
 	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
 		switch (attributeProperty) {
@@ -41,7 +38,12 @@ public class SeededDualAttribute<T> : SeededAttribute<T> {
 			default: return "Unknown";
 		}
 	}
-	public override bool Editor_OnlyShowAlteredInPlay(AttributeProperty attributeProperty) => true;
+
+	public DualAttribute() { }
+	public DualAttribute(T value, T other) : base(value) {
+		_other = other;
+	}
+
 
 	/// <summary> Registers a function that alters what the other property returns. </summary>
 	public void RegisterSecondaryAlterer(Func<T, T> alterer) {
@@ -56,6 +58,18 @@ public class SeededDualAttribute<T> : SeededAttribute<T> {
 		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
 		alterers.Remove(key);
 		otherAlterers.Remove(key);
+	}
+
+	/// <summary> Sets value to other. </summary>
+	public void ResetValue() {
+		value = other;
+	}
+
+	/// <summary> If value is larger than other, sets value to other. T must be castable to IComparable. </summary>
+	public void LimitValue() {
+		if (((IComparable)value).CompareTo((IComparable)other) > 0) {
+			value = other;
+		}
 	}
 
 }

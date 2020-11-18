@@ -7,28 +7,23 @@ using System;
 using System.Security;
 
 [Serializable]
-public class SeededToggleAttribute<T> : SeededAttribute<T> {
+public class Attribute<T> : AttributeBase {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(enabled))]
-	[Tooltip("Attribute is enabled?")]
-	private bool _enabled;
-	public virtual bool enabled => enabledAlterers.Values.Aggregate(_enabled, (current, alt) => alt(current));
+	[FormerlySerializedAs(nameof(value))]
+	[Tooltip("Primary value")]
+	protected T _value;
 
-	protected Dictionary<object, Func<bool, bool>> enabledAlterers = new Dictionary<object, Func<bool, bool>>();
-
-
-	public SeededToggleAttribute(bool enabled = true) {
-		_enabled = enabled;
-	}
-	public SeededToggleAttribute(T value, bool enabled = true) : base(value) {
-		_enabled = enabled;
+	public virtual T value {
+		get => alterers.Values.Aggregate(_value, (current, alt) => alt(current));
+		set => _value = value;
 	}
 
+	protected Dictionary<object, Func<T, T>> alterers = new Dictionary<object, Func<T, T>>();
 
 	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
 		switch (attributeProperty) {
-			case AttributeProperty.Enabled: return !_enabled.Equals(enabled);
+			case AttributeProperty.Enabled: return false;
 			case AttributeProperty.Primary: return !_value.Equals(value);
 			case AttributeProperty.Secondary: return false;
 			default: return false;
@@ -37,13 +32,17 @@ public class SeededToggleAttribute<T> : SeededAttribute<T> {
 
 	public override string Editor_DefaultLabel(AttributeProperty attributeProperty) => "";
 
-	public override bool Editor_OnlyShowAlteredInPlay(AttributeProperty attributeProperty) => true;
+	public Attribute() { }
+	public Attribute(T value) {
+		this._value = value;
+	}
 
-	/// <summary> Registers a function that alters what the other property returns. </summary>
-	public void RegisterSecondaryAlterer(Func<bool, bool> alterer) {
+
+	/// <summary> Registers a function that alters what the value property returns. </summary>
+	public void RegisterAlterer(Func<T, T> alterer) {
 		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
 		var keyObject = new object();
-		enabledAlterers.Add(keyObject, alterer);
+		alterers.Add(keyObject, alterer);
 		keyTarget.Add(keyObject, this);
 	}
 
@@ -51,7 +50,6 @@ public class SeededToggleAttribute<T> : SeededAttribute<T> {
 	public override void RemoveAlterer(object key) {
 		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
 		alterers.Remove(key);
-		enabledAlterers.Remove(key);
 	}
 
 }

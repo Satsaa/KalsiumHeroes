@@ -11,10 +11,10 @@ public class Unit : EntityComponent {
   public UnitData unitData => (UnitData)data;
   public override Type dataType => typeof(UnitData);
 
-  [field: SerializeField] public List<Modifier> modifiers { get; private set; } = new List<Modifier>();
-  [field: SerializeField] public List<Ability> abilities { get; private set; } = new List<Ability>();
-  [field: SerializeField] public List<Passive> passives { get; private set; } = new List<Passive>();
-  [field: SerializeField] public List<StatusEffect> statuses { get; private set; } = new List<StatusEffect>();
+  [field: SerializeField, HideInInspector] public List<Modifier> modifiers { get; private set; } = new List<Modifier>();
+  [field: SerializeField, HideInInspector] public List<Ability> abilities { get; private set; } = new List<Ability>();
+  [field: SerializeField, HideInInspector] public List<Passive> passives { get; private set; } = new List<Passive>();
+  [field: SerializeField, HideInInspector] public List<StatusEffect> statuses { get; private set; } = new List<StatusEffect>();
 
 
   [HideInInspector]
