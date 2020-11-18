@@ -38,7 +38,7 @@ public abstract class EntityComponent : MonoBehaviour {
 #if UNITY_EDITOR
 [CanEditMultipleObjects]
 [CustomEditor(typeof(EntityComponent), true)]
-public class ModifierEditor : Editor {
+public class EntityComponentEditor : Editor {
 
   SerializedProperty source;
   SerializedProperty data;

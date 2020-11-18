@@ -13,7 +13,7 @@ using System;
 using System.Security;
 using Muc;
 
-[System.Serializable]
+[Serializable]
 public abstract class AttributeBase {
 
   internal static bool allow { get; private set; }
@@ -24,6 +24,8 @@ public abstract class AttributeBase {
     AttributeBase.keyTarget = keyTarget;
     return new Deferred(() => { allow = false; keyTarget = null; });
   }
+
+  public abstract bool hasAlterers { get; }
 
   public static void RemoveAlterers() {
     foreach (var kv in keyTarget) {

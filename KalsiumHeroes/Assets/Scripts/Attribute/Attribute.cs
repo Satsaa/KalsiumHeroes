@@ -27,6 +27,7 @@ public class Attribute<T> : AttributeBase {
   }
 
   protected Dictionary<object, Func<T, T>> alterers = new Dictionary<object, Func<T, T>>();
+  public override bool hasAlterers => alterers.Count > 0;
 
 
   public Attribute() { }
@@ -37,15 +38,15 @@ public class Attribute<T> : AttributeBase {
 
   /// <summary> Registers a function that alters what the value property returns. </summary>
   public void RegisterAlterer(Func<T, T> alterer) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     var keyObject = new object();
     alterers.Add(keyObject, alterer);
-    AttributeBase.keyTarget.Add(keyObject, this);
+    keyTarget.Add(keyObject, this);
   }
 
   /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
   public override void RemoveAlterer(object key) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     alterers.Remove(key);
   }
 
@@ -55,6 +56,9 @@ public class Attribute<T> : AttributeBase {
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(Attribute<>))]
 public class AttributeDrawer : PropertyDrawer {
+
+  public float alteredWidth => expandAltered ? 0.5f : 0.8f;
+  public bool expandAltered = false;
 
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
@@ -73,12 +77,31 @@ public class AttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (IndentScope(v => 0)) {
-        EditorGUIUtility.labelWidth = 35;
+
+        var obj = GetValues<AttributeBase>(property).First();
+
+        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "");
+        labelWidth = 35;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
-        EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
-      }
+        if (obj.hasAlterers) pos.width *= alteredWidth;
+        EditorGUI.PropertyField(pos, valueProperty, valueLabel);
 
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = position.xMax;
+            var prop = obj.GetType().GetProperty(nameof(Attribute<int>.value));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, val.ToString());
+            if (Event.current.type == EventType.Repaint) {
+              var prev = expandAltered;
+              expandAltered = pos.Contains(Event.current.mousePosition);
+              GUI.changed |= prev != expandAltered;
+            }
+          }
+        }
+      }
     }
 
   }

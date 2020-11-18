@@ -26,6 +26,7 @@ public class SeededDualAttribute<T> : SeededAttribute<T> {
   }
 
   protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
+  public override bool hasAlterers => alterers.Count > 0 || otherAlterers.Count > 0;
 
 
   public SeededDualAttribute() { }
@@ -35,15 +36,15 @@ public class SeededDualAttribute<T> : SeededAttribute<T> {
 
   /// <summary> Registers a function that alters what the other property returns. </summary>
   public void RegisterSecondaryAlterer(Func<T, T> alterer) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     var keyObject = new object();
     otherAlterers.Add(keyObject, alterer);
-    AttributeBase.keyTarget.Add(keyObject, this);
+    keyTarget.Add(keyObject, this);
   }
 
   /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
   public override void RemoveAlterer(object key) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     alterers.Remove(key);
     otherAlterers.Remove(key);
   }
@@ -73,19 +74,40 @@ public class SeededDualAttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (IndentScope(v => 0)) {
+
+        var obj = GetValues<AttributeBase>(property).First();
+
         var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Seed");
         labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.width = (position.xMax - pos.xMin) / 2 - spacing;
-        using (DisabledScope(v => Application.isPlaying))
+        if (Application.isPlaying) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = position.xMax;
+            var prop = obj.GetType().GetProperty(nameof(SeededDualAttribute<int>.value));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, valueLabel, val.ToString());
+          }
+        } else {
           EditorGUI.PropertyField(pos, valueProperty, valueLabel);
+        }
 
         var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? "Other");
         labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
-        using (DisabledScope(v => Application.isPlaying))
+        if (Application.isPlaying) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = position.xMax;
+            var prop = obj.GetType().GetProperty(nameof(SeededDualAttribute<int>.other));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, baseLabel, val.ToString());
+          }
+        } else {
           EditorGUI.PropertyField(pos, otherProperty, baseLabel);
+        }
       }
 
     }

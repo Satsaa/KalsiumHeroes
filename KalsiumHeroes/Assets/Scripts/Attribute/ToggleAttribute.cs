@@ -16,30 +16,37 @@ using Muc;
 [System.Serializable]
 public class ToggleAttribute<T> : Attribute<T> {
 
+  [SerializeField]
+  [FormerlySerializedAs(nameof(enabled))]
   [Tooltip("Attribute is enabled?")]
-  public bool enabled;
+  private bool _enabled;
+
+  public virtual bool enabled {
+    get => enabledAlterers.Values.Aggregate(_enabled, (current, alt) => alt(current));
+    set => _enabled = value;
+  }
 
   protected Dictionary<object, Func<bool, bool>> enabledAlterers = new Dictionary<object, Func<bool, bool>>();
-
+  public override bool hasAlterers => alterers.Count > 0 || enabledAlterers.Count > 0;
 
   public ToggleAttribute(bool enabled = true) {
-    this.enabled = enabled;
+    _enabled = enabled;
   }
   public ToggleAttribute(T value, bool enabled = true) : base(value) {
-    this.enabled = enabled;
+    _enabled = enabled;
   }
 
 
   internal void RegisterEnabledAlterer(Func<bool, bool> alterer) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     var keyObject = new object();
     enabledAlterers.Add(keyObject, alterer);
-    AttributeBase.keyTarget.Add(keyObject, this);
+    keyTarget.Add(keyObject, this);
   }
 
   /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
   public override void RemoveAlterer(object key) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     alterers.Remove(key);
     enabledAlterers.Remove(key);
   }
@@ -50,13 +57,16 @@ public class ToggleAttribute<T> : Attribute<T> {
 [CustomPropertyDrawer(typeof(ToggleAttribute<>))]
 public class ToggleAttributeDrawer : PropertyDrawer {
 
+  public float alteredWidth => expandAltered ? 0.5f : 0.8f;
+  public bool expandAltered = false;
+
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
     using (PropertyScope(position, label, property, out label))
     using (RestoreLabelWidthScope())
     using (RestoreFieldWidthScope()) {
 
-      var enabledProperty = property.FindPropertyRelative(nameof(ToggleAttribute<int>.enabled));
+      var enabledProperty = property.FindPropertyRelative("_enabled");
       var valueProperty = property.FindPropertyRelative("_value");
 
       var fieldInfo = GetFieldInfo(property);
@@ -68,13 +78,41 @@ public class ToggleAttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (IndentScope(v => 0)) {
+
+        var obj = GetValues<AttributeBase>(property).First();
+        var isRepaint = Event.current.type == EventType.Repaint;
+
         pos.xMin = pos.xMax + spacing;
         pos.width = 15 + spacing;
         EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.x = pos.xMax;
+            var prop = obj.GetType().GetProperty(nameof(ToggleAttribute<int>.enabled));
+            var val = (bool)prop.GetValue(obj);
+            EditorGUI.Toggle(pos, val);
+          }
+        }
 
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
+        if (obj.hasAlterers) pos.width *= alteredWidth;
         EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
+
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = position.xMax;
+            var prop = obj.GetType().GetProperty(nameof(ToggleAttribute<int>.value));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, new GUIContent("", "Altered value"), val.ToString());
+            if (isRepaint) {
+              var prev = expandAltered;
+              expandAltered = pos.Contains(Event.current.mousePosition);
+              GUI.changed |= prev != expandAltered;
+            }
+          }
+        }
       }
 
     }

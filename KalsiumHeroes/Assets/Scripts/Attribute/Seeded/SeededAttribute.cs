@@ -15,7 +15,6 @@ using Muc;
 
 
 [Serializable]
-// Just 
 public class SeededAttribute<T> : AttributeBase {
 
   [SerializeField]
@@ -28,25 +27,26 @@ public class SeededAttribute<T> : AttributeBase {
   }
 
   protected Dictionary<object, Func<T, T>> alterers = new Dictionary<object, Func<T, T>>();
+  public override bool hasAlterers => alterers.Count > 0;
 
 
   public SeededAttribute() { }
   public SeededAttribute(T value) {
-    this._value = value;
+    _value = value;
   }
 
 
   /// <summary> Registers a function that alters what the value property returns. </summary>
   public void RegisterAlterer(Func<T, T> alterer) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     var keyObject = new object();
     alterers.Add(keyObject, alterer);
-    AttributeBase.keyTarget.Add(keyObject, this);
+    keyTarget.Add(keyObject, this);
   }
 
   /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
   public override void RemoveAlterer(object key) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     alterers.Remove(key);
   }
 
@@ -74,11 +74,24 @@ public class SeededAttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (IndentScope(v => 0)) {
+
+        var obj = GetValues<AttributeBase>(property).First();
+
+        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "");
         labelWidth = 35;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
-        using (DisabledScope(v => Application.isPlaying))
-          EditorGUI.PropertyField(pos, valueProperty, new GUIContent(labelAttribute?.primaryLabel ?? ""));
+        if (Application.isPlaying) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = position.xMax;
+            var prop = obj.GetType().GetProperty(nameof(Attribute<int>.value));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, val.ToString());
+          }
+        } else {
+          EditorGUI.PropertyField(pos, valueProperty, valueLabel);
+        }
       }
 
     }

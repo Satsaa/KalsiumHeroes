@@ -27,25 +27,25 @@ public class DualAttribute<T> : Attribute<T> {
   }
 
   protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
-
+  public override bool hasAlterers => alterers.Count > 0 || otherAlterers.Count > 0;
 
   public DualAttribute() { }
   public DualAttribute(T value, T other) : base(value) {
-    this._other = other;
+    _other = other;
   }
 
 
   /// <summary> Registers a function that alters what the other property returns. </summary>
   public void RegisterSecondaryAlterer(Func<T, T> alterer) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     var keyObject = new object();
     otherAlterers.Add(keyObject, alterer);
-    AttributeBase.keyTarget.Add(keyObject, this);
+    keyTarget.Add(keyObject, this);
   }
 
   /// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
   public override void RemoveAlterer(object key) {
-    if (!AttributeBase.allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
+    if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
     alterers.Remove(key);
     otherAlterers.Remove(key);
   }
@@ -69,6 +69,9 @@ public class DualAttribute<T> : Attribute<T> {
 [CustomPropertyDrawer(typeof(DualAttribute<>))]
 public class DualAttributeDrawer : PropertyDrawer {
 
+  public float alteredWidth => expandAltered ? 0.5f : 0.8f;
+  public bool expandAltered = false;
+
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
     using (PropertyScope(position, label, property, out label))
@@ -87,17 +90,59 @@ public class DualAttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (IndentScope(v => 0)) {
-        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Seed");
+
+        var obj = GetValues<AttributeBase>(property).First();
+        var isRepaint = Event.current.type == EventType.Repaint;
+        var prevExpandAltered = expandAltered;
+        var expand = false;
+
+        var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Value");
         labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.width = (position.xMax - pos.xMin) / 2 - spacing;
+        var origMax = pos.xMax;
+        if (obj.hasAlterers) pos.width *= alteredWidth;
         EditorGUI.PropertyField(pos, valueProperty, valueLabel);
+
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = origMax;
+            var prop = obj.GetType().GetProperty(nameof(DualAttribute<int>.value));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, val.ToString());
+            if (isRepaint) {
+              expand |= pos.Contains(Event.current.mousePosition);
+              GUI.changed |= prevExpandAltered != expand;
+            }
+          }
+        }
 
         var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? "Other");
         labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
+        origMax = pos.xMax;
+        if (obj.hasAlterers) pos.width *= alteredWidth;
         EditorGUI.PropertyField(pos, otherProperty, baseLabel);
+
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = origMax;
+            var prop = obj.GetType().GetProperty(nameof(DualAttribute<int>.other));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, val.ToString());
+            if (isRepaint) {
+              expand |= pos.Contains(Event.current.mousePosition);
+              GUI.changed |= prevExpandAltered != expand;
+            }
+          }
+        }
+
+        if (isRepaint) {
+          expandAltered = expand;
+        }
       }
 
     }

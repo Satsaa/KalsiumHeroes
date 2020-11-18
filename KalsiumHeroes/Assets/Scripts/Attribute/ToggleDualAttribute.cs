@@ -16,17 +16,25 @@ using Muc;
 [System.Serializable]
 public class ToggleDualAttribute<T> : DualAttribute<T> {
 
+  [SerializeField]
+  [FormerlySerializedAs(nameof(enabled))]
   [Tooltip("Attribute is enabled?")]
-  public bool enabled;
+  private bool _enabled;
+
+  public virtual bool enabled {
+    get => enabledAlterers.Values.Aggregate(_enabled, (current, alt) => alt(current));
+    set => _enabled = value;
+  }
 
   protected Dictionary<object, Func<bool, bool>> enabledAlterers = new Dictionary<object, Func<bool, bool>>();
+  public override bool hasAlterers => alterers.Count > 0 || otherAlterers.Count > 0 || enabledAlterers.Count > 0;
 
 
   public ToggleDualAttribute(bool enabled = true) {
-    this.enabled = enabled;
+    _enabled = enabled;
   }
   public ToggleDualAttribute(T value, T other, bool enabled = true) : base(value, other) {
-    this.enabled = enabled;
+    _enabled = enabled;
   }
 
 
@@ -51,13 +59,16 @@ public class ToggleDualAttribute<T> : DualAttribute<T> {
 [CustomPropertyDrawer(typeof(ToggleDualAttribute<>))]
 public class ToggleDualAttributeDrawer : PropertyDrawer {
 
+  public float alteredWidth => expandAltered ? 0.5f : 0.8f;
+  public bool expandAltered = false;
+
   public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
     using (PropertyScope(position, label, property, out label))
     using (RestoreLabelWidthScope())
     using (RestoreFieldWidthScope()) {
 
-      var enabledProperty = property.FindPropertyRelative(nameof(ToggleDualAttribute<int>.enabled));
+      var enabledProperty = property.FindPropertyRelative("_enabled");
       var valueProperty = property.FindPropertyRelative("_value");
       var otherProperty = property.FindPropertyRelative("_other");
 
@@ -70,6 +81,12 @@ public class ToggleDualAttributeDrawer : PropertyDrawer {
       if (!noLabel) EditorGUI.LabelField(pos, label);
 
       using (IndentScope(v => 0)) {
+
+        var obj = GetValues<AttributeBase>(property).First();
+        var isRepaint = Event.current.type == EventType.Repaint;
+        var prevExpandAltered = expandAltered;
+        var expand = false;
+
         pos.xMin = pos.xMax + spacing;
         pos.width = 15 + spacing;
         EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
@@ -77,14 +94,50 @@ public class ToggleDualAttributeDrawer : PropertyDrawer {
         var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? "Value");
         labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
-        pos.width = (position.xMax - pos.xMin - 15 - spacing * 2) / 2 - spacing;
+        pos.width = (position.xMax - pos.xMin) / 2 - spacing;
+        var origMax = pos.xMax;
+        if (obj.hasAlterers) pos.width *= alteredWidth;
         EditorGUI.PropertyField(pos, valueProperty, valueLabel);
+
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = origMax;
+            var prop = obj.GetType().GetProperty(nameof(ToggleDualAttribute<int>.enabled));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, new GUIContent("", "Altered value"), val.ToString());
+            if (isRepaint) {
+              expand |= pos.Contains(Event.current.mousePosition);
+              GUI.changed |= prevExpandAltered != expand;
+            }
+          }
+        }
 
         var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? "Other");
         labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
         pos.xMin = pos.xMax + spacing;
         pos.xMax = position.xMax;
+        origMax = pos.xMax;
+        if (obj.hasAlterers) pos.width *= alteredWidth;
         EditorGUI.PropertyField(pos, otherProperty, baseLabel);
+
+        if (obj.hasAlterers) {
+          using (DisabledScope()) {
+            pos.xMin = pos.xMax;
+            pos.xMax = origMax;
+            var prop = obj.GetType().GetProperty(nameof(ToggleDualAttribute<int>.value));
+            var val = prop.GetValue(obj);
+            EditorGUI.TextField(pos, new GUIContent("", "Altered value"), val.ToString());
+            if (isRepaint) {
+              expand |= pos.Contains(Event.current.mousePosition);
+              GUI.changed |= prevExpandAltered != expand;
+            }
+          }
+        }
+
+        if (isRepaint) {
+          expandAltered = expand;
+        }
       }
 
     }
