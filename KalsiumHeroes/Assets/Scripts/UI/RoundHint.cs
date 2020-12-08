@@ -6,15 +6,15 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class RoundHint : MonoBehaviour {
 
-  [SerializeField, HideInInspector] Text text;
+	[SerializeField, HideInInspector] Text text;
 
-  void Start() {
-    text = GetComponent<Text>();
-  }
+	void Start() {
+		text = GetComponent<Text>();
+	}
 
-  void Update() {
-    if (text && Game.instance) {
-      text.text = $"Round: {Game.rounds.round}";
-    }
-  }
+	void Update() {
+		if (text && Game.instance) {
+			text.text = $"Round: {Game.rounds.round}";
+		}
+	}
 }

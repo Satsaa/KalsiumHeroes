@@ -1,7 +1,7 @@
 
 public enum DamageType {
-  None,
-  Physical,
-  Magical,
-  Pure
+	None,
+	Physical,
+	Magical,
+	Pure
 }

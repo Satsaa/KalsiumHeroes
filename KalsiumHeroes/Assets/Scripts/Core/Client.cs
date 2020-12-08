@@ -8,34 +8,34 @@ using UnityEngine.Events;
 [Serializable]
 public class Client {
 
-  public int eventNum = 0;
+	public int eventNum = 0;
 
-  public void PostEvent(GameEvent e) {
-    e.eventNum = eventNum++;
+	public void PostEvent(GameEvent e) {
+		e.eventNum = eventNum++;
 
-    var packet = new GameEventPacket(e.GetType().Name, e);
-    var fullJson = JsonUtility.ToJson(packet);
+		var packet = new GameEventPacket(e.GetType().Name, e);
+		var fullJson = JsonUtility.ToJson(packet);
 
-    // Send to server
+		// Send to server
 
-    ReceiveEvent(fullJson);
-  }
+		ReceiveEvent(fullJson);
+	}
 
-  private void ReceiveEvent(string json) {
-    var packet = JsonUtility.FromJson<GameEventPacket>(json);
-    Game.events.QueueEvent(packet);
-  }
+	private void ReceiveEvent(string json) {
+		var packet = JsonUtility.FromJson<GameEventPacket>(json);
+		Game.events.QueueEvent(packet);
+	}
 }
 
 public class GameEventPacket {
-  public GameEventPacket(string name, GameEvent e) {
-    this.name = name;
-    this.json = JsonUtility.ToJson(e);
-  }
-  public GameEventPacket(string name, string json) {
-    this.name = name;
-    this.json = json;
-  }
-  public string name;
-  public string json;
+	public GameEventPacket(string name, GameEvent e) {
+		this.name = name;
+		this.json = JsonUtility.ToJson(e);
+	}
+	public GameEventPacket(string name, string json) {
+		this.name = name;
+		this.json = json;
+	}
+	public string name;
+	public string json;
 }

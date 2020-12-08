@@ -1,6 +1,6 @@
 
 public enum Team {
-  Neutral,
-  Team1,
-  Team2,
+	Neutral,
+	Team1,
+	Team2,
 }

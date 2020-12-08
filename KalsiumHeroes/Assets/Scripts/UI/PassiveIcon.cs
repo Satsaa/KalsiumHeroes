@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class PassiveIcon : MonoBehaviour {
 
-  [HideInInspector]
-  public Passive passive;
+	[HideInInspector]
+	public Passive passive;
 
-  public Text abilityText;
+	public Text abilityText;
 
-  public Image image;
+	public Image image;
 
 }

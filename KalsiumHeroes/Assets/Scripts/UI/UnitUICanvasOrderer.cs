@@ -7,20 +7,20 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Unit))]
 public class UnitUICanvasOrderer : MonoBehaviour {
 
-  public Camera cam;
-  public Canvas canvas;
+	public Camera cam;
+	public Canvas canvas;
 
-  void OnValidate() => Init();
-  void Reset() => Init();
-  void Start() => Init();
+	void OnValidate() => Init();
+	void Reset() => Init();
+	void Start() => Init();
 
-  void Init() {
-    if (!cam) cam = Camera.main;
-    if (!canvas) canvas = GetComponentInChildren<Canvas>();
-  }
+	void Init() {
+		if (!cam) cam = Camera.main;
+		if (!canvas) canvas = GetComponentInChildren<Canvas>();
+	}
 
-  void LateUpdate() {
-    var distance = Vector3.Distance(transform.position, cam.transform.position);
-    canvas.sortingOrder = (int)(distance * -25);
-  }
+	void LateUpdate() {
+		var distance = Vector3.Distance(transform.position, cam.transform.position);
+		canvas.sortingOrder = (int)(distance * -25);
+	}
 }

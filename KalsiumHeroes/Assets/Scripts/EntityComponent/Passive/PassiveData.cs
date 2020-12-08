@@ -14,6 +14,6 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = nameof(PassiveData), menuName = "DataSources/" + nameof(PassiveData))]
 public class PassiveData : ModifierData {
 
-  [Tooltip("Passives are currently Modifiers which are shown as abilities.")]
-  public string passivesAreJustModifiers;
+	[Tooltip("Passives are currently Modifiers which are shown as abilities.")]
+	public string passivesAreJustModifiers;
 }

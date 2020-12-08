@@ -1,9 +1,9 @@
 
 public enum DebuffType {
-  None,
-  Root,
-  Disarm,
-  Silence,
-  Bleed,
-  Poison,
+	None,
+	Root,
+	Disarm,
+	Silence,
+	Bleed,
+	Poison,
 }

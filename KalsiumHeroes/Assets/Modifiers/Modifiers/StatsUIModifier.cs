@@ -8,31 +8,31 @@ using UnityEngine;
 
 public class StatsUIModifier : Modifier {
 
-  public Camera cam;
-  [Tooltip("World space offset")]
-  public Vector3 wsOffset;
-  [Tooltip("Screen space offs et")]
-  public Vector2 ssOffset;
+	public Camera cam;
+	[Tooltip("World space offset")]
+	public Vector3 wsOffset;
+	[Tooltip("Screen space offs et")]
+	public Vector2 ssOffset;
 
-  [Tooltip("Will be moved based on the position of the unit.")]
-  public GameObject parent;
+	[Tooltip("Will be moved based on the position of the unit.")]
+	public GameObject parent;
 
-  public RectTransform hpRect;
-  public Text hpText;
+	public RectTransform hpRect;
+	public Text hpText;
 
-  [SerializeField, HideInInspector] float hpFullWidth;
+	[SerializeField, HideInInspector] float hpFullWidth;
 
-  void LateUpdate() {
-    parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
-    hpRect.sizeDelta = new Vector2(unit.unitData.health.value / unit.unitData.health.other * hpFullWidth, hpRect.sizeDelta.y);
-    hpText.text = $"{Mathf.Ceil(unit.unitData.health.value)}/{Mathf.Ceil(unit.unitData.health.other)}";
-  }
+	void LateUpdate() {
+		parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
+		hpRect.sizeDelta = new Vector2(unit.unitData.health.value / unit.unitData.health.other * hpFullWidth, hpRect.sizeDelta.y);
+		hpText.text = $"{Mathf.Ceil(unit.unitData.health.value)}/{Mathf.Ceil(unit.unitData.health.other)}";
+	}
 
-  new void Awake() {
-    if (!cam) cam = Camera.main;
-    if (!cam) cam = FindObjectOfType<Camera>();
-    hpFullWidth = hpRect.sizeDelta.x;
-    base.Awake();
-  }
+	new void Awake() {
+		if (!cam) cam = Camera.main;
+		if (!cam) cam = FindObjectOfType<Camera>();
+		hpFullWidth = hpRect.sizeDelta.x;
+		base.Awake();
+	}
 
 }

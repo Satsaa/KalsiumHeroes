@@ -6,22 +6,22 @@ using UnityEngine;
 
 public abstract class StatusEffect : Modifier {
 
-  public StatusEffectData statusEffectData => (StatusEffectData)data;
-  public override Type dataType => typeof(StatusEffectData);
+	public StatusEffectData statusEffectData => (StatusEffectData)data;
+	public override Type dataType => typeof(StatusEffectData);
 
-  public override void OnTurnEnd() {
-    if (statusEffectData.turnDuration.enabled && --statusEffectData.turnDuration.value <= 0) {
-      OnExpire();
-    }
-  }
+	public override void OnTurnEnd() {
+		if (statusEffectData.turnDuration.enabled && --statusEffectData.turnDuration.value <= 0) {
+			OnExpire();
+		}
+	}
 
-  /// <summary> When the Unit got dispelled. </summary>
-  public virtual void OnDispell() {
-    if (statusEffectData.dispellable) Destroy(this);
-  }
+	/// <summary> When the Unit got dispelled. </summary>
+	public virtual void OnDispell() {
+		if (statusEffectData.dispellable) Destroy(this);
+	}
 
-  /// <summary> When this Modifier expires because the duration was reached. </summary>
-  public virtual void OnExpire() {
-    Destroy(this);
-  }
+	/// <summary> When this Modifier expires because the duration was reached. </summary>
+	public virtual void OnExpire() {
+		Destroy(this);
+	}
 }

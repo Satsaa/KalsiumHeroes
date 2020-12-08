@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class AreaDamageSpellGenericAbility : Ability {
 
-  public AreaDamageSpellGenericData areaDamageSpellGenericData => (AreaDamageSpellGenericData)data;
-  public override Type dataType => typeof(AreaDamageSpellGenericData);
+	public AreaDamageSpellGenericData areaDamageSpellGenericData => (AreaDamageSpellGenericData)data;
+	public override Type dataType => typeof(AreaDamageSpellGenericData);
 
-  public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-    return new InstantAbilityHandler(data, this, (ability) => {
-      var target = Game.grid.hexes[data.target];
-      var aoe = GetAffectedArea(target);
-      var primaryTarget = target.unit;
-      if (target.unit != null) primaryTarget.Damage(areaDamageSpellGenericData.primaryDamage.value, areaDamageSpellGenericData.damageType);
-      foreach (var hex in aoe) {
-        if (hex.unit) hex.unit.Damage(areaDamageSpellGenericData.secondaryDamage.value, areaDamageSpellGenericData.damageType);
-      }
-    });
-  }
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
+		return new InstantAbilityHandler(data, this, (ability) => {
+			var target = Game.grid.hexes[data.target];
+			var aoe = GetAffectedArea(target);
+			var primaryTarget = target.unit;
+			if (target.unit != null) primaryTarget.Damage(areaDamageSpellGenericData.primaryDamage.value, areaDamageSpellGenericData.damageType);
+			foreach (var hex in aoe) {
+				if (hex.unit) hex.unit.Damage(areaDamageSpellGenericData.secondaryDamage.value, areaDamageSpellGenericData.damageType);
+			}
+		});
+	}
 }
