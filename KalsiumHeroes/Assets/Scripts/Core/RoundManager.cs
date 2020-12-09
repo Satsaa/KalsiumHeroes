@@ -33,16 +33,16 @@ public class RoundManager {
 	}
 
 	public void NextTurn() {
+		units.RemoveAll(v => v == null);
 		Debug.Log("Next turn");
+		OnTurnEnds();
 		if (units.Count <= 1) {
-			OnTurnEnds();
 			round++;
 			Gather();
 			OnRoundStarts();
 			OnTurnStarts();
 			return;
 		}
-		OnTurnEnds();
 		units.RemoveAt(units.Count - 1);
 		OnTurnStarts();
 	}
@@ -54,7 +54,7 @@ public class RoundManager {
 		OnTurnStarts();
 	}
 
-	private void OnRoundStarts() { foreach (var modifier in Game.modifiers.GetModifiers()) modifier.OnRoundStart(); }
+	private void OnRoundStarts() { foreach (var modifier in Game.ecCache.Enumerate<Modifier>()) modifier.OnRoundStart(); }
 	private void OnTurnEnds() { foreach (var modifier in current.modifiers) modifier.OnTurnEnd(); }
 	private void OnTurnStarts() { foreach (var modifier in current.modifiers) modifier.OnTurnStart(); }
 }

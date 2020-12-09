@@ -26,7 +26,7 @@ public abstract class EntityComponent : MonoBehaviour {
 	[Tooltip("Source asset for data.")]
 	public EntityComponentData source;
 
-	[ShowEditorAttribute]
+	[ShowEditor]
 	[Tooltip("Own data instance of source.")]
 	public EntityComponentData data;
 

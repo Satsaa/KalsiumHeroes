@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShrapnelAbility : Ability {
@@ -18,7 +19,7 @@ public class ShrapnelAbility : Ability {
 			var modifier = Modifier.AddEntityComponent(ability.unit.gameObject, shrapnelAbilityData.shrapnelModifierData) as ShrapnelAbilityModifier;
 			modifier.casterData = ScriptableObject.Instantiate<ShrapnelAbilityData>(shrapnelAbilityData);
 			modifier.target = target;
-			modifier.aoe = aoe;
+			modifier.aoe = aoe.ToList();
 		});
 	}
 

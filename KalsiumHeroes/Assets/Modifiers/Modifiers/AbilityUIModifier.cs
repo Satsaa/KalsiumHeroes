@@ -75,7 +75,7 @@ public class AbilityUIModifier : Modifier {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	static void OnReloadScripts() {
 		if (!Application.isPlaying) return;
-		foreach (var uiMod in Game.modifiers.GetModifiers<AbilityUIModifier>()) uiMod.RefreshValues();
+		foreach (var uiMod in Game.ecCache.Enumerate<AbilityUIModifier>()) uiMod.RefreshValues();
 	}
 #endif
 
@@ -147,6 +147,7 @@ public class AbilityUIModifier : Modifier {
 	}
 
 	public void RefreshPosition() {
+		if (!cam) return;
 		parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
 
 		// Clamp left

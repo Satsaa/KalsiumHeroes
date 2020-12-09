@@ -11,10 +11,11 @@ public class Unit : EntityComponent {
 	public UnitData unitData => (UnitData)data;
 	public override Type dataType => typeof(UnitData);
 
-	[field: SerializeField, HideInInspector] public List<Modifier> modifiers { get; private set; } = new List<Modifier>();
-	[field: SerializeField, HideInInspector] public List<Ability> abilities { get; private set; } = new List<Ability>();
-	[field: SerializeField, HideInInspector] public List<Passive> passives { get; private set; } = new List<Passive>();
-	[field: SerializeField, HideInInspector] public List<StatusEffect> statuses { get; private set; } = new List<StatusEffect>();
+	public EntityComponentCache<Modifier> modifierCache = new EntityComponentCache<Modifier>();
+	public IEnumerable<Modifier> modifiers => modifierCache.Enumerate<Modifier>(true);
+	public IEnumerable<Ability> abilities => modifierCache.Enumerate<Ability>(true);
+	public IEnumerable<Passive> passives => modifierCache.Enumerate<Passive>(true);
+	public IEnumerable<StatusEffect> statuses => modifierCache.Enumerate<StatusEffect>(true);
 
 
 	[HideInInspector]
@@ -33,7 +34,7 @@ public class Unit : EntityComponent {
 	public GameHex hex;
 
 	protected void OnValidate() {
-		if (source) data = Instantiate(source);
+		if (source && !Application.isPlaying) data = Instantiate(source);
 		if (hex && hex.unit == null) {
 			MovePosition(hex);
 		}
@@ -54,11 +55,10 @@ public class Unit : EntityComponent {
 		}
 	}
 
-	public void RegisterModifier(Modifier modifier) {
-		modifiers.Add(modifier);
-		if (modifier is Ability ability) abilities.Add(ability);
-		if (modifier is Passive passive) passives.Add(passive);
-		if (modifier is StatusEffect status) statuses.Add(status);
+	protected void OnDestroy() {
+		if (Game.rounds.current == this) {
+			Game.rounds.NextTurn();
+		}
 	}
 
 	void ClampHealth() {
@@ -99,11 +99,8 @@ public class Unit : EntityComponent {
 		}
 
 		if (unitData.health.value <= 0) {
-			foreach (var modifier in Game.modifiers.GetModifiers()) {
+			foreach (var modifier in Game.ecCache.Enumerate<Modifier>()) {
 				modifier.OnDeath();
-			}
-			// Health still deadly?
-			if (unitData.health.value <= 0) {
 				hex.graveYard.Add(new GraveUnit(this));
 				Destroy(gameObject);
 			}
@@ -111,7 +108,7 @@ public class Unit : EntityComponent {
 	}
 
 	public void Dispell() {
-		foreach (var effect in statuses) {
+		foreach (var effect in modifierCache.Enumerate<StatusEffect>(true)) {
 			effect.OnDispell();
 		}
 	}
@@ -144,7 +141,7 @@ public class Unit : EntityComponent {
 			sourceHex.unit = other;
 			other.hex = sourceHex;
 
-			// Only this units movement is optional
+			// The other unit is always repositioned
 			if (reposition) transform.position = hex.center;
 			other.transform.position = sourceHex.center;
 		}

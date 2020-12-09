@@ -7,7 +7,7 @@ public class ShrapnelAbilityModifier : Modifier {
 
 	public ShrapnelAbilityData casterData;
 
-	[HideInInspector] public IEnumerable<GameHex> aoe;
+	[HideInInspector] public List<GameHex> aoe;
 	[HideInInspector] public GameHex target;
 
 	public override void OnTurnStart() {

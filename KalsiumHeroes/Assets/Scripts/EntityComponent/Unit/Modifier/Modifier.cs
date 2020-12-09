@@ -18,15 +18,15 @@ public class Modifier : EntityComponent {
 
 
 	protected void OnValidate() {
-		if (source) data = Instantiate(source);
+		if (source && !Application.isPlaying) data = Instantiate(source);
 		if (!unit) unit = GetComponent<Unit>();
 	}
 
 	protected void Awake() {
 		data = Instantiate(source);
 		unit = GetComponent<Unit>();
-		unit.RegisterModifier(this);
-		Game.modifiers.RegisterModifier(this);
+		unit.modifierCache.Cache(this);
+		Game.ecCache.Cache(this);
 		OnAdd();
 		foreach (var other in unit.modifiers.Where(mod => mod != this)) {
 			other.OnAdd(this);
@@ -45,6 +45,8 @@ public class Modifier : EntityComponent {
 		using (AttributeBase.ConfigurationScope(altererKeys)) {
 			AttributeBase.RemoveAlterers();
 		}
+		unit.modifierCache.Uncache(this);
+		Game.ecCache.Uncache(this);
 		OnUnloadNonpersistent();
 	}
 
@@ -52,7 +54,7 @@ public class Modifier : EntityComponent {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
 		if (Application.isPlaying) {
-			foreach (var mod in Game.modifiers.GetModifiers(true)) {
+			foreach (var mod in Game.ecCache.Enumerate<Modifier>(true)) {
 				using (AttributeBase.ConfigurationScope(mod.altererKeys)) {
 					mod.OnRegisterAlterers();
 				}
