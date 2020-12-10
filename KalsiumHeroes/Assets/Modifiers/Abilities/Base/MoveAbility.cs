@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoveAbility : Ability {
 
-	public static Predicate<GameHex> passablePredicate = h => !h.blocked && !h.unit;
+	public static Predicate<Tile> passablePredicate = h => !h.blocked && !h.unit;
 
 	[HideInInspector] public float usedMovement;
 
@@ -19,9 +19,9 @@ public class MoveAbility : Ability {
 		return usedMovement < unit.unitData.movement.value && base.IsReady();
 	}
 
-	protected override IEnumerable<GameHex> GetTargets_GetRangeTargets(GameHex hex) {
+	protected override IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
 		var maxCost = unit.unitData.movement.value - usedMovement;
-		var res = Game.grid.GetCostField(hex, maxCost: maxCost, passable: h => !h.blocked && !h.unit).costs.Keys;
+		var res = Game.grid.GetCostField(tile, maxCost: maxCost, passable: h => !h.blocked && !h.unit).costs.Keys;
 		return res;
 	}
 

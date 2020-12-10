@@ -11,6 +11,6 @@ public class ShrapnelAbilityData : AbilityData {
 	public DamageType damageType;
 
 	[Tooltip("This modifier casts the shrapnel spell next turn. If you chose the correct one.")]
-	public EntityComponentData shrapnelModifierData;
+	public DataComponentData shrapnelModifierData;
 
 }

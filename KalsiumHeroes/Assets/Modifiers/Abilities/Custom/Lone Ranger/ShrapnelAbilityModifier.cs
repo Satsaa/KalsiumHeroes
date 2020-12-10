@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShrapnelAbilityModifier : Modifier {
+public class ShrapnelAbilityModifier : UnitModifier {
 
 	public ShrapnelAbilityData casterData;
 
-	[HideInInspector] public List<GameHex> aoe;
-	[HideInInspector] public GameHex target;
+	[HideInInspector] public List<Tile> aoe;
+	[HideInInspector] public Tile target;
 
 	public override void OnTurnStart() {
 		base.OnTurnStart();
 
-		foreach (var hex in aoe) {
-			if (hex.unit) hex.unit.Damage(casterData.damage.value, casterData.damageType);
+		foreach (var tile in aoe) {
+			if (tile.unit) tile.unit.Damage(casterData.damage.value, casterData.damageType);
 		}
 
 		Debug.Log("We DID DAMGE?");

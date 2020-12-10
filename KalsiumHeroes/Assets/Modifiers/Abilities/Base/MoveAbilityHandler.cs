@@ -9,17 +9,17 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 	[SerializeField, HideInInspector] float animTime;
 	[SerializeField, HideInInspector] bool animating;
-	[SerializeField, HideInInspector] GameHex start;
-	[SerializeField, HideInInspector] GameHex target;
-	[SerializeField, HideInInspector] GameHex[] path;
+	[SerializeField, HideInInspector] Tile start;
+	[SerializeField, HideInInspector] Tile target;
+	[SerializeField, HideInInspector] Tile[] path;
 
 	public MoveAbilityHandler(Events.Ability data, MoveAbility creator) : base(data) {
 		this.creator = creator;
-		start = Game.grid.hexes[data.unit];
-		target = Game.grid.hexes[data.target];
+		start = Game.grid.tiles[data.unit];
+		target = Game.grid.tiles[data.target];
 		Debug.Log("Handling move ability event!");
 		if (target.unit || target.blocked) {
-			Debug.LogError("Target hex is occupied!");
+			Debug.LogError("Target Tile is occupied!");
 		} else {
 			Game.grid.CheapestPath(start, target, out var path, out var field, MoveAbility.passablePredicate);
 			var cost = field.scores[field.closest];

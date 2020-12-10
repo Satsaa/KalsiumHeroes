@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PathConfirmAbilityTargeter : AbilityTargeter {
 
-	public Predicate<GameHex> passable;
+	public Predicate<Tile> passable;
 
 	public PathConfirmAbilityTargeter(Unit unit, Ability ability, Action<Targeter> onComplete, Action<Targeter> onCancel = null)
 			: base(unit, ability, onComplete, onCancel
@@ -30,10 +30,10 @@ public class PathConfirmAbilityTargeter : AbilityTargeter {
 	}
 
 
-	public override bool Hover(GameHex hex) {
-		var valid = base.Hover(hex);
+	public override bool Hover(Tile tile) {
+		var valid = base.Hover(tile);
 		if (valid) {
-			Game.grid.CheapestPath(unit.hex, hex, out var path, passable);
+			Game.grid.CheapestPath(unit.tile, tile, out var path, passable);
 			foreach (var segment in path) {
 				hovers.Add(segment);
 			}

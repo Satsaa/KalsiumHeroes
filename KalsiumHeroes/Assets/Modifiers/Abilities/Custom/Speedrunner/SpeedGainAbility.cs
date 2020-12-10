@@ -11,10 +11,10 @@ public class SpeedGainAbility : Ability {
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (Ability) => {
 			unitsFound.value = 0;
-			var target = Game.grid.hexes[data.target];
+			var target = Game.grid.tiles[data.target];
 			var aoe = GetAffectedArea(target);
-			foreach (var hex in aoe) {
-				if (hex.unit && hex.unit != unit) unitsFound.value++;
+			foreach (var tile in aoe) {
+				if (tile.unit && tile.unit != unit) unitsFound.value++;
 			}
 			unit.gameObject.AddEntityComponent(speedGainAbilityData.speedGainModifier);
 		});

@@ -6,7 +6,7 @@ using Muc.Extensions;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class StatsUIModifier : Modifier {
+public class StatsUIModifier : UnitModifier {
 
 	public Camera cam;
 	[Tooltip("World space offset")]

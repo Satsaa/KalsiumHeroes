@@ -10,12 +10,12 @@ public class AddEntityComponentAbility : Ability {
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.hexes[data.target];
+			var target = Game.grid.tiles[data.target];
 			var aoe = GetAffectedArea(target);
-			foreach (var hex in aoe) {
-				if (hex.unit) {
+			foreach (var tile in aoe) {
+				if (tile.unit) {
 					foreach (var component in createUnitAbilityData.components) {
-						hex.unit.gameObject.AddEntityComponent(component);
+						tile.unit.gameObject.AddEntityComponent(component);
 					}
 				}
 			}

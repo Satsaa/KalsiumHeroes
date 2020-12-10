@@ -6,10 +6,10 @@ using System.Linq;
 
 public abstract class Targeter {
 
-	public IEnumerable<GameHex> targets = new List<GameHex>(0);
-	public List<GameHex> selection = new List<GameHex>(0);
-	public HashSet<GameHex> hovers = new HashSet<GameHex>();
-	public Dictionary<GameHex, Color> highlights = new Dictionary<GameHex, Color>();
+	public IEnumerable<Tile> targets = new List<Tile>(0);
+	public List<Tile> selection = new List<Tile>(0);
+	public HashSet<Tile> hovers = new HashSet<Tile>();
+	public Dictionary<Tile, Color> highlights = new Dictionary<Tile, Color>();
 
 	public Action<Targeter> onComplete;
 	public Action<Targeter> onCancel;
@@ -28,22 +28,22 @@ public abstract class Targeter {
 		foreach (var hover in hovers) highlights[hover] = hoverColor;
 	}
 
-	/// <summary> Attempt to select a hex. Return true if the selection is accepted. </summary>
-	public virtual bool Select(GameHex hex) {
+	/// <summary> Attempt to select a Tile. Return true if the selection is accepted. </summary>
+	public virtual bool Select(Tile tile) {
 		if (IsCompleted()) throw new InvalidOperationException($"Attempted to select after the {nameof(Targeter)} was completed.");
-		if (targets.Contains(hex)) {
-			selection.Add(hex);
+		if (targets.Contains(tile)) {
+			selection.Add(tile);
 			return true;
 		}
 		return false;
 	}
 
-	/// <summary> Hover over a hex or nothing/null. Add it to hovers and additional hexes around it its aoe. </summary>
-	public virtual bool Hover(GameHex hex) {
+	/// <summary> Hover over a Tile or nothing/null. Add it to hovers and additional Tiles around it for aoe. </summary>
+	public virtual bool Hover(Tile tile) {
 		hovers.Clear();
-		if (hex == null) return false;
-		if (targets.Contains(hex)) {
-			hovers.Add(hex);
+		if (tile == null) return false;
+		if (targets.Contains(tile)) {
+			hovers.Add(tile);
 			return true;
 		}
 		return false;

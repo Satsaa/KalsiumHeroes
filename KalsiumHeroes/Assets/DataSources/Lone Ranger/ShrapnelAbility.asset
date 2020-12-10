@@ -22,7 +22,7 @@ MonoBehaviour:
   targetType: 0
   range:
     _value: 9
-    enabled: 0
+    _enabled: 0
   rangeMode: 0
   radius:
     _value: 2
@@ -36,7 +36,7 @@ MonoBehaviour:
     _other: 1
   uses:
     _value: 0
-    enabled: 0
+    _enabled: 0
   alwaysCastable:
     _value: 0
   damage:

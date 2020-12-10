@@ -18,8 +18,8 @@ public class GridTester : MonoBehaviour {
 	public GameGrid grid { get; private set; }
 
 	// Editor
-	public GameHex main;
-	public GameHex hover;
+	public Tile main;
+	public Tile hover;
 
 	[Space]
 
@@ -72,8 +72,8 @@ public class GridTester : MonoBehaviour {
 
 	void OnValidate() {
 		grid = GetComponent<GameGrid>();
-		if (main == null || !grid.hexes.ContainsValue(main)) main = grid.hexes.First().Value;
-		if (hover == null || !grid.hexes.ContainsValue(hover)) hover = grid.hexes.First().Value;
+		if (main == null || !grid.tiles.ContainsValue(main)) main = grid.tiles.First().Value;
+		if (hover == null || !grid.tiles.ContainsValue(hover)) hover = grid.tiles.First().Value;
 	}
 }
 
@@ -94,24 +94,24 @@ public class GridTesterEditor : Editor {
 
 		// Draw selection
 		if (grid != null) {
-			DrawHex(t.main, ChangeAlpha(Color.red, 0.25f));
+			DrawTile(t.main, ChangeAlpha(Color.red, 0.25f));
 		}
 
 		// Draw hover
 		var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-		var hovered = grid.RaycastHex(ray);
+		var hovered = grid.RaycastTile(ray);
 		if (hovered) {
 			t.hover = hovered;
-			DrawHex(t.hover, ChangeAlpha(Color.yellow, 0.25f));
+			DrawTile(t.hover, ChangeAlpha(Color.yellow, 0.25f));
 			Event e = Event.current;
 			if (e.type == EventType.MouseDown && e.button == 0) { t.main = t.hover; e.Use(); }
 		}
 
 		if (t.drawLine) {
-			foreach (var hex in grid.Line(t.main, t.hover)) {
-				DrawHex(hex, lightBlue);
+			foreach (var tile in grid.Line(t.main, t.hover)) {
+				DrawTile(tile, lightBlue);
 			}
-			foreach (var pair in Hex.GetLine(t.main.hex, t.hover.hex)) {
+			foreach (var pair in Hex.Line(t.main.hex, t.hover.hex)) {
 				var fractHex = pair.Item2;
 				var ws = Layout.HexToPixel(fractHex);
 				var spherePos = new Vector3(ws.x, 0, ws.y);
@@ -120,20 +120,20 @@ public class GridTesterEditor : Editor {
 		}
 
 		if (t.drawRadius) {
-			foreach (var hex in grid.Radius(t.main, distance)) {
-				DrawHex(hex, lightBlue);
+			foreach (var tile in grid.Radius(t.main, distance)) {
+				DrawTile(tile, lightBlue);
 			}
 		}
 
 		if (t.drawRing) {
-			foreach (var hex in grid.Ring(t.main, distance)) {
-				DrawHex(hex, lightBlue);
+			foreach (var tile in grid.Ring(t.main, distance)) {
+				DrawTile(tile, lightBlue);
 			}
 		}
 
 		if (t.drawVision) {
-			foreach (var hex in grid.Vision(t.main, distance)) {
-				DrawHex(hex, lightBlue);
+			foreach (var tile in grid.Vision(t.main, distance)) {
+				DrawTile(tile, lightBlue);
 			}
 		}
 
@@ -160,39 +160,39 @@ public class GridTesterEditor : Editor {
 
 		if (t.drawCostField) {
 			var field = grid.GetCostField(t.main);
-			foreach (var kv in field.costs) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			foreach (var kv in field.costs) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 		}
 		if (t.drawDistanceField) {
 			var field = grid.GetDistanceField(t.main);
-			foreach (var kv in field.distances) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			foreach (var kv in field.distances) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 		}
 
 		if (t.drawFlood) {
-			foreach (var hex in grid.Flood(t.main)) DrawHex(hex, lightBlue);
+			foreach (var tile in grid.Flood(t.main)) DrawTile(tile, lightBlue);
 		}
 		if (t.drawArea) {
 			var areas = grid.GetAreas();
 			foreach (var area in areas) {
 				var r = new System.Random(area.Value);
 				var color = new Color(r.Next(64, 256) / 256f, r.Next(64, 256) / 256f, r.Next(64, 256) / 256f);
-				DrawHex(area.Key, color);
+				DrawTile(area.Key, color);
 			}
 		}
 
 		if (t.drawCheapestPath) {
 			grid.CheapestPath(t.main, t.hover, out var path, out var field);
-			foreach (var kv in field.scores) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
-			foreach (var segment in path) DrawHex(segment, Color.blue);
+			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
 		if (t.drawShortestPath) {
 			grid.ShortestPath(t.main, t.hover, out var path, out var field);
-			foreach (var kv in field.scores) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
-			foreach (var segment in path) DrawHex(segment, Color.blue);
+			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
 		if (t.drawFirstPath) {
 			grid.FirstPath(t.main, t.hover, out var path, out var field);
-			foreach (var kv in field.scores) DrawHex(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
-			foreach (var segment in path) DrawHex(segment, Color.blue);
+			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
 	}
 
@@ -220,8 +220,8 @@ public class GridTesterEditor : Editor {
 		}
 	}
 
-	private void DrawHex(GameHex hex, Color color) {
-		var wsCorners = hex.corners.Select(v => (Vector3)v).ToList();
+	private void DrawTile(Tile tile, Color color) {
+		var wsCorners = tile.corners.Select(v => (Vector3)v).ToList();
 		wsCorners.Add(wsCorners[0]);
 		using (ColorScope(color)) {
 			Handles.DrawAAConvexPolygon(wsCorners.ToArray());

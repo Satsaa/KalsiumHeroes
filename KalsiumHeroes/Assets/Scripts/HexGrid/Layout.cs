@@ -31,20 +31,18 @@ namespace HexGrid {
 		}
 
 
-		public static Vector2 HexCornerOffset(int corner) {
+		public static Vector2 CornerOffset(int corner) {
 			float angle = 2f * Mathf.PI * (Orientation.start_angle - corner) / 6f;
 			return new Vector2(size.x * Mathf.Cos(angle), size.y * Mathf.Sin(angle));
 		}
 
 
-		public static List<Vector2> PolygonCorners(Hex h) {
-			List<Vector2> corners = new List<Vector2>();
+		public static IEnumerable<Vector2> Corners(Hex h) {
 			Vector2 center = HexToPixel(h);
 			for (int i = 0; i < 6; i++) {
-				Vector2 offset = HexCornerOffset(i);
-				corners.Add(new Vector2(center.x + offset.x, center.y + offset.y));
+				Vector2 offset = CornerOffset(i);
+				yield return new Vector2(center.x + offset.x, center.y + offset.y);
 			}
-			return corners;
 		}
 
 	}

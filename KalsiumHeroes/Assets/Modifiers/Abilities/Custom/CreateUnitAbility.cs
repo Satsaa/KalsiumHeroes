@@ -10,12 +10,12 @@ public class CreateUnitAbility : Ability {
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.hexes[data.target];
+			var target = Game.grid.tiles[data.target];
 			var aoe = GetAffectedArea(target);
-			foreach (var hex in aoe) {
-				if (!hex.unit) {
+			foreach (var tile in aoe) {
+				if (!tile.unit) {
 					var go = Instantiate(createUnitData.unitPrefab);
-					go.GetComponent<Unit>().MovePosition(hex, true);
+					go.GetComponent<Unit>().MovePosition(tile, true);
 				}
 			}
 		});

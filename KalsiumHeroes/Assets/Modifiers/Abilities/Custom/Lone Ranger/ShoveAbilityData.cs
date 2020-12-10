@@ -6,5 +6,5 @@ using UnityEngine;
 public class ShoveAbilityData : AbilityData {
 	[Header("Shove Ability Data")]
 	[Tooltip("This is the root modifier the ability gives the targeted unit")]
-	public EntityComponentData rootModifier;
+	public DataComponentData rootModifier;
 }

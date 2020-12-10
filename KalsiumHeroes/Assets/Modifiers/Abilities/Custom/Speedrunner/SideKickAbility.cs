@@ -11,10 +11,10 @@ public class SideKickAbility : Ability {
 		return new InstantAbilityHandler(data, this, (ability) => {
 			var speed = unit.unitData.speed.value;
 			var movement = unit.unitData.movement.value;
-			var target = Game.grid.hexes[data.target];
+			var target = Game.grid.tiles[data.target];
 			var aoe = GetAffectedArea(target);
-			foreach (var hex in aoe) {
-				if (hex.unit) hex.unit.Damage(speed * sideKickAbilityData.speedDamageMultiplier.value + movement * sideKickAbilityData.movementDamageMultiplier.value, sideKickAbilityData.damageType);
+			foreach (var tile in aoe) {
+				if (tile.unit) tile.unit.Damage(speed * sideKickAbilityData.speedDamageMultiplier.value + movement * sideKickAbilityData.movementDamageMultiplier.value, sideKickAbilityData.damageType);
 				print("Total Damage Dealt: " + (speed * sideKickAbilityData.speedDamageMultiplier.value + movement * sideKickAbilityData.movementDamageMultiplier.value) + " From Speed: " + speed * sideKickAbilityData.speedDamageMultiplier.value + " From Movement: " + movement * sideKickAbilityData.movementDamageMultiplier.value);
 			}
 		});

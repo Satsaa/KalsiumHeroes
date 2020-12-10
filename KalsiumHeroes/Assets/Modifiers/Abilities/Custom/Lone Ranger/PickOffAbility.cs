@@ -11,21 +11,21 @@ public class PickOffAbility : Ability {
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
 			var damage = pickOffAbilityData.damage.value;
-			var target = Game.grid.hexes[data.target];
+			var target = Game.grid.tiles[data.target];
 			var aoe = GetAffectedArea(target);
-			foreach (var hex in aoe) {
-				if (hex.unit) hex.unit.Damage(CalculateDamage(damage), pickOffAbilityData.damageType);
+			foreach (var tile in aoe) {
+				if (tile.unit) tile.unit.Damage(CalculateDamage(damage), pickOffAbilityData.damageType);
 			}
 		});
 	}
 
 	float CalculateDamage(float i) {
 		var multiplier = 1f;
-		var h = unit.hex;
+		var h = unit.tile;
 		var radius = Game.grid.Ring(h, 1);
 		bool foundUnit = false;
-		foreach (var hex in radius) {
-			if (hex.unit && hex.unit != this.unit) {
+		foreach (var tile in radius) {
+			if (tile.unit && tile.unit != this.unit) {
 				foundUnit = true;
 			}
 		}
@@ -34,8 +34,8 @@ public class PickOffAbility : Ability {
 			return i * multiplier;
 		} else {
 			radius = Game.grid.Ring(h, 2);
-			foreach (var hex in radius) {
-				if (hex.unit && hex.unit != this.unit) {
+			foreach (var tile in radius) {
+				if (tile.unit && tile.unit != this.unit) {
 					foundUnit = true;
 				}
 			}
@@ -45,8 +45,8 @@ public class PickOffAbility : Ability {
 				return i * multiplier;
 			} else {
 				radius = Game.grid.Ring(h, 3);
-				foreach (var hex in radius) {
-					if (hex.unit && hex.unit != this.unit) {
+				foreach (var tile in radius) {
+					if (tile.unit && tile.unit != this.unit) {
 						foundUnit = true;
 					}
 				}
@@ -56,8 +56,8 @@ public class PickOffAbility : Ability {
 					return i * multiplier;
 				} else {
 					radius = Game.grid.Ring(h, 4);
-					foreach (var hex in radius) {
-						if (hex.unit && hex.unit != this.unit) {
+					foreach (var tile in radius) {
+						if (tile.unit && tile.unit != this.unit) {
 							foundUnit = true;
 						}
 					}

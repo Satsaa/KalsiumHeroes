@@ -5,7 +5,7 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 
-public class AbilityUIModifier : Modifier {
+public class AbilityUIModifier : UnitModifier {
 
 	public Canvas canvas;
 	public Camera cam;
@@ -75,7 +75,7 @@ public class AbilityUIModifier : Modifier {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	static void OnReloadScripts() {
 		if (!Application.isPlaying) return;
-		foreach (var uiMod in Game.ecCache.Enumerate<AbilityUIModifier>()) uiMod.RefreshValues();
+		foreach (var uiMod in Game.dataComponents.Enumerate<AbilityUIModifier>()) uiMod.RefreshValues();
 	}
 #endif
 
@@ -268,7 +268,7 @@ public class AbilityUIModifier : Modifier {
 	}
 
 
-	public override void OnAdd(Modifier modifier) {
+	public override void OnAdd(UnitModifier modifier) {
 		base.OnAdd(modifier);
 		switch (modifier) {
 			case Ability ability: AddIcon(ability); break;
@@ -276,7 +276,7 @@ public class AbilityUIModifier : Modifier {
 		}
 	}
 
-	public override void OnRemove(Modifier modifier) {
+	public override void OnRemove(UnitModifier modifier) {
 		base.OnRemove(modifier);
 		switch (modifier) {
 			case Ability ability: AddIcon(ability); break;

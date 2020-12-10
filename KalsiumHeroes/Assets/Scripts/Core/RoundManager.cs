@@ -28,7 +28,7 @@ public class RoundManager {
 	}
 
 	void Gather() {
-		units = Game.grid.hexes.Values.Where(v => v.unit != null).Select(v => v.unit).ToList();
+		units = Game.grid.tiles.Values.Where(v => v.unit != null).Select(v => v.unit).ToList();
 		Sort();
 	}
 
@@ -54,7 +54,7 @@ public class RoundManager {
 		OnTurnStarts();
 	}
 
-	private void OnRoundStarts() { foreach (var modifier in Game.ecCache.Enumerate<Modifier>()) modifier.OnRoundStart(); }
+	private void OnRoundStarts() { foreach (var modifier in Game.dataComponents.Enumerate<UnitModifier>()) modifier.OnRoundStart(); }
 	private void OnTurnEnds() { foreach (var modifier in current.modifiers) modifier.OnTurnEnd(); }
 	private void OnTurnStarts() { foreach (var modifier in current.modifiers) modifier.OnTurnStart(); }
 }

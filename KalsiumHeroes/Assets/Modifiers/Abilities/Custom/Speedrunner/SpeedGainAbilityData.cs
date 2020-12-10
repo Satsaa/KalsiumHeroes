@@ -6,5 +6,5 @@ using UnityEngine;
 public class SpeedGainAbilityData : AbilityData {
 	[Header("Speed Gain Ability Data")]
 	[Tooltip("This is the actual speed gain modifier gained from using the spell")]
-	public EntityComponentData speedGainModifier;
+	public DataComponentData speedGainModifier;
 }

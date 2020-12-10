@@ -8,85 +8,85 @@ public class ShoveAbility : Ability {
 	public override Type dataType => typeof(ShoveAbilityData);
 
 	[HideInInspector]
-	public GameHex.Dir direction;
+	public Tile.Dir direction;
 	[HideInInspector]
 	bool dontShove = false;
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
 			dontShove = false;
-			var target = Game.grid.hexes[data.target];
+			var target = Game.grid.tiles[data.target];
 			var aoe = GetAffectedArea(target);
-			foreach (var hex in aoe) {
-				if (hex.unit) {
-					hex.unit.gameObject.AddEntityComponent(shoveAbilityData.rootModifier);
-					hex.unit.MovePosition(GetTargetHex(hex));
+			foreach (var tile in aoe) {
+				if (tile.unit) {
+					tile.unit.gameObject.AddEntityComponent(shoveAbilityData.rootModifier);
+					tile.unit.MovePosition(GetTargetTile(tile));
 				}
 			}
 		});
 	}
 
-	GameHex GetTargetHex(GameHex hex) {
-		direction = CheckDirection(hex);
+	Tile GetTargetTile(Tile tile) {
+		direction = CheckDirection(tile);
 		if (!dontShove) {
-			if (direction == GameHex.Dir.DownRight) {
-				while (hex.downRight != null && !hex.downRight.unit && !hex.downRight.blocked) {
-					hex = hex.downRight;
+			if (direction == Tile.Dir.DownRight) {
+				while (tile.downRight != null && !tile.downRight.unit && !tile.downRight.blocked) {
+					tile = tile.downRight;
 				}
 			}
-			if (direction == GameHex.Dir.DownLeft) {
-				while (hex.downLeft != null && !hex.downLeft.unit && !hex.downLeft.blocked) {
-					hex = hex.downLeft;
+			if (direction == Tile.Dir.DownLeft) {
+				while (tile.downLeft != null && !tile.downLeft.unit && !tile.downLeft.blocked) {
+					tile = tile.downLeft;
 				}
 			}
-			if (direction == GameHex.Dir.Left) {
-				while (hex.left != null && !hex.left.unit && !hex.left.blocked) {
-					hex = hex.left;
+			if (direction == Tile.Dir.Left) {
+				while (tile.left != null && !tile.left.unit && !tile.left.blocked) {
+					tile = tile.left;
 				}
 			}
-			if (direction == GameHex.Dir.UpLeft) {
-				while (hex.upLeft != null && !hex.upLeft.unit && !hex.upLeft.blocked) {
-					hex = hex.upLeft;
+			if (direction == Tile.Dir.UpLeft) {
+				while (tile.upLeft != null && !tile.upLeft.unit && !tile.upLeft.blocked) {
+					tile = tile.upLeft;
 				}
 			}
-			if (direction == GameHex.Dir.UpRight) {
-				while (hex.upRight != null && !hex.upRight.unit && !hex.upRight.blocked) {
-					hex = hex.upRight;
+			if (direction == Tile.Dir.UpRight) {
+				while (tile.upRight != null && !tile.upRight.unit && !tile.upRight.blocked) {
+					tile = tile.upRight;
 				}
 			}
-			if (direction == GameHex.Dir.Right) {
-				while (hex.right != null && !hex.right.unit && !hex.right.blocked) {
-					hex = hex.right;
+			if (direction == Tile.Dir.Right) {
+				while (tile.right != null && !tile.right.unit && !tile.right.blocked) {
+					tile = tile.right;
 				}
 			}
 		}
-		return hex;
+		return tile;
 	}
 
 
-	GameHex.Dir CheckDirection(GameHex hex) {
+	Tile.Dir CheckDirection(Tile tile) {
 		var u = unit;
-		if (hex.upLeft.unit && hex.upLeft.unit == u) {
-			return GameHex.Dir.DownRight;
+		if (tile.upLeft.unit && tile.upLeft.unit == u) {
+			return Tile.Dir.DownRight;
 		}
-		if (hex.upRight.unit && hex.upRight.unit == u) {
-			return GameHex.Dir.DownLeft;
+		if (tile.upRight.unit && tile.upRight.unit == u) {
+			return Tile.Dir.DownLeft;
 		}
-		if (hex.right.unit && hex.right.unit == u) {
-			return GameHex.Dir.Left;
+		if (tile.right.unit && tile.right.unit == u) {
+			return Tile.Dir.Left;
 		}
-		if (hex.downRight.unit && hex.downRight.unit == u) {
-			return GameHex.Dir.UpLeft;
+		if (tile.downRight.unit && tile.downRight.unit == u) {
+			return Tile.Dir.UpLeft;
 		}
-		if (hex.downLeft.unit && hex.downLeft.unit == u) {
-			return GameHex.Dir.UpRight;
+		if (tile.downLeft.unit && tile.downLeft.unit == u) {
+			return Tile.Dir.UpRight;
 		}
-		if (hex.left.unit && hex.left.unit == u) {
-			return GameHex.Dir.Right;
+		if (tile.left.unit && tile.left.unit == u) {
+			return Tile.Dir.Right;
 		} else {
 			Debug.LogError("Unit was not in melee range! Something has gone wrong!");
 			dontShove = true;
-			return GameHex.Dir.Right;
+			return Tile.Dir.Right;
 		}
 	}
 }

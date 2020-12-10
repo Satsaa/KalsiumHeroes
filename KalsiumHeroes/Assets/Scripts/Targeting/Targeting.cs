@@ -10,7 +10,7 @@ public class Targeting : MonoBehaviour {
 	private Events e => Game.events;
 	private bool finished => e.finished;
 
-	private GameHex prevHoverHex;
+	private Tile prevHoverTile;
 
 	Targeter targeter;
 	[SerializeField] new Camera camera;
@@ -22,7 +22,7 @@ public class Targeting : MonoBehaviour {
 	public bool TryStartTargeter(Targeter targeter) {
 		if (this.targeter != null) return false;
 		this.targeter = targeter;
-		prevHoverHex = null;
+		prevHoverTile = null;
 		this.targeter.RefreshTargets();
 		this.targeter.Hover(null);
 		RefreshHighlights();
@@ -39,13 +39,13 @@ public class Targeting : MonoBehaviour {
 	void Update() {
 		if (targeter != null) {
 			if (!TryComplete()) {
-				var hex = Game.grid.RaycastHex(camera.ScreenPointToRay(Input.mousePosition));
+				var tile = Game.grid.RaycastTile(camera.ScreenPointToRay(Input.mousePosition));
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
-					if (hex == null) {
+					if (tile == null) {
 						TryCancel();
 						return;
 					}
-					if (targeter.Select(hex)) {
+					if (targeter.Select(tile)) {
 						if (!TryComplete()) {
 							RefreshHighlights();
 						}
@@ -56,9 +56,9 @@ public class Targeting : MonoBehaviour {
 					TryCancel();
 					return;
 				} else {
-					if (prevHoverHex != hex) {
-						prevHoverHex = hex;
-						targeter.Hover(hex);
+					if (prevHoverTile != tile) {
+						prevHoverTile = tile;
+						targeter.Hover(tile);
 						RefreshHighlights();
 					}
 				}
@@ -97,7 +97,7 @@ public class Targeting : MonoBehaviour {
 
 	void End() {
 		targeter = null;
-		prevHoverHex = null;
+		prevHoverTile = null;
 		ClearHighlights();
 		onTargeterEnd?.Invoke();
 	}
@@ -109,16 +109,16 @@ public class Targeting : MonoBehaviour {
 		ClearHighlights();
 
 		foreach (var kv in targeter.highlights) {
-			var hex = kv.Key;
+			var tile = kv.Key;
 			var color = kv.Value;
-			hex.highlighter.Highlight(color);
+			tile.highlighter.Highlight(color);
 		}
 	}
 
 	void ClearHighlights() {
-		foreach (var kv in Game.grid.hexes) {
-			var hex = kv.Value;
-			hex.highlighter.ResetHighlight();
+		foreach (var kv in Game.grid.tiles) {
+			var tile = kv.Value;
+			tile.highlighter.ResetHighlight();
 		}
 	}
 

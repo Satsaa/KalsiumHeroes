@@ -24,11 +24,11 @@ public class AbilityTargeter : Targeter {
 		targets = ability.GetTargets();
 	}
 
-	public override bool Hover(GameHex hex) {
-		var valid = base.Hover(hex);
+	public override bool Hover(Tile tile) {
+		var valid = base.Hover(tile);
 		if (valid) {
 			hovers.Clear();
-			hovers.UnionWith(ability.GetAffectedArea(hex));
+			hovers.UnionWith(ability.GetAffectedArea(tile));
 		}
 		return valid;
 	}

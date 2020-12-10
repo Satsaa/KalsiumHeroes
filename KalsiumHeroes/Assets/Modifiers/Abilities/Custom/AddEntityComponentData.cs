@@ -7,6 +7,6 @@ public class AddEntityComponentData : AbilityData {
 	[Header("Add Entity Component Ability Data")]
 
 	[Tooltip("Added components. (Hint: Try adding a dot status effect!)")]
-	public EntityComponentData[] components;
+	public DataComponentData[] components;
 
 }
