@@ -9,6 +9,8 @@ namespace HexGrid {
 	[Serializable]
 	public struct Hex {
 
+		public static implicit operator FractHex(Hex v) => new FractHex(v);
+
 		public Hex(Vector2Int pos) : this(pos.x, pos.y, -pos.y - pos.x) { }
 		public Hex(Vector3Int pos) : this(pos.x, pos.y, pos.z) { }
 		public Hex(int x, int y) : this(x, y, -y - x) { }
@@ -24,29 +26,29 @@ namespace HexGrid {
 		[field: SerializeField] public int z { get; private set; }
 		public Vector3Int pos => new Vector3Int(x, y, z);
 
-		public Hex _up => new Hex(x, y + 1, z - 1);
-		public Hex _down => new Hex(x, y - 1, z + 1);
+		public Hex up => new Hex(x, y + 1, z - 1);
+		public Hex down => new Hex(x, y - 1, z + 1);
 
-		public Hex _upRight => new Hex(x - 1, y + 1, z);
-		public Hex _downRight => new Hex(x - 1, y, z + 1);
-		public Hex _upLeft => new Hex(x + 1, y, z - 1);
-		public Hex _downLeft => new Hex(x + 1, y - 1, z);
+		public Hex upRight => new Hex(x - 1, y + 1, z);
+		public Hex downRight => new Hex(x - 1, y, z + 1);
+		public Hex upLeft => new Hex(x + 1, y, z - 1);
+		public Hex downLeft => new Hex(x + 1, y - 1, z);
 
 		public Hex GetNeighbor(int index) {
-			return Add(this, Hex.neighbors[index]);
+			return Add(this, neighborOffsets[index]);
 		}
 
 		#region Static
 
-		/// <summary> Neighbor offsets from downRight to upRight </summary>
-		public static Hex[] neighbors = new Hex[] {
-						new Hex(1, -1, 0),
-						new Hex(0, -1, 1),
-						new Hex(-1, 0, 1),
-						new Hex(-1, 1, 0),
-						new Hex(0, 1, -1),
-						new Hex(1, 0, -1)
-				};
+		/// <summary> Neighbor offsets from downLeft to upLeft </summary>
+		public static Hex[] neighborOffsets = new Hex[] {
+			new Hex(1, -1, 0),
+			new Hex(0, -1, 1),
+			new Hex(-1, 0, 1),
+			new Hex(-1, 1, 0),
+			new Hex(0, 1, -1),
+			new Hex(1, 0, -1)
+		};
 
 
 		public static Hex Add(Hex a, Hex b) {
@@ -65,7 +67,7 @@ namespace HexGrid {
 				var res = Hex.Lerp(aNudge, bNudge, 1f / dist * i);
 				yield return (res.Round(), res);
 			}
-			yield return (b, b.ToFract());
+			yield return (b, b);
 		}
 
 		public static IEnumerable<Hex> Radius(Hex a, int dist) {
@@ -75,15 +77,21 @@ namespace HexGrid {
 					yield return Add(a, new Hex(x, y, z));
 				}
 			}
-
 		}
 
 		public static FractHex Lerp(FractHex a, FractHex b, float t) {
 			return new FractHex(a.x * (1f - t) + b.x * t, a.y * (1f - t) + b.y * t, a.z * (1f - t) + b.z * t);
 		}
 
-		public FractHex ToFract() {
-			return new FractHex(pos);
+		public override bool Equals(object obj) {
+			if (obj is Hex hex) {
+				return x == hex.x && y == hex.y;
+			}
+			return false;
+		}
+
+		public override int GetHashCode() {
+			return unchecked(x.GetHashCode() * 17 + y.GetHashCode());
 		}
 
 		#endregion

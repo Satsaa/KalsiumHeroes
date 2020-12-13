@@ -45,5 +45,17 @@ namespace HexGrid {
 		public FractHex HexLerp(FractHex b, float t) {
 			return new FractHex(x * (1f - t) + b.x * t, y * (1f - t) + b.y * t, z * (1f - t) + b.z * t);
 		}
+
+		public override bool Equals(object obj) {
+			if (obj is FractHex fhex) {
+				return x == fhex.x && y == fhex.y && z == fhex.z;
+			}
+			return false;
+		}
+
+		public override int GetHashCode() {
+			return unchecked(x.GetHashCode() * 17 + y.GetHashCode() * 17 + z.GetHashCode());
+		}
+
 	}
 }

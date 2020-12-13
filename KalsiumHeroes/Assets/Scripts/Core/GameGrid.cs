@@ -52,8 +52,8 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		foreach (var kv in tiles) {
 			var tile = kv.Value;
 			var hex = tile.hex;
-			for (int i = 0; i < Hex.neighbors.Length; i++) {
-				var offset = Hex.neighbors[i];
+			for (int i = 0; i < Hex.neighborOffsets.Length; i++) {
+				var offset = Hex.neighborOffsets[i];
 				var offsetHex = Hex.Add(hex, offset);
 				if (tiles.TryGetValue(offsetHex.pos, out var neighbor))
 					tile.SetNeighbor((Tile.Dir)i, neighbor);
@@ -71,32 +71,32 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	/// <summary>
-	/// Iterates in a radius around a Tile.
+	/// Iterates in a radius around hex.
 	/// </summary>
-	public IEnumerable<Tile> Radius(Tile tile, int radius) {
+	public IEnumerable<Tile> Radius(Hex hex, int radius) {
 		for (int x = -radius; x <= radius; x++) {
 			for (int y = Mathf.Max(-radius, -x - radius); y <= Mathf.Min(+radius, -x + radius); y++) {
-				var pos = tile.hex.pos + new Vector3Int(x, y, -x - y);
+				var pos = hex.pos + new Vector3Int(x, y, -x - y);
 				if (tiles.TryGetValue(pos, out var res)) yield return res;
 			}
 		}
 	}
 
 	/// <summary>
-	/// Iterates in a Ring around a Tile.
+	/// Iterates in a ring around hex.
 	/// </summary>
-	public IEnumerable<Tile> Ring(Tile tile, int radius) {
-		if (radius <= 0) {
-			if (radius == 0) {
-				yield return tile;
+	public IEnumerable<Tile> Ring(Hex hex, int distance) {
+		if (distance <= 0) {
+			if (distance == 0) {
+				if (tiles.TryGetValue(hex.pos, out var res))
+					yield return res;
 				yield break;
 			}
-			throw new ArgumentOutOfRangeException(nameof(radius));
+			throw new ArgumentOutOfRangeException(nameof(distance));
 		}
-
-		var pos = tile.hex.pos + new Vector3Int(0, radius, -radius);
+		var pos = hex.pos + new Vector3Int(0, distance, -distance);
 		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < radius; j++) {
+			for (int j = 0; j < distance; j++) {
 				if (tiles.TryGetValue(pos, out var res)) yield return res;
 				pos = new Hex(pos).GetNeighbor(i).pos;
 			}
@@ -104,17 +104,42 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	/// <summary>
-	/// Return the hex distance between a and b.
+	/// Iterates in a spiral around hex.
 	/// </summary>
-	public int Distance(Tile a, Tile b) {
-		return Hex.Distance(a.hex, b.hex);
+	public IEnumerable<Tile> Spiral(Hex hex, int distance) {
+		for (int i = 0; i <= distance; i++) {
+			foreach (var ringTile in Ring(hex, i)) {
+				yield return ringTile;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Iterates in a spiral around hex that starts at distance min.
+	/// </summary>
+	/// <param name="min">Start distance</param>
+	/// <param name="max">Max distance</param>
+	public IEnumerable<Tile> Spiral(Hex hex, int min, int max) {
+		for (int i = min; i <= max; i++) {
+			foreach (var ringTile in Ring(hex, i)) {
+				yield return ringTile;
+			}
+		}
+	}
+
+	/// <summary> Returns the distance between a and b in tiles. </summary>
+	public int Distance(Hex a, Hex b) {
+		return Hex.Distance(a, b);
 	}
 
 	/// <summary>
 	/// Iterates in a direction until a null Tile is reached.
 	/// </summary>
-	public IEnumerable<Tile> Direction(Tile tile, Tile.Dir direction) {
-		var current = tile;
+	/// <remarks>
+	/// The initial Tile is included in the iteration.
+	/// </remarks>
+	public IEnumerable<Tile> Direction(Hex hex, Tile.Dir direction) {
+		tiles.TryGetValue(hex.pos, out var current);
 		while (current != null) {
 			yield return current;
 			current = current.GetNeighbor(direction);
@@ -122,64 +147,117 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	/// <summary>
-	/// Raycasts along a plane (normal is up) at planeHeight and returns the Tile at the raycast hit point.
+	/// Raycasts along a plane at height and returns the Tile at the raycast hit point.
 	/// </summary>
 	/// <param name="ray">The ray used for raycasting.</param>
-	/// <param name="planeHeight">The height of the plane that is being raycasted.</param>
+	/// <param name="height">The height of the plane that is being raycasted.</param>
 	/// <returns>The Tile at the raycast hit point, if any.</returns>
-	public Tile RaycastTile(Ray ray, float planeHeight = 0) {
-		var plane = new Plane(Vector3.up, new Vector3(0, planeHeight, 0));
+	public Tile RaycastTile(Ray ray, float height = 0) {
+		var plane = new Plane(Vector3.up, new Vector3(0, height, 0));
 		if (plane.Raycast(ray, out float enter)) {
 			var point = (ray.origin + ray.direction * enter).xz();
-			var hex = Layout.PixelToHex(point).Round();
-			tiles.TryGetValue(hex.pos, out var res);
-			return res;
+			return TileAtPoint(point);
 		}
 		return default;
 	}
 
 	/// <summary>
-	/// Returns an IEnumerable that enumerates the Tiles in a line from start to end.
+	/// Raycasts along a plane at height and returns the Hex of the raycast hit point.
+	/// </summary>
+	/// <param name="ray">The ray used for raycasting.</param>
+	/// <param name="height">The height of the plane that is being raycasted.</param>
+	/// <returns>The Hex of the raycast hit point.</returns>
+	public Hex RaycastHex(Ray ray, float height = 0) {
+		var plane = new Plane(Vector3.up, new Vector3(0, height, 0));
+		if (plane.Raycast(ray, out float enter)) {
+			var point = (ray.origin + ray.direction * enter).xz();
+			return Layout.PointToHex(point).Round();
+		}
+		return default;
+	}
+
+	/// <summary> Returns the Tile at point. </summary>
+	public Tile TileAtPoint(Vector2 point) {
+		var hex = Layout.PointToHex(point).Round();
+		tiles.TryGetValue(hex.pos, out var res);
+		return res;
+	}
+
+	/// <summary> Returns the nearest Tile to point. </summary>
+	/// <remarks> Not optimized when there is no Tile at point. Distances to all other Tiles are calculated. </remarks>
+	public Tile NearestTile(Vector2 point) {
+		var hex = Layout.PointToHex(point).Round();
+		if (!tiles.TryGetValue(hex.pos, out var res)) {
+			var dist = float.PositiveInfinity;
+			foreach (var tile in tiles.Values) {
+				var thisDist = Vector2.Distance(point, Layout.HexToPoint(tile.hex));
+				if (thisDist < dist) {
+					dist = thisDist;
+					res = tile;
+				}
+			}
+		}
+		return res;
+	}
+
+	/// <summary> Returns the nearest Tile to point. Searchs in a spiral around point. </summary>
+	/// <remarks> Not optimized at large distances, use maxDistance with null handling. </remarks>
+	public Tile NearestTileSpiralSearch(Vector2 point, int maxDistance = int.MaxValue) {
+		var hex = Layout.PointToHex(point).Round();
+		if (!tiles.TryGetValue(hex.pos, out var res)) {
+			foreach (var spiralTile in Spiral(hex, maxDistance)) {
+				var ringDist = Distance(hex, spiralTile);
+				var dist = float.PositiveInfinity;
+				foreach (var tile in Ring(hex, ringDist)) {
+					var thisDist = Vector2.Distance(point, Layout.HexToPoint(tile.hex));
+					if (thisDist < dist) {
+						dist = thisDist;
+						res = tile;
+					}
+				}
+				return res;
+			}
+		}
+		return res;
+	}
+
+	/// <summary>
+	/// Returns an IEnumerable that enumerates Tiles in a line from start to end.
 	/// </summary>
 	/// <remarks>
 	/// Tiles outside the grid will be returned as null.
 	/// </remarks>
-	/// <param name="start">Start Tile</param>
-	/// <param name="end">End Tile</param>
+	/// <param name="start">Start Hex</param>
+	/// <param name="end">End Hex</param>
 	/// <param name="altNudge">Use alternate opposite nudge direction? Edge cases will be nudged the other way.</param>
-	/// <returns>IEnumerable yielding the Tiles along the line.</returns>
-	public IEnumerable<Tile> Line(Tile start, Tile end, bool altNudge = false) {
-		var _start = start.hex;
-		var _end = end.hex;
-		int dist = Hex.Distance(_start, _end);
+	public IEnumerable<Tile> Line(Hex start, Hex end, bool altNudge = false) {
+		int dist = Hex.Distance(start, end);
 		var xNudge = altNudge ? -1e-06f : 1e-06f;
 		var yNudge = altNudge ? -1e-06f : 1e-06f;
 		var zNudge = altNudge ? +2e-06f : -2e-06f;
-		FractHex startNudge = new FractHex(_start.x + xNudge, _start.y + yNudge, _start.z + zNudge);
-		FractHex endNudge = new FractHex(_end.x + xNudge, _end.y + yNudge, _end.z + zNudge);
+		FractHex startNudge = new FractHex(start.x + xNudge, start.y + yNudge, start.z + zNudge);
+		FractHex endNudge = new FractHex(end.x + xNudge, end.y + yNudge, end.z + zNudge);
 		for (int i = 0; i < dist; i++) {
 			var hex = Hex.Lerp(startNudge, endNudge, 1f / dist * i);
 			tiles.TryGetValue(hex.Round().pos, out var ghRes1);
 			yield return ghRes1;
 		}
-		tiles.TryGetValue(_end.pos, out var ghRes2);
+		tiles.TryGetValue((Vector3Int)end.pos, out var ghRes2);
 		yield return ghRes2;
 	}
 
 	/// <summary>
-	/// Returns true if tile has semi-direct vision to target.
+	/// Returns true if tile has pseudo-direct vision of target.
 	/// </summary>
-	/// <note> The tile and target is sampled and <c>Distance(tile, target) - 1</c> amount of samples are taken between tile and target. </note>
+	/// <remarks> The tile and target is sampled and <c>Distance(tile, target) - 1</c> amount of samples are taken between tile and target. </remarks>
 	/// <param name="tile">The sighting Tile</param>
 	/// <param name="target">The sighted Tile</param>
-	/// <param name="target">The sighted Tile</param>
 	/// <param name="seeThrough">Predicate which determines if a Tile can be seen through.</param>
-	/// <returns>Whether or not tile has sight of target</returns>
-	public bool HasSight(Tile tile, Tile target, Predicate<Tile> seeThrough = null) {
+	public bool HasSight(Hex hex, Hex target, Predicate<Tile> seeThrough = null) {
 		seeThrough = seeThrough ?? (h => !h.blocked);
 		int nudge = 0;
-		var lineA = Line(tile, target, false).GetEnumerator();
-		var lineB = Line(tile, target, true).GetEnumerator();
+		var lineA = Line(hex, target, false).GetEnumerator();
+		var lineB = Line(hex, target, true).GetEnumerator();
 
 		while (lineA.MoveNext() && lineB.MoveNext()) {
 			var a = lineA.Current;
@@ -210,19 +288,19 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		return true;
 
 		bool SeeThrough(Tile a) {
-			return a != null && seeThrough(a);
+			return a == null || seeThrough(a);
 		}
 	}
 
 	/// <summary>
-	/// Iterates around tile and yields visible tiles.
+	/// Iterates in a radius around hex and yields visible Tiles.
 	/// </summary>
 	/// <param name="seeThrough">Predicate which determines if a Tile can be seen through.</param>
-	public IEnumerable<Tile> Vision(Tile tile, int range, Predicate<Tile> seeThrough = null) {
-		var radius = Radius(tile, range);
+	public IEnumerable<Tile> Vision(Hex hex, int range, Predicate<Tile> seeThrough = null) {
+		var radius = Radius(hex, range);
 		var visible = new HashSet<Tile>();
 		foreach (var radiusTile in radius) {
-			if (HasSight(tile, radiusTile, seeThrough) && visible.Add(radiusTile)) yield return radiusTile;
+			if (HasSight(hex, radiusTile, seeThrough) && visible.Add(radiusTile)) yield return radiusTile;
 		}
 	}
 

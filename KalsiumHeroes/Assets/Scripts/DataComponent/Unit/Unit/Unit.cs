@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Muc.Editor;
 using static UnityEngine.Mathf;
+using Muc.Extensions;
 
 public class Unit : DataComponent {
 
@@ -31,9 +32,11 @@ public class Unit : DataComponent {
 	public SeededAttribute<bool> rooted;
 
 	public Team team;
+	[HideInInspector]
 	public Tile tile;
 #if UNITY_EDITOR
-	[SerializeField, HideInInspector] Tile prevTile;
+	[SerializeField, HideInInspector]
+	private Tile prevTile;
 #endif
 
 	protected void OnValidate() {
@@ -57,11 +60,17 @@ public class Unit : DataComponent {
 		if (tile && (tile.unit == this || tile.unit == null)) {
 			MovePosition(tile);
 		} else {
-			// Move unit to first unoccupied tile
-			foreach (var tile in Game.grid.tiles.Values) {
-				if (tile.unit == null && !tile.blocked) {
-					MovePosition(tile);
-					break;
+			// Move Unit to the nearest Tile if it is unoccupied
+			var underTile = Game.grid.NearestTile(transform.position.xz());
+			if (underTile && (underTile.unit == null || underTile.unit == this)) {
+				MovePosition(underTile);
+			} else {
+				// Otherwise move the Unit to first unoccupied Tile
+				foreach (var tile in Game.grid.tiles.Values) {
+					if (tile.unit == null && !tile.blocked) {
+						MovePosition(tile);
+						break;
+					}
 				}
 			}
 		}

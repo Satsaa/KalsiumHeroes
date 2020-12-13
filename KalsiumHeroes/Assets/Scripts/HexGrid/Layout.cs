@@ -10,20 +10,20 @@ namespace HexGrid {
 		public static Vector2 size = Vector2.one;
 		public static Vector2 origin = Vector2.zero;
 
-		public static Vector2 HexToPixel(Hex h) {
+		public static Vector2 HexToPoint(Hex h) {
 			float x = (Orientation.f0 * h.x + Orientation.f1 * h.y) * size.x;
 			float y = (Orientation.f2 * h.x + Orientation.f3 * h.y) * size.y;
 			return new Vector2(x + origin.x, y + origin.y);
 		}
 
-		public static Vector2 HexToPixel(FractHex h) {
+		public static Vector2 HexToPoint(FractHex h) {
 			float x = (Orientation.f0 * h.x + Orientation.f1 * h.y) * size.x;
 			float y = (Orientation.f2 * h.x + Orientation.f3 * h.y) * size.y;
 			return new Vector2(x + origin.x, y + origin.y);
 		}
 
 
-		public static FractHex PixelToHex(Vector2 p) {
+		public static FractHex PointToHex(Vector2 p) {
 			Vector2 pt = new Vector2((p.x - origin.x) / size.x, (p.y - origin.y) / size.y);
 			float x = Orientation.b0 * pt.x + Orientation.b1 * pt.y;
 			float y = Orientation.b2 * pt.x + Orientation.b3 * pt.y;
@@ -38,7 +38,7 @@ namespace HexGrid {
 
 
 		public static IEnumerable<Vector2> Corners(Hex h) {
-			Vector2 center = HexToPixel(h);
+			Vector2 center = HexToPoint(h);
 			for (int i = 0; i < 6; i++) {
 				Vector2 offset = CornerOffset(i);
 				yield return new Vector2(center.x + offset.x, center.y + offset.y);

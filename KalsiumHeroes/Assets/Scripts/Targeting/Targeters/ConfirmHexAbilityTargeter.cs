@@ -9,7 +9,7 @@ public class ConfirmTileAbilityTargeter : AbilityTargeter {
 	public bool confirmed;
 
 	public ConfirmTileAbilityTargeter(Unit unit, Ability ability, Action<Targeter> onComplete, Action<Targeter> onCancel)
-					: base(unit, ability, onComplete, onCancel) { }
+		: base(unit, ability, onComplete, onCancel) { }
 
 	public override bool IsCompleted() {
 		return selection.Count > 0 && confirmed;

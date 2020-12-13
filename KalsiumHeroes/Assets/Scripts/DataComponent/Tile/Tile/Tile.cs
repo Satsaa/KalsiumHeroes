@@ -13,6 +13,8 @@ public class Tile : MonoBehaviour {
 	public float positiviness;
 	public Highlighter highlighter;
 
+	public static implicit operator Hex(Tile v) => v.hex;
+
 	public void Awake() {
 		var ob = gameObject.transform.Find("Obstacle");
 		if (blocked) {
@@ -21,8 +23,8 @@ public class Tile : MonoBehaviour {
 	}
 	public void Init(Hex hex) {
 		this.hex = hex;
-		var pix = Layout.HexToPixel(hex);
-		center = new Vector3(pix.x, 0, pix.y);
+		var pt = Layout.HexToPoint(hex);
+		center = new Vector3(pt.x, 0, pt.y);
 		transform.position = center;
 		corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 	}

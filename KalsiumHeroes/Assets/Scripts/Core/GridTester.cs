@@ -10,6 +10,7 @@ using HexGrid;
 using System;
 using System.Linq;
 using Debug = UnityEngine.Debug;
+using Muc.Extensions;
 
 [RequireComponent(typeof(GameGrid))]
 public class GridTester : MonoBehaviour {
@@ -26,7 +27,12 @@ public class GridTester : MonoBehaviour {
 	public bool drawLine;
 	public bool drawRadius;
 	public bool drawRing;
-	public bool drawVision;
+	public bool drawSpiral;
+
+	[Space]
+
+	public bool drawNearest;
+	public bool drawNearestSpiralSearch;
 
 	[Space]
 
@@ -37,6 +43,7 @@ public class GridTester : MonoBehaviour {
 
 	public bool drawArea;
 	public bool drawFlood;
+	public bool drawVision;
 
 	[Space]
 
@@ -99,7 +106,13 @@ public class GridTesterEditor : Editor {
 
 		// Draw hover
 		var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+		var hex = grid.RaycastHex(ray);
 		var hovered = grid.RaycastTile(ray);
+
+		var mousePos = Vector2.zero;
+		if (new Plane(Vector3.up, Vector3.zero).Raycast(ray, out float enter))
+			mousePos = (ray.origin + ray.direction * enter).xz();
+
 		if (hovered) {
 			t.hover = hovered;
 			DrawTile(t.hover, ChangeAlpha(Color.yellow, 0.25f));
@@ -113,49 +126,36 @@ public class GridTesterEditor : Editor {
 			}
 			foreach (var pair in Hex.Line(t.main.hex, t.hover.hex)) {
 				var fractHex = pair.Item2;
-				var ws = Layout.HexToPixel(fractHex);
+				var ws = Layout.HexToPoint(fractHex);
 				var spherePos = new Vector3(ws.x, 0, ws.y);
 				Handles.SphereHandleCap(0, spherePos, Quaternion.identity, 0.25f, EventType.Repaint);
 			}
 		}
-
 		if (t.drawRadius) {
 			foreach (var tile in grid.Radius(t.main, distance)) {
 				DrawTile(tile, lightBlue);
 			}
 		}
-
 		if (t.drawRing) {
 			foreach (var tile in grid.Ring(t.main, distance)) {
 				DrawTile(tile, lightBlue);
 			}
 		}
-
-		if (t.drawVision) {
-			foreach (var tile in grid.Vision(t.main, distance)) {
-				DrawTile(tile, lightBlue);
+		if (t.drawSpiral) {
+			var i = 0;
+			foreach (var tile in grid.Spiral(t.main, distance)) {
+				var color = Color.Lerp(Color.green, Color.red, i++ / 100f);
+				DrawTile(tile, color);
 			}
 		}
 
-		switch (t.paint) {
-			case GridTester.PaintType.NoWall: t.main.blocked = false; break;
-			case GridTester.PaintType.Wall: t.main.blocked = true; break;
-			case GridTester.PaintType.PositivinessN2: t.main.positiviness = -2; break;
-			case GridTester.PaintType.PositivinessN1: t.main.positiviness = -1; break;
-			case GridTester.PaintType.Positiviness0: t.main.positiviness = 0; break;
-			case GridTester.PaintType.Positiviness1: t.main.positiviness = 1; break;
-			case GridTester.PaintType.Positiviness2: t.main.positiviness = 2; break;
-			case GridTester.PaintType.MoveCost0: t.main.moveCost = 0; break;
-			case GridTester.PaintType.MoveCost1: t.main.moveCost = 1; break;
-			case GridTester.PaintType.MoveCost2: t.main.moveCost = 2; break;
-			case GridTester.PaintType.MoveCost3: t.main.moveCost = 3; break;
-			case GridTester.PaintType.MoveCost4: t.main.moveCost = 4; break;
-			case GridTester.PaintType.MoveCost5: t.main.moveCost = 5; break;
-			case GridTester.PaintType.MoveCost6: t.main.moveCost = 6; break;
-			case GridTester.PaintType.MoveCost7: t.main.moveCost = 7; break;
-			case GridTester.PaintType.MoveCost8: t.main.moveCost = 8; break;
-			case GridTester.PaintType.MoveCost9: t.main.moveCost = 9; break;
-			case GridTester.PaintType.MoveCost10: t.main.moveCost = 10; break;
+		if (t.drawNearest) {
+			var nearest = grid.NearestTile(mousePos);
+			DrawTile(nearest, lightBlue);
+		}
+		if (t.drawNearestSpiralSearch) {
+			var nearest = grid.NearestTileSpiralSearch(mousePos, 10);
+			DrawTile(nearest, lightBlue);
 		}
 
 		if (t.drawCostField) {
@@ -178,6 +178,11 @@ public class GridTesterEditor : Editor {
 				DrawTile(area.Key, color);
 			}
 		}
+		if (t.drawVision) {
+			foreach (var tile in grid.Vision(t.main, distance)) {
+				DrawTile(tile, lightBlue);
+			}
+		}
 
 		if (t.drawCheapestPath) {
 			grid.CheapestPath(t.main, t.hover, out var path, out var field);
@@ -194,6 +199,29 @@ public class GridTesterEditor : Editor {
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
+
+
+		switch (t.paint) {
+			case GridTester.PaintType.NoWall: t.main.blocked = false; break;
+			case GridTester.PaintType.Wall: t.main.blocked = true; break;
+			case GridTester.PaintType.PositivinessN2: t.main.positiviness = -2; break;
+			case GridTester.PaintType.PositivinessN1: t.main.positiviness = -1; break;
+			case GridTester.PaintType.Positiviness0: t.main.positiviness = 0; break;
+			case GridTester.PaintType.Positiviness1: t.main.positiviness = 1; break;
+			case GridTester.PaintType.Positiviness2: t.main.positiviness = 2; break;
+			case GridTester.PaintType.MoveCost0: t.main.moveCost = 0; break;
+			case GridTester.PaintType.MoveCost1: t.main.moveCost = 1; break;
+			case GridTester.PaintType.MoveCost2: t.main.moveCost = 2; break;
+			case GridTester.PaintType.MoveCost3: t.main.moveCost = 3; break;
+			case GridTester.PaintType.MoveCost4: t.main.moveCost = 4; break;
+			case GridTester.PaintType.MoveCost5: t.main.moveCost = 5; break;
+			case GridTester.PaintType.MoveCost6: t.main.moveCost = 6; break;
+			case GridTester.PaintType.MoveCost7: t.main.moveCost = 7; break;
+			case GridTester.PaintType.MoveCost8: t.main.moveCost = 8; break;
+			case GridTester.PaintType.MoveCost9: t.main.moveCost = 9; break;
+			case GridTester.PaintType.MoveCost10: t.main.moveCost = 10; break;
+		}
+
 	}
 
 	public override void OnInspectorGUI() {
@@ -221,6 +249,7 @@ public class GridTesterEditor : Editor {
 	}
 
 	private void DrawTile(Tile tile, Color color) {
+		if (!tile) return;
 		var wsCorners = tile.corners.Select(v => (Vector3)v).ToList();
 		wsCorners.Add(wsCorners[0]);
 		using (ColorScope(color)) {
