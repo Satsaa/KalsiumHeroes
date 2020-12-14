@@ -19,6 +19,6 @@ public class GraveUnit {
 	}
 	public GraveUnit(Unit unit) {
 		unitData = Object.Instantiate(unit.unitData);
-		unitModifierData = unit.modifiers.Select(v => Object.Instantiate(v.unitModifierData)).ToArray();
+		unitModifierData = unit.modifiers.Get().Select(v => Object.Instantiate(v.unitModifierData)).ToArray();
 	}
 }

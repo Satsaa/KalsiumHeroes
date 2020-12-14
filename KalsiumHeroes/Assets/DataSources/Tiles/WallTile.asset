@@ -9,22 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: UnitData
+  m_Script: {fileID: 11500000, guid: 300035d4948879748b4e7032a12eb642, type: 3}
+  m_Name: WallTile
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  identifier: 
+  displayName: Wall Tile
+  description: The default wall tile.
+  identifier: tile_wall
   componentType:
-    _name: 
-  speed:
+    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  passable:
     _value: 1
-  movement:
+  transparent:
     _value: 1
-  health:
-    _value: 100
-    _other: 100
-  defense:
-    _value: 0
-  resistance:
+  moveCost:
+    _value: 1
+  appeal:
     _value: 0

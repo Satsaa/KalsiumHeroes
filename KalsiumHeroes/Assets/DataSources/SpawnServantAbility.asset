@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5269718c91e67fa459255c747639973f, type: 3}
-  m_Name: CreateUnitAbility
+  m_Name: SpawnServantAbility
   m_EditorClassIdentifier: 
   displayName: Spawn Servant
-  description: Spawns servants of satan.
+  description: Spawns a servant of satan.
   identifier: ability_spawn_servant
   componentType:
     _name: CreateUnitAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
@@ -22,22 +22,22 @@ MonoBehaviour:
   abilityType: 3
   targetType: 1
   range:
-    value: 3
-    enabled: 1
+    _value: 3
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   unitPrefab: {fileID: 9047958665005421617, guid: 59232557127a33742b6296a4b10e48ca, type: 3}

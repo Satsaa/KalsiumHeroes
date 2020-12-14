@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
-  m_Name: HealGeneric
+  m_Name: HealGenericAbility
   m_EditorClassIdentifier: 
   displayName: Heal
   description: Heal a unit for 25 health
@@ -22,23 +22,23 @@ MonoBehaviour:
   abilityType: 3
   targetType: 14
   range:
-    value: 4
-    enabled: 1
+    _value: 4
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 1
+    _value: 1
   cooldown:
-    value: 0
-    other: 2
+    _value: 0
+    _other: 2
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   heal:
-    value: 25
+    _value: 25

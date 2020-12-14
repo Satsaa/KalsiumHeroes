@@ -106,13 +106,8 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <summary>
 	/// Iterates in a spiral around hex.
 	/// </summary>
-	public IEnumerable<Tile> Spiral(Hex hex, int distance) {
-		for (int i = 0; i <= distance; i++) {
-			foreach (var ringTile in Ring(hex, i)) {
-				yield return ringTile;
-			}
-		}
-	}
+	/// <param name="max">Max distance</param>
+	public IEnumerable<Tile> Spiral(Hex hex, int distance = Int32.MaxValue) => Spiral(hex, 0, distance);
 
 	/// <summary>
 	/// Iterates in a spiral around hex that starts at distance min.
@@ -121,8 +116,14 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="max">Max distance</param>
 	public IEnumerable<Tile> Spiral(Hex hex, int min, int max) {
 		for (int i = min; i <= max; i++) {
-			foreach (var ringTile in Ring(hex, i)) {
-				yield return ringTile;
+			// Yields the first Tile in the ring last.
+			var enumer = Ring(hex, i).GetEnumerator();
+			if (enumer.MoveNext()) {
+				var first = enumer.Current;
+				while (enumer.MoveNext()) {
+					yield return enumer.Current;
+				}
+				yield return first;
 			}
 		}
 	}
@@ -184,35 +185,52 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	/// <summary> Returns the nearest Tile to point. </summary>
-	/// <remarks> Not optimized when there is no Tile at point. Distances to all other Tiles are calculated. </remarks>
-	public Tile NearestTile(Vector2 point) {
+	/// <remarks> Not optimized when there is no Tile at point. Distances to all other Tiles are calculated. </remarks> <summary>
+	/// <param name="point">Reference point</param>
+	/// <param name="predicate">Optional predicate for Tiles.</param>
+	public Tile NearestTile(Vector2 point, Predicate<Tile> predicate = null) {
 		var hex = Layout.PointToHex(point).Round();
-		if (!tiles.TryGetValue(hex.pos, out var res)) {
+		if (!tiles.TryGetValue(hex.pos, out var res) || (predicate != null && !predicate(res))) {
 			var dist = float.PositiveInfinity;
 			foreach (var tile in tiles.Values) {
-				var thisDist = Vector2.Distance(point, Layout.HexToPoint(tile.hex));
-				if (thisDist < dist) {
-					dist = thisDist;
-					res = tile;
+				if (predicate == null || predicate(tile)) {
+					var thisDist = Vector2.Distance(point, Layout.HexToPoint(tile.hex));
+					if (thisDist < dist) {
+						dist = thisDist;
+						res = tile;
+					}
 				}
 			}
 		}
 		return res;
 	}
 
-	/// <summary> Returns the nearest Tile to point. Searchs in a spiral around point. </summary>
+	/// <summary> Returns the nearest Tile to point. Searchs in a spiral around point and picks the nearest Tile in the first ring with a Tile. </summary>
 	/// <remarks> Not optimized at large distances, use maxDistance with null handling. </remarks>
-	public Tile NearestTileSpiralSearch(Vector2 point, int maxDistance = int.MaxValue) {
+	/// <param name="point">Reference point</param>
+	/// <param name="predicate">Optional predicate for Tiles.</param>
+	/// <param name="maxDistance">Maximum search distance.</param>
+	public Tile NearestTileSpiralSearch(Vector2 point, Predicate<Tile> predicate = null, int maxDistance = int.MaxValue) =>
+		NearestTileSpiralSearch(point, maxDistance, predicate);
+
+	/// <summary> Returns the nearest Tile to point. Searchs in a spiral around point and picks the nearest Tile in the first ring with a Tile. </summary>
+	/// <remarks> Not optimized at large distances, use maxDistance with null handling. </remarks>
+	/// <param name="point">Reference point</param>
+	/// <param name="maxDistance">Maximum search distance.</param>
+	/// <param name="predicate">Optional predicate for Tiles.</param>
+	public Tile NearestTileSpiralSearch(Vector2 point, int maxDistance = int.MaxValue, Predicate<Tile> predicate = null) {
 		var hex = Layout.PointToHex(point).Round();
-		if (!tiles.TryGetValue(hex.pos, out var res)) {
+		if (!tiles.TryGetValue(hex.pos, out var res) || (predicate != null && !predicate(res))) {
 			foreach (var spiralTile in Spiral(hex, maxDistance)) {
 				var ringDist = Distance(hex, spiralTile);
 				var dist = float.PositiveInfinity;
 				foreach (var tile in Ring(hex, ringDist)) {
-					var thisDist = Vector2.Distance(point, Layout.HexToPoint(tile.hex));
-					if (thisDist < dist) {
-						dist = thisDist;
-						res = tile;
+					if (predicate == null || predicate(tile)) {
+						var thisDist = Vector2.Distance(point, Layout.HexToPoint(tile.hex));
+						if (thisDist < dist) {
+							dist = thisDist;
+							res = tile;
+						}
 					}
 				}
 				return res;
@@ -252,9 +270,9 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <remarks> The tile and target is sampled and <c>Distance(tile, target) - 1</c> amount of samples are taken between tile and target. </remarks>
 	/// <param name="tile">The sighting Tile</param>
 	/// <param name="target">The sighted Tile</param>
-	/// <param name="seeThrough">Predicate which determines if a Tile can be seen through.</param>
-	public bool HasSight(Hex hex, Hex target, Predicate<Tile> seeThrough = null) {
-		seeThrough = seeThrough ?? (h => !h.blocked);
+	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>
+	public bool HasSight(Hex hex, Hex target, Predicate<Tile> predicate = null) {
+		predicate = predicate ?? (h => h.tileData.transparent.value);
 		int nudge = 0;
 		var lineA = Line(hex, target, false).GetEnumerator();
 		var lineB = Line(hex, target, true).GetEnumerator();
@@ -264,16 +282,16 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 			var b = lineB.Current;
 			switch (nudge) {
 				case 1: {
-						if (SeeThrough(a)) continue;
+						if (Transparent(a)) continue;
 						else return false;
 					}
 				case 2: {
-						if (SeeThrough(b)) continue;
+						if (Transparent(b)) continue;
 						else return false;
 					}
 				default: {
-						var aPass = SeeThrough(a);
-						var bPass = SeeThrough(b);
+						var aPass = Transparent(a);
+						var bPass = Transparent(b);
 						if (aPass) {
 							if (!bPass) nudge = 1;
 							continue;
@@ -287,15 +305,15 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		}
 		return true;
 
-		bool SeeThrough(Tile a) {
-			return a == null || seeThrough(a);
+		bool Transparent(Tile a) {
+			return a == null || predicate(a);
 		}
 	}
 
 	/// <summary>
 	/// Iterates in a radius around hex and yields visible Tiles.
 	/// </summary>
-	/// <param name="seeThrough">Predicate which determines if a Tile can be seen through.</param>
+	/// <param name="seeThrough">Predicate which determines if a Tile is see-through.</param>
 	public IEnumerable<Tile> Vision(Hex hex, int range, Predicate<Tile> seeThrough = null) {
 		var radius = Radius(hex, range);
 		var visible = new HashSet<Tile>();
@@ -307,10 +325,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <summary>
 	/// Finds blocked of areas and returns the area id for all Tiles.
 	/// </summary>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Dictionary of Tile areas. Key: Tile, Value: Area id</returns>
 	public Dictionary<Tile, int> GetAreas(Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var results = new Dictionary<Tile, int>(tiles.Count);
 		var id = 0;
 
@@ -327,9 +345,9 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <summary>
 	/// Iterates the passable Tiles around source.
 	/// </summary>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	public IEnumerable<Tile> Flood(Tile source, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var frontier = new Queue<Tile>();
 		yield return source;
 		frontier.Enqueue(source);
@@ -347,8 +365,8 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		}
 	}
 
-	#region Pathing
 
+	#region Pathing
 
 	private Tile[] BuildPath(Dictionary<Tile, Tile> sources, Tile closest) {
 		var res = new List<Tile>();
@@ -418,10 +436,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="start">Starting Tile</param>
 	/// <param name="target">Target Tile</param>
 	/// <param name="path">Array of Tiles starting from start, representing the path.</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>True if target was reached</returns>
 	public bool CheapestPath(Tile start, Tile target, out Tile[] path, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var minDist = Distance(start, target);
 		var closest = start;
 
@@ -431,13 +449,13 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		var costs = new Dictionary<Tile, float>() { { start, 0 } };
 		var sources = new Dictionary<Tile, Tile>() { { start, null } };
 		var frontier = new ComparisonPriorityQueue<TriplePriorityNode>(tiles.Count, new TripleComparer());
-		frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.moveCost);
+		frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.tileData.moveCost.value);
 
 		if (start != target) {
 			while (frontier.Count != 0) {
 				var tile = frontier.Dequeue().tile;
 				foreach (var neighbor in tile.Neighbors()) {
-					var cost = costs[tile] + neighbor.moveCost;
+					var cost = costs[tile] + neighbor.tileData.moveCost.value;
 					if (neighbor == target) {
 						costs[neighbor] = cost;
 						sources[neighbor] = tile;
@@ -449,7 +467,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 						sources[neighbor] = tile;
 						var dist = Distance(neighbor, target);
 						float priority = cost;
-						frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.positiviness, dist), priority);
+						frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.tileData.appeal.value, dist), priority);
 						if (dist < minDist) {
 							minDist = dist;
 							closest = neighbor;
@@ -484,10 +502,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="target">Target Tile</param>
 	/// <param name="path">Array of hTiles starting from start, representing the path.</param>
 	/// <param name="field">Field containing the costs and sources of traversed Tiles.</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>True if target was reached</returns>
 	public bool CheapestPath(Tile start, Tile target, out Tile[] path, out PathField<float> field, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var minDist = Distance(start, target);
 		var closest = start;
 
@@ -497,13 +515,13 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		var costs = new Dictionary<Tile, float>() { { start, 0 } };
 		var sources = new Dictionary<Tile, Tile>() { { start, null } };
 		var frontier = new ComparisonPriorityQueue<TriplePriorityNode>(tiles.Count, new TripleComparer());
-		frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.moveCost);
+		frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.tileData.moveCost.value);
 
 		if (start != target) {
 			while (frontier.Count != 0) {
 				var tile = frontier.Dequeue().tile;
 				foreach (var neighbor in tile.Neighbors()) {
-					var cost = costs[tile] + neighbor.moveCost;
+					var cost = costs[tile] + neighbor.tileData.moveCost.value;
 					if (neighbor == target) {
 						costs[neighbor] = cost;
 						sources[neighbor] = tile;
@@ -516,7 +534,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 						sources[neighbor] = tile;
 						var dist = Distance(neighbor, target);
 						float priority = cost;
-						frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.positiviness, dist), priority);
+						frontier.Enqueue(new TriplePriorityNode(neighbor, neighbor.tileData.appeal.value, dist), priority);
 						if (dist < minDist) {
 							minDist = dist;
 							closest = neighbor;
@@ -542,10 +560,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="start">Starting Tile</param>
 	/// <param name="target">Target Tile</param>
 	/// <param name="path">Array of Tiles starting from start, representing the path.</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>True if target was reached</returns>
 	public bool ShortestPath(Tile start, Tile target, out Tile[] path, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var minDist = Distance(start, target);
 		var closest = start;
 
@@ -555,7 +573,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		var costs = new Dictionary<Tile, int>() { { start, 0 } };
 		var sources = new Dictionary<Tile, Tile>() { { start, null } };
 		var frontier = new ComparisonPriorityQueue<DoublePriorityNode>(tiles.Count, new DoubleComparer());
-		frontier.Enqueue(new DoublePriorityNode(start, start.positiviness), 1);
+		frontier.Enqueue(new DoublePriorityNode(start, start.tileData.appeal.value), 1);
 
 		if (start != target) {
 			while (frontier.Count != 0) {
@@ -573,7 +591,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 						sources[neighbor] = tile;
 						var dist = Distance(neighbor, target);
 						var priority = dist + cost;
-						frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.positiviness), priority);
+						frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.tileData.appeal.value), priority);
 						if (dist < minDist) {
 							minDist = dist;
 							closest = neighbor;
@@ -597,10 +615,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="target">Target Tile</param>
 	/// <param name="path">Array of Tiles starting from start, representing the path.</param>
 	/// <param name="field">Field containing the distances and sources of traversed Tiles. (contains inaccuracies).</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>True if target was reached</returns>
 	public bool ShortestPath(Tile start, Tile target, out Tile[] path, out PathField<int> field, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var minDist = Distance(start, target);
 		var closest = start;
 
@@ -610,7 +628,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		var costs = new Dictionary<Tile, int>() { { start, 0 } };
 		var sources = new Dictionary<Tile, Tile>() { { start, null } };
 		var frontier = new ComparisonPriorityQueue<DoublePriorityNode>(tiles.Count, new DoubleComparer());
-		frontier.Enqueue(new DoublePriorityNode(start, start.positiviness), 1);
+		frontier.Enqueue(new DoublePriorityNode(start, start.tileData.appeal.value), 1);
 
 		if (start != target) {
 			while (frontier.Count != 0) {
@@ -629,7 +647,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 						sources[neighbor] = tile;
 						var dist = Distance(neighbor, target);
 						var priority = dist + cost;
-						frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.positiviness), priority);
+						frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.tileData.appeal.value), priority);
 						if (dist < minDist) {
 							minDist = dist;
 							closest = neighbor;
@@ -656,10 +674,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="start">Starting Tile</param>
 	/// <param name="target">Target Tile</param>
 	/// <param name="path">Array of Tiles starting from start, representing the path.</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>True if target was reached</returns>
 	public bool FirstPath(Tile start, Tile target, out Tile[] path, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var minDist = Distance(start, target);
 		var closest = start;
 
@@ -712,10 +730,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="target">Target Tile</param>
 	/// <param name="path">Array of Tiles starting from start, representing the path.</param>
 	/// <param name="field">Field containing the costs and sources of traversed Tiles. (Contains inaccuracies).</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>True if target was reached</returns>
 	public bool FirstPath(Tile start, Tile target, out Tile[] path, out PathField<int> field, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var minDist = Distance(start, target);
 		var closest = start;
 
@@ -783,10 +801,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="source">Cost is calculated from this Tile.</param>
 	/// <param name="distance">Maximum distance of returned Tiles.</param>
 	/// <param name="maxCost">Maximum cost of returned Tiles</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Field containing the costs and sources of traversed Tiles.</returns>
 	public CostField GetCostField(Tile source, int distance = int.MaxValue, float maxCost = float.PositiveInfinity, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var costs = new Dictionary<Tile, float>() { { source, 0 } };
 		var sources = new Dictionary<Tile, Tile>() { { source, null } };
 		var edges = new Dictionary<float, List<Tile>>() { { 0, new List<Tile>() { source } } };
@@ -796,7 +814,7 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 			edges[i + 1] = new List<Tile>();
 			foreach (var tile in edges[i]) {
 				foreach (var neighbor in tile.Neighbors()) {
-					var cost = costs[tile] + neighbor.moveCost;
+					var cost = costs[tile] + neighbor.tileData.moveCost.value;
 					if (cost > maxCost) continue;
 					if (passable(neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
 						costs[neighbor] = cost;
@@ -825,10 +843,10 @@ public class GameGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// </summary>
 	/// <param name="source">Cost is calculated from this Tile.</param>
 	/// <param name="maxCost">Maximum cost of returned Tiles.</param>
-	/// <param name="passable">Predicate which determines if a Tile is passable.</param>
+	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Field containing the distances and sources of traversed Tiles.</returns>
 	public DistanceField GetDistanceField(Tile source, int distance = int.MaxValue, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => !h.blocked);
+		passable = passable ?? (h => h.tileData.passable.value);
 		var dists = new Dictionary<Tile, float>() { { source, 0 } };
 		var sources = new Dictionary<Tile, Tile>() { { source, null } };
 		var edges = new Dictionary<float, List<Tile>>() { { 0, new List<Tile>() { source } } };
@@ -881,13 +899,13 @@ public class GameGridEditor : Editor {
 	protected virtual void OnSceneGUI() {
 		foreach (var kv in t.tiles) {
 			var tile = kv.Value;
-			var fillColor = tile.blocked ? Color.black : (
-					Color.Lerp(
-							Saturate(Whitener(Color.green, 0.75f), tile.positiviness * -0.08f),
-							Saturate(Whitener(Color.red, 0.75f), tile.positiviness * -0.08f),
-							tile.moveCost / 10f
-					)
-			);
+			var fillColor = tile.tileData.passable.value ? (
+				Color.Lerp(
+					Saturate(Whitener(Color.green, 0.75f), tile.tileData.appeal.value * -0.08f),
+					Saturate(Whitener(Color.red, 0.75f), tile.tileData.appeal.value * -0.08f),
+					tile.tileData.moveCost.value / 10f
+				)
+			) : Color.black;
 			using (ColorScope(fillColor)) {
 				Handles.DrawAAConvexPolygon(tile.corners);
 			}

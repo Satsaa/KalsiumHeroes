@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
   m_Name: DoNothingAbility
   m_EditorClassIdentifier: 
-  displayName: Do Nothing.
+  displayName: Do Nothing
   description: Do a nothing.
   identifier: Deals an amount of damage at the end of the turn.
   componentType:
@@ -21,21 +21,21 @@ MonoBehaviour:
   abilityType: 3
   targetType: 1
   range:
-    value: 5
-    enabled: 1
+    _value: 5
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 1
+    _value: 1
   cooldown:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   charges:
-    value: 3
-    other: 3
+    _value: 3
+    _other: 3
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0

@@ -42,8 +42,8 @@ public abstract class Ability : UnitModifier {
 		else abilityData.charges.value--;
 
 		var isBase = abilityData.abilityType != AbilityType.Base;
-		if (isBase) foreach (var modifier in unit.modifiers) modifier.OnAbilityCast(this);
-		else foreach (var modifier in unit.modifiers) modifier.OnBaseAbilityCast(this);
+		if (isBase) foreach (var modifier in unit.modifiers.Get()) modifier.OnAbilityCast(this);
+		else foreach (var modifier in unit.modifiers.Get()) modifier.OnBaseAbilityCast(this);
 	}
 
 
@@ -86,11 +86,11 @@ public abstract class Ability : UnitModifier {
 				case RangeMode.Distance:
 					return Game.grid.Radius(tile, abilityData.range.value);
 				case RangeMode.PathDistance:
-					return Game.grid.GetDistanceField(tile, abilityData.range.value, h => !h.blocked && !h.unit).distances.Keys;
+					return Game.grid.GetDistanceField(tile, abilityData.range.value, h => h.tileData.passable.value && !h.unit).distances.Keys;
 				case RangeMode.PathDistancePassThrough:
 					return Game.grid.GetDistanceField(tile, abilityData.range.value).distances.Keys;
 				case RangeMode.PathCost:
-					return Game.grid.GetCostField(tile, maxCost: abilityData.range.value, passable: h => !h.blocked && !h.unit).costs.Keys;
+					return Game.grid.GetCostField(tile, maxCost: abilityData.range.value, passable: h => h.tileData.passable.value && !h.unit).costs.Keys;
 				case RangeMode.PathCostPassThrough:
 					return Game.grid.GetCostField(tile, maxCost: abilityData.range.value).costs.Keys;
 			}

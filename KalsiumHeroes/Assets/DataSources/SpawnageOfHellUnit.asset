@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
-  m_Name: SpawnageOfHell
+  m_Name: SpawnageOfHellUnit
   m_EditorClassIdentifier: 
   displayName: Spawnage of Hell
   description: A servant of satan.
@@ -18,13 +18,13 @@ MonoBehaviour:
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   speed:
-    value: 5
+    _value: 5
   movement:
-    value: 10
+    _value: 10
   health:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   defense:
-    value: 0
+    _value: 0
   resistance:
-    value: 100
+    _value: 100

@@ -16,5 +16,5 @@ MonoBehaviour:
   description: 
   identifier: 
   componentType:
-    _name: UnitModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   sprite: {fileID: 0}

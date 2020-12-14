@@ -57,13 +57,13 @@ public class GridTester : MonoBehaviour {
 
 	public enum PaintType {
 		None,
-		NoWall,
-		Wall,
-		PositivinessN2,
-		PositivinessN1,
-		Positiviness0,
-		Positiviness1,
-		Positiviness2,
+		Passable,
+		Impassable,
+		AppealN2,
+		AppealN1,
+		Appeal0,
+		Appeal1,
+		Appeal2,
 		MoveCost0,
 		MoveCost1,
 		MoveCost2,
@@ -143,8 +143,9 @@ public class GridTesterEditor : Editor {
 		}
 		if (t.drawSpiral) {
 			var i = 0;
+			var total = 3 * Mathf.Pow((distance + 1), 2) - 3 * (distance + 1) + 1;
 			foreach (var tile in grid.Spiral(t.main, distance)) {
-				var color = Color.Lerp(Color.green, Color.red, i++ / 100f);
+				var color = Color.Lerp(Color.green, Color.red, i++ / total);
 				DrawTile(tile, color);
 			}
 		}
@@ -202,24 +203,24 @@ public class GridTesterEditor : Editor {
 
 
 		switch (t.paint) {
-			case GridTester.PaintType.NoWall: t.main.blocked = false; break;
-			case GridTester.PaintType.Wall: t.main.blocked = true; break;
-			case GridTester.PaintType.PositivinessN2: t.main.positiviness = -2; break;
-			case GridTester.PaintType.PositivinessN1: t.main.positiviness = -1; break;
-			case GridTester.PaintType.Positiviness0: t.main.positiviness = 0; break;
-			case GridTester.PaintType.Positiviness1: t.main.positiviness = 1; break;
-			case GridTester.PaintType.Positiviness2: t.main.positiviness = 2; break;
-			case GridTester.PaintType.MoveCost0: t.main.moveCost = 0; break;
-			case GridTester.PaintType.MoveCost1: t.main.moveCost = 1; break;
-			case GridTester.PaintType.MoveCost2: t.main.moveCost = 2; break;
-			case GridTester.PaintType.MoveCost3: t.main.moveCost = 3; break;
-			case GridTester.PaintType.MoveCost4: t.main.moveCost = 4; break;
-			case GridTester.PaintType.MoveCost5: t.main.moveCost = 5; break;
-			case GridTester.PaintType.MoveCost6: t.main.moveCost = 6; break;
-			case GridTester.PaintType.MoveCost7: t.main.moveCost = 7; break;
-			case GridTester.PaintType.MoveCost8: t.main.moveCost = 8; break;
-			case GridTester.PaintType.MoveCost9: t.main.moveCost = 9; break;
-			case GridTester.PaintType.MoveCost10: t.main.moveCost = 10; break;
+			case GridTester.PaintType.Passable: t.main.tileData.passable.value = true; break;
+			case GridTester.PaintType.Impassable: t.main.tileData.passable.value = false; break;
+			case GridTester.PaintType.AppealN2: t.main.tileData.appeal.value = -2; break;
+			case GridTester.PaintType.AppealN1: t.main.tileData.appeal.value = -1; break;
+			case GridTester.PaintType.Appeal0: t.main.tileData.appeal.value = 0; break;
+			case GridTester.PaintType.Appeal1: t.main.tileData.appeal.value = 1; break;
+			case GridTester.PaintType.Appeal2: t.main.tileData.appeal.value = 2; break;
+			case GridTester.PaintType.MoveCost0: t.main.tileData.moveCost.value = 0; break;
+			case GridTester.PaintType.MoveCost1: t.main.tileData.moveCost.value = 1; break;
+			case GridTester.PaintType.MoveCost2: t.main.tileData.moveCost.value = 2; break;
+			case GridTester.PaintType.MoveCost3: t.main.tileData.moveCost.value = 3; break;
+			case GridTester.PaintType.MoveCost4: t.main.tileData.moveCost.value = 4; break;
+			case GridTester.PaintType.MoveCost5: t.main.tileData.moveCost.value = 5; break;
+			case GridTester.PaintType.MoveCost6: t.main.tileData.moveCost.value = 6; break;
+			case GridTester.PaintType.MoveCost7: t.main.tileData.moveCost.value = 7; break;
+			case GridTester.PaintType.MoveCost8: t.main.tileData.moveCost.value = 8; break;
+			case GridTester.PaintType.MoveCost9: t.main.tileData.moveCost.value = 9; break;
+			case GridTester.PaintType.MoveCost10: t.main.tileData.moveCost.value = 10; break;
 		}
 
 	}

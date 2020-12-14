@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Muc.Editor;
 
-[RequireComponent(typeof(Unit))]
+[RequireComponent(typeof(Tile))]
 public class TileModifier : DataComponent {
 
 	public TileModifierData tileModifierData => (TileModifierData)data;
@@ -22,14 +22,18 @@ public class TileModifier : DataComponent {
 	}
 
 	protected void Awake() {
+		if (GetComponent<Tile>().initialized) Init();
+	}
+
+	public virtual void Init() {
 		data = Instantiate(source);
 		tile = GetComponent<Tile>();
-		// tile.RegisterModifier(this);
-		Game.dataComponents.Cache(this);
+		tile.modifiers.Add(this);
+		Game.dataComponents.Add(this);
 		OnAdd();
-		// foreach (var other in tile.modifiers.Where(mod => mod != this)) {
-		// 	other.OnAdd(this);
-		// }
+		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) {
+			other.OnAdd(this);
+		}
 		using (AttributeBase.ConfigurationScope(altererKeys)) {
 			OnRegisterAlterers();
 		}
@@ -38,14 +42,14 @@ public class TileModifier : DataComponent {
 
 	protected void OnDestroy() {
 		OnRemove();
-		// foreach (var other in tile.modifiers.Where(mod => mod != this)) {
-		// 	other.OnRemove(this);
-		// }
+		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) {
+			other.OnRemove(this);
+		}
 		using (AttributeBase.ConfigurationScope(altererKeys)) {
 			AttributeBase.RemoveAlterers();
 		}
-		// tile.UnregisterModifier(this);
-		Game.dataComponents.Uncache(this);
+		tile.modifiers.Remove(this);
+		Game.dataComponents.Remove(this);
 		OnUnloadNonpersistent();
 	}
 
@@ -53,7 +57,7 @@ public class TileModifier : DataComponent {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
 		if (Application.isPlaying) {
-			foreach (var mod in Game.dataComponents.Enumerate<TileModifier>(true)) {
+			foreach (var mod in Game.dataComponents.Get<TileModifier>(true)) {
 				using (AttributeBase.ConfigurationScope(mod.altererKeys)) {
 					mod.OnRegisterAlterers();
 				}

@@ -12,11 +12,7 @@ public class Unit : DataComponent {
 	public UnitData unitData => (UnitData)data;
 	public override Type dataType => typeof(UnitData);
 
-	public DataComponentCache<UnitModifier> modifierCache = new DataComponentCache<UnitModifier>();
-	public IEnumerable<UnitModifier> modifiers => modifierCache.Enumerate<UnitModifier>(true);
-	public IEnumerable<Ability> abilities => modifierCache.Enumerate<Ability>(true);
-	public IEnumerable<Passive> passives => modifierCache.Enumerate<Passive>(true);
-	public IEnumerable<StatusEffect> statuses => modifierCache.Enumerate<StatusEffect>(true);
+	public DataComponentDict<UnitModifier> modifiers = new DataComponentDict<UnitModifier>();
 
 
 	[HideInInspector]
@@ -32,27 +28,11 @@ public class Unit : DataComponent {
 	public SeededAttribute<bool> rooted;
 
 	public Team team;
-	[HideInInspector]
-	public Tile tile;
-#if UNITY_EDITOR
-	[SerializeField, HideInInspector]
-	private Tile prevTile;
-#endif
+	[field: SerializeField]
+	public Tile tile { get; private set; }
 
 	protected void OnValidate() {
 		if (source && !Application.isPlaying) data = Instantiate(source);
-		if (prevTile != tile) {
-			if (!tile || (tile.unit != null && tile.unit != this)) {
-				tile = prevTile;
-			} else {
-				if (prevTile && prevTile.unit == this)
-					prevTile.unit = null;
-				if (tile) {
-					MovePosition(tile);
-				}
-			}
-			prevTile = tile;
-		}
 	}
 
 	protected void Awake() {
@@ -60,19 +40,9 @@ public class Unit : DataComponent {
 		if (tile && (tile.unit == this || tile.unit == null)) {
 			MovePosition(tile);
 		} else {
-			// Move Unit to the nearest Tile if it is unoccupied
-			var underTile = Game.grid.NearestTile(transform.position.xz());
-			if (underTile && (underTile.unit == null || underTile.unit == this)) {
-				MovePosition(underTile);
-			} else {
-				// Otherwise move the Unit to first unoccupied Tile
-				foreach (var tile in Game.grid.tiles.Values) {
-					if (tile.unit == null && !tile.blocked) {
-						MovePosition(tile);
-						break;
-					}
-				}
-			}
+			// Move Unit to the nearest Tile that is unoccupied
+			var nearTile = Game.grid.NearestTile(transform.position.xz(), v => v.unit == null);
+			if (nearTile) MovePosition(nearTile);
 		}
 	}
 
@@ -91,12 +61,12 @@ public class Unit : DataComponent {
 	}
 
 	public void Heal(float value) {
-		unitData.health.value += modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
+		unitData.health.value += modifiers.Get().Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
 		ClampHealth();
 	}
 
 	public void Damage(float value, DamageType type) {
-		var total = modifiers.Aggregate(Max(0, value), (cur, v) => Max(0, v.OnDamage(cur, type)));
+		var total = modifiers.Get().Aggregate(Max(0, value), (cur, v) => Max(0, v.OnDamage(cur, type)));
 
 		switch (type) {
 			case DamageType.Physical:
@@ -120,7 +90,7 @@ public class Unit : DataComponent {
 		}
 
 		if (unitData.health.value <= 0) {
-			foreach (var modifier in Game.dataComponents.Enumerate<UnitModifier>()) {
+			foreach (var modifier in Game.dataComponents.Get<UnitModifier>()) {
 				modifier.OnDeath();
 				tile.graveyard.Add(new GraveUnit(this));
 				Destroy(gameObject);
@@ -129,7 +99,7 @@ public class Unit : DataComponent {
 	}
 
 	public void Dispell() {
-		foreach (var effect in modifierCache.Enumerate<StatusEffect>(true)) {
+		foreach (var effect in modifiers.Get<StatusEffect>(true)) {
 			effect.OnDispell();
 		}
 	}

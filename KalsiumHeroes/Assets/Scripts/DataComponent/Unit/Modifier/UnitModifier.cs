@@ -7,7 +7,7 @@ using UnityEngine;
 using Muc.Editor;
 
 [RequireComponent(typeof(Unit))]
-public class UnitModifier : DataComponent {
+public abstract class UnitModifier : DataComponent {
 
 	public UnitModifierData unitModifierData => (UnitModifierData)data;
 	public override Type dataType => typeof(UnitModifierData);
@@ -25,10 +25,10 @@ public class UnitModifier : DataComponent {
 	protected void Awake() {
 		data = Instantiate(source);
 		unit = GetComponent<Unit>();
-		unit.modifierCache.Cache(this);
-		Game.dataComponents.Cache(this);
+		unit.modifiers.Add(this);
+		Game.dataComponents.Add(this);
 		OnAdd();
-		foreach (var other in unit.modifiers.Where(mod => mod != this)) {
+		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnAdd(this);
 		}
 		using (AttributeBase.ConfigurationScope(altererKeys)) {
@@ -39,14 +39,14 @@ public class UnitModifier : DataComponent {
 
 	protected void OnDestroy() {
 		OnRemove();
-		foreach (var other in unit.modifiers.Where(mod => mod != this)) {
+		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnRemove(this);
 		}
 		using (AttributeBase.ConfigurationScope(altererKeys)) {
 			AttributeBase.RemoveAlterers();
 		}
-		unit.modifierCache.Uncache(this);
-		Game.dataComponents.Uncache(this);
+		unit.modifiers.Remove(this);
+		Game.dataComponents.Remove(this);
 		OnUnloadNonpersistent();
 	}
 
@@ -54,7 +54,7 @@ public class UnitModifier : DataComponent {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
 		if (Application.isPlaying) {
-			foreach (var mod in Game.dataComponents.Enumerate<UnitModifier>(true)) {
+			foreach (var mod in Game.dataComponents.Get<UnitModifier>(true)) {
 				using (AttributeBase.ConfigurationScope(mod.altererKeys)) {
 					mod.OnRegisterAlterers();
 				}

@@ -30,32 +30,32 @@ public class ShoveAbility : Ability {
 		direction = CheckDirection(tile);
 		if (!dontShove) {
 			if (direction == Tile.Dir.DownRight) {
-				while (tile.downRight != null && !tile.downRight.unit && !tile.downRight.blocked) {
+				while (tile.downRight != null && !tile.downRight.unit && !tile.downRight.tileData.passable.value) {
 					tile = tile.downRight;
 				}
 			}
 			if (direction == Tile.Dir.DownLeft) {
-				while (tile.downLeft != null && !tile.downLeft.unit && !tile.downLeft.blocked) {
+				while (tile.downLeft != null && !tile.downLeft.unit && !tile.downLeft.tileData.passable.value) {
 					tile = tile.downLeft;
 				}
 			}
 			if (direction == Tile.Dir.Left) {
-				while (tile.left != null && !tile.left.unit && !tile.left.blocked) {
+				while (tile.left != null && !tile.left.unit && !tile.left.tileData.passable.value) {
 					tile = tile.left;
 				}
 			}
 			if (direction == Tile.Dir.UpLeft) {
-				while (tile.upLeft != null && !tile.upLeft.unit && !tile.upLeft.blocked) {
+				while (tile.upLeft != null && !tile.upLeft.unit && !tile.upLeft.tileData.passable.value) {
 					tile = tile.upLeft;
 				}
 			}
 			if (direction == Tile.Dir.UpRight) {
-				while (tile.upRight != null && !tile.upRight.unit && !tile.upRight.blocked) {
+				while (tile.upRight != null && !tile.upRight.unit && !tile.upRight.tileData.passable.value) {
 					tile = tile.upRight;
 				}
 			}
 			if (direction == Tile.Dir.Right) {
-				while (tile.right != null && !tile.right.unit && !tile.right.blocked) {
+				while (tile.right != null && !tile.right.unit && !tile.right.tileData.passable.value) {
 					tile = tile.right;
 				}
 			}

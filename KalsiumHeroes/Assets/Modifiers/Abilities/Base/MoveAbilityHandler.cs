@@ -18,7 +18,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 		start = Game.grid.tiles[data.unit];
 		target = Game.grid.tiles[data.target];
 		Debug.Log("Handling move ability event!");
-		if (target.unit || target.blocked) {
+		if (target.unit || !target.tileData.passable.value) {
 			Debug.LogError("Target Tile is occupied!");
 		} else {
 			Game.grid.CheapestPath(start, target, out var path, out var field, MoveAbility.passablePredicate);

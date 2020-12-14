@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoveAbility : Ability {
 
-	public static Predicate<Tile> passablePredicate = h => !h.blocked && !h.unit;
+	public static Predicate<Tile> passablePredicate = h => h.tileData.passable.value && !h.unit;
 
 	[HideInInspector] public float usedMovement;
 
@@ -21,7 +21,7 @@ public class MoveAbility : Ability {
 
 	protected override IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
 		var maxCost = unit.unitData.movement.value - usedMovement;
-		var res = Game.grid.GetCostField(tile, maxCost: maxCost, passable: h => !h.blocked && !h.unit).costs.Keys;
+		var res = Game.grid.GetCostField(tile, maxCost: maxCost, passable: h => h.tileData.passable.value && !h.unit).costs.Keys;
 		return res;
 	}
 

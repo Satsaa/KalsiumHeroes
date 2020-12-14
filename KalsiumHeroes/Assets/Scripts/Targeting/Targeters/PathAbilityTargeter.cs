@@ -15,11 +15,11 @@ public class PathConfirmAbilityTargeter : AbilityTargeter {
 			switch (ability.abilityData.rangeMode) {
 				case RangeMode.PathCost:
 				case RangeMode.PathDistance:
-					passable = h => !h.blocked && !h.unit;
+					passable = h => h.tileData.passable.value && !h.unit;
 					break;
 				case RangeMode.PathCostPassThrough:
 				case RangeMode.PathDistancePassThrough:
-					passable = h => !h.blocked;
+					passable = h => h.tileData.passable.value;
 					break;
 				case RangeMode.Distance:
 				default:

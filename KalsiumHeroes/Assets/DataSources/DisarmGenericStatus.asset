@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a048e5852712933428974a03f98c834b, type: 3}
   m_Name: DisarmGenericStatus
   m_EditorClassIdentifier: 
-  displayName: Disarm
+  displayName: Disarmed
   description: Unit is disarmed for 2 turns
   identifier: status_disarm_generic
   componentType:
@@ -22,5 +22,5 @@ MonoBehaviour:
   positive: 0
   dispellable: 1
   turnDuration:
-    value: 2
-    enabled: 1
+    _value: 2
+    _enabled: 1

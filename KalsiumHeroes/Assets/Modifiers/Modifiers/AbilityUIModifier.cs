@@ -67,15 +67,15 @@ public class AbilityUIModifier : UnitModifier {
 		if (!cam) cam = Camera.main;
 		if (!cam) FindObjectOfType<Camera>();
 		base.Awake();
-		foreach (var ability in unit.abilities) AddIcon(ability);
-		foreach (var passive in unit.passives) AddIcon(passive);
+		foreach (var ability in unit.modifiers.Get<Ability>()) AddIcon(ability);
+		foreach (var passive in unit.modifiers.Get<Passive>()) AddIcon(passive);
 	}
 
 #if UNITY_EDITOR
 	[UnityEditor.Callbacks.DidReloadScripts]
 	static void OnReloadScripts() {
 		if (!Application.isPlaying) return;
-		foreach (var uiMod in Game.dataComponents.Enumerate<AbilityUIModifier>()) uiMod.RefreshValues();
+		foreach (var uiMod in Game.dataComponents.Get<AbilityUIModifier>()) uiMod.RefreshValues();
 	}
 #endif
 

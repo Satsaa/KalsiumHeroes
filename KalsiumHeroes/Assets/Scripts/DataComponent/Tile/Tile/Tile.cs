@@ -6,27 +6,34 @@ using UnityEngine;
 using HexGrid;
 
 [RequireComponent(typeof(Highlighter))]
-public class Tile : MonoBehaviour {
+public class Tile : DataComponent {
 
-	public bool blocked;
-	public float moveCost = 1;
-	public float positiviness;
+	public TileData tileData => (TileData)data;
+	public override Type dataType => typeof(TileData);
+
+	public DataComponentDict<TileModifier> modifiers = new DataComponentDict<TileModifier>();
 	public Highlighter highlighter;
+	[field: SerializeField, HideInInspector]
+	public bool initialized { get; protected set; }
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
-	public void Awake() {
-		var ob = gameObject.transform.Find("Obstacle");
-		if (blocked) {
-			ob.gameObject.SetActive(true);
-		} else ob.gameObject.SetActive(false);
+	protected void OnValidate() {
+		if (source && !Application.isPlaying) data = Instantiate(source);
 	}
+
 	public void Init(Hex hex) {
+		if (initialized) throw new InvalidOperationException("Tile has already been initialized!");
+		initialized = true;
 		this.hex = hex;
+		highlighter = GetComponent<Highlighter>();
 		var pt = Layout.HexToPoint(hex);
 		center = new Vector3(pt.x, 0, pt.y);
 		transform.position = center;
 		corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
+		foreach (var modifier in GetComponents<TileModifier>()) {
+			modifier.Init();
+		}
 	}
 
 	public Unit unit;

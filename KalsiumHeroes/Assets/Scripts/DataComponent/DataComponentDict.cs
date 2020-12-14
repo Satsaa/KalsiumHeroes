@@ -7,38 +7,40 @@ using System.Reflection;
 using System.Collections;
 
 /// <summary>
-/// Stores EntityComponents in collections based on their type hierarchy.
+/// Stores EntityComponents in collections based on their types.
 /// </summary>
 [Serializable]
-public class DataComponentCache : DataComponentCache<DataComponent> { }
+public class DataComponentDict : DataComponentDict<DataComponent> { }
 
 /// <summary>
-/// Stores EntityComponents in collections based on their type hierarchy.
+/// Stores EntityComponents in collections based on their types.
 /// </summary>
 [Serializable]
-public class DataComponentCache<TBase> : ISerializationCallbackReceiver where TBase : DataComponent {
+public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBase : DataComponent {
 
-	Dictionary<Type, object> cache = new Dictionary<Type, object>();
+	Dictionary<Type, object> dict = new Dictionary<Type, object>();
 
 	/// <summary> Caches all loaded EntityComponents </summary>
-	public void BuildCache() {
+	public void BuildFromScene() {
 		var ecs = GameObject.FindObjectsOfType<TBase>(true);
 		foreach (var ec in ecs) {
-			Cache(ec);
+			Add(ec);
 		}
 	}
 
 
-	public IEnumerable<T> Enumerate<T>(bool includeInactive = false) where T : TBase {
+	public IEnumerable<TBase> Get(bool includeInactive = false) => Get<TBase>();
+
+	public IEnumerable<T> Get<T>(bool includeInactive = false) where T : TBase {
 		var type = typeof(T);
 		if (includeInactive) {
-			if (cache.TryGetValue(type, out var val)) {
+			if (dict.TryGetValue(type, out var val)) {
 				return val as HashSet<T>;
 			} else {
 				return new T[0];
 			}
 		} else {
-			if (cache.TryGetValue(type, out var val)) {
+			if (dict.TryGetValue(type, out var val)) {
 				return (val as HashSet<T>).Where(v => v.isActiveAndEnabled);
 			} else {
 				return new T[0];
@@ -47,12 +49,12 @@ public class DataComponentCache<TBase> : ISerializationCallbackReceiver where TB
 	}
 
 	/// <summary> Adds the EntityComponent to the cache. </summary>
-	public void Cache<T>(T entityComponent) where T : TBase {
+	public void Add<T>(T entityComponent) where T : TBase {
 		var type = entityComponent.GetType();
 		while (true) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			if (!cache.TryGetValue(type, out var set)) {
-				cache[type] = set = Activator.CreateInstance(setType);
+			if (!dict.TryGetValue(type, out var set)) {
+				dict[type] = set = Activator.CreateInstance(setType);
 			}
 			var method = setType.GetMethod("Add");
 			method.Invoke(set, new object[] { entityComponent });
@@ -62,11 +64,11 @@ public class DataComponentCache<TBase> : ISerializationCallbackReceiver where TB
 	}
 
 	/// <summary> Removes the EntityComponent from the cache. </summary>
-	public void Uncache(TBase entityComponent) {
+	public void Remove(TBase entityComponent) {
 		var type = entityComponent.GetType();
 		while (true) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			var set = cache[type];
+			var set = dict[type];
 			var method = setType.GetMethod("Remove");
 			method.Invoke(set, new object[] { entityComponent });
 			if (type == typeof(TBase)) break;
@@ -82,8 +84,8 @@ public class DataComponentCache<TBase> : ISerializationCallbackReceiver where TB
 	private DataComponent[][] vals;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
-		keys = cache.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
-		vals = cache.Values.Select(v => (v as IEnumerable).Cast<DataComponent>().ToArray()).ToArray();
+		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
+		vals = dict.Values.Select(v => (v as IEnumerable).Cast<DataComponent>().ToArray()).ToArray();
 	}
 
 	void ISerializationCallbackReceiver.OnAfterDeserialize() {
@@ -93,7 +95,7 @@ public class DataComponentCache<TBase> : ISerializationCallbackReceiver where TB
 				var ecs = vals[i];
 
 				Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-				var set = cache[type] = Activator.CreateInstance(setType);
+				var set = dict[type] = Activator.CreateInstance(setType);
 				var method = setType.GetMethod("Add");
 				foreach (var ec in ecs) {
 					method.Invoke(set, new object[] { ec });

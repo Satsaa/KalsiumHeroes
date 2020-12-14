@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4153982263914213858}
   - component: {fileID: 3644837470951789499}
   m_Layer: 0
-  m_Name: Hex
+  m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,10 +125,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c863e506635e44580ae68f5c534149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocked: 0
-  moveCost: 1
-  positiviness: 0
-  highlighter: {fileID: 4153982263914213858}
+  source: {fileID: 11400000, guid: d21af8bf14076454f952b2c88960bd34, type: 2}
+  data: {fileID: 0}
+  modifiers:
+    keys: []
+  highlighter: {fileID: 0}
+  <initialized>k__BackingField: 0
   unit: {fileID: 0}
   graveyard: []
   <hex>k__BackingField:

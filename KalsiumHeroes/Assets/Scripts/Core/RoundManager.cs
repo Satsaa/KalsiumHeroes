@@ -54,7 +54,7 @@ public class RoundManager {
 		OnTurnStarts();
 	}
 
-	private void OnRoundStarts() { foreach (var modifier in Game.dataComponents.Enumerate<UnitModifier>()) modifier.OnRoundStart(); }
-	private void OnTurnEnds() { foreach (var modifier in current.modifiers) modifier.OnTurnEnd(); }
-	private void OnTurnStarts() { foreach (var modifier in current.modifiers) modifier.OnTurnStart(); }
+	private void OnRoundStarts() { foreach (var modifier in Game.dataComponents.Get<UnitModifier>()) modifier.OnRoundStart(); }
+	private void OnTurnEnds() { foreach (var modifier in current.modifiers.Get()) modifier.OnTurnEnd(); }
+	private void OnTurnStarts() { foreach (var modifier in current.modifiers.Get()) modifier.OnTurnStart(); }
 }

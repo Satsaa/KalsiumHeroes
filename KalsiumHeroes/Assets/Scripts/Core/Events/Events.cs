@@ -79,7 +79,7 @@ public class Events {
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
 			var unit = Game.grid.tiles[this.unit].unit;
-			var ability = unit.abilities.First(a => a.data.identifier == this.ability);
+			var ability = unit.modifiers.Get<global::Ability>().First(a => a.data.identifier == this.ability);
 			EventHandler<Ability> abilityHandler = ability.CreateEventHandler(this);
 			ability.OnCast();
 			return abilityHandler;
