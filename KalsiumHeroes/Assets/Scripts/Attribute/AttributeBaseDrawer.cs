@@ -44,7 +44,7 @@ public class AttributeBaseDrawer : PropertyDrawer {
 					var attributeProperty = AttributeBase.AttributeProperty.Enabled;
 					pos.xMin = pos.xMax + spacing;
 					pos.width = 15 + spacing;
-					if (Application.isPlaying && obj.Editor_OnlyShowAlteredInPlay(attributeProperty)) {
+					if (Application.isPlaying && obj.DisplayAlteredInPlay(attributeProperty)) {
 						using (DisabledScope()) {
 							var prop = objType.GetProperty("enabled");
 							var val = (bool)prop.GetValue(obj);
@@ -66,12 +66,12 @@ public class AttributeBaseDrawer : PropertyDrawer {
 				// Primary value
 				if (valueProperty != null) {
 					var attributeProperty = AttributeBase.AttributeProperty.Primary;
-					var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? obj.Editor_DefaultLabel(attributeProperty));
+					var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? obj.GetEditorLabel(attributeProperty));
 					labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
 					pos.xMin = pos.xMax + spacing;
 					pos.width = (position.xMax - pos.xMin) / 2 - spacing;
 					if (otherProperty == null) pos.xMax = position.xMax;
-					if (Application.isPlaying && obj.Editor_OnlyShowAlteredInPlay(attributeProperty)) {
+					if (Application.isPlaying && obj.DisplayAlteredInPlay(attributeProperty)) {
 						using (DisabledScope()) {
 							var prop = objType.GetProperty("value");
 							var val = prop.GetValue(obj);
@@ -105,11 +105,11 @@ public class AttributeBaseDrawer : PropertyDrawer {
 				// Secondary value
 				if (otherProperty != null) {
 					var attributeProperty = AttributeBase.AttributeProperty.Secondary;
-					var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? obj.Editor_DefaultLabel(attributeProperty));
+					var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? obj.GetEditorLabel(attributeProperty));
 					labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
 					pos.xMin = pos.xMax + spacing;
 					pos.xMax = position.xMax;
-					if (Application.isPlaying && obj.Editor_OnlyShowAlteredInPlay(attributeProperty)) {
+					if (Application.isPlaying && obj.DisplayAlteredInPlay(attributeProperty)) {
 						using (DisabledScope()) {
 							var prop = objType.GetProperty("other");
 							var val = prop.GetValue(obj);

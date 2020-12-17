@@ -10,7 +10,7 @@ using System.Collections;
 /// Stores DataComponents in collections based on their types.
 /// </summary>
 [Serializable]
-public class DataComponentDict : DataComponentDict<DataComponent> { }
+public class DataComponentDict : DataComponentDict<DataComponent>, ISerializationCallbackReceiver { }
 
 /// <summary>
 /// Stores DataComponents in collections based on their types.
@@ -29,22 +29,14 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 	}
 
 
-	public IEnumerable<TBase> Get(bool includeInactive = false) => Get<TBase>();
+	public IEnumerable<TBase> Get() => Get<TBase>();
 
-	public IEnumerable<T> Get<T>(bool includeInactive = false) where T : TBase {
+	public IEnumerable<T> Get<T>() where T : TBase {
 		var type = typeof(T);
-		if (includeInactive) {
-			if (dict.TryGetValue(type, out var val)) {
-				return val as HashSet<T>;
-			} else {
-				return new T[0];
-			}
+		if (dict.TryGetValue(type, out var val)) {
+			return val as HashSet<T>;
 		} else {
-			if (dict.TryGetValue(type, out var val)) {
-				return (val as HashSet<T>).Where(v => v.isActiveAndEnabled);
-			} else {
-				return new T[0];
-			}
+			return new T[0];
 		}
 	}
 
@@ -79,28 +71,38 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 
 	#region Serialization
 
+	[Serializable]
+	private class DataComponentArrayContainer {
+		public DataComponent[] components;
+		public DataComponentArrayContainer(DataComponent[] components) => this.components = components;
+	}
+
 	[SerializeField, HideInInspector]
 	private string[] keys;
-	private DataComponent[][] vals;
+	[SerializeField, HideInInspector]
+	private DataComponentArrayContainer[] vals;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
 		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
-		vals = dict.Values.Select(v => (v as IEnumerable).Cast<DataComponent>().ToArray()).ToArray();
+		vals = dict.Values.Select(v => (v as IEnumerable).Cast<DataComponent>().ToArray()).Select(v => new DataComponentArrayContainer(v)).ToArray();
 	}
 
-	void ISerializationCallbackReceiver.OnAfterDeserialize() {
+	void ISerializationCallbackReceiver.OnAfterDeserialize() { //
 		if (keys != null && vals != null) {
 			for (int i = 0; i < keys.Length; i++) {
 				var type = Type.GetType(keys[i]);
-				var ecs = vals[i];
+				var comps = vals[i].components;
 
 				Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
 				var set = dict[type] = Activator.CreateInstance(setType);
 				var method = setType.GetMethod("Add");
-				foreach (var ec in ecs) {
-					method.Invoke(set, new object[] { ec });
+				foreach (var comp in comps) {
+					method.Invoke(set, new object[] { comp });
 				}
 			}
+		} else {
+			Debug.Assert(keys != null, "Keys was null. Can't deserialize.");
+			Debug.Assert(vals != null, "Vals was null. Can't deserialize.");
 		}
 		keys = null;
 		vals = null;

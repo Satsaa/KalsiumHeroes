@@ -11,9 +11,7 @@ public class Unit : MasterComponent {
 
 	public UnitData unitData => (UnitData)data;
 	public override Type dataType => typeof(UnitData);
-
 	public DataComponentDict<UnitModifier> modifiers = new DataComponentDict<UnitModifier>();
-
 
 	[HideInInspector]
 	[Tooltip("Unit is silenced? It cannot cast spells.")]
@@ -97,7 +95,7 @@ public class Unit : MasterComponent {
 	}
 
 	public void Dispell() {
-		foreach (var effect in modifiers.Get<StatusEffect>(true)) {
+		foreach (var effect in modifiers.Get<StatusEffect>()) {
 			effect.OnDispell();
 		}
 	}

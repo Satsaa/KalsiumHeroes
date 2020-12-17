@@ -9,9 +9,9 @@ public class RootGeneric : StatusEffect {
 
 	public override Type dataType => typeof(RootGenericData);
 
-	protected override void OnRegisterAlterers() {
-		// Removed automatically when the component is destroyed
-		unit.rooted.RegisterAlterer(v => true);
+	protected override void OnConfigureNonpersistent(bool add) {
+		base.OnConfigureNonpersistent(add);
+		unit.rooted.ConfigureAlterer(add, v => true);
 	}
 
 }

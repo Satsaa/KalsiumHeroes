@@ -251,20 +251,19 @@ public class AbilityUIModifier : UnitModifier {
 	}
 
 
-	protected override void OnLoadNonpersistent() {
-		base.OnLoadNonpersistent();
-		Game.events.onStart += OnEventStart;
-		Game.events.onFinish += OnEventFinish;
-		Game.targeting.onTargeterEnd += OnTargeterEnd;
-		Game.targeting.onTargeterStart += OnTargeterStart;
-	}
-
-	protected override void OnUnloadNonpersistent() {
-		base.OnLoadNonpersistent();
-		Game.events.onStart -= OnEventStart;
-		Game.events.onFinish -= OnEventFinish;
-		Game.targeting.onTargeterEnd -= OnTargeterEnd;
-		Game.targeting.onTargeterStart -= OnTargeterStart;
+	protected override void OnConfigureNonpersistent(bool add) {
+		base.OnConfigureNonpersistent(add);
+		if (add) {
+			Game.events.onStart += OnEventStart;
+			Game.events.onFinish += OnEventFinish;
+			Game.targeting.onTargeterEnd += OnTargeterEnd;
+			Game.targeting.onTargeterStart += OnTargeterStart;
+		} else {
+			Game.events.onStart -= OnEventStart;
+			Game.events.onFinish -= OnEventFinish;
+			Game.targeting.onTargeterEnd -= OnTargeterEnd;
+			Game.targeting.onTargeterStart -= OnTargeterStart;
+		}
 	}
 
 

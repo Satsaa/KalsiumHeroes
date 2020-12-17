@@ -8,9 +8,9 @@ public class DisarmGeneric : StatusEffect {
 
 	public override Type dataType => typeof(DisarmGenericData);
 
-	protected override void OnRegisterAlterers() {
-		// Removed automatically when the component is destroyed
-		unit.disarmed.RegisterAlterer(v => true);
+	protected override void OnConfigureNonpersistent(bool add) {
+		base.OnConfigureNonpersistent(add);
+		unit.disarmed.ConfigureAlterer(add, v => true);
 	}
 
 }

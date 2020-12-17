@@ -22,36 +22,15 @@ public class GridTester : MonoBehaviour {
 	public Tile main;
 	public Tile hover;
 
-	[Space]
-
-	public bool drawLine;
-	public bool drawRadius;
-	public bool drawRing;
-	public bool drawSpiral;
-
-	[Space]
-
-	public bool drawNearest;
-	public bool drawNearestSpiralSearch;
-
-	[Space]
-
-	public bool drawCostField;
-	public bool drawDistanceField;
-
-	[Space]
-
-	public bool drawAreas;
-	public bool drawFlood;
-	public bool drawVision;
-
-	[Space]
-
-	public bool drawCheapestPath;
-	public bool drawShortestPath;
-	public bool drawFirstPath;
-
-	[Space]
+	public Draw draw;
+	public enum Draw {
+		None,
+		Line, Radius, Ring, Spiral,
+		Nearest, NearestSpiralSearch,
+		CostField, DistanceField,
+		Areas, Flood, Vision,
+		CheapestPath, ShortestPath, FirstPath,
+	}
 
 	public bool paint;
 	public TileData paintTile;
@@ -101,7 +80,7 @@ public class GridTesterEditor : Editor {
 			if (e.type == EventType.MouseDown && e.button == 0) { t.main = t.hover; e.Use(); }
 		}
 
-		if (t.drawLine) {
+		if (t.draw == GridTester.Draw.Line) {
 			foreach (var tile in grid.Line(t.main, t.hover)) {
 				DrawTile(tile, lightBlue);
 			}
@@ -112,17 +91,17 @@ public class GridTesterEditor : Editor {
 				Handles.SphereHandleCap(0, spherePos, Quaternion.identity, 0.25f, EventType.Repaint);
 			}
 		}
-		if (t.drawRadius) {
+		if (t.draw == GridTester.Draw.Radius) {
 			foreach (var tile in grid.Radius(t.main, distance)) {
 				DrawTile(tile, lightBlue);
 			}
 		}
-		if (t.drawRing) {
+		if (t.draw == GridTester.Draw.Ring) {
 			foreach (var tile in grid.Ring(t.main, distance)) {
 				DrawTile(tile, lightBlue);
 			}
 		}
-		if (t.drawSpiral) {
+		if (t.draw == GridTester.Draw.Spiral) {
 			var i = 0;
 			var total = 3 * Mathf.Pow((distance + 1), 2) - 3 * (distance + 1) + 1;
 			foreach (var tile in grid.Spiral(t.main, distance)) {
@@ -131,28 +110,28 @@ public class GridTesterEditor : Editor {
 			}
 		}
 
-		if (t.drawNearest) {
+		if (t.draw == GridTester.Draw.Nearest) {
 			var nearest = grid.NearestTile(mousePos);
 			DrawTile(nearest, lightBlue);
 		}
-		if (t.drawNearestSpiralSearch) {
+		if (t.draw == GridTester.Draw.NearestSpiralSearch) {
 			var nearest = grid.NearestTileSpiralSearch(mousePos, 10);
 			DrawTile(nearest, lightBlue);
 		}
 
-		if (t.drawCostField) {
+		if (t.draw == GridTester.Draw.CostField) {
 			var field = Pathing.GetCostField(t.main);
 			foreach (var kv in field.costs) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 		}
-		if (t.drawDistanceField) {
+		if (t.draw == GridTester.Draw.DistanceField) {
 			var field = Pathing.GetDistanceField(t.main);
 			foreach (var kv in field.distances) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 		}
 
-		if (t.drawFlood) {
+		if (t.draw == GridTester.Draw.Flood) {
 			foreach (var tile in grid.Flood(t.main)) DrawTile(tile, lightBlue);
 		}
-		if (t.drawAreas) {
+		if (t.draw == GridTester.Draw.Areas) {
 			var areas = grid.GetAreas();
 			foreach (var area in areas) {
 				var r = new System.Random(area.Value);
@@ -160,23 +139,23 @@ public class GridTesterEditor : Editor {
 				DrawTile(area.Key, color);
 			}
 		}
-		if (t.drawVision) {
+		if (t.draw == GridTester.Draw.Vision) {
 			foreach (var tile in grid.Vision(t.main, distance)) {
 				DrawTile(tile, lightBlue);
 			}
 		}
 
-		if (t.drawCheapestPath) {
+		if (t.draw == GridTester.Draw.CheapestPath) {
 			Pathing.CheapestPath(t.main, t.hover, out var path, out var field);
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
-		if (t.drawShortestPath) {
+		if (t.draw == GridTester.Draw.ShortestPath) {
 			Pathing.ShortestPath(t.main, t.hover, out var path, out var field);
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
-		if (t.drawFirstPath) {
+		if (t.draw == GridTester.Draw.FirstPath) {
 			Pathing.FirstPath(t.main, t.hover, out var path, out var field);
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);

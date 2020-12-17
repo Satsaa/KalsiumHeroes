@@ -8,9 +8,9 @@ public class SilenceGeneric : StatusEffect {
 
 	public override Type dataType => typeof(SilenceGenericData);
 
-	protected override void OnRegisterAlterers() {
-		// Removed automatically when the component is destroyed
-		unit.silenced.RegisterAlterer(v => true);
+	protected override void OnConfigureNonpersistent(bool add) {
+		base.OnConfigureNonpersistent(add);
+		unit.silenced.ConfigureAlterer(add, v => true);
 	}
 
 }

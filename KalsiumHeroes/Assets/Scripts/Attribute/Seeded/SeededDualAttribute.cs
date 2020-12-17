@@ -13,9 +13,9 @@ public class SeededDualAttribute<T> : SeededAttribute<T> {
 	[FormerlySerializedAs(nameof(other))]
 	[Tooltip("Secondary value")]
 	protected T _other;
-	public virtual T other => otherAlterers.Values.Aggregate(_other, (current, alt) => alt(current));
+	public virtual T other => otherAlterers.Aggregate(_other, (current, alt) => alt(current));
 
-	protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
+	protected HashSet<Func<T, T>> otherAlterers = new HashSet<Func<T, T>>();
 
 
 	public SeededDualAttribute() { }
@@ -24,38 +24,28 @@ public class SeededDualAttribute<T> : SeededAttribute<T> {
 	}
 
 
+	/// <summary> Adds or removes a function that alters what the value property returns. </summary>
+	public bool ConfigureOtherAlterer(bool add, Func<T, T> alterer) {
+		if (add) return otherAlterers.Add(alterer);
+		else return otherAlterers.Remove(alterer);
+	}
+
 	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
 		switch (attributeProperty) {
-			case AttributeProperty.Enabled: return false;
 			case AttributeProperty.Primary: return !_value.Equals(value);
 			case AttributeProperty.Secondary: return !_other.Equals(other);
+			case AttributeProperty.Enabled: return false;
 			default: return false;
 		}
 	}
 
-	public override string Editor_DefaultLabel(AttributeProperty attributeProperty) {
+	public override string GetEditorLabel(AttributeProperty attributeProperty) {
 		switch (attributeProperty) {
-			case AttributeProperty.Enabled: return "";
 			case AttributeProperty.Primary: return "Value";
 			case AttributeProperty.Secondary: return "Other";
+			case AttributeProperty.Enabled: return "";
 			default: return "Unknown";
 		}
-	}
-	public override bool Editor_OnlyShowAlteredInPlay(AttributeProperty attributeProperty) => true;
-
-	/// <summary> Registers a function that alters what the other property returns. </summary>
-	public void RegisterSecondaryAlterer(Func<T, T> alterer) {
-		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
-		var keyObject = new object();
-		otherAlterers.Add(keyObject, alterer);
-		keyTarget.Add(keyObject, this);
-	}
-
-	/// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
-	public override void RemoveAlterer(object key) {
-		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
-		alterers.Remove(key);
-		otherAlterers.Remove(key);
 	}
 
 }

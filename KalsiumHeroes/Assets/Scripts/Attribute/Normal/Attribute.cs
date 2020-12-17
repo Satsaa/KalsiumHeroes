@@ -15,22 +15,12 @@ public class Attribute<T> : AttributeBase {
 	protected T _value;
 
 	public virtual T value {
-		get => alterers.Values.Aggregate(_value, (current, alt) => alt(current));
+		get => alterers.Aggregate(_value, (current, alt) => alt(current));
 		set => _value = value;
 	}
 
-	protected Dictionary<object, Func<T, T>> alterers = new Dictionary<object, Func<T, T>>();
+	protected HashSet<Func<T, T>> alterers = new HashSet<Func<T, T>>();
 
-	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
-		switch (attributeProperty) {
-			case AttributeProperty.Enabled: return false;
-			case AttributeProperty.Primary: return !_value.Equals(value);
-			case AttributeProperty.Secondary: return false;
-			default: return false;
-		}
-	}
-
-	public override string Editor_DefaultLabel(AttributeProperty attributeProperty) => "";
 
 	public Attribute() { }
 	public Attribute(T value) {
@@ -38,18 +28,21 @@ public class Attribute<T> : AttributeBase {
 	}
 
 
-	/// <summary> Registers a function that alters what the value property returns. </summary>
-	public void RegisterAlterer(Func<T, T> alterer) {
-		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
-		var keyObject = new object();
-		alterers.Add(keyObject, alterer);
-		keyTarget.Add(keyObject, this);
+	/// <summary> Adds or removes a function that alters what the value property returns. </summary>
+	public bool ConfigureAlterer(bool add, Func<T, T> alterer) {
+		if (add) return alterers.Add(alterer);
+		else return alterers.Remove(alterer);
 	}
 
-	/// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
-	public override void RemoveAlterer(object key) {
-		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
-		alterers.Remove(key);
+	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
+		switch (attributeProperty) {
+			case AttributeProperty.Primary: return !_value.Equals(value);
+			case AttributeProperty.Secondary: return false;
+			case AttributeProperty.Enabled: return false;
+			default: return false;
+		}
 	}
+
+	public override string GetEditorLabel(AttributeProperty attributeProperty) => "";
 
 }

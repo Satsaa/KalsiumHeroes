@@ -14,8 +14,6 @@ public abstract class UnitModifier : DataComponent {
 
 	[HideInInspector] public Unit unit;
 
-	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
-
 
 	protected new void Awake() {
 		base.Awake();
@@ -25,10 +23,7 @@ public abstract class UnitModifier : DataComponent {
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnAdd(this);
 		}
-		using (AttributeBase.ConfigurationScope(altererKeys)) {
-			OnRegisterAlterers();
-		}
-		OnLoadNonpersistent();
+		OnConfigureNonpersistent(true);
 	}
 
 	protected new void OnDestroy() {
@@ -36,11 +31,8 @@ public abstract class UnitModifier : DataComponent {
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnRemove(this);
 		}
-		using (AttributeBase.ConfigurationScope(altererKeys)) {
-			AttributeBase.RemoveAlterers();
-		}
 		unit.modifiers.Remove(this);
-		OnUnloadNonpersistent();
+		OnConfigureNonpersistent(false);
 		base.OnDestroy();
 	}
 
@@ -48,24 +40,19 @@ public abstract class UnitModifier : DataComponent {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
 		if (Application.isPlaying) {
-			foreach (var mod in Game.dataComponents.Get<UnitModifier>(true)) {
-				using (AttributeBase.ConfigurationScope(mod.altererKeys)) {
-					mod.OnRegisterAlterers();
-				}
-				mod.OnLoadNonpersistent();
+			foreach (var mod in Game.dataComponents.Get<UnitModifier>()) {
+				mod.OnConfigureNonpersistent(true);
 			}
 		}
 	}
 #endif
 
-	/// <summary> Register attribute alterers. This is the only place to do so. Alterers are automatically removed and added. </summary>
-	protected virtual void OnRegisterAlterers() { }
-
-	/// <summary> When the UnitModifier is instantiated or the scripts are reloaded. Place to add non-persistent event listeners for example. </summary>
-	protected virtual void OnLoadNonpersistent() { }
-
-	/// <summary> Same as OnRemove but exists for naming. </summary>
-	protected virtual void OnUnloadNonpersistent() { }
+	/// <summary>
+	/// Modifier is instantiated or the scripts are reloaded.
+	/// Also when the UnitModifier is removed but with add = false.
+	/// Conditionally add or remove non-persistent things here.
+	/// </summary>
+	protected virtual void OnConfigureNonpersistent(bool add) { }
 
 	/// <summary> When this UnitModifier is being added (instantiated). </summary>
 	public virtual void OnAdd() { }

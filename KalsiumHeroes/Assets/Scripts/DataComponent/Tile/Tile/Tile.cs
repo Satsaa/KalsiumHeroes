@@ -14,8 +14,8 @@ public class Tile : MasterComponent {
 
 	public TileData tileData => (TileData)data;
 	public override Type dataType => typeof(TileData);
-
 	public DataComponentDict<TileModifier> modifiers = new DataComponentDict<TileModifier>();
+
 	public Highlighter highlighter;
 
 	public Unit unit;
@@ -38,16 +38,16 @@ public class Tile : MasterComponent {
 		if (!highlighter) Debug.LogError("No Highlighter in MasterComponent instantiatee.");
 		var pt = Layout.HexToPoint(hex);
 		center = new Vector3(pt.x, 0, pt.y);
-		transform.position = center;
+		transform.position = center.SetY(transform.position.y);
 		corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 	}
 
 	protected new void OnDestroy() {
 		for (int i = 0; i < neighbors.Length; i++) {
 			var nbr = neighbors[i];
-			if (nbr == null) {
+			if (nbr == null && edges[i]) {
 				if (Application.isPlaying) Destroy(edges[i].gameObject);
-				else if (edges[i].gameObject) DestroyImmediate(edges[i].gameObject);
+				else DestroyImmediate(edges[i].gameObject);
 			}
 		}
 		base.OnDestroy();

@@ -15,29 +15,12 @@ public class DualAttribute<T> : Attribute<T> {
 	protected T _other;
 
 	public virtual T other {
-		get => otherAlterers.Values.Aggregate(_other, (current, alt) => alt(current));
+		get => otherAlterers.Aggregate(_other, (current, alt) => alt(current));
 		set => _other = value;
 	}
 
-	protected Dictionary<object, Func<T, T>> otherAlterers = new Dictionary<object, Func<T, T>>();
+	protected HashSet<Func<T, T>> otherAlterers = new HashSet<Func<T, T>>();
 
-	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
-		switch (attributeProperty) {
-			case AttributeProperty.Enabled: return false;
-			case AttributeProperty.Primary: return !_value.Equals(value);
-			case AttributeProperty.Secondary: return !_other.Equals(other);
-			default: return false;
-		}
-	}
-
-	public override string Editor_DefaultLabel(AttributeProperty attributeProperty) {
-		switch (attributeProperty) {
-			case AttributeProperty.Enabled: return "";
-			case AttributeProperty.Primary: return "Value";
-			case AttributeProperty.Secondary: return "Other";
-			default: return "Unknown";
-		}
-	}
 
 	public DualAttribute() { }
 	public DualAttribute(T value, T other) : base(value) {
@@ -45,30 +28,35 @@ public class DualAttribute<T> : Attribute<T> {
 	}
 
 
-	/// <summary> Registers a function that alters what the other property returns. </summary>
-	public void RegisterSecondaryAlterer(Func<T, T> alterer) {
-		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
-		var keyObject = new object();
-		otherAlterers.Add(keyObject, alterer);
-		keyTarget.Add(keyObject, this);
-	}
-
-	/// <summary> Internal use only. Attribute alterers are removed automatically. </summary>
-	public override void RemoveAlterer(object key) {
-		if (!allow) throw new SecurityException("Configuring alterers is only allowed inside the RegisterAttributeAlterers function!");
-		alterers.Remove(key);
-		otherAlterers.Remove(key);
-	}
-
 	/// <summary> Sets value to other. </summary>
-	public void ResetValue() {
-		value = other;
+	public void ResetValue() => value = other;
+
+	/// <summary> If value is larger than other, sets value to other. T must be IComparable. </summary>
+	public void LimitValue() {
+		if (((IComparable)value).CompareTo((IComparable)other) > 0) value = other;
 	}
 
-	/// <summary> If value is larger than other, sets value to other. T must be castable to IComparable. </summary>
-	public void LimitValue() {
-		if (((IComparable)value).CompareTo((IComparable)other) > 0) {
-			value = other;
+	/// <summary> Adds or removes a function that alters what the value property returns. </summary>
+	public bool ConfigureOtherAlterer(bool add, Func<T, T> alterer) {
+		if (add) return otherAlterers.Add(alterer);
+		else return otherAlterers.Remove(alterer);
+	}
+
+	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
+		switch (attributeProperty) {
+			case AttributeProperty.Primary: return !_value.Equals(value);
+			case AttributeProperty.Secondary: return !_other.Equals(other);
+			case AttributeProperty.Enabled: return false;
+			default: return false;
+		}
+	}
+
+	public override string GetEditorLabel(AttributeProperty attributeProperty) {
+		switch (attributeProperty) {
+			case AttributeProperty.Primary: return "Value";
+			case AttributeProperty.Secondary: return "Other";
+			case AttributeProperty.Enabled: return "";
+			default: return "Unknown";
 		}
 	}
 

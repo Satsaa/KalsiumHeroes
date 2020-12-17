@@ -10,7 +10,6 @@ public class Edge : MasterComponent {
 
 	public EdgeData edgeData => (EdgeData)data;
 	public override Type dataType => typeof(EdgeData);
-
 	public DataComponentDict<EdgeModifier> modifiers = new DataComponentDict<EdgeModifier>();
 
 	public Tile tile1;
