@@ -16,6 +16,7 @@ public class Game : MonoBehaviour {
 	public static Events events => instance._events;
 	public static Targeting targeting => instance._targeting;
 	public static RoundManager rounds => instance._rounds;
+
 	public static DataComponentDict dataComponents => instance._dataComponents;
 
 	private static Game _instance;

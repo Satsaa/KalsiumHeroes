@@ -87,22 +87,17 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 		vals = dict.Values.Select(v => (v as IEnumerable).Cast<DataComponent>().ToArray()).Select(v => new DataComponentArrayContainer(v)).ToArray();
 	}
 
-	void ISerializationCallbackReceiver.OnAfterDeserialize() { //
-		if (keys != null && vals != null) {
-			for (int i = 0; i < keys.Length; i++) {
-				var type = Type.GetType(keys[i]);
-				var comps = vals[i].components;
+	void ISerializationCallbackReceiver.OnAfterDeserialize() {
+		for (int i = 0; i < keys.Length; i++) {
+			var type = Type.GetType(keys[i]);
+			var comps = vals[i].components;
 
-				Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-				var set = dict[type] = Activator.CreateInstance(setType);
-				var method = setType.GetMethod("Add");
-				foreach (var comp in comps) {
-					method.Invoke(set, new object[] { comp });
-				}
+			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			var set = dict[type] = Activator.CreateInstance(setType);
+			var method = setType.GetMethod("Add");
+			foreach (var comp in comps) {
+				method.Invoke(set, new object[] { comp });
 			}
-		} else {
-			Debug.Assert(keys != null, "Keys was null. Can't deserialize.");
-			Debug.Assert(vals != null, "Vals was null. Can't deserialize.");
 		}
 		keys = null;
 		vals = null;
