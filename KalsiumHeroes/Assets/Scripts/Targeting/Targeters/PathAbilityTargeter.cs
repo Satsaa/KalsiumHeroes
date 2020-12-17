@@ -6,24 +6,22 @@ using UnityEngine;
 
 public class PathConfirmAbilityTargeter : AbilityTargeter {
 
-	public Predicate<Tile> passable;
+	public Pather pather;
 
-	public PathConfirmAbilityTargeter(Unit unit, Ability ability, Action<Targeter> onComplete, Action<Targeter> onCancel = null)
-			: base(unit, ability, onComplete, onCancel
-	) {
-		if (passable == null) {
+	public PathConfirmAbilityTargeter(Unit unit, Ability ability, Action<Targeter> onComplete, Action<Targeter> onCancel = null) : base(unit, ability, onComplete, onCancel) {
+		if (pather == null) {
 			switch (ability.abilityData.rangeMode) {
 				case RangeMode.PathCost:
 				case RangeMode.PathDistance:
-					passable = h => h.tileData.passable.value && !h.unit;
+					pather = Pathers.OneWayUnitBlocking;
 					break;
 				case RangeMode.PathCostPassThrough:
 				case RangeMode.PathDistancePassThrough:
-					passable = h => h.tileData.passable.value;
+					pather = Pathers.OneWay;
 					break;
 				case RangeMode.Distance:
 				default:
-					passable = h => true;
+					pather = delegate { return true; };
 					break;
 			}
 		}
@@ -33,7 +31,7 @@ public class PathConfirmAbilityTargeter : AbilityTargeter {
 	public override bool Hover(Tile tile) {
 		var valid = base.Hover(tile);
 		if (valid) {
-			Game.grid.CheapestPath(unit.tile, tile, out var path, passable);
+			Pathing.CheapestPath(unit.tile, tile, out var path, out var _, pather);
 			foreach (var segment in path) {
 				hovers.Add(segment);
 			}

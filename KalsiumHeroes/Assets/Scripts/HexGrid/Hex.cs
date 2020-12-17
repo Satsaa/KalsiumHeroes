@@ -42,12 +42,12 @@ namespace HexGrid {
 
 		/// <summary> Neighbor offsets from downLeft to upLeft </summary>
 		public static Hex[] neighborOffsets = new Hex[] {
+			new Hex(1, 0, -1),
 			new Hex(1, -1, 0),
 			new Hex(0, -1, 1),
 			new Hex(-1, 0, 1),
 			new Hex(-1, 1, 0),
-			new Hex(0, 1, -1),
-			new Hex(1, 0, -1)
+			new Hex(0, 1, -1)
 		};
 
 

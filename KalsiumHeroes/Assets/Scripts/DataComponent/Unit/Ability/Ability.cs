@@ -86,13 +86,13 @@ public abstract class Ability : UnitModifier {
 				case RangeMode.Distance:
 					return Game.grid.Radius(tile, abilityData.range.value);
 				case RangeMode.PathDistance:
-					return Game.grid.GetDistanceField(tile, abilityData.range.value, h => h.tileData.passable.value && !h.unit).distances.Keys;
+					return Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.OneWayUnitBlocking).distances.Keys;
 				case RangeMode.PathDistancePassThrough:
-					return Game.grid.GetDistanceField(tile, abilityData.range.value).distances.Keys;
+					return Pathing.GetDistanceField(tile, abilityData.range.value).distances.Keys;
 				case RangeMode.PathCost:
-					return Game.grid.GetCostField(tile, maxCost: abilityData.range.value, passable: h => h.tileData.passable.value && !h.unit).costs.Keys;
+					return Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.OneWayUnitBlocking).costs.Keys;
 				case RangeMode.PathCostPassThrough:
-					return Game.grid.GetCostField(tile, maxCost: abilityData.range.value).costs.Keys;
+					return Pathing.GetCostField(tile, maxCost: abilityData.range.value).costs.Keys;
 			}
 		} else {
 			return Game.grid.tiles.Values;

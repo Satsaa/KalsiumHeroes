@@ -17,16 +17,10 @@ public abstract class UnitModifier : DataComponent {
 	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
 
 
-	protected void OnValidate() {
-		if (source && !Application.isPlaying) data = Instantiate(source);
-		if (!unit) unit = GetComponent<Unit>();
-	}
-
-	protected void Awake() {
-		data = Instantiate(source);
+	protected new void Awake() {
+		base.Awake();
 		unit = GetComponent<Unit>();
 		unit.modifiers.Add(this);
-		Game.dataComponents.Add(this);
 		OnAdd();
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnAdd(this);
@@ -37,7 +31,7 @@ public abstract class UnitModifier : DataComponent {
 		OnLoadNonpersistent();
 	}
 
-	protected void OnDestroy() {
+	protected new void OnDestroy() {
 		OnRemove();
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnRemove(this);
@@ -46,8 +40,8 @@ public abstract class UnitModifier : DataComponent {
 			AttributeBase.RemoveAlterers();
 		}
 		unit.modifiers.Remove(this);
-		Game.dataComponents.Remove(this);
 		OnUnloadNonpersistent();
+		base.OnDestroy();
 	}
 
 #if UNITY_EDITOR

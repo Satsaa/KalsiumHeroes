@@ -7,20 +7,20 @@ using System.Reflection;
 using System.Collections;
 
 /// <summary>
-/// Stores EntityComponents in collections based on their types.
+/// Stores DataComponents in collections based on their types.
 /// </summary>
 [Serializable]
 public class DataComponentDict : DataComponentDict<DataComponent> { }
 
 /// <summary>
-/// Stores EntityComponents in collections based on their types.
+/// Stores DataComponents in collections based on their types.
 /// </summary>
 [Serializable]
 public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBase : DataComponent {
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
 
-	/// <summary> Caches all loaded EntityComponents </summary>
+	/// <summary> Caches all loaded DataComponents </summary>
 	public void BuildFromScene() {
 		var ecs = GameObject.FindObjectsOfType<TBase>(true);
 		foreach (var ec in ecs) {
@@ -48,29 +48,29 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 		}
 	}
 
-	/// <summary> Adds the EntityComponent to the cache. </summary>
-	public void Add<T>(T entityComponent) where T : TBase {
-		var type = entityComponent.GetType();
+	/// <summary> Adds the DataComponent to the cache. </summary>
+	public void Add<T>(T dataComponent) where T : TBase {
+		var type = dataComponent.GetType();
 		while (true) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out var set)) {
 				dict[type] = set = Activator.CreateInstance(setType);
 			}
 			var method = setType.GetMethod("Add");
-			method.Invoke(set, new object[] { entityComponent });
+			method.Invoke(set, new object[] { dataComponent });
 			if (type == typeof(TBase)) break;
 			type = type.BaseType;
 		}
 	}
 
-	/// <summary> Removes the EntityComponent from the cache. </summary>
-	public void Remove(TBase entityComponent) {
-		var type = entityComponent.GetType();
+	/// <summary> Removes the DataComponent from the cache. </summary>
+	public void Remove(TBase dataComponent) {
+		var type = dataComponent.GetType();
 		while (true) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
 			var set = dict[type];
 			var method = setType.GetMethod("Remove");
-			method.Invoke(set, new object[] { entityComponent });
+			method.Invoke(set, new object[] { dataComponent });
 			if (type == typeof(TBase)) break;
 			type = type.BaseType;
 		}

@@ -7,7 +7,7 @@ using Muc.Editor;
 using static UnityEngine.Mathf;
 using Muc.Extensions;
 
-public class Unit : DataComponent {
+public class Unit : MasterComponent {
 
 	public UnitData unitData => (UnitData)data;
 	public override Type dataType => typeof(UnitData);
@@ -31,12 +31,9 @@ public class Unit : DataComponent {
 	[field: SerializeField]
 	public Tile tile { get; private set; }
 
-	protected void OnValidate() {
-		if (source && !Application.isPlaying) data = Instantiate(source);
-	}
 
-	protected void Awake() {
-		data = Instantiate(source);
+	protected new void Awake() {
+		base.Awake();
 		if (tile && (tile.unit == this || tile.unit == null)) {
 			MovePosition(tile);
 		} else {
@@ -46,10 +43,11 @@ public class Unit : DataComponent {
 		}
 	}
 
-	protected void OnDestroy() {
+	protected new void OnDestroy() {
 		if (Game.rounds.current == this) {
 			Game.rounds.NextTurn();
 		}
+		base.OnDestroy();
 	}
 
 	void ClampHealth() {

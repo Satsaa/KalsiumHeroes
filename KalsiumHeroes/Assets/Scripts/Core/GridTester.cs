@@ -12,11 +12,11 @@ using System.Linq;
 using Debug = UnityEngine.Debug;
 using Muc.Extensions;
 
-[RequireComponent(typeof(GameGrid))]
+[RequireComponent(typeof(TileGrid))]
 public class GridTester : MonoBehaviour {
 
 	[field: SerializeField]
-	public GameGrid grid { get; private set; }
+	public TileGrid grid { get; private set; }
 
 	// Editor
 	public Tile main;
@@ -41,7 +41,7 @@ public class GridTester : MonoBehaviour {
 
 	[Space]
 
-	public bool drawArea;
+	public bool drawAreas;
 	public bool drawFlood;
 	public bool drawVision;
 
@@ -53,34 +53,11 @@ public class GridTester : MonoBehaviour {
 
 	[Space]
 
-	public PaintType paint;
-
-	public enum PaintType {
-		None,
-		Passable,
-		Impassable,
-		AppealN2,
-		AppealN1,
-		Appeal0,
-		Appeal1,
-		Appeal2,
-		MoveCost0,
-		MoveCost1,
-		MoveCost2,
-		MoveCost3,
-		MoveCost4,
-		MoveCost5,
-		MoveCost6,
-		MoveCost7,
-		MoveCost8,
-		MoveCost9,
-		MoveCost10,
-	}
+	public bool paint;
+	public TileData paintTile;
 
 	void OnValidate() {
-		grid = GetComponent<GameGrid>();
-		if (main == null || !grid.tiles.ContainsValue(main)) main = grid.tiles.First().Value;
-		if (hover == null || !grid.tiles.ContainsValue(hover)) hover = grid.tiles.First().Value;
+		grid = GetComponent<TileGrid>();
 	}
 }
 
@@ -91,10 +68,14 @@ public class GridTester : MonoBehaviour {
 public class GridTesterEditor : Editor {
 
 	GridTester t => (GridTester)target;
-	GameGrid grid => t.grid;
+	TileGrid grid => t.grid;
 
 
 	protected virtual void OnSceneGUI() {
+
+		if (t.main == null || !grid.tiles.ContainsValue(t.main)) t.main = grid.tiles.First().Value;
+		if (t.hover == null || !grid.tiles.ContainsValue(t.hover)) t.hover = grid.tiles.First().Value;
+		if (!t.main) return;
 
 		var distance = Hex.Distance(t.hover.hex, t.main.hex);
 		var lightBlue = ChangeAlpha(Color.blue, 0.25f);
@@ -160,18 +141,18 @@ public class GridTesterEditor : Editor {
 		}
 
 		if (t.drawCostField) {
-			var field = grid.GetCostField(t.main);
+			var field = Pathing.GetCostField(t.main);
 			foreach (var kv in field.costs) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 		}
 		if (t.drawDistanceField) {
-			var field = grid.GetDistanceField(t.main);
+			var field = Pathing.GetDistanceField(t.main);
 			foreach (var kv in field.distances) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 		}
 
 		if (t.drawFlood) {
 			foreach (var tile in grid.Flood(t.main)) DrawTile(tile, lightBlue);
 		}
-		if (t.drawArea) {
+		if (t.drawAreas) {
 			var areas = grid.GetAreas();
 			foreach (var area in areas) {
 				var r = new System.Random(area.Value);
@@ -186,41 +167,24 @@ public class GridTesterEditor : Editor {
 		}
 
 		if (t.drawCheapestPath) {
-			grid.CheapestPath(t.main, t.hover, out var path, out var field);
+			Pathing.CheapestPath(t.main, t.hover, out var path, out var field);
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
 		if (t.drawShortestPath) {
-			grid.ShortestPath(t.main, t.hover, out var path, out var field);
+			Pathing.ShortestPath(t.main, t.hover, out var path, out var field);
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
 		if (t.drawFirstPath) {
-			grid.FirstPath(t.main, t.hover, out var path, out var field);
+			Pathing.FirstPath(t.main, t.hover, out var path, out var field);
 			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
 			foreach (var segment in path) DrawTile(segment, Color.blue);
 		}
 
 
-		switch (t.paint) {
-			case GridTester.PaintType.Passable: t.main.tileData.passable.value = true; break;
-			case GridTester.PaintType.Impassable: t.main.tileData.passable.value = false; break;
-			case GridTester.PaintType.AppealN2: t.main.tileData.appeal.value = -2; break;
-			case GridTester.PaintType.AppealN1: t.main.tileData.appeal.value = -1; break;
-			case GridTester.PaintType.Appeal0: t.main.tileData.appeal.value = 0; break;
-			case GridTester.PaintType.Appeal1: t.main.tileData.appeal.value = 1; break;
-			case GridTester.PaintType.Appeal2: t.main.tileData.appeal.value = 2; break;
-			case GridTester.PaintType.MoveCost0: t.main.tileData.moveCost.value = 0; break;
-			case GridTester.PaintType.MoveCost1: t.main.tileData.moveCost.value = 1; break;
-			case GridTester.PaintType.MoveCost2: t.main.tileData.moveCost.value = 2; break;
-			case GridTester.PaintType.MoveCost3: t.main.tileData.moveCost.value = 3; break;
-			case GridTester.PaintType.MoveCost4: t.main.tileData.moveCost.value = 4; break;
-			case GridTester.PaintType.MoveCost5: t.main.tileData.moveCost.value = 5; break;
-			case GridTester.PaintType.MoveCost6: t.main.tileData.moveCost.value = 6; break;
-			case GridTester.PaintType.MoveCost7: t.main.tileData.moveCost.value = 7; break;
-			case GridTester.PaintType.MoveCost8: t.main.tileData.moveCost.value = 8; break;
-			case GridTester.PaintType.MoveCost9: t.main.tileData.moveCost.value = 9; break;
-			case GridTester.PaintType.MoveCost10: t.main.tileData.moveCost.value = 10; break;
+		if (t.paint && t.paintTile != null && t.main.source != t.paintTile) {
+			t.main = Game.grid.ReplaceTile(t.main.hex, t.paintTile);
 		}
 
 	}
@@ -229,28 +193,29 @@ public class GridTesterEditor : Editor {
 
 		DrawDefaultInspector();
 
+		Tile btnTile = null;
 		using (new EditorGUILayout.HorizontalScope()) {
-			using (new EditorGUI.DisabledGroupScope(!t.main || t.main.upLeft == null)) if (GUILayout.Button(nameof(t.main.upLeft))) t.main = t.main.upLeft ? t.main.upLeft : t.main;
-			using (new EditorGUI.DisabledGroupScope(!t.main || t.main.upRight == null)) if (GUILayout.Button(nameof(t.main.upRight))) t.main = t.main.upRight ? t.main.upRight : t.main;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.UpLeft)))) if (GUILayout.Button(nameof(TileDir.UpLeft))) t.main = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.UpRight)))) if (GUILayout.Button(nameof(TileDir.UpRight))) t.main = btnTile;
 		}
 		using (new EditorGUILayout.HorizontalScope()) {
-			using (new EditorGUI.DisabledGroupScope(!t.main || t.main.left == null)) if (GUILayout.Button(nameof(t.main.left))) t.main = t.main.left ? t.main.left : t.main;
-			using (new EditorGUI.DisabledGroupScope(!t.main || t.main.right == null)) if (GUILayout.Button(nameof(t.main.right))) t.main = t.main.right ? t.main.right : t.main;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.Left)))) if (GUILayout.Button(nameof(TileDir.Left))) t.main = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.Right)))) if (GUILayout.Button(nameof(TileDir.Right))) t.main = btnTile;
 		}
 		using (new EditorGUILayout.HorizontalScope()) {
-			using (new EditorGUI.DisabledGroupScope(!t.main || t.main.downLeft == null)) if (GUILayout.Button(nameof(t.main.downLeft))) t.main = t.main.downLeft ? t.main.downLeft : t.main;
-			using (new EditorGUI.DisabledGroupScope(!t.main || t.main.downRight == null)) if (GUILayout.Button(nameof(t.main.downRight))) t.main = t.main.downRight ? t.main.downRight : t.main;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.DownLeft)))) if (GUILayout.Button(nameof(TileDir.DownLeft))) t.main = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.DownRight)))) if (GUILayout.Button(nameof(TileDir.DownRight))) t.main = btnTile;
 		}
 
 		EditorGUILayout.Space();
 		using (new EditorGUI.DisabledGroupScope(true)) {
-			var dist = Hex.Distance(t.hover.hex, t.main.hex);
+			var dist = t.hover && t.main ? Hex.Distance(t.hover.hex, t.main.hex) : 0;
 			EditorGUILayout.IntField("Distance", dist);
 		}
 	}
 
 	private void DrawTile(Tile tile, Color color) {
-		if (!tile) return;
+		if (!tile || tile.corners == null) return;
 		var wsCorners = tile.corners.Select(v => (Vector3)v).ToList();
 		wsCorners.Add(wsCorners[0]);
 		using (ColorScope(color)) {

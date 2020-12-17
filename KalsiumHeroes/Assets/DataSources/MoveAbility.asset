@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MoveAbility
   m_EditorClassIdentifier: 
   displayName: Move
-  description: Moves to the target tile.
+  description: Moves the unit to the target tile.
   identifier: ability_move
   componentType:
     _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -21,21 +21,21 @@ MonoBehaviour:
   abilityType: 1
   targetType: 1
   range:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   rangeMode: 3
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 0
+    _value: 0
+    _other: 0
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0

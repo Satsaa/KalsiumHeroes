@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddEntityComponentAbility : Ability {
+public class AddDataComponentAbility : Ability {
 
-	public AddEntityComponentData createUnitAbilityData => (AddEntityComponentData)data;
-	public override Type dataType => typeof(AddEntityComponentData);
+	public AddDataComponentData createUnitAbilityData => (AddDataComponentData)data;
+	public override Type dataType => typeof(AddDataComponentData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
@@ -15,7 +15,7 @@ public class AddEntityComponentAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit) {
 					foreach (var component in createUnitAbilityData.components) {
-						tile.unit.gameObject.AddEntityComponent(component);
+						tile.unit.gameObject.AddDataComponent(component);
 					}
 				}
 			}

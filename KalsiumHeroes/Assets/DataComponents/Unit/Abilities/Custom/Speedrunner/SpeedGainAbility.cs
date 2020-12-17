@@ -16,7 +16,7 @@ public class SpeedGainAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit && tile.unit != unit) unitsFound.value++;
 			}
-			unit.gameObject.AddEntityComponent(speedGainAbilityData.speedGainModifier);
+			unit.gameObject.AddDataComponent(speedGainAbilityData.speedGainModifier);
 		});
 	}
 }

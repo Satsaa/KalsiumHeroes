@@ -4,17 +4,17 @@ using Muc.Data;
 
 public abstract class DataComponentData : ScriptableObject {
 
-	[Header("Entity Component Data")]
-	[Tooltip("Display name of this entity component, displayed to users. (\"Oracle\")")]
+	[Header("Data Component Data")]
+	[Tooltip("Display name of this DataComponent, displayed to users. (\"Oracle\")")]
 	public string displayName;
 
-	[Tooltip("Description of this entity component, displayed to users.")]
+	[Tooltip("Description of this DataComponent, displayed to users.")]
 	public string description;
 
-	[Tooltip("String identifier of this entity component. (\"unit_oracle\")")]
+	[Tooltip("String identifier of this DataComponent. (\"unit_oracle\")")]
 	public string identifier;
 
-	[Tooltip("Instantiate this Type of EntityComponent for this data.")]
+	[Tooltip("Instantiate this Type of DataComponent for this data.")]
 	public SerializedType<DataComponent> componentType;
 
 }

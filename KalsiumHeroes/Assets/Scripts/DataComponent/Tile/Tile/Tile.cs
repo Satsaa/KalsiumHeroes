@@ -4,37 +4,19 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using HexGrid;
+using Muc.Extensions;
+using Muc.Numerics;
 
-[RequireComponent(typeof(Highlighter))]
-public class Tile : DataComponent {
+[ExecuteAlways]
+public class Tile : MasterComponent {
+
+	public static implicit operator Hex(Tile v) => v.hex;
 
 	public TileData tileData => (TileData)data;
 	public override Type dataType => typeof(TileData);
 
 	public DataComponentDict<TileModifier> modifiers = new DataComponentDict<TileModifier>();
 	public Highlighter highlighter;
-	[field: SerializeField, HideInInspector]
-	public bool initialized { get; protected set; }
-
-	public static implicit operator Hex(Tile v) => v.hex;
-
-	protected void OnValidate() {
-		if (source && !Application.isPlaying) data = Instantiate(source);
-	}
-
-	public void Init(Hex hex) {
-		if (initialized) throw new InvalidOperationException("Tile has already been initialized!");
-		initialized = true;
-		this.hex = hex;
-		highlighter = GetComponent<Highlighter>();
-		var pt = Layout.HexToPoint(hex);
-		center = new Vector3(pt.x, 0, pt.y);
-		transform.position = center;
-		corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
-		foreach (var modifier in GetComponents<TileModifier>()) {
-			modifier.Init();
-		}
-	}
 
 	public Unit unit;
 	public List<GraveUnit> graveyard;
@@ -44,52 +26,58 @@ public class Tile : DataComponent {
 	[field: SerializeField] public Vector3 center { get; private set; }
 	[field: SerializeField] public Vector3[] corners { get; private set; }
 
-	[field: SerializeField] public Tile downRight { get; internal set; }
-	[field: SerializeField] public Tile downLeft { get; internal set; }
-	[field: SerializeField] public Tile left { get; internal set; }
-	[field: SerializeField] public Tile upLeft { get; internal set; }
-	[field: SerializeField] public Tile upRight { get; internal set; }
-	[field: SerializeField] public Tile right { get; internal set; }
+	[field: SerializeField] public Tile[] neighbors { get; private set; } = new Tile[6];
+	[field: SerializeField] public Edge[] edges { get; private set; } = new Edge[6];
 
-	public enum Dir {
-		DownRight,
-		DownLeft,
-		Left,
-		UpLeft,
-		UpRight,
-		Right,
+
+	protected new void Awake() {
+		if (!source) throw new InvalidOperationException("Source must be defined when creating a Tile!");
+		base.Awake();
+		hex = Layout.PointToHex(transform.position.xz()).Round();
+		highlighter = GetComponent<Highlighter>();
+		if (!highlighter) Debug.LogError("No Highlighter in MasterComponent instantiatee.");
+		var pt = Layout.HexToPoint(hex);
+		center = new Vector3(pt.x, 0, pt.y);
+		transform.position = center;
+		corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 	}
 
-	public Tile GetNeighbor(Dir direction) {
-		switch (direction) {
-			case Dir.DownRight: return downRight;
-			case Dir.DownLeft: return downLeft;
-			case Dir.Left: return left;
-			case Dir.UpLeft: return upLeft;
-			case Dir.UpRight: return upRight;
-			case Dir.Right: return right;
-			default: return null;
+	protected new void OnDestroy() {
+		for (int i = 0; i < neighbors.Length; i++) {
+			var nbr = neighbors[i];
+			if (nbr == null) {
+				if (Application.isPlaying) Destroy(edges[i].gameObject);
+				else if (edges[i].gameObject) DestroyImmediate(edges[i].gameObject);
+			}
 		}
+		base.OnDestroy();
 	}
 
-	public void SetNeighbor(Dir direction, Tile value) {
-		switch (direction) {
-			case Dir.DownRight: downRight = value; break;
-			case Dir.DownLeft: downLeft = value; break;
-			case Dir.Left: left = value; break;
-			case Dir.UpLeft: upLeft = value; break;
-			case Dir.UpRight: upRight = value; break;
-			case Dir.Right: right = value; break;
-		}
+	public IEnumerable<Tile> Neighbors() => neighbors.Where(v => v != null);
+
+	public Tile GetNeighbor(TileDir direction) => neighbors[(int)direction];
+	public Tile GetNeighbor(int direction) => neighbors[direction];
+
+	public void SetNeighbor(TileDir direction, Tile tile, bool propagate = true) => SetNeighbor((int)direction, tile, propagate);
+	public void SetNeighbor(int direction, Tile tile, bool propagate = true) {
+		neighbors[direction] = tile;
+		if (!propagate) return;
+		var neighbor = GetNeighbor(direction);
+		if (neighbor) neighbor.SetNeighbor(new CircularInt(direction - 3, 6), this, false);
 	}
 
-	public IEnumerable<Tile> Neighbors() {
-		if (downRight != null) yield return downRight;
-		if (downLeft != null) yield return downLeft;
-		if (left != null) yield return left;
-		if (upLeft != null) yield return upLeft;
-		if (upRight != null) yield return upRight;
-		if (right != null) yield return right;
-	}
+	public IEnumerable<Edge> Edges() => edges.Where(v => v != null);
 
+	public Edge GetEdge(TileDir direction) => edges[(int)direction];
+	public Edge GetEdge(int direction) => edges[direction];
+
+	public void SetEdge(TileDir direction, Edge edge, bool propagate = true) => SetEdge((int)direction, edge, propagate);
+	public void SetEdge(int direction, Edge edge, bool propagate = true) {
+		edges[direction] = edge;
+		if (!propagate) return;
+		edge.tile1 = this;
+		var neighbor = GetNeighbor(direction);
+		edge.tile2 = neighbor;
+		if (neighbor) neighbor.SetEdge(new CircularInt(direction - 3, 6), edge, false);
+	}
 }

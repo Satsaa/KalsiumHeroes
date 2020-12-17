@@ -7,11 +7,11 @@ using UnityEditor;
 #endif
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
-[RequireComponent(typeof(GameGrid), typeof(Targeting))]
+[RequireComponent(typeof(TileGrid), typeof(Targeting))]
 public class Game : MonoBehaviour {
 
 	public static Game instance => _instance;
-	public static GameGrid grid => instance._grid;
+	public static TileGrid grid => instance._grid;
 	public static Client client => instance._client;
 	public static Events events => instance._events;
 	public static Targeting targeting => instance._targeting;
@@ -19,7 +19,7 @@ public class Game : MonoBehaviour {
 	public static DataComponentDict dataComponents => instance._dataComponents;
 
 	private static Game _instance;
-	[SerializeField] private GameGrid _grid;
+	[SerializeField] private TileGrid _grid;
 	[SerializeField] private Client _client = new Client();
 	[SerializeField] private Events _events = new Events();
 	[SerializeField] private Targeting _targeting = default;
@@ -35,7 +35,7 @@ public class Game : MonoBehaviour {
 		}
 
 		_instance = this;
-		if (_grid == null && (_grid = GetComponent<GameGrid>()) == null) Debug.LogError($"No {nameof(GameGrid)} Component!");
+		if (_grid == null && (_grid = GetComponent<TileGrid>()) == null) Debug.LogError($"No {nameof(TileGrid)} Component!");
 		if (_targeting == null && (_targeting = GetComponent<Targeting>()) == null) Debug.LogError($"No {nameof(Targeting)} Component!");
 		dataComponents.BuildFromScene();
 	}
@@ -49,7 +49,7 @@ public class Game : MonoBehaviour {
 		}
 
 		_instance = this;
-		if (_grid == null) _grid = GetComponent<GameGrid>();
+		if (_grid == null) _grid = GetComponent<TileGrid>();
 		if (_targeting == null) _targeting = GetComponent<Targeting>();
 		dataComponents.BuildFromScene();
 		_rounds.OnGameStart();

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TileModifierData : DataComponentData {
 
 	[Header("Tile Modifier Data")]
-	[Tooltip("Displayed image")]
-	public Sprite sprite;
+	[Tooltip("Placeholder for properties of TileModifiers")]
+	public int tilePlaceholder;
 
 }

@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: WallTile
   m_EditorClassIdentifier: 
   displayName: Wall Tile
-  description: The default wall tile.
+  description: An impassable wall tile
   identifier: tile_wall
   componentType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 194248088727427243, guid: 09ad36188e110ec4b815aa905bbfefb5, type: 3}
   passable:
-    _value: 1
+    _value: 0
   transparent:
-    _value: 1
+    _value: 0
   moveCost:
     _value: 1
   appeal:
     _value: 0
+  edges: []

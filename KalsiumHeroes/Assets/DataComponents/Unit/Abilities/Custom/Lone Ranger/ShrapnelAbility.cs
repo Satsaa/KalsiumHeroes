@@ -16,7 +16,7 @@ public class ShrapnelAbility : Ability {
 
 			var unit = ability.unit;
 
-			var modifier = UnitModifier.AddEntityComponent(ability.unit.gameObject, shrapnelAbilityData.shrapnelModifierData) as ShrapnelAbilityModifier;
+			var modifier = ability.unit.gameObject.AddDataComponent<ShrapnelAbilityModifier>(shrapnelAbilityData.shrapnelModifierData);
 			modifier.casterData = ScriptableObject.Instantiate<ShrapnelAbilityData>(shrapnelAbilityData);
 			modifier.target = target;
 			modifier.aoe = aoe.ToList();

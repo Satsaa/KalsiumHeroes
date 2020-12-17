@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: GroundTile
   m_EditorClassIdentifier: 
   displayName: Ground Tile
-  description: The default ground tile.
+  description: The default ground tile
   identifier: tile_ground
   componentType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   passable:
     _value: 1
   transparent:
@@ -25,3 +26,4 @@ MonoBehaviour:
     _value: 1
   appeal:
     _value: 0
+  edges: []

@@ -24,21 +24,20 @@ namespace HexGrid {
 		public Vector3 pos => new Vector3(x, y, z);
 
 		public Hex Round() {
-			int qi = Mathf.RoundToInt(x);
-			int ri = Mathf.RoundToInt(y);
-			int si = Mathf.RoundToInt(z);
-			float q_diff = Math.Abs(qi - x);
-			float r_diff = Math.Abs(ri - y);
-			float s_diff = Math.Abs(si - z);
-			if (q_diff > r_diff && q_diff > s_diff) {
-				qi = -ri - si;
-			} else
-							if (r_diff > s_diff) {
-				ri = -qi - si;
+			int xi = Mathf.RoundToInt(x);
+			int yi = Mathf.RoundToInt(y);
+			int zi = Mathf.RoundToInt(z);
+			float xd = Math.Abs(xi - x);
+			float yd = Math.Abs(yi - y);
+			float zd = Math.Abs(zi - z);
+			if (xd > yd && xd > zd) {
+				xi = -yi - zi;
+			} else if (yd > zd) {
+				yi = -xi - zi;
 			} else {
-				si = -qi - ri;
+				zi = -xi - yi;
 			}
-			return new Hex(qi, ri, si);
+			return new Hex(xi, yi, zi);
 		}
 
 

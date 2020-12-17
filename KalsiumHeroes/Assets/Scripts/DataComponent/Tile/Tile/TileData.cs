@@ -6,9 +6,10 @@ using UnityEngine;
 using static UnityEngine.Mathf;
 
 [CreateAssetMenu(fileName = nameof(TileData), menuName = "DataSources/" + nameof(TileData))]
-public class TileData : DataComponentData {
+public class TileData : MasterComponentData {
 
-	[Tooltip("Can this Tile be moved on?")]
+	[Header("Tile Data")]
+	[Tooltip("Is this tile considered passable?")]
 	public Attribute<bool> passable = new Attribute<bool>(true);
 
 	[Tooltip("Can this Tile be seen through?")]
@@ -19,4 +20,8 @@ public class TileData : DataComponentData {
 
 	[Tooltip("More appealing Tiles are preferred when pathfinding.")]
 	public Attribute<float> appeal = new Attribute<float>(0);
+
+	[Tooltip("EdgeModifiers added to the Edges around this Tile")]
+	public EdgeModifierData[] edges;
+
 }

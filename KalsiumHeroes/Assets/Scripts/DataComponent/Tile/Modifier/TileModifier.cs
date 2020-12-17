@@ -7,7 +7,7 @@ using UnityEngine;
 using Muc.Editor;
 
 [RequireComponent(typeof(Tile))]
-public class TileModifier : DataComponent {
+public abstract class TileModifier : DataComponent {
 
 	public TileModifierData tileModifierData => (TileModifierData)data;
 	public override Type dataType => typeof(TileModifierData);
@@ -17,17 +17,8 @@ public class TileModifier : DataComponent {
 	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
 
 
-	protected void OnValidate() {
-		if (source && !Application.isPlaying) data = Instantiate(source);
-	}
-
-	protected void Awake() {
-		if (GetComponent<Tile>().initialized) Init();
-	}
-
-	public virtual void Init() {
-		data = Instantiate(source);
-		tile = GetComponent<Tile>();
+	protected new void Awake() {
+		base.Awake();
 		tile.modifiers.Add(this);
 		Game.dataComponents.Add(this);
 		OnAdd();
@@ -40,7 +31,7 @@ public class TileModifier : DataComponent {
 		OnLoadNonpersistent();
 	}
 
-	protected void OnDestroy() {
+	protected new void OnDestroy() {
 		OnRemove();
 		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) {
 			other.OnRemove(this);
@@ -49,8 +40,8 @@ public class TileModifier : DataComponent {
 			AttributeBase.RemoveAlterers();
 		}
 		tile.modifiers.Remove(this);
-		Game.dataComponents.Remove(this);
 		OnUnloadNonpersistent();
+		base.OnDestroy();
 	}
 
 #if UNITY_EDITOR
@@ -82,9 +73,9 @@ public class TileModifier : DataComponent {
 	public virtual void OnRemove() { }
 
 	/// <summary> When any other TileModifier is being added. </summary>
-	public virtual void OnAdd(TileModifier tileModifier) { }
+	public virtual void OnAdd(TileModifier modifier) { }
 	/// <summary> When any other TileModifier is being removed. </summary>
-	public virtual void OnRemove(TileModifier tileModifier) { }
+	public virtual void OnRemove(TileModifier modifier) { }
 
 }
 
