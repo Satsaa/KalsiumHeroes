@@ -34,7 +34,7 @@ public class Tile : MasterComponent {
 		if (!source) throw new InvalidOperationException("Source must be defined when creating a Tile!");
 		base.Awake();
 		hex = Layout.PointToHex(transform.position.xz()).Round();
-		highlighter = GetComponent<Highlighter>();
+		highlighter = GetComponentInChildren<Highlighter>();
 		if (!highlighter) Debug.LogError("No Highlighter in MasterComponent instantiatee.");
 		var pt = Layout.HexToPoint(hex);
 		center = new Vector3(pt.x, 0, pt.y);
@@ -45,9 +45,14 @@ public class Tile : MasterComponent {
 	protected new void OnDestroy() {
 		for (int i = 0; i < neighbors.Length; i++) {
 			var nbr = neighbors[i];
-			if (nbr == null && edges[i]) {
-				if (Application.isPlaying) Destroy(edges[i].gameObject);
-				else DestroyImmediate(edges[i].gameObject);
+			var edge = edges[i];
+			if (edge) {
+				if (nbr == null) {
+					if (Application.isPlaying) Destroy(edge.gameObject);
+					else DestroyImmediate(edge.gameObject);
+				} else {
+					edge.RemoveByContext(this);
+				}
 			}
 		}
 		base.OnDestroy();

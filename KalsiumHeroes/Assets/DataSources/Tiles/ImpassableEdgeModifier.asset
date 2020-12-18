@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0487570fedbc6c6449117c1fcd3742be, type: 3}
+  m_Name: ImpassableEdgeModifier
+  m_EditorClassIdentifier: 
+  displayName: Impassable Edge
+  description: Impassable edge of a tile.
+  identifier: edge_impassable
+  componentType:
+    _name: ImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  tilePlaceholder: 0

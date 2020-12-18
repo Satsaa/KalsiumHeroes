@@ -22,6 +22,6 @@ public class TileData : MasterComponentData {
 	public Attribute<float> appeal = new Attribute<float>(0);
 
 	[Tooltip("EdgeModifiers added to the Edges around this Tile")]
-	public EdgeModifierData[] edges;
+	public EdgeModifierData[] edgeModifiers;
 
 }

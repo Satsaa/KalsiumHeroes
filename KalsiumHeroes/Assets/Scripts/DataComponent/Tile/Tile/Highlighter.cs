@@ -17,10 +17,11 @@ public class Highlighter : MonoBehaviour {
 	}
 
 	public void Highlight(Color color) {
+		if (!renderer.enabled) renderer.enabled = true;
 		renderer.material.color = color;
 	}
 
-	public void ResetHighlight() {
-		renderer.material.color = this.color;
+	public void DisableHighlight() {
+		renderer.enabled = false;
 	}
 }

@@ -20,6 +20,17 @@ public class Edge : MasterComponent {
 		base.Awake();
 	}
 
+	/// <summary> Removes EdgeModifiers with matching context Tile </summary>
+	public void RemoveByContext(Tile context) {
+		var modifiers = GetComponents<EdgeModifier>();
+		foreach (var modifier in modifiers) {
+			if (modifier.context == context) {
+				if (Application.isPlaying) Destroy(modifier);
+				else DestroyImmediate(modifier);
+			}
+		}
+	}
+
 	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public bool IsPassable(Tile from, Tile to) {
 		if (!((from == tile1 && to == tile2) || (from == tile2 && to == tile1))) throw new ArgumentException("Arguments from and to must be Tiles of the Edge");

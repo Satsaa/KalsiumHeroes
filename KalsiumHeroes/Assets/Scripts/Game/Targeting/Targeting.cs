@@ -118,7 +118,7 @@ public class Targeting : MonoBehaviour {
 	void ClearHighlights() {
 		foreach (var kv in Game.grid.tiles) {
 			var tile = kv.Value;
-			tile.highlighter.ResetHighlight();
+			tile.highlighter.DisableHighlight();
 		}
 	}
 

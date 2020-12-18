@@ -121,13 +121,6 @@ public static class Pathing {
 					if (neighbor == null) continue;
 					var edge = tile.edges[i];
 					var cost = costs[tile] + costCalculator(tile, edge, neighbor);
-					if (neighbor == target) {
-						costs[neighbor] = cost;
-						sources[neighbor] = tile;
-						field = new PathField<float>(costs, sources, neighbor);
-						path = BuildPath(sources, neighbor);
-						return true;
-					}
 					if (pather(tile, edge, neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
 						costs[neighbor] = cost;
 						sources[neighbor] = tile;
@@ -181,13 +174,6 @@ public static class Pathing {
 					if (neighbor == null) continue;
 					var edge = tile.edges[i];
 					var cost = costs[tile] + 1;
-					if (neighbor == target) {
-						costs[neighbor] = cost;
-						sources[neighbor] = tile;
-						field = new PathField<int>(costs, sources, neighbor);
-						path = BuildPath(sources, neighbor);
-						return true;
-					}
 					if (pather(tile, edge, neighbor) && (!costs.TryGetValue(neighbor, out var other) || other > cost)) {
 						costs[neighbor] = cost;
 						sources[neighbor] = tile;
@@ -242,13 +228,6 @@ public static class Pathing {
 					if (neighbor == null) continue;
 					var edge = tile.edges[i];
 					var cost = costs[tile] + 1;
-					if (neighbor == target) {
-						costs[neighbor] = cost;
-						sources[neighbor] = tile;
-						field = new PathField<int>(costs, sources, neighbor);
-						path = BuildPath(sources, neighbor);
-						return true;
-					}
 					if (pather(tile, edge, neighbor) && (!costs.TryGetValue(neighbor, out var other))) {
 						costs[neighbor] = cost;
 						sources[neighbor] = tile;

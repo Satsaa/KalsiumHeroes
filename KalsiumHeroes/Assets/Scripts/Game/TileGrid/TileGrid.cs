@@ -68,6 +68,9 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 					edge = ego.GetComponent<Edge>();
 					tile.SetEdge(i, edge);
 				}
+				foreach (var edgeSource in tile.tileData.edgeModifiers) {
+					edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
+				}
 			}
 		}
 #if UNITY_EDITOR
@@ -104,19 +107,19 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 			var edge = tile.edges[i];
 			if (edge == null) {
 				var nbr = tile.GetNeighbor(i);
-				if (nbr) {
-					var nbrEdge = nbr.GetEdge(new CircularInt(i + 3, 6));
-					if (nbrEdge != null) {
-						tile.SetEdge(i, nbrEdge);
-						continue;
-					}
+				if (nbr && (edge = nbr.GetEdge(new CircularInt(i + 3, 6))) != null) {
+					tile.SetEdge(i, edge);
+				} else {
+					var pos = (tile.corners[i] + tile.corners[new CircularInt(i + 1, 6)]) / 2;
+					var ego = MasterComponent.Instantiate<Edge>(defaultEdge, pos);
+					ego.transform.parent = transform;
+					ego.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {((TileDir)i).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
+					edge = ego.GetComponent<Edge>();
+					tile.SetEdge(i, edge);
 				}
-				var pos = (tile.corners[i] + tile.corners[new CircularInt(i + 1, 6)]) / 2;
-				var ego = MasterComponent.Instantiate<Edge>(defaultEdge, pos);
-				ego.transform.parent = transform;
-				ego.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {((TileDir)i).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
-				edge = ego.GetComponent<Edge>();
-				tile.SetEdge(i, edge);
+			}
+			foreach (var edgeSource in tile.tileData.edgeModifiers) {
+				edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
 			}
 		}
 #if UNITY_EDITOR

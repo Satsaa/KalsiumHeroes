@@ -13,11 +13,15 @@ public abstract class EdgeModifier : DataComponent {
 	public override Type dataType => typeof(EdgeModifierData);
 
 	[HideInInspector] public Edge edge;
+	/// <summary> Which tile to use as  context. Either tile1 or tile2 of the Edge. </summary>
+	[field: SerializeField]
+	public Tile context { get; protected set; }
 
 	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
 
 	protected new void Awake() {
 		base.Awake();
+		Debug.Assert(context, $"No context set! Use initializer parameter of AddDataComponent and call {nameof(Init)}");
 		edge = GetComponent<Edge>();
 		edge.modifiers.Add(this);
 		OnAdd();
@@ -25,6 +29,12 @@ public abstract class EdgeModifier : DataComponent {
 			other.OnAdd(this);
 		}
 		OnConfigureNonpersistent(true);
+	}
+
+	public void Init(Tile context) {
+		edge = GetComponent<Edge>();
+		Debug.Assert(context == edge.tile1 || context == edge.tile2, "Context was set to a Tile that doesn't have this Edge.");
+		this.context = context;
 	}
 
 	protected new void OnDestroy() {
@@ -42,7 +52,7 @@ public abstract class EdgeModifier : DataComponent {
 	private static void OnReloadScripts() {
 		if (Application.isPlaying) {
 			foreach (var mod in Game.dataComponents.Get<EdgeModifier>()) {
-				mod.OnConfigureNonpersistent(true);
+				if (mod) mod.OnConfigureNonpersistent(true);
 			}
 		}
 	}

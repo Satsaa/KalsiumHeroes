@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300035d4948879748b4e7032a12eb642, type: 3}
+  m_Name: ProtectedTile
+  m_EditorClassIdentifier: 
+  displayName: Protected Tile
+  description: Tile which you cannot move inside of
+  identifier: tile_protected
+  componentType:
+    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 194248088727427243, guid: e6034e3aa059288499a9830f8d20fd7e, type: 3}
+  passable:
+    _value: 1
+  transparent:
+    _value: 1
+  moveCost:
+    _value: 1
+  appeal:
+    _value: 0
+  edgeModifiers:
+  - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
