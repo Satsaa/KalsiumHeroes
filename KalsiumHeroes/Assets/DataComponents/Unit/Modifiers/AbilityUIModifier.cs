@@ -119,8 +119,8 @@ public class AbilityUIModifier : UnitModifier {
 		var total = aIcons.Count + pIcons.Count;
 		if (total == 0) return;
 
-		var compAbilties = unit.GetComponents<Ability>();
-		var compPassives = unit.GetComponents<Passive>();
+		var compAbilties = unit.modifiers.Get<Ability>().ToArray();
+		var compPassives = unit.modifiers.Get<Passive>().ToArray();
 		aIcons.Sort((a, b) =>
 				Array.FindIndex(compAbilties, v => v == a.ability).CompareTo(
 				Array.FindIndex(compAbilties, v => v == b.ability)

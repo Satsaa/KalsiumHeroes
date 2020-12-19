@@ -44,8 +44,12 @@ public static class DataComponentExtensions {
 	/// <typeparam name="T">Type of created DataComponent</typeparam>
 	/// <returns>The created DataComponent.</returns>
 	public static DataComponent AddDataComponent(this GameObject target, DataComponentData dataSource, Action<DataComponent> initializer = null) {
-		var wasActive = target.activeInHierarchy;
-		if (wasActive) target.SetActive(false);
+		var wasActive = target.activeSelf;
+		if (dataSource is ModifierData md && md.container != null) {
+			var parent = target;
+			target = ObjectUtil.UnawokenGameObject(md.container, out wasActive);
+			target.transform.SetParent(parent.transform, false);
+		} else if (wasActive) target.SetActive(false);
 		var res = target.AddComponent(dataSource.componentType) as DataComponent;
 		res.source = dataSource;
 		if (initializer != null) initializer(res);
@@ -75,13 +79,18 @@ public static class DataComponentExtensions {
 	/// <returns>The created DataComponent.</returns>
 	public static T AddDataComponent<T>(this GameObject target, DataComponentData dataSource, Action<T> initializer = null) where T : DataComponent {
 		if (!typeof(T).IsAssignableFrom(dataSource.componentType.type)) throw new InvalidCastException($"{typeof(T).Name} is not assignable to {dataSource.componentType.type.Name}");
-		var wasActive = target.activeInHierarchy;
-		if (wasActive) target.SetActive(false);
+		var wasActive = target.activeSelf;
+		if (dataSource is ModifierData md && md.container != null) {
+			var parent = target;
+			target = ObjectUtil.UnawokenGameObject(md.container, out wasActive);
+			target.transform.SetParent(parent.transform, false);
+		} else if (wasActive) target.SetActive(false);
 		var res = target.AddComponent(dataSource.componentType) as T;
 		res.source = dataSource;
 		if (initializer != null) initializer(res);
 		if (wasActive) target.SetActive(true);
 		return res;
 	}
+
 
 }

@@ -20,23 +20,40 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
 
-	/// <summary> Caches all loaded DataComponents </summary>
+	/// <summary> Rebuilds the dictionary from all loaded DataComponents. </summary>
 	public void BuildFromScene() {
-		var ecs = GameObject.FindObjectsOfType<TBase>(true);
-		foreach (var ec in ecs) {
-			Add(ec);
+		dict = new Dictionary<Type, object>();
+		var comps = GameObject.FindObjectsOfType<TBase>(true);
+		foreach (var comp in comps) {
+			Add(comp);
 		}
 	}
 
-
+	/// <summary> Enumerates DataComponents of the root type. </summary>
 	public IEnumerable<TBase> Get() => Get<TBase>();
-
+	/// <summary> Enumerates DataComponents of type T. </summary>
 	public IEnumerable<T> Get<T>() where T : TBase {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
 			return val as HashSet<T>;
 		} else {
 			return new T[0];
+		}
+	}
+
+	/// <summary> Executes action on DataComponents of the root type. </summary>
+	public void Execute(Action<TBase> action) => Execute<TBase>(action);
+	/// <summary> Executes action on DataComponents of type T. </summary>
+	public void Execute<T>(Action<T> action) where T : TBase {
+		var type = typeof(T);
+		IEnumerable<T> targets;
+		if (dict.TryGetValue(type, out var val)) {
+			targets = val as HashSet<T>;
+		} else {
+			targets = new T[0];
+		}
+		foreach (var target in targets) {
+			action(target);
 		}
 	}
 

@@ -6,8 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Muc.Editor;
 
-[RequireComponent(typeof(Edge))]
-public abstract class EdgeModifier : DataComponent {
+public abstract class EdgeModifier : Modifier {
 
 	public EdgeModifierData edgeModifierData => (EdgeModifierData)data;
 	public override Type dataType => typeof(EdgeModifierData);
@@ -20,19 +19,18 @@ public abstract class EdgeModifier : DataComponent {
 	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
 
 	protected new void Awake() {
+		edge = GetMasterComponent<Edge>();
 		base.Awake();
-		Debug.Assert(context, $"No context set! Use initializer parameter of AddDataComponent and call {nameof(Init)}");
-		edge = GetComponent<Edge>();
+		Debug.Assert(context, $"No context set! Use an initializer with AddDataComponent and call {nameof(Init)}");
 		edge.modifiers.Add(this);
 		OnAdd();
 		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) {
 			other.OnAdd(this);
 		}
-		OnConfigureNonpersistent(true);
 	}
 
 	public void Init(Tile context) {
-		edge = GetComponent<Edge>();
+		edge = GetMasterComponent<Edge>();
 		Debug.Assert(context == edge.tile1 || context == edge.tile2, "Context was set to a Tile that doesn't have this Edge.");
 		this.context = context;
 	}
@@ -43,27 +41,8 @@ public abstract class EdgeModifier : DataComponent {
 			other.OnRemove(this);
 		}
 		edge.modifiers.Remove(this);
-		OnConfigureNonpersistent(false);
 		base.OnDestroy();
 	}
-
-#if UNITY_EDITOR
-	[UnityEditor.Callbacks.DidReloadScripts]
-	private static void OnReloadScripts() {
-		if (Application.isPlaying) {
-			foreach (var mod in Game.dataComponents.Get<EdgeModifier>()) {
-				if (mod) mod.OnConfigureNonpersistent(true);
-			}
-		}
-	}
-#endif
-
-	/// <summary>
-	/// Modifier is instantiated or the scripts are reloaded.
-	/// Also when the UnitModifier is removed but with add = false.
-	/// Conditionally add or remove non-persistent things here.
-	/// </summary>
-	protected virtual void OnConfigureNonpersistent(bool add) { }
 
 	/// <summary> When this EdgeModifier is being added (instantiated). </summary>
 	public virtual void OnAdd() { }

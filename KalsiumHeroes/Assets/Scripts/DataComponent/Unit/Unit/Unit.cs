@@ -7,11 +7,10 @@ using Muc.Editor;
 using static UnityEngine.Mathf;
 using Muc.Extensions;
 
-public class Unit : MasterComponent {
+public class Unit : MasterComponent<UnitModifier> {
 
 	public UnitData unitData => (UnitData)data;
 	public override Type dataType => typeof(UnitData);
-	public DataComponentDict<UnitModifier> modifiers = new DataComponentDict<UnitModifier>();
 
 	[HideInInspector]
 	[Tooltip("Unit is silenced? It cannot cast spells.")]
@@ -39,6 +38,8 @@ public class Unit : MasterComponent {
 			var nearTile = Game.grid.NearestTile(transform.position.xz(), v => v.unit == null);
 			if (nearTile) MovePosition(nearTile);
 		}
+		Game.dataComponents.Execute<Modifier>(v => v.OnSpawn(this));
+		tile.modifiers.Execute<TileModifier>(v => v.OnSpawnOn(this));
 	}
 
 	protected new void OnDestroy() {
@@ -86,6 +87,7 @@ public class Unit : MasterComponent {
 		}
 
 		if (unitData.health.value <= 0) {
+			Game.dataComponents.Execute<Modifier>(v => v.OnDeath(this));
 			foreach (var modifier in Game.dataComponents.Get<UnitModifier>()) {
 				modifier.OnDeath();
 				tile.graveyard.Add(new GraveUnit(this));

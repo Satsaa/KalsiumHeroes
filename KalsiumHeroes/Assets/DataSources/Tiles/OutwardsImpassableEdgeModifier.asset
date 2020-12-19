@@ -18,4 +18,4 @@ MonoBehaviour:
   componentType:
     _name: OutwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  tilePlaceholder: 0
+  container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}

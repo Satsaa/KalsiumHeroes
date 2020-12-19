@@ -6,11 +6,10 @@ using UnityEngine;
 using HexGrid;
 using Muc.Extensions;
 
-public class Edge : MasterComponent {
+public class Edge : MasterComponent<EdgeModifier> {
 
 	public EdgeData edgeData => (EdgeData)data;
 	public override Type dataType => typeof(EdgeData);
-	public DataComponentDict<EdgeModifier> modifiers = new DataComponentDict<EdgeModifier>();
 
 	public Tile tile1;
 	public Tile tile2;
@@ -21,12 +20,12 @@ public class Edge : MasterComponent {
 	}
 
 	/// <summary> Removes EdgeModifiers with matching context Tile </summary>
-	public void RemoveByContext(Tile context) {
-		var modifiers = GetComponents<EdgeModifier>();
+	public void RemoveModifiersByContext(Tile context) {
+		var modifiers = GetComponentsInChildren<EdgeModifier>();
 		foreach (var modifier in modifiers) {
 			if (modifier.context == context) {
-				if (Application.isPlaying) Destroy(modifier);
-				else DestroyImmediate(modifier);
+				if (modifier.modifierData && modifier.modifierData.container) ObjectUtil.Destroy(modifier.gameObject);
+				else ObjectUtil.Destroy(modifier);
 			}
 		}
 	}

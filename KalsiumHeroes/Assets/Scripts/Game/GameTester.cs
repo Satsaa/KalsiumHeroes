@@ -65,7 +65,7 @@ public class GameTesterEditor : Editor {
 			Game.client.PostEvent(e);
 		}
 
-		t.currentPos = t.tester.main.hex.pos;
+		t.currentPos = t.tester.mainHex.pos;
 		serializedObject.ApplyModifiedProperties();
 
 	}

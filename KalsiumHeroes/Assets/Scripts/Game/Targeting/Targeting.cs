@@ -6,7 +6,7 @@ using System.Linq;
 
 public class Targeting : MonoBehaviour {
 
-	private RoundManager rm => Game.rounds;
+	private Rounds rm => Game.rounds;
 	private Events e => Game.events;
 	private bool finished => e.finished;
 

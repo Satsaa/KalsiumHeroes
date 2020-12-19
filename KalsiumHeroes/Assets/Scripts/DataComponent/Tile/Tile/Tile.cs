@@ -8,13 +8,12 @@ using Muc.Extensions;
 using Muc.Numerics;
 
 [ExecuteAlways]
-public class Tile : MasterComponent {
+public class Tile : MasterComponent<TileModifier> {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
 	public TileData tileData => (TileData)data;
 	public override Type dataType => typeof(TileData);
-	public DataComponentDict<TileModifier> modifiers = new DataComponentDict<TileModifier>();
 
 	public Highlighter highlighter;
 
@@ -29,8 +28,10 @@ public class Tile : MasterComponent {
 	[field: SerializeField] public Tile[] neighbors { get; private set; } = new Tile[6];
 	[field: SerializeField] public Edge[] edges { get; private set; } = new Edge[6];
 
+	public bool awoken = false;
 
 	protected new void Awake() {
+		awoken = true;
 		if (!source) throw new InvalidOperationException("Source must be defined when creating a Tile!");
 		base.Awake();
 		hex = Layout.PointToHex(transform.position.xz()).Round();
@@ -48,10 +49,9 @@ public class Tile : MasterComponent {
 			var edge = edges[i];
 			if (edge) {
 				if (nbr == null) {
-					if (Application.isPlaying) Destroy(edge.gameObject);
-					else DestroyImmediate(edge.gameObject);
+					ObjectUtil.Destroy(edge.gameObject);
 				} else {
-					edge.RemoveByContext(this);
+					edge.RemoveModifiersByContext(this);
 				}
 			}
 		}

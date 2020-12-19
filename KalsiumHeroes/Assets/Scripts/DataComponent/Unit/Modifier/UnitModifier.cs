@@ -4,26 +4,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Muc.Editor;
 
-[RequireComponent(typeof(Unit))]
-public abstract class UnitModifier : DataComponent {
+public abstract class UnitModifier : Modifier {
 
 	public UnitModifierData unitModifierData => (UnitModifierData)data;
 	public override Type dataType => typeof(UnitModifierData);
 
-	[HideInInspector] public Unit unit;
+	public Unit unit;
 
 
 	protected new void Awake() {
+		unit = GetMasterComponent<Unit>();
 		base.Awake();
-		unit = GetComponent<Unit>();
 		unit.modifiers.Add(this);
 		OnAdd();
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
 			other.OnAdd(this);
 		}
-		OnConfigureNonpersistent(true);
 	}
 
 	protected new void OnDestroy() {
@@ -32,27 +29,8 @@ public abstract class UnitModifier : DataComponent {
 			other.OnRemove(this);
 		}
 		unit.modifiers.Remove(this);
-		OnConfigureNonpersistent(false);
 		base.OnDestroy();
 	}
-
-#if UNITY_EDITOR
-	[UnityEditor.Callbacks.DidReloadScripts]
-	private static void OnReloadScripts() {
-		if (Application.isPlaying) {
-			foreach (var mod in Game.dataComponents.Get<UnitModifier>()) {
-				mod.OnConfigureNonpersistent(true);
-			}
-		}
-	}
-#endif
-
-	/// <summary>
-	/// Modifier is instantiated or the scripts are reloaded.
-	/// Also when the UnitModifier is removed but with add = false.
-	/// Conditionally add or remove non-persistent things here.
-	/// </summary>
-	protected virtual void OnConfigureNonpersistent(bool add) { }
 
 	/// <summary> When this UnitModifier is being added (instantiated). </summary>
 	public virtual void OnAdd() { }
@@ -67,8 +45,6 @@ public abstract class UnitModifier : DataComponent {
 	public virtual float OnHeal(float value) => value;
 	public virtual float OnDamage(float value, DamageType type) => value;
 
-	/// <summary> When a round starts. </summary>
-	public virtual void OnRoundStart() { }
 	/// <summary> When the Unit's turn starts. </summary>
 	public virtual void OnTurnStart() { }
 	/// <summary> When the Unit's turn ends. </summary>

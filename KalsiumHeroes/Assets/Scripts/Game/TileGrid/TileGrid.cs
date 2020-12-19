@@ -25,6 +25,12 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 
 	public Dictionary<Vector3Int, Tile> tiles = new Dictionary<Vector3Int, Tile>();
 
+	public Tile GetTile(Hex hex) => GetTile(hex.pos);
+	public Tile GetTile(Vector3Int pos) {
+		tiles.TryGetValue(pos, out var res);
+		return res;
+	}
+
 	/// <summary>
 	/// Builds a new grid with default values.
 	/// </summary>
@@ -81,17 +87,27 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	public Tile ReplaceTile(Hex hex, TileData dataSource) {
-		if (tiles.TryGetValue(hex.pos, out var old)) {
-			if (Application.isPlaying) Destroy(old.gameObject);
-			else DestroyImmediate(old.gameObject);
-			tiles.Remove(hex.pos);
-		}
+		DestroyTile(hex);
 		return CreateTile(hex, dataSource);
+	}
+
+	public bool DestroyTile(Hex hex) {
+		if (tiles.TryGetValue(hex.pos, out var tile)) {
+			foreach (var edge in tile.edges) edge.RemoveModifiersByContext(tile);
+			ObjectUtil.Destroy(tile.gameObject);
+			tiles.Remove(hex.pos);
+			return true;
+		}
+		return false;
 	}
 
 	public Tile CreateTile(Hex hex, TileData dataSource) {
 		if (tiles.ContainsKey(hex.pos)) throw new ArgumentException("Hex already contains a Tile.");
-		var go = MasterComponent.Instantiate(dataSource, Layout.HexToPoint(hex).xxy().SetY(dataSource.instantiatee.transform.position.y));
+		var go = MasterComponent.Instantiate(dataSource, Layout.HexToPoint(hex).xxy().SetY(dataSource.instantiatee.transform.position.y),
+			v => {
+				Debug.Assert(!(v as Tile).awoken);
+			}
+		);
 		go.transform.parent = transform;
 		go.name = $"Tile ({hex.x}, {hex.y})";
 		var tile = go.GetComponent<Tile>();
@@ -132,8 +148,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	public void DestroyGrid() {
 		foreach (Transform child in transform.Cast<Transform>().ToList()) {
 			if (child) { // Can be already destroyed by Tile OnDestroy
-				if (Application.isPlaying) Destroy(child.gameObject);
-				else DestroyImmediate(child.gameObject);
+				ObjectUtil.Destroy(child.gameObject);
 			}
 		}
 		tiles.Clear();
