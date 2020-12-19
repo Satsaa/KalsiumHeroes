@@ -67,7 +67,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 				ExecuteOn(path[index]);
 				ExecuteOff(path[index]);
 			}
-			creator.unit.MovePosition(tile, true);
+			creator.unit.MoveTo(tile);
 		}
 	}
 

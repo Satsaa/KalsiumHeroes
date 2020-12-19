@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Outwards Impassable Edge
   description: Ouwards impassable edge of a tile.
-  identifier: edge_outwards_impassable
+  identifier: edgemodifier_outwards_impassable
   componentType:
     _name: OutwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null

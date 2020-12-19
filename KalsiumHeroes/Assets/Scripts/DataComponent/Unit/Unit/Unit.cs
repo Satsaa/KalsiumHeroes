@@ -32,11 +32,11 @@ public class Unit : MasterComponent<UnitModifier> {
 	protected new void Awake() {
 		base.Awake();
 		if (tile && (tile.unit == this || tile.unit == null)) {
-			MovePosition(tile);
+			MoveTo(tile);
 		} else {
 			// Move Unit to the nearest Tile that is unoccupied
 			var nearTile = Game.grid.NearestTile(transform.position.xz(), v => v.unit == null);
-			if (nearTile) MovePosition(nearTile);
+			if (nearTile) MoveTo(nearTile);
 		}
 		Game.dataComponents.Execute<Modifier>(v => v.OnSpawn(this));
 		tile.modifiers.Execute<TileModifier>(v => v.OnSpawnOn(this));
@@ -102,38 +102,14 @@ public class Unit : MasterComponent<UnitModifier> {
 		}
 	}
 
-	public bool MovePosition(Tile tile, bool reposition = true) {
+	public bool MoveTo(Tile tile) {
 		if (tile.unit == null) {
-			if (this.tile) this.tile.unit = null;
+			if (this.tile != null) this.tile.unit = null;
 			tile.unit = this;
 			this.tile = tile;
-			if (reposition) transform.position = tile.center;
 			return true;
 		} else {
 			return tile.unit == this;
 		}
 	}
-
-	public void SwapPosition(Tile tile, bool reposition = true) {
-		if (tile.unit == null) {
-			this.tile.unit = null;
-			tile.unit = this;
-			this.tile = tile;
-			transform.position = tile.center;
-		} else {
-			var other = tile.unit;
-			var sourceTile = this.tile;
-
-			tile.unit = this;
-			this.tile = tile;
-
-			sourceTile.unit = other;
-			other.tile = sourceTile;
-
-			// The other unit is always repositioned
-			if (reposition) transform.position = tile.center;
-			other.transform.position = sourceTile.center;
-		}
-	}
-
 }

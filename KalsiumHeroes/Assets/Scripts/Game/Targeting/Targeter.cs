@@ -10,6 +10,7 @@ public abstract class Targeter {
 	public List<Tile> selection = new List<Tile>(0);
 	public HashSet<Tile> hovers = new HashSet<Tile>();
 	public Dictionary<Tile, Color> highlights = new Dictionary<Tile, Color>();
+	public Dictionary<Tile, Color> oldhighlights = null;
 
 	public Action<Targeter> onComplete;
 	public Action<Targeter> onCancel;
@@ -22,7 +23,8 @@ public abstract class Targeter {
 	public abstract void RefreshTargets();
 
 	public virtual void RefreshHighlights() {
-		highlights.Clear();
+		oldhighlights = highlights;
+		highlights = new Dictionary<Tile, Color>();
 		foreach (var target in targets) highlights[target] = targetColor;
 		foreach (var selected in selection) highlights[selected] = selectionColor;
 		foreach (var hover in hovers) highlights[hover] = hoverColor;

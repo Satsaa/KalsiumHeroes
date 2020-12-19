@@ -33,6 +33,7 @@ public abstract class Modifier : DataComponent {
 		}
 	}
 
+	/// <summary> Gets a MasterComponent of type T from the GameObject or it's parent. </summary>
 	protected T GetMasterComponent<T>() where T : MasterComponent {
 		if (TryGetComponent<T>(out var res)) return res;
 		if (transform.parent != null && transform.parent.TryGetComponent<T>(out res)) return res;

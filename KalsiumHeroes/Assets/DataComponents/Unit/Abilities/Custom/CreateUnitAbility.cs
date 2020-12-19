@@ -14,8 +14,7 @@ public class CreateUnitAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (!tile.unit) {
-					var go = Instantiate(createUnitData.unitPrefab);
-					go.GetComponent<Unit>().MovePosition(tile, true);
+					var go = Instantiate(createUnitData.unitPrefab, tile.center, Quaternion.identity);
 				}
 			}
 		});

@@ -19,7 +19,7 @@ public class ShoveAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit) {
 					tile.unit.gameObject.AddDataComponent(shoveAbilityData.rootModifier);
-					tile.unit.MovePosition(GetTargetTile(tile));
+					tile.unit.MoveTo(GetTargetTile(tile));
 				}
 			}
 		});

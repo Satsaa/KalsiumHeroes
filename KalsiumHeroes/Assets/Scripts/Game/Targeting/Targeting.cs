@@ -106,12 +106,12 @@ public class Targeting : MonoBehaviour {
 	void RefreshHighlights() {
 		targeter.RefreshHighlights();
 
-		ClearHighlights();
-
 		foreach (var kv in targeter.highlights) {
 			var tile = kv.Key;
 			var color = kv.Value;
-			tile.highlighter.Highlight(color);
+			if (targeter.oldhighlights == null || !targeter.oldhighlights.TryGetValue(tile, out var oldColor) || oldColor != color) {
+				tile.highlighter.Highlight(color);
+			}
 		}
 	}
 
