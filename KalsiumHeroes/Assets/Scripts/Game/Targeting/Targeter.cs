@@ -6,53 +6,26 @@ using System.Linq;
 
 public abstract class Targeter {
 
-	public IEnumerable<Tile> targets = new List<Tile>(0);
-	public List<Tile> selection = new List<Tile>(0);
-	public HashSet<Tile> hovers = new HashSet<Tile>();
+	public List<Tile> selections = new List<Tile>(0);
 	public Dictionary<Tile, Color> highlights = new Dictionary<Tile, Color>();
-	public Dictionary<Tile, Color> oldhighlights = null;
 
 	public Action<Targeter> onComplete;
 	public Action<Targeter> onCancel;
 
-	protected Color targetColor => new Color(0.25f, 0.75f, 0.25f);
-	protected Color selectionColor => new Color(0.1f, 0.7f, 1f);
-	protected Color hoverColor => new Color(0.25f, 0.25f, 1f);
-
 	public abstract bool IsCompleted();
-	public abstract void RefreshTargets();
 
-	public virtual void RefreshHighlights() {
-		oldhighlights = highlights;
-		highlights = new Dictionary<Tile, Color>();
-		foreach (var target in targets) highlights[target] = targetColor;
-		foreach (var selected in selection) highlights[selected] = selectionColor;
-		foreach (var hover in hovers) highlights[hover] = hoverColor;
-	}
+	public abstract HashSet<Tile> GetTargets();
+	public virtual HashSet<Tile> GetHover(Tile tile) => new HashSet<Tile>() { tile };
+	public virtual Dictionary<Tile, Color> GetCustom() => new Dictionary<Tile, Color>();
 
-	/// <summary> Attempt to select a Tile. Return true if the selection is accepted. </summary>
-	public virtual bool Select(Tile tile) {
-		if (IsCompleted()) throw new InvalidOperationException($"Attempted to select after the {nameof(Targeter)} was completed.");
-		if (targets.Contains(tile)) {
-			selection.Add(tile);
-			return true;
-		}
-		return false;
-	}
-
-	/// <summary> Hover over a Tile or nothing/null. Add it to hovers and additional Tiles around it for aoe. </summary>
-	public virtual bool Hover(Tile tile) {
-		hovers.Clear();
-		if (tile == null) return false;
-		if (targets.Contains(tile)) {
-			hovers.Add(tile);
-			return true;
-		}
-		return false;
+	/// <summary> Attempt to select a Tile. Return true to accept the selection. </summary>
+	public virtual bool TrySelect(Tile tile) {
+		selections.Add(tile);
+		return true;
 	}
 
 	/// <summary> Attempt canceling targeting sequence. Usually when clicking an invalid target. Return true to accept cancellation. </summary>
-	public virtual bool Cancel() {
+	public virtual bool TryCancel() {
 		return true;
 	}
 }

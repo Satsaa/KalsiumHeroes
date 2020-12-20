@@ -12,17 +12,17 @@ public class ConfirmTileAbilityTargeter : AbilityTargeter {
 		: base(unit, ability, onComplete, onCancel) { }
 
 	public override bool IsCompleted() {
-		return selection.Count > 0 && confirmed;
+		return selections.Count > 0 && confirmed;
 	}
 
-	public override bool Select(Tile tile) {
-		var prevSelection = selection.FirstOrDefault();
+	public override bool TrySelect(Tile tile) {
+		var prevSelection = selections.LastOrDefault();
 		if (prevSelection == tile) {
 			confirmed = true;
 			return true;
 		} else {
-			selection.Clear();
-			return base.Select(tile);
+			if (selections.Any()) selections.RemoveAt(selections.Count - 1);
+			return base.TrySelect(tile);
 		}
 	}
 }

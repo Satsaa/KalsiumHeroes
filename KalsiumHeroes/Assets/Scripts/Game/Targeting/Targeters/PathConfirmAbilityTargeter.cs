@@ -45,21 +45,15 @@ public class PathConfirmAbilityTargeter : AbilityTargeter {
 	}
 
 
-	public override bool Hover(Tile tile) {
-		var valid = base.Hover(tile);
-		if (valid) {
-			Tile[] path;
-			// Differences with fields and paths atm so false is added
-			if (false && field.tiles.ContainsKey(tile)) {
-				path = field.BuildPath(tile);
-			} else {
-				Pathing.CheapestPath(unit.tile, tile, out var result, pather, cc);
-				path = result.path;
-			}
-			foreach (var segment in path) {
-				hovers.Add(segment);
-			}
+	public override HashSet<Tile> GetHover(Tile tile) {
+		Tile[] path;
+		// Differences with fields and paths atm so false is added
+		if (false && field.tiles.ContainsKey(tile)) {
+			path = field.BuildPath(tile);
+		} else {
+			Pathing.CheapestPath(unit.tile, tile, out var result, pather, cc);
+			path = result.path;
 		}
-		return valid;
+		return new HashSet<Tile>(path);
 	}
 }

@@ -17,19 +17,14 @@ public class AbilityTargeter : Targeter {
 	}
 
 	public override bool IsCompleted() {
-		return selection.Count > 0;
+		return selections.Count > 0;
 	}
 
-	public override void RefreshTargets() {
-		targets = ability.GetTargets();
+	public override HashSet<Tile> GetTargets() {
+		return new HashSet<Tile>(ability.GetTargets());
 	}
 
-	public override bool Hover(Tile tile) {
-		var valid = base.Hover(tile);
-		if (valid) {
-			hovers.Clear();
-			hovers.UnionWith(ability.GetAffectedArea(tile));
-		}
-		return valid;
+	public override HashSet<Tile> GetHover(Tile tile) {
+		return new HashSet<Tile>(ability.GetAffectedArea(tile));
 	}
 }

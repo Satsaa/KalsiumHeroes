@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderer: {fileID: 1459379149428687440}
-  color: {r: 0, g: 0, b: 0, a: 0}
+  colors: []
 --- !u!1001 &2381468155826529590
 PrefabInstance:
   m_ObjectHideFlags: 0

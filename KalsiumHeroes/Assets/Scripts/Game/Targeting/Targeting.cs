@@ -18,14 +18,21 @@ public class Targeting : MonoBehaviour {
 	public event Action onTargeterStart;
 	public event Action onTargeterEnd;
 
+	bool hoverIsValid;
+	HashSet<Tile> targets = new HashSet<Tile>();
+	HashSet<Tile> hovers = new HashSet<Tile>();
+	Dictionary<Tile, (Color color, int priority)> customs = new Dictionary<Tile, (Color, int)>();
+
+	Color targetColor => new Color(0.25f, 0.75f, 0.25f);
+	Color selectionColor => new Color(0.1f, 0.7f, 1f);
+	Color hoverColor => new Color(0.25f, 0.25f, 1f);
+	Color invalidColor => new Color(0.80f, 0.25f, 0.25f);
 
 	public bool TryStartTargeter(Targeter targeter) {
 		if (this.targeter != null) return false;
 		this.targeter = targeter;
 		prevHoverTile = null;
-		this.targeter.RefreshTargets();
-		this.targeter.Hover(null);
-		RefreshHighlights();
+		RefreshTargets();
 		onTargeterStart?.Invoke();
 		TryComplete();
 		return true;
@@ -45,12 +52,17 @@ public class Targeting : MonoBehaviour {
 						TryCancel();
 						return;
 					}
-					if (targeter.Select(tile)) {
+					UnhighlightSelections();
+					var prevLength = targeter.selections.Count;
+					if (hoverIsValid && targeter.TrySelect(tile)) {
 						if (!TryComplete()) {
-							RefreshHighlights();
+							HighlightSelections();
 						}
 					} else {
-						TryCancel();
+						Debug.Assert(
+							prevLength == targeter.selections.Count,
+							"Selection changed even though TrySelect returned false. Only modify selections after succesful selection."
+						);
 					}
 				} else if (Input.GetKeyDown(KeyCode.Mouse1)) {
 					TryCancel();
@@ -58,8 +70,8 @@ public class Targeting : MonoBehaviour {
 				} else {
 					if (prevHoverTile != tile) {
 						prevHoverTile = tile;
-						targeter.Hover(tile);
-						RefreshHighlights();
+						hoverIsValid = targets.Contains(tile);
+						RefreshHovers(tile);
 					}
 				}
 			}
@@ -69,57 +81,57 @@ public class Targeting : MonoBehaviour {
 
 	bool TryComplete() {
 		if (targeter.IsCompleted()) {
-			Complete();
+			targeter.onComplete(targeter);
+			End();
 			return true;
 		}
 		return false;
 	}
-
-	void Complete() {
-		targeter.onComplete(targeter);
-		End();
-	}
-
 
 	bool TryCancel() {
-		if (targeter.Cancel()) {
-			Cancel();
+		if (targeter.TryCancel()) {
+			targeter.onCancel?.Invoke(targeter);
+			End();
 			return true;
 		}
 		return false;
 	}
-
-	void Cancel() {
-		targeter.onCancel?.Invoke(targeter);
-		End();
-	}
-
 
 	void End() {
 		targeter = null;
 		prevHoverTile = null;
-		ClearHighlights();
+		foreach (var tile in Game.grid.tiles.Values) {
+			tile.highlighter.Clear();
+		}
 		onTargeterEnd?.Invoke();
 	}
 
 
-	void RefreshHighlights() {
-		targeter.RefreshHighlights();
-
-		foreach (var kv in targeter.highlights) {
-			var tile = kv.Key;
-			var color = kv.Value;
-			if (targeter.oldhighlights == null || !targeter.oldhighlights.TryGetValue(tile, out var oldColor) || oldColor != color) {
-				tile.highlighter.Highlight(color);
-			}
-		}
+	void RefreshTargets() {
+		foreach (var target in targets) target.highlighter.Unhighlight(0);
+		targets = targeter.GetTargets();
+		foreach (var target in targets) target.highlighter.Highlight(targetColor, 0);
 	}
 
-	void ClearHighlights() {
-		foreach (var kv in Game.grid.tiles) {
-			var tile = kv.Value;
-			tile.highlighter.DisableHighlight();
-		}
+	void UnhighlightSelections() {
+		foreach (var selection in targeter.selections) selection.highlighter.Unhighlight(1);
+	}
+
+	void HighlightSelections() {
+		foreach (var selection in targeter.selections) selection.highlighter.Highlight(selectionColor, 1);
+	}
+
+	void RefreshHovers(Tile tile) {
+		foreach (var hover in hovers) hover.highlighter.Unhighlight(3);
+		if (tile == null) hovers.Clear();
+		else hovers = targeter.GetHover(tile);
+		foreach (var hover in hovers) hover.highlighter.Highlight(hoverIsValid ? hoverColor : invalidColor, 3);
+	}
+
+	void RefreshCustoms(Dictionary<Tile, (Color, int)> newCustoms) {
+		foreach (var kv in customs) kv.Key.highlighter.Unhighlight(kv.Value.priority);
+		customs = newCustoms;
+		foreach (var kv in customs) kv.Key.highlighter.Highlight(kv.Value.color, kv.Value.priority);
 	}
 
 }

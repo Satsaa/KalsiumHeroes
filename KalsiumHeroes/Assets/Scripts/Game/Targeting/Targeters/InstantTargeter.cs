@@ -11,9 +11,11 @@ public class InstantTargeter : Targeter {
 		this.onCancel = onCancel;
 	}
 
+	public override HashSet<Tile> GetTargets() {
+		return new HashSet<Tile>();
+	}
+
 	public override bool IsCompleted() {
 		return true;
 	}
-
-	public override void RefreshTargets() { }
 }

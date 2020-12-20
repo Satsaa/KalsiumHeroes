@@ -32,7 +32,7 @@ public class MoveAbility : Ability {
 	public override Targeter GetTargeter() {
 		var maxCost = unit.unitData.movement.value - usedMovement;
 		return new PathConfirmAbilityTargeter(unit, this, maxCost,
-			onComplete: t => PostDefaultAbilityEvent(t.selection[0])
+			onComplete: t => PostDefaultAbilityEvent(t.selections[0])
 		) { pather = Pathers.Unphased };
 	}
 
