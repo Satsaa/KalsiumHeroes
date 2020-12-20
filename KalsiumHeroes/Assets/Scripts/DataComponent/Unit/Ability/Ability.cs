@@ -81,19 +81,21 @@ public abstract class Ability : UnitModifier {
 	/// <summary> Get the target Tiles in range with this method. Call the base implementation for default behaviour. </summary>
 	protected virtual IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
 		if (abilityData.range.enabled) {
-			switch (abilityData.rangeMode) {
-				default:
-				case RangeMode.Distance:
-					return Game.grid.Radius(tile, abilityData.range.value);
-				case RangeMode.PathDistance:
-					return Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.OneWayUnitBlocking).distances.Keys;
-				case RangeMode.PathDistancePassThrough:
-					return Pathing.GetDistanceField(tile, abilityData.range.value).distances.Keys;
-				case RangeMode.PathCost:
-					return Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.OneWayUnitBlocking).costs.Keys;
-				case RangeMode.PathCostPassThrough:
-					return Pathing.GetCostField(tile, maxCost: abilityData.range.value).costs.Keys;
-			}
+			return (abilityData.rangeMode) switch {
+				RangeMode.Distance => Game.grid.Radius(tile, abilityData.range.value),
+
+				RangeMode.PathDistance => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.Unphased).tiles.Keys,
+				RangeMode.PathDistancePhased => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.Phased).tiles.Keys,
+				RangeMode.PathDistanceFlying => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.Flying).tiles.Keys,
+				RangeMode.PathDistancePhasedFlying => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.FlyingPhased).tiles.Keys,
+
+				RangeMode.PathCost => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.Unphased).tiles.Keys,
+				RangeMode.PathCostPhased => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.Phased).tiles.Keys,
+				RangeMode.PathCostFlying => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.Flying).tiles.Keys,
+				RangeMode.PathCostPhasedFlying => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.FlyingPhased).tiles.Keys,
+
+				_ => Game.grid.Radius(tile, abilityData.range.value),
+			};
 		} else {
 			return Game.grid.tiles.Values;
 		}

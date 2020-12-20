@@ -58,6 +58,15 @@ public class Tile : MasterComponent<TileModifier> {
 		base.OnDestroy();
 	}
 
+	public IEnumerable<(Tile tile, Edge edge)> NeighborsAndEdges() {
+		for (int i = 0; i < neighbors.Length; i++) {
+			var neighbor = neighbors[i];
+			if (neighbor == null) continue;
+			var edge = edges[i];
+			yield return (neighbor, edge);
+		}
+	}
+
 	public IEnumerable<Tile> Neighbors() => neighbors.Where(v => v != null);
 
 	public Tile GetNeighbor(TileDir direction) => neighbors[(int)direction];

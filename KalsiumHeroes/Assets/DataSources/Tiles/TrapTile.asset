@@ -25,6 +25,17 @@ MonoBehaviour:
   moveCost:
     _value: 1
   appeal:
-    _value: 0
+    _value: -5
   edgeModifiers:
-  - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+    right:
+    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+    downRight:
+    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+    downLeft:
+    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+    left:
+    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+    upLeft:
+    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+    upRigth:
+    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}

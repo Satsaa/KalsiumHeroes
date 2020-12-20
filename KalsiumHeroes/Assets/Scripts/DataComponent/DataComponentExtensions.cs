@@ -48,6 +48,7 @@ public static class DataComponentExtensions {
 		if (dataSource is ModifierData md && md.container != null) {
 			var parent = target;
 			target = ObjectUtil.UnawokenGameObject(md.container, out wasActive);
+			target.name = dataSource.componentType.type.Name;
 			target.transform.SetParent(parent.transform, false);
 		} else if (wasActive) target.SetActive(false);
 		var res = target.AddComponent(dataSource.componentType) as DataComponent;
@@ -83,6 +84,7 @@ public static class DataComponentExtensions {
 		if (dataSource is ModifierData md && md.container != null) {
 			var parent = target;
 			target = ObjectUtil.UnawokenGameObject(md.container, out wasActive);
+			target.name = dataSource.componentType.type.Name;
 			target.transform.SetParent(parent.transform, false);
 		} else if (wasActive) target.SetActive(false);
 		var res = target.AddComponent(dataSource.componentType) as T;

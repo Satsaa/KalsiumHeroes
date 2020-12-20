@@ -26,4 +26,10 @@ MonoBehaviour:
     _value: 1
   appeal:
     _value: 0
-  edges: []
+  edgeModifiers:
+    right: []
+    downRight: []
+    downLeft: []
+    left: []
+    upLeft: []
+    upRigth: []

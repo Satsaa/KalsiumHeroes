@@ -27,4 +27,15 @@ MonoBehaviour:
   appeal:
     _value: 0
   edgeModifiers:
-  - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
+    right:
+    - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
+    downRight:
+    - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
+    downLeft:
+    - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
+    left:
+    - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
+    upLeft:
+    - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}
+    upRigth:
+    - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}

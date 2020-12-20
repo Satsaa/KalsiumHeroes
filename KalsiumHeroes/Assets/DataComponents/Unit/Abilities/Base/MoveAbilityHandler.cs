@@ -24,9 +24,10 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			Debug.LogError("Target Tile is unreachable!");
 		} else {
 			ExecuteOff(start);
-			Pathing.CheapestPath(start, end, out this.path, out var field, Pathers.OneWayUnitBlocking);
-			var cost = field.scores[field.closest];
-			creator.usedMovement += cost + 1;
+			Pathing.CheapestPath(start, end, out var result, Pathers.Unphased);
+			path = result.path;
+			var cost = result.tiles[result.closest].cost;
+			creator.usedMovement += cost;
 			animating = true;
 			animTime = 0;
 		}
@@ -67,7 +68,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 				ExecuteOn(path[index]);
 				ExecuteOff(path[index]);
 			}
-			creator.unit.MoveTo(tile);
+			creator.unit.MoveTo(tile, true);
 		}
 	}
 

@@ -32,11 +32,11 @@ public class Unit : MasterComponent<UnitModifier> {
 	protected new void Awake() {
 		base.Awake();
 		if (tile && (tile.unit == this || tile.unit == null)) {
-			MoveTo(tile);
+			MoveTo(tile, true);
 		} else {
 			// Move Unit to the nearest Tile that is unoccupied
 			var nearTile = Game.grid.NearestTile(transform.position.xz(), v => v.unit == null);
-			if (nearTile) MoveTo(nearTile);
+			if (nearTile) MoveTo(nearTile, true);
 		}
 		Game.dataComponents.Execute<Modifier>(v => v.OnSpawn(this));
 		tile.modifiers.Execute<TileModifier>(v => v.OnSpawnOn(this));
@@ -102,11 +102,12 @@ public class Unit : MasterComponent<UnitModifier> {
 		}
 	}
 
-	public bool MoveTo(Tile tile) {
+	public bool MoveTo(Tile tile, bool reposition) {
 		if (tile.unit == null) {
 			if (this.tile != null) this.tile.unit = null;
 			tile.unit = this;
 			this.tile = tile;
+			if (reposition) transform.position = this.tile.center;
 			return true;
 		} else {
 			return tile.unit == this;

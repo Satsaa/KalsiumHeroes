@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShoveAbility : Ability {
+
 	public ShoveAbilityData shoveAbilityData => (ShoveAbilityData)data;
 	public override Type dataType => typeof(ShoveAbilityData);
 
@@ -19,7 +20,7 @@ public class ShoveAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit) {
 					tile.unit.gameObject.AddDataComponent(shoveAbilityData.rootModifier);
-					tile.unit.MoveTo(GetTargetTile(tile));
+					tile.unit.MoveTo(GetTargetTile(tile), true);
 				}
 			}
 		});

@@ -9,36 +9,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a048e5852712933428974a03f98c834b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8363fb19f91acb24cb2621601918dd61, type: 3}
   m_Name: DisarmGenericAbility
   m_EditorClassIdentifier: 
   displayName: Disarm
   description: Disarm a unit for 2 turns.
   identifier: ability_disarm_generic
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AddDataComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
-  targetType: 28
+  targetType: 30
   range:
-    value: 4
-    enabled: 1
+    _value: 5
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 3
+    _value: 0
+    _other: 0
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   components:
   - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}

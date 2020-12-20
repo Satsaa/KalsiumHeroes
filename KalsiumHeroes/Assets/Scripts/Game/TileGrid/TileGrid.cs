@@ -74,7 +74,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 					edge = ego.GetComponent<Edge>();
 					tile.SetEdge(i, edge);
 				}
-				foreach (var edgeSource in tile.tileData.edgeModifiers) {
+				foreach (var edgeSource in tile.tileData.edgeModifiers[i]) {
 					edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
 				}
 			}
@@ -84,6 +84,15 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 			SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
 		}
 #endif
+	}
+
+	protected void DestroyGrid() {
+		foreach (Transform child in transform.Cast<Transform>().ToList()) {
+			if (child) { // Can be already destroyed by Tile OnDestroy
+				ObjectUtil.Destroy(child.gameObject);
+			}
+		}
+		tiles.Clear();
 	}
 
 	public Tile ReplaceTile(Hex hex, TileData dataSource) {
@@ -134,7 +143,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 					tile.SetEdge(i, edge);
 				}
 			}
-			foreach (var edgeSource in tile.tileData.edgeModifiers) {
+			foreach (var edgeSource in tile.tileData.edgeModifiers[i]) {
 				edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
 			}
 		}
@@ -145,14 +154,6 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		return tile;
 	}
 
-	public void DestroyGrid() {
-		foreach (Transform child in transform.Cast<Transform>().ToList()) {
-			if (child) { // Can be already destroyed by Tile OnDestroy
-				ObjectUtil.Destroy(child.gameObject);
-			}
-		}
-		tiles.Clear();
-	}
 
 	/// <summary>
 	/// Iterates in a radius around hex.
@@ -324,34 +325,66 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	/// <summary>
-	/// Returns an IEnumerable that enumerates Tiles in a line from start to end.
+	/// Returns an IEnumerable that enumerates existing Tiles in a line from start to end.
 	/// </summary>
-	/// <remarks>
-	/// Tiles outside the grid will be returned as null.
-	/// </remarks>
 	/// <param name="start">Start Hex</param>
 	/// <param name="end">End Hex</param>
 	/// <param name="altNudge">Use alternate opposite nudge direction? Edge cases will be nudged the other way.</param>
 	public IEnumerable<Tile> Line(Hex start, Hex end, bool altNudge = false) {
 		int dist = Hex.Distance(start, end);
-		var xNudge = altNudge ? -1e-06f : 1e-06f;
-		var yNudge = altNudge ? -1e-06f : 1e-06f;
-		var zNudge = altNudge ? +2e-06f : -2e-06f;
-		FractHex startNudge = new FractHex(start.x + xNudge, start.y + yNudge, start.z + zNudge);
-		FractHex endNudge = new FractHex(end.x + xNudge, end.y + yNudge, end.z + zNudge);
+
+		var nudge = new Vector3(
+			altNudge ? -1e-06f : +1e-06f,
+			altNudge ? -1e-06f : +1e-06f,
+			altNudge ? +2e-06f : -2e-06f
+		);
+
+		var startNudge = new FractHex(start.pos + nudge);
+		var endNudge = new FractHex(end.pos + nudge);
+
 		for (int i = 0; i < dist; i++) {
 			var hex = Hex.Lerp(startNudge, endNudge, 1f / dist * i);
-			tiles.TryGetValue(hex.Round().pos, out var ghRes1);
-			yield return ghRes1;
+			if (tiles.TryGetValue(hex.Round().pos, out var ghRes1))
+				yield return ghRes1;
 		}
-		tiles.TryGetValue((Vector3Int)end.pos, out var ghRes2);
-		yield return ghRes2;
+		if (tiles.TryGetValue(end.pos, out var ghRes2))
+			yield return ghRes2;
+	}
+
+	/// <summary>
+	/// Returns an IEnumerable that enumerates existing Tiles in a line from start to end. When no Tile is found, tries again with the other nudge direction.
+	/// </summary>
+	/// <param name="start">Start Hex</param>
+	/// <param name="end">End Hex</param>
+	/// <param name="altNudge">Use alternate opposite nudge direction? Edge cases will be nudged the other way.</param>
+	public IEnumerable<Tile> SmartLine(Hex start, Hex end) {
+		int dist = Hex.Distance(start, end);
+		var nudge = new Vector3(+1e-06f, +1e-06f, -2e-06f);
+		var altNudge = new Vector3(-1e-06f, -1e-06f, +2e-06f);
+
+		var startNudge = new FractHex(start.pos + nudge);
+		var endNudge = new FractHex(end.pos + nudge);
+		var altStartNudge = new FractHex(start.pos + altNudge);
+		var altEndNudge = new FractHex(end.pos + altNudge);
+
+		for (int i = 0; i < dist; i++) {
+			var hex = Hex.Lerp(startNudge, endNudge, 1f / dist * i);
+			if (tiles.TryGetValue(hex.Round().pos, out var res1)) {
+				yield return res1;
+			} else {
+				var altHex = Hex.Lerp(altStartNudge, altEndNudge, 1f / dist * i);
+				if (tiles.TryGetValue(altHex.Round().pos, out var res2))
+					yield return res2;
+			}
+		}
+		if (tiles.TryGetValue(end.pos, out var res3))
+			yield return res3;
 	}
 
 	/// <summary>
 	/// Returns true if tile has pseudo-direct vision of target.
 	/// </summary>
-	/// <remarks> The tile and target is sampled and <c>Distance(tile, target) - 1</c> amount of samples are taken between tile and target. </remarks>
+	/// <remarks> The tile and target is sampled additionally <c>Distance(tile, target) - 1</c> amount of samples are taken between tile and target. </remarks>
 	/// <param name="tile">The sighting Tile</param>
 	/// <param name="target">The sighted Tile</param>
 	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>

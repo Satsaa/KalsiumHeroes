@@ -25,5 +25,11 @@ MonoBehaviour:
   moveCost:
     _value: 1
   appeal:
-    _value: -99
-  edgeModifiers: []
+    _value: 5
+  edgeModifiers:
+    right: []
+    downRight: []
+    downLeft: []
+    left: []
+    upLeft: []
+    upRigth: []

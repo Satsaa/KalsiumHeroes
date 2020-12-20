@@ -21,7 +21,36 @@ public class TileData : MasterComponentData {
 	[Tooltip("More appealing Tiles are preferred when pathfinding.")]
 	public Attribute<float> appeal = new Attribute<float>(0);
 
-	[Tooltip("EdgeModifiers added to the Edges around this Tile")]
-	public EdgeModifierData[] edgeModifiers;
+	[Tooltip("EdgeModifiers added to the Edges around this Tile. Please leave at length 6.")]
+	public TileEdgeModifierCollection edgeModifiers;
 
+}
+
+[Serializable]
+public class TileEdgeModifierCollection {
+
+	public EdgeModifierData[] this[int index] {
+		get => index switch {
+			0 => this.right,
+			1 => this.downRight,
+			2 => this.downLeft,
+			3 => this.left,
+			4 => this.upLeft,
+			5 => this.upRigth,
+			_ => throw new ArgumentOutOfRangeException(nameof(index)),
+		};
+	}
+
+	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.Right) + " Edge.")]
+	public EdgeModifierData[] right;
+	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.DownRight) + " Edge.")]
+	public EdgeModifierData[] downRight;
+	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.DownLeft) + " Edge.")]
+	public EdgeModifierData[] downLeft;
+	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.Left) + " Edge.")]
+	public EdgeModifierData[] left;
+	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.UpLeft) + " Edge.")]
+	public EdgeModifierData[] upLeft;
+	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.UpRight) + " Edge.")]
+	public EdgeModifierData[] upRigth;
 }

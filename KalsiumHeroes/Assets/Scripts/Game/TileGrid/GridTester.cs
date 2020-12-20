@@ -26,7 +26,7 @@ public class GridTester : MonoBehaviour {
 	public Draw draw;
 	public enum Draw {
 		None,
-		Line, Radius, Ring, Spiral,
+		Line, SmartLine, Radius, Ring, Spiral,
 		Nearest, NearestSpiralSearch,
 		CostField, DistanceField,
 		Areas, Flood, Vision,
@@ -76,11 +76,11 @@ public class GridTesterEditor : Editor {
 		DrawTile(t.hoverHex, ChangeAlpha(Color.yellow, 0.25f));
 
 
-		if (t.draw == GridTester.Draw.Line && t.main != null && t.hover != null) {
-			foreach (var tile in grid.Line(t.main, t.hover)) {
+		if ((t.draw == GridTester.Draw.Line || t.draw == GridTester.Draw.SmartLine)) {
+			foreach (var tile in t.draw == GridTester.Draw.Line ? grid.Line(t.mainHex, t.hoverHex) : grid.SmartLine(t.mainHex, t.hoverHex)) {
 				DrawTile(tile, lightBlue);
 			}
-			foreach (var pair in Hex.Line(t.main.hex, t.hover.hex)) {
+			foreach (var pair in Hex.Line(t.mainHex, t.hoverHex)) {
 				var fractHex = pair.Item2;
 				var ws = Layout.HexToPoint(fractHex);
 				var spherePos = new Vector3(ws.x, 0, ws.y);
@@ -116,12 +116,12 @@ public class GridTesterEditor : Editor {
 		}
 
 		if (t.draw == GridTester.Draw.CostField && t.main != null) {
-			var field = Pathing.GetCostField(t.main);
-			foreach (var kv in field.costs) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			var result = Pathing.GetCostField(t.main);
+			foreach (var kv in result.tiles) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value.cost / 15f));
 		}
 		if (t.draw == GridTester.Draw.DistanceField && t.main != null) {
-			var field = Pathing.GetDistanceField(t.main);
-			foreach (var kv in field.distances) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
+			var result = Pathing.GetDistanceField(t.main);
+			foreach (var kv in result.tiles) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value.cost / 15f));
 		}
 
 		if (t.draw == GridTester.Draw.Flood && t.main != null) {
@@ -142,19 +142,19 @@ public class GridTesterEditor : Editor {
 		}
 
 		if (t.draw == GridTester.Draw.CheapestPath && t.main != null && t.hover != null) {
-			Pathing.CheapestPath(t.main, t.hover, out var path, out var field);
-			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
-			foreach (var segment in path) DrawTile(segment, Color.blue);
+			Pathing.CheapestPath(t.main, t.hover, out var result);
+			foreach (var kv in result.tiles) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value.cost / 15f));
+			foreach (var segment in result.path) DrawTile(segment, Color.blue);
 		}
 		if (t.draw == GridTester.Draw.ShortestPath && t.main != null && t.hover != null) {
-			Pathing.ShortestPath(t.main, t.hover, out var path, out var field);
-			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
-			foreach (var segment in path) DrawTile(segment, Color.blue);
+			Pathing.ShortestPath(t.main, t.hover, out var result);
+			foreach (var kv in result.tiles) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value.cost / 15f));
+			foreach (var segment in result.path) DrawTile(segment, Color.blue);
 		}
 		if (t.draw == GridTester.Draw.FirstPath && t.main != null && t.hover != null) {
-			Pathing.FirstPath(t.main, t.hover, out var path, out var field);
-			foreach (var kv in field.scores) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value / 15f));
-			foreach (var segment in path) DrawTile(segment, Color.blue);
+			Pathing.FirstPath(t.main, t.hover, out var result);
+			foreach (var kv in result.tiles) DrawTile(kv.Key, Color.Lerp(Color.green, Color.red, kv.Value.cost / 15f));
+			foreach (var segment in result.path) DrawTile(segment, Color.blue);
 		}
 
 
@@ -188,7 +188,7 @@ public class GridTesterEditor : Editor {
 
 		EditorGUILayout.Space();
 		using (new EditorGUI.DisabledGroupScope(true)) {
-			var dist = t.hover && t.main ? Hex.Distance(t.hover.hex, t.main.hex) : 0;
+			var dist = Hex.Distance(t.hoverHex, t.mainHex);
 			EditorGUILayout.IntField("Distance", dist);
 		}
 	}

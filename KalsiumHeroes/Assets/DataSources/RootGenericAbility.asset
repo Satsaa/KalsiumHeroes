@@ -16,29 +16,30 @@ MonoBehaviour:
   description: Root a unit for 2 turns.
   identifier: ability_root_generic
   componentType:
-    _name: AddEntityComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AddDataComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
   targetType: 28
   range:
-    value: 4
-    enabled: 1
+    _value: 4
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 3
+    _value: 0
+    _other: 3
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   components:
   - {fileID: 11400000, guid: 36b112e336978bb47afcb4e19e922e85, type: 2}

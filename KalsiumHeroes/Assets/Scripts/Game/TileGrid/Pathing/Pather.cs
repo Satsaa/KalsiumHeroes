@@ -16,26 +16,41 @@ public delegate bool Pather(Tile from, Edge edge, Tile to);
 
 public static class Pathers {
 
+	public static Pather Reverse(Pather pather) {
+		return (Tile from, Edge edge, Tile to) => pather(to, edge, from);
+	}
+
+
 	/// <summary> Returns true if you can advance forward over the Edge.</summary>
-	public static bool OneWay(Tile from, Edge edge, Tile to) {
-		if (to == null) return false;
+	public static bool Phased(Tile from, Edge edge, Tile to) {
 		return edge.IsPassable(from, to);
 	}
 
 	/// <summary> Returns true if you can advance forward over the Edge and disallows advancing to Tiles with an Unit.</summary>
-	public static bool OneWayUnitBlocking(Tile from, Edge edge, Tile to) {
-		return to.unit == null && OneWay(from, edge, to);
+	public static bool Unphased(Tile from, Edge edge, Tile to) {
+		return to.unit == null && Phased(from, edge, to);
 	}
 
 	/// <summary> Returns true if you can advance forward AND backwards over the Edge.</summary>
 	public static bool BothWays(Tile from, Edge edge, Tile to) {
-		return OneWay(from, edge, to) && OneWay(to, edge, from);
+		return Phased(from, edge, to) && Phased(to, edge, from);
 	}
 
 	/// <summary> Returns true if you can advance forward OR backwards over the Edge.</summary>
 	public static bool EitherWay(Tile from, Edge edge, Tile to) {
-		return OneWay(from, edge, to) || OneWay(to, edge, from);
+		return Phased(from, edge, to) || Phased(to, edge, from);
 	}
+
+	/// <summary> Returns true when there is no unit at Tile "to".</summary>
+	public static bool Flying(Tile from, Edge edge, Tile to) {
+		return to.unit == null;
+	}
+
+	/// <summary> Returns true always (TM).</summary>
+	public static bool FlyingPhased(Tile from, Edge edge, Tile to) {
+		return true;
+	}
+
 
 }
 

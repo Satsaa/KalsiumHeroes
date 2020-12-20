@@ -24,7 +24,7 @@ public class Edge : MasterComponent<EdgeModifier> {
 		var modifiers = GetComponentsInChildren<EdgeModifier>();
 		foreach (var modifier in modifiers) {
 			if (modifier.context == context) {
-				if (modifier.modifierData && modifier.modifierData.container) ObjectUtil.Destroy(modifier.gameObject);
+				if (modifier.source && (modifier.source as ModifierData).container) ObjectUtil.Destroy(modifier.gameObject);
 				else ObjectUtil.Destroy(modifier);
 			}
 		}
