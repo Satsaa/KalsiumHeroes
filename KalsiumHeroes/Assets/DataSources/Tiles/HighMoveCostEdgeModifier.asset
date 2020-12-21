@@ -20,4 +20,4 @@ MonoBehaviour:
       PublicKeyToken=null
   container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}
   additionalMoveCost:
-    _value: 5
+    _value: 3

@@ -54,6 +54,9 @@ public abstract class EdgeModifier : Modifier {
 	/// <summary> When any other EdgeModifier is being removed. </summary>
 	public virtual void OnRemove(EdgeModifier modifier) { }
 
+	/// <summary> When a Unit moves over this Edge. </summary>
+	public virtual void OnMoveOver(Unit unit, Tile from) { }
+
 	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public virtual bool IsPassable(Tile from, Tile to, bool current) => current;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,10 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	[SerializeField, HideInInspector] Tile start;
 	[SerializeField, HideInInspector] Tile end;
 	[SerializeField, HideInInspector] Tile[] path;
-	[SerializeField, HideInInspector] int index;
-	int maxIndex => path.Length - 1;
+
+	[SerializeField, HideInInspector] int eventIndex;
+	int maxIndex => (path.Length - 1) * 2;
+	int tileIndex => eventIndex / 2;
 
 	public MoveAbilityHandler(Events.Ability data, MoveAbility creator) : base(data) {
 		this.creator = creator;
@@ -35,14 +38,14 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 	public override void Update() {
 		animTime += Time.deltaTime * 3;
-		if (animTime > maxIndex) {
+		if (animTime > maxIndex / 2) {
 			End();
 			return;
 		}
-		var max = Mathf.FloorToInt(animTime);
-		LoopTo(max);
-		var startPos = path[index].center;
-		var targetPos = path[index + 1].center;
+		var newIndex = Mathf.FloorToInt(animTime * 2);
+		LoopTo(newIndex);
+		var startPos = path[tileIndex].center;
+		var targetPos = path[tileIndex + 1].center;
 		creator.unit.transform.position = Vector3.Lerp(startPos, targetPos, animTime % 1);
 	}
 
@@ -58,20 +61,30 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	}
 
 	protected void LoopTo(int max) {
-		while (max > index) {
-			index++;
-			var last = index == maxIndex;
-			var tile = path[index];
-			if (last) {
-				ExecuteOn(path[index]);
+		while (max > eventIndex) {
+			eventIndex++;
+			var tile = path[tileIndex];
+			if (eventIndex % 2 == 1) {
+				var next = path[tileIndex + 1];
+				ExecuteOver(tile, next);
 			} else {
-				ExecuteOn(path[index]);
-				ExecuteOff(path[index]);
+				if (eventIndex == maxIndex) {
+					ExecuteOn(path[tileIndex]);
+				} else {
+					ExecuteOn(path[tileIndex]);
+					ExecuteOff(path[tileIndex]);
+				}
+				creator.unit.MoveTo(tile, true);
 			}
-			creator.unit.MoveTo(tile, true);
 		}
 	}
 
-	protected void ExecuteOn(Tile tile) { Debug.Log("OnMoveOn"); tile.modifiers.Execute(v => v.OnMoveOn(creator.unit)); }
-	protected void ExecuteOff(Tile tile) { Debug.Log("OnMoveOff"); tile.modifiers.Execute(v => v.OnMoveOff(creator.unit)); }
+	protected void ExecuteOver(Tile current, Tile next) {
+		Debug.Log($"OnMoveOver ({current.gameObject.name} -> {next.gameObject.name})");
+		var edge = current.edges[current.neighbors.ToList().FindIndex(v => v == next)];
+		edge.modifiers.Execute(v => v.OnMoveOver(creator.unit, current));
+	}
+
+	protected void ExecuteOn(Tile tile) { Debug.Log($"OnMoveOn ({tile.gameObject.name})"); tile.modifiers.Execute(v => v.OnMoveOn(creator.unit)); }
+	protected void ExecuteOff(Tile tile) { Debug.Log($"OnMoveOff ({tile.gameObject.name})"); tile.modifiers.Execute(v => v.OnMoveOff(creator.unit)); }
 }
