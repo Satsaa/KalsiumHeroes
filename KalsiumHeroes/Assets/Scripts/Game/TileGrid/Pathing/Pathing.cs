@@ -115,7 +115,7 @@ public static class Pathing {
 	/// Finds the cheapest path leading from start to the closest reachable Tile to target using Dijkstra's.
 	/// </summary>
 	/// <remarks>
-	/// The cheapest path is selected. The most appealing path is selected. Tiles closer to the target are favored.
+	/// The cheapest path is selected. The most appealing path is selected.
 	/// </remarks>
 	/// <param name="start">Starting Tile</param>
 	/// <param name="target">Target Tile</param>
@@ -132,8 +132,8 @@ public static class Pathing {
 		var closest = start;
 
 		var tiles = new Dictionary<Tile, FieldItem>() { { start, new FieldItem(0, 0, null) } };
-		var frontier = new ComparisonPriorityQueue<TriplePriorityNode>(Game.grid.tiles.Count, new TripleComparer());
-		frontier.Enqueue(new TriplePriorityNode(start, 0, 0), start.tileData.moveCost.value);
+		var frontier = new ComparisonPriorityQueue<DoublePriorityNode>(Game.grid.tiles.Count, new DoubleComparer());
+		frontier.Enqueue(new DoublePriorityNode(start, 0), start.tileData.moveCost.value);
 
 		if (start != target) {
 			while (frontier.Count != 0) {
@@ -144,9 +144,9 @@ public static class Pathing {
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
 						tiles[neighbor] = new FieldItem(cost, appeal, tile);
 						if (cost < minCost || closest != target) {
-							var dist = Game.grid.Distance(neighbor, target);
 							float priority = cost;
-							frontier.Enqueue(new TriplePriorityNode(neighbor, -neighbor.tileData.appeal.value, dist), priority);
+							frontier.Enqueue(new DoublePriorityNode(neighbor, -neighbor.tileData.appeal.value), priority);
+							var dist = Game.grid.Distance(neighbor, target);
 							if (dist < minDist) {
 								minDist = dist;
 								closest = neighbor;
