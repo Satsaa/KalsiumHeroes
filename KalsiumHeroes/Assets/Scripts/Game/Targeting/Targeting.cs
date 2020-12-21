@@ -46,7 +46,22 @@ public class Targeting : MonoBehaviour {
 	void Update() {
 		if (targeter != null) {
 			if (!TryComplete()) {
-				var tile = Game.grid.RaycastTile(camera.ScreenPointToRay(Input.mousePosition));
+
+				var ray = camera.ScreenPointToRay(Input.mousePosition);
+				var hex = Game.grid.RaycastHex(ray);
+				var main = Game.grid.GetTile(hex);
+				var area = Game.grid.Radius(hex, 1);
+				List<(Tile tile, Collider col)> candidates = area.Select(v => (v, v.GetComponent<Collider>())).ToList();
+
+				var tile = main;
+				var minDist = float.PositiveInfinity;
+				foreach (var candidate in candidates) {
+					if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y > (main == null ? -0.25f : main.transform.position.y)) {
+						minDist = hit.distance;
+						tile = candidate.tile;
+					}
+				}
+
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
 					if (tile == null) {
 						TryCancel();
