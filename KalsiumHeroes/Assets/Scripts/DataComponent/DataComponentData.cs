@@ -1,8 +1,12 @@
 
 using UnityEngine;
 using Muc.Data;
+using System;
 
 public abstract class DataComponentData : ScriptableObject {
+
+	/// <summary> componentType base type. </summary>
+	public abstract Type componentTypeConstraint { get; }
 
 	[Header("Data Component Data")]
 	[Tooltip("Display name of this DataComponent, displayed to users. (\"Oracle\")")]
@@ -39,6 +43,8 @@ namespace Muc.Data {
 		private SerializedProperty identifier;
 		private SerializedProperty componentType;
 
+		private DataComponentData t => (DataComponentData)target;
+
 		void OnEnable() {
 			displayName = serializedObject.FindProperty(nameof(displayName));
 			description = serializedObject.FindProperty(nameof(description));
@@ -66,7 +72,7 @@ namespace Muc.Data {
 				// Dropdown
 				var hint = new GUIContent(label) { text = value.type == null ? "null" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
-					var types = GetCompatibleTypes(value.type);
+					var types = GetCompatibleTypes(value.type, t.componentTypeConstraint);
 					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(componentType, type));
 					menu.DropDown(position);
 				}
@@ -74,6 +80,7 @@ namespace Muc.Data {
 
 			DrawPropertiesExcluding(
 				serializedObject,
+				"m_Script",
 				nameof(displayName),
 				nameof(description),
 				nameof(identifier),
@@ -95,23 +102,14 @@ namespace Muc.Data {
 
 		private static List<Type> dataComponentTypes;
 
-		private static IEnumerable<Type> GetCompatibleTypes(Type dataType) {
+		private static IEnumerable<Type> GetCompatibleTypes(Type dataType, Type componentType) {
 			DataComponentDataDrawer.dataComponentTypes ??= AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(v => v.GetTypes())
 				.Where(v =>
 					(v.IsClass && !v.IsAbstract) &&
 					(v == typeof(DataComponent) || typeof(DataComponent).IsAssignableFrom(v))
 				).ToList();
-			return DataComponentDataDrawer.dataComponentTypes.Where(v => IsCompatible(dataType, v));
-		}
-
-		// https://stackoverflow.com/questions/11162652/c-sharp-get-property-value-without-creating-instance
-		private static bool IsCompatible(Type dataType, Type componentType) {
-
-			var method = componentType.GetProperty(nameof(DataComponent.dataType)).GetGetMethod();
-			var openDelegate = (Func<DataComponent, Type>)Delegate.CreateDelegate(typeof(Func<DataComponent, Type>), method);
-			var otherDataType = openDelegate(null);
-			return otherDataType.IsAssignableFrom(dataType);
+			return dataComponentTypes.Where(v => v == componentType || componentType.IsAssignableFrom(v));
 		}
 
 

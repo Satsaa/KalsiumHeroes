@@ -8,6 +8,8 @@ using static UnityEngine.Mathf;
 [CreateAssetMenu(fileName = nameof(TileData), menuName = "DataSources/" + nameof(TileData))]
 public class TileData : MasterComponentData {
 
+	public override Type componentTypeConstraint => typeof(Tile);
+
 	[Header("Tile Data")]
 	[Tooltip("Is this tile considered passable?")]
 	public Attribute<bool> passable = new Attribute<bool>(true);

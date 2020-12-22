@@ -8,6 +8,8 @@ using static UnityEngine.Mathf;
 [CreateAssetMenu(fileName = nameof(EdgeData), menuName = "DataSources/" + nameof(EdgeData))]
 public class EdgeData : MasterComponentData {
 
+	public override Type componentTypeConstraint => typeof(Edge);
+
 	// [Header("Edge Data")]
 
 }

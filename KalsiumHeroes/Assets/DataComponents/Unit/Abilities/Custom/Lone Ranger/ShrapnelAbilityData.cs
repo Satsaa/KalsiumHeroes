@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(ShrapnelAbilityData), menuName = "DataSources/Units/Lone Ranger/" + nameof(ShrapnelAbilityData))]
 public class ShrapnelAbilityData : AbilityData {
+
+	public override Type componentTypeConstraint => typeof(ShrapnelAbility);
 
 	[Header("Shrapnel Ability Data")]
 	public Attribute<float> damage;

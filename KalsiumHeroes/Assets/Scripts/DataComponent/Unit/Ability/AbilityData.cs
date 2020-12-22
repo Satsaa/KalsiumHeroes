@@ -1,18 +1,14 @@
 ﻿
 
-
-#if UNITY_EDITOR
-using UnityEditor;
-using Muc.Editor;
-using static Muc.Editor.EditorUtil;
-#endif
-
-using UnityEngine;
+using System;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(AbilityData), menuName = "DataSources/" + nameof(AbilityData))]
 public class AbilityData : UnitModifierData {
+
+	public override Type componentTypeConstraint => typeof(Ability);
 
 	[Header("Ability Data")]
 

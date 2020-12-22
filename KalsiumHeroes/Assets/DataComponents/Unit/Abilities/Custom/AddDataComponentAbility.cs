@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AddDataComponentAbility : Ability {
 
-	public AddDataComponentData createUnitAbilityData => (AddDataComponentData)data;
+	public AddDataComponentData addDataComponentAbilityData => (AddDataComponentData)data;
 	public override Type dataType => typeof(AddDataComponentData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
@@ -14,7 +14,7 @@ public class AddDataComponentAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					foreach (var component in createUnitAbilityData.components) {
+					foreach (var component in addDataComponentAbilityData.components) {
 						tile.unit.gameObject.AddDataComponent(component);
 					}
 				}

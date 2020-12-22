@@ -8,6 +8,8 @@ using static UnityEngine.Mathf;
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
 public class UnitData : MasterComponentData {
 
+	public override Type componentTypeConstraint => typeof(Unit);
+
 	[Header("Unit Data")]
 	[Tooltip("Speed determines when the unit gets to be played. The higher the speed, the higher the priority within any turn.")]
 	public Attribute<int> speed = new Attribute<int>(1);

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedGainStatus : StatusEffect {
-	public SpeedGainModifierData speedGainModifierData => (SpeedGainModifierData)data;
 
+	public SpeedGainModifierData speedGainModifierData => (SpeedGainModifierData)data;
 	public override Type dataType => typeof(SpeedGainModifierData);
 
 	protected override void OnConfigureNonpersistent(bool add) {

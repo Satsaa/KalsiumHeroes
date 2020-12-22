@@ -1,8 +1,11 @@
 
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(StatusEffectData), menuName = "DataSources/" + nameof(StatusEffectData))]
 public class StatusEffectData : UnitModifierData {
+
+	public override Type componentTypeConstraint => typeof(StatusEffect);
 
 	[Header("Status Effect Data")]
 	[Tooltip("Debuff type. This status effect may, for example, be nullified if the target has resistance to the type.")]

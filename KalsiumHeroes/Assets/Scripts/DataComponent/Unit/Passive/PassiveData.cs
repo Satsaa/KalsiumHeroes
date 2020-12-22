@@ -1,18 +1,13 @@
 ﻿
-
-
-#if UNITY_EDITOR
-using UnityEditor;
-using Muc.Editor;
-using static Muc.Editor.EditorUtil;
-#endif
-
-using UnityEngine;
+using System;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(PassiveData), menuName = "DataSources/" + nameof(PassiveData))]
 public class PassiveData : UnitModifierData {
+
+	public override Type componentTypeConstraint => typeof(Passive);
 
 	[Tooltip("Passives are currently Modifiers which are shown as abilities.")]
 	public string passivesAreJustModifiers;
