@@ -237,6 +237,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &9047958664919704068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,10 +387,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 62fdae0fbdf9b644990c323d49ce5892, type: 2}
   data: {fileID: 0}
-  <modifiers>k__BackingField: []
-  <abilities>k__BackingField: []
-  <passives>k__BackingField: []
-  <statuses>k__BackingField: []
+  modifiers:
+    keys: []
+    vals: []
   silenced:
     _value: 0
   disarmed:
@@ -397,7 +397,7 @@ MonoBehaviour:
   rooted:
     _value: 0
   team: 0
-  hex: {fileID: 0}
+  <tile>k__BackingField: {fileID: 0}
 --- !u!114 &6285319181486077891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,7 +483,7 @@ MonoBehaviour:
   data: {fileID: 0}
   unit: {fileID: 9047958665005421618}
   castBlocked: 0
-  remainingMovement: 0
+  usedMovement: 0
 --- !u!114 &9047958665005421621
 MonoBehaviour:
   m_ObjectHideFlags: 0

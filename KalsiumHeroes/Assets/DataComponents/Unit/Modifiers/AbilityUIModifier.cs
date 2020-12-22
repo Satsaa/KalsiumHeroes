@@ -305,4 +305,13 @@ public class AbilityUIModifier : UnitModifier {
 		Hibernate();
 	}
 
+	public override void OnGameStart() {
+		base.OnGameStart();
+		if (Game.rounds.current == unit)
+			Wake();
+	}
+
+	public override void OnGameEnd() {
+		Destroy(this);
+	}
 }

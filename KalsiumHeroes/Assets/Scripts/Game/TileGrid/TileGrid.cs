@@ -505,7 +505,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 #if UNITY_EDITOR
 
 [CustomEditor(typeof(TileGrid))]
-public class GameGridEditor : Editor {
+public class TileGridEditor : Editor {
 
 	TileGrid t => (TileGrid)target;
 

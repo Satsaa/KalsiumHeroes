@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
+[DefaultExecutionOrder(-1)]
+[RequireComponent(typeof(TileGrid), typeof(Rounds), typeof(Targeting))]
 public class Game : MonoBehaviour {
 
 	public static Game instance => _instance;
@@ -50,6 +52,9 @@ public class Game : MonoBehaviour {
 		if (_targeting == null) _targeting = GetComponent<Targeting>();
 		dataComponents.BuildFromScene();
 		_rounds.OnGameStart();
+		foreach (var modifier in dataComponents.Get<Modifier>()) {
+			modifier.OnGameStart();
+		}
 	}
 
 	void Update() {

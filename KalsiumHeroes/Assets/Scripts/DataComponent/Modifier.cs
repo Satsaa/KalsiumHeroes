@@ -70,4 +70,9 @@ public abstract class Modifier : DataComponent {
 	/// <summary> When any Unit dies. </summary>
 	public virtual void OnDeath(Unit unit) { }
 
+	/// <summary> When the game starts. </summary>
+	public virtual void OnGameStart() { }
+
+	/// <summary> When the game ends. </summary>
+	public virtual void OnGameEnd() { }
 }

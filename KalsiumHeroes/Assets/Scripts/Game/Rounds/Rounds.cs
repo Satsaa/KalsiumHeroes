@@ -28,7 +28,7 @@ public class Rounds {
 	}
 
 	void Gather() {
-		units = Game.dataComponents.Get<Unit>().ToList();
+		units = Game.dataComponents.Get<Unit>().Where(v => v).ToList();
 		Sort();
 	}
 
@@ -38,8 +38,10 @@ public class Rounds {
 		if (units.Count <= 1) {
 			round++;
 			Gather();
-			OnRoundStarts();
-			OnTurnStarts();
+			if (!TryEndGame()) {
+				OnRoundStarts();
+				OnTurnStarts();
+			}
 			return;
 		}
 		units.RemoveAt(units.Count - 1);
@@ -49,12 +51,22 @@ public class Rounds {
 	public void OnGameStart() {
 		round++;
 		Gather();
-		OnRoundStarts();
-		OnTurnStarts();
+		if (!TryEndGame()) {
+			OnRoundStarts();
+			OnTurnStarts();
+		}
+	}
+
+	private bool TryEndGame() {
+		if (Game.dataComponents.Get<Unit>().Count() <= 1) {
+			Debug.Log($"Game end");
+			foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnGameEnd();
+			return true;
+		}
+		return false;
 	}
 
 	private void OnRoundStarts() {
-		var _ = current;
 		Debug.Log($"Round start: {units.Count} Unit(s)");
 		foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnRoundStart();
 	}
