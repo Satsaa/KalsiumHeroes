@@ -16,11 +16,12 @@ MonoBehaviour:
   description: Rooted for 1 turn
   identifier: status_shove_root
   componentType:
-    _name: RootGeneric, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   debuffType: 1
   positive: 0
   dispellable: 1
   turnDuration:
     _value: 1
-    enabled: 1
+    _enabled: 1

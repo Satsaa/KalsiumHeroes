@@ -1,20 +1,26 @@
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
-using Muc.Extensions;
-using HexGrid;
-using System;
-using Priority_Queue;
-using UnityEngine.Serialization;
 
 public delegate float CostCalculator(Tile from, Edge edge, Tile to);
 
 public static class CostCalculators {
+
+	public static CostCalculator For(RangeMode rangeMode) {
+		return (rangeMode) switch {
+			RangeMode.Distance => CostCalculators.Distance,
+
+			RangeMode.PathDistance => CostCalculators.Distance,
+			RangeMode.PathDistancePhased => CostCalculators.Distance,
+			RangeMode.PathDistanceFlying => CostCalculators.Distance,
+			RangeMode.PathDistancePhasedFlying => CostCalculators.Distance,
+
+			RangeMode.PathCost => CostCalculators.MoveCost,
+			RangeMode.PathCostPhased => CostCalculators.MoveCost,
+			RangeMode.PathCostFlying => CostCalculators.MoveCost,
+			RangeMode.PathCostPhasedFlying => CostCalculators.MoveCost,
+
+			_ => CostCalculators.Distance,
+		};
+	}
 
 	public static CostCalculator Reverse(CostCalculator pather) {
 		return (Tile from, Edge edge, Tile to) => pather(to, edge, from);

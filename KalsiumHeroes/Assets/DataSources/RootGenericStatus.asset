@@ -16,11 +16,12 @@ MonoBehaviour:
   description: Unit is rooted for 2 turns
   identifier: status_root_generic
   componentType:
-    _name: RootGeneric, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType: 1
   positive: 0
   dispellable: 1
   turnDuration:
-    value: 2
-    enabled: 1
+    _value: 2
+    _enabled: 1

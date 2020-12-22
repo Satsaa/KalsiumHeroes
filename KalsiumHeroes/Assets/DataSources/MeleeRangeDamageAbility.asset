@@ -16,30 +16,30 @@ MonoBehaviour:
   description: Deals 30 Physical damage to a unit.
   identifier: ability_melee_range_damage
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   targetType: 28
   range:
-    value: 1
-    enabled: 1
+    _value: 1
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 0
+    _value: 0
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 1
+    _value: 0
+    _other: 1
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   damage:
-    value: 30
+    _value: 30
   damageType: 1

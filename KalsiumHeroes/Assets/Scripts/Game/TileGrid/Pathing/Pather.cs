@@ -16,6 +16,24 @@ public delegate bool Pather(Tile from, Edge edge, Tile to);
 
 public static class Pathers {
 
+	public static Pather For(RangeMode rangeMode) {
+		return (rangeMode) switch {
+			RangeMode.Distance => Pathers.FlyingPhased,
+
+			RangeMode.PathDistance => Pathers.Unphased,
+			RangeMode.PathDistancePhased => Pathers.Phased,
+			RangeMode.PathDistanceFlying => Pathers.Flying,
+			RangeMode.PathDistancePhasedFlying => Pathers.FlyingPhased,
+
+			RangeMode.PathCost => Pathers.Unphased,
+			RangeMode.PathCostPhased => Pathers.Phased,
+			RangeMode.PathCostFlying => Pathers.Flying,
+			RangeMode.PathCostPhasedFlying => Pathers.FlyingPhased,
+
+			_ => Pathers.FlyingPhased
+		};
+	}
+
 	public static Pather Reverse(Pather pather) {
 		return (Tile from, Edge edge, Tile to) => pather(to, edge, from);
 	}

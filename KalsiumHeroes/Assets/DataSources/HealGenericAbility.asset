@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Heal a unit for 25 health
   identifier: ability_heal_generic
   componentType:
-    _name: HealGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: HealAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
   targetType: 14

@@ -17,12 +17,13 @@ MonoBehaviour:
   identifier: ability_speed_gain
   componentType:
     _name: SpeedGainAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
   targetType: 2
   range:
     _value: 1
-    enabled: 0
+    _enabled: 0
   rangeMode: 0
   radius:
     _value: 2
@@ -36,7 +37,7 @@ MonoBehaviour:
     _other: 1
   uses:
     _value: 0
-    enabled: 0
+    _enabled: 0
   alwaysCastable:
     _value: 0
   speedGainModifier: {fileID: 11400000, guid: de7a0bea84f3d5d4e8e753f1a061c087, type: 2}

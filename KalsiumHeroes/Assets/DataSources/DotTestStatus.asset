@@ -16,14 +16,15 @@ MonoBehaviour:
   description: Deals an amount of damage at the end of the turn.
   identifier: status_dot_test
   componentType:
-    _name: DotTestStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: DotStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType: 4
   positive: 0
   dispellable: 1
   turnDuration:
-    value: 2
-    enabled: 1
+    _value: 2
+    _enabled: 1
   damage:
-    value: 25
+    _value: 25
   damageType: 3

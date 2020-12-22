@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(AddDataComponentData), menuName = "DataSources/" + nameof(AddDataComponentData))]
 public class AddDataComponentData : AbilityData {
 
-	public override Type componentTypeConstraint => typeof(AddDataComponentAbility);
+	public override Type componentConstraint => typeof(AddDataComponentAbility);
 
 	[Header("Add Data Component Ability Data")]
 

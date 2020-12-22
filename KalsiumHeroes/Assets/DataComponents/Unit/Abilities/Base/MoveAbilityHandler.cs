@@ -23,11 +23,12 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 		start = Game.grid.tiles[data.unit];
 		end = Game.grid.tiles[data.target];
 		Debug.Log("Handling move ability event!");
-		if (end.unit || !end.tileData.passable.value) {
-			Debug.LogError("Target Tile is unreachable!");
+		if (end.unit) {
+			Debug.LogError("Target Tile is blocked by a unit!");
 		} else {
 			ExecuteOff(start);
-			Pathing.CheapestPath(start, end, out var result, Pathers.Unphased);
+			var rangeMode = creator.abilityData.rangeMode;
+			Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
 			path = result.path;
 			var cost = result.tiles[result.closest].cost;
 			creator.usedMovement += cost;
@@ -55,7 +56,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 	public override bool End() {
 		LoopTo(maxIndex);
-		creator.unit.transform.position = end.center;
+		creator.unit.MoveTo(end, true);
 		animating = false;
 		return true;
 	}
@@ -74,7 +75,6 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 					ExecuteOn(path[tileIndex]);
 					ExecuteOff(path[tileIndex]);
 				}
-				creator.unit.MoveTo(tile, true);
 			}
 		}
 	}

@@ -16,32 +16,33 @@ MonoBehaviour:
   description: Damage a unit for 25 damage and the units around it for 15.
   identifier: ability_aoe_generic
   componentType:
-    _name: AreaDamageSpellGenericAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: AreaDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
   targetType: -1
   range:
-    value: 4
-    enabled: 1
+    _value: 4
+    _enabled: 1
   rangeMode: 0
   radius:
-    value: 1
+    _value: 1
   requiresVision:
-    value: 0
+    _value: 0
   cooldown:
-    value: 0
-    other: 2
+    _value: 0
+    _other: 2
   charges:
-    value: 1
-    other: 1
+    _value: 1
+    _other: 1
   uses:
-    value: 0
-    enabled: 0
+    _value: 0
+    _enabled: 0
   alwaysCastable:
-    value: 0
+    _value: 0
   primaryDamage:
-    value: 15
+    _value: 15
   secondaryDamage:
-    value: 10
+    _value: 10
   damageType: 2

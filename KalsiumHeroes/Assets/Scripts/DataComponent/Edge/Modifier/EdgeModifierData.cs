@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(EdgeModifierData), menuName = "DataSources/" + nameof(EdgeModifierData))]
 public class EdgeModifierData : ModifierData {
 
-	public override Type componentTypeConstraint => typeof(EdgeModifier);
+	public override Type componentConstraint => typeof(EdgeModifier);
 
 	// [Header("Edge Modifier Data")]
 

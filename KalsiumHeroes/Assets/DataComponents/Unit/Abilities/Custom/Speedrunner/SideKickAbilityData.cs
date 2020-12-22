@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(SideKickAbilityData), menuName = "DataSources/Units/Speedrunner/" + nameof(SideKickAbilityData))]
 public class SideKickAbilityData : AbilityData {
 
-	public override Type componentTypeConstraint => typeof(SideKickAbility);
+	public override Type componentConstraint => typeof(SideKickAbility);
 
 	[Header("Side Kick Ability Data")]
 	public Attribute<float> movementDamageMultiplier;

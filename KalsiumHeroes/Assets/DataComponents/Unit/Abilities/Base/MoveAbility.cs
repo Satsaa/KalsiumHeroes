@@ -20,8 +20,9 @@ public class MoveAbility : Ability {
 
 	protected override IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
 		var maxCost = unit.unitData.movement.value - usedMovement;
-		var res = Pathing.GetCostField(tile, maxCost: maxCost, pather: Pathers.Unphased).tiles.Keys;
-		return res.Where(v => v != tile); // Ignore own tile
+		var rangeMode = abilityData.rangeMode;
+		var res = Pathing.GetCostField(tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
+		return res.Where(v => !v.unit); // Ignore tiles with units
 	}
 
 	public override void OnTurnStart() {
@@ -33,7 +34,7 @@ public class MoveAbility : Ability {
 		var maxCost = unit.unitData.movement.value - usedMovement;
 		return new PathConfirmAbilityTargeter(unit, this, maxCost,
 			onComplete: t => PostDefaultAbilityEvent(t.selections[0])
-		) { pather = Pathers.Unphased };
+		) { pather = Pathers.For(abilityData.rangeMode), cc = CostCalculators.For(abilityData.rangeMode) };
 	}
 
 }

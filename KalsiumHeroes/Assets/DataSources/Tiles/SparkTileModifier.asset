@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SparkTileModifier
   m_EditorClassIdentifier: 
   displayName: Spark Tile
-  description: Sparks why as you move on this tile.
+  description: Sparks fly as you move on this tile.
   identifier: tilemodifier_spark
   componentType:
     _name: PlayEffectTileModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,

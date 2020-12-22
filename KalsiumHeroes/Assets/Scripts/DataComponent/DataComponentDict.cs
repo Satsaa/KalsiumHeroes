@@ -20,15 +20,6 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
 
-	/// <summary> Rebuilds the dictionary from all loaded DataComponents. </summary>
-	public void BuildFromScene() {
-		dict = new Dictionary<Type, object>();
-		var comps = GameObject.FindObjectsOfType<TBase>(true);
-		foreach (var comp in comps) {
-			Add(comp);
-		}
-	}
-
 	/// <summary> Enumerates DataComponents of the root type. </summary>
 	public IEnumerable<TBase> Get() => Get<TBase>();
 	/// <summary> Enumerates DataComponents of type T. </summary>

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SpeedGainStatus : Status {
 
-	public SpeedGainModifierData speedGainModifierData => (SpeedGainModifierData)data;
-	public override Type dataType => typeof(SpeedGainModifierData);
+	public SpeedGainStatusData speedGainModifierData => (SpeedGainStatusData)data;
+	public override Type dataType => typeof(SpeedGainStatusData);
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);

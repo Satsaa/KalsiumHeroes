@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(PickOffAbilityData), menuName = "DataSources/Units/Lone Ranger/" + nameof(PickOffAbilityData))]
 public class PickOffAbilityData : AbilityData {
 
-	public override Type componentTypeConstraint => typeof(PickOffAbility);
+	public override Type componentConstraint => typeof(PickOffAbility);
 
 	[Header("Pick Off Ability Data")]
 	public Attribute<float> damage;

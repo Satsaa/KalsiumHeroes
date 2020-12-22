@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DotTestStatus : Status {
+public class DotStatus : Status {
 
-	public DotTestStatusData dotTestData => (DotTestStatusData)data;
-	public override Type dataType => typeof(DotTestStatusData);
+	public DotStatusData dotTestData => (DotStatusData)data;
+	public override Type dataType => typeof(DotStatusData);
 
 	public override void OnTurnEnd() {
 		unit.Damage(dotTestData.damage.value, dotTestData.damageType);

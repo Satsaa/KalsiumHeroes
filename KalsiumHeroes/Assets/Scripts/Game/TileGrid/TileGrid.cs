@@ -68,7 +68,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 				if (edge == null) {
 					var nbr = tile.GetNeighbor(i);
 					var pos = (tile.corners[i] + tile.corners[new CircularInt(i + 1, 6)]) / 2;
-					var ego = MasterComponent.Instantiate<Edge>(defaultEdge, pos);
+					var ego = MasterComponent.Instantiate(defaultEdge, pos);
 					ego.transform.parent = transform;
 					ego.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {((TileDir)i).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
 					edge = ego.GetComponent<Edge>();
@@ -136,7 +136,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 					tile.SetEdge(i, edge);
 				} else {
 					var pos = (tile.corners[i] + tile.corners[new CircularInt(i + 1, 6)]) / 2;
-					var ego = MasterComponent.Instantiate<Edge>(defaultEdge, pos);
+					var ego = MasterComponent.Instantiate(defaultEdge, pos);
 					ego.transform.parent = transform;
 					ego.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {((TileDir)i).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
 					edge = ego.GetComponent<Edge>();

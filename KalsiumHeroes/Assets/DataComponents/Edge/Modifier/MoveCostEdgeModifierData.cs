@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(MoveCostEdgeModifierData), menuName = "DataSources/" + nameof(MoveCostEdgeModifierData))]
 public class MoveCostEdgeModifierData : EdgeModifierData {
 
-	public override Type componentTypeConstraint => typeof(MoveCostEdgeModifier);
+	public override Type componentConstraint => typeof(MoveCostEdgeModifier);
 
 	[Header("MoveCost Edge Modifier Data")]
 	[Tooltip("Aditional move cost.")]

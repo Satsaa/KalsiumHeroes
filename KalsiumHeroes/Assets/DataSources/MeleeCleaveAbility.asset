@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Cleaves 30 dmg around unit
   identifier: ability_melee_cleave
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   targetType: -1

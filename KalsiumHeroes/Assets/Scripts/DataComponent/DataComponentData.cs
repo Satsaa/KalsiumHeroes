@@ -3,10 +3,10 @@ using UnityEngine;
 using Muc.Data;
 using System;
 
-public abstract class DataComponentData : ScriptableObject {
+public class DataComponentData : ScriptableObject {
 
-	/// <summary> componentType base type. </summary>
-	public abstract Type componentTypeConstraint { get; }
+	/// <summary> Base type for componentType. </summary>
+	public virtual Type componentConstraint => typeof(DataComponent);
 
 	[Header("Data Component Data")]
 	[Tooltip("Display name of this DataComponent, displayed to users. (\"Oracle\")")]
@@ -72,7 +72,7 @@ namespace Muc.Data {
 				// Dropdown
 				var hint = new GUIContent(label) { text = value.type == null ? "null" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
-					var types = GetCompatibleTypes(value.type, t.componentTypeConstraint);
+					var types = GetCompatibleTypes(value.type, t.componentConstraint);
 					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(componentType, type));
 					menu.DropDown(position);
 				}

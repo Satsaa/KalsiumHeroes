@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RootGeneric : Status {
+public class RootStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);

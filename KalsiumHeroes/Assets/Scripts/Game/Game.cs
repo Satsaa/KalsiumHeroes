@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
-[DefaultExecutionOrder(-1)]
+[DefaultExecutionOrder(-600)]
 [RequireComponent(typeof(TileGrid), typeof(Rounds), typeof(Targeting))]
 public class Game : MonoBehaviour {
 
@@ -36,7 +36,6 @@ public class Game : MonoBehaviour {
 		_instance = this;
 		if (_grid == null && (_grid = GetComponent<TileGrid>()) == null) Debug.LogError($"No {nameof(TileGrid)} Component!");
 		if (_targeting == null && (_targeting = GetComponent<Targeting>()) == null) Debug.LogError($"No {nameof(Targeting)} Component!");
-		dataComponents.BuildFromScene();
 	}
 
 	private void Awake() {
@@ -50,7 +49,6 @@ public class Game : MonoBehaviour {
 		_instance = this;
 		if (_grid == null) _grid = GetComponent<TileGrid>();
 		if (_targeting == null) _targeting = GetComponent<Targeting>();
-		dataComponents.BuildFromScene();
 		_rounds.OnGameStart();
 		foreach (var modifier in dataComponents.Get<Modifier>()) {
 			modifier.OnGameStart();

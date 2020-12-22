@@ -16,14 +16,14 @@ MonoBehaviour:
   description: Raged attack of 40 damage
   identifier: ability_attack_ranged
   componentType:
-    _name: MeleeRangeDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   targetType: -1
   range:
     _value: 20
-    enabled: 1
+    _enabled: 1
   rangeMode: 0
   radius:
     _value: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     _other: 1
   uses:
     _value: 0
-    enabled: 0
+    _enabled: 0
   alwaysCastable:
     _value: 0
   damage:
