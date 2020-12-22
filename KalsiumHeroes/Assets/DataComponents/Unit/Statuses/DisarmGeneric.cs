@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisarmGeneric : StatusEffect {
+public class DisarmGeneric : Status {
 	public DisarmGenericData disarmGenericData => (DisarmGenericData)data;
 
 	public override Type dataType => typeof(DisarmGenericData);

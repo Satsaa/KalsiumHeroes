@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DotTestStatus : StatusEffect {
+public class DotTestStatus : Status {
 
 	public DotTestStatusData dotTestData => (DotTestStatusData)data;
 	public override Type dataType => typeof(DotTestStatusData);

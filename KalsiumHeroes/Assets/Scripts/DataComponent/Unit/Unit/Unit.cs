@@ -97,7 +97,7 @@ public class Unit : MasterComponent<UnitModifier> {
 	}
 
 	public void Dispell() {
-		foreach (var effect in modifiers.Get<StatusEffect>()) {
+		foreach (var effect in modifiers.Get<Status>()) {
 			effect.OnDispell();
 		}
 	}

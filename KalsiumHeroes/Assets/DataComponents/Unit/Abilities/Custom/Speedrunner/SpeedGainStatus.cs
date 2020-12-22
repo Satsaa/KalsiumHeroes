@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedGainStatus : StatusEffect {
+public class SpeedGainStatus : Status {
 
 	public SpeedGainModifierData speedGainModifierData => (SpeedGainModifierData)data;
 	public override Type dataType => typeof(SpeedGainModifierData);

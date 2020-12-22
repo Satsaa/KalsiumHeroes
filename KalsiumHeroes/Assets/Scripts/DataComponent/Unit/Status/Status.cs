@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class StatusEffect : UnitModifier {
+public abstract class Status : UnitModifier {
 
-	public StatusEffectData statusEffectData => (StatusEffectData)data;
-	public override Type dataType => typeof(StatusEffectData);
+	public StatusData statusEffectData => (StatusData)data;
+	public override Type dataType => typeof(StatusData);
 
 	public override void OnTurnEnd() {
 		if (statusEffectData.turnDuration.enabled && --statusEffectData.turnDuration.value <= 0) {
