@@ -24,8 +24,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 15d40d91fda9a8d4a91d6a5d9dbdc411, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -89,8 +89,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_6e112a3ecbe048ff9cbe207497b45f73: 8
+    - Vector1_6e112a3ecbe048ff9cbe207497b45f73: 10
     - Vector1_72ad1d3bdc6d488594b0b4239a7c0efa: -0.6
+    - Vector1_877922aead8c4e6f89ad8cf7ae3f58a8: 0.027
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -102,11 +103,13 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _FogPower: 0.67
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _Mode: 0
+    - _NoiseScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
@@ -120,7 +123,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_7d2a4d7c3351408ab00bef25adfb03f8: {r: 0.107467055, g: 0.13873473, b: 0.14150941, a: 1}
+    - Color_7d2a4d7c3351408ab00bef25adfb03f8: {r: 0.10746703, g: 0.1387347, b: 0.14150938, a: 1}
+    - Vector3_6261a30c523340aab5b10851c3d202db: {r: 0.25, g: 0.36, b: 0.25, a: 0}
     - _BaseColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
