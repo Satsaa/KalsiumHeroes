@@ -17,7 +17,8 @@ MonoBehaviour:
   identifier: unit_lone_ranger
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 0}
+  instantiatee: {fileID: 7246361080335083718, guid: f1f55e9575cb7304a85b624fb822bc49, type: 3}
+  portrait: {fileID: 21300000, guid: 2223b0a570b66ee42b3e0a79f0789b2a, type: 3}
   speed:
     _value: 8
   movement:

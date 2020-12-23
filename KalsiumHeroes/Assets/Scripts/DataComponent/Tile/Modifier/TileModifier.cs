@@ -21,16 +21,14 @@ public abstract class TileModifier : Modifier {
 		tile.modifiers.Add(this);
 		Game.dataComponents.Add(this);
 		OnAdd();
-		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) {
-			other.OnAdd(this);
-		}
+		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
+		Game.InvokeOnAfterEvent();
 	}
 
 	protected new void OnDestroy() {
 		OnRemove();
-		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) {
-			other.OnRemove(this);
-		}
+		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
+		Game.InvokeOnAfterEvent();
 		tile.modifiers.Remove(this);
 		base.OnDestroy();
 	}

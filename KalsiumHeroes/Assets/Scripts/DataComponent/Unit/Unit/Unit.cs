@@ -39,7 +39,9 @@ public class Unit : MasterComponent<UnitModifier> {
 			if (nearTile) MoveTo(nearTile, true);
 		}
 		Game.dataComponents.Execute<Modifier>(v => v.OnSpawn(this));
+		Game.InvokeOnAfterEvent();
 		tile.modifiers.Execute<TileModifier>(v => v.OnSpawnOn(this));
+		Game.InvokeOnAfterEvent();
 	}
 
 	protected new void OnDestroy() {
@@ -59,11 +61,13 @@ public class Unit : MasterComponent<UnitModifier> {
 
 	public void Heal(float value) {
 		unitData.health.value += modifiers.Get().Aggregate(Max(0, value), (cur, v) => Max(0, v.OnHeal(cur)));
+		Game.InvokeOnAfterEvent();
 		ClampHealth();
 	}
 
 	public void Damage(float value, DamageType type) {
 		var total = modifiers.Get().Aggregate(Max(0, value), (cur, v) => Max(0, v.OnDamage(cur, type)));
+		Game.InvokeOnAfterEvent();
 
 		switch (type) {
 			case DamageType.Physical:
@@ -88,18 +92,17 @@ public class Unit : MasterComponent<UnitModifier> {
 
 		if (unitData.health.value <= 0) {
 			Game.dataComponents.Execute<Modifier>(v => v.OnDeath(this));
-			foreach (var modifier in Game.dataComponents.Get<UnitModifier>()) {
-				modifier.OnDeath();
-				tile.graveyard.Add(new GraveUnit(this));
-				Destroy(gameObject);
-			}
+			Game.InvokeOnAfterEvent();
+			foreach (var modifier in Game.dataComponents.Get<UnitModifier>()) modifier.OnDeath();
+			Game.InvokeOnAfterEvent();
+			tile.graveyard.Add(new GraveUnit(this));
+			Destroy(gameObject);
 		}
 	}
 
 	public void Dispell() {
-		foreach (var effect in modifiers.Get<Status>()) {
-			effect.OnDispell();
-		}
+		foreach (var effect in modifiers.Get<Status>()) effect.OnDispell();
+		Game.InvokeOnAfterEvent();
 	}
 
 	public bool MoveTo(Tile tile, bool reposition) {
@@ -112,5 +115,9 @@ public class Unit : MasterComponent<UnitModifier> {
 		} else {
 			return tile.unit == this;
 		}
+	}
+
+	public int GetEstimatedSpeed(int roundsAhead) {
+		return modifiers.Get().Aggregate(unitData.speed.unalteredValue, (cur, v) => cur + v.GetEstimatedSpeedGain(roundsAhead));
 	}
 }

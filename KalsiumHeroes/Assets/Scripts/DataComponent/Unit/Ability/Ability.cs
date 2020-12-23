@@ -27,8 +27,8 @@ public abstract class Ability : UnitModifier {
 		}
 	}
 
-	public override void OnAbilityCast(Ability ability) {
-		base.OnAbilityCast(ability);
+	public override void OnAbility(Ability ability) {
+		base.OnAbility(ability);
 		if (!abilityData.alwaysCastable.value) {
 			castBlocked = true;
 		}
@@ -42,8 +42,9 @@ public abstract class Ability : UnitModifier {
 		else abilityData.charges.value--;
 
 		var isBase = abilityData.abilityType != AbilityType.Base;
-		if (isBase) foreach (var modifier in unit.modifiers.Get()) modifier.OnAbilityCast(this);
-		else foreach (var modifier in unit.modifiers.Get()) modifier.OnBaseAbilityCast(this);
+		if (isBase) foreach (var modifier in unit.modifiers.Get()) modifier.OnAbility(this);
+		else foreach (var modifier in unit.modifiers.Get()) modifier.OnBaseAbility(this);
+		Game.InvokeOnAfterEvent();
 	}
 
 

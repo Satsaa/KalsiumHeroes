@@ -16,10 +16,6 @@ public class Events {
 	[SerializeReference] public List<object> stack = new List<object>();
 	public GameEvent first => (GameEvent)stack[0];
 
-	/// <summary> When an event handler has ended. </summary>
-	public event Action onFinish;
-	/// <summary> When an event handler is created and starts. </summary>
-	public event Action onStart;
 	public bool finished => eventHandler == null;
 
 	[SerializeReference]
@@ -29,7 +25,8 @@ public class Events {
 		if (eventHandler != null) {
 			if (eventHandler.EventHasEnded()) {
 				eventHandler = null;
-				onFinish?.Invoke();
+				foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnEventEnd();
+				Game.InvokeOnAfterEvent();
 			} else {
 				eventHandler.Update();
 				return;
@@ -38,9 +35,13 @@ public class Events {
 		if (stack.Count > 0) {
 			try {
 				eventHandler = first.GetHandler();
-				if (eventHandler != null) onStart?.Invoke();
+				if (eventHandler != null) {
+					foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnEventStart();
+					Game.InvokeOnAfterEvent();
+				}
 			} catch (Exception) {
-				onFinish?.Invoke();
+				foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnEventEnd();
+				Game.InvokeOnAfterEvent();
 				throw;
 			} finally {
 				stack.RemoveAt(0);
@@ -82,6 +83,7 @@ public class Events {
 			var ability = unit.modifiers.Get<global::Ability>().First(a => a.data.identifier == this.ability);
 			EventHandler<Ability> abilityHandler = ability.CreateEventHandler(this);
 			ability.OnCast();
+			Game.InvokeOnAfterEvent();
 			return abilityHandler;
 		}
 	}

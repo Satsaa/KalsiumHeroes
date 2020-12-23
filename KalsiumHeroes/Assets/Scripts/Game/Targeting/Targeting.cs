@@ -56,7 +56,7 @@ public class Targeting : MonoBehaviour {
 				var tile = main;
 				var minDist = float.PositiveInfinity;
 				foreach (var candidate in candidates) {
-					if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y > (main == null ? -0.25f : main.transform.position.y)) {
+					if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null ? -0.25f : main.transform.position.y - 0.25f)) {
 						minDist = hit.distance;
 						tile = candidate.tile;
 					}

@@ -11,6 +11,10 @@ public class UnitData : MasterComponentData {
 	public override Type componentConstraint => typeof(Unit);
 
 	[Header("Unit Data")]
+
+	[Tooltip("The default portrait sprite for this Unit.")]
+	public Sprite portrait;
+
 	[Tooltip("Speed determines when the unit gets to be played. The higher the speed, the higher the priority within any turn.")]
 	public Attribute<int> speed = new Attribute<int>(1);
 

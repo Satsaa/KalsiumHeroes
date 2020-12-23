@@ -17,6 +17,8 @@ MonoBehaviour:
   identifier: unit_test
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 9047958665005421617, guid: 2849e05cdb902b94596b8fe24a513732, type: 3}
+  portrait: {fileID: 21300000, guid: b6a96c7c65795c94abf54a62adbf5c38, type: 3}
   speed:
     _value: 2
   movement:

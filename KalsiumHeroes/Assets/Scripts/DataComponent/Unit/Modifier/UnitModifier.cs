@@ -18,22 +18,24 @@ public abstract class UnitModifier : Modifier {
 		base.Awake();
 		unit.modifiers.Add(this);
 		OnAdd();
-		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
-			other.OnAdd(this);
-		}
+		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
+		Game.InvokeOnAfterEvent();
 	}
 
 	protected new void OnDestroy() {
 		OnRemove();
-		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) {
-			other.OnRemove(this);
-		}
+		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
+		Game.InvokeOnAfterEvent();
 		unit.modifiers.Remove(this);
 		base.OnDestroy();
 	}
 
+	/// <summary> If this UnitModifier may increase the speed of the Unit, use this to allow predicting future speed values. </summary>
+	public virtual int GetEstimatedSpeedGain(int roundsAhead) => 0;
+
 	/// <summary> When this UnitModifier is being added (instantiated). </summary>
 	public virtual void OnAdd() { }
+
 	/// <summary> When this UnitModifier is being removed (destroyed). </summary>
 	public virtual void OnRemove() { }
 
@@ -54,9 +56,9 @@ public abstract class UnitModifier : Modifier {
 	public virtual void OnDeath() { }
 
 	/// <summary> When the Unit casts an Ability that is not a base Ability. </summary>
-	public virtual void OnAbilityCast(Ability ability) { }
+	public virtual void OnAbility(Ability ability) { }
 
 	/// <summary> When the Unit casts a base Ability. </summary>
-	public virtual void OnBaseAbilityCast(Ability ability) { }
+	public virtual void OnBaseAbility(Ability ability) { }
 }
 

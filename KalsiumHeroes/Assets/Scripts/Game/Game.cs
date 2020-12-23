@@ -25,6 +25,18 @@ public class Game : MonoBehaviour {
 	[SerializeField] private Rounds _rounds = new Rounds();
 	[SerializeField] private DataComponentDict _dataComponents = new DataComponentDict();
 
+	private event Action _onAfterEvent;
+	/// <summary> This event is invoked after the current event execution loop finishes. The event is then cleared. <summary>
+	public static event Action onAfterEvent {
+		add => instance._onAfterEvent += value;
+		remove => instance._onAfterEvent -= value;
+	}
+
+	public static void InvokeOnAfterEvent() {
+		instance._onAfterEvent?.Invoke();
+		instance._onAfterEvent = null;
+	}
+
 	private void OnValidate() {
 
 		if (_instance != null && _instance != this) {
@@ -49,10 +61,13 @@ public class Game : MonoBehaviour {
 		_instance = this;
 		if (_grid == null) _grid = GetComponent<TileGrid>();
 		if (_targeting == null) _targeting = GetComponent<Targeting>();
+	}
+
+	private void Start() {
 		_rounds.OnGameStart();
-		foreach (var modifier in dataComponents.Get<Modifier>()) {
-			modifier.OnGameStart();
-		}
+		InvokeOnAfterEvent();
+		foreach (var modifier in dataComponents.Get<Modifier>()) modifier.OnGameStart();
+		InvokeOnAfterEvent();
 	}
 
 	void Update() {

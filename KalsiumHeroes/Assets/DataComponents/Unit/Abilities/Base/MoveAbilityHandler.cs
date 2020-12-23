@@ -83,8 +83,17 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 		Debug.Log($"OnMoveOver ({current.gameObject.name} -> {next.gameObject.name})");
 		var edge = current.edges[current.neighbors.ToList().FindIndex(v => v == next)];
 		edge.modifiers.Execute(v => v.OnMoveOver(creator.unit, current));
+		Game.InvokeOnAfterEvent();
 	}
 
-	protected void ExecuteOn(Tile tile) { Debug.Log($"OnMoveOn ({tile.gameObject.name})"); tile.modifiers.Execute(v => v.OnMoveOn(creator.unit)); }
-	protected void ExecuteOff(Tile tile) { Debug.Log($"OnMoveOff ({tile.gameObject.name})"); tile.modifiers.Execute(v => v.OnMoveOff(creator.unit)); }
+	protected void ExecuteOn(Tile tile) {
+		Debug.Log($"OnMoveOn ({tile.gameObject.name})");
+		tile.modifiers.Execute(v => v.OnMoveOn(creator.unit));
+		Game.InvokeOnAfterEvent();
+	}
+	protected void ExecuteOff(Tile tile) {
+		Debug.Log($"OnMoveOff ({tile.gameObject.name})");
+		tile.modifiers.Execute(v => v.OnMoveOff(creator.unit));
+		Game.InvokeOnAfterEvent();
+	}
 }

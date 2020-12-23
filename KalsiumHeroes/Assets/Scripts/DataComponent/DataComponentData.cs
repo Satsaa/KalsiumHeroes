@@ -3,6 +3,7 @@ using UnityEngine;
 using Muc.Data;
 using System;
 
+[CreateAssetMenu(fileName = nameof(DataComponentData), menuName = "DataSources/" + nameof(DataComponentData))]
 public class DataComponentData : ScriptableObject {
 
 	/// <summary> Base type for componentType. </summary>

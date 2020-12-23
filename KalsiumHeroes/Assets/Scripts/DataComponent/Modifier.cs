@@ -75,4 +75,10 @@ public abstract class Modifier : DataComponent {
 
 	/// <summary> When the game ends. </summary>
 	public virtual void OnGameEnd() { }
+
+	/// <summary> When an event handler starts (animations). </summary>
+	public virtual void OnEventStart() { }
+
+	/// <summary> When an event handler finishes (animations). </summary>
+	public virtual void OnEventEnd() { }
 }

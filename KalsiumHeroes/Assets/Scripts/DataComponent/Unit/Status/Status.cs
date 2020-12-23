@@ -24,4 +24,10 @@ public abstract class Status : UnitModifier {
 	public virtual void OnExpire() {
 		Destroy(this);
 	}
+
+	/// <summary> Based on statusEffectData.turnDuration check if this status would have expired after the provided round count. </summary>
+	public bool TurnDurationWouldHaveExpired(int roundsAhead) {
+		if (Game.rounds.HasFinishedTurn(unit)) roundsAhead--;
+		return statusEffectData.turnDuration.enabled && statusEffectData.turnDuration.value - roundsAhead <= 0;
+	}
 }

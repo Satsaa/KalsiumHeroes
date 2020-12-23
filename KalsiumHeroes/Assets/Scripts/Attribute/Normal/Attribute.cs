@@ -19,6 +19,8 @@ public class Attribute<T> : AttributeBase {
 		set => _value = value;
 	}
 
+	public virtual T unalteredValue => _value;
+
 	protected HashSet<Func<T, T>> alterers = new HashSet<Func<T, T>>();
 
 

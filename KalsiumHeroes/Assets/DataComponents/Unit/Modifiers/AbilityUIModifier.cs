@@ -228,11 +228,13 @@ public class AbilityUIModifier : UnitModifier {
 	}
 
 
-	private void OnEventStart() {
+	public override void OnEventStart() {
+		base.OnEventStart();
 		targetAlpha = fadeAlpha;
 		if (Game.rounds.current == unit) RefreshValues();
 	}
-	private void OnEventFinish() {
+	public override void OnEventEnd() {
+		base.OnEventEnd();
 		targetAlpha = 1;
 		if (Game.rounds.current == unit) RefreshValues();
 	}
@@ -254,13 +256,9 @@ public class AbilityUIModifier : UnitModifier {
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 		if (add) {
-			Game.events.onStart += OnEventStart;
-			Game.events.onFinish += OnEventFinish;
 			Game.targeting.onTargeterEnd += OnTargeterEnd;
 			Game.targeting.onTargeterStart += OnTargeterStart;
 		} else {
-			Game.events.onStart -= OnEventStart;
-			Game.events.onFinish -= OnEventFinish;
 			Game.targeting.onTargeterEnd -= OnTargeterEnd;
 			Game.targeting.onTargeterStart -= OnTargeterStart;
 		}
@@ -284,13 +282,13 @@ public class AbilityUIModifier : UnitModifier {
 	}
 
 
-	public override void OnBaseAbilityCast(Ability ability) {
-		base.OnBaseAbilityCast(ability);
+	public override void OnBaseAbility(Ability ability) {
+		base.OnBaseAbility(ability);
 		RefreshValues();
 	}
 
-	public override void OnAbilityCast(Ability ability) {
-		base.OnAbilityCast(ability);
+	public override void OnAbility(Ability ability) {
+		base.OnAbility(ability);
 		RefreshValues();
 	}
 
