@@ -103,7 +103,7 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Dist: 10
-    - _DitherStrength: 0.004
+    - _DitherStrength: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _FogPower: 0.6
