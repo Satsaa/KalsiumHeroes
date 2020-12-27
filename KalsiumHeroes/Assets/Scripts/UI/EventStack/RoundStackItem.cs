@@ -1,19 +1,12 @@
 
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using Muc.Extensions;
 
 public class RoundStackItem : EventStackItem {
 
-	public Text hint;
+	public Unit unit;
 
-	public void Init(int round) {
-		hint.text = $"Round {round}";
-	}
-
-	public override void OnReachZero(EventStack es) {
-		es.Remove(0);
-		Destroy(gameObject);
-	}
 }

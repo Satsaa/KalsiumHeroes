@@ -23,7 +23,7 @@ public abstract class DataComponent : MonoBehaviour {
 	}
 
 	protected void Awake() {
-		data = Instantiate(source);
+		if (source) data = Instantiate(source);
 		Game.dataComponents.Add(this);
 	}
 

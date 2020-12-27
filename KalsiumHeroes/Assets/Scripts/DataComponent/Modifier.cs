@@ -28,7 +28,7 @@ public abstract class Modifier : DataComponent {
 	}
 
 	private void DestroyContainer() {
-		if (modifierData.container != null) {
+		if (modifierData && modifierData.container != null) {
 			ObjectUtil.Destroy(gameObject);
 		}
 	}

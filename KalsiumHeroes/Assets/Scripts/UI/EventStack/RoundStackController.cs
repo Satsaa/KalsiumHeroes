@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(EventStack))]
 public class RoundStackController : Modifier {
 
-	public EventStack es;
+	[HideInInspector] public EventStack es;
 	public GameObject roundStackPrefab;
 	public GameObject roundStackItemPrefab;
 	public int total;
@@ -37,8 +37,8 @@ public class RoundStackController : Modifier {
 	void CreateItem(int round) {
 		if (roundStackItemPrefab) {
 			var item = Instantiate(roundStackItemPrefab, transform);
-			var comp = item.GetComponent<RoundStackItem>();
-			comp.Init(round);
+			var comp = item.GetComponent<RoundItem>();
+			comp.round = round;
 			es.Add(comp);
 		}
 		var go = Instantiate(roundStackPrefab, transform);

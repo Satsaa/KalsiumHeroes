@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2276784613278986124}
   - component: {fileID: 3814413257098286455}
   - component: {fileID: 272284078850804416}
-  - component: {fileID: 4849491548154869717}
+  - component: {fileID: 8634059818958978833}
+  - component: {fileID: 6162781632663721530}
   - component: {fileID: 2472465268865085573}
   m_Layer: 0
   m_Name: RoundStack
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4849491548154869717
+--- !u!114 &8634059818958978833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,34 +101,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2920945020312278200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3afbbc70ffad93478d3cc50eb862825, type: 3}
+  m_Script: {fileID: 11500000, guid: 9050fe96ca0a3f241b6d28d2b5798104, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  data: {fileID: 0}
+  rs: {fileID: 0}
+--- !u!114 &6162781632663721530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920945020312278200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d2b5b6e96f5e344b99a2858ad9e5c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  group: {fileID: 0}
-  fullWidth: 100
-  time: 0
-  velocity: 0
-  targetPosition: 0
---- !u!114 &2472465268865085573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2920945020312278200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca82c49bc2add642aaf10f3b1b75dab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 11400000, guid: 7a06a3cb142a18f44a5f654786004aa8, type: 2}
-  data: {fileID: 0}
-  item: {fileID: 4849491548154869717}
-  bgImageRect: {fileID: 4658022545333423302}
-  stack: []
-  itemPrefab: {fileID: 5954060762746580402, guid: 1950e848802dc5f4b9446e8e2c7711b6, type: 3}
-  expandCurve:
+  rt: {fileID: 0}
+  repositionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -151,8 +145,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  expandTime: 0.5
-  speed: 1500
+  repositionDuration: 1
+  repositionings: []
+  es: {fileID: 0}
+--- !u!114 &2472465268865085573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920945020312278200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca82c49bc2add642aaf10f3b1b75dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stack: []
+  thisItem: {fileID: 0}
+  bgImageRect: {fileID: 4658022545333423302}
+  itemPrefab: {fileID: 5954060762746580402, guid: 1950e848802dc5f4b9446e8e2c7711b6, type: 3}
   round: -1
 --- !u!1 &3840414409640685005
 GameObject:
