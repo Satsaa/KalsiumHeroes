@@ -8,9 +8,9 @@ using Muc.Extensions;
 [Serializable]
 public class EventStackItemContainer<T> where T : EventStackItem {
 	public T item;
-	public int width;
-	public int targetPosition;
-	public EventStackItemContainer(T item, int targetPosition) {
+	public float width;
+	public float targetPosition;
+	public EventStackItemContainer(T item, float targetPosition) {
 		this.item = item;
 		this.targetPosition = targetPosition;
 		this.width = item.width;
@@ -27,7 +27,7 @@ public class EventStack<T> : MonoBehaviour where T : EventStackItem {
 
 	protected void Awake() {
 		_stack.RemoveAll(v => v.item == null);
-		var pos = 0;
+		var pos = 0f;
 		for (int i = 0; i < stack.Count; i++) {
 			var cont = stack[i];
 			cont.width = cont.item.width;
@@ -38,7 +38,7 @@ public class EventStack<T> : MonoBehaviour where T : EventStackItem {
 
 	protected void Update() {
 		_stack.RemoveAll(v => v.item == null);
-		var pos = 0;
+		var pos = 0f;
 		for (int i = 0; i < stack.Count; i++) {
 			var cont = stack[i];
 
@@ -77,7 +77,7 @@ public class EventStack<T> : MonoBehaviour where T : EventStackItem {
 		_stack.Insert(newIndex, cont);
 	}
 
-	private void InstantPush(int startIndex, int offset) {
+	private void InstantPush(int startIndex, float offset) {
 		for (int i = startIndex; i < _stack.Count; i++) {
 			var cont = _stack[i];
 			if (cont.item != null) {
@@ -88,15 +88,15 @@ public class EventStack<T> : MonoBehaviour where T : EventStackItem {
 	}
 
 
-	private int CalculateTargetPosition(int index) {
-		var pos = 0;
+	private float CalculateTargetPosition(int index) {
+		var pos = 0f;
 		for (int i = 0; i < index; i++) {
 			pos += _stack[i].item.width;
 		}
 		return pos;
 	}
 
-	public int MaxX() {
+	public float MaxX() {
 		return _stack.Aggregate(0, (acc, cur) => !cur.item ? acc : Mathf.Max(acc, Mathf.RoundToInt(cur.item.rt.localPosition.x + cur.item.width)));
 	}
 

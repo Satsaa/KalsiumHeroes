@@ -11,7 +11,7 @@ public class StackItem : EventStackItem {
 	[HideInInspector] public EventStack es;
 	[HideInInspector] public RoundStack rs;
 
-	public override int width => es != null ? es.MaxX() : rs.MaxX();
+	public override float width => es != null ? es.MaxX() : rs.MaxX();
 
 
 	new protected void Awake() {

@@ -145,9 +145,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  repositionDuration: 1
+  repositionDuration: 0.35
   repositionings: []
   es: {fileID: 0}
+  rs: {fileID: 0}
 --- !u!114 &2472465268865085573
 MonoBehaviour:
   m_ObjectHideFlags: 0

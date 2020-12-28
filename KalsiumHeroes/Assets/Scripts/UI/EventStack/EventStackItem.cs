@@ -22,7 +22,7 @@ public class EventStackItem : MonoBehaviour {
 	[HideInInspector] public Canvas canvas;
 	[HideInInspector] public RectTransform rt;
 
-	public virtual int width => Mathf.RoundToInt(rt.rect.width);
+	public virtual float width => rt ? Mathf.RoundToInt(rt.rect.width) : 0;
 
 	public AnimationCurve repositionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 	public float repositionDuration = 1;

@@ -293,10 +293,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  repositionDuration: 1
+  repositionDuration: 0.35
   repositionings: []
   hint: {fileID: 6165865163104927554}
   round: -1
+  removed: 0
 --- !u!1 &6852165252867649270
 GameObject:
   m_ObjectHideFlags: 0

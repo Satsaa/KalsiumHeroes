@@ -15,7 +15,9 @@ public class RoundStack : EventStack<RoundStackItem> {
 
 	public int round;
 
+	bool isOld => Game.rounds.round > round;
 	bool isCurrent => Game.rounds.round == round;
+	bool isUpcoming => Game.rounds.round < round;
 	int roundsAhead => round - Game.rounds.round;
 
 	new void Awake() {

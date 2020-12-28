@@ -340,7 +340,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  repositionDuration: 1
+  repositionDuration: 0.35
   repositionings: []
   unit: {fileID: 0}
   frame: {fileID: 425057432723267546}
