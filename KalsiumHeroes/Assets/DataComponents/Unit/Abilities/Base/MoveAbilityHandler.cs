@@ -21,7 +21,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	public MoveAbilityHandler(Events.Ability data, MoveAbility creator) : base(data) {
 		this.creator = creator;
 		start = Game.grid.tiles[data.unit];
-		end = Game.grid.tiles[data.target];
+		end = Game.grid.tiles[data.targets.First()];
 		Debug.Log("Handling move ability event!");
 		if (end.unit) {
 			Debug.LogError("Target Tile is blocked by a unit!");

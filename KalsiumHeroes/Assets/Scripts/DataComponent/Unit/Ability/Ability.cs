@@ -144,7 +144,7 @@ public abstract class Ability : UnitModifier {
 	protected void PostDefaultAbilityEvent(Tile target) {
 		Game.client.PostEvent(new Events.Ability() {
 			ability = data.identifier,
-			target = target.hex.pos,
+			targets = new Vector3Int[] { target.hex.pos },
 			unit = unit.tile.hex.pos
 		});
 	}

@@ -73,9 +73,12 @@ public class Events {
 	[Serializable]
 	public class Ability : GameEvent {
 
+		/// <summary> ability_id. </summary>
 		public string ability;
+		/// <summary> Tile of caster. </summary>
 		public Vector3Int unit;
-		public Vector3Int target;
+		/// <summary> An ordered list of targeted tiles. </summary>
+		public Vector3Int[] targets;
 
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");

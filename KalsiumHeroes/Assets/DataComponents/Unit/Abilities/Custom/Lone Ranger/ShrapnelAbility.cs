@@ -11,7 +11,7 @@ public class ShrapnelAbility : Ability {
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.target];
+			var target = Game.grid.tiles[data.targets.First()];
 			var aoe = GetAffectedArea(target);
 
 			var unit = ability.unit;

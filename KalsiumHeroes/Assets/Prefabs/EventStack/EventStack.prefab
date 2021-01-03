@@ -49,33 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3002c57b139f9743a45161f9af7ce12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stack: []
-  expandCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  expandTime: 0.5
-  speed: 1500
+  _stack: []
 --- !u!114 &4334936177802526929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +64,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 11400000, guid: 7a06a3cb142a18f44a5f654786004aa8, type: 2}
   data: {fileID: 0}
+  rt: {fileID: 0}
   es: {fileID: 8381428152262172752}
   roundStackPrefab: {fileID: 2920945020312278200, guid: 207ce2ebd691c6740ac53874be2df01e, type: 3}
   roundStackItemPrefab: {fileID: 5954060762746580402, guid: ed788a9e85d86d04aa632b946ae403b6, type: 3}
-  total: 3
+  total: 10

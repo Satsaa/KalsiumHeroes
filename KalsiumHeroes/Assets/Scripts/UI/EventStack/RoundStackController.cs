@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Muc.Extensions;
 
 [RequireComponent(typeof(EventStack))]
 public class RoundStackController : Modifier {
 
+	[HideInInspector] public RectTransform rt;
 	[HideInInspector] public EventStack es;
 	public GameObject roundStackPrefab;
 	public GameObject roundStackItemPrefab;
@@ -13,7 +15,12 @@ public class RoundStackController : Modifier {
 
 	new void Awake() {
 		base.Awake();
+		rt = GetComponent<RectTransform>();
 		es = GetComponent<EventStack>();
+	}
+
+	protected void Update() {
+		rt.sizeDelta = rt.sizeDelta.SetX(es.MaxX());
 	}
 
 	public override void OnGameStart() {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AreaDamageAbility : Ability {
@@ -10,7 +11,7 @@ public class AreaDamageAbility : Ability {
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.target];
+			var target = Game.grid.tiles[data.targets.First()];
 			var aoe = GetAffectedArea(target);
 			var primaryTarget = target.unit;
 			if (target.unit != null) primaryTarget.Damage(areaDamageSpellGenericData.primaryDamage.value, areaDamageSpellGenericData.damageType);
