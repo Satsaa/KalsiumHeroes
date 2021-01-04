@@ -10,6 +10,7 @@ public class DataComponentData : ScriptableObject {
 	public virtual Type componentConstraint => typeof(DataComponent);
 
 	[Header("Data Component Data")]
+
 	[Tooltip("Display name of this DataComponent, displayed to users. (\"Oracle\")")]
 	public string displayName;
 

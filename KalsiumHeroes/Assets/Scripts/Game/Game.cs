@@ -14,6 +14,7 @@ public class Game : MonoBehaviour {
 	public static Events events => instance._events;
 	public static Targeting targeting => instance._targeting;
 	public static Rounds rounds => instance._rounds;
+	public static Library library => instance._library;
 
 	public static DataComponentDict dataComponents => instance._dataComponents;
 
@@ -23,6 +24,7 @@ public class Game : MonoBehaviour {
 	[SerializeField] private Events _events = new Events();
 	[SerializeField] private Targeting _targeting = default;
 	[SerializeField] private Rounds _rounds = new Rounds();
+	[SerializeField] private Library _library;
 	[SerializeField] private DataComponentDict _dataComponents = new DataComponentDict();
 
 	private event Action _onAfterEvent;

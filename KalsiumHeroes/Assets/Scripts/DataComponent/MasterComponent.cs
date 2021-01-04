@@ -8,7 +8,7 @@ public abstract class MasterComponent<T> : MasterComponent where T : Modifier {
 	public DataComponentDict<T> modifiers = new DataComponentDict<T>();
 }
 
-
+[DisallowMultipleComponent]
 public abstract class MasterComponent : DataComponent {
 
 	public MasterComponentData masterComponentData => (MasterComponentData)data;
