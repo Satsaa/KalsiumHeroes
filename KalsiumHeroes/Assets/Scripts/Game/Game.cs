@@ -39,30 +39,19 @@ public class Game : MonoBehaviour {
 		instance._onAfterEvent = null;
 	}
 
-	private void OnValidate() {
+	private void OnValidate() => Awake();
+
+	private void Awake() {
 
 		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {nameof(Game)} managers. Exterminating.");
-			DestroyImmediate(this);
+			Debug.LogError($"Multiple {nameof(Game)} GameObjects. Exterminating.");
+			ObjectUtil.Destroy(this);
 			return;
 		}
 
 		_instance = this;
 		if (_grid == null && (_grid = GetComponent<TileGrid>()) == null) Debug.LogError($"No {nameof(TileGrid)} Component!");
 		if (_targeting == null && (_targeting = GetComponent<Targeting>()) == null) Debug.LogError($"No {nameof(Targeting)} Component!");
-	}
-
-	private void Awake() {
-
-		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {nameof(Game)} managers. Exterminating.");
-			Destroy(this);
-			return;
-		}
-
-		_instance = this;
-		if (_grid == null) _grid = GetComponent<TileGrid>();
-		if (_targeting == null) _targeting = GetComponent<Targeting>();
 	}
 
 	private void Start() {

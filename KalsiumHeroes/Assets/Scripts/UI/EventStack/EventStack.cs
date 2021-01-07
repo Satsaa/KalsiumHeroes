@@ -107,7 +107,7 @@ public class EventStack<T> : MonoBehaviour where T : EventStackItem {
 }
 
 #if UNITY_EDITOR
-namespace EventStackEditor {
+namespace Editors {
 
 	using System.Reflection;
 	using System.Linq;

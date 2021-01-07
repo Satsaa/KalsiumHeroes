@@ -26,7 +26,7 @@ public class DataComponentData : ScriptableObject {
 }
 
 #if UNITY_EDITOR
-namespace Muc.Data {
+namespace Editors {
 
 	using System;
 	using System.Linq;
