@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -27,5 +28,10 @@ public class Library : ScriptableObject {
 			res.Add(source.identifier, source);
 		}
 		return res;
+	}
+
+	public T GetData<T>(string id) where T : DataComponentData {
+		var item = dict[id];
+		return item as T;
 	}
 }

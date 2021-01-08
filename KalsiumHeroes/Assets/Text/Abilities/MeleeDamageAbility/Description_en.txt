@@ -1,1 +1,1 @@
-Sample Text
+Deals damage to a unit in an adjacent tile

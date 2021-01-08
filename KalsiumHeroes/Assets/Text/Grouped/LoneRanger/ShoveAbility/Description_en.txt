@@ -1,1 +1,1 @@
-Sample Text
+Shoves a unit away until it hits a wall or another unit.

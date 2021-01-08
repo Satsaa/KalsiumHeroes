@@ -24,7 +24,7 @@ public class StatsUIModifier : UnitModifier {
 
 	void LateUpdate() {
 		parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
-		hpRect.sizeDelta = new Vector2(unit.unitData.health.value / unit.unitData.health.other * hpFullWidth, hpRect.sizeDelta.y);
+		hpRect.sizeDelta = hpRect.sizeDelta.SetX(unit.unitData.health.value / unit.unitData.health.other * hpFullWidth);
 		hpText.text = $"{Mathf.Ceil(unit.unitData.health.value)}/{Mathf.Ceil(unit.unitData.health.other)}";
 	}
 

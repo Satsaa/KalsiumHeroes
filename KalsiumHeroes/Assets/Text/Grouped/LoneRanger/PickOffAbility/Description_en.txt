@@ -1,1 +1,1 @@
-Sample Text
+Deals damage to a unit based on positional relation to other units.

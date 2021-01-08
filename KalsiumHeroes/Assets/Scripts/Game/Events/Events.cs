@@ -73,7 +73,7 @@ public class Events {
 	[Serializable]
 	public class Ability : GameEvent {
 
-		/// <summary> ability_id. </summary>
+		/// <summary> ability id. </summary>
 		public string ability;
 		/// <summary> Tile of caster. </summary>
 		public Vector3Int unit;
@@ -99,5 +99,47 @@ public class Events {
 			return null;
 		}
 	}
+
+	[Serializable]
+	public class Ready : GameEvent {
+
+		[Serializable]
+		public class SpawnInfo {
+
+			/// <summary> unit id. </summary>
+			public string unit;
+
+			/// <summary> Tile to spawn unit at. </summary>
+			public Vector3Int position;
+		}
+
+		/// <summary> Spawned starter units. </summary>
+		public SpawnInfo[] units;
+
+		public override EventHandler GetHandler() {
+			Debug.Log($"{this.GetType().Name}: Called");
+
+			Game.readyCount++;
+
+			switch (Game.readyCount) {
+				case 1:
+					foreach (var info in this.units) {
+						var tile = Game.grid.tiles[info.position];
+						var unitData = Game.library.GetData<UnitData>(info.unit);
+						var go = MasterComponent.Instantiate(unitData, Game.instance.transform);
+						go.SetActive(false);
+					}
+					break;
+				case 2:
+					break;
+				default:
+					throw new InvalidOperationException($"Too many readies! ({Game.readyCount})");
+			}
+
+
+			return null;
+		}
+	}
+
 
 }

@@ -1,1 +1,1 @@
-Sample Text
+Disarms a unit

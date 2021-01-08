@@ -1,1 +1,1 @@
-Sample Text
+Gains speed based on the amount of units in the affected area.

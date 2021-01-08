@@ -1,1 +1,1 @@
-Sample Text
+Moves to a target tile.

@@ -15,7 +15,6 @@ public class Game : MonoBehaviour {
 	public static Targeting targeting => instance._targeting;
 	public static Rounds rounds => instance._rounds;
 	public static Library library => instance._library;
-
 	public static DataComponentDict dataComponents => instance._dataComponents;
 
 	private static Game _instance;
@@ -26,6 +25,9 @@ public class Game : MonoBehaviour {
 	[SerializeField] private Rounds _rounds = new Rounds();
 	[SerializeField] private Library _library;
 	[SerializeField] private DataComponentDict _dataComponents = new DataComponentDict();
+
+	public static int readyCount { get => instance._readyCount; set => instance._readyCount = value; }
+	[SerializeField] private int _readyCount = 0;
 
 	private event Action _onAfterEvent;
 	/// <summary> This event is invoked after the current event execution loop finishes. The event is then cleared. <summary>

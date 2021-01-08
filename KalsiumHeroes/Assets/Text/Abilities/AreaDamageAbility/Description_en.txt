@@ -1,1 +1,1 @@
-Sample Text
+Deals damage in an aoe, dealing bonus damage at the center tile.
