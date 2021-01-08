@@ -22,7 +22,7 @@ public class UnitItem : RoundStackItem {
 				Team.Team2 => Color.red,
 				_ => Color.magenta,
 			};
-			unitText.text = unit.unitData.displayName;
+			unitText.text = unit.unitData.displayName.text;
 		}
 	}
 

@@ -11,6 +11,13 @@ public class TileData : MasterComponentData {
 	public override Type componentConstraint => typeof(Tile);
 
 	[Header("Tile Data")]
+
+	[Tooltip("Display name of the Tile.")]
+	public TextSource displayName;
+
+	[Tooltip("Description of the Tile.")]
+	public TextSource description;
+
 	[Tooltip("Is this tile considered passable?")]
 	public Attribute<bool> passable = new Attribute<bool>(true);
 

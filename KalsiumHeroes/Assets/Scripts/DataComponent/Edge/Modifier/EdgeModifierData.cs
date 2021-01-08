@@ -8,6 +8,12 @@ public class EdgeModifierData : ModifierData {
 
 	public override Type componentConstraint => typeof(EdgeModifier);
 
-	// [Header("Edge Modifier Data")]
+	[Header("Edge Modifier Data")]
+
+	[Tooltip("Display name of the EdgeModifier.")]
+	public TextSource displayName;
+
+	[Tooltip("Description of the EdgeModifier.")]
+	public TextSource description;
 
 }

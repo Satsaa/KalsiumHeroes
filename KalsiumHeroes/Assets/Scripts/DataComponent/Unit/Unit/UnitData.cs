@@ -12,6 +12,15 @@ public class UnitData : MasterComponentData {
 
 	[Header("Unit Data")]
 
+	[Tooltip("Display name of the Unit.")]
+	public TextSource displayName;
+
+	[Tooltip("Description of the Unit.")]
+	public TextSource description;
+
+	[Tooltip("Lore or the bio of the Unit.")]
+	public TextSource lore;
+
 	[Tooltip("The default portrait sprite for this Unit.")]
 	public Sprite portrait;
 

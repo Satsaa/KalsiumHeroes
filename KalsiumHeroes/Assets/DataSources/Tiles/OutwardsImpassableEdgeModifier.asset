@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0487570fedbc6c6449117c1fcd3742be, type: 3}
   m_Name: OutwardsImpassableEdgeModifier
   m_EditorClassIdentifier: 
-  displayName: Outwards Impassable Edge
-  description: Ouwards impassable edge of a tile.
   identifier: edgemodifier_outwards_impassable
   componentType:
     _name: OutwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}
+  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}

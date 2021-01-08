@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300035d4948879748b4e7032a12eb642, type: 3}
   m_Name: TrapTile
   m_EditorClassIdentifier: 
-  displayName: Trap Tile
-  description: Tile which you cannot move out of
   identifier: tile_trap
   componentType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   instantiatee: {fileID: 194248088727427243, guid: a74a4a59cdf9c284e87fd031d12e3c20, type: 3}
+  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
   passable:
     _value: 1
   transparent:

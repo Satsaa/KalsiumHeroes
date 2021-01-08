@@ -8,6 +8,12 @@ public class TileModifierData : ModifierData {
 
 	public override Type componentConstraint => typeof(TileModifier);
 
-	// [Header("Tile Modifier Data")]
+	[Header("Tile Modifier Data")]
+
+	[Tooltip("Display name of the TileModifier.")]
+	public TextSource displayName;
+
+	[Tooltip("Description of the TileModifier.")]
+	public TextSource description;
 
 }

@@ -84,7 +84,7 @@ public class AbilityUIModifier : UnitModifier {
 		icon.transform.SetParent(parent.transform);
 		aIcons.Add(icon);
 		icon.ability = ability;
-		icon.abilityText.text = ability.data.displayName;
+		icon.abilityText.text = ability.unitModifierData.displayName.text;
 		icon.cooldownText.text = "";
 		icon.chargeText.text = "";
 		icon.fgImage.enabled = true;
@@ -96,7 +96,7 @@ public class AbilityUIModifier : UnitModifier {
 		var icon = Instantiate(passivePrefab).GetComponent<PassiveIcon>();
 		pIcons.Add(icon);
 		icon.passive = passive;
-		icon.abilityText.text = passive.data.displayName;
+		icon.abilityText.text = passive.unitModifierData.displayName.text;
 		RefreshLayout();
 	}
 

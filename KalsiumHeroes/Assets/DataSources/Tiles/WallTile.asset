@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300035d4948879748b4e7032a12eb642, type: 3}
   m_Name: WallTile
   m_EditorClassIdentifier: 
-  displayName: Wall Tile
-  description: An impassable wall tile
   identifier: tile_wall
   componentType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   instantiatee: {fileID: 194248088727427243, guid: 09ad36188e110ec4b815aa905bbfefb5, type: 3}
+  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
   passable:
     _value: 0
   transparent:
@@ -26,4 +26,10 @@ MonoBehaviour:
     _value: 1
   appeal:
     _value: 0
-  edges: []
+  edgeModifiers:
+    right: []
+    downRight: []
+    downLeft: []
+    left: []
+    upLeft: []
+    upRigth: []

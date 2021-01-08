@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daea9f0a2ec25a34e9f2ab504bd1621c, type: 3}
   m_Name: SparkTileModifier
   m_EditorClassIdentifier: 
-  displayName: Spark Tile
-  description: Sparks fly as you move on this tile.
   identifier: tilemodifier_spark
   componentType:
     _name: PlayEffectTileModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}

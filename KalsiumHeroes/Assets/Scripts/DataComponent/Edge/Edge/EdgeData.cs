@@ -10,6 +10,11 @@ public class EdgeData : MasterComponentData {
 
 	public override Type componentConstraint => typeof(Edge);
 
-	// [Header("Edge Data")]
+	[Header("Edge Data")]
 
+	[Tooltip("Display name of the Edge.")]
+	public TextSource displayName;
+
+	[Tooltip("Description of the Edge.")]
+	public TextSource description;
 }

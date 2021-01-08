@@ -21,14 +21,52 @@ public class TextSource : ScriptableObject {
 		}
 	}
 
-	public string GetText() {
-		var asset = assets.Find(v => v.lang == App.lang).asset;
-		if (asset == null) return "";
-		return asset.text;
+	public string text {
+		get {
+			var asset = assets.Find(v => v.lang == App.lang).asset;
+			if (asset == null) return "";
+			return asset.text;
+		}
+
 	}
 
 }
 
+#if UNITY_EDITOR
+namespace Editors {
+
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using UnityEngine;
+	using UnityEditor;
+	using static Muc.Editor.PropertyUtil;
+	using static Muc.Editor.EditorUtil;
+
+	[CanEditMultipleObjects]
+	[CustomPropertyDrawer(typeof(TextSource))]
+	public class SerializedTypeDrawer : PropertyDrawer {
+
+		bool initialized = false;
+
+		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+			if (!initialized) {
+				initialized = true;
+				if (!property.hasMultipleDifferentValues) {
+					var val = GetFirstValue<TextSource>(property);
+					if (val == null) {
+						SetValue(property, AppProjectSettings.instance.defaultTextSource);
+					}
+				}
+			}
+			EditorGUI.PropertyField(position, property, label);
+		}
+
+	}
+}
+#endif
+
+#if UNITY_EDITOR
 namespace Editors {
 
 	using UnityEngine;
@@ -96,3 +134,4 @@ namespace Editors {
 
 	}
 }
+#endif

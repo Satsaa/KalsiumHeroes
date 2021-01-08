@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6243cad3f117eb04a8fc7108f4b470a7, type: 3}
   m_Name: SideKickAbility
   m_EditorClassIdentifier: 
-  displayName: Side Kick
-  description: Deal 2*Movement and 2*Speed as Physical Damage to any 1 target in
-    melee range
   identifier: ability_side_kick
   componentType:
     _name: SideKickAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: b79976a7c2384dd449dafbf66c4585da, type: 2}
+  description: {fileID: 11400000, guid: e664965360ed40f448281c2fea5884d9, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   targetType: 12
   range:
     _value: 1
-    enabled: 1
+    _enabled: 1
   rangeMode: 0
   radius:
     _value: 0
@@ -37,7 +37,7 @@ MonoBehaviour:
     _other: 1
   uses:
     _value: 0
-    enabled: 0
+    _enabled: 0
   alwaysCastable:
     _value: 0
   movementDamageMultiplier:

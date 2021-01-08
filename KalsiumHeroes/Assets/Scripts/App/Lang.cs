@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum Lang {
 	en,
-	abc,
+	fi,
 }

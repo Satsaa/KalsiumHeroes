@@ -11,12 +11,6 @@ public class DataComponentData : ScriptableObject {
 
 	[Header("Data Component Data")]
 
-	[Tooltip("Display name of this DataComponent, displayed to users. (\"Oracle\")")]
-	public string displayName;
-
-	[Tooltip("Description of this DataComponent, displayed to users.")]
-	public string description;
-
 	[Tooltip("String identifier of this DataComponent. (\"unit_oracle\")")]
 	public string identifier;
 
@@ -57,8 +51,6 @@ namespace Editors {
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
 
-			EditorGUILayout.PropertyField(displayName);
-			EditorGUILayout.PropertyField(description);
 			EditorGUILayout.PropertyField(identifier);
 
 			// Draw custom type selector
@@ -83,8 +75,6 @@ namespace Editors {
 			DrawPropertiesExcluding(
 				serializedObject,
 				"m_Script",
-				nameof(displayName),
-				nameof(description),
 				nameof(identifier),
 				nameof(componentType)
 			);
