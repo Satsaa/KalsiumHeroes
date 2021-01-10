@@ -12,18 +12,16 @@ public class Unit : MasterComponent<UnitModifier> {
 	public UnitData unitData => (UnitData)data;
 	public override Type dataType => typeof(UnitData);
 
-	[HideInInspector]
-	[Tooltip("Unit is silenced? It cannot cast spells.")]
+	[HideInInspector, Tooltip("Unit is silenced? It cannot cast spells.")]
 	public SeededAttribute<bool> silenced;
 
-	[HideInInspector]
-	[Tooltip("Unit is disarmed? It cannot cast weapon skills.")]
+	[HideInInspector, Tooltip("Unit is disarmed? It cannot cast weapon skills.")]
 	public SeededAttribute<bool> disarmed;
 
-	[HideInInspector]
-	[Tooltip("Unit is rooted? It cannot move.")]
+	[HideInInspector, Tooltip("Unit is rooted? It cannot move.")]
 	public SeededAttribute<bool> rooted;
 
+	public UnitActor actor;
 	public Team team;
 	[field: SerializeField]
 	public Tile tile { get; private set; }
@@ -38,6 +36,7 @@ public class Unit : MasterComponent<UnitModifier> {
 			var nearTile = Game.grid.NearestTile(transform.position.xz(), v => v.unit == null);
 			if (nearTile) MoveTo(nearTile, true);
 		}
+		actor = GetComponentInChildren<UnitActor>();
 		Game.dataComponents.Execute<Modifier>(v => v.OnSpawn(this));
 		Game.InvokeOnAfterEvent();
 		tile.modifiers.Execute<TileModifier>(v => v.OnSpawnOn(this));

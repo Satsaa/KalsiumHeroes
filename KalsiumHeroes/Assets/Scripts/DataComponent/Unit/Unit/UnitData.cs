@@ -21,6 +21,9 @@ public class UnitData : MasterComponentData {
 	[Tooltip("Lore or the bio of the Unit.")]
 	public TextSource lore;
 
+	[Tooltip("Prefab which contains the actor for this Unit.")]
+	public UnitActor actorPrefab;
+
 	[Tooltip("The default portrait sprite for this Unit.")]
 	public Sprite portrait;
 

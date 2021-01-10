@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: SpeedrunnerUnit
+  m_EditorClassIdentifier: 
+  identifier: unit_speedrunner
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 2111917448119326900, guid: e6f77dd4b5c9cce48a1c42eb44db6005, type: 3}
+  displayName: {fileID: 11400000, guid: 02f9ce3799542db4cad57c85ac89a7f6, type: 2}
+  description: {fileID: 11400000, guid: 0cc2f4cf8f4cdf84fa4ee8dd1563b885, type: 2}
+  lore: {fileID: 11400000, guid: 3f159dc07f8502148bf3cbc506966547, type: 2}
+  portrait: {fileID: 21300000, guid: 7e1aff9652c0dac418d9aa42f5f24dc2, type: 3}
+  speed:
+    _value: 6
+  movement:
+    _value: 5
+  health:
+    _value: 100
+    _other: 100
+  defense:
+    _value: 10
+  resistance:
+    _value: 0

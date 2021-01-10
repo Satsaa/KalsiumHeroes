@@ -8,46 +8,64 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 	public MoveAbility creator;
 
-	[SerializeField, HideInInspector] float animTime;
 	[SerializeField, HideInInspector] bool animating;
-	[SerializeField, HideInInspector] Tile start;
-	[SerializeField, HideInInspector] Tile end;
-	[SerializeField, HideInInspector] Tile[] path;
-
-	[SerializeField, HideInInspector] int eventIndex;
-	int maxIndex => (path.Length - 1) * 2;
-	int tileIndex => eventIndex / 2;
+	[SerializeField, HideInInspector] int index;
+	[SerializeField, HideInInspector] List<MasterComponent> pathObjects = new List<MasterComponent>();
 
 	public MoveAbilityHandler(Events.Ability data, MoveAbility creator) : base(data) {
 		this.creator = creator;
-		start = Game.grid.tiles[data.unit];
-		end = Game.grid.tiles[data.targets.First()];
+		var start = Game.grid.tiles[data.unit];
+		var end = Game.grid.tiles[data.targets.First()];
 		Debug.Log("Handling move ability event!");
 		if (end.unit) {
 			Debug.LogError("Target Tile is blocked by a unit!");
 		} else {
-			ExecuteOff(start);
 			var rangeMode = creator.abilityData.rangeMode;
 			Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
-			path = result.path;
+			animating = true;
+			index = 0;
+			pathObjects.Clear();
+
 			var cost = result.tiles[result.closest].cost;
 			creator.usedMovement += cost;
-			animating = true;
-			animTime = 0;
+
+			// Build list of items to move to
+			Tile prev = null;
+			foreach (var tile in result.path) {
+				if (prev != null) {
+					var edge = tile.edges[tile.neighbors.ToList().FindIndex(v => v == prev)];
+					pathObjects.Add(edge);
+				}
+				pathObjects.Add(tile);
+				prev = tile;
+			}
 		}
 	}
 
 	public override void Update() {
-		animTime += Time.deltaTime * 3;
-		if (animTime > maxIndex / 2) {
-			End();
-			return;
+		var actor = creator.unit.actor;
+		if (!actor.animating) {
+			var doSlowDown = false;
+			if (index >= pathObjects.Count - 1) {
+				End();
+				return;
+			}
+			var prev = pathObjects[index];
+			var next = pathObjects[++index];
+			switch (next) {
+				case Tile tile:
+					ExecuteOver(prev as Edge, pathObjects[index - 2] as Tile);
+					if (index >= pathObjects.Count - 1) doSlowDown = true;
+					break;
+				case Edge edge:
+					if (index > 1) ExecuteOn(prev as Tile);
+					if (index > pathObjects.Count - 1) {
+						ExecuteOff(prev as Tile);
+					}
+					break;
+			}
+			actor.WalkTo(next.transform.position, doSlowDown);
 		}
-		var newIndex = Mathf.FloorToInt(animTime * 2);
-		LoopTo(newIndex);
-		var startPos = path[tileIndex].center;
-		var targetPos = path[tileIndex + 1].center;
-		creator.unit.transform.position = Vector3.Lerp(startPos, targetPos, animTime % 1);
 	}
 
 	public override bool EventHasEnded() {
@@ -55,34 +73,22 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	}
 
 	public override bool End() {
-		LoopTo(maxIndex);
-		creator.unit.MoveTo(end, true);
+		if (!animating) return true;
 		animating = false;
+		while (index < pathObjects.Count - 1) {
+			Update();
+			var actor = creator.unit.actor;
+			actor.EndAnimations();
+		}
+		ExecuteOn(pathObjects.Last() as Tile);
+		creator.unit.MoveTo(pathObjects.Last() as Tile, true);
 		return true;
 	}
 
-	protected void LoopTo(int max) {
-		while (max > eventIndex) {
-			eventIndex++;
-			var tile = path[tileIndex];
-			if (eventIndex % 2 == 1) {
-				var next = path[tileIndex + 1];
-				ExecuteOver(tile, next);
-			} else {
-				if (eventIndex == maxIndex) {
-					ExecuteOn(path[tileIndex]);
-				} else {
-					ExecuteOn(path[tileIndex]);
-					ExecuteOff(path[tileIndex]);
-				}
-			}
-		}
-	}
 
-	protected void ExecuteOver(Tile current, Tile next) {
-		Debug.Log($"OnMoveOver ({current.gameObject.name} -> {next.gameObject.name})");
-		var edge = current.edges[current.neighbors.ToList().FindIndex(v => v == next)];
-		edge.modifiers.Execute(v => v.OnMoveOver(creator.unit, current));
+	protected void ExecuteOver(Edge edge, Tile source) {
+		Debug.Log($"OnMoveOver ({edge.gameObject.name})");
+		edge.modifiers.Execute(v => v.OnMoveOver(creator.unit, source));
 		Game.InvokeOnAfterEvent();
 	}
 
