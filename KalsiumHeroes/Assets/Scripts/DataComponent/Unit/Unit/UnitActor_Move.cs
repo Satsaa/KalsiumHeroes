@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Muc.Extensions;
+using Muc.Geometry;
+using System.Linq;
 
 public partial class UnitActor {
 
@@ -12,108 +14,50 @@ public partial class UnitActor {
 	public float walkSpeed = 1f;
 	public float runSpeed = 1.75f;
 
-	public float walkSpeedUpDuration = 0.25f;
-	public float runSpeedUpDuration = 0.25f;
-	public AnimationCurve speedUpCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
-	public float walkSlowDownDistance = 0.1f;
-	public float runSlowDownDistance = 0.1f;
-	public AnimationCurve slowDownCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
-
 	[HideInInspector, SerializeField] bool isMoving;
-	[HideInInspector, SerializeField] float speed;
-	[HideInInspector, SerializeField] Vector2 moveTarget;
-	[HideInInspector, SerializeField] float moveTime;
-	[HideInInspector, SerializeField] bool doStop;
-	private enum MoveStage { SpeedUp, Stable, SlowDown }
-	[HideInInspector, SerializeField] MoveStage moveStage;
-	[HideInInspector, SerializeField] float slowDownStartTime;
-	[HideInInspector, SerializeField] Vector2 slowDownStartPosition;
-	[HideInInspector, SerializeField] float slowDownDuration;
+	[HideInInspector, SerializeField] public float moveT;
+	[HideInInspector, SerializeField] public Spline spline;
 
 
-	public void WalkTo(Vector3 position, bool doStop) => WalkTo(position.xz(), doStop);
-	public void WalkTo(Vector2 position, bool doStop) {
-		if (!isMoving) {
-			EndAnimations();
-			ResetMovementVars();
-		}
-		isMoving = true;
-		this.doStop = doStop;
+	public void Walk(IEnumerable<Vector3> positions) {
+		moveT = 0;
+		spline = new Spline(positions);
 		animationType = AnimationType.Walk;
-		moveTarget = position;
-	}
-
-	public void RunTo(Vector3 position, bool doStop) => RunTo(position.xz(), doStop);
-	public void RunTo(Vector2 position, bool doStop) {
-		if (!isMoving) {
-			EndAnimations();
-			ResetMovementVars();
-		}
 		isMoving = true;
-		this.doStop = doStop;
-		animationType = AnimationType.Run;
-		moveTarget = position;
+		Set2DPos(positions.First());
 	}
 
-	private void ResetMovementVars() {
-		moveTime = Time.time;
-		moveStage = MoveStage.SpeedUp;
-		speed = 0;
+	public void Run(IEnumerable<Vector3> positions) {
+		moveT = 0;
+		spline = new Spline(positions);
+		animationType = AnimationType.Run;
+		isMoving = true;
+		Set2DPos(positions.First());
 	}
 
 	private void DoMovement() {
-		if (doStop && moveStage != MoveStage.SlowDown) {
-			var slowDownDistance = animationType == AnimationType.Walk ? walkSlowDownDistance : runSlowDownDistance;
-			var distance = Vector2.Distance(Get2DPos(), moveTarget);
-			if (distance <= slowDownDistance) {
-				slowDownStartTime = Time.time;
-				slowDownStartPosition = Get2DPos();
-				slowDownDuration = Vector2.Distance(slowDownStartPosition, moveTarget) / speed;
-				moveStage = MoveStage.SlowDown;
-			}
+		moveT += walkSpeed * Time.deltaTime;
+		var point = spline.Eval(moveT);
+		var diff = point - GetPos();
+		Set2DPos(point.xz());
+		base.transform.parent.LookAt(GetPos() + diff);
+		if (moveT >= spline._controls.Count - 1) {
+			EndAnimations();
 		}
-		switch (moveStage) {
-			case MoveStage.SpeedUp: {
-					var targetSpeed = animationType == AnimationType.Walk ? walkSpeed : runSpeed;
-					var speedUpDuration = animationType == AnimationType.Walk ? walkSpeedUpDuration : runSpeedUpDuration;
+	}
 
-					var timePassed = Time.time - moveTime;
-					var timeFract = timePassed / speedUpDuration;
+	private void OnDrawGizmos() {
+		if (spline._controls.Count < 2) return;
+		var points = spline.RenderSpline(8);
 
-					if (timeFract >= 1) {
-						speed = targetSpeed;
-						moveStage = MoveStage.Stable;
-					} else {
-						speed = speedUpCurve.Evaluate(timeFract);
-					}
-					Set2DPos(Vector2.MoveTowards(Get2DPos(), moveTarget, speed * Time.deltaTime));
-				}
-				break;
-
-			case MoveStage.Stable: {
-					Set2DPos(Vector2.MoveTowards(Get2DPos(), moveTarget, speed * Time.deltaTime));
-					if (Get2DPos() == moveTarget) {
-						if (doStop) EndAnimations();
-						else animationType = AnimationType.None; // Without isMoving = false
-					}
-				}
-				break;
-
-			case MoveStage.SlowDown: {
-					var slowDownDistance = animationType == AnimationType.Walk ? walkSlowDownDistance : runSlowDownDistance;
-
-					var timePassed = Time.time - slowDownStartTime;
-					var timeFract = timePassed / slowDownDuration;
-
-					var lerpPos = Vector2.Lerp(slowDownStartPosition, moveTarget, 1 - slowDownCurve.Evaluate(timeFract));
-					Set2DPos(lerpPos);
-					if (timeFract >= 1) {
-						if (doStop) EndAnimations();
-						else animationType = AnimationType.None; // Without isMoving = false
-					}
-				}
-				break;
+		int i = 0;
+		var prev = Vector3.zero;
+		foreach (var point in points) {
+			if (i > 0) {
+				Gizmos.DrawLine(prev, point);
+			}
+			prev = point;
+			i++;
 		}
 	}
 

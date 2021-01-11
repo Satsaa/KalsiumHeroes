@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Muc.Extensions;
+using System.Linq;
 
 public partial class UnitActor : MonoBehaviour {
 
@@ -44,7 +45,8 @@ public partial class UnitActor : MonoBehaviour {
 				break;
 			case AnimationType.Run:
 			case AnimationType.Walk:
-				Set2DPos(moveTarget);
+				Set2DPos(spline._controls.Last().xz());
+				moveT = spline._controls.Count - 1;
 				isMoving = false;
 				break;
 		}

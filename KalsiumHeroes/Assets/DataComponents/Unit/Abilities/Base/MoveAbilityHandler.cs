@@ -23,7 +23,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			var rangeMode = creator.abilityData.rangeMode;
 			Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
 			animating = true;
-			index = 0;
+			index = -1;
 			pathObjects.Clear();
 
 			var cost = result.tiles[result.closest].cost;
@@ -39,32 +39,30 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 				pathObjects.Add(tile);
 				prev = tile;
 			}
+			var actor = creator.unit.actor;
+			actor.Walk(pathObjects.Select(v => v.transform.position));
 		}
 	}
 
 	public override void Update() {
 		var actor = creator.unit.actor;
-		if (!actor.animating) {
-			var doSlowDown = false;
+		if (index + 1 <= actor.moveT) {
+			index++;
 			if (index >= pathObjects.Count - 1) {
 				End();
 				return;
 			}
 			var prev = pathObjects[index];
-			var next = pathObjects[++index];
+			var next = pathObjects[index + 1];
 			switch (next) {
 				case Tile tile:
-					ExecuteOver(prev as Edge, pathObjects[index - 2] as Tile);
-					if (index >= pathObjects.Count - 1) doSlowDown = true;
+					ExecuteOver(prev as Edge, pathObjects[index - 1] as Tile);
 					break;
 				case Edge edge:
-					if (index > 1) ExecuteOn(prev as Tile);
-					if (index > pathObjects.Count - 1) {
-						ExecuteOff(prev as Tile);
-					}
+					if (index > 0) ExecuteOn(prev as Tile);
+					ExecuteOff(prev as Tile);
 					break;
 			}
-			actor.WalkTo(next.transform.position, doSlowDown);
 		}
 	}
 
