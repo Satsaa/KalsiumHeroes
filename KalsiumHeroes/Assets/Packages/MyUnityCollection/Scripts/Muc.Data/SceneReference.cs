@@ -19,15 +19,15 @@ namespace Muc.Data {
 	// Internally we serialize an Object to the SceneAsset which only exists at editor time.
 	// Any time the object is serialized, we store the path provided by this Asset (assuming it was valid).
 	//
-	// This means that, come build time, the string path of the scene asset is always already stored, which if 
+	// This means that, come build time, the string path of the scene asset is always already stored, which if
 	// the scene was added to the build settings means it can be loaded.
 	//
 	// It is up to the user to ensure the scene exists in the build settings so it is loadable at runtime.
 	// To help with this, a custom PropertyDrawer displays the scene build settings state.
 	//
 	//  Known issues:
-	// - When reverting back to a prefab which has the asset stored as null, Unity will show the property 
-	// as modified despite having just reverted. This only happens on the fist time, and reverting again fix it. 
+	// - When reverting back to a prefab which has the asset stored as null, Unity will show the property
+	// as modified despite having just reverted. This only happens on the fist time, and reverting again fix it.
 	// Under the hood the state is still always valid and serialized correctly regardless.
 
 

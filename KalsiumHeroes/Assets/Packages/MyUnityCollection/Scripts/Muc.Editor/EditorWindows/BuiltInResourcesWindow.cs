@@ -2,235 +2,236 @@
 #if UNITY_EDITOR
 namespace Muc.Editor {
 
-  using System;
-  using UnityEditor;
-  using UnityEngine;
-  using System.Collections.Generic;
-  using System.Linq;
+	using System;
+	using UnityEditor;
+	using UnityEngine;
+	using System.Collections.Generic;
+	using System.Linq;
 
-  public class GUIResourcesWindow : EditorWindow {
-    [MenuItem("Window/GUI Resources")]
-    public static void ShowWindow() {
-      GUIResourcesWindow w = (GUIResourcesWindow)EditorWindow.GetWindow<GUIResourcesWindow>();
-      w.Show();
+	public class GUIResourcesWindow : EditorWindow {
 
-    }
+		[MenuItem("Window/GUI Resources")]
+		public static void ShowWindow() {
+			GUIResourcesWindow w = (GUIResourcesWindow)EditorWindow.GetWindow<GUIResourcesWindow>();
+			w.Show();
 
-    private struct Drawer {
-      public Rect rect;
-      public Action draw;
-      public bool active;
-    }
+		}
 
-    private List<Drawer> drawers;
+		private struct Drawer {
+			public Rect rect;
+			public Action draw;
+			public bool active;
+		}
 
-    private List<Texture2D> textures;
+		private List<Drawer> drawers;
 
-    private float maxY;
-    private Rect oldPosition;
+		private List<Texture2D> textures;
 
-    private Tab tab = Tab.Styles;
-    private enum Tab { Styles, Textures }
+		private float maxY;
+		private Rect oldPosition;
 
-    private string search = "";
-    private float scrollVal;
+		private Tab tab = Tab.Styles;
+		private enum Tab { Styles, Textures }
 
-    private const int PADDING_X = 5;
-    private const int PADDING_Y = 5;
+		private string search = "";
+		private float scrollVal;
 
-    private const int SCROLL_W = 16;
+		private const int PADDING_X = 5;
+		private const int PADDING_Y = 5;
 
-    private string[] FILTER_TEXTURE_NAMES { get; } = new string[] { "", "CurveTexture", "Font Texture", "Clear Texture", "MagentaTexture" };
+		private const int SCROLL_W = 16;
 
-    void OnGUI() {
-      if (position.width != oldPosition.width && Event.current.type == EventType.Layout) {
-        drawers = null;
-        oldPosition = position;
-      }
+		private string[] FILTER_TEXTURE_NAMES { get; } = new string[] { "", "CurveTexture", "Font Texture", "Clear Texture", "MagentaTexture" };
 
-      using (new GUILayout.HorizontalScope()) {
+		void OnGUI() {
+			if (position.width != oldPosition.width && Event.current.type == EventType.Layout) {
+				drawers = null;
+				oldPosition = position;
+			}
 
-        if (GUILayout.Toggle(tab == Tab.Styles, "Styles", GUI.skin.FindStyle("Tab first")) && tab != Tab.Styles) {
-          tab = Tab.Styles;
-          drawers = null;
-        }
+			using (new GUILayout.HorizontalScope()) {
 
-        if (GUILayout.Toggle(tab == Tab.Textures, "Textures", GUI.skin.FindStyle("Tab last")) && tab != Tab.Textures) {
-          tab = Tab.Textures;
-          textures = null;
-          drawers = null;
-        }
-      }
+				if (GUILayout.Toggle(tab == Tab.Styles, "Styles", GUI.skin.FindStyle("Tab first")) && tab != Tab.Styles) {
+					tab = Tab.Styles;
+					drawers = null;
+				}
 
+				if (GUILayout.Toggle(tab == Tab.Textures, "Textures", GUI.skin.FindStyle("Tab last")) && tab != Tab.Textures) {
+					tab = Tab.Textures;
+					textures = null;
+					drawers = null;
+				}
+			}
 
-      string newSearch = GUILayout.TextField(search);
-      if (newSearch != search) {
-        search = newSearch;
-        drawers = null;
-      }
 
+			string newSearch = GUILayout.TextField(search);
+			if (newSearch != search) {
+				search = newSearch;
+				drawers = null;
+			}
 
-      if (drawers == null) {
 
-        drawers = new List<Drawer>();
+			if (drawers == null) {
 
-        var nameStyle = GUI.skin.FindStyle("MiniToolbarButton");
+				drawers = new List<Drawer>();
 
-        GUIContent normalText = new GUIContent("normal");
-        GUIContent activeText = new GUIContent("active");
+				var nameStyle = GUI.skin.FindStyle("MiniToolbarButton");
 
-        float x = PADDING_X;
-        float y = PADDING_Y;
+				GUIContent normalText = new GUIContent("normal");
+				GUIContent activeText = new GUIContent("active");
 
-        float maxHeight = 0;
+				float x = PADDING_X;
+				float y = PADDING_Y;
 
-        string searchLow = search.ToLower();
+				float maxHeight = 0;
 
+				string searchLow = search.ToLower();
 
-        switch (tab) {
 
-          case Tab.Styles:
+				switch (tab) {
 
-            foreach (GUIStyle style in GUI.skin.customStyles) {
-              if (searchLow != "" && !style.name.ToLower().Contains(searchLow))
-                continue;
+					case Tab.Styles:
 
-              var drawer = new Drawer();
+						foreach (GUIStyle style in GUI.skin.customStyles) {
+							if (searchLow != "" && !style.name.ToLower().Contains(searchLow))
+								continue;
 
-              var size = style.CalcSize(normalText);
-              if (size.x < 8) size.x = 80;
-              if (size.y < 8) size.y = 40;
+							var drawer = new Drawer();
 
-              var nameSize = nameStyle.CalcSize(new GUIContent(style.name));
+							var size = style.CalcSize(normalText);
+							if (size.x < 8) size.x = 80;
+							if (size.y < 8) size.y = 40;
 
-              var width = Mathf.Max(
-                nameSize.x,
-                size.x * 2
-              ) + 16;
+							var nameSize = nameStyle.CalcSize(new GUIContent(style.name));
 
-              var height = nameSize.y + size.y + PADDING_X * 2;
+							var width = Mathf.Max(
+									nameSize.x,
+									size.x * 2
+							) + 16;
 
-              if (x + width > position.width - SCROLL_W - PADDING_X && x > PADDING_X) {
-                x = PADDING_X;
-                y += maxHeight + PADDING_Y * 2;
-                maxHeight = height;
-              }
+							var height = nameSize.y + size.y + PADDING_X * 2;
 
-              maxHeight = Mathf.Max(maxHeight, height);
+							if (x + width > position.width - SCROLL_W - PADDING_X && x > PADDING_X) {
+								x = PADDING_X;
+								y += maxHeight + PADDING_Y * 2;
+								maxHeight = height;
+							}
 
-              drawer.rect = new Rect(x, y, width, height);
+							maxHeight = Mathf.Max(maxHeight, height);
 
-              drawer.draw = () => {
-                EditorGUILayout.SelectableLabel(style.name, nameStyle, GUILayout.Height(16));
+							drawer.rect = new Rect(x, y, width, height);
 
-                using (new GUILayout.HorizontalScope()) {
-                  drawer.active =
-                  GUILayout.Toggle(drawer.active, normalText, style, GUILayout.Width(width / 2));
-                  GUILayout.Toggle(true, activeText, style, GUILayout.Width(width / 2));
-                }
-              };
+							drawer.draw = () => {
+								EditorGUILayout.SelectableLabel(style.name, nameStyle, GUILayout.Height(16));
 
-              x += width + PADDING_X * 2;
+								using (new GUILayout.HorizontalScope()) {
+									drawer.active =
+									GUILayout.Toggle(drawer.active, normalText, style, GUILayout.Width(width / 2));
+									GUILayout.Toggle(true, activeText, style, GUILayout.Width(width / 2));
+								}
+							};
 
-              drawers.Add(drawer);
-            }
+							x += width + PADDING_X * 2;
 
-            break;
+							drawers.Add(drawer);
+						}
 
+						break;
 
-          case Tab.Textures:
 
-            if (textures == null) {
-              textures = Resources.FindObjectsOfTypeAll<Texture2D>().ToList();
-              textures.Sort((a, b) => System.String.Compare(a.name, b.name, System.StringComparison.OrdinalIgnoreCase));
-            }
+					case Tab.Textures:
 
-            foreach (var texture in textures) {
+						if (textures == null) {
+							textures = Resources.FindObjectsOfTypeAll<Texture2D>().ToList();
+							textures.Sort((a, b) => System.String.Compare(a.name, b.name, System.StringComparison.OrdinalIgnoreCase));
+						}
 
-              if (FILTER_TEXTURE_NAMES.Contains(texture.name))
-                continue;
-              if (searchLow != "" && !texture.name.ToLower().Contains(searchLow))
-                continue;
+						foreach (var texture in textures) {
 
-              var drawer = new Drawer();
+							if (FILTER_TEXTURE_NAMES.Contains(texture.name))
+								continue;
+							if (searchLow != "" && !texture.name.ToLower().Contains(searchLow))
+								continue;
 
-              var buttonSize = GUI.skin.button.CalcSize(new GUIContent(texture.name));
+							var drawer = new Drawer();
 
-              var width = Mathf.Max(
-                buttonSize.x,
-                texture.width
-              ) + 8;
+							var buttonSize = GUI.skin.button.CalcSize(new GUIContent(texture.name));
 
-              var height = buttonSize.y + texture.height + 4;
+							var width = Mathf.Max(
+									buttonSize.x,
+									texture.width
+							) + 8;
 
+							var height = buttonSize.y + texture.height + 4;
 
-              if (x + width > position.width - SCROLL_W - PADDING_X && x > PADDING_X) {
-                x = PADDING_X;
-                y += maxHeight + PADDING_Y * 2;
-                maxHeight = height;
-              }
 
-              maxHeight = Mathf.Max(maxHeight, height);
+							if (x + width > position.width - SCROLL_W - PADDING_X && x > PADDING_X) {
+								x = PADDING_X;
+								y += maxHeight + PADDING_Y * 2;
+								maxHeight = height;
+							}
 
-              drawer.rect = new Rect(x, y, width, height);
+							maxHeight = Mathf.Max(maxHeight, height);
 
-              drawer.draw = () => {
-                EditorGUILayout.SelectableLabel(texture.name, nameStyle, GUILayout.Height(16));
+							drawer.rect = new Rect(x, y, width, height);
 
-                var clampW = Mathf.Min(texture.width, position.width - 16);
-                var clampH = Mathf.Min(texture.height, position.height - 16);
+							drawer.draw = () => {
+								EditorGUILayout.SelectableLabel(texture.name, nameStyle, GUILayout.Height(16));
 
-                Rect textureRect = GUILayoutUtility.GetRect(
-                  texture.width, texture.width, texture.height, texture.height,
-                  GUILayout.ExpandHeight(false), GUILayout.ExpandWidth(false)
-                );
+								var clampW = Mathf.Min(texture.width, position.width - 16);
+								var clampH = Mathf.Min(texture.height, position.height - 16);
 
-                textureRect.x += 4;
-                textureRect.y += 3;
+								Rect textureRect = GUILayoutUtility.GetRect(
+										texture.width, texture.width, texture.height, texture.height,
+										GUILayout.ExpandHeight(false), GUILayout.ExpandWidth(false)
+								);
 
-                EditorGUI.DrawTextureTransparent(textureRect, texture);
-              };
+								textureRect.x += 4;
+								textureRect.y += 3;
 
-              x += width + PADDING_X * 2;
+								EditorGUI.DrawTextureTransparent(textureRect, texture);
+							};
 
-              drawers.Add(drawer);
-            }
+							x += width + PADDING_X * 2;
 
-            break;
+							drawers.Add(drawer);
+						}
 
-        }
+						break;
 
-        maxY = y;
-      }
+				}
 
-      float top = EditorGUIUtility.singleLineHeight * 2 - 1;
+				maxY = y;
+			}
 
-      var scrollRect = new Rect(
-        x: position.width - SCROLL_W,
-        y: top,
-        width: SCROLL_W,
-        height: position.height - top
-      );
+			float top = EditorGUIUtility.singleLineHeight * 2 - 1;
 
-      float contentHeight = position.height - top; // 696
-      scrollVal = GUI.VerticalScrollbar(scrollRect, scrollVal, contentHeight, 0, Mathf.Max(position.height - top, maxY)); // 585
+			var scrollRect = new Rect(
+					x: position.width - SCROLL_W,
+					y: top,
+					width: SCROLL_W,
+					height: position.height - top
+			);
 
-      var area = new Rect(0, top, position.width - 16, contentHeight);
-      using (new GUILayout.AreaScope(area)) {
+			float contentHeight = position.height - top; // 696
+			scrollVal = GUI.VerticalScrollbar(scrollRect, scrollVal, contentHeight, 0, Mathf.Max(position.height - top, maxY)); // 585
 
-        foreach (var drawing in drawers) {
-          var clampRect = drawing.rect;
-          clampRect.y -= scrollVal;
+			var area = new Rect(0, top, position.width - 16, contentHeight);
+			using (new GUILayout.AreaScope(area)) {
 
-          if (clampRect.y + clampRect.height > 0 && clampRect.y < contentHeight) {
-            using (new GUILayout.AreaScope(clampRect, "", GUI.skin.FindStyle("grey_border"))) {
-              drawing.draw();
-            }
-          }
-        }
-      }
-    }
+				foreach (var drawing in drawers) {
+					var clampRect = drawing.rect;
+					clampRect.y -= scrollVal;
 
-  }
+					if (clampRect.y + clampRect.height > 0 && clampRect.y < contentHeight) {
+						using (new GUILayout.AreaScope(clampRect, "", GUI.skin.FindStyle("grey_border"))) {
+							drawing.draw();
+						}
+					}
+				}
+			}
+		}
+
+	}
 }
 #endif

@@ -21,7 +21,7 @@ namespace Muc.Systems.Interaction {
 
 
 #if (MUC_HIDE_COMPONENTS || MUC_HIDE_SYSTEM_COMPONENTS)
-  	[AddComponentMenu("")]
+	[AddComponentMenu("")]
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.Interaction) + "/" + nameof(Movable))]
 #endif

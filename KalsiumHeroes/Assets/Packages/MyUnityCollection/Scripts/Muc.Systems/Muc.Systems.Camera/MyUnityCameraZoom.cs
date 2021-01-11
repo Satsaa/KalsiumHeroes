@@ -8,7 +8,7 @@ namespace Muc.Systems.Camera {
 	using UnityEngine;
 
 #if (MUC_HIDE_COMPONENTS || MUC_HIDE_SYSTEM_COMPONENTS)
-  [AddComponentMenu("")]
+	[AddComponentMenu("")]
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.Camera) + "/" + nameof(MyUnityCameraZoom))]
 #endif
