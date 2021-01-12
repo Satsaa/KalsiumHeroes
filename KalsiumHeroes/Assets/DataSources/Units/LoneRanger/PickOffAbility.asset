@@ -29,6 +29,8 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 1
+  energy:
+    _value: 20
   cooldown:
     _value: 0
     _other: 0
