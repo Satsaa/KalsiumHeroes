@@ -23,6 +23,7 @@ public abstract class EdgeModifier : Modifier {
 		base.Awake();
 		Debug.Assert(context, $"No context set! Use an initializer with AddDataComponent and call {nameof(Init)}");
 		edge.modifiers.Add(this);
+		edge.onEvents.Add(this);
 		OnAdd();
 		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
 		Game.InvokeOnAfterEvent();
@@ -38,6 +39,7 @@ public abstract class EdgeModifier : Modifier {
 		OnRemove();
 		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
 		Game.InvokeOnAfterEvent();
+		edge.onEvents.Remove(this);
 		edge.modifiers.Remove(this);
 		base.OnDestroy();
 	}
@@ -52,13 +54,5 @@ public abstract class EdgeModifier : Modifier {
 	/// <summary> When any other EdgeModifier is being removed. </summary>
 	public virtual void OnRemove(EdgeModifier modifier) { }
 
-	/// <summary> When a Unit moves over this Edge. </summary>
-	public virtual void OnMoveOver(Unit unit, Tile from) { }
-
-	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
-	public virtual bool IsPassable(Tile from, Tile to, bool current) => current;
-
-	/// <summary> The move cost over this Edge from Tile "from" to Tile "to". </summary>
-	public virtual float MoveCost(Tile from, Tile to, float current) => current;
 }
 

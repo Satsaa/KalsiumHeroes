@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lore
   m_EditorClassIdentifier: 
   assets:
-  - asset: {fileID: 4900000, guid: 26f32a4038dd9d44d96459675cf8d811, type: 3}
+  - asset: {fileID: 4900000, guid: 46bfe5c26badf614685a6838191d1815, type: 3}
     lang: 0
   - asset: {fileID: 0}
     lang: 1

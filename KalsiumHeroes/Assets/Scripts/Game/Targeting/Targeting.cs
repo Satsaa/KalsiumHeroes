@@ -15,9 +15,6 @@ public class Targeting : MonoBehaviour {
 	Targeter targeter;
 	[SerializeField] new Camera camera;
 
-	public event Action onTargeterStart;
-	public event Action onTargeterEnd;
-
 	bool hoverIsValid;
 	HashSet<Tile> targets = new HashSet<Tile>();
 	HashSet<Tile> hovers = new HashSet<Tile>();
@@ -33,7 +30,7 @@ public class Targeting : MonoBehaviour {
 		this.targeter = targeter;
 		prevHoverTile = null;
 		RefreshTargets();
-		onTargeterStart?.Invoke();
+		Game.onEvents.Execute<IOnTargeterStart>(v => v.OnTargeterStart(targeter));
 		TryComplete();
 		return true;
 	}
@@ -118,7 +115,7 @@ public class Targeting : MonoBehaviour {
 		foreach (var tile in Game.grid.tiles.Values) {
 			tile.highlighter.Clear();
 		}
-		onTargeterEnd?.Invoke();
+		Game.onEvents.Execute<IOnTargeterEnd>(v => v.OnTargeterEnd());
 	}
 
 

@@ -25,8 +25,7 @@ public class Events {
 		if (eventHandler != null) {
 			if (eventHandler.EventHasEnded()) {
 				eventHandler = null;
-				foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnEventEnd();
-				Game.InvokeOnAfterEvent();
+				Game.onEvents.Execute<IOnAnimationEventEnd>(v => v.OnAnimationEventEnd());
 			} else {
 				eventHandler.Update();
 				return;
@@ -36,12 +35,10 @@ public class Events {
 			try {
 				eventHandler = first.GetHandler();
 				if (eventHandler != null) {
-					foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnEventStart();
-					Game.InvokeOnAfterEvent();
+					Game.onEvents.Execute<IOnAnimationEventStart>(v => v.OnAnimationEventStart(eventHandler));
 				}
 			} catch (Exception) {
-				foreach (var modifier in Game.dataComponents.Get<Modifier>()) modifier.OnEventEnd();
-				Game.InvokeOnAfterEvent();
+				Game.onEvents.Execute<IOnAnimationEventEnd>(v => v.OnAnimationEventEnd());
 				throw;
 			} finally {
 				stack.RemoveAt(0);
@@ -86,7 +83,6 @@ public class Events {
 			var ability = unit.modifiers.Get<global::Ability>().First(a => a.data.identifier == this.ability);
 			EventHandler<Ability> abilityHandler = ability.CreateEventHandler(this);
 			ability.OnCast();
-			Game.InvokeOnAfterEvent();
 			return abilityHandler;
 		}
 	}

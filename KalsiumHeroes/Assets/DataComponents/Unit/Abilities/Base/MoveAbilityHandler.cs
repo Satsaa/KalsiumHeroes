@@ -45,7 +45,8 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	}
 
 	public override void Update() {
-		var actor = creator.unit.actor;
+		var unit = creator.unit;
+		var actor = unit.actor;
 		if (index + 1 <= actor.moveT) {
 			index++;
 			if (index >= pathObjects.Count - 1) {
@@ -56,11 +57,11 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			var next = pathObjects[index + 1];
 			switch (next) {
 				case Tile tile:
-					ExecuteOver(prev as Edge, pathObjects[index - 1] as Tile);
+					ExecuteOver(unit, pathObjects[index - 1] as Tile, prev as Edge, pathObjects[index] as Tile);
 					break;
 				case Edge edge:
-					if (index > 0) ExecuteOn(prev as Tile);
-					ExecuteOff(prev as Tile);
+					if (index > 0) ExecuteOn(unit, prev as Tile);
+					ExecuteOff(unit, prev as Tile);
 					break;
 			}
 		}
@@ -78,26 +79,29 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			var actor = creator.unit.actor;
 			actor.EndAnimations();
 		}
-		ExecuteOn(pathObjects.Last() as Tile);
+		ExecuteOn(creator.unit, pathObjects.Last() as Tile);
 		creator.unit.MoveTo(pathObjects.Last() as Tile, true);
 		return true;
 	}
 
 
-	protected void ExecuteOver(Edge edge, Tile source) {
+	protected void ExecuteOver(Unit unit, Tile from, Edge edge, Tile to) {
 		Debug.Log($"OnMoveOver ({edge.gameObject.name})");
-		edge.modifiers.Execute(v => v.OnMoveOver(creator.unit, source));
-		Game.InvokeOnAfterEvent();
+		edge.onEvents.Execute<IOnMoveOver_Edge>(v => v.OnMoveOver(unit, from, to));
+		unit.onEvents.Execute<IOnMoveOver_Unit>(v => v.OnMoveOver(from, edge, to));
+		Game.onEvents.Execute<IOnMoveOver_Global>(v => v.OnMoveOver(unit, from, edge, to));
 	}
 
-	protected void ExecuteOn(Tile tile) {
+	protected void ExecuteOn(Unit unit, Tile tile) {
 		Debug.Log($"OnMoveOn ({tile.gameObject.name})");
-		tile.modifiers.Execute(v => v.OnMoveOn(creator.unit));
-		Game.InvokeOnAfterEvent();
+		tile.onEvents.Execute<IOnMoveOn_Tile>(v => v.OnMoveOn(unit));
+		unit.onEvents.Execute<IOnMoveOn_Unit>(v => v.OnMoveOn(tile));
+		Game.onEvents.Execute<IOnMoveOn_Global>(v => v.OnMoveOn(unit, tile));
 	}
-	protected void ExecuteOff(Tile tile) {
+	protected void ExecuteOff(Unit unit, Tile tile) {
 		Debug.Log($"OnMoveOff ({tile.gameObject.name})");
-		tile.modifiers.Execute(v => v.OnMoveOff(creator.unit));
-		Game.InvokeOnAfterEvent();
+		tile.onEvents.Execute<IOnMoveOff_Tile>(v => v.OnMoveOff(unit));
+		unit.onEvents.Execute<IOnMoveOff_Unit>(v => v.OnMoveOff(tile));
+		Game.onEvents.Execute<IOnMoveOff_Global>(v => v.OnMoveOff(unit, tile));
 	}
 }

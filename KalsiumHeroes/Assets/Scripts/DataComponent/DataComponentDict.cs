@@ -37,14 +37,11 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 	/// <summary> Executes action on DataComponents of type T. </summary>
 	public void Execute<T>(Action<T> action) where T : TBase {
 		var type = typeof(T);
-		IEnumerable<T> targets;
 		if (dict.TryGetValue(type, out var val)) {
-			targets = val as HashSet<T>;
-		} else {
-			targets = new T[0];
-		}
-		foreach (var target in targets) {
-			action(target);
+			var targets = val as HashSet<T>;
+			foreach (var target in targets) {
+				action(target);
+			}
 		}
 	}
 
@@ -85,10 +82,8 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 		public DataComponentArrayContainer(DataComponent[] components) => this.components = components;
 	}
 
-	[SerializeField, HideInInspector]
-	private string[] keys;
-	[SerializeField, HideInInspector]
-	private DataComponentArrayContainer[] vals;
+	[SerializeField, HideInInspector] string[] keys;
+	[SerializeField, HideInInspector] DataComponentArrayContainer[] vals;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
 		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
@@ -99,7 +94,6 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 		for (int i = 0; i < keys.Length; i++) {
 			var type = Type.GetType(keys[i]);
 			var comps = vals[i].components;
-
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
 			var set = dict[type] = Activator.CreateInstance(setType);
 			var method = setType.GetMethod("Add");

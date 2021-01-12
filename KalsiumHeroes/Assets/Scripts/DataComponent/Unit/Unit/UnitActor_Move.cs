@@ -14,8 +14,8 @@ public partial class UnitActor {
 	public float walkSpeed = 1f;
 	public float runSpeed = 1.75f;
 
-	[HideInInspector, SerializeField] bool isMoving;
-	[HideInInspector, SerializeField] public float moveT;
+	[HideInInspector, SerializeField] public bool isMoving = false;
+	[HideInInspector, SerializeField] public float moveT = 0;
 	[HideInInspector, SerializeField] public Spline spline;
 
 
@@ -47,7 +47,7 @@ public partial class UnitActor {
 	}
 
 	private void OnDrawGizmos() {
-		if (spline._controls.Count < 2) return;
+		if (!isMoving || spline._controls.Count < 2) return;
 		var points = spline.RenderSpline(8);
 
 		int i = 0;

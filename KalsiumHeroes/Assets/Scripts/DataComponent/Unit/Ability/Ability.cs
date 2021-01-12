@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability : UnitModifier {
+public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbility_Unit {
 
 	public AbilityData abilityData => (AbilityData)data;
 	public override Type dataType => typeof(AbilityData);
@@ -15,8 +15,7 @@ public abstract class Ability : UnitModifier {
 
 	public abstract EventHandler<Events.Ability> CreateEventHandler(Events.Ability data);
 
-	public override void OnTurnStart() {
-		base.OnTurnStart();
+	public virtual void OnTurnStart() {
 		castBlocked = false;
 		abilityData.cooldown.value--;
 		if (abilityData.cooldown.value <= 0) {
@@ -27,8 +26,8 @@ public abstract class Ability : UnitModifier {
 		}
 	}
 
-	public override void OnAbility(Ability ability) {
-		base.OnAbility(ability);
+	public virtual void OnAbility(Ability ability) {
+		if (ability.abilityData.abilityType == AbilityType.Base) return;
 		if (!abilityData.alwaysCastable.value) {
 			castBlocked = true;
 		}
@@ -40,11 +39,12 @@ public abstract class Ability : UnitModifier {
 		if (abilityData.charges.value == abilityData.charges.other) abilityData.cooldown.ResetValue();
 		if (abilityData.cooldown.value <= 0 && abilityData.cooldown.other <= 0) abilityData.charges.ResetValue();
 		else abilityData.charges.value--;
+		unit.unitData.energy.value -= abilityData.energy.value;
+		unit.RefreshEnergy();
 
-		var isBase = abilityData.abilityType != AbilityType.Base;
-		if (isBase) foreach (var modifier in unit.modifiers.Get()) modifier.OnAbility(this);
-		else foreach (var modifier in unit.modifiers.Get()) modifier.OnBaseAbility(this);
-		Game.InvokeOnAfterEvent();
+		unit.onEvents.Execute<IOnAbility_Unit>(v => v.OnAbility(this));
+		unit.tile.onEvents.Execute<IOnAbility_Tile>(v => v.OnAbility(this));
+		Game.onEvents.Execute<IOnAbility_Global>(v => v.OnAbility(this));
 	}
 
 
@@ -54,6 +54,7 @@ public abstract class Ability : UnitModifier {
 	public virtual bool IsReady() {
 		if (castBlocked) return false;
 		if (abilityData.uses.enabled && abilityData.uses.value <= 0) return false;
+		if (abilityData.energy.value > unit.unitData.energy.value) return false;
 		if (abilityData.abilityType == AbilityType.Spell && unit.silenced.value) return false;
 		if (abilityData.abilityType == AbilityType.WeaponSkill && unit.disarmed.value) return false;
 		if (abilityData.charges.value > 0) return true;

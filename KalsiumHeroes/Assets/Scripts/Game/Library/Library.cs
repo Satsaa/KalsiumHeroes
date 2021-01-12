@@ -14,11 +14,7 @@ public class Library : ScriptableObject {
 	public List<DataComponentData> sources;
 
 	private Dictionary<string, DataComponentData> _dict;
-	public Dictionary<string, DataComponentData> dict {
-		get {
-			return _dict ??= BuildDict();
-		}
-	}
+	public Dictionary<string, DataComponentData> dict => _dict ??= BuildDict();
 
 	private Dictionary<string, DataComponentData> BuildDict() {
 		var res = new Dictionary<string, DataComponentData>();

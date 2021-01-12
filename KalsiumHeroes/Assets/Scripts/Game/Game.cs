@@ -16,6 +16,7 @@ public class Game : MonoBehaviour {
 	public static Rounds rounds => instance._rounds;
 	public static Library library => instance._library;
 	public static DataComponentDict dataComponents => instance._dataComponents;
+	public static OnEventDict<IGlobalOnEvent> onEvents => instance._onEvents;
 
 	private static Game _instance;
 	[SerializeField] private TileGrid _grid;
@@ -25,6 +26,7 @@ public class Game : MonoBehaviour {
 	[SerializeField] private Rounds _rounds = new Rounds();
 	[SerializeField] private Library _library;
 	[SerializeField] private DataComponentDict _dataComponents = new DataComponentDict();
+	[SerializeField] private OnEventDict<IGlobalOnEvent> _onEvents = new OnEventDict<IGlobalOnEvent>();
 
 	public static int readyCount { get => instance._readyCount; set => instance._readyCount = value; }
 	[SerializeField] private int _readyCount = 0;
@@ -58,9 +60,7 @@ public class Game : MonoBehaviour {
 
 	private void Start() {
 		_rounds.OnGameStart();
-		InvokeOnAfterEvent();
-		foreach (var modifier in dataComponents.Get<Modifier>()) modifier.OnGameStart();
-		InvokeOnAfterEvent();
+		Game.onEvents.Execute<IOnGameStart>(v => v.OnGameStart());
 	}
 
 	void Update() {

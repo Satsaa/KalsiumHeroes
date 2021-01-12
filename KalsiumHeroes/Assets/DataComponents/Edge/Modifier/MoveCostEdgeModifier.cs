@@ -5,13 +5,16 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 
-public class MoveCostEdgeModifier : EdgeModifier {
+public class MoveCostEdgeModifier : EdgeModifier, IOnGetMoveCost_Edge {
 
 	public MoveCostEdgeModifierData moveCostEdgeModifierData => (MoveCostEdgeModifierData)data;
 	public override Type dataType => typeof(MoveCostEdgeModifierData);
 
-	public override float MoveCost(Tile from, Tile to, float current) {
+	public float OnGetMoveCost(Tile from, Tile to, float current) {
 		return current + moveCostEdgeModifierData.additionalMoveCost.value;
 	}
 
+	public float OnGetMoveCost(Unit unit, Tile from, Tile to, float current) {
+		return current + moveCostEdgeModifierData.additionalMoveCost.value;
+	}
 }

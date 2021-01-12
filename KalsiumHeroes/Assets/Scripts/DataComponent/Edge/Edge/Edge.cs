@@ -6,7 +6,7 @@ using UnityEngine;
 using HexGrid;
 using Muc.Extensions;
 
-public class Edge : MasterComponent<EdgeModifier> {
+public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 
 	public EdgeData edgeData => (EdgeData)data;
 	public override Type dataType => typeof(EdgeData);
@@ -30,15 +30,41 @@ public class Edge : MasterComponent<EdgeModifier> {
 		}
 	}
 
-	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
-	public bool IsPassable(Tile from, Tile to) {
-		if (!((from == tile1 && to == tile2) || (from == tile2 && to == tile1))) throw new ArgumentException("Arguments from and to must be Tiles of the Edge");
-		return modifiers.Get().Aggregate(to.tileData.passable.value, (cur, v) => v.IsPassable(from, to, cur));
+	/// <summary> Is this Edge considered to be passable from Tile "from". </summary>
+	public bool CanPass(Unit unit, Tile from, Tile to) {
+		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		var value = to.tileData.passable.value;
+		value = onEvents.Aggregate<IOnGetCanPass_Edge, bool>(value, (cur, v) => v.OnGetCanPass(unit, from, to, cur));
+		value = unit.onEvents.Aggregate<IOnGetCanPass_Unit, bool>(value, (cur, v) => v.OnGetCanPass(from, this, to, cur));
+		value = Game.onEvents.Aggregate<IOnGetCanPass_Global, bool>(value, (cur, v) => v.OnGetCanPass(unit, from, this, to, cur));
+		return value;
+	}
+
+	/// <summary> Is this Edge considered to be passable from Tile "from". </summary>
+	public bool CanPass(Tile from, Tile to) {
+		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		var value = to.tileData.passable.value;
+		value = onEvents.Aggregate<IOnGetCanPass_Edge, bool>(value, (cur, v) => v.OnGetCanPass(from, to, cur));
+		value = Game.onEvents.Aggregate<IOnGetCanPass_Global, bool>(value, (cur, v) => v.OnGetCanPass(from, this, to, cur));
+		return value;
+	}
+
+	/// <summary> The move cost over this Edge. </summary>
+	public float MoveCost(Unit unit, Tile from, Tile to) {
+		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		var value = to.tileData.moveCost.value;
+		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => v.OnGetMoveCost(unit, from, to, cur));
+		value = unit.onEvents.Aggregate<IOnGetMoveCost_Unit, float>(value, (cur, v) => v.OnGetMoveCost(from, this, to, cur));
+		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => v.OnGetMoveCost(unit, from, this, to, cur));
+		return Mathf.Max(0, value);
 	}
 
 	/// <summary> The move cost over this Edge. </summary>
 	public float MoveCost(Tile from, Tile to) {
-		if (!((from == tile1 && to == tile2) || (from == tile2 && to == tile1))) throw new ArgumentException("Arguments from and to must be Tiles of the Edge");
-		return Mathf.Max(0, modifiers.Get().Aggregate(to.tileData.moveCost.value, (cur, v) => v.MoveCost(from, to, cur)));
+		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		var value = to.tileData.moveCost.value;
+		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => v.OnGetMoveCost(from, to, cur));
+		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => v.OnGetMoveCost(from, this, to, cur));
+		return Mathf.Max(0, value);
 	}
 }

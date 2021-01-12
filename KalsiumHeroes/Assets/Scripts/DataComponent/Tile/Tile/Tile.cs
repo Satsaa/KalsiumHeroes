@@ -8,7 +8,7 @@ using Muc.Extensions;
 using Muc.Numerics;
 
 [ExecuteAlways]
-public class Tile : MasterComponent<TileModifier> {
+public class Tile : MasterComponent<TileModifier, ITileOnEvent> {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 

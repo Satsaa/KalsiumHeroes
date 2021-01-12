@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedGainStatus : Status {
+public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
 	public SpeedGainStatusData speedGainModifierData => (SpeedGainStatusData)data;
 	public override Type dataType => typeof(SpeedGainStatusData);
@@ -21,7 +21,7 @@ public class SpeedGainStatus : Status {
 		print($"Old Speed: {oldSpd} New Speed: {unit.unitData.speed.value}");
 	}
 
-	public override int GetEstimatedSpeedGain(int roundsAhead) {
+	public virtual int OnGetEstimatedSpeed(int roundsAhead) {
 		if (!TurnDurationWouldHaveExpired(roundsAhead)) return speedGainModifierData.speedGain.value * unitsFound;
 		return 0;
 	}

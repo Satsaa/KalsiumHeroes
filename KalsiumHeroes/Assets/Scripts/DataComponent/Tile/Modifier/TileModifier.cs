@@ -20,6 +20,7 @@ public abstract class TileModifier : Modifier {
 		base.Awake();
 		tile.modifiers.Add(this);
 		Game.dataComponents.Add(this);
+		tile.onEvents.Add(this);
 		OnAdd();
 		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
 		Game.InvokeOnAfterEvent();
@@ -29,6 +30,7 @@ public abstract class TileModifier : Modifier {
 		OnRemove();
 		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
 		Game.InvokeOnAfterEvent();
+		tile.onEvents.Remove(this);
 		tile.modifiers.Remove(this);
 		base.OnDestroy();
 	}
@@ -42,13 +44,6 @@ public abstract class TileModifier : Modifier {
 	public virtual void OnAdd(TileModifier modifier) { }
 	/// <summary> When any other TileModifier is being removed. </summary>
 	public virtual void OnRemove(TileModifier modifier) { }
-
-	/// <summary> When a Unit spawns on this Tile. </summary>
-	public virtual void OnSpawnOn(Unit unit) { }
-	/// <summary> When a Unit advances in to this Tile. (Triggered regardless of whether the Unit stops at this Tile) </summary>
-	public virtual void OnMoveOn(Unit unit) { }
-	/// <summary> When a Unit advances out of this Tile. (Triggered regardless of whether the Unit stops at this Tile) </summary>
-	public virtual void OnMoveOff(Unit unit) { }
 
 }
 

@@ -5,7 +5,16 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 
-public class AbilityUIModifier : UnitModifier {
+public class AbilityUIModifier : UnitModifier,
+		IOnAnimationEventStart,
+		IOnAnimationEventEnd,
+		IOnTargeterStart,
+		IOnTargeterEnd,
+		IOnAbility_Unit,
+		IOnGameStart,
+		IOnGameEnd,
+		IOnTurnStart_Unit,
+		IOnTurnEnd_Unit {
 
 	public Canvas canvas;
 	public Camera cam;
@@ -63,10 +72,10 @@ public class AbilityUIModifier : UnitModifier {
 	}
 
 	new void Awake() {
+		base.Awake();
 		if (!canvas) canvas = GetComponentInChildren<Canvas>();
 		if (!cam) cam = Camera.main;
 		if (!cam) FindObjectOfType<Camera>();
-		base.Awake();
 		foreach (var ability in unit.modifiers.Get<Ability>()) AddIcon(ability);
 		foreach (var passive in unit.modifiers.Get<Passive>()) AddIcon(passive);
 	}
@@ -87,7 +96,7 @@ public class AbilityUIModifier : UnitModifier {
 		icon.abilityText.text = ability.unitModifierData.displayName.text;
 		icon.cooldownText.text = "";
 		icon.chargeText.text = "";
-		icon.fgImage.enabled = true;
+		icon.fgMask.gameObject.SetActive(true);
 		icon.bgImage.enabled = false;
 		RefreshLayout();
 		RefreshValues();
@@ -122,16 +131,16 @@ public class AbilityUIModifier : UnitModifier {
 		var compAbilties = unit.modifiers.Get<Ability>().ToArray();
 		var compPassives = unit.modifiers.Get<Passive>().ToArray();
 		aIcons.Sort((a, b) =>
-				Array.FindIndex(compAbilties, v => v == a.ability).CompareTo(
-				Array.FindIndex(compAbilties, v => v == b.ability)
+			Array.FindIndex(compAbilties, v => v == a.ability).CompareTo(
+			Array.FindIndex(compAbilties, v => v == b.ability)
 		));
 		pIcons.Sort((a, b) =>
-				Array.FindIndex(compPassives, v => v == a.passive).CompareTo(
-				Array.FindIndex(compPassives, v => v == b.passive)
+			Array.FindIndex(compPassives, v => v == a.passive).CompareTo(
+			Array.FindIndex(compPassives, v => v == b.passive)
 		));
 
 		var rts = aIcons.Select(v => v.GetComponent<RectTransform>())
-				.Concat(pIcons.Select(v => v.GetComponent<RectTransform>()));
+			.Concat(pIcons.Select(v => v.GetComponent<RectTransform>()));
 
 		var unpaddedDistance = rts.Aggregate(0f, (acc, rt) => acc + rt.rect.width);
 		height = rts.Aggregate(0f, (acc, rt) => Mathf.Max(acc, rt.rect.height));
@@ -178,19 +187,23 @@ public class AbilityUIModifier : UnitModifier {
 	bool ShowCharges(AbilityData abilityData) => abilityData.charges.other > 1 && abilityData.cooldown.other >= 1;
 	string GetChargeText(AbilityData abilityData) => ShowCharges(abilityData) ? abilityData.charges.value.ToString() : "";
 
+	bool ShowEnergy(AbilityData abilityData) => abilityData.energy.value != 0;
+	string GetEnergyText(AbilityData abilityData) => ShowEnergy(abilityData) ? abilityData.energy.value.ToString() : "";
+
 	public void RefreshValues() {
 
 		foreach (var icon in aIcons) {
-			var (ability, abilityButton, abilityText, cooldownText, chargeText, fgImage, bgImage) = icon;
+			var (ability, abilityButton, abilityText, cooldownText, chargeText, energyText, fgMask, bgImage) = icon;
 			var abilityData = ability.abilityData;
 
 
 			chargeText.text = GetChargeText(abilityData);
+			energyText.text = GetEnergyText(abilityData);
 			abilityButton.onClick.RemoveAllListeners();
 			if (Game.events.finished && ability.IsReady()) {
-				fgImage.fillAmount = 1;
+				fgMask.fillAmount = 1;
 				cooldownText.text = "";
-				fgImage.enabled = true;
+				fgMask.gameObject.SetActive(true);
 				bgImage.enabled = false;
 				abilityButton.onClick.AddListener(() => {
 					if (ability.IsReady()) {
@@ -200,13 +213,13 @@ public class AbilityUIModifier : UnitModifier {
 			} else {
 				if (abilityData.cooldown.other > 0 && abilityData.charges.value <= 0) {
 					cooldownText.text = abilityData.cooldown.value > 0 ? abilityData.cooldown.value.ToString() : "";
-					fgImage.fillAmount = 1 - (float)abilityData.cooldown.value / (float)abilityData.cooldown.other;
-					fgImage.enabled = true;
+					fgMask.fillAmount = 1 - (float)abilityData.cooldown.value / (float)abilityData.cooldown.other;
+					fgMask.gameObject.SetActive(true);
 					bgImage.enabled = true;
 				} else {
 					cooldownText.text = "";
-					fgImage.fillAmount = 1;
-					fgImage.enabled = false;
+					fgMask.fillAmount = 1;
+					fgMask.gameObject.SetActive(false);
 					bgImage.enabled = true;
 				}
 			}
@@ -228,43 +241,6 @@ public class AbilityUIModifier : UnitModifier {
 	}
 
 
-	public override void OnEventStart() {
-		base.OnEventStart();
-		targetAlpha = fadeAlpha;
-		if (Game.rounds.current == unit) RefreshValues();
-	}
-	public override void OnEventEnd() {
-		base.OnEventEnd();
-		targetAlpha = 1;
-		if (Game.rounds.current == unit) RefreshValues();
-	}
-
-	private void OnTargeterStart() {
-		targetAlpha = fadeAlpha;
-		if (Game.rounds.current == unit) {
-			foreach (var icon in aIcons) icon.abilityButton.enabled = false;
-		}
-	}
-	private void OnTargeterEnd() {
-		targetAlpha = 1;
-		if (Game.rounds.current == unit) {
-			foreach (var icon in aIcons) icon.abilityButton.enabled = true;
-		}
-	}
-
-
-	protected override void OnConfigureNonpersistent(bool add) {
-		base.OnConfigureNonpersistent(add);
-		if (add) {
-			Game.targeting.onTargeterEnd += OnTargeterEnd;
-			Game.targeting.onTargeterStart += OnTargeterStart;
-		} else {
-			Game.targeting.onTargeterEnd -= OnTargeterEnd;
-			Game.targeting.onTargeterStart -= OnTargeterStart;
-		}
-	}
-
-
 	public override void OnAdd(UnitModifier modifier) {
 		base.OnAdd(modifier);
 		switch (modifier) {
@@ -281,35 +257,47 @@ public class AbilityUIModifier : UnitModifier {
 		}
 	}
 
+	public void OnAnimationEventStart(EventHandler handler) {
+		targetAlpha = fadeAlpha;
+		if (Game.rounds.current == unit) RefreshValues();
+	}
+	public void OnAnimationEventEnd() {
+		targetAlpha = 1;
+		if (Game.rounds.current == unit) RefreshValues();
+	}
 
-	public override void OnBaseAbility(Ability ability) {
-		base.OnBaseAbility(ability);
+	public void OnTargeterStart(Targeter targeter) {
+		targetAlpha = fadeAlpha;
+		if (Game.rounds.current == unit) {
+			foreach (var icon in aIcons) icon.abilityButton.enabled = false;
+		}
+	}
+	public void OnTargeterEnd() {
+		targetAlpha = 1;
+		if (Game.rounds.current == unit) {
+			foreach (var icon in aIcons) icon.abilityButton.enabled = true;
+		}
+	}
+
+	public void OnAbility(Ability ability) {
 		RefreshValues();
 	}
 
-	public override void OnAbility(Ability ability) {
-		base.OnAbility(ability);
-		RefreshValues();
-	}
 
-
-	public override void OnTurnStart() {
-		base.OnTurnStart();
+	public void OnTurnStart() {
 		Wake();
 	}
 
-	public override void OnTurnEnd() {
-		base.OnTurnEnd();
+	public void OnTurnEnd() {
 		Hibernate();
 	}
 
-	public override void OnGameStart() {
-		base.OnGameStart();
+	public void OnGameStart() {
 		if (Game.rounds.current == unit)
 			Wake();
 	}
 
-	public override void OnGameEnd() {
+	public void OnGameEnd() {
 		Destroy(this);
 	}
 }

@@ -4,8 +4,14 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 
-public abstract class MasterComponent<T> : MasterComponent where T : Modifier {
-	public DataComponentDict<T> modifiers = new DataComponentDict<T>();
+public abstract class MasterComponent<TMod, TOnEvent> : MasterComponent where TMod : Modifier where TOnEvent : IOnEvent {
+	public DataComponentDict<TMod> modifiers = new DataComponentDict<TMod>();
+	public OnEventDict<TOnEvent> onEvents = new OnEventDict<TOnEvent>();
+
+	protected new void Awake() {
+		base.Awake();
+		onEvents.Add(this);
+	}
 }
 
 [DisallowMultipleComponent]

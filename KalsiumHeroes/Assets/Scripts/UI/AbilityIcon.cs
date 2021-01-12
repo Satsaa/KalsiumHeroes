@@ -14,17 +14,19 @@ public class AbilityIcon : MonoBehaviour {
 	public Text abilityText;
 	public Text cooldownText;
 	public Text chargeText;
+	public Text energyText;
 
-	public Image fgImage;
+	public Image fgMask;
 	public Image bgImage;
 
-	public void Deconstruct(out Ability ability, out Button abilityButton, out Text abilityText, out Text cooldownText, out Text chargeText, out Image fgImage, out Image bgImage) {
+	public void Deconstruct(out Ability ability, out Button abilityButton, out Text abilityText, out Text cooldownText, out Text chargeText, out Text energyText, out Image fgMask, out Image bgImage) {
 		ability = this.ability;
 		abilityButton = this.abilityButton;
 		abilityText = this.abilityText;
 		cooldownText = this.cooldownText;
+		energyText = this.energyText;
 		chargeText = this.chargeText;
-		fgImage = this.fgImage;
+		fgMask = this.fgMask;
 		bgImage = this.bgImage;
 	}
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using Muc.Extensions;
 
 [RequireComponent(typeof(EventStack))]
-public class RoundStackController : Modifier {
+public class RoundStackController : Modifier, IOnGameStart, IOnRoundStart {
 
 	[HideInInspector] public RectTransform rt;
 	[HideInInspector] public EventStack es;
@@ -23,7 +23,7 @@ public class RoundStackController : Modifier {
 		rt.sizeDelta = rt.sizeDelta.SetX(es.MaxX());
 	}
 
-	public override void OnGameStart() {
+	public void OnGameStart() {
 		Game.onAfterEvent += () => {
 			for (int i = 0; i < total; i++) {
 				var round = Game.rounds.round + i;
@@ -32,7 +32,7 @@ public class RoundStackController : Modifier {
 		};
 	}
 
-	public override void OnRoundStart() {
+	public void OnRoundStart() {
 		if (Game.rounds.round > 1) {
 			Game.onAfterEvent += () => {
 				var round = Game.rounds.round + total - 1;

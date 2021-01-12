@@ -1,17 +1,4 @@
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
-using Muc.Extensions;
-using HexGrid;
-using System;
-using Priority_Queue;
-using UnityEngine.Serialization;
-
 public delegate bool Pather(Tile from, Edge edge, Tile to);
 
 public static class Pathers {
@@ -41,7 +28,7 @@ public static class Pathers {
 
 	/// <summary> Returns true if you can advance forward over the Edge.</summary>
 	public static bool Phased(Tile from, Edge edge, Tile to) {
-		return edge.IsPassable(from, to);
+		return edge.CanPass(from, to);
 	}
 
 	/// <summary> Returns true if you can advance forward over the Edge and disallows advancing to Tiles with an Unit.</summary>
@@ -69,6 +56,4 @@ public static class Pathers {
 		return true;
 	}
 
-
 }
-

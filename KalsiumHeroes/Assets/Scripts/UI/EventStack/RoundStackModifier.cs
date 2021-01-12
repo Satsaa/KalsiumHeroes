@@ -7,7 +7,7 @@ using System;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(RoundStack))]
-public class RoundStackModifier : Modifier {
+public class RoundStackModifier : Modifier, IOnAnimationEventEnd, IOnTurnStart_Global, IOnRoundStart {
 
 	[HideInInspector] public RoundStack rs;
 
@@ -16,9 +16,8 @@ public class RoundStackModifier : Modifier {
 		this.rs = GetComponent<RoundStack>();
 	}
 
-	public override void OnEventEnd() => rs.Refresh();
-	public override void OnTurnStart(Unit unit) => rs.Refresh();
-
-	public override void OnRoundStart() => rs.Refresh();
+	public void OnAnimationEventEnd() => rs.Refresh();
+	public void OnTurnStart(Unit unit) => rs.Refresh();
+	public void OnRoundStart() => rs.Refresh();
 
 }

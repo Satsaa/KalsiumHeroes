@@ -36,6 +36,15 @@ public class DualAttribute<T> : Attribute<T> {
 		if (((IComparable)value).CompareTo((IComparable)other) > 0) value = other;
 	}
 
+	/// <summary> Clamps value between min and other. T must be IComparable. </summary>
+	public void ClampValue(T min = default(T)) {
+		if (((IComparable)value).CompareTo((IComparable)min) < 0) {
+			value = min;
+		} else {
+			LimitValue();
+		}
+	}
+
 	/// <summary> Adds or removes a function that alters what the value property returns. </summary>
 	public bool ConfigureOtherAlterer(bool add, Func<T, T> alterer) {
 		if (add) return otherAlterers.Add(alterer);

@@ -5,10 +5,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class PlayEffectTileModifier : TileModifier {
+public class PlayEffectTileModifier : TileModifier, IOnMoveOn_Tile {
 
-	public override void OnMoveOn(Unit unit) {
-		base.OnMoveOn(unit);
+	public void OnMoveOn(Unit unit) {
 		var vfx = GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
 		var pts = GetComponent<ParticleSystem>();
