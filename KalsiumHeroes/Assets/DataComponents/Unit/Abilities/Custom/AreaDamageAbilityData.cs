@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(AreaDamageAbilityData), menuName = "DataSources/" + nameof(AreaDamageAbilityData))]
+[CreateAssetMenu(fileName = nameof(AreaDamageAbilityData), menuName = "DataSources/Abilities/" + nameof(AreaDamageAbilityData))]
 public class AreaDamageAbilityData : AbilityData {
 
 	public override Type componentConstraint => typeof(AreaDamageAbility);

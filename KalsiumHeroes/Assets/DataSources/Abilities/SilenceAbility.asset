@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8363fb19f91acb24cb2621601918dd61, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d180165be105c546ad3f9d3ac17802b, type: 3}
   m_Name: SilenceAbility
   m_EditorClassIdentifier: 
   identifier: ability_silence
@@ -20,7 +20,7 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: f4d66a7c11bd3f54e81d123f87dd5b61, type: 2}
   description: {fileID: 11400000, guid: 20fef4e11af067547aad9d035ba7cae1, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
+  abilityType: 2
   targetType: 28
   range:
     _value: 4
@@ -29,6 +29,8 @@ MonoBehaviour:
   radius:
     _value: 0
   requiresVision:
+    _value: 0
+  energy:
     _value: 0
   cooldown:
     _value: 0

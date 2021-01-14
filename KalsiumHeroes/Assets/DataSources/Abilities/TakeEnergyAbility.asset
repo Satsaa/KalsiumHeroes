@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a4614b5cdcfad4c91792f9294a4c46, type: 3}
+  m_Name: TakeEnergyAbility
+  m_EditorClassIdentifier: 
+  identifier: ability_take_energy
+  componentType:
+    _name: ChangeEnergyAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  sprite: {fileID: 0}
+  abilityType: 2
+  targetType: 28
+  range:
+    _value: 5
+    _enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 1
+  requiresVision:
+    _value: 0
+  energy:
+    _value: -5
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    _enabled: 0
+  alwaysCastable:
+    _value: 0
+  energyChange:
+    _value: -5

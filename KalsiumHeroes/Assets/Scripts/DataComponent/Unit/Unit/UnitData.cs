@@ -1,9 +1,6 @@
+
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.Mathf;
 
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
 public class UnitData : MasterComponentData {
@@ -47,4 +44,6 @@ public class UnitData : MasterComponentData {
 	[Tooltip("The amount of resistance to magical damage the unit posesses.")]
 	public Attribute<int> resistance;
 
+	[Tooltip("Outgoing damage amplifications.")]
+	public Amps amps;
 }

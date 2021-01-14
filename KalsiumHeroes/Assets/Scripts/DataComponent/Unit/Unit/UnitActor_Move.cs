@@ -10,7 +10,6 @@ using System.Linq;
 
 public partial class UnitActor {
 
-
 	public float walkSpeed = 1f;
 	public float runSpeed = 1.75f;
 

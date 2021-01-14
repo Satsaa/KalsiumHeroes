@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class AddDataComponentAbility : Ability {
 
-	public AddDataComponentData addDataComponentAbilityData => (AddDataComponentData)data;
-	public override Type dataType => typeof(AddDataComponentData);
+	public AddDataComponentAbilityData addDataComponentAbilityData => (AddDataComponentAbilityData)data;
+	public override Type dataType => typeof(AddDataComponentAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
 		return new InstantAbilityHandler(data, this, (ability) => {

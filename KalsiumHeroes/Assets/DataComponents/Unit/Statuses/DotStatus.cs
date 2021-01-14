@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class DotStatus : Status, IOnTurnEnd_Unit {
 
-	public DotStatusData dotTestData => (DotStatusData)data;
+	public DotStatusData dotStatusData => (DotStatusData)data;
 	public override Type dataType => typeof(DotStatusData);
 
 	public override void OnTurnEnd() {
-		unit.Damage(dotTestData.damage.value, dotTestData.damageType);
+		unit.DealStatusDamage(dotStatusData.damage.value, this, dotStatusData.damageType);
 		base.OnTurnEnd();
 	}
 }

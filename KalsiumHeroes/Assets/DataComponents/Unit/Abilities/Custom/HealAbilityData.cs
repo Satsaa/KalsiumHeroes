@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(HealAbilityData), menuName = "DataSources/" + nameof(HealAbilityData))]
+[CreateAssetMenu(fileName = nameof(HealAbilityData), menuName = "DataSources/Abilities/" + nameof(HealAbilityData))]
 public class HealAbilityData : AbilityData {
 
 	public override Type componentConstraint => typeof(HealAbility);

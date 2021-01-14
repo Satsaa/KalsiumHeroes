@@ -10,7 +10,7 @@ public class AbilityUIModifier : UnitModifier,
 		IOnAnimationEventEnd,
 		IOnTargeterStart,
 		IOnTargeterEnd,
-		IOnAbility_Unit,
+		IOnAbilityCastStart_Unit,
 		IOnGameStart,
 		IOnGameEnd,
 		IOnTurnStart_Unit,
@@ -279,7 +279,7 @@ public class AbilityUIModifier : UnitModifier,
 		}
 	}
 
-	public void OnAbility(Ability ability) {
+	public void OnAbilityCastStart(Ability ability) {
 		RefreshValues();
 	}
 

@@ -10,9 +10,7 @@ public abstract class TileModifier : Modifier {
 	public TileModifierData tileModifierData => (TileModifierData)data;
 	public override Type dataType => typeof(TileModifierData);
 
-	public Tile tile;
-
-	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
+	[HideInInspector] public Tile tile;
 
 
 	protected new void Awake() {

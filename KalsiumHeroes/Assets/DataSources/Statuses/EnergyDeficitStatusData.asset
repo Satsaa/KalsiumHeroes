@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90450df768d12a84dbcd80afefc2edf3, type: 3}
+  m_Name: EnergyDeficitStatusData
+  m_EditorClassIdentifier: 
+  identifier: status_energy_deficit
+  componentType:
+    _name: EnergyDeficitStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 6574234657853972042, guid: f7101482130ebdd43b80ad7d03790535, type: 3}
+  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
+  turnDuration:
+    _value: 0
+    _enabled: 0
+  defenseReduction: 5
+  resistanceReduction: 5

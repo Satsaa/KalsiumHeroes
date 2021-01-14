@@ -19,7 +19,7 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: c6285f03929ace145963e70e1562e42f, type: 2}
   description: {fileID: 11400000, guid: 1a1e43e122cc0e2408151a89f60edbd9, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 3
+  abilityType: 2
   targetType: 2
   range:
     _value: 1
@@ -28,6 +28,8 @@ MonoBehaviour:
   radius:
     _value: 2
   requiresVision:
+    _value: 0
+  energy:
     _value: 0
   cooldown:
     _value: 0

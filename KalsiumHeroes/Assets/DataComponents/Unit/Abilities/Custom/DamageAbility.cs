@@ -14,7 +14,7 @@ public class DamageAbility : Ability {
 			var target = Game.grid.tiles[data.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.Damage(meleeRangeDamageData.damage.value, meleeRangeDamageData.damageType);
+				if (tile.unit) tile.unit.DealAbilityDamage(meleeRangeDamageData.damage.value, this, meleeRangeDamageData.damageType);
 			}
 		});
 	}

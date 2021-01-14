@@ -2,8 +2,8 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(AddDataComponentData), menuName = "DataSources/" + nameof(AddDataComponentData))]
-public class AddDataComponentData : AbilityData {
+[CreateAssetMenu(fileName = nameof(AddDataComponentAbilityData), menuName = "DataSources/Abilities/" + nameof(AddDataComponentAbilityData))]
+public class AddDataComponentAbilityData : AbilityData {
 
 	public override Type componentConstraint => typeof(AddDataComponentAbility);
 

@@ -5,13 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbility_Unit {
+public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnAnimationEventEnd {
 
 	public AbilityData abilityData => (AbilityData)data;
 	public override Type dataType => typeof(AbilityData);
 
-	[HideInInspector]
-	public bool castBlocked = false;
+	[HideInInspector, SerializeField] bool castBlocked = false;
+	[HideInInspector, SerializeField] bool sendOnCastEnd = false;
 
 	public abstract EventHandler<Events.Ability> CreateEventHandler(Events.Ability data);
 
@@ -26,15 +26,25 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbility_Unit
 		}
 	}
 
-	public virtual void OnAbility(Ability ability) {
+	public virtual void OnAbilityCastStart(Ability ability) {
 		if (ability.abilityData.abilityType == AbilityType.Base) return;
 		if (!abilityData.alwaysCastable.value) {
 			castBlocked = true;
 		}
 	}
 
+	public virtual void OnAnimationEventEnd() {
+		if (sendOnCastEnd) {
+			sendOnCastEnd = false;
+			unit.onEvents.Execute<IOnAbilityCastEnd_Unit>(v => v.OnAbilityCastEnd(this));
+			unit.tile.onEvents.Execute<IOnAbilityCastEnd_Tile>(v => v.OnAbilityCastEnd(this));
+			Game.onEvents.Execute<IOnAbilityCastEnd_Global>(v => v.OnAbilityCastEnd(this));
+		}
+	}
+
 	/// <summary> Called when the ability is actually cast. </summary>
 	public virtual void OnCast() {
+		sendOnCastEnd = true;
 		if (abilityData.uses.enabled) abilityData.uses.value--;
 		if (abilityData.charges.value == abilityData.charges.other) abilityData.cooldown.ResetValue();
 		if (abilityData.cooldown.value <= 0 && abilityData.cooldown.other <= 0) abilityData.charges.ResetValue();
@@ -42,9 +52,47 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbility_Unit
 		unit.unitData.energy.value -= abilityData.energy.value;
 		unit.RefreshEnergy();
 
-		unit.onEvents.Execute<IOnAbility_Unit>(v => v.OnAbility(this));
-		unit.tile.onEvents.Execute<IOnAbility_Tile>(v => v.OnAbility(this));
-		Game.onEvents.Execute<IOnAbility_Global>(v => v.OnAbility(this));
+		unit.onEvents.Execute<IOnAbilityCastStart_Unit>(v => v.OnAbilityCastStart(this));
+		unit.tile.onEvents.Execute<IOnAbilityCastStart_Tile>(v => v.OnAbilityCastStart(this));
+		Game.onEvents.Execute<IOnAbilityCastStart_Global>(v => v.OnAbilityCastStart(this));
+	}
+
+	public float GetCalculatedDamage(float damage, DamageType damageType) {
+		var abilityType = this.abilityData.abilityType;
+		switch (abilityType) {
+			default:
+			case AbilityType.Base:
+				Debug.LogWarning($"Unexpected {nameof(AbilityType)} {abilityType.ToString()}.");
+				break;
+			case AbilityType.Skill:
+				damage *= 1f + unit.unitData.amps.skill.value;
+				break;
+			case AbilityType.WeaponSkill:
+				damage *= 1f + unit.unitData.amps.weaponSkill.value;
+				break;
+			case AbilityType.Spell:
+				damage *= 1f + unit.unitData.amps.spell.value;
+				break;
+		}
+
+		switch (damageType) {
+			case DamageType.Physical:
+				damage *= 1f + unit.unitData.amps.physical.value;
+				break;
+			case DamageType.Magical:
+				damage *= 1f + unit.unitData.amps.magical.value;
+				break;
+			case DamageType.Pure:
+				damage *= 1f + unit.unitData.amps.pure.value;
+				break;
+			default:
+				Debug.LogWarning($"Unexpected {nameof(DamageType)} {damageType.ToString()}.");
+				return damage;
+		}
+		damage = unit.onEvents.Aggregate<IOnGetCalculatedAbilityDamage_Unit, float>(damage, (cur, v) => v.OnGetCalculatedAbilityDamage(cur, this, damageType));
+		damage = unit.tile.onEvents.Aggregate<IOnGetCalculatedAbilityDamage_Tile, float>(damage, (cur, v) => v.OnGetCalculatedAbilityDamage(cur, this, damageType));
+		damage = Game.onEvents.Aggregate<IOnGetCalculatedAbilityDamage_Global, float>(damage, (cur, v) => v.OnGetCalculatedAbilityDamage(cur, this, damageType));
+		return Mathf.Max(0, damage);
 	}
 
 

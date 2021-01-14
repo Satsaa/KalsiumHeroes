@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 public class SideKickAbility : Ability {
+
 	public SideKickAbilityData sideKickAbilityData => (SideKickAbilityData)data;
 	public override Type dataType => typeof(SideKickAbilityData);
 
@@ -14,9 +15,11 @@ public class SideKickAbility : Ability {
 			var movement = unit.unitData.movement.value;
 			var target = Game.grid.tiles[data.targets.First()];
 			var aoe = GetAffectedArea(target);
+			var movementDamage = movement * sideKickAbilityData.movementDamageMultiplier.value;
+			var totalDamage = speed * sideKickAbilityData.speedDamageMultiplier.value + movementDamage;
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.Damage(speed * sideKickAbilityData.speedDamageMultiplier.value + movement * sideKickAbilityData.movementDamageMultiplier.value, sideKickAbilityData.damageType);
-				print("Total Damage Dealt: " + (speed * sideKickAbilityData.speedDamageMultiplier.value + movement * sideKickAbilityData.movementDamageMultiplier.value) + " From Speed: " + speed * sideKickAbilityData.speedDamageMultiplier.value + " From Movement: " + movement * sideKickAbilityData.movementDamageMultiplier.value);
+				if (tile.unit) tile.unit.DealAbilityDamage(totalDamage, this, sideKickAbilityData.damageType);
+				print("Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * sideKickAbilityData.speedDamageMultiplier.value + " From Movement: " + movementDamage);
 			}
 		});
 	}

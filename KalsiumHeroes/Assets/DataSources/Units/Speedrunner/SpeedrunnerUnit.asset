@@ -27,7 +27,25 @@ MonoBehaviour:
   health:
     _value: 100
     _other: 100
+  energy:
+    _value: 10
+    _other: 20
+  energyRegen:
+    _value: 5
   defense:
     _value: 10
   resistance:
     _value: 0
+  amps:
+    weaponSkill:
+      _value: 0
+    spell:
+      _value: 0
+    skill:
+      _value: 0
+    physical:
+      _value: 0
+    magical:
+      _value: 0
+    pure:
+      _value: 0

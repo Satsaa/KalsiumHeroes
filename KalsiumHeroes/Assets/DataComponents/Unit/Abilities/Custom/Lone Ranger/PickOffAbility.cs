@@ -14,8 +14,9 @@ public class PickOffAbility : Ability {
 			var damage = pickOffAbilityData.damage.value;
 			var target = Game.grid.tiles[data.targets.First()];
 			var aoe = GetAffectedArea(target);
+			var finalDamage = CalculateDamage(damage);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.Damage(CalculateDamage(damage), pickOffAbilityData.damageType);
+				if (tile.unit) tile.unit.DealAbilityDamage(finalDamage, this, pickOffAbilityData.damageType);
 			}
 		});
 	}

@@ -93,6 +93,7 @@ public class DataComponentDict<TBase> : ISerializationCallbackReceiver where TBa
 	void ISerializationCallbackReceiver.OnAfterDeserialize() {
 		for (int i = 0; i < keys.Length; i++) {
 			var type = Type.GetType(keys[i]);
+			if (type == null) continue;
 			var comps = vals[i].components;
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
 			var set = dict[type] = Activator.CreateInstance(setType);

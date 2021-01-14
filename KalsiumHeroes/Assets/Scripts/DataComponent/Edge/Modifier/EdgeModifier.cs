@@ -13,10 +13,8 @@ public abstract class EdgeModifier : Modifier {
 
 	[HideInInspector] public Edge edge;
 	/// <summary> Which tile to use as  context. Either tile1 or tile2 of the Edge. </summary>
-	[field: SerializeField]
-	public Tile context { get; protected set; }
+	[field: SerializeField] public Tile context { get; protected set; }
 
-	private Dictionary<object, AttributeBase> altererKeys = new Dictionary<object, AttributeBase>();
 
 	protected new void Awake() {
 		edge = GetMasterComponent<Edge>();

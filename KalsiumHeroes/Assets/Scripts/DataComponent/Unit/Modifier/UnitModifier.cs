@@ -10,7 +10,7 @@ public abstract class UnitModifier : Modifier {
 	public UnitModifierData unitModifierData => (UnitModifierData)data;
 	public override Type dataType => typeof(UnitModifierData);
 
-	public Unit unit;
+	[HideInInspector] public Unit unit;
 
 
 	protected new void Awake() {

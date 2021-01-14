@@ -9,13 +9,16 @@ public class StatusData : UnitModifierData {
 
 	[Header("Status Data")]
 	[Tooltip("Debuff type. This status effect may, for example, be nullified if the target has resistance to the type.")]
-	public DebuffType debuffType = DebuffType.None;
+	public Attribute<DebuffType> debuffType = new Attribute<DebuffType>(DebuffType.None);
 
-	[Tooltip("Is the debuff considered positive?")]
-	public bool positive;
+	[Tooltip("Is this status considered positive?")]
+	public Attribute<bool> positive = new Attribute<bool>(false);
 
-	[Tooltip("Is the debuff dispellable?")]
-	public bool dispellable = true;
+	[Tooltip("Is this status dispellable?")]
+	public Attribute<bool> dispellable = new Attribute<bool>(true);
+
+	[Tooltip("Is this status displayed in the UI?")]
+	public Attribute<bool> hidden = new Attribute<bool>(false);
 
 	[Tooltip("How long does this status effect last?")]
 	public ToggleAttribute<int> turnDuration = new ToggleAttribute<int>(false);

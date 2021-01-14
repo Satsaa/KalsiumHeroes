@@ -14,9 +14,9 @@ public class AreaDamageAbility : Ability {
 			var target = Game.grid.tiles[data.targets.First()];
 			var aoe = GetAffectedArea(target);
 			var primaryTarget = target.unit;
-			if (target.unit != null) primaryTarget.Damage(areaDamageSpellGenericData.primaryDamage.value, areaDamageSpellGenericData.damageType);
+			if (target.unit != null) primaryTarget.DealAbilityDamage(areaDamageSpellGenericData.primaryDamage.value, this, areaDamageSpellGenericData.damageType);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.Damage(areaDamageSpellGenericData.secondaryDamage.value, areaDamageSpellGenericData.damageType);
+				if (tile.unit) tile.unit.DealAbilityDamage(areaDamageSpellGenericData.secondaryDamage.value, this, areaDamageSpellGenericData.damageType);
 			}
 		});
 	}

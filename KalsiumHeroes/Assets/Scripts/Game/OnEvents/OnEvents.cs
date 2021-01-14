@@ -7,13 +7,25 @@ public interface IEdgeOnEvent : IOnEvent { }
 public interface IGlobalOnEvent : IOnEvent { }
 
 
-public interface IOnAbility_Unit : IUnitOnEvent { void OnAbility(Ability ability); }
-public interface IOnAbility_Tile : ITileOnEvent { void OnAbility(Ability ability); }
-public interface IOnAbility_Global : IGlobalOnEvent { void OnAbility(Ability ability); }
+public interface IOnAbilityCastStart_Unit : IUnitOnEvent { void OnAbilityCastStart(Ability ability); }
+public interface IOnAbilityCastStart_Tile : ITileOnEvent { void OnAbilityCastStart(Ability ability); }
+public interface IOnAbilityCastStart_Global : IGlobalOnEvent { void OnAbilityCastStart(Ability ability); }
+
+public interface IOnAbilityCastEnd_Unit : IUnitOnEvent { void OnAbilityCastEnd(Ability ability); }
+public interface IOnAbilityCastEnd_Tile : ITileOnEvent { void OnAbilityCastEnd(Ability ability); }
+public interface IOnAbilityCastEnd_Global : IGlobalOnEvent { void OnAbilityCastEnd(Ability ability); }
 
 public interface IOnDispell_Unit : IUnitOnEvent { void OnDispell(); }
 public interface IOnDispell_Tile : ITileOnEvent { void OnDispell(Unit unit); }
 public interface IOnDispell_Global : IGlobalOnEvent { void OnDispell(Unit unit); }
+
+public interface IOnEnergyDeficit_Unit : IUnitOnEvent { void OnEnergyDeficit(int deficit); }
+public interface IOnEnergyDeficit_Tile : ITileOnEvent { void OnEnergyDeficit(Unit unit, int deficit); }
+public interface IOnEnergyDeficit_Global : IGlobalOnEvent { void OnEnergyDeficit(Unit unit, int deficit); }
+
+public interface IOnEnergyExcess_Unit : IUnitOnEvent { void OnEnergyExcess(int excess); }
+public interface IOnEnergyExcess_Tile : ITileOnEvent { void OnEnergyExcess(Unit unit, int excess); }
+public interface IOnEnergyExcess_Global : IGlobalOnEvent { void OnEnergyExcess(Unit unit, int excess); }
 
 public interface IOnGetEstimatedSpeed_Unit : IUnitOnEvent { int OnGetEstimatedSpeed(int roundsAhead); }
 public interface IOnGetEstimatedSpeed_Tile : ITileOnEvent { int OnGetEstimatedSpeed(Unit unit, int roundsAhead); }
@@ -84,4 +96,14 @@ public interface IOnGetMoveCost_Unit : IUnitOnEvent {
 public interface IOnGetMoveCost_Global : IGlobalOnEvent {
 	float OnGetMoveCost(Tile from, Edge edge, Tile to, float current);
 	float OnGetMoveCost(Unit unit, Tile from, Edge edge, Tile to, float current);
+}
+
+public interface IOnGetCalculatedAbilityDamage_Unit : IUnitOnEvent {
+	float OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType);
+}
+public interface IOnGetCalculatedAbilityDamage_Tile : ITileOnEvent {
+	float OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType);
+}
+public interface IOnGetCalculatedAbilityDamage_Global : IGlobalOnEvent {
+	float OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType);
 }

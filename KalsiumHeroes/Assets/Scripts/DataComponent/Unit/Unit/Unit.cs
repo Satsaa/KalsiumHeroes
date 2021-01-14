@@ -6,6 +6,7 @@ using UnityEngine;
 using Muc.Editor;
 using Muc.Extensions;
 
+[DefaultExecutionOrder(-500)]
 public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 
 	public UnitData unitData => (UnitData)data;
@@ -51,39 +52,47 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 		base.OnDestroy();
 	}
 
-	public void Heal(float value) {
-		value = onEvents.Aggregate<IOnHeal_Unit, float>(value, (cur, v) => Mathf.Max(0, v.OnHeal(cur)));
-		value = tile.onEvents.Aggregate<IOnHeal_Tile, float>(value, (cur, v) => Mathf.Max(0, v.OnHeal(this, cur)));
-		value = Game.onEvents.Aggregate<IOnHeal_Global, float>(value, (cur, v) => Mathf.Max(0, v.OnHeal(this, cur)));
-		unitData.health.value += Mathf.Max(0, value);
+	public void Heal(float heal) {
+		heal = onEvents.Aggregate<IOnHeal_Unit, float>(heal, (cur, v) => Mathf.Max(0, v.OnHeal(cur)));
+		heal = tile.onEvents.Aggregate<IOnHeal_Tile, float>(heal, (cur, v) => Mathf.Max(0, v.OnHeal(this, cur)));
+		heal = Game.onEvents.Aggregate<IOnHeal_Global, float>(heal, (cur, v) => Mathf.Max(0, v.OnHeal(this, cur)));
+		unitData.health.value += Mathf.Max(0, heal);
 		unitData.health.ClampValue();
 	}
 
-	public void Damage(float value, DamageType type) {
-		var both = (value, type);
+	public void DealAbilityDamage(float damage, Ability ability, DamageType damageType) {
+		var calc = ability.GetCalculatedDamage(damage, damageType);
+		DealCalculatedDamage(calc, damageType);
+	}
+
+	public void DealStatusDamage(float damage, Status status, DamageType damageType) {
+		DealCalculatedDamage(damage, damageType);
+	}
+
+	public void DealCalculatedDamage(float damage, DamageType type) {
+		var both = (damage, type);
 		both = onEvents.Aggregate<IOnDamage_Unit, (float, DamageType)>(both, (cur, v) => v.OnDamage(cur.Item1, cur.Item2));
 		both = tile.onEvents.Aggregate<IOnDamage_Tile, (float, DamageType)>(both, (cur, v) => v.OnDamage(this, cur.Item1, cur.Item2));
 		both = Game.onEvents.Aggregate<IOnDamage_Global, (float, DamageType)>(both, (cur, v) => v.OnDamage(this, cur.Item1, cur.Item2));
 
-		value = both.value;
+		damage = both.damage;
 		type = both.type;
 
 		switch (type) {
 			case DamageType.Physical:
-				unitData.health.value -= (1 - unitData.defense.value / 100f) * value;
+				unitData.health.value -= (1 - unitData.defense.value / 100f) * damage;
 				unitData.health.ClampValue();
 				break;
 			case DamageType.Magical:
-				unitData.health.value -= (1 - unitData.resistance.value / 100f) * value;
+				unitData.health.value -= (1 - unitData.resistance.value / 100f) * damage;
 				unitData.health.ClampValue();
 				break;
 			case DamageType.Pure:
-				unitData.health.value -= value;
+				unitData.health.value -= damage;
 				unitData.health.ClampValue();
 				break;
-			case DamageType.None:
 			default:
-				unitData.health.value -= value;
+				unitData.health.value -= damage;
 				unitData.health.ClampValue();
 				Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
 				break;
@@ -101,9 +110,17 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	/// <summary> Applies any statuses caused by energy deficit or excess </summary>
 	public void RefreshEnergy() {
 		var deficit = 0 - unitData.energy.value;
-		if (deficit > 0) Debug.Log($"Deficit energy ({deficit})");
+		if (deficit > 0) {
+			onEvents.Execute<IOnEnergyDeficit_Unit>(v => v.OnEnergyDeficit(deficit));
+			tile.onEvents.Execute<IOnEnergyDeficit_Tile>(v => v.OnEnergyDeficit(this, deficit));
+			Game.onEvents.Execute<IOnEnergyDeficit_Global>(v => v.OnEnergyDeficit(this, deficit));
+		}
 		var excess = unitData.energy.value - unitData.energy.other;
-		if (excess > 0) Debug.Log($"Excess energy ({excess})");
+		if (excess > 0) {
+			onEvents.Execute<IOnEnergyExcess_Unit>(v => v.OnEnergyExcess(excess));
+			tile.onEvents.Execute<IOnEnergyExcess_Tile>(v => v.OnEnergyExcess(this, excess));
+			Game.onEvents.Execute<IOnEnergyExcess_Global>(v => v.OnEnergyExcess(this, excess));
+		}
 		unitData.energy.ClampValue();
 	}
 
@@ -136,6 +153,6 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	void IOnTurnStart_Unit.OnTurnStart() {
 		if (Game.rounds.round <= 1) return;
 		unitData.energy.value += unitData.energyRegen.value;
-		unitData.energy.ClampValue();
+		RefreshEnergy();
 	}
 }

@@ -19,9 +19,14 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: 93b1319758abf8c4eb1635cf686e0464, type: 2}
   description: {fileID: 11400000, guid: 5413486dfcf31954c94d280424228d0e, type: 2}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 1
-  positive: 0
-  dispellable: 1
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
   turnDuration:
     _value: 2
     _enabled: 1

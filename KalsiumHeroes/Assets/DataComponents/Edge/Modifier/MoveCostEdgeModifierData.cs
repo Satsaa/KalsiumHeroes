@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(MoveCostEdgeModifierData), menuName = "DataSources/" + nameof(MoveCostEdgeModifierData))]
+[CreateAssetMenu(fileName = nameof(MoveCostEdgeModifierData), menuName = "DataSources/EdgeModifiers/" + nameof(MoveCostEdgeModifierData))]
 public class MoveCostEdgeModifierData : EdgeModifierData {
 
 	public override Type componentConstraint => typeof(MoveCostEdgeModifier);

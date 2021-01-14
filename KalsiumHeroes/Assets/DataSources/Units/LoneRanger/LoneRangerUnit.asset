@@ -19,7 +19,6 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: 42f86a866cda1d443a677a06699c8b8d, type: 2}
   description: {fileID: 11400000, guid: bc31a1daa4660eb458469dc8fcf65240, type: 2}
   lore: {fileID: 11400000, guid: 1f04b3f76c37205448bc0a6cebf7d491, type: 2}
-  actor: {fileID: 0}
   portrait: {fileID: 21300000, guid: 2223b0a570b66ee42b3e0a79f0789b2a, type: 3}
   speed:
     _value: 8
@@ -28,7 +27,25 @@ MonoBehaviour:
   health:
     _value: 70
     _other: 70
+  energy:
+    _value: 10
+    _other: 20
+  energyRegen:
+    _value: 5
   defense:
     _value: 0
   resistance:
     _value: 20
+  amps:
+    weaponSkill:
+      _value: 0
+    spell:
+      _value: 0
+    skill:
+      _value: 0
+    physical:
+      _value: 0
+    magical:
+      _value: 0
+    pure:
+      _value: 0

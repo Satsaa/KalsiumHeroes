@@ -37,6 +37,7 @@ public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : I
 			Game.onAfterEvent += () => {
 				Execute<T>(action);
 			};
+			return;
 		}
 		executing = true;
 		if (dict.TryGetValue(typeof(T), out var val)) {

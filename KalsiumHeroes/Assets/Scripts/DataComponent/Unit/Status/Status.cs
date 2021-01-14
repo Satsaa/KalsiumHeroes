@@ -17,7 +17,7 @@ public abstract class Status : UnitModifier, IOnTurnEnd_Unit, IOnDispell_Unit {
 
 	/// <summary> When the Unit got dispelled. </summary>
 	public virtual void OnDispell() {
-		if (statusEffectData.dispellable) Destroy(this);
+		if (statusEffectData.dispellable.value) Destroy(this);
 	}
 
 	/// <summary> When this UnitModifier expires because the duration was reached. </summary>

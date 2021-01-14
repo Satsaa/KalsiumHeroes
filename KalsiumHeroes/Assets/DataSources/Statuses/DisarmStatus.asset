@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a048e5852712933428974a03f98c834b, type: 3}
+  m_Script: {fileID: 11500000, guid: dae7e33d858c99a4a9545bdf4b082d0e, type: 3}
   m_Name: DisarmStatus
   m_EditorClassIdentifier: 
   identifier: status_disarm
@@ -19,9 +19,14 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: 5907726c058f19f4e87007f93e53fba5, type: 2}
   description: {fileID: 11400000, guid: 31360d12ca3540944be91a087bbd3381, type: 2}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 2
-  positive: 0
-  dispellable: 1
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
   turnDuration:
     _value: 2
     _enabled: 1
