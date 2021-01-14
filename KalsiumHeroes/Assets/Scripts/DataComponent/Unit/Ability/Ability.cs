@@ -49,7 +49,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 		if (abilityData.charges.value == abilityData.charges.other) abilityData.cooldown.ResetValue();
 		if (abilityData.cooldown.value <= 0 && abilityData.cooldown.other <= 0) abilityData.charges.ResetValue();
 		else abilityData.charges.value--;
-		unit.unitData.energy.value -= abilityData.energy.value;
+		unit.unitData.energy.value -= abilityData.energyCost.value;
 		unit.RefreshEnergy();
 
 		unit.onEvents.Execute<IOnAbilityCastStart_Unit>(v => v.OnAbilityCastStart(this));
@@ -102,7 +102,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 	public virtual bool IsReady() {
 		if (castBlocked) return false;
 		if (abilityData.uses.enabled && abilityData.uses.value <= 0) return false;
-		if (abilityData.energy.value > unit.unitData.energy.value) return false;
+		if (abilityData.energyCost.value > unit.unitData.energy.value) return false;
 		if (abilityData.abilityType == AbilityType.Spell && unit.silenced.value) return false;
 		if (abilityData.abilityType == AbilityType.WeaponSkill && unit.disarmed.value) return false;
 		if (abilityData.charges.value > 0) return true;

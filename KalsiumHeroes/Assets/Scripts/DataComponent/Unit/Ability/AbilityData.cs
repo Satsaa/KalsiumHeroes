@@ -30,8 +30,9 @@ public class AbilityData : UnitModifierData {
 	[Tooltip("Only directly visible Tiles are valid in range?")]
 	public Attribute<bool> requiresVision = new Attribute<bool>(false);
 
-	[Tooltip("The amount of energy required for this ability.")]
-	public Attribute<int> energy = new Attribute<int>(0);
+	[UnityEngine.Serialization.FormerlySerializedAs("energy")]
+	[Tooltip("The amount of energy required to cast this ability.")]
+	public Attribute<int> energyCost = new Attribute<int>(0);
 
 	[AttributeLabels("Current", "Max")]
 	[Tooltip("How many turns it takes for this ability to gain a charge.")]

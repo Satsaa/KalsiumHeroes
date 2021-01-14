@@ -187,8 +187,8 @@ public class AbilityUIModifier : UnitModifier,
 	bool ShowCharges(AbilityData abilityData) => abilityData.charges.other > 1 && abilityData.cooldown.other >= 1;
 	string GetChargeText(AbilityData abilityData) => ShowCharges(abilityData) ? abilityData.charges.value.ToString() : "";
 
-	bool ShowEnergy(AbilityData abilityData) => abilityData.energy.value != 0;
-	string GetEnergyText(AbilityData abilityData) => ShowEnergy(abilityData) ? abilityData.energy.value.ToString() : "";
+	bool ShowEnergy(AbilityData abilityData) => abilityData.energyCost.value != 0;
+	string GetEnergyText(AbilityData abilityData) => ShowEnergy(abilityData) ? abilityData.energyCost.value.ToString() : "";
 
 	public void RefreshValues() {
 
