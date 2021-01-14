@@ -25,7 +25,7 @@ public class MoveAbilityTargeter : PathConfirmAbilityTargeter {
 		var paidTiles = field.tiles.Where(v => v.Value.cost > freeMovement).Select(v => v.Key);
 		var customs = new Dictionary<Tile, (Color, int)>();
 		foreach (var paidTile in paidTiles) {
-			customs.Add(paidTile, (Color.yellow, Targeting.targetPriority + 1));
+			customs.Add(paidTile, (new Color(0.85f, 0.85f, 0f), Targeting.targetPriority + 1));
 		}
 		Game.targeting.RefreshCustoms(customs);
 	}

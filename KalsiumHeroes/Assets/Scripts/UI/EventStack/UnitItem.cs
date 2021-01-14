@@ -27,17 +27,17 @@ public class UnitItem : RoundStackItem {
 	}
 
 	public void OnDestroy() {
-		if (highlighter) highlighter.Unhighlight(5);
+		if (highlighter) highlighter.Unhighlight(Targeting.hoverPriority * 2);
 	}
 
 	public void OnMouseEnter() {
-		if (highlighter) highlighter.Unhighlight(5);
+		if (highlighter) highlighter.Unhighlight(Targeting.hoverPriority * 2);
 		highlighter = unit.tile.highlighter;
-		highlighter.Highlight(Color.cyan, 5);
+		highlighter.Highlight(Color.cyan, Targeting.hoverPriority * 2);
 	}
 
 	public void OnMouseExit() {
-		if (highlighter) highlighter.Unhighlight(5);
+		if (highlighter) highlighter.Unhighlight(Targeting.hoverPriority * 2);
 	}
 
 	/// <summary>

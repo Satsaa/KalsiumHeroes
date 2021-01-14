@@ -10,6 +10,12 @@ public class Targeting : MonoBehaviour {
 	public const int selectionPriority = 2;
 	public const int hoverPriority = 4;
 
+	public readonly Color targetColor = new Color(0.25f, 0.75f, 0.25f);
+	public readonly Color selectionColor = new Color(0.1f, 0.7f, 1f);
+	public readonly Color hoverColor = new Color(0.25f, 0.25f, 1f);
+	public readonly Color invalidColor = new Color(0.80f, 0.25f, 0.25f);
+
+
 	private Rounds rm => Game.rounds;
 	private Events e => Game.events;
 	private bool finished => e.finished;
@@ -23,11 +29,6 @@ public class Targeting : MonoBehaviour {
 	HashSet<Tile> targets = new HashSet<Tile>();
 	HashSet<Tile> hovers = new HashSet<Tile>();
 	Dictionary<Tile, (Color color, int priority)> customs = new Dictionary<Tile, (Color, int)>();
-
-	Color targetColor => new Color(0.25f, 0.75f, 0.25f);
-	Color selectionColor => new Color(0.1f, 0.7f, 1f);
-	Color hoverColor => new Color(0.25f, 0.25f, 1f);
-	Color invalidColor => new Color(0.80f, 0.25f, 0.25f);
 
 	public bool TryStartTargeter(Targeter targeter) {
 		if (this.targeter != null) return false;
