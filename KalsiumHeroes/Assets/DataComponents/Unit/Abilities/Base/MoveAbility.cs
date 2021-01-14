@@ -15,14 +15,32 @@ public class MoveAbility : Ability {
 
 	public override bool IsReady() {
 		if (unit.rooted.value) return false;
-		return usedMovement < unit.unitData.movement.value && base.IsReady();
+		var energyMovement = GetPaidMovement(unit.unitData.movement.value, unit.unitData.energy.value);
+		return (usedMovement - energyMovement) < unit.unitData.movement.value && base.IsReady();
 	}
 
 	protected override IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
-		var maxCost = unit.unitData.movement.value - usedMovement;
+		var movement = unit.unitData.movement.value;
+		var freeMovement = movement - usedMovement;
+		var energyMovement = GetPaidMovement(movement, unit.unitData.energy.value);
+		var maxCost = freeMovement + energyMovement;
 		var rangeMode = abilityData.rangeMode;
 		var res = Pathing.GetCostField(tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
 		return res.Where(v => !v.unit); // Ignore tiles with units
+	}
+
+	public float GetPaidMovement(int movement, int energy) {
+		if (movement < 3) return energy / 3;
+		if (movement > 5) return energy / 1;
+		return energy / 2;
+	}
+
+	public float GetPaidMovementCost(float cost, float movement) {
+		cost -= movement - usedMovement;
+		if (cost <= 0) return 0;
+		if (movement < 3) return cost * 3;
+		if (movement > 5) return cost * 1;
+		return cost * 2;
 	}
 
 	public override void OnTurnStart() {
@@ -31,8 +49,10 @@ public class MoveAbility : Ability {
 	}
 
 	public override Targeter GetTargeter() {
-		var maxCost = unit.unitData.movement.value - usedMovement;
-		return new PathConfirmAbilityTargeter(unit, this, maxCost,
+		var movement = unit.unitData.movement.value;
+		var freeMovement = movement - usedMovement;
+		var energyMovement = GetPaidMovement(movement, unit.unitData.energy.value);
+		return new MoveAbilityTargeter(unit, this, freeMovement, energyMovement,
 			onComplete: t => PostDefaultAbilityEvent(t.selections[0])
 		) { pather = Pathers.For(abilityData.rangeMode), cc = CostCalculators.For(abilityData.rangeMode) };
 	}

@@ -6,6 +6,10 @@ using System.Linq;
 
 public class Targeting : MonoBehaviour {
 
+	public const int targetPriority = 0;
+	public const int selectionPriority = 2;
+	public const int hoverPriority = 4;
+
 	private Rounds rm => Game.rounds;
 	private Events e => Game.events;
 	private bool finished => e.finished;
@@ -120,27 +124,27 @@ public class Targeting : MonoBehaviour {
 
 
 	void RefreshTargets() {
-		foreach (var target in targets) target.highlighter.Unhighlight(0);
+		foreach (var target in targets) target.highlighter.Unhighlight(targetPriority);
 		targets = targeter.GetTargets();
-		foreach (var target in targets) target.highlighter.Highlight(targetColor, 0);
+		foreach (var target in targets) target.highlighter.Highlight(targetColor, targetPriority);
 	}
 
 	void UnhighlightSelections() {
-		foreach (var selection in targeter.selections) selection.highlighter.Unhighlight(1);
+		foreach (var selection in targeter.selections) selection.highlighter.Unhighlight(selectionPriority);
 	}
 
 	void HighlightSelections() {
-		foreach (var selection in targeter.selections) selection.highlighter.Highlight(selectionColor, 1);
+		foreach (var selection in targeter.selections) selection.highlighter.Highlight(selectionColor, selectionPriority);
 	}
 
 	void RefreshHovers(Tile tile) {
-		foreach (var hover in hovers) hover.highlighter.Unhighlight(3);
+		foreach (var hover in hovers) hover.highlighter.Unhighlight(hoverPriority);
 		if (tile == null) hovers.Clear();
 		else hovers = targeter.GetHover(tile);
-		foreach (var hover in hovers) hover.highlighter.Highlight(hoverIsValid ? hoverColor : invalidColor, 3);
+		foreach (var hover in hovers) hover.highlighter.Highlight(hoverIsValid ? hoverColor : invalidColor, hoverPriority);
 	}
 
-	void RefreshCustoms(Dictionary<Tile, (Color, int)> newCustoms) {
+	public void RefreshCustoms(Dictionary<Tile, (Color, int)> newCustoms) {
 		foreach (var kv in customs) kv.Key.highlighter.Unhighlight(kv.Value.priority);
 		customs = newCustoms;
 		foreach (var kv in customs) kv.Key.highlighter.Highlight(kv.Value.color, kv.Value.priority);

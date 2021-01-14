@@ -26,8 +26,14 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			index = -1;
 			pathObjects.Clear();
 
+			var movement = creator.unit.unitData.movement.value;
+			var freeMovement = movement - creator.usedMovement;
+			var energyMovement = creator.GetPaidMovement(movement, creator.unit.unitData.energy.value);
+
 			var cost = result.tiles[result.closest].cost;
-			creator.usedMovement += cost;
+			var energyPayment = creator.GetPaidMovementCost(cost, movement);
+			creator.unit.unitData.energy.value -= Mathf.FloorToInt(energyPayment);
+			creator.usedMovement += Mathf.Min(freeMovement, cost);
 
 			// Build list of items to move to
 			Tile prev = null;
@@ -86,20 +92,17 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 
 	protected void ExecuteOver(Unit unit, Tile from, Edge edge, Tile to) {
-		Debug.Log($"OnMoveOver ({edge.gameObject.name})");
 		edge.onEvents.Execute<IOnMoveOver_Edge>(v => v.OnMoveOver(unit, from, to));
 		unit.onEvents.Execute<IOnMoveOver_Unit>(v => v.OnMoveOver(from, edge, to));
 		Game.onEvents.Execute<IOnMoveOver_Global>(v => v.OnMoveOver(unit, from, edge, to));
 	}
 
 	protected void ExecuteOn(Unit unit, Tile tile) {
-		Debug.Log($"OnMoveOn ({tile.gameObject.name})");
 		tile.onEvents.Execute<IOnMoveOn_Tile>(v => v.OnMoveOn(unit));
 		unit.onEvents.Execute<IOnMoveOn_Unit>(v => v.OnMoveOn(tile));
 		Game.onEvents.Execute<IOnMoveOn_Global>(v => v.OnMoveOn(unit, tile));
 	}
 	protected void ExecuteOff(Unit unit, Tile tile) {
-		Debug.Log($"OnMoveOff ({tile.gameObject.name})");
 		tile.onEvents.Execute<IOnMoveOff_Tile>(v => v.OnMoveOff(unit));
 		unit.onEvents.Execute<IOnMoveOff_Unit>(v => v.OnMoveOff(tile));
 		Game.onEvents.Execute<IOnMoveOff_Global>(v => v.OnMoveOff(unit, tile));
