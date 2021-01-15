@@ -20,7 +20,7 @@ public class OnEventDict : OnEventDict<IOnEvent>, ISerializationCallbackReceiver
 public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : IOnEvent {
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
-	private bool executing = false;
+	public static int executing = 0;
 
 	/// <summary> Enumerates IOnEvents of type T. </summary>
 	public IEnumerable<T> Get<T>() where T : TBase {
@@ -33,51 +33,45 @@ public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : I
 
 	/// <summary> Executes action on IOnEvents of type T. </summary>
 	public void Execute<T>(Action<T> action) where T : TBase {
-		if (executing) {
-			Game.onAfterEvent += () => {
-				Execute<T>(action);
-			};
+		if (executing > 0) {
+			Game.onAfterEvent += () => Execute<T>(action);
 			return;
 		}
-		executing = true;
 		if (dict.TryGetValue(typeof(T), out var val)) {
+			executing++;
 			try {
 				var targets = val as HashSet<T>;
 				foreach (var target in targets) {
 					action(target);
 				}
 			} finally {
-				executing = false;
-				Game.InvokeOnAfterEvent();
+				executing--;
+				if (executing <= 0) Game.InvokeOnAfterEvent();
 			}
 		}
-		executing = false;
-		Game.InvokeOnAfterEvent();
 	}
 
 	/// <summary> Aggregates on IOnEvents of type T. </summary>
 	public TAccumulate Aggregate<T, TAccumulate>(TAccumulate seed, Func<TAccumulate, T, TAccumulate> func) where T : TBase {
-		executing = true;
 		if (dict.TryGetValue(typeof(T), out var val)) {
+			executing++;
 			try {
 				var targets = val as HashSet<T>;
 				foreach (var target in targets) {
 					seed = func(seed, target);
 				}
 			} finally {
-				executing = false;
-				Game.InvokeOnAfterEvent();
+				executing--;
+				if (executing <= 0) Game.InvokeOnAfterEvent();
 			}
 		}
-		executing = false;
-		Game.InvokeOnAfterEvent();
 		return seed;
 	}
 
 	/// <summary> Adds the OnEvents to the cache. </summary>
 	public void Add(Object obj) {
-		if (executing) {
-			Game.onAfterEvent += () => Add(obj); ;
+		if (executing > 0) {
+			Game.onAfterEvent += () => Add(obj);
 			return;
 		}
 		foreach (var type in obj.GetType().GetInterfaces()) {
@@ -91,6 +85,10 @@ public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : I
 
 	/// <summary> Removes the OnEvents from the cache. </summary>
 	public void Remove(Object obj) {
+		if (executing > 0) {
+			Game.onAfterEvent += () => Remove(obj);
+			return;
+		}
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
 			dynamic set = dict[type];

@@ -84,7 +84,7 @@ public class AbilityUIModifier : UnitModifier,
 	[UnityEditor.Callbacks.DidReloadScripts]
 	static void OnReloadScripts() {
 		if (!Application.isPlaying) return;
-		foreach (var uiMod in Game.dataComponents.Get<AbilityUIModifier>()) uiMod.RefreshValues();
+		foreach (var uiMod in Game.dataComponents.Get<AbilityUIModifier>().Where(v => v)) uiMod.RefreshValues();
 	}
 #endif
 

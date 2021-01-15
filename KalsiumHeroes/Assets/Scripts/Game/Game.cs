@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
@@ -31,16 +32,20 @@ public class Game : MonoBehaviour {
 	public static int readyCount { get => instance._readyCount; set => instance._readyCount = value; }
 	[SerializeField] private int _readyCount = 0;
 
-	private event Action _onAfterEvent;
+	private List<Action> _onAfterEvent = new List<Action>();
 	/// <summary> This event is invoked after the current event execution loop finishes. The event is then cleared. <summary>
 	public static event Action onAfterEvent {
-		add => instance._onAfterEvent += value;
-		remove => instance._onAfterEvent -= value;
+		add => instance._onAfterEvent.Add(value);
+		remove => instance._onAfterEvent.RemoveAt(instance._onAfterEvent.FindLastIndex(v => v == value));
 	}
 
 	public static void InvokeOnAfterEvent() {
-		instance._onAfterEvent?.Invoke();
-		instance._onAfterEvent = null;
+		if (instance._onAfterEvent.Count <= 0) return;
+		var clone = instance._onAfterEvent.ToList();
+		instance._onAfterEvent.Clear();
+		foreach (var action in clone) {
+			action.Invoke();
+		}
 	}
 
 	private void OnValidate() => Awake();

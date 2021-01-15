@@ -43,7 +43,7 @@ public abstract class Modifier : DataComponent {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
 		if (Application.isPlaying) {
-			foreach (var mod in Game.dataComponents.Get<UnitModifier>()) {
+			foreach (var mod in Game.dataComponents.Get<UnitModifier>().Where(v => v)) {
 				mod.OnConfigureNonpersistent(true);
 			}
 		}

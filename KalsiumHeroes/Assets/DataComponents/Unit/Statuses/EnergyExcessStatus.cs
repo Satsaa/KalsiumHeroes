@@ -39,13 +39,13 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 		didCalculateDamage = false;
 	}
 
-	void IOnAbilityCastEnd_Unit.OnAbilityCastEnd(Ability ability) {
-		if (didCalculateDamage) Clear();
-	}
-
 	float IOnGetCalculatedAbilityDamage_Unit.OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType) {
 		didCalculateDamage = true;
 		return damage;
+	}
+
+	void IOnAbilityCastEnd_Unit.OnAbilityCastEnd(Ability ability) {
+		if (didCalculateDamage) Clear();
 	}
 
 	private void Add(int excess) {
