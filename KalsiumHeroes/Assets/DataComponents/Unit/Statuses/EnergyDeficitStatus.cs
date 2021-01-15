@@ -9,7 +9,9 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	public EnergyDeficitStatusData energyDeficitStatusData => (EnergyDeficitStatusData)data;
 	public override Type dataType => typeof(EnergyDeficitStatusData);
 
-	public int stacks;
+	[SerializeField] int stacks;
+	[SerializeField] int stacksDuringOwnTurn;
+	bool ownTurn => Game.rounds.current == unit;
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
@@ -19,15 +21,23 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	}
 
 	public void OnEnergyDeficit(int deficit) {
+		if (ownTurn) {
+			stacksDuringOwnTurn += deficit;
+		}
 		Add(deficit);
 	}
 
 	public override void OnTurnEnd() {
-		Clear();
+		if (stacksDuringOwnTurn > 0) {
+			stacks = stacksDuringOwnTurn;
+		} else {
+			Clear();
+		}
+		stacksDuringOwnTurn = 0;
 	}
 
 	private void Add(int excess) {
-		this.stacks += excess;
+		stacks += excess;
 		if (!modifierData.container) return;
 		var vfx = GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
