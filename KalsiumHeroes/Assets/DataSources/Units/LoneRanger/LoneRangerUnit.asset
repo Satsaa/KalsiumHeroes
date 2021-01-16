@@ -15,7 +15,7 @@ MonoBehaviour:
   identifier: unit_lone_ranger
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 7246361080335083718, guid: f1f55e9575cb7304a85b624fb822bc49, type: 3}
+  instantiatee: {fileID: 1349719364863503964, guid: c8298ee03768baa4ea5c0a858c1fd155, type: 3}
   displayName: {fileID: 11400000, guid: 42f86a866cda1d443a677a06699c8b8d, type: 2}
   description: {fileID: 11400000, guid: bc31a1daa4660eb458469dc8fcf65240, type: 2}
   lore: {fileID: 11400000, guid: 1f04b3f76c37205448bc0a6cebf7d491, type: 2}

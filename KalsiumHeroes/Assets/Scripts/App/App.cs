@@ -15,7 +15,6 @@ public class App : MonoBehaviour {
 
 	[SerializeField] private SceneReference defaultScene;
 	[SerializeField] private InitDisplay initDisplay;
-	[SerializeField] private TextProvider textTest;
 
 	private void OnValidate() {
 		if (_instance != null && _instance != this) {
