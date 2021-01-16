@@ -77,19 +77,16 @@ public class Rounds {
 	}
 
 	private void OnRoundStarts() {
-		Debug.Log($"Round start: {units.Count} Unit(s)");
 		Game.onEvents.Execute<IOnRoundStart>(v => v.OnRoundStart());
 	}
 
 	private void OnTurnEnds() {
-		Debug.Log($"Turn end: {current.name}");
 		current.onEvents.Execute<IOnTurnEnd_Unit>(v => v.OnTurnEnd());
 		current.tile.onEvents.Execute<IOnTurnEnd_Tile>(v => v.OnTurnEnd(current));
 		Game.onEvents.Execute<IOnTurnEnd_Global>(v => v.OnTurnEnd(current));
 	}
 
 	private void OnTurnStarts() {
-		Debug.Log($"Turn start: {current.name}");
 		current.onEvents.Execute<IOnTurnStart_Unit>(v => v.OnTurnStart());
 		current.tile.onEvents.Execute<IOnTurnStart_Tile>(v => v.OnTurnStart(current));
 		Game.onEvents.Execute<IOnTurnStart_Global>(v => v.OnTurnStart(current));

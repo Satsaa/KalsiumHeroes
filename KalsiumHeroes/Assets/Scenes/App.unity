@@ -389,6 +389,9 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: f87085b2c5d361f4a8266034d9fa4fa1, type: 3}
     scenePath: Assets/Scenes/Game.unity
   initDisplay: {fileID: 1946788572}
+  textTest:
+    placeHolder: 
+    source: {fileID: 11400000, guid: e664965360ed40f448281c2fea5884d9, type: 2}
 --- !u!4 &1363905730
 Transform:
   m_ObjectHideFlags: 0

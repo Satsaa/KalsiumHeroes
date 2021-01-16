@@ -35,47 +35,13 @@ public class TextSource : ScriptableObject {
 #if UNITY_EDITOR
 namespace Editors {
 
-	using System;
 	using System.Linq;
-	using System.Collections.Generic;
-	using UnityEngine;
-	using UnityEditor;
-	using static Muc.Editor.PropertyUtil;
-	using static Muc.Editor.EditorUtil;
-
-	[CanEditMultipleObjects]
-	[CustomPropertyDrawer(typeof(TextSource))]
-	public class SerializedTypeDrawer : PropertyDrawer {
-
-		bool initialized = false;
-
-		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
-			if (!initialized) {
-				initialized = true;
-				if (!property.hasMultipleDifferentValues) {
-					var val = GetFirstValue<TextSource>(property);
-					if (val == null) {
-						SetValue(property, AppProjectSettings.instance.defaultTextSource);
-					}
-				}
-			}
-			EditorGUI.PropertyField(position, property, label);
-		}
-
-	}
-}
-#endif
-
-#if UNITY_EDITOR
-namespace Editors {
-
 	using UnityEngine;
 	using UnityEditor;
 	using UnityEditorInternal;
 
 	using static Muc.Editor.EditorUtil;
 	using static Muc.Editor.PropertyUtil;
-	using System.Linq;
 
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(TextSource))]

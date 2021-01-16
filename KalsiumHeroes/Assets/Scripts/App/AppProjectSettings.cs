@@ -38,7 +38,6 @@ namespace Editors {
 
 		SerializedObject serializedObject;
 
-		SerializedProperty defaultTextSource;
 
 		static AppProjectSettings t => AppProjectSettings.instance;
 
@@ -51,7 +50,6 @@ namespace Editors {
 		public override void OnActivate(string searchContext, VisualElement rootElement) {
 			AppProjectSettings.instance.Save();
 			serializedObject = AppProjectSettings.instance.GetSerializedObject();
-			defaultTextSource = serializedObject.FindProperty(nameof(defaultTextSource));
 		}
 
 		[SettingsProvider]
@@ -70,8 +68,6 @@ namespace Editors {
 					EditorGUIUtility.labelWidth += 100;
 
 					EditorGUILayout.Space();
-
-					defaultTextSource.objectReferenceValue = EditorGUILayout.ObjectField(Styles.defaultTextSource, defaultTextSource.objectReferenceValue, typeof(TextSource), false);
 
 					EditorGUIUtility.labelWidth = 0;
 				}

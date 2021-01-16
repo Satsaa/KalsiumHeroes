@@ -17,6 +17,8 @@ public class DataComponentData : ScriptableObject {
 	[Tooltip("Instantiate this Type of DataComponent for this data.")]
 	public SerializedType<DataComponent> componentType;
 
+	[SerializeField] private TextProvider textTest;
+
 }
 
 #if UNITY_EDITOR
