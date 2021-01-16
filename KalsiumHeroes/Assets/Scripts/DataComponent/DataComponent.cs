@@ -19,6 +19,7 @@ public abstract class DataComponent : MonoBehaviour {
 	public abstract Type dataType { get; }
 
 	protected void OnValidate() {
+		if (Application.isPlaying) return;
 		if (source) data = Instantiate(source);
 	}
 

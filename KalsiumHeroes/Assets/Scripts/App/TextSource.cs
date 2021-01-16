@@ -7,6 +7,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(TextSource), menuName = nameof(TextSource))]
 public class TextSource : ScriptableObject {
 
+	public static implicit operator string(TextSource v) => v ? v.text : null;
+
 	[Serializable]
 	protected class Pair {
 		public TextAsset asset;
@@ -22,7 +24,7 @@ public class TextSource : ScriptableObject {
 		}
 	}
 
-	public string text {
+	protected string text {
 		get {
 			var asset = assets.Find(v => v.lang == App.lang).asset;
 			if (asset == null) return "";

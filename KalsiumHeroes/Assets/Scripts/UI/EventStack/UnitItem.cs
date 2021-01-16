@@ -10,6 +10,8 @@ public class UnitItem : RoundStackItem {
 	public Image unitImage;
 	public Text unitText;
 
+	public const int highlightPriority = Targeting.hoverPriority * 2;
+
 	[HideInInspector] public Highlighter highlighter;
 
 	public void Start() {
@@ -22,22 +24,22 @@ public class UnitItem : RoundStackItem {
 				Team.Team2 => Color.red,
 				_ => Color.magenta,
 			};
-			unitText.text = unit.unitData.displayName.text;
+			unitText.text = unit.unitData.displayName;
 		}
 	}
 
 	public void OnDestroy() {
-		if (highlighter) highlighter.Unhighlight(Targeting.hoverPriority * 2);
+		if (highlighter) highlighter.Unhighlight(highlightPriority);
 	}
 
 	public void OnMouseEnter() {
-		if (highlighter) highlighter.Unhighlight(Targeting.hoverPriority * 2);
+		if (highlighter) highlighter.Unhighlight(highlightPriority);
 		highlighter = unit.tile.highlighter;
-		highlighter.Highlight(Color.cyan, Targeting.hoverPriority * 2);
+		highlighter.Highlight(Color.cyan, highlightPriority);
 	}
 
 	public void OnMouseExit() {
-		if (highlighter) highlighter.Unhighlight(Targeting.hoverPriority * 2);
+		if (highlighter) highlighter.Unhighlight(highlightPriority);
 	}
 
 	/// <summary>
