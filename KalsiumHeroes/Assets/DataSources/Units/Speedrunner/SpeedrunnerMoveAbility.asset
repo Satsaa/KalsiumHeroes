@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
-  m_Name: SpeedrunnerMove
+  m_Name: SpeedrunnerMoveAbility
   m_EditorClassIdentifier: 
-  identifier: ability_move_speedrunner
+  identifier: ability_speedrunner_move
   componentType:
     _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   container: {fileID: 0}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
