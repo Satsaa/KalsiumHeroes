@@ -109,8 +109,6 @@ namespace Editors {
 										AssetDatabase.CreateAsset(asset, $"Assets{folderPath}/{propertyName}_{lang}.txt");
 										File.WriteAllText($"{assetsPath}{folderPath}/{propertyName}_{lang}.txt", $"{identifier.stringValue}.{propertyName}");
 										textSource.SetText(lang, asset);
-										EditorGUIUtility.PingObject(asset);
-										EditorGUIUtility.PingObject(asset);
 									}
 
 									AssetDatabase.CreateAsset(textSource, $"Assets{folderPath}/{propertyName}.asset");
