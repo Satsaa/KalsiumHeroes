@@ -63,7 +63,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			var next = pathObjects[index + 1];
 			switch (next) {
 				case Tile tile:
-					ExecuteOver(unit, pathObjects[index - 1] as Tile, prev as Edge, pathObjects[index] as Tile);
+					ExecuteOver(unit, pathObjects[index - 1] as Tile, prev as Edge, pathObjects[index + 1] as Tile);
 					break;
 				case Edge edge:
 					if (index > 0) ExecuteOn(unit, prev as Tile);
