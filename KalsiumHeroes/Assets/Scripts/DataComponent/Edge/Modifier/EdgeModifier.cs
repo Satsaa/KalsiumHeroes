@@ -8,7 +8,7 @@ using Muc.Editor;
 
 public abstract class EdgeModifier : Modifier {
 
-	public EdgeModifierData edgeModifierData => (EdgeModifierData)data;
+	public new EdgeModifierData data => (EdgeModifierData)base.data;
 	public override Type dataType => typeof(EdgeModifierData);
 
 	[HideInInspector] public Edge edge;

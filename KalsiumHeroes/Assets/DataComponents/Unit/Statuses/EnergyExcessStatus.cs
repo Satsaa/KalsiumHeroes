@@ -15,15 +15,15 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		statusEffectData.hidden.ConfigureAlterer(add, v => stacks > 0);
+		base.data.hidden.ConfigureAlterer(add, v => stacks > 0);
 
-		unit.unitData.amps.weaponSkill.ConfigureAlterer(add, v => v + data.amps.weaponSkill.value * stacks);
-		unit.unitData.amps.spell.ConfigureAlterer(add, v => v + data.amps.spell.value * stacks);
-		unit.unitData.amps.skill.ConfigureAlterer(add, v => v + data.amps.skill.value * stacks);
+		unit.data.amps.weaponSkill.ConfigureAlterer(add, v => v + data.amps.weaponSkill.value * stacks);
+		unit.data.amps.spell.ConfigureAlterer(add, v => v + data.amps.spell.value * stacks);
+		unit.data.amps.skill.ConfigureAlterer(add, v => v + data.amps.skill.value * stacks);
 
-		unit.unitData.amps.pure.ConfigureAlterer(add, v => v + data.amps.pure.value * stacks);
-		unit.unitData.amps.physical.ConfigureAlterer(add, v => v + data.amps.physical.value * stacks);
-		unit.unitData.amps.magical.ConfigureAlterer(add, v => v + data.amps.magical.value * stacks);
+		unit.data.amps.pure.ConfigureAlterer(add, v => v + data.amps.pure.value * stacks);
+		unit.data.amps.physical.ConfigureAlterer(add, v => v + data.amps.physical.value * stacks);
+		unit.data.amps.magical.ConfigureAlterer(add, v => v + data.amps.magical.value * stacks);
 	}
 
 
@@ -50,7 +50,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 
 	private void Add(int excess) {
 		this.stacks += excess;
-		if (!modifierData.container) return;
+		if (!data.container) return;
 		var vfx = GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
 		var pts = GetComponent<ParticleSystem>();
@@ -58,7 +58,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	}
 	private void Clear() {
 		stacks = 0;
-		if (!modifierData.container) return;
+		if (!data.container) return;
 		var vfx = GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();
 		var pts = GetComponent<ParticleSystem>();

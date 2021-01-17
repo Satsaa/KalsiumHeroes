@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class UnitModifier : Modifier {
 
-	public UnitModifierData unitModifierData => (UnitModifierData)data;
+	public new UnitModifierData data => (UnitModifierData)base.data;
 	public override Type dataType => typeof(UnitModifierData);
 
 	[HideInInspector] public Unit unit;

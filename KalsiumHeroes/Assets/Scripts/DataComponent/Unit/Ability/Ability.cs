@@ -5,37 +5,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnAnimationEventEnd {
+public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEventEnd {
 
-	public AbilityData abilityData => (AbilityData)data;
+	public new AbilityData data => (AbilityData)base.data;
 	public override Type dataType => typeof(AbilityData);
 
-	[HideInInspector, SerializeField] bool castBlocked = false;
-	[HideInInspector, SerializeField] bool sendOnCastEnd = false;
+	[HideInInspector, SerializeField] public bool isCasting = false;
 
 	public abstract EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg);
 
 	public virtual void OnTurnStart() {
-		castBlocked = false;
-		abilityData.cooldown.value--;
-		if (abilityData.cooldown.value <= 0) {
-			abilityData.charges.value++;
-			if (abilityData.cooldown.value <= 0 && abilityData.cooldown.other <= 0) abilityData.charges.ResetValue();
-			else abilityData.charges.LimitValue();
-			abilityData.cooldown.ResetValue();
-		}
-	}
-
-	public virtual void OnAbilityCastStart(Ability ability) {
-		if (ability.abilityData.abilityType == AbilityType.Base) return;
-		if (!abilityData.alwaysCastable.value) {
-			castBlocked = true;
+		data.cooldown.value--;
+		if (data.cooldown.value <= 0) {
+			data.charges.value++;
+			if (data.cooldown.value <= 0 && data.cooldown.other <= 0) data.charges.ResetValue();
+			else data.charges.LimitValue();
+			data.cooldown.ResetValue();
 		}
 	}
 
 	public virtual void OnAnimationEventEnd() {
-		if (sendOnCastEnd) {
-			sendOnCastEnd = false;
+		if (isCasting) {
+			isCasting = false;
 			unit.onEvents.Execute<IOnAbilityCastEnd_Unit>(v => v.OnAbilityCastEnd(this));
 			unit.tile.onEvents.Execute<IOnAbilityCastEnd_Tile>(v => v.OnAbilityCastEnd(this));
 			Game.onEvents.Execute<IOnAbilityCastEnd_Global>(v => v.OnAbilityCastEnd(this));
@@ -44,12 +35,12 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 
 	/// <summary> Called when the ability is actually cast. </summary>
 	public virtual void OnCast() {
-		sendOnCastEnd = true;
-		if (abilityData.uses.enabled) abilityData.uses.value--;
-		if (abilityData.charges.value == abilityData.charges.other) abilityData.cooldown.ResetValue();
-		if (abilityData.cooldown.value <= 0 && abilityData.cooldown.other <= 0) abilityData.charges.ResetValue();
-		else abilityData.charges.value--;
-		unit.unitData.energy.value -= abilityData.energyCost.value;
+		isCasting = true;
+		if (data.uses.enabled) data.uses.value--;
+		if (data.charges.value == data.charges.other) data.cooldown.ResetValue();
+		if (data.cooldown.value <= 0 && data.cooldown.other <= 0) data.charges.ResetValue();
+		else data.charges.value--;
+		unit.data.energy.value -= data.energyCost.value;
 		unit.RefreshEnergy();
 
 		unit.onEvents.Execute<IOnAbilityCastStart_Unit>(v => v.OnAbilityCastStart(this));
@@ -58,32 +49,32 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 	}
 
 	public float GetCalculatedDamage(float damage, DamageType damageType) {
-		var abilityType = this.abilityData.abilityType;
+		var abilityType = this.data.abilityType;
 		switch (abilityType) {
 			default:
 			case AbilityType.Base:
 				Debug.LogWarning($"Unexpected {nameof(AbilityType)} {abilityType.ToString()}.");
 				break;
 			case AbilityType.Skill:
-				damage *= 1f + unit.unitData.amps.skill.value;
+				damage *= 1f + unit.data.amps.skill.value;
 				break;
 			case AbilityType.WeaponSkill:
-				damage *= 1f + unit.unitData.amps.weaponSkill.value;
+				damage *= 1f + unit.data.amps.weaponSkill.value;
 				break;
 			case AbilityType.Spell:
-				damage *= 1f + unit.unitData.amps.spell.value;
+				damage *= 1f + unit.data.amps.spell.value;
 				break;
 		}
 
 		switch (damageType) {
 			case DamageType.Physical:
-				damage *= 1f + unit.unitData.amps.physical.value;
+				damage *= 1f + unit.data.amps.physical.value;
 				break;
 			case DamageType.Magical:
-				damage *= 1f + unit.unitData.amps.magical.value;
+				damage *= 1f + unit.data.amps.magical.value;
 				break;
 			case DamageType.Pure:
-				damage *= 1f + unit.unitData.amps.pure.value;
+				damage *= 1f + unit.data.amps.pure.value;
 				break;
 			default:
 				Debug.LogWarning($"Unexpected {nameof(DamageType)} {damageType.ToString()}.");
@@ -100,12 +91,11 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 
 	/// <summary> Is the Ability castable at the moment? </summary>
 	public virtual bool IsReady() {
-		if (castBlocked) return false;
-		if (abilityData.uses.enabled && abilityData.uses.value <= 0) return false;
-		if (abilityData.energyCost.value > unit.unitData.energy.value) return false;
-		if (abilityData.abilityType == AbilityType.Spell && unit.silenced.value) return false;
-		if (abilityData.abilityType == AbilityType.WeaponSkill && unit.disarmed.value) return false;
-		if (abilityData.charges.value > 0) return true;
+		if (data.uses.enabled && data.uses.value <= 0) return false;
+		if (data.energyCost.value > unit.data.energy.value) return false;
+		if (data.abilityType == AbilityType.Spell && unit.silenced.value) return false;
+		if (data.abilityType == AbilityType.WeaponSkill && unit.disarmed.value) return false;
+		if (data.charges.value > 0) return true;
 		return false;
 	}
 
@@ -116,7 +106,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 	/// Used for highlighting and should be used when casting the ability (ensures equivalency).
 	/// </summary>
 	public virtual IEnumerable<Tile> GetAffectedArea(Tile tile) {
-		return Game.grid.Radius(tile, abilityData.radius.value);
+		return Game.grid.Radius(tile, data.radius.value);
 	}
 
 	#region GetTargets
@@ -130,21 +120,21 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 
 	/// <summary> Get the target Tiles in range with this method. Call the base implementation for default behaviour. </summary>
 	protected virtual IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
-		if (abilityData.range.enabled) {
-			return (abilityData.rangeMode) switch {
-				RangeMode.Distance => Game.grid.Radius(tile, abilityData.range.value),
+		if (data.range.enabled) {
+			return (data.rangeMode) switch {
+				RangeMode.Distance => Game.grid.Radius(tile, data.range.value),
 
-				RangeMode.PathDistance => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.Unphased).tiles.Keys,
-				RangeMode.PathDistancePhased => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.Phased).tiles.Keys,
-				RangeMode.PathDistanceFlying => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.Flying).tiles.Keys,
-				RangeMode.PathDistancePhasedFlying => Pathing.GetDistanceField(tile, abilityData.range.value, Pathers.FlyingPhased).tiles.Keys,
+				RangeMode.PathDistance => Pathing.GetDistanceField(tile, data.range.value, Pathers.Unphased).tiles.Keys,
+				RangeMode.PathDistancePhased => Pathing.GetDistanceField(tile, data.range.value, Pathers.Phased).tiles.Keys,
+				RangeMode.PathDistanceFlying => Pathing.GetDistanceField(tile, data.range.value, Pathers.Flying).tiles.Keys,
+				RangeMode.PathDistancePhasedFlying => Pathing.GetDistanceField(tile, data.range.value, Pathers.FlyingPhased).tiles.Keys,
 
-				RangeMode.PathCost => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.Unphased).tiles.Keys,
-				RangeMode.PathCostPhased => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.Phased).tiles.Keys,
-				RangeMode.PathCostFlying => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.Flying).tiles.Keys,
-				RangeMode.PathCostPhasedFlying => Pathing.GetCostField(tile, maxCost: abilityData.range.value, pather: Pathers.FlyingPhased).tiles.Keys,
+				RangeMode.PathCost => Pathing.GetCostField(tile, maxCost: data.range.value, pather: Pathers.Unphased).tiles.Keys,
+				RangeMode.PathCostPhased => Pathing.GetCostField(tile, maxCost: data.range.value, pather: Pathers.Phased).tiles.Keys,
+				RangeMode.PathCostFlying => Pathing.GetCostField(tile, maxCost: data.range.value, pather: Pathers.Flying).tiles.Keys,
+				RangeMode.PathCostPhasedFlying => Pathing.GetCostField(tile, maxCost: data.range.value, pather: Pathers.FlyingPhased).tiles.Keys,
 
-				_ => Game.grid.Radius(tile, abilityData.range.value),
+				_ => Game.grid.Radius(tile, data.range.value),
 			};
 		} else {
 			return Game.grid.tiles.Values;
@@ -155,14 +145,14 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 	protected virtual void GetTargets_FilterTargets(Tile tile, ref IEnumerable<Tile> targets) {
 
 		// If ground not included. When ground is included all hexes in range are valid, so we need no filtering.
-		if ((abilityData.targetType & TargetType.Ground) == 0) {
+		if ((data.targetType & TargetType.Ground) == 0) {
 
-			bool self = (abilityData.targetType & TargetType.Self) != 0;
-			bool ally = (abilityData.targetType & TargetType.Ally) != 0;
-			bool enemy = (abilityData.targetType & TargetType.Enemy) != 0;
-			bool neutral = (abilityData.targetType & TargetType.Neutral) != 0;
+			bool self = (data.targetType & TargetType.Self) != 0;
+			bool ally = (data.targetType & TargetType.Ally) != 0;
+			bool enemy = (data.targetType & TargetType.Enemy) != 0;
+			bool neutral = (data.targetType & TargetType.Neutral) != 0;
 
-			if (abilityData.targetType > 0) {
+			if (data.targetType > 0) {
 				targets = targets.Where(h => {
 					if (h.unit != null) {
 						if (self && h.unit == unit) return true;
@@ -175,7 +165,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 			}
 		}
 
-		if (abilityData.requiresVision.value) targets = targets.Where(h => Game.grid.HasSight(tile, h));
+		if (data.requiresVision.value) targets = targets.Where(h => Game.grid.HasSight(tile, h));
 	}
 
 	#endregion
@@ -192,7 +182,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 
 	protected void PostDefaultAbilityEvent(Tile target) {
 		Game.client.PostEvent(new Events.Ability() {
-			ability = data.identifier,
+			ability = base.data.identifier,
 			targets = new Vector3Int[] { target.hex.pos },
 			unit = unit.tile.hex.pos
 		});

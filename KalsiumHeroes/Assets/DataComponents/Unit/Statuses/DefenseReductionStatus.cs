@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DefenseReductionStatus : Status {
-    public DefenseReductionStatusData defenseReductionStatusData => (DefenseReductionStatusData)data;
 
+    public new DefenseReductionStatusData data => (DefenseReductionStatusData)base.data;
     public override Type dataType => typeof(DefenseReductionStatusData);
 
     protected override void OnConfigureNonpersistent(bool add) {
         base.OnConfigureNonpersistent(add);
-        unit.unitData.defense.ConfigureAlterer(add, v => v - defenseReductionStatusData.defenseReduction.value);
+        unit.data.defense.ConfigureAlterer(add, v => v - data.defenseReduction.value);
     }
 }

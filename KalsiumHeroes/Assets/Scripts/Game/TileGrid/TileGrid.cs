@@ -74,7 +74,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 					edge = ego.GetComponent<Edge>();
 					tile.SetEdge(i, edge);
 				}
-				foreach (var edgeSource in tile.tileData.edgeModifiers[i]) {
+				foreach (var edgeSource in tile.data.edgeModifiers[i]) {
 					edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
 				}
 			}
@@ -143,7 +143,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 					tile.SetEdge(i, edge);
 				}
 			}
-			foreach (var edgeSource in tile.tileData.edgeModifiers[i]) {
+			foreach (var edgeSource in tile.data.edgeModifiers[i]) {
 				edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
 			}
 		}
@@ -389,7 +389,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="target">The sighted Tile</param>
 	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>
 	public bool HasSight(Hex hex, Hex target, Predicate<Tile> predicate = null) {
-		predicate = predicate ?? (h => h.tileData.transparent.value);
+		predicate = predicate ?? (h => h.data.transparent.value);
 		int nudge = 0;
 		var lineA = Line(hex, target, false).GetEnumerator();
 		var lineB = Line(hex, target, true).GetEnumerator();
@@ -445,7 +445,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Dictionary of Tile areas. Key: Tile, Value: Area id</returns>
 	public Dictionary<Tile, int> GetAreas(Predicate<Tile> passable = null) {
-		passable = passable ?? (h => h.tileData.passable.value);
+		passable = passable ?? (h => h.data.passable.value);
 		var results = new Dictionary<Tile, int>(tiles.Count);
 		var id = 0;
 
@@ -464,7 +464,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// </summary>
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	public IEnumerable<Tile> Flood(Tile source, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => h.tileData.passable.value);
+		passable = passable ?? (h => h.data.passable.value);
 		var frontier = new Queue<Tile>();
 		yield return source;
 		frontier.Enqueue(source);
@@ -514,11 +514,11 @@ public class TileGridEditor : Editor {
 		var b = a.GetParameters();
 		foreach (var kv in t.tiles) {
 			var tile = kv.Value;
-			var fillColor = (tile == null || tile.tileData == null) ? Color.magenta : (tile.tileData.passable.value ? (
+			var fillColor = (tile == null || tile.data == null) ? Color.magenta : (tile.data.passable.value ? (
 				Color.Lerp(
-					Saturate(Whitener(Color.green, 0.75f), tile.tileData.appeal.value * -0.08f),
-					Saturate(Whitener(Color.red, 0.75f), tile.tileData.appeal.value * -0.08f),
-					tile.tileData.moveCost.value / 10f
+					Saturate(Whitener(Color.green, 0.75f), tile.data.appeal.value * -0.08f),
+					Saturate(Whitener(Color.red, 0.75f), tile.data.appeal.value * -0.08f),
+					tile.data.moveCost.value / 10f
 				)
 			) : Color.black);
 			if (tile) {

@@ -11,8 +11,8 @@ public class SideKickAbility : Ability {
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var speed = unit.unitData.speed.value;
-			var movement = unit.unitData.movement.value;
+			var speed = unit.data.speed.value;
+			var movement = unit.data.movement.value;
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			var movementDamage = movement * data.movementDamageMultiplier.value;

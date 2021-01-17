@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public abstract class Modifier : DataComponent {
 
-	public ModifierData modifierData => (ModifierData)data;
+	public new ModifierData data => (ModifierData)base.data;
 	public override Type dataType => typeof(ModifierData);
 
 	protected new void Awake() {
@@ -27,7 +27,7 @@ public abstract class Modifier : DataComponent {
 	}
 
 	private void DestroyContainer() {
-		if (modifierData && modifierData.container != null) {
+		if (data && data.container != null) {
 			ObjectUtil.Destroy(gameObject);
 		}
 	}

@@ -12,7 +12,7 @@ public class Tile : MasterComponent<TileModifier, ITileOnEvent> {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
-	public TileData tileData => (TileData)data;
+	public new TileData data => (TileData)base.data;
 	public override Type dataType => typeof(TileData);
 
 	public Highlighter highlighter;

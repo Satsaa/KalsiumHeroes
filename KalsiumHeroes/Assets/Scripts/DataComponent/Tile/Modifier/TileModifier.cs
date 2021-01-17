@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class TileModifier : Modifier {
 
-	public TileModifierData tileModifierData => (TileModifierData)data;
+	public new TileModifierData data => (TileModifierData)base.data;
 	public override Type dataType => typeof(TileModifierData);
 
 	[HideInInspector] public Tile tile;

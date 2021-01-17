@@ -24,7 +24,7 @@ public class Rounds {
 	[field: SerializeField] public int round { get; private set; }
 
 	void Sort() {
-		units.Sort((a, b) => a.unitData.speed.value.CompareTo(b.unitData.speed.value));
+		units.Sort((a, b) => a.data.speed.value.CompareTo(b.data.speed.value));
 	}
 
 	public List<Unit> GetEstimatedOrder(int roundsAhead) {

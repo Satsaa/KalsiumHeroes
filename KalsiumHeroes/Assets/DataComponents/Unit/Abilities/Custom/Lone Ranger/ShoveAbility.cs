@@ -30,7 +30,7 @@ public class ShoveAbility : Ability {
 		var dir = (TileDir)((IList<Tile>)unit.tile.neighbors).IndexOf(tile);
 		if (!dontShove) {
 			Tile nbr = null;
-			while ((nbr = tile.GetNeighbor(dir)) != null && !nbr.unit && nbr.tileData.passable.value) {
+			while ((nbr = tile.GetNeighbor(dir)) != null && !nbr.unit && nbr.data.passable.value) {
 				tile = nbr;
 			}
 		}

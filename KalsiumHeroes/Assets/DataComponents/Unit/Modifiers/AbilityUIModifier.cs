@@ -93,7 +93,7 @@ public class AbilityUIModifier : UnitModifier,
 		icon.transform.SetParent(parent.transform);
 		aIcons.Add(icon);
 		icon.ability = ability;
-		icon.abilityText.text = ability.unitModifierData.displayName;
+		icon.abilityText.text = ability.data.displayName;
 		icon.cooldownText.text = "";
 		icon.chargeText.text = "";
 		icon.fgMask.gameObject.SetActive(true);
@@ -105,7 +105,7 @@ public class AbilityUIModifier : UnitModifier,
 		var icon = Instantiate(passivePrefab).GetComponent<PassiveIcon>();
 		pIcons.Add(icon);
 		icon.passive = passive;
-		icon.abilityText.text = passive.unitModifierData.displayName;
+		icon.abilityText.text = passive.data.displayName;
 		RefreshLayout();
 	}
 
@@ -194,7 +194,7 @@ public class AbilityUIModifier : UnitModifier,
 
 		foreach (var icon in aIcons) {
 			var (ability, abilityButton, abilityText, cooldownText, chargeText, energyText, fgMask, bgImage) = icon;
-			var abilityData = ability.abilityData;
+			var abilityData = ability.data;
 
 
 			chargeText.text = GetChargeText(abilityData);

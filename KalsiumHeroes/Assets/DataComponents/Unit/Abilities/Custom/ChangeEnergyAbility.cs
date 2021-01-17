@@ -15,7 +15,7 @@ public class ChangeEnergyAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					tile.unit.unitData.energy.value += data.energyChange.value;
+					tile.unit.data.energy.value += data.energyChange.value;
 					tile.unit.RefreshEnergy();
 				}
 			}

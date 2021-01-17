@@ -29,11 +29,11 @@ public class StatsUIModifier : UnitModifier {
 	void LateUpdate() {
 		parent.transform.position = cam.WorldToScreenPoint(transform.position + wsOffset).Add(ssOffset);
 
-		hpRect.sizeDelta = hpRect.sizeDelta.SetX(unit.unitData.health.value / unit.unitData.health.other * hpFullWidth);
-		hpText.text = $"{Mathf.Ceil(unit.unitData.health.value)}/{Mathf.Ceil(unit.unitData.health.other)}";
+		hpRect.sizeDelta = hpRect.sizeDelta.SetX(unit.data.health.value / unit.data.health.other * hpFullWidth);
+		hpText.text = $"{Mathf.Ceil(unit.data.health.value)}/{Mathf.Ceil(unit.data.health.other)}";
 
-		energyRect.sizeDelta = energyRect.sizeDelta.SetX(unit.unitData.energy.value / (float)unit.unitData.energy.other * energyFullWidth);
-		energyText.text = $"{unit.unitData.energy.value}/{unit.unitData.energy.other}";
+		energyRect.sizeDelta = energyRect.sizeDelta.SetX(unit.data.energy.value / (float)unit.data.energy.other * energyFullWidth);
+		energyText.text = $"{unit.data.energy.value}/{unit.data.energy.other}";
 	}
 
 	new void Awake() {

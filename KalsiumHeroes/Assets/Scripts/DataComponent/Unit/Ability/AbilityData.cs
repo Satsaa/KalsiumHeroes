@@ -45,7 +45,8 @@ public class AbilityData : UnitModifierData {
 	[Tooltip("How many times can the ability be cast in total.")]
 	public ToggleAttribute<int> uses = new ToggleAttribute<int>(false);
 
-	[Tooltip("Can the ability be cast after other abilities?")]
-	public Attribute<bool> alwaysCastable = new Attribute<bool>(false);
+	[Tooltip("Can the unit move after this spell is cast?")]
+	[UnityEngine.Serialization.FormerlySerializedAs("alwaysCastable")]
+	public Attribute<bool> allowMove = new Attribute<bool>(false);
 
 }

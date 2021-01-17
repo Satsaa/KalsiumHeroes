@@ -177,6 +177,8 @@ namespace Muc.Data {
 			using (PropertyScope(position, label, property, out label)) {
 				var list = property.FindPropertyRelative("list");
 				EditorGUI.PropertyField(position, list, label);
+				var skin = GUI.skin;
+				EditorGUI.DrawTextureTransparent(position, GUI.skin.box.normal.background);
 			}
 		}
 

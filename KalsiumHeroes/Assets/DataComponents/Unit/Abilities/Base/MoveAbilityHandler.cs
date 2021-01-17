@@ -20,19 +20,19 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 		if (end.unit) {
 			Debug.LogError("Target Tile is blocked by a unit!");
 		} else {
-			var rangeMode = creator.abilityData.rangeMode;
+			var rangeMode = creator.data.rangeMode;
 			Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
 			animating = true;
 			index = -1;
 			pathObjects.Clear();
 
-			var movement = creator.unit.unitData.movement.value;
+			var movement = creator.unit.data.movement.value;
 			var freeMovement = movement - creator.usedMovement;
-			var energyMovement = creator.GetPaidMovement(movement, creator.unit.unitData.energy.value);
+			var energyMovement = creator.GetPaidMovement(movement, creator.unit.data.energy.value);
 
 			var cost = result.tiles[result.closest].cost;
 			var energyPayment = creator.GetPaidMovementCost(cost, movement);
-			creator.unit.unitData.energy.value -= Mathf.FloorToInt(energyPayment);
+			creator.unit.data.energy.value -= Mathf.FloorToInt(energyPayment);
 			creator.usedMovement += Mathf.Min(freeMovement, cost);
 
 			// Build list of items to move to

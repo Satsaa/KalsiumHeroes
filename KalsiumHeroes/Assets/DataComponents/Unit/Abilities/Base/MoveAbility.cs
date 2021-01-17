@@ -4,9 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAbility : Ability {
+public class MoveAbility : Ability, IOnAbilityCastStart_Unit {
 
 	[HideInInspector] public float usedMovement;
+	[HideInInspector, SerializeField] bool blocked;
 
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -15,16 +16,16 @@ public class MoveAbility : Ability {
 
 	public override bool IsReady() {
 		if (unit.rooted.value) return false;
-		var energyMovement = GetPaidMovement(unit.unitData.movement.value, unit.unitData.energy.value);
-		return (usedMovement - energyMovement) < unit.unitData.movement.value && base.IsReady();
+		var energyMovement = GetPaidMovement(unit.data.movement.value, unit.data.energy.value);
+		return (usedMovement - energyMovement) < unit.data.movement.value && base.IsReady();
 	}
 
 	protected override IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
-		var movement = unit.unitData.movement.value;
+		var movement = unit.data.movement.value;
 		var freeMovement = movement - usedMovement;
-		var energyMovement = GetPaidMovement(movement, unit.unitData.energy.value);
+		var energyMovement = GetPaidMovement(movement, unit.data.energy.value);
 		var maxCost = freeMovement + energyMovement;
-		var rangeMode = abilityData.rangeMode;
+		var rangeMode = data.rangeMode;
 		var res = Pathing.GetCostField(tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
 		return res.Where(v => !v.unit); // Ignore tiles with units
 	}
@@ -43,18 +44,23 @@ public class MoveAbility : Ability {
 		return cost * 2;
 	}
 
+	public void OnAbilityCastStart(Ability ability) {
+		if (!ability.data.allowMove.value) blocked = true;
+	}
+
 	public override void OnTurnStart() {
+		blocked = false;
 		usedMovement = 0;
 		base.OnTurnStart();
 	}
 
 	public override Targeter GetTargeter() {
-		var movement = unit.unitData.movement.value;
+		var movement = unit.data.movement.value;
 		var freeMovement = movement - usedMovement;
-		var energyMovement = GetPaidMovement(movement, unit.unitData.energy.value);
+		var energyMovement = GetPaidMovement(movement, unit.data.energy.value);
 		return new MoveAbilityTargeter(unit, this, freeMovement, energyMovement,
 			onComplete: t => PostDefaultAbilityEvent(t.selections[0])
-		) { pather = Pathers.For(abilityData.rangeMode), cc = CostCalculators.For(abilityData.rangeMode) };
+		) { pather = Pathers.For(data.rangeMode), cc = CostCalculators.For(data.rangeMode) };
 	}
 
 }

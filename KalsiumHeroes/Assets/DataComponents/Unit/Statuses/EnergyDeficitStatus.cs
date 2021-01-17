@@ -15,9 +15,9 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		statusEffectData.hidden.ConfigureAlterer(add, v => stacks > 0);
-		unit.unitData.defense.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
-		unit.unitData.resistance.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
+		base.data.hidden.ConfigureAlterer(add, v => stacks > 0);
+		unit.data.defense.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
+		unit.data.resistance.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
 	}
 
 	public void OnEnergyDeficit(int deficit) {
@@ -38,7 +38,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
 	private void Add(int excess) {
 		stacks += excess;
-		if (!modifierData.container) return;
+		if (!data.container) return;
 		var vfx = GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
 		var pts = GetComponent<ParticleSystem>();
@@ -46,7 +46,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	}
 	private void Clear() {
 		stacks = 0;
-		if (!modifierData.container) return;
+		if (!data.container) return;
 		var vfx = GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();
 		var pts = GetComponent<ParticleSystem>();
