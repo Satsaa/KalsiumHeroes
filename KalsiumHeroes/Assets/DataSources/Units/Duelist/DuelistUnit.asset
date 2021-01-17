@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: DuelistUnit
+  m_EditorClassIdentifier: 
+  identifier: unit_duelist
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 0}
+  displayName: {fileID: 11400000, guid: e757e704451a4f946a7132ad39d48b1b, type: 2}
+  description: {fileID: 11400000, guid: 5c13e9f6fac167a43a44abf506489299, type: 2}
+  lore: {fileID: 11400000, guid: 961f2826d9f25904eab3568ea43d7b5c, type: 2}
+  portrait: {fileID: 21300000, guid: a84e0b4f0827fd7419d3bc8e54203ab0, type: 3}
+  speed:
+    _value: 12
+  movement:
+    _value: 5
+  health:
+    _value: 180
+    _other: 180
+  energy:
+    _value: 10
+    _other: 20
+  energyRegen:
+    _value: 5
+  defense:
+    _value: 35
+  resistance:
+    _value: 10
+  amps:
+    weaponSkill:
+      _value: 0
+    spell:
+      _value: 0
+    skill:
+      _value: 0
+    physical:
+      _value: 0
+    magical:
+      _value: 0
+    pure:
+      _value: 0
