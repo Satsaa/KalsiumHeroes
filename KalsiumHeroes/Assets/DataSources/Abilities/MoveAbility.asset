@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,5 +40,5 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
-    _value: 0
+  allowMove:
+    _value: 1
