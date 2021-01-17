@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e51c0386db3c554db23428b2e043c85, type: 3}
+  m_Name: ParryStanceStatus
+  m_EditorClassIdentifier: 
+  identifier: status_parry_stance
+  componentType:
+    _name: ParryStanceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  debuffType:
+    _value: 0
+  positive:
+    _value: 1
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
+  turnDuration:
+    _value: 0
+    _enabled: 0
+  defenseIncrease:
+    _value: 35
+  damage:
+    _value: 30
+  damageType: 1

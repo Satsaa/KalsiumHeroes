@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd36efa997747f340b4975270c1c9f17, type: 3}
   m_Name: TargetWeakSpotStatus
   m_EditorClassIdentifier: 
-  identifier: status_targetweakspot
+  identifier: status_target_weak_spot
   componentType:
-    _name: DefenseReductionStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: DefenseChangeStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   container: {fileID: 0}
   displayName: {fileID: 0}
