@@ -18,7 +18,7 @@ MonoBehaviour:
       PublicKeyToken=null
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 2064e528c15d4264bbd84f384c107680, type: 2}
-  description: {fileID: 0}
+  description: {fileID: 11400000, guid: dabbedb97088c294fa830fcc35e1079d, type: 2}
   sprite: {fileID: 0}
   abilityType: 2
   targetType: 12
