@@ -6,20 +6,20 @@ using UnityEngine;
 
 public class ShoveAbility : Ability {
 
-	public ShoveAbilityData shoveAbilityData => (ShoveAbilityData)data;
+	public new ShoveAbilityData data => (ShoveAbilityData)base.data;
 	public override Type dataType => typeof(ShoveAbilityData);
 
 	[HideInInspector]
 	bool dontShove = false;
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
 			dontShove = false;
-			var target = Game.grid.tiles[data.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					tile.unit.gameObject.AddDataComponent(shoveAbilityData.rootModifier);
+					tile.unit.gameObject.AddDataComponent(data.rootModifier);
 					tile.unit.MoveTo(GetTargetTile(tile), true);
 				}
 			}

@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class HealAbility : Ability {
 
-	public HealAbilityData healGenericData => (HealAbilityData)data;
+	public new HealAbilityData data => (HealAbilityData)base.data;
 	public override Type dataType => typeof(HealAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.targets.First()];
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.Heal(healGenericData.heal.value);
+				if (tile.unit) tile.unit.Heal(data.heal.value);
 			}
 		});
 	}

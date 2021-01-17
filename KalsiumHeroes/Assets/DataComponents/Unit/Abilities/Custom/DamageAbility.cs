@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class DamageAbility : Ability {
 
-	public DamageAbilityData meleeRangeDamageData => (DamageAbilityData)data;
+	public new DamageAbilityData data => (DamageAbilityData)base.data;
 	public override Type dataType => typeof(DamageAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.targets.First()];
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(meleeRangeDamageData.damage.value, this, meleeRangeDamageData.damageType);
+				if (tile.unit) tile.unit.DealAbilityDamage(data.damage.value, this, data.damageType);
 			}
 		});
 	}

@@ -13,7 +13,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAbilityCastS
 	[HideInInspector, SerializeField] bool castBlocked = false;
 	[HideInInspector, SerializeField] bool sendOnCastEnd = false;
 
-	public abstract EventHandler<Events.Ability> CreateEventHandler(Events.Ability data);
+	public abstract EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg);
 
 	public virtual void OnTurnStart() {
 		castBlocked = false;

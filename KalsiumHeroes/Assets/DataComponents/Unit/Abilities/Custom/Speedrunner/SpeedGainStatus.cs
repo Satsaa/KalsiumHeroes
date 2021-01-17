@@ -12,7 +12,6 @@ public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unitsFound = unit.GetComponent<SpeedGainAbility>().unitsFound.value;
 		var oldMt = unit.unitData.movement.value;
 		unit.unitData.movement.ConfigureAlterer(add, v => v + speedGainModifierData.movementGain.value * unitsFound);
 		print($"Old Movement: {oldMt} New Movement: {unit.unitData.movement.value}");

@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class AreaDamageAbility : Ability {
 
-	public AreaDamageAbilityData areaDamageSpellGenericData => (AreaDamageAbilityData)data;
+	public new AreaDamageAbilityData data => (AreaDamageAbilityData)base.data;
 	public override Type dataType => typeof(AreaDamageAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.targets.First()];
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			var primaryTarget = target.unit;
-			if (target.unit != null) primaryTarget.DealAbilityDamage(areaDamageSpellGenericData.primaryDamage.value, this, areaDamageSpellGenericData.damageType);
+			if (target.unit != null) primaryTarget.DealAbilityDamage(data.primaryDamage.value, this, data.damageType);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(areaDamageSpellGenericData.secondaryDamage.value, this, areaDamageSpellGenericData.damageType);
+				if (tile.unit) tile.unit.DealAbilityDamage(data.secondaryDamage.value, this, data.damageType);
 			}
 		});
 	}

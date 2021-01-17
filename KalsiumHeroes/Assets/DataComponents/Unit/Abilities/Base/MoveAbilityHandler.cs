@@ -12,10 +12,10 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	[SerializeField, HideInInspector] int index;
 	[SerializeField, HideInInspector] List<MasterComponent> pathObjects = new List<MasterComponent>();
 
-	public MoveAbilityHandler(Events.Ability data, MoveAbility creator) : base(data) {
+	public MoveAbilityHandler(Events.Ability msg, MoveAbility creator) : base(msg) {
 		this.creator = creator;
-		var start = Game.grid.tiles[data.unit];
-		var end = Game.grid.tiles[data.targets.First()];
+		var start = Game.grid.tiles[msg.unit];
+		var end = Game.grid.tiles[msg.targets.First()];
 		Debug.Log("Handling move ability event!");
 		if (end.unit) {
 			Debug.LogError("Target Tile is blocked by a unit!");

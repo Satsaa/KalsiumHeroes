@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Passives are modifiers that are displayed like Abilities.
+/// Passives are Modifiers that are displayed like Abilities.
 /// </summary>
 public abstract class Passive : UnitModifier {
 

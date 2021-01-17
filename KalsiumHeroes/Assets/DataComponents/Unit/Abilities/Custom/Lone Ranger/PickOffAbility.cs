@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class PickOffAbility : Ability {
 
-	public PickOffAbilityData pickOffAbilityData => (PickOffAbilityData)data;
+	public new PickOffAbilityData data => (PickOffAbilityData)base.data;
 	public override Type dataType => typeof(PickOffAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
-			var damage = pickOffAbilityData.damage.value;
-			var target = Game.grid.tiles[data.targets.First()];
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			var damage = data.damage.value;
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			var finalDamage = CalculateDamage(damage);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(finalDamage, this, pickOffAbilityData.damageType);
+				if (tile.unit) tile.unit.DealAbilityDamage(finalDamage, this, data.damageType);
 			}
 		});
 	}
@@ -42,7 +42,7 @@ public class PickOffAbility : Ability {
 				}
 			}
 			if (foundUnit) {
-				multiplier = pickOffAbilityData.bonusDamageMultipliers[0];
+				multiplier = data.bonusDamageMultipliers[0];
 				print("Unit found within range of 2. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 				return i * multiplier;
 			} else {
@@ -53,7 +53,7 @@ public class PickOffAbility : Ability {
 					}
 				}
 				if (foundUnit) {
-					multiplier = pickOffAbilityData.bonusDamageMultipliers[1];
+					multiplier = data.bonusDamageMultipliers[1];
 					print("Unit found within range of 3. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 					return i * multiplier;
 				} else {
@@ -64,11 +64,11 @@ public class PickOffAbility : Ability {
 						}
 					}
 					if (foundUnit) {
-						multiplier = pickOffAbilityData.bonusDamageMultipliers[2];
+						multiplier = data.bonusDamageMultipliers[2];
 						print("Unit found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 						return i * multiplier;
 					} else {
-						multiplier = pickOffAbilityData.bonusDamageMultipliers[3];
+						multiplier = data.bonusDamageMultipliers[3];
 						print("No units found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 						return i * multiplier;
 					}

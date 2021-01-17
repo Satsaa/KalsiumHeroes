@@ -5,19 +5,19 @@ using System.Linq;
 using UnityEngine;
 
 public class SpeedGainAbility : Ability {
-	public SpeedGainAbilityData speedGainAbilityData => (SpeedGainAbilityData)data;
+
+	public new SpeedGainAbilityData data => (SpeedGainAbilityData)base.data;
 	public override Type dataType => typeof(SpeedGainAbilityData);
-	[HideInInspector]
-	public Attribute<int> unitsFound;
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (Ability) => {
-			unitsFound.value = 0;
-			var target = Game.grid.tiles[data.targets.First()];
+
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (Ability) => {
+			var unitsFound = 0;
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
-				if (tile.unit && tile.unit != unit) unitsFound.value++;
+				if (tile.unit && tile.unit != unit) unitsFound++;
 			}
-			unit.gameObject.AddDataComponent(speedGainAbilityData.speedGainModifier);
+			unit.gameObject.AddDataComponent<SpeedGainStatus>(this.data.speedGainModifier, v => v.unitsFound = unitsFound);
 		});
 	}
 }

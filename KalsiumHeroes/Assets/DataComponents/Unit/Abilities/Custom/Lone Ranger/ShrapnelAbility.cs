@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class ShrapnelAbility : Ability {
 
-	public ShrapnelAbilityData shrapnelAbilityData => (ShrapnelAbilityData)data;
+	public new ShrapnelAbilityData data => (ShrapnelAbilityData)base.data;
 	public override Type dataType => typeof(ShrapnelAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.targets.First()];
-			var modifier = ability.unit.gameObject.AddDataComponent<ShrapnelAbilityModifier>(shrapnelAbilityData.shrapnelModifierData);
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			var target = Game.grid.tiles[msg.targets.First()];
+			var modifier = ability.unit.gameObject.AddDataComponent<ShrapnelAbilityModifier>(data.shrapnelModifierData);
 
-			modifier.calculatedDamage = GetCalculatedDamage(shrapnelAbilityData.damage.value, shrapnelAbilityData.damageType);
-			modifier.damageType = shrapnelAbilityData.damageType;
+			modifier.calculatedDamage = GetCalculatedDamage(data.damage.value, data.damageType);
+			modifier.damageType = data.damageType;
 			modifier.target = target;
 			modifier.aoe = base.GetAffectedArea(target).ToList();
 		});

@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
-	public EnergyDeficitStatusData energyDeficitStatusData => (EnergyDeficitStatusData)data;
+	public new EnergyDeficitStatusData data => (EnergyDeficitStatusData)base.data;
 	public override Type dataType => typeof(EnergyDeficitStatusData);
 
 	[SerializeField] int stacks;
@@ -16,8 +16,8 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 		statusEffectData.hidden.ConfigureAlterer(add, v => stacks > 0);
-		unit.unitData.defense.ConfigureAlterer(add, v => v - energyDeficitStatusData.defenseReduction * stacks);
-		unit.unitData.resistance.ConfigureAlterer(add, v => v - energyDeficitStatusData.defenseReduction * stacks);
+		unit.unitData.defense.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
+		unit.unitData.resistance.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
 	}
 
 	public void OnEnergyDeficit(int deficit) {

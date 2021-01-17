@@ -9,8 +9,8 @@ public class MoveAbility : Ability {
 	[HideInInspector] public float usedMovement;
 
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new MoveAbilityHandler(data, this);
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new MoveAbilityHandler(msg, this);
 	}
 
 	public override bool IsReady() {

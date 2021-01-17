@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class AddDataComponentAbility : Ability {
 
-	public AddDataComponentAbilityData addDataComponentAbilityData => (AddDataComponentAbilityData)data;
+	public new AddDataComponentAbilityData data => (AddDataComponentAbilityData)base.data;
 	public override Type dataType => typeof(AddDataComponentAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
-			var target = Game.grid.tiles[data.targets.First()];
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					foreach (var component in addDataComponentAbilityData.components) {
+					foreach (var component in data.components) {
 						tile.unit.gameObject.AddDataComponent(component);
 					}
 				}

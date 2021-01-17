@@ -6,7 +6,7 @@ using System;
 /// </summary>
 public class InstantAbilityHandler : EventHandler<Events.Ability> {
 
-	public InstantAbilityHandler(Events.Ability data, Ability creator, Action<Ability> doEvent) : base(data) {
+	public InstantAbilityHandler(Events.Ability msg, Ability creator, Action<Ability> doEvent) : base(msg) {
 		doEvent(creator);
 	}
 
@@ -28,7 +28,7 @@ public class InstantAbilityHandler : EventHandler<Events.Ability> {
 /// </summary>
 public class InstantAbilityHandler<T> : EventHandler<Events.Ability> where T : Ability {
 
-	public InstantAbilityHandler(Events.Ability data, T creator, Action<T> doEvent) : base(data) {
+	public InstantAbilityHandler(Events.Ability msg, T creator, Action<T> doEvent) : base(msg) {
 		doEvent(creator);
 	}
 

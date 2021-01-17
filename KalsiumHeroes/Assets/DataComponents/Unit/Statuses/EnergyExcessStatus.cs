@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnGetCalculatedAbilityDamage_Unit {
 
-	public EnergyExcessStatusData energyExcessStatusData => (EnergyExcessStatusData)data;
+	public new EnergyExcessStatusData data => (EnergyExcessStatusData)base.data;
 	public override Type dataType => typeof(EnergyExcessStatusData);
 
 	[HideInInspector, SerializeField] int stacks;
@@ -17,13 +17,13 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 
 		statusEffectData.hidden.ConfigureAlterer(add, v => stacks > 0);
 
-		unit.unitData.amps.weaponSkill.ConfigureAlterer(add, v => v + energyExcessStatusData.amps.weaponSkill.value * stacks);
-		unit.unitData.amps.spell.ConfigureAlterer(add, v => v + energyExcessStatusData.amps.spell.value * stacks);
-		unit.unitData.amps.skill.ConfigureAlterer(add, v => v + energyExcessStatusData.amps.skill.value * stacks);
+		unit.unitData.amps.weaponSkill.ConfigureAlterer(add, v => v + data.amps.weaponSkill.value * stacks);
+		unit.unitData.amps.spell.ConfigureAlterer(add, v => v + data.amps.spell.value * stacks);
+		unit.unitData.amps.skill.ConfigureAlterer(add, v => v + data.amps.skill.value * stacks);
 
-		unit.unitData.amps.pure.ConfigureAlterer(add, v => v + energyExcessStatusData.amps.pure.value * stacks);
-		unit.unitData.amps.physical.ConfigureAlterer(add, v => v + energyExcessStatusData.amps.physical.value * stacks);
-		unit.unitData.amps.magical.ConfigureAlterer(add, v => v + energyExcessStatusData.amps.magical.value * stacks);
+		unit.unitData.amps.pure.ConfigureAlterer(add, v => v + data.amps.pure.value * stacks);
+		unit.unitData.amps.physical.ConfigureAlterer(add, v => v + data.amps.physical.value * stacks);
+		unit.unitData.amps.magical.ConfigureAlterer(add, v => v + data.amps.magical.value * stacks);
 	}
 
 

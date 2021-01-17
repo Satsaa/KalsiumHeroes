@@ -6,20 +6,20 @@ using UnityEngine;
 
 public class SideKickAbility : Ability {
 
-	public SideKickAbilityData sideKickAbilityData => (SideKickAbilityData)data;
+	public new SideKickAbilityData data => (SideKickAbilityData)base.data;
 	public override Type dataType => typeof(SideKickAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) {
-		return new InstantAbilityHandler(data, this, (ability) => {
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
 			var speed = unit.unitData.speed.value;
 			var movement = unit.unitData.movement.value;
-			var target = Game.grid.tiles[data.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
-			var movementDamage = movement * sideKickAbilityData.movementDamageMultiplier.value;
-			var totalDamage = speed * sideKickAbilityData.speedDamageMultiplier.value + movementDamage;
+			var movementDamage = movement * data.movementDamageMultiplier.value;
+			var totalDamage = speed * data.speedDamageMultiplier.value + movementDamage;
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(totalDamage, this, sideKickAbilityData.damageType);
-				print("Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * sideKickAbilityData.speedDamageMultiplier.value + " From Movement: " + movementDamage);
+				if (tile.unit) tile.unit.DealAbilityDamage(totalDamage, this, data.damageType);
+				print("Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * data.speedDamageMultiplier.value + " From Movement: " + movementDamage);
 			}
 		});
 	}

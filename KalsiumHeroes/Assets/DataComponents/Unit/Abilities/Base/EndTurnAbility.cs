@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EndTurnAbility : Ability {
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability data) => default;
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) => default;
 
 	public override Targeter GetTargeter() {
 		return new InstantTargeter(
