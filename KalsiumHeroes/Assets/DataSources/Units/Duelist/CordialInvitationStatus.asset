@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2d7d3c08de69a4896bb7fb877d7ae1, type: 3}
+  m_Name: CordialInvitationStatus
+  m_EditorClassIdentifier: 
+  identifier: status_cordial_invitation
+  componentType:
+    _name: CordialInvitationStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
+  turnDuration:
+    _value: 0
+    _enabled: 0
+  breakRange:
+    _value: 4
+  disgracefulBehaviour: {fileID: 11400000, guid: c88bd8570f9f47c4088667a325b84925, type: 2}
+  piercingGlare: {fileID: 11400000, guid: 7e597633c6fb0a54b9af333c359c78e6, type: 2}
+  opponent: {fileID: 0}
+  opponentStatus: {fileID: 0}

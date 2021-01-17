@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64bb5ec9baa2c7543811ff1b7e7d97c9, type: 3}
+  m_Name: CordialInvitationAbility
+  m_EditorClassIdentifier: 
+  identifier: ability_cordial_invitation
+  componentType:
+    _name: CordialInvitationAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: 2064e528c15d4264bbd84f384c107680, type: 2}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  abilityType: 2
+  targetType: 12
+  range:
+    _value: 4
+    _enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  energyCost:
+    _value: 1
+  cooldown:
+    _value: 0
+    _other: 2
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    _enabled: 0
+  allowMove:
+    _value: 1
+  statusModifier: {fileID: 11400000, guid: 9df62c4917eb3444eb07b15caa30d531, type: 2}
