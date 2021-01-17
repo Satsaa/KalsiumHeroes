@@ -6,20 +6,29 @@ using System;
 /// </summary>
 public class InstantAbilityHandler : EventHandler<Events.Ability> {
 
-	public InstantAbilityHandler(Events.Ability msg, Ability creator, Action<Ability> doEvent) : base(msg) {
-		doEvent(creator);
+	public Ability creator;
+	public Action<Ability> doEvent;
+	public bool ended;
+
+	public InstantAbilityHandler(Events.Ability msg, Ability creator, Action<Ability> handler) : base(msg) {
+		this.creator = creator;
+		this.doEvent = handler;
 	}
 
 	public override bool End() {
+		if (!ended) doEvent(creator);
+		ended = true;
 		return true;
 	}
 
 	public override bool EventHasEnded() {
-		return true;
+		return ended;
 	}
 
 	public override void Update() {
-
+		if (ended) return;
+		doEvent(creator);
+		ended = true;
 	}
 }
 

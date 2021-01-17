@@ -9,12 +9,8 @@ public class ShoveAbility : Ability {
 	public new ShoveAbilityData data => (ShoveAbilityData)base.data;
 	public override Type dataType => typeof(ShoveAbilityData);
 
-	[HideInInspector]
-	bool dontShove = false;
-
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			dontShove = false;
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
@@ -28,11 +24,9 @@ public class ShoveAbility : Ability {
 
 	Tile GetTargetTile(Tile tile) {
 		var dir = (TileDir)((IList<Tile>)unit.tile.neighbors).IndexOf(tile);
-		if (!dontShove) {
-			Tile nbr = null;
-			while ((nbr = tile.GetNeighbor(dir)) != null && !nbr.unit && nbr.data.passable.value) {
-				tile = nbr;
-			}
+		Tile nbr = null;
+		while ((nbr = tile.GetNeighbor(dir)) != null && !nbr.unit && nbr.data.passable.value) {
+			tile = nbr;
 		}
 		return tile;
 	}

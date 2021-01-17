@@ -31,12 +31,12 @@ public interface IOnGetEstimatedSpeed_Unit : IUnitOnEvent { int OnGetEstimatedSp
 public interface IOnGetEstimatedSpeed_Tile : ITileOnEvent { int OnGetEstimatedSpeed(Unit unit, int roundsAhead); }
 public interface IOnGetEstimatedSpeed_Global : IGlobalOnEvent { int OnGetEstimatedSpeed(Unit unit, int roundsAhead); }
 
-public interface IOnHeal_Unit : IUnitOnEvent { float OnHeal(float value); }
-public interface IOnHeal_Tile : ITileOnEvent { float OnHeal(Unit unit, float value); }
-public interface IOnHeal_Global : IGlobalOnEvent { float OnHeal(Unit unit, float value); }
-public interface IOnDamage_Unit : IUnitOnEvent { (float damage, DamageType type) OnDamage(float damage, DamageType type); }
-public interface IOnDamage_Tile : ITileOnEvent { (float damage, DamageType type) OnDamage(Unit unit, float damage, DamageType type); }
-public interface IOnDamage_Global : IGlobalOnEvent { (float damage, DamageType type) OnDamage(Unit unit, float damage, DamageType type); }
+public interface IOnHeal_Unit : IUnitOnEvent { void OnHeal(ref float value); }
+public interface IOnHeal_Tile : ITileOnEvent { void OnHeal(Unit unit, ref float value); }
+public interface IOnHeal_Global : IGlobalOnEvent { void OnHeal(Unit unit, ref float value); }
+public interface IOnDamage_Unit : IUnitOnEvent { void OnDamage(ref float damage, ref DamageType type); }
+public interface IOnDamage_Tile : ITileOnEvent { void OnDamage(Unit unit, ref float damage, ref DamageType type); }
+public interface IOnDamage_Global : IGlobalOnEvent { void OnDamage(Unit unit, ref float damage, ref DamageType type); }
 
 public interface IOnSpawn_Unit : IUnitOnEvent { void OnSpawn(); }
 public interface IOnSpawn_Tile : ITileOnEvent { void OnSpawn(Unit unit); }
@@ -87,15 +87,15 @@ public interface IOnGetCanPass_Global : IGlobalOnEvent {
 }
 
 public interface IOnGetMoveCost_Edge : IEdgeOnEvent {
-	float OnGetMoveCost(Tile from, Tile to, float current);
-	float OnGetMoveCost(Unit unit, Tile from, Tile to, float current);
+	void OnGetMoveCost(Tile from, Tile to, ref float current);
+	void OnGetMoveCost(Unit unit, Tile from, Tile to, ref float current);
 }
 public interface IOnGetMoveCost_Unit : IUnitOnEvent {
-	float OnGetMoveCost(Tile from, Edge edge, Tile to, float current);
+	void OnGetMoveCost(Tile from, Edge edge, Tile to, ref float current);
 }
 public interface IOnGetMoveCost_Global : IGlobalOnEvent {
-	float OnGetMoveCost(Tile from, Edge edge, Tile to, float current);
-	float OnGetMoveCost(Unit unit, Tile from, Edge edge, Tile to, float current);
+	void OnGetMoveCost(Tile from, Edge edge, Tile to, ref float current);
+	void OnGetMoveCost(Unit unit, Tile from, Edge edge, Tile to, ref float current);
 }
 
 public interface IOnGetCalculatedAbilityDamage_Unit : IUnitOnEvent {

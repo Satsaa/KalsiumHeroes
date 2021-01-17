@@ -35,6 +35,7 @@ public class Events {
 			try {
 				eventHandler = first.GetHandler();
 				if (eventHandler != null) {
+					eventHandler.Update();
 					Game.onEvents.Execute<IOnAnimationEventStart>(v => v.OnAnimationEventStart(eventHandler));
 				}
 			} catch (Exception) {

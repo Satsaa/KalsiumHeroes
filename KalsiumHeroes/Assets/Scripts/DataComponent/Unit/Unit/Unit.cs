@@ -53,9 +53,9 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	}
 
 	public void Heal(float heal) {
-		heal = onEvents.Aggregate<IOnHeal_Unit, float>(heal, (cur, v) => Mathf.Max(0, v.OnHeal(cur)));
-		heal = tile.onEvents.Aggregate<IOnHeal_Tile, float>(heal, (cur, v) => Mathf.Max(0, v.OnHeal(this, cur)));
-		heal = Game.onEvents.Aggregate<IOnHeal_Global, float>(heal, (cur, v) => Mathf.Max(0, v.OnHeal(this, cur)));
+		heal = onEvents.Aggregate<IOnHeal_Unit, float>(heal, (cur, v) => { v.OnHeal(ref cur); return Mathf.Max(0, cur); });
+		heal = tile.onEvents.Aggregate<IOnHeal_Tile, float>(heal, (cur, v) => { v.OnHeal(this, ref cur); return Mathf.Max(0, cur); });
+		heal = Game.onEvents.Aggregate<IOnHeal_Global, float>(heal, (cur, v) => { v.OnHeal(this, ref cur); return Mathf.Max(0, cur); });
 		data.health.value += Mathf.Max(0, heal);
 		data.health.ClampValue();
 	}
@@ -71,9 +71,9 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 
 	public void DealCalculatedDamage(float damage, DamageType type) {
 		var both = (damage, type);
-		both = onEvents.Aggregate<IOnDamage_Unit, (float, DamageType)>(both, (cur, v) => v.OnDamage(cur.Item1, cur.Item2));
-		both = tile.onEvents.Aggregate<IOnDamage_Tile, (float, DamageType)>(both, (cur, v) => v.OnDamage(this, cur.Item1, cur.Item2));
-		both = Game.onEvents.Aggregate<IOnDamage_Global, (float, DamageType)>(both, (cur, v) => v.OnDamage(this, cur.Item1, cur.Item2));
+		both = onEvents.Aggregate<IOnDamage_Unit, (float, DamageType)>(both, (cur, v) => { v.OnDamage(ref cur.Item1, ref cur.Item2); return cur; });
+		both = tile.onEvents.Aggregate<IOnDamage_Tile, (float, DamageType)>(both, (cur, v) => { v.OnDamage(this, ref cur.Item1, ref cur.Item2); return cur; });
+		both = Game.onEvents.Aggregate<IOnDamage_Global, (float, DamageType)>(both, (cur, v) => { v.OnDamage(this, ref cur.Item1, ref cur.Item2); return cur; });
 
 		damage = both.damage;
 		type = both.type;

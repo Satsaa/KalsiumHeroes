@@ -53,9 +53,9 @@ public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 	public float MoveCost(Unit unit, Tile from, Tile to) {
 		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
 		var value = to.data.moveCost.value;
-		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => v.OnGetMoveCost(unit, from, to, cur));
-		value = unit.onEvents.Aggregate<IOnGetMoveCost_Unit, float>(value, (cur, v) => v.OnGetMoveCost(from, this, to, cur));
-		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => v.OnGetMoveCost(unit, from, this, to, cur));
+		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => { v.OnGetMoveCost(unit, from, to, ref cur); return cur; });
+		value = unit.onEvents.Aggregate<IOnGetMoveCost_Unit, float>(value, (cur, v) => { v.OnGetMoveCost(from, this, to, ref cur); return cur; });
+		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => { v.OnGetMoveCost(unit, from, this, to, ref cur); return cur; });
 		return Mathf.Max(0, value);
 	}
 
@@ -63,8 +63,8 @@ public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 	public float MoveCost(Tile from, Tile to) {
 		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
 		var value = to.data.moveCost.value;
-		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => v.OnGetMoveCost(from, to, cur));
-		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => v.OnGetMoveCost(from, this, to, cur));
+		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => { v.OnGetMoveCost(from, to, ref cur); return cur; });
+		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => { v.OnGetMoveCost(from, this, to, ref cur); return cur; });
 		return Mathf.Max(0, value);
 	}
 }
