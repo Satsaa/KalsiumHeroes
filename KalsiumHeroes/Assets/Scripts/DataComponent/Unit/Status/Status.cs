@@ -17,12 +17,12 @@ public abstract class Status : UnitModifier, IOnTurnEnd_Unit, IOnDispell_Unit {
 
 	/// <summary> When the Unit got dispelled. </summary>
 	public virtual void OnDispell() {
-		if (data.dispellable.value) Destroy(this);
+		if (data.dispellable.value) this.Destroy();
 	}
 
 	/// <summary> When this UnitModifier expires because the duration was reached. </summary>
 	public virtual void Expire() {
-		Destroy(this);
+		this.Destroy();
 	}
 
 	/// <summary> Based on statusEffectData.turnDuration check if this status would have expired after the provided round count. </summary>

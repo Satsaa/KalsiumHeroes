@@ -24,12 +24,12 @@ public class ParryStanceStatus : Status, IOnAbilityCastStart_Global, IOnDamage_U
 	public void OnDamage(ref float damage, ref DamageType type) {
 		if (lastAbility != null && lastAbility.data.range.value <= 1 && lastAbility.data.abilityType == AbilityType.WeaponSkill) {
 			lastAbility.unit.DealStatusDamage(data.damage.value, this, data.damageType);
-			Destroy(this);
+			this.Destroy();
 		}
 		return;
 	}
 
 	public void OnTurnStart() {
-		Destroy(this);
+		this.Destroy();
 	}
 }

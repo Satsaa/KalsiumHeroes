@@ -103,7 +103,7 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 			tile.onEvents.Execute<IOnDeath_Tile>(v => v.OnDeath(this));
 			Game.onEvents.Execute<IOnDeath_Global>(v => v.OnDeath(this));
 			tile.graveyard.Add(new GraveUnit(this));
-			Destroy(gameObject);
+			Destroy();
 		}
 	}
 

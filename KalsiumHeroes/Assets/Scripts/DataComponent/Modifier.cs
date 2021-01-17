@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using Muc.Editor;
 using UnityEngine;
-
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// DataComponent which receives a bunch of global events in form of overrideable functions.
@@ -12,6 +12,14 @@ public abstract class Modifier : DataComponent {
 
 	public new ModifierData data => (ModifierData)base.data;
 	public override Type dataType => typeof(ModifierData);
+
+	/// <summary> Immediately destroys this DataComponent. Duplicate destroys are handled. </summary>
+	public override void Destroy() {
+		if (isBeingDestroyed || this == null) return;
+		isBeingDestroyed = true;
+		if (data.container) Object.DestroyImmediate(gameObject);
+		else Object.DestroyImmediate(this);
+	}
 
 	protected new void Awake() {
 		base.Awake();

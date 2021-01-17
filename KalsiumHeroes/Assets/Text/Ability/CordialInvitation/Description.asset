@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Description
   m_EditorClassIdentifier: 
   assets:
-  - asset: {fileID: 4900000, guid: ba18e43f86f9d3c48848e5b94b5ed315, type: 2}
+  - asset: {fileID: 4900000, guid: ba18e43f86f9d3c48848e5b94b5ed315, type: 3}
     lang: 0
-  - asset: {fileID: 4900000, guid: 600bcb28c66400847963598a5495d7d7, type: 2}
+  - asset: {fileID: 4900000, guid: 600bcb28c66400847963598a5495d7d7, type: 3}
     lang: 1

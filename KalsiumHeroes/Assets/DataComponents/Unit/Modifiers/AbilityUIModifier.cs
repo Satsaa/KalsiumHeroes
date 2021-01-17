@@ -237,7 +237,7 @@ public class AbilityUIModifier : UnitModifier,
 
 	void Hibernate() {
 		hibernated = true;
-		parent.SetActive(false);
+		if (parent != null) parent.SetActive(false);
 	}
 
 
@@ -298,6 +298,6 @@ public class AbilityUIModifier : UnitModifier,
 	}
 
 	public void OnGameEnd() {
-		Destroy(this);
+		this.Destroy();
 	}
 }

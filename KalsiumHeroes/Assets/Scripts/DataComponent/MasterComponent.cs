@@ -20,6 +20,13 @@ public abstract class MasterComponent : DataComponent {
 	public new MasterComponentData data => (MasterComponentData)base.data;
 	public override Type dataType => typeof(MasterComponentData);
 
+	/// <summary> Immediately destroys this MasterComponent and attached DataComponents. Duplicate destroys are handled. </summary>
+	public override void Destroy() {
+		if (isBeingDestroyed || this == null) return;
+		isBeingDestroyed = true;
+		Object.DestroyImmediate(gameObject);
+	}
+
 	public static GameObject Instantiate(MasterComponentData dataSource, Action<DataComponent> initializer = null) {
 		var go = ObjectUtil.UnawokenGameObject(dataSource.instantiatee, out var wasActive);
 		if (go.TryGetComponent(dataSource.componentType, out var comp)) ((MasterComponent)comp).source = dataSource;

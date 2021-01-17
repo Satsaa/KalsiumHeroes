@@ -4,7 +4,6 @@ using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Unit))]
 public class UnitUICanvasOrderer : MonoBehaviour {
 
 	public Camera cam;
