@@ -1,0 +1,1 @@
+Deal 40 Physical Damage to a single enemy unit, a lower their Defense by 10 for 3 turns.
