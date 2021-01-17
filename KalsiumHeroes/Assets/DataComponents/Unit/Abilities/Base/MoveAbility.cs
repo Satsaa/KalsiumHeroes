@@ -15,6 +15,7 @@ public class MoveAbility : Ability, IOnAbilityCastStart_Unit {
 	}
 
 	public override bool IsReady() {
+		if (blocked) return false;
 		if (unit.rooted.value) return false;
 		var energyMovement = GetPaidMovement(unit.data.movement.value, unit.data.energy.value);
 		return (usedMovement - energyMovement) < unit.data.movement.value && base.IsReady();

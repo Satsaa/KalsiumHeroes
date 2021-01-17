@@ -176,7 +176,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	/// <summary> Returns a targeter with onComplete and onCancel callbacks. </summary>
 	public virtual Targeter GetTargeter() {
 		return new AbilityTargeter(unit, this,
-				onComplete: (targeter) => PostDefaultAbilityEvent(targeter.selections[0])
+			onComplete: (targeter) => PostDefaultAbilityEvent(targeter.selections[0])
 		);
 	}
 

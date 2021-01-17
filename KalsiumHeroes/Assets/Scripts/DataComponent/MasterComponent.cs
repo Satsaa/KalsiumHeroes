@@ -17,7 +17,7 @@ public abstract class MasterComponent<TMod, TOnEvent> : MasterComponent where TM
 [DisallowMultipleComponent]
 public abstract class MasterComponent : DataComponent {
 
-	public MasterComponentData masterComponentData => (MasterComponentData)data;
+	public new MasterComponentData data => (MasterComponentData)base.data;
 	public override Type dataType => typeof(MasterComponentData);
 
 	public static GameObject Instantiate(MasterComponentData dataSource, Action<DataComponent> initializer = null) {
