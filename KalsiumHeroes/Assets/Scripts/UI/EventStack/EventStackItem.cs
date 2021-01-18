@@ -61,7 +61,7 @@ public class EventStackItem : MonoBehaviour {
 	public virtual void OnAdd() { }
 
 	public virtual void StartRemove() {
-		Destroy(gameObject);
+		if (this != null) Destroy(gameObject);
 	}
 
 }

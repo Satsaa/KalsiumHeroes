@@ -19,7 +19,7 @@ public abstract class DataComponent : MonoBehaviour {
 	/// <summary> Actual data type required for source. </summary>
 	public abstract Type dataType { get; }
 
-	protected bool isBeingDestroyed;
+	internal bool isBeingDestroyed;
 
 
 	[Obsolete("Use the dedicated Destroy (It is immediate) function of the " + nameof(DataComponent) + ".")]

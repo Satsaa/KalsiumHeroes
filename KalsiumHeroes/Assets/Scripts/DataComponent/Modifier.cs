@@ -31,13 +31,6 @@ public abstract class Modifier : DataComponent {
 		Game.onEvents.Remove(this);
 		OnConfigureNonpersistent(false);
 		base.OnDestroy();
-		DestroyContainer();
-	}
-
-	private void DestroyContainer() {
-		if (data && data.container != null) {
-			ObjectUtil.Destroy(gameObject);
-		}
 	}
 
 	/// <summary> Gets a MasterComponent of type T from the GameObject or it's parent. </summary>

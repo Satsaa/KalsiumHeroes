@@ -76,10 +76,11 @@ public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : I
 		}
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			if (!dict.TryGetValue(type, out dynamic set)) {
+			if (!dict.TryGetValue(type, out object set)) {
 				dict[type] = set = Activator.CreateInstance(setType);
 			}
-			set.Add(obj as dynamic);
+			var method = setType.GetMethod("Add");
+			method.Invoke(set, new object[] { obj });
 		}
 	}
 
@@ -91,8 +92,9 @@ public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : I
 		}
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			dynamic set = dict[type];
-			set.Remove(obj as dynamic);
+			var set = dict[type];
+			var method = setType.GetMethod("Remove");
+			method.Invoke(set, new object[] { obj });
 		}
 	}
 
@@ -118,10 +120,10 @@ public class OnEventDict<TBase> : ISerializationCallbackReceiver where TBase : I
 			var type = Type.GetType(keys[i]);
 			var objs = vals[i].objs;
 			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			dynamic set = dict[type] = Activator.CreateInstance(setType);
+			var set = dict[type] = Activator.CreateInstance(setType);
 			var method = setType.GetMethod("Add");
-			foreach (dynamic obj in objs) {
-				set.Add(obj);
+			foreach (var obj in objs) {
+				method.Invoke(set, new object[] { obj });
 			}
 		}
 		keys = null;
