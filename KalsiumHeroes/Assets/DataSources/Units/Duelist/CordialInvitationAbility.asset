@@ -31,10 +31,10 @@ MonoBehaviour:
   requiresVision:
     _value: 0
   energyCost:
-    _value: 1
+    _value: 12
   cooldown:
     _value: 0
-    _other: 2
+    _other: 0
   charges:
     _value: 1
     _other: 1

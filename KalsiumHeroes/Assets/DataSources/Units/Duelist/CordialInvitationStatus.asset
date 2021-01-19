@@ -25,7 +25,7 @@ MonoBehaviour:
   positive:
     _value: 0
   dispellable:
-    _value: 1
+    _value: 0
   hidden:
     _value: 0
   turnDuration:
@@ -37,3 +37,4 @@ MonoBehaviour:
   piercingGlare: {fileID: 11400000, guid: 7e597633c6fb0a54b9af333c359c78e6, type: 2}
   opponent: {fileID: 0}
   opponentStatus: {fileID: 0}
+  duelCaster: {fileID: 0}

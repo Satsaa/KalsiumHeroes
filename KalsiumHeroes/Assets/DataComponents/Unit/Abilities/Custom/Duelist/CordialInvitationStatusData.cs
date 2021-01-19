@@ -16,4 +16,6 @@ public class CordialInvitationStatusData : StatusData
     public Unit opponent;
     [SerializeField, HideInInspector]
     public CordialInvitationStatus opponentStatus;
+    [SerializeField, HideInInspector]
+    public CordialInvitationAbility duelCaster;
 }

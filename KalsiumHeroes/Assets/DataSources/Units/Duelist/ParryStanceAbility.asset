@@ -21,7 +21,7 @@ MonoBehaviour:
   description: {fileID: 11400000, guid: b996278258db1e546a4e1ec20e123a20, type: 2}
   sprite: {fileID: 0}
   abilityType: 1
-  targetType: 0
+  targetType: 2
   range:
     _value: 1
     _enabled: 0
@@ -41,6 +41,6 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   statusModifier: {fileID: 11400000, guid: 3f0b22a989c643a4baa9fc23541dda91, type: 2}
