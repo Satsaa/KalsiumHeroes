@@ -54,6 +54,10 @@ public abstract class DataComponent : MonoBehaviour {
 		}
 	}
 
+	public bool NotNullAndIs<T>() {
+		return this != null && this is T;
+	}
+
 	protected void OnValidate() {
 		if (Application.isPlaying) return;
 		if (source) data = Instantiate(source);
