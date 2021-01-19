@@ -18,8 +18,8 @@ public class SideKickAbility : Ability {
 			var movementDamage = movement * data.movementDamageMultiplier.value;
 			var totalDamage = speed * data.speedDamageMultiplier.value + movementDamage;
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(totalDamage, this, data.damageType);
-				print("Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * data.speedDamageMultiplier.value + " From Movement: " + movementDamage);
+				if (tile.unit) DealDamage(tile.unit, totalDamage, data.damageType);
+				print("Raw Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * data.speedDamageMultiplier.value + " From Movement: " + movementDamage);
 			}
 		});
 	}

@@ -1,7 +1,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
-using Muc.Data;
+using Muc.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]

@@ -20,8 +20,7 @@ public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 		print($"Old Speed: {oldSpd} New Speed: {unit.data.speed.value}");
 	}
 
-	public virtual int OnGetEstimatedSpeed(int roundsAhead) {
-		if (!TurnDurationWouldHaveExpired(roundsAhead)) return data.speedGain.value * unitsFound;
-		return 0;
+	public virtual void OnGetEstimatedSpeed(int roundsAhead, ref int current) {
+		if (!TurnDurationWouldHaveExpired(roundsAhead)) current += data.speedGain.value * unitsFound;
 	}
 }

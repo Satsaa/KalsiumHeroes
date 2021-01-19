@@ -24,7 +24,6 @@ public abstract class EdgeModifier : Modifier {
 		edge.onEvents.Add(this);
 		OnAdd();
 		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
-		Game.InvokeOnAfterEvent();
 	}
 
 	public void Init(Tile context) {
@@ -36,7 +35,6 @@ public abstract class EdgeModifier : Modifier {
 	protected new void OnDestroy() {
 		OnRemove();
 		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
-		Game.InvokeOnAfterEvent();
 		edge.onEvents.Remove(this);
 		edge.modifiers.Remove(this);
 		base.OnDestroy();

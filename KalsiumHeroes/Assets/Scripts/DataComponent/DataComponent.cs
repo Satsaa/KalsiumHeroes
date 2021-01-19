@@ -19,7 +19,8 @@ public abstract class DataComponent : MonoBehaviour {
 	/// <summary> Actual data type required for source. </summary>
 	public abstract Type dataType { get; }
 
-	internal bool isBeingDestroyed;
+	[NonSerialized] public bool isBeingDestroyedAfterOnEvent;
+	[NonSerialized] public bool isBeingDestroyed;
 
 
 	[Obsolete("Use the dedicated Destroy (It is immediate) function of the " + nameof(DataComponent) + ".")]
@@ -36,9 +37,21 @@ public abstract class DataComponent : MonoBehaviour {
 
 	/// <summary> Immediately destroys this DataComponent. Duplicate destroys are handled. </summary>
 	public virtual void Destroy() {
-		if (isBeingDestroyed || this == null) return;
-		Object.DestroyImmediate(this);
+		if (this == null || isBeingDestroyed) return;
 		isBeingDestroyed = true;
+
+		// Delay until event finishes or destroy immediately
+		if (OnEvents.executing) {
+			isBeingDestroyedAfterOnEvent = true;
+			OnEvents.onFinishEvent += Do;
+		} else {
+			Do();
+		}
+
+		void Do() {
+			if (this == null) return; // Already destroyed??
+			Object.DestroyImmediate(this);
+		}
 	}
 
 	protected void OnValidate() {

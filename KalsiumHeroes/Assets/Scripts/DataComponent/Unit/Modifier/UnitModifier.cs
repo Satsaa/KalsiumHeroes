@@ -20,13 +20,11 @@ public abstract class UnitModifier : Modifier {
 		unit.modifiers.Add(this);
 		OnAdd();
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
-		Game.InvokeOnAfterEvent();
 	}
 
 	protected new void OnDestroy() {
 		OnRemove();
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
-		Game.InvokeOnAfterEvent();
 		unit.onEvents.Remove(this);
 		unit.modifiers.Remove(this);
 		base.OnDestroy();

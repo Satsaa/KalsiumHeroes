@@ -14,10 +14,14 @@ public class ShrapnelAbility : Ability {
 			var target = Game.grid.tiles[msg.targets.First()];
 			var modifier = ability.unit.gameObject.AddDataComponent<ShrapnelAbilityModifier>(data.shrapnelModifierData);
 
-			modifier.calculatedDamage = GetCalculatedDamage(data.damage.value, data.damageType);
-			modifier.damageType = data.damageType;
 			modifier.target = target;
+			modifier.creator = this;
 			modifier.aoe = base.GetAffectedArea(target).ToList();
+
+			modifier.calculatedDamage = data.damage.value;
+			modifier.damageType = data.damageType;
+
+			CalculateDamage(ref modifier.calculatedDamage, ref modifier.damageType);
 		});
 	}
 

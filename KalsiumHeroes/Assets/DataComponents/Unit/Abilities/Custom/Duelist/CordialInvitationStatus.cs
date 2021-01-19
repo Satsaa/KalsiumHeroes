@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnDamage_Unit, IOnDeath_Unit, IOnAbilityCastStart_Global {
+public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_Unit, IOnDeath_Unit, IOnAbilityCastStart_Global {
 
 	public new CordialInvitationStatusData data => (CordialInvitationStatusData)base.data;
 	public override Type dataType => typeof(CordialInvitationStatusData);
@@ -21,9 +21,8 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnDamage_Unit,
 		if (ability.unit != this.unit && ability.unit != data.opponent) targetUnit = ability.unit;
 	}
 
-	public void OnDamage(ref float damage, ref DamageType type) {
+	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (targetUnit != null && targetUnit != this.unit && targetUnit != data.opponent) targetUnit.gameObject.AddDataComponent(data.piercingGlare);
-		return;
 	}
 
 	public void OnMoveOver(Tile from, Edge edge, Tile to) {

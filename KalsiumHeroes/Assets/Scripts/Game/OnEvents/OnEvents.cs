@@ -1,109 +1,144 @@
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Reflection;
+using System.Collections;
+using Object = UnityEngine.Object;
+using Muc;
 
-public interface IOnEvent { }
-public interface IUnitOnEvent : IOnEvent { }
-public interface ITileOnEvent : IOnEvent { }
-public interface IEdgeOnEvent : IOnEvent { }
-public interface IGlobalOnEvent : IOnEvent { }
+public class OnEvents {
 
+	protected class SharedList<TBase> where TBase : IOnEvent {
 
-public interface IOnAbilityCastStart_Unit : IUnitOnEvent { void OnAbilityCastStart(Ability ability); }
-public interface IOnAbilityCastStart_Tile : ITileOnEvent { void OnAbilityCastStart(Ability ability); }
-public interface IOnAbilityCastStart_Global : IGlobalOnEvent { void OnAbilityCastStart(Ability ability); }
+		/// <summary>
+		/// Shared list used when iterating to reduce allocations.
+		/// If the list contains items it is in use and a dedicated list should be used instead.
+		/// </summary>
+		public static List<TBase> list = new List<TBase>();
+	}
 
-public interface IOnAbilityCastEnd_Unit : IUnitOnEvent { void OnAbilityCastEnd(Ability ability); }
-public interface IOnAbilityCastEnd_Tile : ITileOnEvent { void OnAbilityCastEnd(Ability ability); }
-public interface IOnAbilityCastEnd_Global : IGlobalOnEvent { void OnAbilityCastEnd(Ability ability); }
+	public class Scope : IDisposable {
+		public Scope() => active = true;
 
-public interface IOnDispell_Unit : IUnitOnEvent { void OnDispell(); }
-public interface IOnDispell_Tile : ITileOnEvent { void OnDispell(Unit unit); }
-public interface IOnDispell_Global : IGlobalOnEvent { void OnDispell(Unit unit); }
+		public Action onFinish;
+		public bool active;
 
-public interface IOnEnergyDeficit_Unit : IUnitOnEvent { void OnEnergyDeficit(int deficit); }
-public interface IOnEnergyDeficit_Tile : ITileOnEvent { void OnEnergyDeficit(Unit unit, int deficit); }
-public interface IOnEnergyDeficit_Global : IGlobalOnEvent { void OnEnergyDeficit(Unit unit, int deficit); }
+		public void Dispose() {
+			if (!active) throw new InvalidOperationException("The scope has already been disposed.");
+			onFinish?.Invoke();
+			current = null;
+			active = false;
+		}
+	}
 
-public interface IOnEnergyExcess_Unit : IUnitOnEvent { void OnEnergyExcess(int excess); }
-public interface IOnEnergyExcess_Tile : ITileOnEvent { void OnEnergyExcess(Unit unit, int excess); }
-public interface IOnEnergyExcess_Global : IGlobalOnEvent { void OnEnergyExcess(Unit unit, int excess); }
+	protected static Scope current;
 
-public interface IOnGetEstimatedSpeed_Unit : IUnitOnEvent { int OnGetEstimatedSpeed(int roundsAhead); }
-public interface IOnGetEstimatedSpeed_Tile : ITileOnEvent { int OnGetEstimatedSpeed(Unit unit, int roundsAhead); }
-public interface IOnGetEstimatedSpeed_Global : IGlobalOnEvent { int OnGetEstimatedSpeed(Unit unit, int roundsAhead); }
+	public static bool executing => current != null;
 
-public interface IOnHeal_Unit : IUnitOnEvent { void OnHeal(ref float value); }
-public interface IOnHeal_Tile : ITileOnEvent { void OnHeal(Unit unit, ref float value); }
-public interface IOnHeal_Global : IGlobalOnEvent { void OnHeal(Unit unit, ref float value); }
-public interface IOnDamage_Unit : IUnitOnEvent { void OnDamage(ref float damage, ref DamageType type); }
-public interface IOnDamage_Tile : ITileOnEvent { void OnDamage(Unit unit, ref float damage, ref DamageType type); }
-public interface IOnDamage_Global : IGlobalOnEvent { void OnDamage(Unit unit, ref float damage, ref DamageType type); }
+	/// <summary> This event is Invoked ONCE after the execution of IOnEvents in the current scope ends. </summary>
+	public static event Action onFinishEvent {
+		remove { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish -= value; }
+		add { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish += value; }
+	}
 
-public interface IOnSpawn_Unit : IUnitOnEvent { void OnSpawn(); }
-public interface IOnSpawn_Tile : ITileOnEvent { void OnSpawn(Unit unit); }
-public interface IOnSpawn_Global : IGlobalOnEvent { void OnSpawn(Unit unit); }
-public interface IOnDeath_Unit : IUnitOnEvent { void OnDeath(); }
-public interface IOnDeath_Tile : ITileOnEvent { void OnDeath(Unit unit); }
-public interface IOnDeath_Global : IGlobalOnEvent { void OnDeath(Unit unit); }
-
-public interface IOnTurnStart_Unit : IUnitOnEvent { void OnTurnStart(); }
-public interface IOnTurnStart_Tile : ITileOnEvent { void OnTurnStart(Unit unit); }
-public interface IOnTurnStart_Global : IGlobalOnEvent { void OnTurnStart(Unit unit); }
-public interface IOnTurnEnd_Unit : IUnitOnEvent { void OnTurnEnd(); }
-public interface IOnTurnEnd_Tile : ITileOnEvent { void OnTurnEnd(Unit unit); }
-public interface IOnTurnEnd_Global : IGlobalOnEvent { void OnTurnEnd(Unit unit); }
-
-public interface IOnRoundStart : IGlobalOnEvent { void OnRoundStart(); }
-
-public interface IOnGameStart : IGlobalOnEvent { void OnGameStart(); }
-public interface IOnGameEnd : IGlobalOnEvent { void OnGameEnd(); }
-
-public interface IOnAnimationEventStart : IGlobalOnEvent { void OnAnimationEventStart(EventHandler handler); }
-public interface IOnAnimationEventEnd : IGlobalOnEvent { void OnAnimationEventEnd(); }
-
-public interface IOnTargeterStart : IGlobalOnEvent { void OnTargeterStart(Targeter targeter); }
-public interface IOnTargeterEnd : IGlobalOnEvent { void OnTargeterEnd(); }
-
-public interface IOnMoveOn_Tile : ITileOnEvent { void OnMoveOn(Unit unit); }
-public interface IOnMoveOn_Unit : IUnitOnEvent { void OnMoveOn(Tile tile); }
-public interface IOnMoveOn_Global : IGlobalOnEvent { void OnMoveOn(Unit unit, Tile tile); }
-public interface IOnMoveOff_Tile : ITileOnEvent { void OnMoveOff(Unit unit); }
-public interface IOnMoveOff_Unit : IUnitOnEvent { void OnMoveOff(Tile tile); }
-public interface IOnMoveOff_Global : IGlobalOnEvent { void OnMoveOff(Unit unit, Tile tile); }
-
-public interface IOnMoveOver_Edge : IEdgeOnEvent { void OnMoveOver(Unit unit, Tile from, Tile to); }
-public interface IOnMoveOver_Unit : IUnitOnEvent { void OnMoveOver(Tile from, Edge edge, Tile to); }
-public interface IOnMoveOver_Global : IGlobalOnEvent { void OnMoveOver(Unit unit, Tile from, Edge edge, Tile to); }
-
-public interface IOnGetCanPass_Edge : IEdgeOnEvent {
-	bool OnGetCanPass(Tile from, Tile to, bool current);
-	bool OnGetCanPass(Unit unit, Tile from, Tile to, bool current);
-}
-public interface IOnGetCanPass_Unit : IUnitOnEvent {
-	bool OnGetCanPass(Tile from, Edge edge, Tile to, bool current);
-}
-public interface IOnGetCanPass_Global : IGlobalOnEvent {
-	bool OnGetCanPass(Tile from, Edge edge, Tile to, bool current);
-	bool OnGetCanPass(Unit unit, Tile from, Edge edge, Tile to, bool current);
 }
 
-public interface IOnGetMoveCost_Edge : IEdgeOnEvent {
-	void OnGetMoveCost(Tile from, Tile to, ref float current);
-	void OnGetMoveCost(Unit unit, Tile from, Tile to, ref float current);
-}
-public interface IOnGetMoveCost_Unit : IUnitOnEvent {
-	void OnGetMoveCost(Tile from, Edge edge, Tile to, ref float current);
-}
-public interface IOnGetMoveCost_Global : IGlobalOnEvent {
-	void OnGetMoveCost(Tile from, Edge edge, Tile to, ref float current);
-	void OnGetMoveCost(Unit unit, Tile from, Edge edge, Tile to, ref float current);
-}
+/// <summary>
+/// Stores IOnEvents in collections based on their types.
+/// </summary>
+[Serializable]
+public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TBase : IOnEvent {
 
-public interface IOnGetCalculatedAbilityDamage_Unit : IUnitOnEvent {
-	float OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType);
-}
-public interface IOnGetCalculatedAbilityDamage_Tile : ITileOnEvent {
-	float OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType);
-}
-public interface IOnGetCalculatedAbilityDamage_Global : IGlobalOnEvent {
-	float OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType);
+	Dictionary<Type, object> dict = new Dictionary<Type, object>();
+
+
+	/// <summary> Returns IOnEvents of type T inside a new List. </summary>
+	public IEnumerable<T> Get<T>() where T : TBase {
+		if (dict.TryGetValue(typeof(T), out var val)) {
+			return new List<T>(val as HashSet<T>);
+		} else {
+			return new List<T>();
+		}
+	}
+
+	/// <summary> Invokes action on all IOnEvents of type T. </summary>
+	public void ForEach<T>(Scope scope, Action<T> action) where T : TBase {
+		if (dict.TryGetValue(typeof(T), out var val)) {
+			var set = val as HashSet<T>;
+			var list = SharedList<T>.list;
+			var usingShared = list.Count == 0;
+			if (usingShared) {
+				list.AddRange(set);
+			} else {
+				list = new List<T>(set);
+			}
+			try {
+				foreach (var v in list) {
+					current = scope;
+					action(v);
+				}
+			} finally {
+				// Don't bother clearing if it was created on the spot.
+				if (usingShared) list.Clear();
+			}
+		}
+	}
+
+	/// <summary> Adds the OnEvents to the cache. </summary>
+	public void Add(Object obj) {
+		foreach (var type in obj.GetType().GetInterfaces()) {
+			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			if (!dict.TryGetValue(type, out object set)) {
+				dict[type] = set = Activator.CreateInstance(setType);
+			}
+			var method = setType.GetMethod("Add");
+			method.Invoke(set, new object[] { obj });
+		}
+	}
+
+	/// <summary> Removes the OnEvents from the cache. </summary>
+	public void Remove(Object obj) {
+		foreach (var type in obj.GetType().GetInterfaces()) {
+			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			var set = dict[type];
+			var method = setType.GetMethod("Remove");
+			method.Invoke(set, new object[] { obj });
+		}
+	}
+
+
+	#region Serialization
+
+	[Serializable]
+	private class ObjectArrayContainer {
+		public Object[] objs;
+		public ObjectArrayContainer(Object[] objs) => this.objs = objs;
+	}
+
+	[SerializeField, HideInInspector] string[] keys;
+	[SerializeField, HideInInspector] ObjectArrayContainer[] vals;
+
+	void ISerializationCallbackReceiver.OnBeforeSerialize() {
+		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
+		vals = dict.Values.Select(v => (v as IEnumerable).Cast<Object>().ToArray()).Select(v => new ObjectArrayContainer(v)).ToArray();
+	}
+
+	void ISerializationCallbackReceiver.OnAfterDeserialize() {
+		for (int i = 0; i < keys.Length; i++) {
+			var type = Type.GetType(keys[i]);
+			var objs = vals[i].objs;
+			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			var set = dict[type] = Activator.CreateInstance(setType);
+			var method = setType.GetMethod("Add");
+			foreach (var obj in objs) {
+				method.Invoke(set, new object[] { obj });
+			}
+		}
+		keys = null;
+		vals = null;
+	}
+
+	#endregion
 }

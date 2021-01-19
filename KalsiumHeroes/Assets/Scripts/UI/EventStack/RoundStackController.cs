@@ -24,20 +24,16 @@ public class RoundStackController : Modifier, IOnGameStart, IOnRoundStart {
 	}
 
 	public void OnGameStart() {
-		Game.onAfterEvent += () => {
-			for (int i = 0; i < total; i++) {
-				var round = Game.rounds.round + i;
-				CreateItem(round);
-			}
-		};
+		for (int i = 0; i < total; i++) {
+			var round = Game.rounds.round + i;
+			CreateItem(round);
+		}
 	}
 
 	public void OnRoundStart() {
 		if (Game.rounds.round > 1) {
-			Game.onAfterEvent += () => {
-				var round = Game.rounds.round + total - 1;
-				CreateItem(round);
-			};
+			var round = Game.rounds.round + total - 1;
+			CreateItem(round);
 		}
 	}
 

@@ -14,9 +14,9 @@ public class AreaDamageAbility : Ability {
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			var primaryTarget = target.unit;
-			if (target.unit != null) primaryTarget.DealAbilityDamage(data.primaryDamage.value, this, data.damageType);
+			if (target.unit != null) DealDamage(primaryTarget, data.primaryDamage.value, data.damageType);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(data.secondaryDamage.value, this, data.damageType);
+				if (tile.unit) DealDamage(tile.unit, data.secondaryDamage.value, data.damageType);
 			}
 		});
 	}

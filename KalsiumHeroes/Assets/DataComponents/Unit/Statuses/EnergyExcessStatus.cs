@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnGetCalculatedAbilityDamage_Unit {
+public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnCalculateDamage_Unit {
 
 	public new EnergyExcessStatusData data => (EnergyExcessStatusData)base.data;
 	public override Type dataType => typeof(EnergyExcessStatusData);
@@ -39,9 +39,8 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 		didCalculateDamage = false;
 	}
 
-	float IOnGetCalculatedAbilityDamage_Unit.OnGetCalculatedAbilityDamage(float damage, Ability ability, DamageType damageType) {
-		didCalculateDamage = true;
-		return damage;
+	void IOnCalculateDamage_Unit.OnCalculateDamage(Modifier source, ref float damage, ref DamageType type) {
+		if (source is Ability) didCalculateDamage = true;
 	}
 
 	void IOnAbilityCastEnd_Unit.OnAbilityCastEnd(Ability ability) {

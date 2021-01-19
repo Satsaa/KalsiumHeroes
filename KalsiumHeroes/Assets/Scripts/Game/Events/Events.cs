@@ -25,7 +25,7 @@ public class Events {
 		if (eventHandler != null) {
 			if (eventHandler.EventHasEnded()) {
 				eventHandler = null;
-				Game.onEvents.Execute<IOnAnimationEventEnd>(v => v.OnAnimationEventEnd());
+				using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 			} else {
 				eventHandler.Update();
 				return;
@@ -36,10 +36,10 @@ public class Events {
 				eventHandler = first.GetHandler();
 				if (eventHandler != null) {
 					eventHandler.Update();
-					Game.onEvents.Execute<IOnAnimationEventStart>(v => v.OnAnimationEventStart(eventHandler));
+					using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(eventHandler));
 				}
 			} catch (Exception) {
-				Game.onEvents.Execute<IOnAnimationEventEnd>(v => v.OnAnimationEventEnd());
+				using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 				throw;
 			} finally {
 				stack.RemoveAt(0);

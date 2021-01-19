@@ -92,22 +92,28 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 
 	protected void ExecuteOver(Unit unit, Tile from, Edge edge, Tile to) {
-		edge.onEvents.Execute<IOnMoveOver_Edge>(v => v.OnMoveOver(unit, from, to));
-		unit.onEvents.Execute<IOnMoveOver_Unit>(v => v.OnMoveOver(from, edge, to));
-		Game.onEvents.Execute<IOnMoveOver_Global>(v => v.OnMoveOver(unit, from, edge, to));
+		using (var scope = new OnEvents.Scope()) {
+			edge.onEvents.ForEach<IOnMoveOver_Edge>(scope, v => v.OnMoveOver(unit, from, to));
+			unit.onEvents.ForEach<IOnMoveOver_Unit>(scope, v => v.OnMoveOver(from, edge, to));
+			Game.onEvents.ForEach<IOnMoveOver_Global>(scope, v => v.OnMoveOver(unit, from, edge, to));
+		}
 		if (unit == null) animating = false;
 	}
 
 	protected void ExecuteOn(Unit unit, Tile tile) {
-		tile.onEvents.Execute<IOnMoveOn_Tile>(v => v.OnMoveOn(unit));
-		unit.onEvents.Execute<IOnMoveOn_Unit>(v => v.OnMoveOn(tile));
-		Game.onEvents.Execute<IOnMoveOn_Global>(v => v.OnMoveOn(unit, tile));
+		using (var scope = new OnEvents.Scope()) {
+			tile.onEvents.ForEach<IOnMoveOn_Tile>(scope, v => v.OnMoveOn(unit));
+			unit.onEvents.ForEach<IOnMoveOn_Unit>(scope, v => v.OnMoveOn(tile));
+			Game.onEvents.ForEach<IOnMoveOn_Global>(scope, v => v.OnMoveOn(unit, tile));
+		}
 		if (unit == null) animating = false;
 	}
 	protected void ExecuteOff(Unit unit, Tile tile) {
-		tile.onEvents.Execute<IOnMoveOff_Tile>(v => v.OnMoveOff(unit));
-		unit.onEvents.Execute<IOnMoveOff_Unit>(v => v.OnMoveOff(tile));
-		Game.onEvents.Execute<IOnMoveOff_Global>(v => v.OnMoveOff(unit, tile));
+		using (var scope = new OnEvents.Scope()) {
+			tile.onEvents.ForEach<IOnMoveOff_Tile>(scope, v => v.OnMoveOff(unit));
+			unit.onEvents.ForEach<IOnMoveOff_Unit>(scope, v => v.OnMoveOff(tile));
+			Game.onEvents.ForEach<IOnMoveOff_Global>(scope, v => v.OnMoveOff(unit, tile));
+		}
 		if (unit == null) animating = false;
 	}
 }

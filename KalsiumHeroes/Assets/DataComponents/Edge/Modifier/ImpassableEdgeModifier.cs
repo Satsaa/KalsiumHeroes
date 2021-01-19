@@ -7,10 +7,10 @@ using UnityEngine;
 
 public class ImpassableEdgeModifier : EdgeModifier, IOnGetCanPass_Edge {
 
-	public bool OnGetCanPass(Tile from, Tile to, bool current) {
-		return false;
+	public void OnGetCanPass(Tile from, Tile to, ref bool current) {
+		current = false;
 	}
-	public bool OnGetCanPass(Unit unit, Tile from, Tile to, bool current) {
-		return false;
+	public void OnGetCanPass(Unit unit, Tile from, Tile to, ref bool current) {
+		current = false;
 	}
 }

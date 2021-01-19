@@ -21,13 +21,11 @@ public abstract class TileModifier : Modifier {
 		tile.onEvents.Add(this);
 		OnAdd();
 		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
-		Game.InvokeOnAfterEvent();
 	}
 
 	protected new void OnDestroy() {
 		OnRemove();
 		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
-		Game.InvokeOnAfterEvent();
 		tile.onEvents.Remove(this);
 		tile.modifiers.Remove(this);
 		base.OnDestroy();

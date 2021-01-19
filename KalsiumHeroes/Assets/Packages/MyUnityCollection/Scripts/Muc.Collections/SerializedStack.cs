@@ -1,6 +1,6 @@
 
 
-namespace Muc.Data {
+namespace Muc.Collections {
 
 	using System;
 	using System.Collections.Generic;
@@ -73,8 +73,8 @@ namespace Muc.Data {
 
 		public void CopyTo(T[] array, int arrayIndex) {
 			if (array == null) throw new ArgumentNullException(nameof(array));
-			if (arrayIndex < 0 || arrayIndex > array.Length) throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Offset must be positive.");
-			if (array.Length - arrayIndex < Count) throw new ArgumentException(nameof(arrayIndex), "Invalid offset.");
+			if (arrayIndex < 0 || arrayIndex > array.Length) throw new ArgumentOutOfRangeException("Offset must be positive.", nameof(arrayIndex));
+			if (array.Length - arrayIndex < Count) throw new ArgumentException("Invalid offset.", nameof(arrayIndex));
 
 			Array.Copy(list.ToArray(), 0, array, arrayIndex, Count);
 			Array.Reverse(array, arrayIndex, Count);
@@ -82,10 +82,10 @@ namespace Muc.Data {
 
 		void System.Collections.ICollection.CopyTo(Array array, int arrayIndex) {
 			if (array == null) throw new ArgumentNullException(nameof(array));
-			if (array.Rank != 1) throw new ArgumentException(nameof(array), "Arrays must be of the same rank.");
-			if (array.GetLowerBound(0) != 0) throw new ArgumentException(nameof(array), "Non-zero lowerbound.");
-			if (arrayIndex < 0 || arrayIndex > array.Length) throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Offset must be positive.");
-			if (array.Length - arrayIndex < Count) throw new ArgumentException(nameof(arrayIndex), "Invalid offset.");
+			if (array.Rank != 1) throw new ArgumentException("Arrays must be of the same rank.", nameof(array));
+			if (array.GetLowerBound(0) != 0) throw new ArgumentException("Non-zero lowerbound.", nameof(array));
+			if (arrayIndex < 0 || arrayIndex > array.Length) throw new ArgumentOutOfRangeException("Offset must be positive.", nameof(arrayIndex));
+			if (array.Length - arrayIndex < Count) throw new ArgumentException("Invalid offset.", nameof(arrayIndex));
 
 			try {
 				Array.Copy(list.ToArray(), 0, array, arrayIndex, Count);
@@ -154,7 +154,7 @@ namespace Muc.Data {
 
 
 #if UNITY_EDITOR
-namespace Muc.Data {
+namespace Muc.Collections {
 
 	using System;
 	using System.Linq;

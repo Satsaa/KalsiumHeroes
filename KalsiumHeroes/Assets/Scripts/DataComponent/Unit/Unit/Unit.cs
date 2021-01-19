@@ -40,9 +40,11 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	}
 
 	protected void Start() {
-		onEvents.Execute<IOnSpawn_Unit>(v => v.OnSpawn());
-		tile.onEvents.Execute<IOnSpawn_Tile>(v => v.OnSpawn(this));
-		Game.onEvents.Execute<IOnSpawn_Global>(v => v.OnSpawn(this));
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
+			tile.onEvents.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
+			Game.onEvents.ForEach<IOnSpawn_Global>(scope, v => v.OnSpawn(this));
+		}
 	}
 
 	protected new void OnDestroy() {
@@ -53,31 +55,22 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	}
 
 	public void Heal(float heal) {
-		heal = onEvents.Aggregate<IOnHeal_Unit, float>(heal, (cur, v) => { v.OnHeal(ref cur); return Mathf.Max(0, cur); });
-		heal = tile.onEvents.Aggregate<IOnHeal_Tile, float>(heal, (cur, v) => { v.OnHeal(this, ref cur); return Mathf.Max(0, cur); });
-		heal = Game.onEvents.Aggregate<IOnHeal_Global, float>(heal, (cur, v) => { v.OnHeal(this, ref cur); return Mathf.Max(0, cur); });
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnHeal_Unit>(scope, v => v.OnHeal(ref heal));
+			tile.onEvents.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
+			Game.onEvents.ForEach<IOnHeal_Global>(scope, v => v.OnHeal(this, ref heal));
+		}
 		data.health.value += Mathf.Max(0, heal);
 		data.health.ClampValue();
 	}
 
-	public void DealAbilityDamage(float damage, Ability ability, DamageType damageType) {
-		var calc = ability.GetCalculatedDamage(damage, damageType);
-		DealCalculatedDamage(calc, damageType);
-	}
-
-	public void DealStatusDamage(float damage, Status status, DamageType damageType) {
-		DealCalculatedDamage(damage, damageType);
-	}
-
-	public void DealCalculatedDamage(float damage, DamageType type) {
-		var both = (damage, type);
-		both = onEvents.Aggregate<IOnDamage_Unit, (float, DamageType)>(both, (cur, v) => { v.OnDamage(ref cur.Item1, ref cur.Item2); return cur; });
-		both = tile.onEvents.Aggregate<IOnDamage_Tile, (float, DamageType)>(both, (cur, v) => { v.OnDamage(this, ref cur.Item1, ref cur.Item2); return cur; });
-		both = Game.onEvents.Aggregate<IOnDamage_Global, (float, DamageType)>(both, (cur, v) => { v.OnDamage(this, ref cur.Item1, ref cur.Item2); return cur; });
-
-		damage = both.damage;
-		type = both.type;
-
+	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
+	public void DealCalculatedDamage(Modifier source, float damage, DamageType type) {
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
+			tile.onEvents.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
+			Game.onEvents.ForEach<IOnTakeDamage_Global>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
+		}
 		switch (type) {
 			case DamageType.Physical:
 				data.health.value -= (1 - data.defense.value / 100f) * damage;
@@ -99,9 +92,11 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 		}
 
 		if (data.health.value <= 0) {
-			onEvents.Execute<IOnDeath_Unit>(v => v.OnDeath());
-			tile.onEvents.Execute<IOnDeath_Tile>(v => v.OnDeath(this));
-			Game.onEvents.Execute<IOnDeath_Global>(v => v.OnDeath(this));
+			using (var scope = new OnEvents.Scope()) {
+				this.onEvents.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
+				tile.onEvents.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
+				Game.onEvents.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
+			}
 			tile.graveyard.Add(new GraveUnit(this));
 			Destroy();
 		}
@@ -111,23 +106,29 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	public void RefreshEnergy() {
 		var deficit = 0 - data.energy.value;
 		if (deficit > 0) {
-			onEvents.Execute<IOnEnergyDeficit_Unit>(v => v.OnEnergyDeficit(deficit));
-			tile.onEvents.Execute<IOnEnergyDeficit_Tile>(v => v.OnEnergyDeficit(this, deficit));
-			Game.onEvents.Execute<IOnEnergyDeficit_Global>(v => v.OnEnergyDeficit(this, deficit));
+			using (var scope = new OnEvents.Scope()) {
+				this.onEvents.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
+				tile.onEvents.ForEach<IOnEnergyDeficit_Tile>(scope, v => v.OnEnergyDeficit(this, deficit));
+				Game.onEvents.ForEach<IOnEnergyDeficit_Global>(scope, v => v.OnEnergyDeficit(this, deficit));
+			}
 		}
 		var excess = data.energy.value - data.energy.other;
 		if (excess > 0) {
-			onEvents.Execute<IOnEnergyExcess_Unit>(v => v.OnEnergyExcess(excess));
-			tile.onEvents.Execute<IOnEnergyExcess_Tile>(v => v.OnEnergyExcess(this, excess));
-			Game.onEvents.Execute<IOnEnergyExcess_Global>(v => v.OnEnergyExcess(this, excess));
+			using (var scope = new OnEvents.Scope()) {
+				this.onEvents.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
+				tile.onEvents.ForEach<IOnEnergyExcess_Tile>(scope, v => v.OnEnergyExcess(this, excess));
+				Game.onEvents.ForEach<IOnEnergyExcess_Global>(scope, v => v.OnEnergyExcess(this, excess));
+			}
 		}
 		data.energy.ClampValue();
 	}
 
 	public void Dispell() {
-		onEvents.Execute<IOnDispell_Unit>(v => v.OnDispell());
-		tile.onEvents.Execute<IOnDispell_Tile>(v => v.OnDispell(this));
-		Game.onEvents.Execute<IOnDispell_Global>(v => v.OnDispell(this));
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnDispell_Unit>(scope, v => v.OnDispell());
+			tile.onEvents.ForEach<IOnDispell_Tile>(scope, v => v.OnDispell(this));
+			Game.onEvents.ForEach<IOnDispell_Global>(scope, v => v.OnDispell(this));
+		}
 	}
 
 	public bool MoveTo(Tile tile, bool reposition) {
@@ -142,12 +143,15 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 		}
 	}
 
+	/// <summary> Gets the estimated speed of this unit after a number of rounds have passed. </summary>
 	public int GetEstimatedSpeed(int roundsAhead) {
-		var value = data.speed.unalteredValue;
-		value = onEvents.Aggregate<IOnGetEstimatedSpeed_Unit, int>(value, (cur, v) => cur + v.OnGetEstimatedSpeed(roundsAhead));
-		value = tile.onEvents.Aggregate<IOnGetEstimatedSpeed_Tile, int>(value, (cur, v) => cur + v.OnGetEstimatedSpeed(this, roundsAhead));
-		value = Game.onEvents.Aggregate<IOnGetEstimatedSpeed_Global, int>(value, (cur, v) => cur + v.OnGetEstimatedSpeed(this, roundsAhead));
-		return value;
+		var speed = data.speed.unalteredValue;
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
+			tile.onEvents.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
+			Game.onEvents.ForEach<IOnGetEstimatedSpeed_Global>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
+		}
+		return speed;
 	}
 
 	void IOnTurnStart_Unit.OnTurnStart() {

@@ -27,9 +27,11 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public virtual void OnAnimationEventEnd() {
 		if (isCasting) {
 			isCasting = false;
-			unit.onEvents.Execute<IOnAbilityCastEnd_Unit>(v => v.OnAbilityCastEnd(this));
-			unit.tile.onEvents.Execute<IOnAbilityCastEnd_Tile>(v => v.OnAbilityCastEnd(this));
-			Game.onEvents.Execute<IOnAbilityCastEnd_Global>(v => v.OnAbilityCastEnd(this));
+			using (var scope = new OnEvents.Scope()) {
+				unit.onEvents.ForEach<IOnAbilityCastEnd_Unit>(scope, v => v.OnAbilityCastEnd(this));
+				unit.tile.onEvents.ForEach<IOnAbilityCastEnd_Tile>(scope, v => v.OnAbilityCastEnd(this));
+				Game.onEvents.ForEach<IOnAbilityCastEnd_Global>(scope, v => v.OnAbilityCastEnd(this));
+			}
 		}
 	}
 
@@ -43,12 +45,21 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 		unit.data.energy.value -= data.energyCost.value;
 		unit.RefreshEnergy();
 
-		unit.onEvents.Execute<IOnAbilityCastStart_Unit>(v => v.OnAbilityCastStart(this));
-		unit.tile.onEvents.Execute<IOnAbilityCastStart_Tile>(v => v.OnAbilityCastStart(this));
-		Game.onEvents.Execute<IOnAbilityCastStart_Global>(v => v.OnAbilityCastStart(this));
+		using (var scope = new OnEvents.Scope()) {
+			unit.onEvents.ForEach<IOnAbilityCastStart_Unit>(scope, v => v.OnAbilityCastStart(this));
+			unit.tile.onEvents.ForEach<IOnAbilityCastStart_Tile>(scope, v => v.OnAbilityCastStart(this));
+			Game.onEvents.ForEach<IOnAbilityCastStart_Global>(scope, v => v.OnAbilityCastStart(this));
+		}
 	}
 
-	public float GetCalculatedDamage(float damage, DamageType damageType) {
+	/// <summary> Calculates damage and deals it to the target. </summary>
+	protected override void DealDamage(Unit target, float damage, DamageType damageType) {
+		CalculateDamage(ref damage, ref damageType);
+		target.DealCalculatedDamage(this, damage, damageType);
+	}
+
+	/// <summary> Calculates damage for later use. Amplifications and modifiers are applied to the ref values. </summary>
+	public void CalculateDamage(ref float damage, ref DamageType damageType) {
 		var abilityType = this.data.abilityType;
 		switch (abilityType) {
 			default:
@@ -78,12 +89,15 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 				break;
 			default:
 				Debug.LogWarning($"Unexpected {nameof(DamageType)} {damageType.ToString()}.");
-				return damage;
+				break;
 		}
-		damage = unit.onEvents.Aggregate<IOnGetCalculatedAbilityDamage_Unit, float>(damage, (cur, v) => v.OnGetCalculatedAbilityDamage(cur, this, damageType));
-		damage = unit.tile.onEvents.Aggregate<IOnGetCalculatedAbilityDamage_Tile, float>(damage, (cur, v) => v.OnGetCalculatedAbilityDamage(cur, this, damageType));
-		damage = Game.onEvents.Aggregate<IOnGetCalculatedAbilityDamage_Global, float>(damage, (cur, v) => v.OnGetCalculatedAbilityDamage(cur, this, damageType));
-		return Mathf.Max(0, damage);
+		using (var scope = new OnEvents.Scope()) {
+			var (_damage, _damageType) = (damage, damageType);
+			unit.onEvents.ForEach<IOnCalculateDamage_Unit>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			unit.tile.onEvents.ForEach<IOnCalculateDamage_Tile>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			Game.onEvents.ForEach<IOnCalculateDamage_Global>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			(damage, damageType) = (_damage, _damageType);
+		}
 	}
 
 

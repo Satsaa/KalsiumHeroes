@@ -30,41 +30,53 @@ public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 		}
 	}
 
-	/// <summary> Is this Edge considered to be passable from Tile "from". </summary>
+	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public bool CanPass(Unit unit, Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
+		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
 		var value = to.data.passable.value;
-		value = onEvents.Aggregate<IOnGetCanPass_Edge, bool>(value, (cur, v) => v.OnGetCanPass(unit, from, to, cur));
-		value = unit.onEvents.Aggregate<IOnGetCanPass_Unit, bool>(value, (cur, v) => v.OnGetCanPass(from, this, to, cur));
-		value = Game.onEvents.Aggregate<IOnGetCanPass_Global, bool>(value, (cur, v) => v.OnGetCanPass(unit, from, this, to, cur));
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(unit, from, to, ref value));
+			unit.onEvents.ForEach<IOnGetCanPass_Unit>(scope, v => v.OnGetCanPass(from, this, to, ref value));
+			Game.onEvents.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(unit, from, this, to, ref value));
+		}
 		return value;
 	}
 
-	/// <summary> Is this Edge considered to be passable from Tile "from". </summary>
+	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public bool CanPass(Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
+		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
 		var value = to.data.passable.value;
-		value = onEvents.Aggregate<IOnGetCanPass_Edge, bool>(value, (cur, v) => v.OnGetCanPass(from, to, cur));
-		value = Game.onEvents.Aggregate<IOnGetCanPass_Global, bool>(value, (cur, v) => v.OnGetCanPass(from, this, to, cur));
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(from, to, ref value));
+			Game.onEvents.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(from, this, to, ref value));
+		}
 		return value;
 	}
 
 	/// <summary> The move cost over this Edge. </summary>
 	public float MoveCost(Unit unit, Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
+		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
 		var value = to.data.moveCost.value;
-		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => { v.OnGetMoveCost(unit, from, to, ref cur); return cur; });
-		value = unit.onEvents.Aggregate<IOnGetMoveCost_Unit, float>(value, (cur, v) => { v.OnGetMoveCost(from, this, to, ref cur); return cur; });
-		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => { v.OnGetMoveCost(unit, from, this, to, ref cur); return cur; });
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(unit, from, to, ref value));
+			unit.onEvents.ForEach<IOnGetMoveCost_Unit>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
+			Game.onEvents.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(unit, from, this, to, ref value));
+		}
 		return Mathf.Max(0, value);
 	}
 
 	/// <summary> The move cost over this Edge. </summary>
 	public float MoveCost(Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.");
+		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
+		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
 		var value = to.data.moveCost.value;
-		value = onEvents.Aggregate<IOnGetMoveCost_Edge, float>(value, (cur, v) => { v.OnGetMoveCost(from, to, ref cur); return cur; });
-		value = Game.onEvents.Aggregate<IOnGetMoveCost_Global, float>(value, (cur, v) => { v.OnGetMoveCost(from, this, to, ref cur); return cur; });
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(from, to, ref value));
+			Game.onEvents.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
+		}
 		return Mathf.Max(0, value);
 	}
 }

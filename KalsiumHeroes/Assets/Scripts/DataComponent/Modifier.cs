@@ -6,7 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 /// <summary>
-/// DataComponent which receives a bunch of global events in form of overrideable functions.
+/// Base class for all Modifiers of MasterComponents.
 /// </summary>
 public abstract class Modifier : DataComponent {
 
@@ -15,10 +15,26 @@ public abstract class Modifier : DataComponent {
 
 	/// <summary> Immediately destroys this DataComponent. Duplicate destroys are handled. </summary>
 	public override void Destroy() {
-		if (isBeingDestroyed || this == null) return;
+		if (this == null || isBeingDestroyed) return;
 		isBeingDestroyed = true;
-		if (data.container) Object.DestroyImmediate(gameObject);
-		else Object.DestroyImmediate(this);
+
+		// Delay until event finishes or destroy immediately
+		if (OnEvents.executing) {
+			isBeingDestroyedAfterOnEvent = true;
+			OnEvents.onFinishEvent += Do;
+		} else {
+			Do();
+		}
+
+		void Do() {
+			if (this == null) return; // Already destroyed??
+			if (data.container) Object.DestroyImmediate(gameObject);
+			else Object.DestroyImmediate(this);
+		}
+	}
+
+	protected virtual void DealDamage(Unit unit, float damage, DamageType type) {
+		unit.DealCalculatedDamage(this, damage, type);
 	}
 
 	protected new void Awake() {

@@ -16,7 +16,7 @@ public class PickOffAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			var finalDamage = CalculateDamage(damage);
 			foreach (var tile in aoe) {
-				if (tile.unit) tile.unit.DealAbilityDamage(finalDamage, this, data.damageType);
+				if (tile.unit) DealDamage(tile.unit, finalDamage, data.damageType);
 			}
 		});
 	}

@@ -35,7 +35,7 @@ public class Targeting : MonoBehaviour {
 		this.targeter = targeter;
 		prevHoverTile = null;
 		RefreshTargets();
-		Game.onEvents.Execute<IOnTargeterStart>(v => v.OnTargeterStart(targeter));
+		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTargeterStart>(scope, v => v.OnTargeterStart(targeter));
 		TryComplete();
 		return true;
 	}
@@ -117,10 +117,8 @@ public class Targeting : MonoBehaviour {
 	void End() {
 		targeter = null;
 		prevHoverTile = null;
-		foreach (var tile in Game.grid.tiles.Values) {
-			tile.highlighter.Clear();
-		}
-		Game.onEvents.Execute<IOnTargeterEnd>(v => v.OnTargeterEnd());
+		foreach (var tile in Game.grid.tiles.Values) tile.highlighter.Clear();
+		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTargeterEnd>(scope, v => v.OnTargeterEnd());
 	}
 
 

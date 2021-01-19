@@ -9,7 +9,7 @@ public class DotStatus : Status, IOnTurnEnd_Unit {
 	public override Type dataType => typeof(DotStatusData);
 
 	public override void OnTurnEnd() {
-		unit.DealStatusDamage(data.damage.value, this, data.damageType);
+		DealDamage(unit, data.damage.value, data.damageType);
 		base.OnTurnEnd();
 	}
 }

@@ -70,25 +70,29 @@ public class Rounds {
 
 	private bool TryEndGame() {
 		if (Game.dataComponents.Get<Unit>().Count() <= 1) {
-			Game.onEvents.Execute<IOnGameEnd>(v => v.OnGameEnd());
+			using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnGameEnd>(scope, v => v.OnGameEnd());
 			return true;
 		}
 		return false;
 	}
 
 	private void OnRoundStarts() {
-		Game.onEvents.Execute<IOnRoundStart>(v => v.OnRoundStart());
+		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart());
 	}
 
 	private void OnTurnEnds() {
-		current.onEvents.Execute<IOnTurnEnd_Unit>(v => v.OnTurnEnd());
-		current.tile.onEvents.Execute<IOnTurnEnd_Tile>(v => v.OnTurnEnd(current));
-		Game.onEvents.Execute<IOnTurnEnd_Global>(v => v.OnTurnEnd(current));
+		using (var scope = new OnEvents.Scope()) {
+			current.onEvents.ForEach<IOnTurnEnd_Unit>(scope, v => v.OnTurnEnd());
+			current.tile.onEvents.ForEach<IOnTurnEnd_Tile>(scope, v => v.OnTurnEnd(current));
+			Game.onEvents.ForEach<IOnTurnEnd_Global>(scope, v => v.OnTurnEnd(current));
+		}
 	}
 
 	private void OnTurnStarts() {
-		current.onEvents.Execute<IOnTurnStart_Unit>(v => v.OnTurnStart());
-		current.tile.onEvents.Execute<IOnTurnStart_Tile>(v => v.OnTurnStart(current));
-		Game.onEvents.Execute<IOnTurnStart_Global>(v => v.OnTurnStart(current));
+		using (var scope = new OnEvents.Scope()) {
+			current.onEvents.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
+			current.tile.onEvents.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(current));
+			Game.onEvents.ForEach<IOnTurnStart_Global>(scope, v => v.OnTurnStart(current));
+		}
 	}
 }

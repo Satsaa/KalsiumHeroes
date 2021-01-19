@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 public abstract class MasterComponent<TMod, TOnEvent> : MasterComponent where TMod : Modifier where TOnEvent : IOnEvent {
 	public DataComponentDict<TMod> modifiers = new DataComponentDict<TMod>();
-	public OnEventDict<TOnEvent> onEvents = new OnEventDict<TOnEvent>();
+	public OnEvents<TOnEvent> onEvents = new OnEvents<TOnEvent>();
 
 	protected new void Awake() {
 		base.Awake();
@@ -22,13 +22,23 @@ public abstract class MasterComponent : DataComponent {
 
 	/// <summary> Immediately destroys this MasterComponent and attached DataComponents. Duplicate destroys are handled. </summary>
 	public override void Destroy() {
-		if (isBeingDestroyed || this == null) return;
-		var go = gameObject;
+		if (this == null || isBeingDestroyed) return;
 		isBeingDestroyed = true;
-		foreach (var dc in GetComponentsInChildren<DataComponent>(true)) {
-			dc.isBeingDestroyed = true;
+
+		// Delay until event finishes or destroy immediately
+		if (OnEvents.executing) {
+			isBeingDestroyedAfterOnEvent = true;
+			OnEvents.onFinishEvent += Do;
+		} else {
+			Do();
 		}
-		Object.DestroyImmediate(gameObject);
+
+		void Do() {
+			if (this == null) return; // Already destroyed??
+			var go = gameObject;
+			foreach (var dc in GetComponentsInChildren<DataComponent>(true)) dc.isBeingDestroyed = true;
+			Object.DestroyImmediate(gameObject);
+		}
 	}
 
 	public static GameObject Instantiate(MasterComponentData dataSource, Action<DataComponent> initializer = null) {
