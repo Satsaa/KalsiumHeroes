@@ -67,6 +67,11 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
 	public void DealCalculatedDamage(Modifier source, float damage, DamageType type) {
 		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(source, this, damage, type));
+			tile.onEvents.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(source, this, damage, type));
+			Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
+		}
+		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
 			tile.onEvents.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
 			Game.onEvents.ForEach<IOnTakeDamage_Global>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
