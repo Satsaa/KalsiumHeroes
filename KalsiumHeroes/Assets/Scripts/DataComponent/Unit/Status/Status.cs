@@ -11,7 +11,7 @@ public abstract class Status : UnitModifier, IOnTurnEnd_Unit, IOnDispell_Unit {
 
 	public virtual void OnTurnEnd() {
 		if (data.turnDuration.enabled && --data.turnDuration.value <= 0) {
-			Expire();
+			OnExpire();
 		}
 	}
 
@@ -21,7 +21,7 @@ public abstract class Status : UnitModifier, IOnTurnEnd_Unit, IOnDispell_Unit {
 	}
 
 	/// <summary> When this UnitModifier expires because the duration was reached. </summary>
-	public virtual void Expire() {
+	public virtual void OnExpire() {
 		this.Destroy();
 	}
 
