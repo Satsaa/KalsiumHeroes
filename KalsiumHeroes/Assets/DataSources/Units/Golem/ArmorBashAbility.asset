@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7510cf8c26316a46b0498c02f9a2c1a, type: 3}
+  m_Name: ArmorBashAbility
+  m_EditorClassIdentifier: 
+  identifier: ability_armor_bash
+  componentType:
+    _name: ArmorBashAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: b277b317c1eb3b949b16fe827c2f6608, type: 2}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  abilityType: 1
+  targetType: 12
+  range:
+    _value: 1
+    _enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  energyCost:
+    _value: 3
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    _enabled: 0
+  allowMove:
+    _value: 0
+  damageType: 1

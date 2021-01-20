@@ -15,7 +15,7 @@ MonoBehaviour:
   identifier: unit_duelist
   componentType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 0}
+  instantiatee: {fileID: 2643036142074190079, guid: b37493e9de5538142aaef978ab506ce0, type: 3}
   displayName: {fileID: 11400000, guid: e757e704451a4f946a7132ad39d48b1b, type: 2}
   description: {fileID: 11400000, guid: 5c13e9f6fac167a43a44abf506489299, type: 2}
   lore: {fileID: 11400000, guid: 961f2826d9f25904eab3568ea43d7b5c, type: 2}

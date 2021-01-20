@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6facac02922bc48a9638f3cf901550, type: 3}
+  m_Name: EarthquakeAbility
+  m_EditorClassIdentifier: 
+  identifier: ability_earthquake
+  componentType:
+    _name: EarthquakeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: 56101509bf78a8548813a79e8d8f9522, type: 2}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  abilityType: 2
+  targetType: 2
+  range:
+    _value: 1
+    _enabled: 0
+  rangeMode: 0
+  radius:
+    _value: 3
+  requiresVision:
+    _value: 0
+  energyCost:
+    _value: 9
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    _enabled: 0
+  allowMove:
+    _value: 0
+  damageType: 1
+  damage1:
+    _value: 40
+  rootModifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
+  damage2:
+    _value: 20
+  slowModifier2: {fileID: 11400000, guid: d8f394ef87492154c8e68d25312f7bbb, type: 2}
+  damage3:
+    _value: 10
+  slowModifier3: {fileID: 11400000, guid: 3d67f7ff942e6e64cbc4ea43f0e5e835, type: 2}
