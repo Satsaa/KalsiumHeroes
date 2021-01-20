@@ -25,7 +25,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 		}
 	}
 
-	public void OnTurnEnd() {
+	public virtual void OnTurnEnd() {
 		switch (data.tickMode) {
 			case TickMode.TurnEnd:
 				Tick();
@@ -36,7 +36,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 		}
 	}
 
-	public void OnRoundStart() {
+	public virtual void OnRoundStart() {
 		if (data.tickMode == TickMode.RoundStart) Tick();
 	}
 
