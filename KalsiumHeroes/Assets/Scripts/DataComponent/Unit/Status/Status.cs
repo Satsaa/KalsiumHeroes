@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class Status : UnitModifier, IOnTurnEnd_Unit, IOnDispell_Unit {
+public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnDispell_Unit {
 
 	public new StatusData data => (StatusData)base.data;
 	public override Type dataType => typeof(StatusData);
 
-	public virtual void OnTurnEnd() {
+	public virtual void OnTurnStart() {
 		if (data.turnDuration.enabled && --data.turnDuration.value <= 0) {
 			OnExpire();
 		}
