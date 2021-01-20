@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public enum TickMode {
 	[Tooltip("Ticks at the start of the unit's turn.")]
 	TurnStart,
