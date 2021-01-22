@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c8de1c73de6bd4cad784fce6835302, type: 3}
+  m_Name: SwiftStrikeAbility
+  m_EditorClassIdentifier: 
+  identifier: ability_swift_strike
+  componentType:
+    _name: SwiftStrikeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: b47425188137ac84eac71260e77407b2, type: 2}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  abilityType: 1
+  targetType: 12
+  range:
+    _value: 1
+    _enabled: 1
+  rangeMode: 0
+  radius:
+    _value: 0
+  requiresVision:
+    _value: 0
+  energyCost:
+    _value: 4
+  cooldown:
+    _value: 0
+    _other: 0
+  charges:
+    _value: 1
+    _other: 1
+  uses:
+    _value: 0
+    _enabled: 0
+  allowMove:
+    _value: 0
+  damage:
+    _value: 30
+  damageType: 1

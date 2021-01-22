@@ -28,9 +28,11 @@ MonoBehaviour:
     _value: 1
   hidden:
     _value: 0
-  turnDuration:
-    _value: 0
-    _enabled: 0
+  ticks:
+    _value: 1
+    _other: 0
+    _enabled: 1
+  tickMode: 0
   defenseIncrease:
     _value: 35
   damage:

@@ -22,9 +22,4 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 			}
 		}
 	}
-
-	public override void OnTurnStart() {
-		base.OnTurnStart();
-		Remove();
-	}
 }

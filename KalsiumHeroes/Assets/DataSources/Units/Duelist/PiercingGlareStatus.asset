@@ -28,6 +28,8 @@ MonoBehaviour:
     _value: 1
   hidden:
     _value: 0
-  turnDuration:
+  ticks:
     _value: 2
+    _other: 0
     _enabled: 1
+  tickMode: 1
