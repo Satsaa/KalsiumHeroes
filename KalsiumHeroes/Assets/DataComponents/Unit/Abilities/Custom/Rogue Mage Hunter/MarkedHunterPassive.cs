@@ -10,6 +10,8 @@ public class MarkedHunterPassive : Passive, IOnDealDamage_Unit
     public override Type dataType => typeof(MarkedHunterPassiveData);
 
     public void OnDealDamage(UnitModifier source, Unit targetUnit, float damage, DamageType damageType) {
-        if (targetUnit.data.health.value > 0 && !targetUnit.modifiers.Get<MarkOfPreyStatus>().Any()) targetUnit.gameObject.AddDataComponent(data.markOfPreyModifier);
+        if (!(source is HuntTheMarkAbility)) {
+            if (targetUnit.data.health.value > 0 && !targetUnit.modifiers.Get<MarkOfPreyStatus>().Any()) targetUnit.gameObject.AddDataComponent(data.markOfPreyModifier);
+        }
     }
 }

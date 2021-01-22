@@ -21,9 +21,9 @@ public class CordialInvitationAbility : Ability
             foreach (var tile in aoe) {
                 if (tile.unit) {
                     var givenStatus = tile.unit.gameObject.AddDataComponent<CordialInvitationStatus>(data.statusModifier);
-                    var gainedStatus = this.unit.gameObject.AddDataComponent<CordialInvitationStatus>(data.statusModifier);
+                    var gainedStatus = unit.gameObject.AddDataComponent<CordialInvitationStatus>(data.statusModifier);
                     givenStatus.data.opponentStatus = gainedStatus;
-                    givenStatus.data.opponent = this.unit;
+                    givenStatus.data.opponent = unit;
                     gainedStatus.data.opponentStatus = givenStatus;
                     gainedStatus.data.opponent = tile.unit;
                     gainedStatus.data.duelCaster = this;
@@ -33,7 +33,7 @@ public class CordialInvitationAbility : Ability
     }
 
     public override bool IsReady() {
-        if (this.unit.modifiers.Get<CordialInvitationStatus>().Any()) return false;
+        if (unit.modifiers.Get<CordialInvitationStatus>().Any()) return false;
         return base.IsReady();
     }
 }

@@ -37,3 +37,4 @@ MonoBehaviour:
     _value: 30
   damageType: 2
   silenceModifier: {fileID: 11400000, guid: dc2a1f5f29eddca4585a2ac1fd0461c5, type: 2}
+  markOfPreyModifier: {fileID: 11400000, guid: 7c3f8f3037972f746a4cbbe5b0fc6eef, type: 2}
