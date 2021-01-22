@@ -13,6 +13,10 @@ public class HuntTheMarkAbility : Ability
     public override IEnumerable<Tile> GetTargets() {
         return base.GetTargets().Where(v => v.unit && TargetHasFreeTiles(v) && v.unit.modifiers.Get<MarkOfPreyStatus>().Any());
     }
+
+    public override bool IsReady() {
+        return base.IsReady() && Game.dataComponents.Get<MarkOfPreyStatus>().Where(v => v.unit != unit && TargetHasFreeTiles(v.unit.tile)).Any();
+    }
     public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
         return new InstantAbilityHandler(msg, this, (ability) => {
             var target = Game.grid.tiles[msg.targets.First()];
