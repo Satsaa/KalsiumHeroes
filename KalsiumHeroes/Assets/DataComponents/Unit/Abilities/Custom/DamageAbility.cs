@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DamageAbility : Ability {
 
-	public new DamageAbilityData data => (DamageAbilityData)base.data;
+	public new DamageAbilityData data => (DamageAbilityData)_data;
 	public override Type dataType => typeof(DamageAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {

@@ -7,36 +7,23 @@ using UnityEngine;
 
 public abstract class UnitModifier : Modifier {
 
-	public new UnitModifierData data => (UnitModifierData)base.data;
+	public new UnitModifierData source => (UnitModifierData)_source;
+	public new UnitModifierData data => (UnitModifierData)_data;
 	public override Type dataType => typeof(UnitModifierData);
+	public Unit unit => (Unit)master;
 
-	[HideInInspector] public Unit unit;
-
-
-	protected new void Awake() {
-		unit = GetMasterComponent<Unit>();
-		base.Awake();
-		unit.onEvents.Add(this);
-		unit.modifiers.Add(this);
-		OnAdd();
-		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
+	protected override void OnCreate() {
+		base.OnCreate();
+		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnCreate(this);
 	}
 
-	protected new void OnDestroy() {
-		OnRemove();
+	protected override void OnRemove() {
 		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
-		unit.onEvents.Remove(this);
-		unit.modifiers.Remove(this);
-		base.OnDestroy();
+		base.OnRemove();
 	}
-
-	/// <summary> When this UnitModifier is being added (instantiated). </summary>
-	public virtual void OnAdd() { }
-	/// <summary> When this UnitModifier is being removed (destroyed). </summary>
-	public virtual void OnRemove() { }
 
 	/// <summary> When any other UnitModifier is being added. </summary>
-	public virtual void OnAdd(UnitModifier modifier) { }
+	public virtual void OnCreate(UnitModifier modifier) { }
 	/// <summary> When any other UnitModifier is being removed. </summary>
 	public virtual void OnRemove(UnitModifier modifier) { }
 

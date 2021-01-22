@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ShoveAbility : Ability {
 
-	public new ShoveAbilityData data => (ShoveAbilityData)base.data;
+	public new ShoveAbilityData data => (ShoveAbilityData)_data;
 	public override Type dataType => typeof(ShoveAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -15,7 +15,7 @@ public class ShoveAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					tile.unit.gameObject.AddDataComponent(data.rootModifier);
+					UnitModifier.Create(master, data.rootModifier);
 					tile.unit.MoveTo(GetTargetTile(tile), true);
 				}
 			}

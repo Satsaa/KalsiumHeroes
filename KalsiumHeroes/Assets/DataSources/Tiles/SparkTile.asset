@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: SparkTile
   m_EditorClassIdentifier: 
   identifier: tile_ground
-  componentType:
+  dataObjectType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 194248088727427243, guid: dd5d4bfd537eeb44085350fc3da9c842, type: 3}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  container: {fileID: 194248088727427243, guid: dd5d4bfd537eeb44085350fc3da9c842, type: 3}
+  baseModifiers:
+  - {fileID: 11400000, guid: 1cdae7c5b2231184db4f55867743794f, type: 2}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   passable:
     _value: 1
   transparent:

@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(UnitModifierData), menuName = "DataSources/" + nameof(UnitModifierData))]
 public class UnitModifierData : ModifierData {
 
-	public override Type componentConstraint => typeof(UnitModifier);
+	public override Type ownerConstraint => typeof(UnitModifier);
 
 	[Header("Unit Modifier Data")]
 

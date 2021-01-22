@@ -118,13 +118,15 @@ public class Events {
 
 			Game.readyCount++;
 
+			// TODO
 			switch (Game.readyCount) {
 				case 1:
 					foreach (var info in this.units) {
 						var tile = Game.grid.tiles[info.position];
 						var unitData = Game.library.GetData<UnitData>(info.unit);
-						var go = MasterComponent.Instantiate(unitData, Game.instance.transform);
-						go.SetActive(false);
+						var unit = Unit.Create(unitData, null);
+						unit.gameObject.transform.parent = Game.instance.transform;
+						unit.gameObject.SetActive(false);
 					}
 					break;
 				case 2:

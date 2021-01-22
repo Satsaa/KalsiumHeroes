@@ -5,48 +5,40 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Muc.Editor;
+using HexGrid;
 
 public abstract class EdgeModifier : Modifier {
 
-	public new EdgeModifierData data => (EdgeModifierData)base.data;
+	public new EdgeModifierData data => (EdgeModifierData)_data;
 	public override Type dataType => typeof(EdgeModifierData);
+	public Edge edge => (Edge)master;
 
-	[HideInInspector] public Edge edge;
-	/// <summary> Which tile to use as  context. Either tile1 or tile2 of the Edge. </summary>
-	[field: SerializeField] public Tile context { get; protected set; }
+	/// <summary> Which hex to use as context. Either hex1 or hex2 of the Edge. </summary>
+	[field: SerializeField] public Hex context { get; protected set; }
 
-
-	protected new void Awake() {
-		edge = GetMasterComponent<Edge>();
-		base.Awake();
-		Debug.Assert(context, $"No context set! Use an initializer with AddDataComponent and call {nameof(Init)}");
-		edge.modifiers.Add(this);
-		edge.onEvents.Add(this);
-		OnAdd();
-		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
+	/// <summary> Creates an EdgeModifier based on the given source and attaches it to the master. </summary>
+	public static EdgeModifier Create(Edge edge, EdgeModifierData source, Hex context) {
+		return Create<EdgeModifier>(edge, source, v => {
+			Debug.Assert(context == v.edge.hex1 || context == v.edge.hex2, "Context was set to a Hex not connected to this Edge.");
+			v.context = context;
+		});
 	}
 
 	public void Init(Tile context) {
-		edge = GetMasterComponent<Edge>();
-		Debug.Assert(context == edge.tile1 || context == edge.tile2, "Context was set to a Tile that doesn't have this Edge.");
-		this.context = context;
 	}
 
-	protected new void OnDestroy() {
-		OnRemove();
+	protected override void OnCreate() {
+		base.OnCreate();
+		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnCreate(this);
+	}
+
+	protected override void OnRemove() {
 		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
-		edge.onEvents.Remove(this);
-		edge.modifiers.Remove(this);
-		base.OnDestroy();
+		base.OnRemove();
 	}
-
-	/// <summary> When this EdgeModifier is being added (instantiated). </summary>
-	public virtual void OnAdd() { }
-	/// <summary> When this EdgeModifier is being removed (destroyed). </summary>
-	public virtual void OnRemove() { }
 
 	/// <summary> When any other EdgeModifier is being added. </summary>
-	public virtual void OnAdd(EdgeModifier modifier) { }
+	public virtual void OnCreate(EdgeModifier modifier) { }
 	/// <summary> When any other EdgeModifier is being removed. </summary>
 	public virtual void OnRemove(EdgeModifier modifier) { }
 

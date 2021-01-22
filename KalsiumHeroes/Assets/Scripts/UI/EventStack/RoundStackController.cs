@@ -5,7 +5,7 @@ using UnityEngine;
 using Muc.Extensions;
 
 [RequireComponent(typeof(EventStack))]
-public class RoundStackController : Modifier, IOnGameStart, IOnRoundStart {
+public class RoundStackController : MonoBehaviour, IOnGameStart, IOnRoundStart {
 
 	[HideInInspector] public RectTransform rt;
 	[HideInInspector] public EventStack es;
@@ -13,14 +13,18 @@ public class RoundStackController : Modifier, IOnGameStart, IOnRoundStart {
 	public GameObject roundStackItemPrefab;
 	public int total;
 
-	new void Awake() {
-		base.Awake();
+	protected void Awake() {
 		rt = GetComponent<RectTransform>();
 		es = GetComponent<EventStack>();
+		Game.onEvents.Add(this);
 	}
 
 	protected void Update() {
 		rt.sizeDelta = rt.sizeDelta.SetX(es.MaxX());
+	}
+
+	void OnDestroy() {
+		Game.onEvents.Remove(this);
 	}
 
 	public void OnGameStart() {

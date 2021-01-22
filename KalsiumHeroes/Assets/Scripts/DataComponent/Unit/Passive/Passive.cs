@@ -10,7 +10,8 @@ using UnityEngine;
 /// </summary>
 public abstract class Passive : UnitModifier {
 
-	public new PassiveData data => (PassiveData)base.data;
+	public new PassiveData source => (PassiveData)_source;
+	public new PassiveData data => (PassiveData)_data;
 	public override Type dataType => typeof(PassiveData);
 
 }

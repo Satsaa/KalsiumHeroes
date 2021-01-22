@@ -16,7 +16,7 @@ public class Game : MonoBehaviour {
 	public static Targeting targeting => instance._targeting;
 	public static Rounds rounds => instance._rounds;
 	public static Library library => instance._library;
-	public static DataComponentDict dataComponents => instance._dataComponents;
+	public static ObjectDict<DataObject> dataObjects => instance._dataObjects;
 	public static OnEvents<IGlobalOnEvent> onEvents => instance._onEvents;
 
 	private static Game _instance;
@@ -26,7 +26,7 @@ public class Game : MonoBehaviour {
 	[SerializeField] private Targeting _targeting = default;
 	[SerializeField] private Rounds _rounds = new Rounds();
 	[SerializeField] private Library _library;
-	[SerializeField] private DataComponentDict _dataComponents = new DataComponentDict();
+	[SerializeField] private ObjectDict<DataObject> _dataObjects = new ObjectDict<DataObject>();
 	[SerializeField] private OnEvents<IGlobalOnEvent> _onEvents = new OnEvents<IGlobalOnEvent>();
 
 	public static int readyCount { get => instance._readyCount; set => instance._readyCount = value; }
@@ -45,6 +45,15 @@ public class Game : MonoBehaviour {
 		_instance = this;
 		if (_grid == null && (_grid = GetComponent<TileGrid>()) == null) Debug.LogError($"No {nameof(TileGrid)} Component!");
 		if (_targeting == null && (_targeting = GetComponent<Targeting>()) == null) Debug.LogError($"No {nameof(Targeting)} Component!");
+		Flush();
+
+	}
+
+	private void Flush() {
+		foreach (var dataObject in dataObjects.Get<Master>().Where(v => v.removed).ToList()) {
+			dataObjects.Remove(dataObject);
+			ObjectUtil.Destroy(dataObject);
+		}
 	}
 
 	private void Start() {
@@ -54,5 +63,10 @@ public class Game : MonoBehaviour {
 
 	void Update() {
 		_events.Update();
+		using (var scope = new OnEvents.Scope()) _onEvents.ForEach<IOnUpdate>(scope, v => v.OnUpdate());
+	}
+
+	void LateUpdate() {
+		using (var scope = new OnEvents.Scope()) _onEvents.ForEach<IOnLateUpdate>(scope, v => v.OnLateUpdate());
 	}
 }

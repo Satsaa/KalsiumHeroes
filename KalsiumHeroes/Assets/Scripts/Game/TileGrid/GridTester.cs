@@ -108,11 +108,11 @@ public class GridTesterEditor : Editor {
 
 		if (t.draw == GridTester.Draw.Nearest) {
 			var nearest = grid.NearestTile(mousePos);
-			DrawTile(nearest, lightBlue);
+			if (nearest) DrawTile(nearest, lightBlue);
 		}
 		if (t.draw == GridTester.Draw.NearestSpiralSearch) {
 			var nearest = grid.NearestTileSpiralSearch(mousePos, 10);
-			DrawTile(nearest, lightBlue);
+			if (nearest) DrawTile(nearest, lightBlue);
 		}
 
 		if (t.draw == GridTester.Draw.CostField && t.main != null) {
@@ -161,8 +161,16 @@ public class GridTesterEditor : Editor {
 		if (t.paint) {
 			if (t.paintTile == null) {
 				Game.grid.DestroyTile(t.mainHex);
+
+#if UNITY_EDITOR
+				foreach (Transform child in Game.instance.transform) SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
+#endif
 			} else if (!t.main || t.main.source != t.paintTile) {
 				t.main = Game.grid.ReplaceTile(t.mainHex, t.paintTile);
+
+#if UNITY_EDITOR
+				foreach (Transform child in Game.instance.transform) SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
+#endif
 			}
 		}
 

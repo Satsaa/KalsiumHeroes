@@ -13,9 +13,20 @@ MonoBehaviour:
   m_Name: TestUnit
   m_EditorClassIdentifier: 
   identifier: unit_test
-  componentType:
+  dataObjectType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 2010802630245687894, guid: a7ff074526032de4abc63ba91a9e7daa, type: 3}
+  container: {fileID: 9047958665005421617, guid: 90e4d820cb7c9034d914c90d346025db, type: 3}
+  baseModifiers:
+  - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
+  - {fileID: 11400000, guid: a15af9eb71372c24eb4dc6b8ea9bb35d, type: 2}
+  - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
+  - {fileID: 11400000, guid: 2d89865c0774b9e4391071c0977b54c5, type: 2}
+  - {fileID: 11400000, guid: d287935d8879ea2408e6cdabe35919d8, type: 2}
+  - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
+  - {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
+  - {fileID: 11400000, guid: 752bb0df403122f4f80d922f6cbefc96, type: 2}
+  - {fileID: 11400000, guid: 2752847404be97a46ba3c5ea86bb9783, type: 2}
+  - {fileID: 11400000, guid: a82a72e75573d194987c2e1e7408fe45, type: 2}
   displayName: {fileID: 11400000, guid: 17f3c728518b7c045ba4e3fd957c4c72, type: 2}
   description: {fileID: 11400000, guid: e63ce89955fd74b41bb77e9f66bc1448, type: 2}
   lore: {fileID: 11400000, guid: 717090cce5af1e84c9697e8ec0e073ff, type: 2}

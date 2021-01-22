@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SparkTileModifier
   m_EditorClassIdentifier: 
   identifier: tilemodifier_spark
-  componentType:
+  dataObjectType:
     _name: PlayEffectTileModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  container: {fileID: 3688105352514756551, guid: d6b45685cf74c9b45baa17bdb000f7c0, type: 3}
+  displayName: {fileID: 0}
+  description: {fileID: 0}

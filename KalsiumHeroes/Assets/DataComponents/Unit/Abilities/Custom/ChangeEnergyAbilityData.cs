@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(ChangeEnergyAbilityData), menuName = "DataSources/Abilities/" + nameof(ChangeEnergyAbilityData))]
 public class ChangeEnergyAbilityData : AbilityData {
 
-	public override Type componentConstraint => typeof(ChangeEnergyAbility);
+	public override Type ownerConstraint => typeof(ChangeEnergyAbility);
 
 	[Header("Change Energy Ability Data")]
 

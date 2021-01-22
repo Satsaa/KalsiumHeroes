@@ -19,7 +19,6 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	[field: SerializeField]
 	public Vector2Int size { get; private set; }
 
-	[FormerlySerializedAs("tile")]
 	public TileData defaultTile;
 	public EdgeData defaultEdge;
 
@@ -46,39 +45,10 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 				// Cut right edge for symmetry
 				var yOddRow = y / 2 + 1;
 				if (y % 2 == 1 && x + yOddRow == size.x) continue;
-				var go = MasterComponent.Instantiate(defaultTile, Layout.HexToPoint(hex).xxy().SetY(defaultTile.instantiatee.transform.position.y));
-				go.transform.parent = transform;
-				go.name = $"Tile ({x}, {y})";
-				var tile = go.GetComponent<Tile>();
-				tiles.Add(hex.pos, tile);
+				var tile = Tile.Create(defaultTile, hex);
 			}
 		}
 
-		foreach (var kv in tiles) {
-			var tile = kv.Value;
-			var hex = tile.hex;
-			for (int i = 0; i < Hex.neighborOffsets.Length; i++) {
-				var offset = Hex.neighborOffsets[i];
-				var offsetHex = Hex.Add(hex, offset);
-				if (tiles.TryGetValue(offsetHex.pos, out var neighbor))
-					tile.SetNeighbor((TileDir)i, neighbor);
-			}
-			for (int i = 0; i < tile.edges.Length; i++) {
-				var edge = tile.edges[i];
-				if (edge == null) {
-					var nbr = tile.GetNeighbor(i);
-					var pos = (tile.corners[i] + tile.corners[new CircularInt(i + 1, 6)]) / 2;
-					var ego = MasterComponent.Instantiate(defaultEdge, pos);
-					ego.transform.parent = transform;
-					ego.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {((TileDir)i).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
-					edge = ego.GetComponent<Edge>();
-					tile.SetEdge(i, edge);
-				}
-				foreach (var edgeSource in tile.data.edgeModifiers[i]) {
-					edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
-				}
-			}
-		}
 #if UNITY_EDITOR
 		foreach (Transform child in transform) {
 			SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
@@ -87,77 +57,44 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	protected void DestroyGrid() {
-		foreach (Transform child in transform.Cast<Transform>().ToList()) {
-			if (child) { // Can be already destroyed by Tile OnDestroy
-				ObjectUtil.Destroy(child.gameObject);
-			}
+		foreach (var tile in Game.grid.tiles.Values.ToList()) {
+			tile.Remove();
 		}
+		foreach (var tile in FindObjectsOfType<Tile>()) {
+			ObjectUtil.Destroy(tile);
+		}
+
 		tiles.Clear();
+		Resources.UnloadUnusedAssets();
 	}
 
-	public Tile ReplaceTile(Hex hex, TileData dataSource) {
+	public Tile CreateTile(Hex hex, TileData source) {
+		return Tile.Create(source, hex);
+	}
+
+	public Tile ReplaceTile(Hex hex, TileData source) {
+		Unit unit = default;
+		if (tiles.TryGetValue(hex.pos, out var tile)) {
+			unit = tile.unit;
+		}
 		DestroyTile(hex);
-		return CreateTile(hex, dataSource);
+		var res = CreateTile(hex, source);
+		if (unit) {
+			unit.MoveTo(res, false);
+		}
+		return res;
 	}
 
 	public bool DestroyTile(Hex hex) {
 		if (tiles.TryGetValue(hex.pos, out var tile)) {
-			foreach (var edge in tile.edges) edge.RemoveModifiersByContext(tile);
-			ObjectUtil.Destroy(tile.gameObject);
-			tiles.Remove(hex.pos);
+			tile.Remove();
 			return true;
 		}
 		return false;
 	}
 
-	public Tile CreateTile(Hex hex, TileData dataSource) {
-		if (tiles.ContainsKey(hex.pos)) throw new ArgumentException("Hex already contains a Tile.");
-		var go = MasterComponent.Instantiate(dataSource, Layout.HexToPoint(hex).xxy().SetY(dataSource.instantiatee.transform.position.y),
-			v => {
-				Debug.Assert(!(v as Tile).awoken);
-			}
-		);
-		go.transform.parent = transform;
-		go.name = $"Tile ({hex.x}, {hex.y})";
-		var tile = go.GetComponent<Tile>();
-		tiles.Add(hex.pos, tile);
 
-		for (int i = 0; i < Hex.neighborOffsets.Length; i++) {
-			var offset = Hex.neighborOffsets[i];
-			var offsetHex = Hex.Add(hex, offset);
-			if (tiles.TryGetValue(offsetHex.pos, out var neighbor))
-				tile.SetNeighbor((TileDir)i, neighbor);
-		}
-		for (int i = 0; i < tile.edges.Length; i++) {
-			var edge = tile.edges[i];
-			if (edge == null) {
-				var nbr = tile.GetNeighbor(i);
-				if (nbr && (edge = nbr.GetEdge(new CircularInt(i + 3, 6))) != null) {
-					tile.SetEdge(i, edge);
-				} else {
-					var pos = (tile.corners[i] + tile.corners[new CircularInt(i + 1, 6)]) / 2;
-					var ego = MasterComponent.Instantiate(defaultEdge, pos);
-					ego.transform.parent = transform;
-					ego.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {((TileDir)i).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
-					edge = ego.GetComponent<Edge>();
-					tile.SetEdge(i, edge);
-				}
-			}
-			foreach (var edgeSource in tile.data.edgeModifiers[i]) {
-				edge.AddDataComponent<EdgeModifier>(edgeSource, v => v.Init(tile));
-			}
-		}
-#if UNITY_EDITOR
-		SceneVisibilityManager.instance.DisablePicking(tile.gameObject, false);
-		foreach (var edge in tile.edges) SceneVisibilityManager.instance.DisablePicking(edge.gameObject, false);
-#endif
-		return tile;
-	}
-
-
-	/// <summary>
-	/// Iterates in a radius around hex.
-	/// </summary>
+	/// <summary> Iterates in a radius around hex. </summary>
 	public IEnumerable<Tile> Radius(Hex hex, int radius) {
 		for (int x = -radius; x <= radius; x++) {
 			for (int y = Mathf.Max(-radius, -x - radius); y <= Mathf.Min(+radius, -x + radius); y++) {

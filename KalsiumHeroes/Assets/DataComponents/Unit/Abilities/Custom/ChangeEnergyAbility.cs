@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ChangeEnergyAbility : Ability {
 
-	public new ChangeEnergyAbilityData data => (ChangeEnergyAbilityData)base.data;
+	public new ChangeEnergyAbilityData data => (ChangeEnergyAbilityData)_data;
 	public override Type dataType => typeof(ChangeEnergyAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {

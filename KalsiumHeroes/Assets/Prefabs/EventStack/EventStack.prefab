@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8857882038524855536}
   - component: {fileID: 8381428152262172752}
-  - component: {fileID: 4334936177802526929}
   m_Layer: 0
   m_Name: EventStack
   m_TagString: Untagged
@@ -50,22 +49,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stack: []
---- !u!114 &4334936177802526929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2763633339167335843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fb6e88943b59e647b0864a78486dc59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 11400000, guid: 7a06a3cb142a18f44a5f654786004aa8, type: 2}
-  data: {fileID: 0}
-  rt: {fileID: 0}
-  es: {fileID: 8381428152262172752}
-  roundStackPrefab: {fileID: 2920945020312278200, guid: 207ce2ebd691c6740ac53874be2df01e, type: 3}
-  roundStackItemPrefab: {fileID: 5954060762746580402, guid: ed788a9e85d86d04aa632b946ae403b6, type: 3}
-  total: 10

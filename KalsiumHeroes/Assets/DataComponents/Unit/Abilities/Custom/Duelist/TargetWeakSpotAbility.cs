@@ -5,8 +5,8 @@ using System.Linq;
 using UnityEngine;
 
 public class TargetWeakSpotAbility : Ability {
-	public new TargetWeakSpotAbilityData data => (TargetWeakSpotAbilityData)base.data;
 
+	public new TargetWeakSpotAbilityData data => (TargetWeakSpotAbilityData)_data;
 	public override Type dataType => typeof(TargetWeakSpotAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -17,7 +17,7 @@ public class TargetWeakSpotAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit) {
 					DealDamage(tile.unit, data.damage.value, data.damageType);
-					tile.unit.gameObject.AddDataComponent(data.defenseReductionModifier);
+					Modifier.Create(master, data.defenseReductionModifier);
 				}
 			}
 		});

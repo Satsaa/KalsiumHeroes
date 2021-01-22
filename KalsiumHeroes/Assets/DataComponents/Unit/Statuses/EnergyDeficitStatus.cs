@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
-	public new EnergyDeficitStatusData data => (EnergyDeficitStatusData)base.data;
+	public new EnergyDeficitStatusData data => (EnergyDeficitStatusData)_data;
 	public override Type dataType => typeof(EnergyDeficitStatusData);
 
 	[SerializeField] int stacks;
@@ -15,7 +15,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		base.data.hidden.ConfigureAlterer(add, v => stacks > 0);
+		data.hidden.ConfigureAlterer(add, v => stacks > 0);
 		unit.data.defense.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
 		unit.data.resistance.ConfigureAlterer(add, v => v - data.defenseReduction * stacks);
 	}
@@ -39,17 +39,17 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	private void Add(int excess) {
 		stacks += excess;
 		if (!data.container) return;
-		var vfx = GetComponent<VisualEffect>();
+		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
-		var pts = GetComponent<ParticleSystem>();
+		var pts = container.GetComponent<ParticleSystem>();
 		if (pts) pts.Play();
 	}
 	private void Clear() {
 		stacks = 0;
 		if (!data.container) return;
-		var vfx = GetComponent<VisualEffect>();
+		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();
-		var pts = GetComponent<ParticleSystem>();
+		var pts = container.GetComponent<ParticleSystem>();
 		if (pts) pts.Stop();
 	}
 }

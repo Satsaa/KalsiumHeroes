@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DotStatus : Status, IOnTurnEnd_Unit {
 
-	public new DotStatusData data => (DotStatusData)base.data;
+	public new DotStatusData data => (DotStatusData)_data;
 	public override Type dataType => typeof(DotStatusData);
 
 	public override void OnTurnEnd() {

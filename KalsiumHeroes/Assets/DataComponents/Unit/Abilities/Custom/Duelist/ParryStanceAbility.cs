@@ -3,21 +3,20 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParryStanceAbility : Ability, IOnAbilityCastEnd_Unit
-{
-    public new ParryStanceAbilityData data => (ParryStanceAbilityData)base.data;
+public class ParryStanceAbility : Ability, IOnAbilityCastEnd_Unit {
 
-    public override Type dataType => typeof(ParryStanceAbilityData);
+	public new ParryStanceAbilityData data => (ParryStanceAbilityData)_data;
+	public override Type dataType => typeof(ParryStanceAbilityData);
 
-    public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
-        return new InstantAbilityHandler(msg, this, (ability) => {
-            this.unit.AddDataComponent(data.statusModifier);
-        });
-    }
+	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, (ability) => {
+			Modifier.Create(master, data.statusModifier);
+		});
+	}
 
-    public void OnAbilityCastEnd(Ability ability) {
-        if (ability == this) {
-            Game.client.PostEvent(new Events.Turn());
-        }
-    }
+	public void OnAbilityCastEnd(Ability ability) {
+		if (ability == this) {
+			Game.client.PostEvent(new Events.Turn());
+		}
+	}
 }

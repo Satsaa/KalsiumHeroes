@@ -7,7 +7,8 @@ using UnityEngine;
 
 public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEventEnd {
 
-	public new AbilityData data => (AbilityData)base.data;
+	public new AbilityData source => (AbilityData)_source;
+	public new AbilityData data => (AbilityData)_data;
 	public override Type dataType => typeof(AbilityData);
 
 	[HideInInspector, SerializeField] public bool isCasting = false;
@@ -196,7 +197,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	protected void PostDefaultAbilityEvent(Tile target) {
 		Game.client.PostEvent(new Events.Ability() {
-			ability = base.data.identifier,
+			ability = data.identifier,
 			targets = new Vector3Int[] { target.hex.pos },
 			unit = unit.tile.hex.pos
 		});

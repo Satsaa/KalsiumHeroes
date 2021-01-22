@@ -8,17 +8,20 @@ using Muc.Extensions;
 using Muc.Numerics;
 
 [ExecuteAlways]
-public class Tile : MasterComponent<TileModifier, ITileOnEvent> {
+public class Tile : Master<TileModifier, ITileOnEvent> {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
-	public new TileData data => (TileData)base.data;
+	public new TileData source => (TileData)_source;
+	public new TileData data => (TileData)_data;
 	public override Type dataType => typeof(TileData);
+	public static Type modifierDataType => typeof(TileModifierData);
 
-	public Highlighter highlighter;
 
 	public Unit unit;
+
 	public List<GraveUnit> graveyard;
+	[field: SerializeField] public Highlighter highlighter;
 
 	[field: SerializeField] public Hex hex { get; private set; }
 
@@ -28,37 +31,72 @@ public class Tile : MasterComponent<TileModifier, ITileOnEvent> {
 	[field: SerializeField] public Tile[] neighbors { get; private set; } = new Tile[6];
 	[field: SerializeField] public Edge[] edges { get; private set; } = new Edge[6];
 
-	public bool awoken = false;
-
-	protected new void Awake() {
-		awoken = true;
-		if (!source) throw new InvalidOperationException("Source must be defined when creating a Tile!");
-		base.Awake();
-		hex = Layout.PointToHex(transform.position.xz()).Round();
-		highlighter = GetComponentInChildren<Highlighter>();
-		if (!highlighter) Debug.LogError("No Highlighter in MasterComponent instantiatee.");
-		var pt = Layout.HexToPoint(hex);
-		center = new Vector3(pt.x, 0, pt.y);
-		transform.position = center.SetY(transform.position.y);
-		corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
+	/// <summary> Creates a Tile based on the given source and hex. </summary>
+	public static Tile Create(TileData source, Hex hex) {
+		if (Game.grid.tiles.ContainsKey(hex.pos)) throw new InvalidOperationException("There is already a Tile at the Hex.");
+		return Create<Tile>(source, v => {
+			v.gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(source.container.transform.position.y);
+			v.hex = hex;
+			v.gameObject.transform.parent = Game.instance.transform;
+			v.gameObject.name = $"Tile ({hex.x}, {hex.y})";
+			Game.grid.tiles.Add(hex.pos, v);
+			v.highlighter = v.gameObject.GetComponentInChildren<Highlighter>();
+			if (!v.highlighter) Debug.LogError("No Highlighter in container.");
+			var pt = Layout.HexToPoint(hex);
+			v.center = new Vector3(pt.x, 0, pt.y);
+			v.transform.position = v.center.SetY(v.transform.position.y);
+			v.corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
+		});
 	}
 
-	protected new void OnDestroy() {
+	protected override void OnCreate() {
+		base.OnCreate();
+		// Find neighbors
+		for (int i = 0; i < neighbors.Length; i++) {
+			if (Game.grid.tiles.TryGetValue(hex.GetNeighbor(i).pos, out var nbr)) {
+				SetNeighbor(i, nbr);
+			}
+		}
+		// Find or create edges
+		for (int i = 0; i < neighbors.Length; i++) {
+			var nbr = neighbors[i];
+			if (nbr) {
+				var opposite = new CircularInt(i - 3, 6);
+				this.SetEdge(i, nbr.GetEdge(opposite), false);
+			} else {
+				Edge.Create(Game.grid.defaultEdge, this, (TileDir)i);
+			}
+		}
+		// Create default edge modifiers
+		for (int i = 0; i < neighbors.Length; i++) {
+			var edge = edges[i];
+			Debug.Assert(edge); // Should be set for all direction
+			foreach (var edgeSource in this.data.edgeModifiers[i]) {
+				EdgeModifier.Create(edge, edgeSource, this);
+			}
+		}
+	}
+
+	protected override void OnRemove() {
 		for (int i = 0; i < neighbors.Length; i++) {
 			var nbr = neighbors[i];
 			var edge = edges[i];
+			if (nbr) {
+				nbr.SetNeighbor(new CircularInt(i - 3, 6), null);
+			}
 			if (edge) {
 				if (nbr == null) {
-					ObjectUtil.Destroy(edge.gameObject);
-				} else {
-					edge.RemoveModifiersByContext(this);
+					edge.Remove();
 				}
+				edge.RemoveModifiersByContext(this);
 			}
 		}
-		base.OnDestroy();
+		Game.grid.tiles.Remove(hex.pos);
+		ObjectUtil.Destroy(gameObject);
+		base.OnRemove();
 	}
 
-	public IEnumerable<(Tile tile, Edge edge)> NeighborsAndEdges() {
+	public IEnumerable<(Tile tile, Edge edge)> NeighborsWithEdges() {
 		for (int i = 0; i < neighbors.Length; i++) {
 			var neighbor = neighbors[i];
 			if (neighbor == null) continue;
@@ -75,9 +113,8 @@ public class Tile : MasterComponent<TileModifier, ITileOnEvent> {
 	public void SetNeighbor(TileDir direction, Tile tile, bool propagate = true) => SetNeighbor((int)direction, tile, propagate);
 	public void SetNeighbor(int direction, Tile tile, bool propagate = true) {
 		neighbors[direction] = tile;
-		if (!propagate) return;
-		var neighbor = GetNeighbor(direction);
-		if (neighbor) neighbor.SetNeighbor(new CircularInt(direction - 3, 6), this, false);
+		if (!propagate || tile == null) return;
+		tile.SetNeighbor(new CircularInt(direction - 3, 6), this, false);
 	}
 
 	public IEnumerable<Edge> Edges() => edges.Where(v => v != null);
@@ -89,9 +126,11 @@ public class Tile : MasterComponent<TileModifier, ITileOnEvent> {
 	public void SetEdge(int direction, Edge edge, bool propagate = true) {
 		edges[direction] = edge;
 		if (!propagate) return;
-		edge.tile1 = this;
+		if (edge != null) {
+			edge.hex1 = this;
+			edge.hex2 = hex.GetNeighbor(direction);
+		}
 		var neighbor = GetNeighbor(direction);
-		edge.tile2 = neighbor;
 		if (neighbor) neighbor.SetEdge(new CircularInt(direction - 3, 6), edge, false);
 	}
 }

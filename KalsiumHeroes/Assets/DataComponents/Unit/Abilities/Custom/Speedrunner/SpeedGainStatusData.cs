@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(SpeedGainStatusData), menuName = "DataSources/Units/Speedrunner/" + nameof(SpeedGainStatusData))]
 public class SpeedGainStatusData : StatusData {
 
-	public override Type componentConstraint => typeof(SpeedGainStatus);
+	public override Type ownerConstraint => typeof(SpeedGainStatus);
 
 	[Header("Speed Gain Status Data")]
 

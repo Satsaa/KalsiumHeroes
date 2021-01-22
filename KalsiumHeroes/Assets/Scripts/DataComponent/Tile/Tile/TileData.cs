@@ -6,9 +6,9 @@ using UnityEngine;
 using static UnityEngine.Mathf;
 
 [CreateAssetMenu(fileName = nameof(TileData), menuName = "DataSources/" + nameof(TileData))]
-public class TileData : MasterComponentData {
+public class TileData : MasterData {
 
-	public override Type componentConstraint => typeof(Tile);
+	public override Type ownerConstraint => typeof(Tile);
 
 	[Header("Tile Data")]
 

@@ -42,6 +42,10 @@ public class Highlighter : MonoBehaviour {
 	}
 
 	public void Unhighlight(int priority) {
+		if (!renderer) {
+			colors.Clear();
+			return;
+		}
 		colors.RemoveAll(v => v.priority == priority);
 		if (colors.Count == 0) renderer.enabled = false;
 		else renderer.material.SetColor("_Color", colors.Last().color);

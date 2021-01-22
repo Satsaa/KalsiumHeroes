@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(PassiveData), menuName = "DataSources/" + nameof(PassiveData))]
 public class PassiveData : UnitModifierData {
 
-	public override Type componentConstraint => typeof(Passive);
+	public override Type ownerConstraint => typeof(Passive);
 
 	[Tooltip("Passives are currently Modifiers which are shown as abilities.")]
 	public string passivesAreJustModifiers;

@@ -7,39 +7,48 @@ using Muc.Editor;
 using Muc.Extensions;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
+public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 
-	public new UnitData data => (UnitData)base.data;
+	public new UnitData source => (UnitData)_source;
+	public new UnitData data => (UnitData)_data;
 	public override Type dataType => typeof(UnitData);
+	public static Type modifierDataType => typeof(UnitModifierData);
 
 	[Tooltip("Silenced units cannot cast spells.")]
-	public SeededAttribute<bool> silenced;
+	public SeededAttribute<bool> silenced = new SeededAttribute<bool>();
 
 	[Tooltip("Disarmed units cannot cast weapon skills.")]
-	public SeededAttribute<bool> disarmed;
+	public SeededAttribute<bool> disarmed = new SeededAttribute<bool>();
 
 	[Tooltip("Rooted units cannot move.")]
-	public SeededAttribute<bool> rooted;
+	public SeededAttribute<bool> rooted = new SeededAttribute<bool>();
 
 	public UnitActor actor;
+	public Canvas canvas;
 	public Team team;
 	[field: SerializeField]
 	public Tile tile { get; private set; }
 
 
-	protected new void Awake() {
-		base.Awake();
-		if (tile && (tile.unit == this || tile.unit == null)) {
-			MoveTo(tile, true);
-		} else {
-			// Move Unit to the nearest Tile that is unoccupied
-			var nearTile = Game.grid.NearestTile(transform.position.xz(), v => v.unit == null);
-			if (nearTile) MoveTo(nearTile, true);
-		}
-		actor = GetComponentInChildren<UnitActor>();
+	public static Unit Create(UnitData source, Vector3 position, Team team) {
+		return Create<Unit>(source, v => {
+			v.team = team;
+			v.gameObject.transform.position = position;
+			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz(), v => v.unit == null);
+			if (nearTile) v.MoveTo(nearTile, true);
+		});
 	}
 
-	protected void Start() {
+	public static Unit Create(UnitData source, Tile tile) {
+		return Create<Unit>(source, v => {
+			v.MoveTo(tile, true);
+		});
+	}
+
+	protected override void OnCreate() {
+		base.OnCreate();
+		Debug.Assert(actor = gameObject.GetComponentInChildren<UnitActor>());
+		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
 			tile.onEvents.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
@@ -47,11 +56,12 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 		}
 	}
 
-	protected new void OnDestroy() {
+	protected override void OnRemove() {
+		if (!removed) return;
+		base.OnRemove();
 		if (Game.rounds.current == this) {
 			Game.rounds.NextTurn();
 		}
-		base.OnDestroy();
 	}
 
 	public void Heal(float heal) {
@@ -67,9 +77,20 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
 	public void DealCalculatedDamage(Modifier source, float damage, DamageType type) {
 		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(source, this, damage, type));
-			tile.onEvents.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(source, this, damage, type));
-			Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
+			switch (source) {
+				case UnitModifier um:
+					um.unit.onEvents.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(um, this, damage, type));
+					Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(um, this, damage, type));
+					break;
+				case TileModifier tm:
+					tm.tile.onEvents.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(tm, this, damage, type));
+					Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(tm, this, damage, type));
+					break;
+				case EdgeModifier em:
+					em.edge.onEvents.ForEach<IOnDealDamage_Edge>(scope, v => v.OnDealDamage(em, this, damage, type));
+					Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
+					break;
+			}
 		}
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
@@ -102,8 +123,10 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 				tile.onEvents.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
 				Game.onEvents.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
 			}
+			tile.unit = null;
+			Destroy(gameObject);
 			tile.graveyard.Add(new GraveUnit(this));
-			Destroy();
+			Remove();
 		}
 	}
 
@@ -137,11 +160,11 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 	}
 
 	public bool MoveTo(Tile tile, bool reposition) {
-		if (tile.unit == null) {
+		if (tile.unit == null || tile.unit == this) {
 			if (this.tile != null) this.tile.unit = null;
 			tile.unit = this;
 			this.tile = tile;
-			if (reposition) transform.position = this.tile.center;
+			if (reposition) gameObject.transform.position = this.tile.center;
 			return true;
 		} else {
 			return tile.unit == this;

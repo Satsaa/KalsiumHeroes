@@ -6,12 +6,13 @@ using UnityEngine;
 
 public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit, IOnRoundStart, IOnDispell_Unit {
 
-	public new StatusData data => (StatusData)base.data;
+	public new StatusData source => (StatusData)_source;
+	public new StatusData data => (StatusData)_data;
 	public override Type dataType => typeof(StatusData);
 
 	/// <summary> When the Unit got dispelled. </summary>
 	public virtual void OnDispell() {
-		if (data.dispellable.value) this.Destroy();
+		if (data.dispellable.value) Remove();
 	}
 
 	public virtual void OnTurnStart() {
@@ -53,7 +54,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 	protected virtual void OnTick() { }
 
 	/// <summary> When this UnitModifier expires because the tick duration was reached. </summary>
-	public virtual void OnExpire() => this.Destroy();
+	public virtual void OnExpire() => Remove();
 
 	/// <summary> Based on statusEffectData.tickDuration check if this status would have expired after the provided round count. </summary>
 	public bool HasExpired() {

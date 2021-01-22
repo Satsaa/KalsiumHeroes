@@ -138,7 +138,7 @@ public static class Pathing {
 		if (start != target) {
 			while (frontier.Count != 0) {
 				var tile = frontier.Dequeue().tile;
-				foreach (var (neighbor, edge) in tile.NeighborsAndEdges()) {
+				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + costCalculator(tile, edge, neighbor);
 					var appeal = tiles[tile].appeal + tile.data.appeal.value;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
@@ -187,7 +187,7 @@ public static class Pathing {
 		if (start != target) {
 			while (frontier.Count != 0) {
 				var tile = frontier.Dequeue().tile;
-				foreach (var (neighbor, edge) in tile.NeighborsAndEdges()) {
+				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + 1;
 					var appeal = tiles[tile].appeal + tile.data.appeal.value;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
@@ -235,7 +235,7 @@ public static class Pathing {
 		if (start != target) {
 			while (frontier.Count != 0) {
 				var tile = frontier.Dequeue().tile;
-				foreach (var (neighbor, edge) in tile.NeighborsAndEdges()) {
+				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + 1;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other))) {
 						tiles[neighbor] = new FieldItem(cost, 0, tile);
@@ -313,7 +313,7 @@ public static class Pathing {
 			if (i >= distance) break;
 			frontier[i + 1] = new List<Tile>();
 			foreach (var tile in frontier[i]) {
-				foreach (var (neighbor, edge) in tile.NeighborsAndEdges()) {
+				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + costCalculator(tile, edge, neighbor);
 					if (cost > maxCost) continue;
 					var appeal = tiles[tile].appeal + tile.data.appeal.value;
@@ -355,7 +355,7 @@ public static class Pathing {
 			if (i >= distance) break;
 			frontier[i + 1] = new List<Tile>();
 			foreach (var tile in frontier[i]) {
-				foreach (var (neighbor, edge) in tile.NeighborsAndEdges()) {
+				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = i + 1;
 					var appeal = tiles[tile].appeal + tile.data.appeal.value;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MoveCostEdgeModifier : EdgeModifier, IOnGetMoveCost_Edge {
 
-	public new MoveCostEdgeModifierData data => (MoveCostEdgeModifierData)base.data;
+	public new MoveCostEdgeModifierData data => (MoveCostEdgeModifierData)_data;
 	public override Type dataType => typeof(MoveCostEdgeModifierData);
 
 	public void OnGetMoveCost(Tile from, Tile to, ref float cost) {

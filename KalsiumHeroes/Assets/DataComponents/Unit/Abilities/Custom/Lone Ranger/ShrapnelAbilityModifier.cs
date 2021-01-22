@@ -16,7 +16,7 @@ public class ShrapnelAbilityModifier : UnitModifier, IOnTurnStart_Unit {
 			if (tile.unit) tile.unit.DealCalculatedDamage(creator, calculatedDamage, damageType);
 		}
 		Debug.Log("Shrapnel?");
-		this.Destroy();
+		Remove();
 	}
 
 }

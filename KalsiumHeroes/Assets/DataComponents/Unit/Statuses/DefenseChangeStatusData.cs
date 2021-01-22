@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(DefenseChangeStatusData), menuName = "DataSources/Statuses/" + nameof(DefenseChangeStatusData))]
-public class DefenseChangeStatusData : StatusData
-{
-    public override Type componentConstraint => typeof(DefenseChangeStatus);
+public class DefenseChangeStatusData : StatusData {
+	public override Type ownerConstraint => typeof(DefenseChangeStatus);
 
-    [Header("Defense Change Status Data")]
-    public Attribute<int> defenseReduction;
+	[Header("Defense Change Status Data")]
+	public Attribute<int> defenseReduction;
 
 }

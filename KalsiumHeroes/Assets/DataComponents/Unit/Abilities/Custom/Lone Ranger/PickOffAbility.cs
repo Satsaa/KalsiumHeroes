@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PickOffAbility : Ability {
 
-	public new PickOffAbilityData data => (PickOffAbilityData)base.data;
+	public new PickOffAbilityData data => (PickOffAbilityData)_data;
 	public override Type dataType => typeof(PickOffAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -32,7 +32,7 @@ public class PickOffAbility : Ability {
 			}
 		}
 		if (foundUnit) {
-			print("Unit found within range of 1. Damage dealt: " + i * multiplier + " Multiplier was " + multiplier);
+			Debug.Log("Unit found within range of 1. Damage dealt: " + i * multiplier + " Multiplier was " + multiplier);
 			return i * multiplier;
 		} else {
 			radius = Game.grid.Ring(h, 2);
@@ -43,7 +43,7 @@ public class PickOffAbility : Ability {
 			}
 			if (foundUnit) {
 				multiplier = data.bonusDamageMultipliers[0];
-				print("Unit found within range of 2. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
+				Debug.Log("Unit found within range of 2. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 				return i * multiplier;
 			} else {
 				radius = Game.grid.Ring(h, 3);
@@ -54,7 +54,7 @@ public class PickOffAbility : Ability {
 				}
 				if (foundUnit) {
 					multiplier = data.bonusDamageMultipliers[1];
-					print("Unit found within range of 3. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
+					Debug.Log("Unit found within range of 3. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 					return i * multiplier;
 				} else {
 					radius = Game.grid.Ring(h, 4);
@@ -65,11 +65,11 @@ public class PickOffAbility : Ability {
 					}
 					if (foundUnit) {
 						multiplier = data.bonusDamageMultipliers[2];
-						print("Unit found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
+						Debug.Log("Unit found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 						return i * multiplier;
 					} else {
 						multiplier = data.bonusDamageMultipliers[3];
-						print("No units found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
+						Debug.Log("No units found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
 						return i * multiplier;
 					}
 				}

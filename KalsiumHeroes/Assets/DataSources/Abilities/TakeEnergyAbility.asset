@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: TakeEnergyAbility
   m_EditorClassIdentifier: 
   identifier: ability_take_energy
-  componentType:
+  dataObjectType:
     _name: ChangeEnergyAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   targetType: 28
@@ -30,7 +30,7 @@ MonoBehaviour:
     _value: 1
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: -5
   cooldown:
     _value: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   energyChange:
     _value: -5

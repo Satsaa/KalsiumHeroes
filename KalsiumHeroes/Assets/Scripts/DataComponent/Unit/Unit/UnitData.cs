@@ -3,9 +3,9 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
-public class UnitData : MasterComponentData {
+public class UnitData : MasterData {
 
-	public override Type componentConstraint => typeof(Unit);
+	public override Type ownerConstraint => typeof(Unit);
 
 	[Header("Unit Data")]
 

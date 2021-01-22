@@ -9,6 +9,9 @@ namespace HexGrid {
 	[Serializable]
 	public struct Hex {
 
+		public static bool operator ==(Hex a, Hex b) => a.Equals(b);
+		public static bool operator !=(Hex a, Hex b) => !a.Equals(b);
+
 		public static implicit operator FractHex(Hex v) => new FractHex(v);
 
 		public Hex(Vector2Int pos) : this(pos.x, pos.y, -pos.y - pos.x) { }

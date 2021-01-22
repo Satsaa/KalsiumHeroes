@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: TrapTile
   m_EditorClassIdentifier: 
   identifier: tile_trap
-  componentType:
+  dataObjectType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 194248088727427243, guid: a74a4a59cdf9c284e87fd031d12e3c20, type: 3}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  container: {fileID: 194248088727427243, guid: a74a4a59cdf9c284e87fd031d12e3c20, type: 3}
+  baseModifiers: []
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   passable:
     _value: 1
   transparent:

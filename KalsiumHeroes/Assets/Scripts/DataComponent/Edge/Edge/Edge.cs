@@ -5,35 +5,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using HexGrid;
 using Muc.Extensions;
+using Muc.Numerics;
 
-public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
+public class Edge : Master<EdgeModifier, IEdgeOnEvent> {
 
-	public new EdgeData data => (EdgeData)base.data;
+	public new EdgeData data => (EdgeData)_data;
 	public override Type dataType => typeof(EdgeData);
+	public static Type modifierDataType => typeof(EdgeModifierData);
 
-	public Tile tile1;
-	public Tile tile2;
-	public TileDir direction;
+	public Hex hex1;
+	public Hex hex2;
+	public Tile tile1 { get { Game.grid.tiles.TryGetValue(hex1.pos, out var res); return res; } }
+	public Tile tile2 { get { Game.grid.tiles.TryGetValue(hex2.pos, out var res); return res; } }
 
-	protected new void Awake() {
-		base.Awake();
+	/// <summary> Creates an Edge based on the given source, Tile and direction. </summary>
+	public static Edge Create(EdgeData source, Tile tile, TileDir direction) {
+		return Create<Edge>(source, v => {
+			if (tile.GetEdge(direction)) throw new InvalidOperationException("Edge already created at that position.");
+			var dir = (int)direction;
+			var nbr = tile.GetNeighbor(dir);
+			v.hex1 = tile;
+			v.hex2 = tile.hex.GetNeighbor(dir);
+			v.gameObject.transform.position = (tile.corners[dir] + tile.corners[new CircularInt(dir + 1, 6)]) / 2;
+			v.gameObject.transform.parent = Game.instance.transform;
+			v.gameObject.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {(direction).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
+			tile.SetEdge(dir, v);
+		});
+	}
+
+	protected override void OnRemove() {
+		base.OnRemove();
+		ObjectUtil.Destroy(gameObject);
 	}
 
 	/// <summary> Removes EdgeModifiers with matching context Tile </summary>
 	public void RemoveModifiersByContext(Tile context) {
-		var modifiers = GetComponentsInChildren<EdgeModifier>();
-		foreach (var modifier in modifiers) {
-			if (modifier.context == context) {
-				if (modifier.source && (modifier.source as ModifierData).container) ObjectUtil.Destroy(modifier.gameObject);
-				else ObjectUtil.Destroy(modifier);
-			}
+		foreach (var modifier in modifiers.Get<EdgeModifier>().Where(v => v.context == context).ToList()) {
+			modifier.Remove();
 		}
 	}
 
 	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public bool CanPass(Unit unit, Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
-		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
+		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
+		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.passable.value;
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(unit, from, to, ref value));
@@ -45,8 +60,8 @@ public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 
 	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public bool CanPass(Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
-		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
+		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
+		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.passable.value;
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(from, to, ref value));
@@ -57,8 +72,8 @@ public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 
 	/// <summary> The move cost over this Edge. </summary>
 	public float MoveCost(Unit unit, Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
-		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
+		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
+		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.moveCost.value;
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(unit, from, to, ref value));
@@ -70,8 +85,8 @@ public class Edge : MasterComponent<EdgeModifier, IEdgeOnEvent> {
 
 	/// <summary> The move cost over this Edge. </summary>
 	public float MoveCost(Tile from, Tile to) {
-		if (to != tile1 && to != tile2) throw new ArgumentException("To must be one of the Tiles of the Edge.", nameof(to));
-		if (from != tile1 && from != tile2) throw new ArgumentException("From must be one of the Tiles of the Edge.", nameof(from));
+		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
+		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.moveCost.value;
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(from, to, ref value));

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(DotStatusData), menuName = "DataSources/Statuses/" + nameof(DotStatusData))]
 public class DotStatusData : StatusData {
 
-	public override Type componentConstraint => typeof(DotStatus);
+	public override Type ownerConstraint => typeof(DotStatus);
 
 	[Header("Dot Test Data")]
 

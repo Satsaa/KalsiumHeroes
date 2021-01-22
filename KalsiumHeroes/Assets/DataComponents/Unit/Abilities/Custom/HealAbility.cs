@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class HealAbility : Ability {
 
-	public new HealAbilityData data => (HealAbilityData)base.data;
+	public new HealAbilityData data => (HealAbilityData)_data;
 	public override Type dataType => typeof(HealAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {

@@ -8,6 +8,8 @@ public interface ITileOnEvent : IOnEvent { }
 public interface IEdgeOnEvent : IOnEvent { }
 public interface IGlobalOnEvent : IOnEvent { }
 
+public interface IOnUpdate : IGlobalOnEvent { void OnUpdate(); }
+public interface IOnLateUpdate : IGlobalOnEvent { void OnLateUpdate(); }
 
 public interface IOnAbilityCastStart_Unit : IUnitOnEvent { void OnAbilityCastStart(Ability ability); }
 public interface IOnAbilityCastStart_Tile : ITileOnEvent { void OnAbilityCastStart(Ability ability); }
@@ -41,8 +43,9 @@ public interface IOnTakeDamage_Unit : IUnitOnEvent { void OnTakeDamage(Modifier?
 public interface IOnTakeDamage_Tile : ITileOnEvent { void OnTakeDamage(Unit unit, Modifier? source, ref float damage, ref DamageType type); }
 public interface IOnTakeDamage_Global : IGlobalOnEvent { void OnTakeDamage(Unit unit, Modifier? source, ref float damage, ref DamageType type); }
 
-public interface IOnDealDamage_Unit : IUnitOnEvent { void OnDealDamage(Modifier? source, Unit target, float damage, DamageType type); }
-public interface IOnDealDamage_Tile : ITileOnEvent { void OnDealDamage(Modifier? source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Unit : IUnitOnEvent { void OnDealDamage(UnitModifier? source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Edge : IEdgeOnEvent { void OnDealDamage(EdgeModifier? source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Tile : ITileOnEvent { void OnDealDamage(TileModifier? source, Unit target, float damage, DamageType type); }
 public interface IOnDealDamage_Global : IGlobalOnEvent { void OnDealDamage(Modifier? source, Unit target, float damage, DamageType type); }
 
 public interface IOnCalculateDamage_Unit : IUnitOnEvent { void OnCalculateDamage(Modifier? source, ref float damage, ref DamageType type); }

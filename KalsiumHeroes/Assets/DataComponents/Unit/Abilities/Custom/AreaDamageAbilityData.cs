@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(AreaDamageAbilityData), menuName = "DataSources/Abilities/" + nameof(AreaDamageAbilityData))]
 public class AreaDamageAbilityData : AbilityData {
 
-	public override Type componentConstraint => typeof(AreaDamageAbility);
+	public override Type ownerConstraint => typeof(AreaDamageAbility);
 
 	[Header("Area Damage Ability Data")]
 

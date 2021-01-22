@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpeedGainAbility : Ability {
 
-	public new SpeedGainAbilityData data => (SpeedGainAbilityData)base.data;
+	public new SpeedGainAbilityData data => (SpeedGainAbilityData)_data;
 	public override Type dataType => typeof(SpeedGainAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -17,7 +17,7 @@ public class SpeedGainAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit && tile.unit != unit) unitsFound++;
 			}
-			unit.gameObject.AddDataComponent<SpeedGainStatus>(this.data.speedGainModifier, v => v.unitsFound = unitsFound);
+			SpeedGainStatus.Create(master, data.speedGainModifier, v => ((SpeedGainStatus)v).unitsFound = unitsFound);
 		});
 	}
 }

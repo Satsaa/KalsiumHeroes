@@ -28,13 +28,13 @@ public class Rounds {
 	}
 
 	public List<Unit> GetEstimatedOrder(int roundsAhead) {
-		var units = Game.dataComponents.Get<Unit>().Where(v => v).ToList();
+		var units = Game.dataObjects.Get<Unit>().Where(v => v).ToList();
 		units.Sort((a, b) => a.GetEstimatedSpeed(roundsAhead).CompareTo(b.GetEstimatedSpeed(roundsAhead)));
 		return units.ToList();
 	}
 
 	void Gather() {
-		units = Game.dataComponents.Get<Unit>().Where(v => v).ToList();
+		units = Game.dataObjects.Get<Unit>().Where(v => v).ToList();
 		Sort();
 	}
 
@@ -69,7 +69,7 @@ public class Rounds {
 	}
 
 	private bool TryEndGame() {
-		if (Game.dataComponents.Get<Unit>().Count() <= 1) {
+		if (Game.dataObjects.Get<Unit>().Count() <= 1) {
 			using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnGameEnd>(scope, v => v.OnGameEnd());
 			return true;
 		}

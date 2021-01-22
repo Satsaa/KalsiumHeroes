@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(HealAbilityData), menuName = "DataSources/Abilities/" + nameof(HealAbilityData))]
 public class HealAbilityData : AbilityData {
 
-	public override Type componentConstraint => typeof(HealAbility);
+	public override Type ownerConstraint => typeof(HealAbility);
 
 	[Header("Heal Ability Data")]
 

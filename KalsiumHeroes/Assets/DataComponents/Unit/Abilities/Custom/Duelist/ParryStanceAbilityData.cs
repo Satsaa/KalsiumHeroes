@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(ParryStanceAbilityData), menuName = "DataSources/Units/Duelist/" + nameof(ParryStanceAbilityData))]
-public class ParryStanceAbilityData : AbilityData
-{
-    public override Type componentConstraint => typeof(ParryStanceAbility);
+public class ParryStanceAbilityData : AbilityData {
 
-    [Header("Parry Stance Data")]
+	public override Type ownerConstraint => typeof(ParryStanceAbility);
 
-    public DataComponentData statusModifier;
+	[Header("Parry Stance Data")]
+
+	public ModifierData statusModifier;
 }

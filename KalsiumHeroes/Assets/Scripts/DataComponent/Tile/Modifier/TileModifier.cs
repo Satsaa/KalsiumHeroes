@@ -7,37 +7,24 @@ using UnityEngine;
 
 public abstract class TileModifier : Modifier {
 
-	public new TileModifierData data => (TileModifierData)base.data;
+	public new TileModifierData source => (TileModifierData)_source;
+	public new TileModifierData data => (TileModifierData)_data;
 	public override Type dataType => typeof(TileModifierData);
+	public Tile tile => (Tile)master;
 
-	[HideInInspector] public Tile tile;
 
-
-	protected new void Awake() {
-		tile = GetMasterComponent<Tile>();
-		base.Awake();
-		tile.modifiers.Add(this);
-		Game.dataComponents.Add(this);
-		tile.onEvents.Add(this);
-		OnAdd();
-		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnAdd(this);
+	protected new void OnCreate() {
+		base.OnCreate();
+		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnCreate(this);
 	}
 
-	protected new void OnDestroy() {
-		OnRemove();
+	protected new void OnRemove() {
 		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
-		tile.onEvents.Remove(this);
-		tile.modifiers.Remove(this);
-		base.OnDestroy();
+		base.OnRemove();
 	}
-
-	/// <summary> When this TileModifier is being added (instantiated). </summary>
-	public virtual void OnAdd() { }
-	/// <summary> When this TileModifier is being removed (destroyed). </summary>
-	public virtual void OnRemove() { }
 
 	/// <summary> When any other TileModifier is being added. </summary>
-	public virtual void OnAdd(TileModifier modifier) { }
+	public virtual void OnCreate(TileModifier modifier) { }
 	/// <summary> When any other TileModifier is being removed. </summary>
 	public virtual void OnRemove(TileModifier modifier) { }
 

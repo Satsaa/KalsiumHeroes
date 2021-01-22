@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SideKickAbility : Ability {
 
-	public new SideKickAbilityData data => (SideKickAbilityData)base.data;
+	public new SideKickAbilityData data => (SideKickAbilityData)_data;
 	public override Type dataType => typeof(SideKickAbilityData);
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -19,7 +19,7 @@ public class SideKickAbility : Ability {
 			var totalDamage = speed * data.speedDamageMultiplier.value + movementDamage;
 			foreach (var tile in aoe) {
 				if (tile.unit) DealDamage(tile.unit, totalDamage, data.damageType);
-				print("Raw Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * data.speedDamageMultiplier.value + " From Movement: " + movementDamage);
+				Debug.Log("Raw Total Damage Dealt: " + (totalDamage) + " From Speed: " + speed * data.speedDamageMultiplier.value + " From Movement: " + movementDamage);
 			}
 		});
 	}

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(EnergyDeficitStatusData), menuName = "DataSources/Statuses/" + nameof(EnergyDeficitStatusData))]
 public class EnergyDeficitStatusData : StatusData {
 
-	public override Type componentConstraint => typeof(EnergyDeficitStatus);
+	public override Type ownerConstraint => typeof(EnergyDeficitStatus);
 
 	[Header("Energy Deficit Status Data")]
 

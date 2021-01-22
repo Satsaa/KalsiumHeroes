@@ -6,8 +6,8 @@ using Muc.Extensions;
 using System;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(StackItem), typeof(RoundStackModifier))]
-public class RoundStack : EventStack<RoundStackItem> {
+[RequireComponent(typeof(StackItem))]
+public class RoundStack : EventStack<RoundStackItem>, IOnAnimationEventEnd, IOnTurnStart_Global, IOnRoundStart {
 
 	[HideInInspector] public StackItem thisItem;
 	public RectTransform bgImageRect;
@@ -20,21 +20,28 @@ public class RoundStack : EventStack<RoundStackItem> {
 	bool isUpcoming => Game.rounds.round < round;
 	int roundsAhead => round - Game.rounds.round;
 
-	new void Awake() {
+	protected new void Awake() {
 		base.Awake();
 		thisItem = GetComponent<StackItem>();
+		Game.onEvents.Add(this);
 	}
 
 	void Start() {
 		DoNonCurrent();
 	}
 
-
-	new void Update() {
+	protected new void Update() {
 		base.Update();
 		bgImageRect.sizeDelta = new Vector2(MaxX(), bgImageRect.sizeDelta.y);
 	}
 
+	void OnDestroy() {
+		Game.onEvents.Remove(this);
+	}
+
+	public void OnAnimationEventEnd() => Refresh();
+	public void OnTurnStart(Unit unit) => Refresh();
+	public void OnRoundStart() => Refresh();
 
 	public void DoNonCurrent() {
 		var units = Game.rounds.GetEstimatedOrder(roundsAhead);

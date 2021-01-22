@@ -11,13 +11,13 @@ public class Library : ScriptableObject {
 
 	public string version = "0.0.0";
 
-	public List<DataComponentData> sources;
+	public List<DataObjectData> sources;
 
-	private Dictionary<string, DataComponentData> _dict;
-	public Dictionary<string, DataComponentData> dict => _dict ??= BuildDict();
+	private Dictionary<string, DataObjectData> _dict;
+	public Dictionary<string, DataObjectData> dict => _dict ??= BuildDict();
 
-	private Dictionary<string, DataComponentData> BuildDict() {
-		var res = new Dictionary<string, DataComponentData>();
+	private Dictionary<string, DataObjectData> BuildDict() {
+		var res = new Dictionary<string, DataObjectData>();
 		foreach (var source in sources) {
 			Debug.Assert(source.identifier != "");
 			Debug.Assert(!res.ContainsKey(source.identifier));
@@ -26,7 +26,7 @@ public class Library : ScriptableObject {
 		return res;
 	}
 
-	public T GetData<T>(string id) where T : DataComponentData {
+	public T GetData<T>(string id) where T : DataObjectData {
 		var item = dict[id];
 		return item as T;
 	}

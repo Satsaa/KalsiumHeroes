@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnCalculateDamage_Unit {
 
-	public new EnergyExcessStatusData data => (EnergyExcessStatusData)base.data;
+	public new EnergyExcessStatusData data => (EnergyExcessStatusData)_data;
 	public override Type dataType => typeof(EnergyExcessStatusData);
 
 	[HideInInspector, SerializeField] int stacks;
@@ -15,7 +15,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		base.data.hidden.ConfigureAlterer(add, v => stacks > 0);
+		data.hidden.ConfigureAlterer(add, v => stacks > 0);
 
 		unit.data.amps.weaponSkill.ConfigureAlterer(add, v => v + data.amps.weaponSkill.value * stacks);
 		unit.data.amps.spell.ConfigureAlterer(add, v => v + data.amps.spell.value * stacks);
@@ -50,17 +50,17 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	private void Add(int excess) {
 		this.stacks += excess;
 		if (!data.container) return;
-		var vfx = GetComponent<VisualEffect>();
+		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
-		var pts = GetComponent<ParticleSystem>();
+		var pts = container.GetComponent<ParticleSystem>();
 		if (pts) pts.Play();
 	}
 	private void Clear() {
 		stacks = 0;
 		if (!data.container) return;
-		var vfx = GetComponent<VisualEffect>();
+		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();
-		var pts = GetComponent<ParticleSystem>();
+		var pts = container.GetComponent<ParticleSystem>();
 		if (pts) pts.Stop();
 	}
 }

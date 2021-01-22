@@ -53,12 +53,12 @@ public class Targeting : MonoBehaviour {
 				var hex = Game.grid.RaycastHex(ray);
 				var main = Game.grid.GetTile(hex);
 				var area = Game.grid.Radius(hex, 1);
-				List<(Tile tile, Collider col)> candidates = area.Select(v => (v, v.GetComponent<Collider>())).ToList();
+				List<(Tile tile, Collider col)> candidates = area.Select(v => (v, v.gameObject.GetComponent<Collider>())).ToList();
 
 				var tile = main;
 				var minDist = float.PositiveInfinity;
 				foreach (var candidate in candidates) {
-					if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null ? -0.25f : main.transform.position.y - 0.25f)) {
+					if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null ? -0.25f : main.gameObject.transform.position.y - 0.25f)) {
 						minDist = hit.distance;
 						tile = candidate.tile;
 					}
@@ -138,7 +138,7 @@ public class Targeting : MonoBehaviour {
 
 	void RefreshHovers(Tile tile) {
 		foreach (var hover in hovers) hover.highlighter.Unhighlight(hoverPriority);
-		if (tile == null) hovers.Clear();
+		if (tile == null || tile.removed) hovers.Clear();
 		else hovers = targeter.GetHover(tile);
 		foreach (var hover in hovers) hover.highlighter.Highlight(hoverIsValid ? hoverColor : invalidColor, hoverPriority);
 	}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb9b9b8c8d46b24cb4f7ab9256d0b09, type: 3}
+  m_Name: AbilityUIModifierData
+  m_EditorClassIdentifier: 
+  identifier: unitmodifier_ability_buttons_ui
+  dataObjectType:
+    _name: AbilityUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  container: {fileID: 2768687307950674131, guid: 5e231820c99b1ae4f9b6f9af5b32e0e3, type: 3}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  wsOffset: {x: 0, y: 0, z: -0.5}
+  ssOffset: {x: 0, y: -20}
+  abilityPrefab: {fileID: 4298021054131525013, guid: 82a6aec0927e44b43a218d554e4e3e10, type: 3}
+  passivePrefab: {fileID: 4298021054131525013, guid: e61db6825ba54f241bbe726418c8132c, type: 3}
+  padding: 5
+  fadeAlpha: 0.15
+  alphaFadeSpeed: 5

@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(MovementChangeStatusData), menuName = "DataSources/Statuses/" + nameof(MovementChangeStatusData))]
-public class MovementChangeStatusData : StatusData
-{
-    public override Type componentConstraint => typeof(MovementChangeStatus);
+public class MovementChangeStatusData : StatusData {
+	public override Type ownerConstraint => typeof(MovementChangeStatus);
 
-    public Attribute<int> movementChange;
+	public Attribute<int> movementChange;
 }
