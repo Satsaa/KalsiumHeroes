@@ -10,7 +10,6 @@ using System.Security;
 public class Attribute<T> : AttributeBase {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(value))]
 	[Tooltip("Primary value")]
 	protected T _value;
 

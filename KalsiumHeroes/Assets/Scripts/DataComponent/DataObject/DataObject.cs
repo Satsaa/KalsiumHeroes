@@ -9,11 +9,11 @@ using Object = UnityEngine.Object;
 
 public abstract class DataObject : ScriptableObject {
 
-	[Tooltip("Source data instance."), SerializeField, FormerlySerializedAs("source")]
+	[Tooltip("Source data instance."), SerializeField]
 	protected DataObjectData _source;
 	public DataObjectData source => _source;
 
-	[Tooltip("Own data instance of source."), SerializeField, ShowEditor, FormerlySerializedAs("data")]
+	[Tooltip("Own data instance of source."), SerializeField, ShowEditor]
 	protected DataObjectData _data;
 	public DataObjectData data => _data;
 

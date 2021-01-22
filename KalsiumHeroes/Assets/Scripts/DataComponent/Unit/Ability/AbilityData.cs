@@ -28,7 +28,6 @@ public class AbilityData : UnitModifierData {
 	[Tooltip("Only directly visible Tiles are valid in range?")]
 	public Attribute<bool> requiresVision = new Attribute<bool>(false);
 
-	[UnityEngine.Serialization.FormerlySerializedAs("energy")]
 	[Tooltip("The amount of energy required to cast this ability.")]
 	public Attribute<int> energyCost = new Attribute<int>(0);
 
@@ -44,7 +43,6 @@ public class AbilityData : UnitModifierData {
 	public ToggleAttribute<int> uses = new ToggleAttribute<int>(false);
 
 	[Tooltip("Can the unit move after this spell is cast?")]
-	[UnityEngine.Serialization.FormerlySerializedAs("alwaysCastable")]
 	public Attribute<bool> allowMove = new Attribute<bool>(false);
 
 }

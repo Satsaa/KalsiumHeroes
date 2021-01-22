@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d66743e39b3fe846aa5ff52800a1f24, type: 3}
   m_Name: StatsUIModifierData
   m_EditorClassIdentifier: 
-  identifier: unitmodifier_stats_ui
-  dataObjectType:
+  createType:
     _name: StatsUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: unitmodifier_stats_ui
   container: {fileID: 849966782816346085, guid: 1cb3dcdc6cd7f4548a559fc9806cdd6c, type: 3}
   displayName: {fileID: 0}
   description: {fileID: 0}

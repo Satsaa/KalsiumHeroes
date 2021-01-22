@@ -10,7 +10,6 @@ using System.Security;
 public class ToggleDualAttribute<T> : DualAttribute<T> {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(enabled))]
 	[Tooltip("Attribute is enabled?")]
 	private bool _enabled;
 

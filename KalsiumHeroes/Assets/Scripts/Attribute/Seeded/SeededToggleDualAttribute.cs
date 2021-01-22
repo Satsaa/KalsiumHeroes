@@ -10,7 +10,6 @@ using System.Security;
 public class SeededToggleDualAttribute<T> : SeededDualAttribute<T> {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(enabled))]
 	[Tooltip("Attribute is enabled?")]
 	private bool _enabled;
 	public virtual bool enabled => enabledAlterers.Aggregate(_enabled, (current, alt) => alt(current));

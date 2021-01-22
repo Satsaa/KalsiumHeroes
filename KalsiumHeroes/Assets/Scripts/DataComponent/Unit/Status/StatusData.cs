@@ -20,7 +20,7 @@ public class StatusData : UnitModifierData {
 	[Tooltip("Is this status displayed in the UI?")]
 	public Attribute<bool> hidden = new Attribute<bool>(false);
 
-	[Tooltip("How long does this status effect last?"), AttributeLabels("Current", "Limit"), FormerlySerializedAs("turnDuration")]
+	[Tooltip("How long does this status effect last?"), AttributeLabels("Current", "Limit")]
 	public ToggleDualAttribute<int> ticks = new ToggleDualAttribute<int>(0, 0, false);
 
 	public TickMode tickMode;

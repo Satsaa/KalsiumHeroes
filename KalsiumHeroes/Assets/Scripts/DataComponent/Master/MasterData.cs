@@ -9,7 +9,7 @@ public abstract class MasterData : DataObjectData {
 
 	public override Type createTypeConstraint => typeof(Master);
 
-	[Tooltip("Instantiated GameObject when this MasterComponent is created"), FormerlySerializedAs("instantiatee")]
+	[Tooltip("Instantiated GameObject when this MasterComponent is created")]
 	public GameObject container;
 
 	[Tooltip("Created modifiers for this master.")]

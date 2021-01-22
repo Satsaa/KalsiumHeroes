@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d180165be105c546ad3f9d3ac17802b, type: 3}
   m_Name: RootAbility
   m_EditorClassIdentifier: 
-  identifier: ability_root
-  componentType:
-    _name: AddDataComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+  createType:
+    _name: AddModifierAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_root
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 4e6395aab1d83ae4eb53d37b00c3c169, type: 2}
   description: {fileID: 11400000, guid: a1b223e37505ed94da3985a51169ba9b, type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
-  components:
+  addedModifiers:
   - {fileID: 11400000, guid: 36b112e336978bb47afcb4e19e922e85, type: 2}

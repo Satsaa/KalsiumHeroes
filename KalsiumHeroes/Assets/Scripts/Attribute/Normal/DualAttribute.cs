@@ -10,7 +10,6 @@ using System.Security;
 public class DualAttribute<T> : Attribute<T> {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(other))]
 	[Tooltip("Secondary value")]
 	protected T _other;
 

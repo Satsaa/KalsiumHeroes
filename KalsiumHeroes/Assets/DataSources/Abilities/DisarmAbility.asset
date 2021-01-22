@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d180165be105c546ad3f9d3ac17802b, type: 3}
   m_Name: DisarmAbility
   m_EditorClassIdentifier: 
-  identifier: ability_disarm
-  componentType:
-    _name: AddDataComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+  createType:
+    _name: AddModifierAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_disarm
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 987d63614e34920468dda954803c1a98, type: 2}
   description: {fileID: 11400000, guid: 8c9c93ddc45d7a14e8436a5dcef42574, type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
-  components:
+  addedModifiers:
   - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}

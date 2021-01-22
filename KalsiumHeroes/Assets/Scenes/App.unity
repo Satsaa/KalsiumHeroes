@@ -409,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lang: 0
   defaultScene:
-    sceneAsset: {fileID: 102900000, guid: f87085b2c5d361f4a8266034d9fa4fa1, type: 3}
+    sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
     scenePath: Assets/Scenes/Game.unity
   initDisplay: {fileID: 1946788572}
 --- !u!4 &1363905730

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdda26183062e0f4f96bf281553faeeb, type: 3}
   m_Name: HuntTheMarkAbility
   m_EditorClassIdentifier: 
-  identifier: 
-  componentType:
-    _name: 
+  createType:
+    _name: HuntTheMarkAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  identifier: ability_hunt_the_mark
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

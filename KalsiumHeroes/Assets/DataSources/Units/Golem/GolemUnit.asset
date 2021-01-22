@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
   m_Name: GolemUnit
   m_EditorClassIdentifier: 
-  identifier: unit_golem
-  dataObjectType:
+  createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  container: {fileID: 9047958665005421617, guid: 90e4d820cb7c9034d914c90d346025db, type: 3}
+  identifier: unit_golem
+  container: {fileID: 4841974498028539211, guid: 8c2b3026cdf8e3045a8ba408088d7283, type: 3}
   baseModifiers:
   - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
   - {fileID: 11400000, guid: a15af9eb71372c24eb4dc6b8ea9bb35d, type: 2}

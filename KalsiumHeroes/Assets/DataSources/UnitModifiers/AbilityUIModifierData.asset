@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb9b9b8c8d46b24cb4f7ab9256d0b09, type: 3}
   m_Name: AbilityUIModifierData
   m_EditorClassIdentifier: 
-  identifier: unitmodifier_ability_buttons_ui
-  dataObjectType:
+  createType:
     _name: AbilityUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: unitmodifier_ability_buttons_ui
   container: {fileID: 2768687307950674131, guid: 5e231820c99b1ae4f9b6f9af5b32e0e3, type: 3}
   displayName: {fileID: 0}
   description: {fileID: 0}

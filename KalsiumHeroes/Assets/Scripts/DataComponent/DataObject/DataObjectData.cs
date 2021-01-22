@@ -10,7 +10,7 @@ public abstract class DataObjectData : ScriptableObject {
 	/// <summary> Base type for createType. </summary>
 	public abstract Type createTypeConstraint { get; }
 
-	[Tooltip("Create this Type of DataObject for this data."), FormerlySerializedAs("componentType")]
+	[Tooltip("Create this Type of DataObject for this data.")]
 	public SerializedType<DataObject> createType;
 
 	[Tooltip("String identifier of this DataObject. (\"unit_oracle\")")]
@@ -35,7 +35,7 @@ namespace Editors {
 	[CustomEditor(typeof(DataObjectData), true)]
 	public class DataObjectDataDrawer : Editor {
 
-		private SerializedProperty dataObjectType;
+		private SerializedProperty createType;
 		private SerializedProperty baseModifiers; // Only on MasterData
 
 		private DataObjectData t => (DataObjectData)target;
@@ -46,7 +46,7 @@ namespace Editors {
 		Type listType;
 
 		void OnEnable() {
-			dataObjectType = serializedObject.FindProperty(nameof(dataObjectType));
+			createType = serializedObject.FindProperty(nameof(createType));
 			baseModifiers = serializedObject.FindProperty(nameof(baseModifiers));
 
 			if (baseModifiers != null) {
@@ -90,7 +90,7 @@ namespace Editors {
 						case nameof(baseModifiers):
 							DrawBaseModifiers();
 							break;
-						case nameof(dataObjectType):
+						case nameof(createType):
 							DrawDataObjectType();
 							break;
 						default:
@@ -110,9 +110,9 @@ namespace Editors {
 		private void DrawDataObjectType() {
 			// Draw custom type selector
 			var position = EditorGUILayout.GetControlRect();
-			using (PropertyScope(position, new GUIContent(dataObjectType.displayName), dataObjectType, out var label)) {
+			using (PropertyScope(position, new GUIContent(createType.displayName), createType, out var label)) {
 
-				var values = GetValues<SerializedType>(dataObjectType);
+				var values = GetValues<SerializedType>(createType);
 				var value = values.First();
 
 				// Label
@@ -122,7 +122,7 @@ namespace Editors {
 				var hint = new GUIContent(label) { text = value.type == null ? "null" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
 					var types = GetCompatibleTypes(value.type, t.createTypeConstraint);
-					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(dataObjectType, type));
+					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(createType, type));
 					menu.DropDown(position);
 				}
 			}
@@ -144,16 +144,16 @@ namespace Editors {
 		}
 
 
-		private static List<Type> dataObjectTypes;
+		private static List<Type> createTypes;
 
-		private static IEnumerable<Type> GetCompatibleTypes(Type dataType, Type dataObjectType) {
-			DataObjectDataDrawer.dataObjectTypes ??= AppDomain.CurrentDomain.GetAssemblies()
+		private static IEnumerable<Type> GetCompatibleTypes(Type dataType, Type createType) {
+			DataObjectDataDrawer.createTypes ??= AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(v => v.GetTypes())
 				.Where(v =>
 					(v.IsClass && !v.IsAbstract) &&
 					(v == typeof(DataObject) || typeof(DataObject).IsAssignableFrom(v))
 				).ToList();
-			return dataObjectTypes.Where(v => v == dataObjectType || dataObjectType.IsAssignableFrom(v));
+			return createTypes.Where(v => v == createType || createType.IsAssignableFrom(v));
 		}
 
 

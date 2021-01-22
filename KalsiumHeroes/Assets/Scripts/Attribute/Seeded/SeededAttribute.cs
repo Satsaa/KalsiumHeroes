@@ -11,7 +11,6 @@ using System.Security;
 public class SeededAttribute<T> : AttributeBase {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(value))]
 	[Tooltip("Seed value")]
 	protected T _value;
 	public virtual T value => alterers.Aggregate(_value, (current, alt) => alt(current));

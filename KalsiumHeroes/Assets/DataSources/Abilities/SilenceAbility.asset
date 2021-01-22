@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d180165be105c546ad3f9d3ac17802b, type: 3}
   m_Name: SilenceAbility
   m_EditorClassIdentifier: 
-  identifier: ability_silence
-  componentType:
-    _name: AddDataComponentAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+  createType:
+    _name: AddModifierAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_silence
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: f4d66a7c11bd3f54e81d123f87dd5b61, type: 2}
   description: {fileID: 11400000, guid: 20fef4e11af067547aad9d035ba7cae1, type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
-  components:
+  addedModifiers:
   - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}

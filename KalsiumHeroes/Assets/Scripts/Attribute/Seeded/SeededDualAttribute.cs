@@ -10,7 +10,6 @@ using System.Security;
 public class SeededDualAttribute<T> : SeededAttribute<T> {
 
 	[SerializeField]
-	[FormerlySerializedAs(nameof(other))]
 	[Tooltip("Secondary value")]
 	protected T _other;
 	public virtual T other => otherAlterers.Aggregate(_other, (current, alt) => alt(current));

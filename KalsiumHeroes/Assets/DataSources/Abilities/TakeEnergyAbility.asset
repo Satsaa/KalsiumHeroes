@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a4614b5cdcfad4c91792f9294a4c46, type: 3}
   m_Name: TakeEnergyAbility
   m_EditorClassIdentifier: 
-  identifier: ability_take_energy
-  dataObjectType:
+  createType:
     _name: ChangeEnergyAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_take_energy
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}
