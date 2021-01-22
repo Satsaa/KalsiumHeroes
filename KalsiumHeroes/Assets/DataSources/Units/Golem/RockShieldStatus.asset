@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b7f34b40f7cdb47b0b4d5cf12fbcfc, type: 3}
+  m_Name: RockShieldStatus
+  m_EditorClassIdentifier: 
+  identifier: status_rock_shield
+  componentType:
+    _name: RockShieldStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  container: {fileID: 0}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
+  ticks:
+    _value: 1
+    _other: 0
+    _enabled: 1
+  tickMode: 0
+  shieldHP:
+    _value: 50
+  statusModifier: {fileID: 11400000, guid: a8f8aa5e738725c4f97e5b78a05717ac, type: 2}
+  explosionRadius:
+    _value: 1

@@ -21,7 +21,7 @@ MonoBehaviour:
   lore: {fileID: 0}
   portrait: {fileID: 0}
   speed:
-    _value: 6
+    _value: 20
   movement:
     _value: 3
   health:
