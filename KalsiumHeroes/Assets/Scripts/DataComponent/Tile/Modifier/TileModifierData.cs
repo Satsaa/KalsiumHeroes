@@ -8,8 +8,6 @@ public class TileModifierData : ModifierData {
 
 	public override Type ownerConstraint => typeof(TileModifier);
 
-	[Header("Tile Modifier Data")]
-
 	[Tooltip("Display name of the TileModifier.")]
 	public TextSource displayName;
 

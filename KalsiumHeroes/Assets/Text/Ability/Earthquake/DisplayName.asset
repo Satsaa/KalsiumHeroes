@@ -15,5 +15,5 @@ MonoBehaviour:
   assets:
   - asset: {fileID: 4900000, guid: 2e892c3cd493e2141b5fc78a21293a0e, type: 3}
     lang: 0
-  - asset: {fileID: 4900000, guid: 07bbff4b779dd924588d23071ed94c1b, type: 2}
+  - asset: {fileID: 4900000, guid: 07bbff4b779dd924588d23071ed94c1b, type: 3}
     lang: 1

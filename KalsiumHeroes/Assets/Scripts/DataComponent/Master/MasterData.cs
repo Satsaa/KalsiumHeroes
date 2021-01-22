@@ -9,8 +9,6 @@ public abstract class MasterData : DataObjectData {
 
 	public override Type ownerConstraint => typeof(Master);
 
-	[Header("Master Data")]
-
 	[Tooltip("Instantiated GameObject when this MasterComponent is created"), FormerlySerializedAs("instantiatee")]
 	public GameObject container;
 

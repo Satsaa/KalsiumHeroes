@@ -5,12 +5,11 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(MarkOfCastigationStatusData), menuName = "DataSources/Units/Rogue Mage Hunter/" + nameof(MarkOfCastigationStatusData))]
 public class MarkOfCastigationStatusData : StatusData {
-    
-    public override Type componentConstraint => typeof(MarkOfCastigationStatus);
 
-    [Header("Mark of Castigation Status Attributes")]
-    public Attribute<float> damage;
-    public DamageType damageType;
-    public DataComponentData silenceModifier;
-    public DataComponentData markOfPreyModifier;
+	public override Type ownerConstraint => typeof(MarkOfCastigationStatus);
+
+	public Attribute<float> damage;
+	public DamageType damageType;
+	public UnitModifierData silenceModifier;
+	public UnitModifierData markOfPreyModifier;
 }

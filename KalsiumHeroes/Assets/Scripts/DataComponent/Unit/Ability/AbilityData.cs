@@ -10,8 +10,6 @@ public class AbilityData : UnitModifierData {
 
 	public override Type ownerConstraint => typeof(Ability);
 
-	[Header("Ability Data")]
-
 	[Tooltip("Type of the ability.")]
 	public AbilityType abilityType;
 

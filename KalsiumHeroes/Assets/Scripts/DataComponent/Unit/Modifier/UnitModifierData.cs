@@ -8,8 +8,6 @@ public class UnitModifierData : ModifierData {
 
 	public override Type ownerConstraint => typeof(UnitModifier);
 
-	[Header("Unit Modifier Data")]
-
 	[Tooltip("Display name of the UnitModifier.")]
 	public TextSource displayName;
 

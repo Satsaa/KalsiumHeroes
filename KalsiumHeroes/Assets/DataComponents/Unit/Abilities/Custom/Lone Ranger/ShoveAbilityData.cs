@@ -8,7 +8,6 @@ public class ShoveAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(ShoveAbility);
 
-	[Header("Shove Ability Data")]
 	[Tooltip("This is the root modifier the ability gives the targeted unit")]
 	public ModifierData rootModifier;
 }

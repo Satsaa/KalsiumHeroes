@@ -7,7 +7,6 @@ using UnityEngine;
 public class OpportunistPassiveData : PassiveData {
 	public override Type ownerConstraint => typeof(OpportunistPassive);
 
-	[Header("Opportunist Passive Data")]
 	public Attribute<float> damage;
 	public DamageType damageType;
 	public Attribute<int> range;

@@ -7,7 +7,6 @@ using UnityEngine;
 public class ParryStanceStatusData : StatusData {
 	public override Type ownerConstraint => typeof(ParryStanceStatus);
 
-	[Header("Parry Stance Status Data")]
 	public Attribute<int> defenseIncrease;
 	public Attribute<float> damage;
 	public DamageType damageType;

@@ -8,7 +8,6 @@ public class MoveCostEdgeModifierData : EdgeModifierData {
 
 	public override Type ownerConstraint => typeof(MoveCostEdgeModifier);
 
-	[Header("MoveCost Edge Modifier Data")]
 	[Tooltip("Aditional move cost.")]
 	public Attribute<float> additionalMoveCost = new Attribute<float>(1);
 

@@ -8,8 +8,6 @@ public class AbilityUIModifierData : UnitModifierData {
 
 	public override Type ownerConstraint => typeof(AbilityUIModifier);
 
-	[Header("Ability UI Modifier Data. Include " + nameof(AbilityButtonsUI) + " in the container!")]
-
 	[Tooltip("World space offset or the UI")]
 	public Vector3 wsOffset;
 	[Tooltip("Screen space offset or the UI")]

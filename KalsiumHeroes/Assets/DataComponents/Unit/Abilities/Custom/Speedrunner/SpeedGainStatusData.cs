@@ -8,8 +8,6 @@ public class SpeedGainStatusData : StatusData {
 
 	public override Type ownerConstraint => typeof(SpeedGainStatus);
 
-	[Header("Speed Gain Status Data")]
-
 	public Attribute<int> speedGain;
 
 	public Attribute<int> movementGain;

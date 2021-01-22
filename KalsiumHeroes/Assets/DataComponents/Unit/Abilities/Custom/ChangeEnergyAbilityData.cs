@@ -8,8 +8,6 @@ public class ChangeEnergyAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(ChangeEnergyAbility);
 
-	[Header("Change Energy Ability Data")]
-
 	public Attribute<int> energyChange;
 
 }

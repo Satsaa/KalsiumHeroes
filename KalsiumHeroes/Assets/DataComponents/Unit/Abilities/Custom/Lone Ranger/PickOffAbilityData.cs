@@ -8,7 +8,6 @@ public class PickOffAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(PickOffAbility);
 
-	[Header("Pick Off Ability Data")]
 	public Attribute<float> damage;
 
 	[Tooltip("Set the array length to the range of the bonus damage, and then check how the damage grows. 0 = first tile")]

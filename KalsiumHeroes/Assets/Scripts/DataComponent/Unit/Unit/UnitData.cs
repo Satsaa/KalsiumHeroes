@@ -7,8 +7,6 @@ public class UnitData : MasterData {
 
 	public override Type ownerConstraint => typeof(Unit);
 
-	[Header("Unit Data")]
-
 	[Tooltip("Display name of the Unit.")]
 	public TextSource displayName;
 

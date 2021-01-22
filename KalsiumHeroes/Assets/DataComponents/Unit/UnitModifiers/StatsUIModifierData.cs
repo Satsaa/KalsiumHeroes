@@ -8,8 +8,6 @@ public class StatsUIModifierData : UnitModifierData {
 
 	public override Type ownerConstraint => typeof(StatsUIModifier);
 
-	[Header("Stats UI Modifier Data. Include " + nameof(StatsUI) + " in the container!")]
-
 	[Tooltip("World space offset or the UI")]
 	public Vector3 wsOffset;
 	[Tooltip("Screen space offset or the UI")]

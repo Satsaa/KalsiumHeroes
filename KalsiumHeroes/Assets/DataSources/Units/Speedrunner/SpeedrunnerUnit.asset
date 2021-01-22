@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: SpeedrunnerUnit
   m_EditorClassIdentifier: 
   identifier: unit_speedrunner
-  componentType:
+  dataObjectType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 6906010577594737696, guid: 357d4a9f59272f840bba2ed13f4784d9, type: 3}
+  container: {fileID: 9047958665005421617, guid: 90e4d820cb7c9034d914c90d346025db, type: 3}
+  baseModifiers:
+  - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
+  - {fileID: 11400000, guid: a15af9eb71372c24eb4dc6b8ea9bb35d, type: 2}
+  - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
+  - {fileID: 11400000, guid: 2d89865c0774b9e4391071c0977b54c5, type: 2}
+  - {fileID: 11400000, guid: 720ac284cc209e546b85ece103b1eee3, type: 2}
+  - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
+  - {fileID: 11400000, guid: 0ed4d05bee91c9f46872c56ac4e61e21, type: 2}
+  - {fileID: 11400000, guid: feed0ee3b2bf56c429d8e82b283cabfd, type: 2}
+  - {fileID: 11400000, guid: 720ac284cc209e546b85ece103b1eee3, type: 2}
   displayName: {fileID: 11400000, guid: 02f9ce3799542db4cad57c85ac89a7f6, type: 2}
   description: {fileID: 11400000, guid: 0cc2f4cf8f4cdf84fa4ee8dd1563b885, type: 2}
   lore: {fileID: 11400000, guid: 3f159dc07f8502148bf3cbc506966547, type: 2}

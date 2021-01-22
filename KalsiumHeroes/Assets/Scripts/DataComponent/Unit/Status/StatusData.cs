@@ -8,7 +8,6 @@ public class StatusData : UnitModifierData {
 
 	public override Type ownerConstraint => typeof(Status);
 
-	[Header("Status Data")]
 	[Tooltip("Debuff type. This status effect may, for example, be nullified if the target has resistance to the type.")]
 	public Attribute<DebuffType> debuffType = new Attribute<DebuffType>(DebuffType.None);
 

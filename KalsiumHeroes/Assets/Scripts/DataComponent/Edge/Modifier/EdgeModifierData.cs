@@ -8,8 +8,6 @@ public class EdgeModifierData : ModifierData {
 
 	public override Type ownerConstraint => typeof(EdgeModifier);
 
-	[Header("Edge Modifier Data")]
-
 	[Tooltip("Display name of the EdgeModifier.")]
 	public TextSource displayName;
 

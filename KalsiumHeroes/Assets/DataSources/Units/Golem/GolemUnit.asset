@@ -13,9 +13,20 @@ MonoBehaviour:
   m_Name: GolemUnit
   m_EditorClassIdentifier: 
   identifier: unit_golem
-  componentType:
+  dataObjectType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 0}
+  container: {fileID: 9047958665005421617, guid: 90e4d820cb7c9034d914c90d346025db, type: 3}
+  baseModifiers:
+  - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
+  - {fileID: 11400000, guid: a15af9eb71372c24eb4dc6b8ea9bb35d, type: 2}
+  - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
+  - {fileID: 11400000, guid: 2d89865c0774b9e4391071c0977b54c5, type: 2}
+  - {fileID: 11400000, guid: d287935d8879ea2408e6cdabe35919d8, type: 2}
+  - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
+  - {fileID: 11400000, guid: 1dbf340438277834e9684b44e6f11a51, type: 2}
+  - {fileID: 11400000, guid: c61e49be82dcb6940a09aa831b25b05c, type: 2}
+  - {fileID: 11400000, guid: aecac7c16203c3f4d8a7cd81375fccd3, type: 2}
+  - {fileID: 11400000, guid: 454f1b36de6759446b85bb0fcf97dc7c, type: 2}
   displayName: {fileID: 11400000, guid: a1c36344cd330424b858b0064fff53da, type: 2}
   description: {fileID: 0}
   lore: {fileID: 0}

@@ -7,8 +7,6 @@ public class DamageAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(DamageAbility);
 
-	[Header("Damage Ability Data")]
-
 	public Attribute<float> damage;
 
 	public DamageType damageType;

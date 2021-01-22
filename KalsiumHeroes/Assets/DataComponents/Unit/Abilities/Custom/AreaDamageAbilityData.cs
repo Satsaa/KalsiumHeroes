@@ -8,8 +8,6 @@ public class AreaDamageAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(AreaDamageAbility);
 
-	[Header("Area Damage Ability Data")]
-
 	public Attribute<float> primaryDamage;
 
 	public Attribute<float> secondaryDamage;

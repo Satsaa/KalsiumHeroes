@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(SwiftStrikeAbilityData), menuName = "DataSources/Units/Rogue Mage Hunter/" + nameof(SwiftStrikeAbilityData))]
-public class SwiftStrikeAbilityData : AbilityData
-{
-    public override Type componentConstraint => typeof(SwiftStrikeAbility);
+public class SwiftStrikeAbilityData : AbilityData {
 
-    [Header("Swift Strike Ability Attributes")]
-    public Attribute<float> damage;
-    public DamageType damageType;
+	public override Type ownerConstraint => typeof(SwiftStrikeAbility);
+
+	public Attribute<float> damage;
+	public DamageType damageType;
 }

@@ -12,6 +12,7 @@ public class AbilityUIModifier : UnitModifier,
 		IOnTargeterStart,
 		IOnTargeterEnd,
 		IOnAbilityCastStart_Unit,
+		IOnDeath_Unit,
 		IOnGameStart,
 		IOnGameEnd,
 		IOnTurnStart_Unit,
@@ -288,6 +289,10 @@ public class AbilityUIModifier : UnitModifier,
 	}
 
 	public void OnGameEnd() {
+		Remove();
+	}
+
+	public void OnDeath() {
 		Remove();
 	}
 }

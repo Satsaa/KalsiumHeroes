@@ -8,7 +8,5 @@ public class ParryStanceAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(ParryStanceAbility);
 
-	[Header("Parry Stance Data")]
-
 	public ModifierData statusModifier;
 }

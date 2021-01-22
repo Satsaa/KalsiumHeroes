@@ -8,7 +8,6 @@ public class ShrapnelAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(ShrapnelAbility);
 
-	[Header("Shrapnel Ability Data")]
 	public Attribute<float> damage;
 
 	public DamageType damageType;

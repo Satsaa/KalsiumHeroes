@@ -8,7 +8,6 @@ public class SideKickAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(SideKickAbility);
 
-	[Header("Side Kick Ability Data")]
 	public Attribute<float> movementDamageMultiplier;
 
 	public Attribute<float> speedDamageMultiplier;

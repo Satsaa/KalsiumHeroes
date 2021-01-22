@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: LoneRangerUnit
   m_EditorClassIdentifier: 
   identifier: unit_lone_ranger
-  componentType:
+  dataObjectType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 1349719364863503964, guid: c8298ee03768baa4ea5c0a858c1fd155, type: 3}
+  container: {fileID: 9047958665005421617, guid: 90e4d820cb7c9034d914c90d346025db, type: 3}
+  baseModifiers:
+  - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
+  - {fileID: 11400000, guid: a15af9eb71372c24eb4dc6b8ea9bb35d, type: 2}
+  - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
+  - {fileID: 11400000, guid: 2d89865c0774b9e4391071c0977b54c5, type: 2}
+  - {fileID: 11400000, guid: d287935d8879ea2408e6cdabe35919d8, type: 2}
+  - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
+  - {fileID: 11400000, guid: 0573a3e5a1b7e2444aaa08757477463c, type: 2}
+  - {fileID: 11400000, guid: 1c02de160193e194d9bacaa24b7522b4, type: 2}
+  - {fileID: 11400000, guid: 0efa7d0572be3d14d848f789fafd38da, type: 2}
   displayName: {fileID: 11400000, guid: 42f86a866cda1d443a677a06699c8b8d, type: 2}
   description: {fileID: 11400000, guid: bc31a1daa4660eb458469dc8fcf65240, type: 2}
   lore: {fileID: 11400000, guid: 1f04b3f76c37205448bc0a6cebf7d491, type: 2}

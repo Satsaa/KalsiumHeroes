@@ -8,8 +8,6 @@ public class HealAbilityData : AbilityData {
 
 	public override Type ownerConstraint => typeof(HealAbility);
 
-	[Header("Heal Ability Data")]
-
 	public Attribute<float> heal;
 
 }

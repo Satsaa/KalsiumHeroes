@@ -10,8 +10,6 @@ public class TileData : MasterData {
 
 	public override Type ownerConstraint => typeof(Tile);
 
-	[Header("Tile Data")]
-
 	[Tooltip("Display name of the Tile.")]
 	public TextSource displayName;
 
