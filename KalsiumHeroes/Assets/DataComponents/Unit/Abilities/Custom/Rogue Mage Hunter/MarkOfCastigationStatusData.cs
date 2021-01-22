@@ -12,4 +12,5 @@ public class MarkOfCastigationStatusData : StatusData {
     public Attribute<float> damage;
     public DamageType damageType;
     public DataComponentData silenceModifier;
+    public DataComponentData markOfPreyModifier;
 }

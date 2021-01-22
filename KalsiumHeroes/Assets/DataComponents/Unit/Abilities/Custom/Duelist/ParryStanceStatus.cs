@@ -33,8 +33,4 @@ public class ParryStanceStatus : Status/*, IOnAbilityCastStart_Global*/, IOnTake
             }
         }
 	}
-
-	public void OnTurnStart() {
-		this.Destroy();
-	}
 }

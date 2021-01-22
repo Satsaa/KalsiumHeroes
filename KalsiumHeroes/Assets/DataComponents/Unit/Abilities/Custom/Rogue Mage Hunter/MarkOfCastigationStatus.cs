@@ -11,7 +11,9 @@ public class MarkOfCastigationStatus : Status, IOnAbilityCastEnd_Unit
     public void OnAbilityCastEnd(Ability ability) {
         if (ability.data.abilityType == AbilityType.Spell) {
             ability.unit.gameObject.AddDataComponent(data.silenceModifier);
+            ability.unit.gameObject.AddDataComponent(data.markOfPreyModifier);
             ability.unit.DealCalculatedDamage(this, data.damage.value, data.damageType);
+            this.Destroy();
         }
     }
 }
