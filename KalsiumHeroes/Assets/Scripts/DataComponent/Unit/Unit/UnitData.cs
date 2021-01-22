@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
 public class UnitData : MasterData {
 
-	public override Type ownerConstraint => typeof(Unit);
+	public override Type createTypeConstraint => typeof(Unit);
 
 	[Tooltip("Display name of the Unit.")]
 	public TextSource displayName;

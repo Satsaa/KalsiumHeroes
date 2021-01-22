@@ -8,7 +8,7 @@ using static UnityEngine.Mathf;
 [CreateAssetMenu(fileName = nameof(TileData), menuName = "DataSources/" + nameof(TileData))]
 public class TileData : MasterData {
 
-	public override Type ownerConstraint => typeof(Tile);
+	public override Type createTypeConstraint => typeof(Tile);
 
 	[Tooltip("Display name of the Tile.")]
 	public TextSource displayName;

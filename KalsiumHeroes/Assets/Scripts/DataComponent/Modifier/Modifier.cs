@@ -43,7 +43,7 @@ public abstract class Modifier : DataObject {
 	}
 	/// <summary> Creates a Modifier based on the given source and attaches it to the master. </summary>
 	public static T Create<T>(Master master, ModifierData source, Action<T> initializer = null) where T : Modifier {
-		var modifier = (T)CreateInstance(source.dataObjectType);
+		var modifier = (T)CreateInstance(source.createType);
 		modifier._master = master;
 		modifier._source = source;
 		modifier._data = Instantiate(source);

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public abstract class MasterData : DataObjectData {
 
-	public override Type ownerConstraint => typeof(Master);
+	public override Type createTypeConstraint => typeof(Master);
 
 	[Tooltip("Instantiated GameObject when this MasterComponent is created"), FormerlySerializedAs("instantiatee")]
 	public GameObject container;

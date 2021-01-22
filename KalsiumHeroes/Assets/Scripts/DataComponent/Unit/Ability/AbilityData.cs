@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(AbilityData), menuName = "DataSources/" + nameof(AbilityData))]
 public class AbilityData : UnitModifierData {
 
-	public override Type ownerConstraint => typeof(Ability);
+	public override Type createTypeConstraint => typeof(Ability);
 
 	[Tooltip("Type of the ability.")]
 	public AbilityType abilityType;

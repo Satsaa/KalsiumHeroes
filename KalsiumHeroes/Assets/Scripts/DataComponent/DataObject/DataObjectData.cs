@@ -7,14 +7,14 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
 public abstract class DataObjectData : ScriptableObject {
 
-	/// <summary> Base type for objectType. </summary>
-	public abstract Type ownerConstraint { get; }
+	/// <summary> Base type for createType. </summary>
+	public abstract Type createTypeConstraint { get; }
+
+	[Tooltip("Create this Type of DataObject for this data."), FormerlySerializedAs("componentType")]
+	public SerializedType<DataObject> createType;
 
 	[Tooltip("String identifier of this DataObject. (\"unit_oracle\")")]
 	public string identifier;
-
-	[Tooltip("Create this Type of DataObject for this data."), FormerlySerializedAs("componentType")]
-	public SerializedType<DataObject> dataObjectType;
 
 }
 
@@ -51,7 +51,7 @@ namespace Editors {
 
 			if (baseModifiers != null) {
 				list = new ReorderableList(baseModifiers.serializedObject, baseModifiers, true, false, true, true);
-				var prop = t.ownerConstraint.GetProperty(nameof(Unit.modifierDataType), BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.Public);
+				var prop = t.createTypeConstraint.GetProperty(nameof(Unit.modifierDataType), BindingFlags.Static | BindingFlags.FlattenHierarchy | BindingFlags.Public);
 				listType = (Type)prop.GetValue(null);
 				list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) => {
 					var element = baseModifiers.GetArrayElementAtIndex(index);
@@ -121,7 +121,7 @@ namespace Editors {
 				// Dropdown
 				var hint = new GUIContent(label) { text = value.type == null ? "null" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
-					var types = GetCompatibleTypes(value.type, t.ownerConstraint);
+					var types = GetCompatibleTypes(value.type, t.createTypeConstraint);
 					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(dataObjectType, type));
 					menu.DropDown(position);
 				}

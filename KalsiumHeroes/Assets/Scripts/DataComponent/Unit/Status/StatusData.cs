@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = nameof(StatusData), menuName = "DataSources/" + nameof(StatusData))]
 public class StatusData : UnitModifierData {
 
-	public override Type ownerConstraint => typeof(Status);
+	public override Type createTypeConstraint => typeof(Status);
 
 	[Tooltip("Debuff type. This status effect may, for example, be nullified if the target has resistance to the type.")]
 	public Attribute<DebuffType> debuffType = new Attribute<DebuffType>(DebuffType.None);

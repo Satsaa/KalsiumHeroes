@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(UnitModifierData), menuName = "DataSources/" + nameof(UnitModifierData))]
 public class UnitModifierData : ModifierData {
 
-	public override Type ownerConstraint => typeof(UnitModifier);
+	public override Type createTypeConstraint => typeof(UnitModifier);
 
 	[Tooltip("Display name of the UnitModifier.")]
 	public TextSource displayName;
