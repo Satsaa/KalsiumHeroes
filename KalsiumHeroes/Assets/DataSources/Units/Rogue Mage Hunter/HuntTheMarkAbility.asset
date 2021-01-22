@@ -9,21 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e2e27e650a4c543a8bbc986f135aed, type: 3}
-  m_Name: CastigationOfCastingAbility
+  m_Script: {fileID: 11500000, guid: bdda26183062e0f4f96bf281553faeeb, type: 3}
+  m_Name: HuntTheMarkAbility
   m_EditorClassIdentifier: 
-  identifier: ability_castigation_of_casting
+  identifier: 
   componentType:
-    _name: CastigationOfCastingAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: 
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 5471186b2a2a6c941b2298d9ef335fa9, type: 2}
+  displayName: {fileID: 0}
   description: {fileID: 0}
   sprite: {fileID: 0}
-  abilityType: 2
-  targetType: 12
+  abilityType: 0
+  targetType: 0
   range:
-    _value: 5
+    _value: 1
     _enabled: 1
   rangeMode: 0
   radius:
@@ -31,10 +30,10 @@ MonoBehaviour:
   requiresVision:
     _value: 0
   energyCost:
-    _value: 5
+    _value: 0
   cooldown:
     _value: 0
-    _other: 1
+    _other: 0
   charges:
     _value: 1
     _other: 1
@@ -43,4 +42,8 @@ MonoBehaviour:
     _enabled: 0
   allowMove:
     _value: 0
-  markOfCastigationModifier: {fileID: 11400000, guid: 3bfd885416a30824a82f108ed8e6621f, type: 2}
+  normalDamage:
+    _value: 0
+  silenceDamage:
+    _value: 0
+  damageType: 0
