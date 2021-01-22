@@ -64,14 +64,26 @@ public class Unit : MasterComponent<UnitModifier, IUnitOnEvent>, IOnTurnStart_Un
 		data.health.ClampValue();
 	}
 
-	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
-	public void DealCalculatedDamage(Modifier source, float damage, DamageType type) {
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(source, this, damage, type));
-			tile.onEvents.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(source, this, damage, type));
-			Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
-		}
-		using (var scope = new OnEvents.Scope()) {
+    /// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
+    /// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
+    public void DealCalculatedDamage(Modifier source, float damage, DamageType type) {
+        using (var scope = new OnEvents.Scope()) {
+            switch (source) {
+                case UnitModifier um:
+                    um.unit.onEvents.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(um, this, damage, type));
+                    Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(um, this, damage, type));
+                    break;
+                case TileModifier tm:
+                    tm.tile.onEvents.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(tm, this, damage, type));
+                    Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(tm, this, damage, type));
+                    break;
+                case EdgeModifier em:
+                    em.edge.onEvents.ForEach<IOnDealDamage_Edge>(scope, v => v.OnDealDamage(em, this, damage, type));
+                    Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
+                    break;
+            }
+        }
+        using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
 			tile.onEvents.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
 			Game.onEvents.ForEach<IOnTakeDamage_Global>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));

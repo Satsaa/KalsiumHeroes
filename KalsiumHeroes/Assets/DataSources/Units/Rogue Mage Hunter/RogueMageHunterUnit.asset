@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8face7f9f3e104ab2195eb897cfd86, type: 3}
+  m_Name: RogueMageHunterUnit
+  m_EditorClassIdentifier: 
+  identifier: unit_rogue_mage_hunter
+  componentType:
+    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  instantiatee: {fileID: 0}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
+  lore: {fileID: 0}
+  portrait: {fileID: 0}
+  speed:
+    _value: 12
+  movement:
+    _value: 4
+  health:
+    _value: 140
+    _other: 140
+  energy:
+    _value: 5
+    _other: 17
+  energyRegen:
+    _value: 9
+  defense:
+    _value: 10
+  resistance:
+    _value: 35
+  amps:
+    weaponSkill:
+      _value: 0
+    spell:
+      _value: 0
+    skill:
+      _value: 0
+    physical:
+      _value: 0
+    magical:
+      _value: 0
+    pure:
+      _value: 0
