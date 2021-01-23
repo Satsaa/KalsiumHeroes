@@ -34,7 +34,10 @@ namespace Muc.Data {
 			}
 			set {
 				_type = value;
-				_name = _type?.AssemblyQualifiedName;
+#if UNITY_EDITOR
+				if (_type != null || Application.isPlaying)
+#endif
+					_name = _type?.AssemblyQualifiedName;
 			}
 		}
 

@@ -31,4 +31,4 @@ MonoBehaviour:
     _value: 1
     _other: 0
     _enabled: 1
-  tickMode: 0
+  tickMode: 1

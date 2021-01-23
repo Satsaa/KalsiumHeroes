@@ -15,7 +15,7 @@ public class ShoveAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					UnitModifier.Create(master, data.rootModifier);
+					UnitModifier.Create(tile.unit, data.rootModifier);
 					Shove(tile);
 				}
 			}

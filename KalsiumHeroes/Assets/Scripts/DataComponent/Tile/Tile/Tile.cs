@@ -43,7 +43,7 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 			v.highlighter = v.gameObject.GetComponentInChildren<Highlighter>();
 			if (!v.highlighter) Debug.LogError("No Highlighter in container.");
 			var pt = Layout.HexToPoint(hex);
-			v.center = new Vector3(pt.x, 0, pt.y);
+			v.center = new Vector3(pt.x, source.container.transform.position.y, pt.y);
 			v.transform.position = v.center.SetY(v.transform.position.y);
 			v.corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 		});

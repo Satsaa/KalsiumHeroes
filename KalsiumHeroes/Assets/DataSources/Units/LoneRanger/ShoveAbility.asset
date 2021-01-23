@@ -43,3 +43,5 @@ MonoBehaviour:
   allowMove:
     _value: 0
   rootModifier: {fileID: 11400000, guid: 90fc7f84233e52446b3d2c46fd688605, type: 2}
+  shoveDist:
+    _value: 4
