@@ -9,11 +9,11 @@ public class HuntTheMarkAbility : Ability {
 	public new HuntTheMarkAbilityData data => (HuntTheMarkAbilityData)_data;
 	public override Type dataType => typeof(HuntTheMarkAbilityData);
 
-	public override IEnumerable<Tile> GetTargets() {
-		return base.GetTargets().Where(v => v.unit && TargetHasFreeTiles(v) && v.unit.modifiers.Get<MarkOfPreyStatus>().Any());
-	}
+    public override IEnumerable<Tile> GetTargets() {
+        return base.GetTargets().Where(v => v.unit && TargetHasFreeTiles(v) && v.unit.modifiers.Get<MarkOfPreyStatus>().Any());
+    }
 
-	public override bool IsReady() {
+    public override bool IsReady() {
 		return base.IsReady() && Game.dataObjects.Get<MarkOfPreyStatus>().Where(v => v.unit != unit && TargetHasFreeTiles(v.unit.tile)).Any();
 	}
 
@@ -36,7 +36,7 @@ public class HuntTheMarkAbility : Ability {
 		bool freeTile = false;
 		var radius = Game.grid.Ring(tile, 1);
 		foreach (var hex in radius) {
-			if (!hex.unit) freeTile = true;
+			if (!hex.unit && hex.data.passable.value) freeTile = true;
 		}
 		return freeTile;
 	}
@@ -46,13 +46,13 @@ public class HuntTheMarkAbility : Ability {
 		var radius = Game.grid.Ring(targetTile, 1);
 		var closestTile = radius.First();
 		foreach (var tile in radius) {
-			if (!tile.unit) {
+			if (!tile.unit && tile.data.passable.value) {
 				var distanceA = Game.grid.Distance(closestTile, unit.tile);
 				var distanceB = Game.grid.Distance(tile, unit.tile);
 				if (distanceB < distanceA) closestTile = tile;
-				if (distanceA == distanceB && closestTile.unit) closestTile = tile;
+				if (distanceA == distanceB && (closestTile.unit || closestTile.data.passable.value)) closestTile = tile;
 			}
-			if (!tile.unit && closestTile.unit) closestTile = tile;
+			if (!tile.unit && (closestTile.unit || !closestTile.data.passable.value)) closestTile = tile;
 		}
 		return closestTile;
 	}

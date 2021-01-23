@@ -9,21 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdda26183062e0f4f96bf281553faeeb, type: 3}
-  m_Name: HuntTheMarkAbility
+  m_Script: {fileID: 11500000, guid: 084d76bbed3c3754a817b4cfab13c470, type: 3}
+  m_Name: OpportuneFlightAbility
   m_EditorClassIdentifier: 
   createType:
-    _name: HuntTheMarkAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+    _name: OpportuneFlightAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_hunt_the_mark
+  identifier: ability_opportune_flight
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: c367b524af8d46f4d80687b9260ed928, type: 2}
+  displayName: {fileID: 11400000, guid: 2972100259d2dab4c97d4ebd17321a01, type: 2}
   description: {fileID: 0}
   sprite: {fileID: 0}
-  abilityType: 2
-  targetType: 12
+  abilityType: 3
+  targetType: 1
   range:
-    _value: 6
+    _value: 1
     _enabled: 1
   rangeMode: 0
   radius:
@@ -31,10 +31,10 @@ MonoBehaviour:
   requiresVision:
     _value: 0
   energyCost:
-    _value: 9
-  cooldown:
     _value: 0
-    _other: 0
+  cooldown:
+    _value: 2
+    _other: 2
   charges:
     _value: 1
     _other: 1
@@ -42,9 +42,6 @@ MonoBehaviour:
     _value: 0
     _enabled: 0
   allowMove:
-    _value: 0
-  normalDamage:
-    _value: 30
-  silenceDamage:
-    _value: 40
-  damageType: 1
+    _value: 1
+  moveDistance:
+    _value: 6
