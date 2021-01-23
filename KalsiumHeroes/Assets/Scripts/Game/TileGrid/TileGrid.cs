@@ -161,6 +161,8 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <remarks>
 	/// The initial Tile is included in the iteration.
 	/// </remarks>
+	/// <param name="hex">The starting Hex.</param>
+	/// <param name="direction">The direction to iterate in.</param>
 	public IEnumerable<Tile> Direction(Hex hex, TileDir direction) {
 		tiles.TryGetValue(hex.pos, out var current);
 		while (current != null) {

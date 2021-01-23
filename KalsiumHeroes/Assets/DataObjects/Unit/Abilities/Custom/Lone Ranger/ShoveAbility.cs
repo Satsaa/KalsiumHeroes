@@ -23,10 +23,19 @@ public class ShoveAbility : Ability {
 	}
 
 	Tile GetTargetTile(Tile tile) {
-		var dir = (TileDir)((IList<Tile>)unit.tile.neighbors).IndexOf(tile);
-		Tile nbr = null;
-		while ((nbr = tile.GetNeighbor(dir)) != null && !nbr.unit && nbr.data.passable.value) {
-			tile = nbr;
+		var dir = unit.tile.GetDir(tile);
+		UnitPather pather = UnitPathers.Unphased;
+		Tile prev = tile;
+		while (true) {
+			var current = tile.GetNeighbor(dir);
+			if (current == null) break;
+			var edge = prev.GetEdge(dir);
+			if (pather(this.unit, prev, edge, current)) {
+				tile = current;
+			} else {
+				break;
+			}
+			prev = current;
 		}
 		return tile;
 	}

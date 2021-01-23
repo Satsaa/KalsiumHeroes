@@ -107,7 +107,7 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 
 	public TileDir GetDir(Tile neighbor) {
 		if (neighbor is null) throw new ArgumentNullException(nameof(neighbor));
-		var res = ((IList<Tile>)neighbors).IndexOf(neighbor);
+		var res = Array.FindIndex(neighbors, v => v == neighbor);
 		if (res == -1) throw new ArgumentOutOfRangeException("The tile must be a direct neighbor.", nameof(neighbor));
 		return (TileDir)res;
 	}
@@ -139,5 +139,13 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 		}
 		var neighbor = GetNeighbor(direction);
 		if (neighbor) neighbor.SetEdge(new CircularInt(direction - 3, 6), edge, false);
+	}
+
+	public static Edge EdgeBetween(Tile tile1, Tile tile2) {
+		if (tile1 is null) throw new ArgumentNullException(nameof(tile1));
+		if (tile2 is null) throw new ArgumentNullException(nameof(tile2));
+		var dir = tile1.GetDir(tile2);
+		var edge = tile1.GetEdge(dir);
+		return edge;
 	}
 }

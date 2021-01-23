@@ -33,10 +33,10 @@ MonoBehaviour:
   energyCost:
     _value: 0
   cooldown:
-    _value: 2
+    _value: 3
     _other: 2
   charges:
-    _value: 1
+    _value: 0
     _other: 1
   uses:
     _value: 0
