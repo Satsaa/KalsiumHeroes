@@ -105,12 +105,11 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 		}
 	}
 
-	public TileDir GetTileDir(Tile tile) {
-		if (tile is null) throw new ArgumentNullException(nameof(tile));
-		var res = ((IList<Tile>)neighbors).IndexOf(tile);
-		if (res == -1) throw new ArgumentOutOfRangeException("The tile must be a direct neighbor.", nameof(tile));
+	public TileDir GetDir(Tile neighbor) {
+		if (neighbor is null) throw new ArgumentNullException(nameof(neighbor));
+		var res = ((IList<Tile>)neighbors).IndexOf(neighbor);
+		if (res == -1) throw new ArgumentOutOfRangeException("The tile must be a direct neighbor.", nameof(neighbor));
 		return (TileDir)res;
-
 	}
 
 	public IEnumerable<Tile> Neighbors() => neighbors.Where(v => v != null);
