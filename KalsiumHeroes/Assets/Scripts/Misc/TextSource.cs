@@ -106,11 +106,11 @@ namespace Editors {
 									var folderPath = $"/Text/{category}/{name}";
 
 									foreach (Lang lang in Enum.GetValues(typeof(Lang))) {
-										var asset = new TextAsset();
 										Directory.CreateDirectory($"{assetsPath}{folderPath}");
-										AssetDatabase.CreateAsset(asset, $"Assets{folderPath}/{propertyName}_{lang}.txt");
 										File.WriteAllText($"{assetsPath}{folderPath}/{propertyName}_{lang}.txt", $"{identifier.stringValue}.{propertyName}");
-										textSource.SetText(lang, asset);
+										AssetDatabase.Refresh();
+										var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>($"Assets{folderPath}/{propertyName}_{lang}.txt");
+										textSource.SetText(lang, textAsset);
 									}
 
 									AssetDatabase.CreateAsset(textSource, $"Assets{folderPath}/{propertyName}.asset");
