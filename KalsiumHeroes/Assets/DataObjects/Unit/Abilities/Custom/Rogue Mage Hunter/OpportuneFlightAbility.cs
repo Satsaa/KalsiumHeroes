@@ -11,7 +11,7 @@ public class OpportuneFlightAbility : Ability {
 
 	public override IEnumerable<Tile> GetTargets() {
 		UnitPather pather = UnitPathers.Unphased;
-		return base.GetTargets().Where(v => Game.grid.Distance(unit.tile, v) == 1 && pather(unit, unit.tile, Tile.EdgeBetween(unit.tile, v), v));
+		return base.GetTargets().Where(v => Game.grid.Distance(unit.tile, v) == 1 && pather(unit, unit.tile, unit.tile.EdgeBetween(v), v));
 	}
 
 	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
@@ -19,12 +19,13 @@ public class OpportuneFlightAbility : Ability {
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
-				unit.MoveTo(GetTargetTile(tile), true);
+				DoMove(tile);
 			}
 		});
 	}
 
-	Tile GetTargetTile(Tile tile) {
+	void DoMove(Tile tile) {
+		var target = unit;
 		var dir = unit.tile.GetDir(tile);
 		UnitPather pather = UnitPathers.Unphased;
 		Tile prev = tile;
@@ -32,15 +33,17 @@ public class OpportuneFlightAbility : Ability {
 		while (true && i++ < data.moveDistance.value) {
 			var current = tile.GetNeighbor(dir);
 			if (current == null) break;
-			var edge = prev.GetEdge(dir);
-			if (pather(this.unit, prev, edge, current)) {
+			if (prev.CanMoveTo(current, pather, target)) {
+				ExecuteMoveOff(target, prev);
+				ExecuteMoveOver(target, prev, current);
+				ExecuteMoveOn(target, current);
 				tile = current;
 			} else {
 				break;
 			}
 			prev = current;
 		}
-		return tile;
+		target.MoveTo(tile, true);
 	}
 
 }

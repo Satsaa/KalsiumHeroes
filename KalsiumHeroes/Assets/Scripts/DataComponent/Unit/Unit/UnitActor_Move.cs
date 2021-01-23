@@ -23,7 +23,7 @@ public partial class UnitActor {
 		spline = new Spline(positions);
 		animationType = AnimationType.Walk;
 		isMoving = true;
-		Set2DPos(positions.First());
+		SetPos(positions.First());
 	}
 
 	public void Run(IEnumerable<Vector3> positions) {
@@ -31,21 +31,21 @@ public partial class UnitActor {
 		spline = new Spline(positions);
 		animationType = AnimationType.Run;
 		isMoving = true;
-		Set2DPos(positions.First());
+		SetPos(positions.First());
 	}
 
 	private void DoMovement() {
 		moveT += walkSpeed * Time.deltaTime;
 		var point = spline.Eval(moveT);
-		var diff = point - GetPos();
-		Set2DPos(point.xz());
-		base.transform.parent.LookAt(GetPos() + diff);
+		var futurePoint = spline.Eval(moveT + 0.1f);
+		SetPos(point);
+		base.transform.LookAt(futurePoint.SetY(base.transform.position.y));
 		if (moveT >= spline._controls.Count - 1) {
 			EndAnimations();
 		}
 	}
 
-	private void OnDrawGizmos() {
+	private void OnDrawGizmosMove() {
 		if (!isMoving || spline._controls.Count < 2) return;
 		var points = spline.RenderSpline(8);
 

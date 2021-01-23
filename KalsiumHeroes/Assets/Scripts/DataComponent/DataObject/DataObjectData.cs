@@ -75,10 +75,9 @@ namespace Editors {
 				var prev = decType;
 				if (decType != (decType = fi.DeclaringType)) {
 					if (expandI != 0) {
-						EditorGUILayout.EndFoldoutHeaderGroup();
 						EditorGUI.indentLevel--;
 					}
-					expands[expandI] = EditorGUILayout.BeginFoldoutHeaderGroup(expands[expandI], ObjectNames.NicifyVariableName(decType.Name), EditorStyles.foldoutHeader);
+					expands[expandI] = EditorGUILayout.Foldout(expands[expandI], ObjectNames.NicifyVariableName(decType.Name), true, EditorStyles.foldoutHeader);
 					EditorGUI.indentLevel++;
 					expandI++;
 					if (expands.Count <= expandI) {
@@ -100,7 +99,6 @@ namespace Editors {
 				}
 			}
 			if (expandI != 0) {
-				EditorGUILayout.EndFoldoutHeaderGroup();
 				EditorGUI.indentLevel--;
 			}
 

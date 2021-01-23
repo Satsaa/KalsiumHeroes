@@ -56,7 +56,7 @@ public abstract class Master : DataObject {
 
 	/// <summary> Creates a Master based on the given source. </summary>
 	protected static T Create<T>(MasterData source, Action<T> initializer = null) where T : Master {
-		var gameObject = source.container ? Instantiate(source.container) : new GameObject();
+		var gameObject = source.container ? ObjectUtil.Instantiate(source.container) : new GameObject();
 		var cont = gameObject.AddComponent<DataObjectContainer>();
 		var master = (T)ScriptableObject.CreateInstance(source.createType);
 		cont.dataObject = master;

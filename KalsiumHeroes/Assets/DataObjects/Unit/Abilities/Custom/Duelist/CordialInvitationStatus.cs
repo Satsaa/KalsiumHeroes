@@ -22,7 +22,7 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_U
 		}
 	}
 
-	public void OnMoveOver(Tile from, Edge edge, Tile to) {
+	public void OnMoveOver(Modifier reason, Tile from, Edge edge, Tile to) {
 		var distance = Game.grid.Distance(this.unit.tile, data.opponent.tile);
 		if (distance >= data.breakRange.value) {
 			Modifier.Create(master, data.disgracefulBehaviour);

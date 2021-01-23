@@ -62,7 +62,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9047958665005421619, guid: 90e4d820cb7c9034d914c90d346025db, type: 3}
   m_PrefabInstance: {fileID: 4513425212585089402}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6743403331844852411
+--- !u!1001 &5054674375813278612
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -74,16 +74,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2225523978868451996, guid: 5672fa9fae2db4644868af94e805446e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2225523978868451996, guid: 5672fa9fae2db4644868af94e805446e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2225523978868451996, guid: 5672fa9fae2db4644868af94e805446e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2225523978868451996, guid: 5672fa9fae2db4644868af94e805446e, type: 3}
       propertyPath: m_LocalPosition.z

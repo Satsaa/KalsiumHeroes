@@ -141,11 +141,22 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 		if (neighbor) neighbor.SetEdge(new CircularInt(direction - 3, 6), edge, false);
 	}
 
-	public static Edge EdgeBetween(Tile tile1, Tile tile2) {
-		if (tile1 is null) throw new ArgumentNullException(nameof(tile1));
+	public Edge EdgeBetween(Tile tile2) {
 		if (tile2 is null) throw new ArgumentNullException(nameof(tile2));
-		var dir = tile1.GetDir(tile2);
-		var edge = tile1.GetEdge(dir);
+		var dir = GetDir(tile2);
+		var edge = GetEdge(dir);
 		return edge;
+	}
+
+	public bool CanMoveTo(Tile tile, Pather pather) {
+		var dir = GetDir(tile);
+		var edge = GetEdge(dir);
+		return pather(this, edge, tile);
+	}
+
+	public bool CanMoveTo(Tile tile, UnitPather pather, Unit unit) {
+		var dir = GetDir(tile);
+		var edge = GetEdge(dir);
+		return pather(unit, this, edge, tile);
 	}
 }

@@ -36,17 +36,27 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			creator.usedMovement += Mathf.Min(freeMovement, cost);
 
 			// Build list of items to move to
-			Tile prev = null;
-			foreach (var tile in result.path) {
-				if (prev != null) {
-					var edge = tile.edges[tile.neighbors.ToList().FindIndex(v => v == prev)];
-					pathObjects.Add(edge);
+			{
+				Tile prev = null;
+				foreach (var tile in result.path) {
+					if (prev != null) {
+						var edge = tile.edges[tile.neighbors.ToList().FindIndex(v => v == prev)];
+						pathObjects.Add(edge);
+					}
+					pathObjects.Add(tile);
+					prev = tile;
 				}
-				pathObjects.Add(tile);
-				prev = tile;
 			}
 			var actor = creator.unit.actor;
-			actor.Walk(pathObjects.Select(v => v.transform.position));
+			var walkPositions = pathObjects.Select(v => v.transform.position).ToList();
+			for (int i = 0; i < walkPositions.Count; i++) {
+				if ((i + 1) % 2 == 0) {
+					var prev = walkPositions[i - 1];
+					var next = walkPositions[i + 1];
+					walkPositions[i] = Vector3.Lerp(prev, next, 0.5f);
+				}
+			}
+			actor.Walk(walkPositions);
 		}
 	}
 
@@ -86,34 +96,22 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			actor.EndAnimations();
 		}
 		ExecuteOn(creator.unit, pathObjects.Last() as Tile);
-		creator.unit.MoveTo(pathObjects.Last() as Tile, true);
+		creator.unit.MoveTo(pathObjects.Last() as Tile, false);
 		return true;
 	}
 
 
 	protected void ExecuteOver(Unit unit, Tile from, Edge edge, Tile to) {
-		using (var scope = new OnEvents.Scope()) {
-			edge.onEvents.ForEach<IOnMoveOver_Edge>(scope, v => v.OnMoveOver(unit, from, to));
-			unit.onEvents.ForEach<IOnMoveOver_Unit>(scope, v => v.OnMoveOver(from, edge, to));
-			Game.onEvents.ForEach<IOnMoveOver_Global>(scope, v => v.OnMoveOver(unit, from, edge, to));
-		}
-		if (unit == null) animating = false;
+		creator.ExecuteMoveOver(unit, from, edge, to);
+		if (unit.removed) animating = false;
 	}
 
 	protected void ExecuteOn(Unit unit, Tile tile) {
-		using (var scope = new OnEvents.Scope()) {
-			tile.onEvents.ForEach<IOnMoveOn_Tile>(scope, v => v.OnMoveOn(unit));
-			unit.onEvents.ForEach<IOnMoveOn_Unit>(scope, v => v.OnMoveOn(tile));
-			Game.onEvents.ForEach<IOnMoveOn_Global>(scope, v => v.OnMoveOn(unit, tile));
-		}
-		if (unit == null) animating = false;
+		creator.ExecuteMoveOn(unit, tile);
+		if (unit.removed) animating = false;
 	}
 	protected void ExecuteOff(Unit unit, Tile tile) {
-		using (var scope = new OnEvents.Scope()) {
-			tile.onEvents.ForEach<IOnMoveOff_Tile>(scope, v => v.OnMoveOff(unit));
-			unit.onEvents.ForEach<IOnMoveOff_Unit>(scope, v => v.OnMoveOff(tile));
-			Game.onEvents.ForEach<IOnMoveOff_Global>(scope, v => v.OnMoveOff(unit, tile));
-		}
-		if (unit == null) animating = false;
+		creator.ExecuteMoveOff(unit, tile);
+		if (unit.removed) animating = false;
 	}
 }

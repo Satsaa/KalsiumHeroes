@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Muc.Extensions;
 using System.Linq;
+using static Muc.Editor.GizmosUtil;
 
 public partial class UnitActor : MonoBehaviour {
 
@@ -22,6 +23,13 @@ public partial class UnitActor : MonoBehaviour {
 
 	[HideInInspector] public AnimationType animationType;
 	public bool animating => animationType != 0;
+
+	void OnDrawGizmos() {
+		if (!Application.isPlaying) return;
+		using (ColorScope(Color.blue))
+			Gizmos.DrawRay(new Ray(GetPos(), base.transform.forward));
+		OnDrawGizmosMove();
+	}
 
 	protected void Update() {
 		switch (animationType) {
@@ -45,7 +53,7 @@ public partial class UnitActor : MonoBehaviour {
 				break;
 			case AnimationType.Run:
 			case AnimationType.Walk:
-				Set2DPos(spline._controls.Last().xz());
+				SetPos(spline._controls.Last());
 				moveT = spline._controls.Count - 1;
 				isMoving = false;
 				break;

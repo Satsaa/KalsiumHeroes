@@ -43,12 +43,12 @@ public class RoundStackController : MonoBehaviour, IOnGameStart, IOnRoundStart {
 
 	void CreateItem(int round) {
 		if (roundStackItemPrefab) {
-			var item = Instantiate(roundStackItemPrefab, transform);
+			var item = ObjectUtil.Instantiate(roundStackItemPrefab, transform);
 			var comp = item.GetComponent<RoundItem>();
 			comp.round = round;
 			es.Add(comp);
 		}
-		var go = Instantiate(roundStackPrefab, transform);
+		var go = ObjectUtil.Instantiate(roundStackPrefab, transform);
 		var mod = go.GetComponent<RoundStack>().round = round;
 		es.Add(go.GetComponent<EventStackItem>());
 	}

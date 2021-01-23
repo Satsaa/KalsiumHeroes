@@ -1,6 +1,4 @@
 
-#nullable enable annotations // "?" used to put emphasis on some arguments that may be null
-
 public interface IOnEvent { }
 
 public interface IUnitOnEvent : IOnEvent { }
@@ -39,18 +37,18 @@ public interface IOnHeal_Unit : IUnitOnEvent { void OnHeal(ref float value); }
 public interface IOnHeal_Tile : ITileOnEvent { void OnHeal(Unit unit, ref float value); }
 public interface IOnHeal_Global : IGlobalOnEvent { void OnHeal(Unit unit, ref float value); }
 
-public interface IOnTakeDamage_Unit : IUnitOnEvent { void OnTakeDamage(Modifier? source, ref float damage, ref DamageType type); }
-public interface IOnTakeDamage_Tile : ITileOnEvent { void OnTakeDamage(Unit unit, Modifier? source, ref float damage, ref DamageType type); }
-public interface IOnTakeDamage_Global : IGlobalOnEvent { void OnTakeDamage(Unit unit, Modifier? source, ref float damage, ref DamageType type); }
+public interface IOnTakeDamage_Unit : IUnitOnEvent { void OnTakeDamage(Modifier source, ref float damage, ref DamageType type); }
+public interface IOnTakeDamage_Tile : ITileOnEvent { void OnTakeDamage(Unit unit, Modifier source, ref float damage, ref DamageType type); }
+public interface IOnTakeDamage_Global : IGlobalOnEvent { void OnTakeDamage(Unit unit, Modifier source, ref float damage, ref DamageType type); }
 
-public interface IOnDealDamage_Unit : IUnitOnEvent { void OnDealDamage(UnitModifier? source, Unit target, float damage, DamageType type); }
-public interface IOnDealDamage_Edge : IEdgeOnEvent { void OnDealDamage(EdgeModifier? source, Unit target, float damage, DamageType type); }
-public interface IOnDealDamage_Tile : ITileOnEvent { void OnDealDamage(TileModifier? source, Unit target, float damage, DamageType type); }
-public interface IOnDealDamage_Global : IGlobalOnEvent { void OnDealDamage(Modifier? source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Unit : IUnitOnEvent { void OnDealDamage(UnitModifier source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Edge : IEdgeOnEvent { void OnDealDamage(EdgeModifier source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Tile : ITileOnEvent { void OnDealDamage(TileModifier source, Unit target, float damage, DamageType type); }
+public interface IOnDealDamage_Global : IGlobalOnEvent { void OnDealDamage(Modifier source, Unit target, float damage, DamageType type); }
 
-public interface IOnCalculateDamage_Unit : IUnitOnEvent { void OnCalculateDamage(Modifier? source, ref float damage, ref DamageType type); }
-public interface IOnCalculateDamage_Tile : ITileOnEvent { void OnCalculateDamage(Modifier? source, ref float damage, ref DamageType type); }
-public interface IOnCalculateDamage_Global : IGlobalOnEvent { void OnCalculateDamage(Modifier? source, ref float damage, ref DamageType type); }
+public interface IOnCalculateDamage_Unit : IUnitOnEvent { void OnCalculateDamage(Modifier source, ref float damage, ref DamageType type); }
+public interface IOnCalculateDamage_Tile : ITileOnEvent { void OnCalculateDamage(Modifier source, ref float damage, ref DamageType type); }
+public interface IOnCalculateDamage_Global : IGlobalOnEvent { void OnCalculateDamage(Modifier source, ref float damage, ref DamageType type); }
 
 public interface IOnSpawn_Unit : IUnitOnEvent { void OnSpawn(); }
 public interface IOnSpawn_Tile : ITileOnEvent { void OnSpawn(Unit unit); }
@@ -79,17 +77,17 @@ public interface IOnAnimationEventEnd : IGlobalOnEvent { void OnAnimationEventEn
 public interface IOnTargeterStart : IGlobalOnEvent { void OnTargeterStart(Targeter targeter); }
 public interface IOnTargeterEnd : IGlobalOnEvent { void OnTargeterEnd(); }
 
-public interface IOnMoveOn_Tile : ITileOnEvent { void OnMoveOn(Unit unit); }
-public interface IOnMoveOn_Unit : IUnitOnEvent { void OnMoveOn(Tile tile); }
-public interface IOnMoveOn_Global : IGlobalOnEvent { void OnMoveOn(Unit unit, Tile tile); }
+public interface IOnMoveOn_Tile : ITileOnEvent { void OnMoveOn(Modifier reason, Unit unit); }
+public interface IOnMoveOn_Unit : IUnitOnEvent { void OnMoveOn(Modifier reason, Tile tile); }
+public interface IOnMoveOn_Global : IGlobalOnEvent { void OnMoveOn(Modifier reason, Unit unit, Tile tile); }
 
-public interface IOnMoveOff_Tile : ITileOnEvent { void OnMoveOff(Unit unit); }
-public interface IOnMoveOff_Unit : IUnitOnEvent { void OnMoveOff(Tile tile); }
-public interface IOnMoveOff_Global : IGlobalOnEvent { void OnMoveOff(Unit unit, Tile tile); }
+public interface IOnMoveOff_Tile : ITileOnEvent { void OnMoveOff(Modifier reason, Unit unit); }
+public interface IOnMoveOff_Unit : IUnitOnEvent { void OnMoveOff(Modifier reason, Tile tile); }
+public interface IOnMoveOff_Global : IGlobalOnEvent { void OnMoveOff(Modifier reason, Unit unit, Tile tile); }
 
-public interface IOnMoveOver_Edge : IEdgeOnEvent { void OnMoveOver(Unit unit, Tile from, Tile to); }
-public interface IOnMoveOver_Unit : IUnitOnEvent { void OnMoveOver(Tile from, Edge edge, Tile to); }
-public interface IOnMoveOver_Global : IGlobalOnEvent { void OnMoveOver(Unit unit, Tile from, Edge edge, Tile to); }
+public interface IOnMoveOver_Edge : IEdgeOnEvent { void OnMoveOver(Modifier reason, Unit unit, Tile from, Tile to); }
+public interface IOnMoveOver_Unit : IUnitOnEvent { void OnMoveOver(Modifier reason, Tile from, Edge edge, Tile to); }
+public interface IOnMoveOver_Global : IGlobalOnEvent { void OnMoveOver(Modifier reason, Unit unit, Tile from, Edge edge, Tile to); }
 
 public interface IOnGetCanPass_Edge : IEdgeOnEvent {
 	void OnGetCanPass(Tile from, Tile to, ref bool current);
@@ -114,5 +112,3 @@ public interface IOnGetMoveCost_Global : IGlobalOnEvent {
 	void OnGetMoveCost(Tile from, Edge edge, Tile to, ref float current);
 	void OnGetMoveCost(Unit unit, Tile from, Edge edge, Tile to, ref float current);
 }
-
-#nullable disable annotations

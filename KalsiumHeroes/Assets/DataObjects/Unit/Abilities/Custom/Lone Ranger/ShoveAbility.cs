@@ -16,27 +16,30 @@ public class ShoveAbility : Ability {
 			foreach (var tile in aoe) {
 				if (tile.unit) {
 					UnitModifier.Create(master, data.rootModifier);
-					tile.unit.MoveTo(GetTargetTile(tile), true);
+					Shove(tile);
 				}
 			}
 		});
 	}
 
-	Tile GetTargetTile(Tile tile) {
+	void Shove(Tile tile) {
+		var target = tile.unit;
 		var dir = unit.tile.GetDir(tile);
 		UnitPather pather = UnitPathers.Unphased;
 		Tile prev = tile;
 		while (true) {
 			var current = tile.GetNeighbor(dir);
 			if (current == null) break;
-			var edge = prev.GetEdge(dir);
-			if (pather(this.unit, prev, edge, current)) {
+			if (prev.CanMoveTo(current, pather, target)) {
+				ExecuteMoveOff(target, prev);
+				ExecuteMoveOver(target, prev, current);
+				ExecuteMoveOn(target, current);
 				tile = current;
 			} else {
 				break;
 			}
 			prev = current;
 		}
-		return tile;
+		target.MoveTo(tile, true);
 	}
 }

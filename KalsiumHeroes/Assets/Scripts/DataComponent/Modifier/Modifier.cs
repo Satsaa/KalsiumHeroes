@@ -51,9 +51,9 @@ public abstract class Modifier : DataObject {
 			Canvas canvas;
 			// Create containers containing RectTransforms on the Canvas of the Master.
 			if (source.container.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
-				modifier.container = Instantiate(source.container, canvas.transform);
+				modifier.container = ObjectUtil.Instantiate(source.container, canvas.transform);
 			} else {
-				modifier.container = Instantiate(source.container, master.gameObject.transform);
+				modifier.container = ObjectUtil.Instantiate(source.container, master.gameObject.transform);
 			}
 			modifier.container.transform.rotation = source.container.transform.localRotation;
 		}
@@ -74,4 +74,36 @@ public abstract class Modifier : DataObject {
 		unit.DealCalculatedDamage(this, damage, type);
 	}
 
+	public void ExecuteMoveOver(Unit unit, Tile from, Edge edge, Tile to) {
+		edge = from.EdgeBetween(to);
+		using (var scope = new OnEvents.Scope()) {
+			edge.onEvents.ForEach<IOnMoveOver_Edge>(scope, v => v.OnMoveOver(this, unit, from, to));
+			unit.onEvents.ForEach<IOnMoveOver_Unit>(scope, v => v.OnMoveOver(this, from, edge, to));
+			Game.onEvents.ForEach<IOnMoveOver_Global>(scope, v => v.OnMoveOver(this, unit, from, edge, to));
+		}
+	}
+
+	public void ExecuteMoveOver(Unit unit, Tile from, Tile to) {
+		var edge = from.EdgeBetween(to);
+		using (var scope = new OnEvents.Scope()) {
+			edge.onEvents.ForEach<IOnMoveOver_Edge>(scope, v => v.OnMoveOver(this, unit, from, to));
+			unit.onEvents.ForEach<IOnMoveOver_Unit>(scope, v => v.OnMoveOver(this, from, edge, to));
+			Game.onEvents.ForEach<IOnMoveOver_Global>(scope, v => v.OnMoveOver(this, unit, from, edge, to));
+		}
+	}
+
+	public void ExecuteMoveOn(Unit unit, Tile tile) {
+		using (var scope = new OnEvents.Scope()) {
+			tile.onEvents.ForEach<IOnMoveOn_Tile>(scope, v => v.OnMoveOn(this, unit));
+			unit.onEvents.ForEach<IOnMoveOn_Unit>(scope, v => v.OnMoveOn(this, tile));
+			Game.onEvents.ForEach<IOnMoveOn_Global>(scope, v => v.OnMoveOn(this, unit, tile));
+		}
+	}
+	public void ExecuteMoveOff(Unit unit, Tile tile) {
+		using (var scope = new OnEvents.Scope()) {
+			tile.onEvents.ForEach<IOnMoveOff_Tile>(scope, v => v.OnMoveOff(this, unit));
+			unit.onEvents.ForEach<IOnMoveOff_Unit>(scope, v => v.OnMoveOff(this, tile));
+			Game.onEvents.ForEach<IOnMoveOff_Global>(scope, v => v.OnMoveOff(this, unit, tile));
+		}
+	}
 }

@@ -50,7 +50,7 @@ public class RoundStack : EventStack<RoundStackItem>, IOnAnimationEventEnd, IOnT
 		var oldItems = stack.Where(v => !units.Contains(v.item.unit)).ToList();
 
 		foreach (var newUnit in newUnits) {
-			var go = GameObject.Instantiate(itemPrefab, transform);
+			var go = ObjectUtil.Instantiate(itemPrefab, transform);
 			var comp = go.GetComponent<RoundStackItem>();
 			comp.unit = newUnit;
 			base.Add(comp);

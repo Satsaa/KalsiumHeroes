@@ -70,7 +70,7 @@ public class AbilityUIModifier : UnitModifier,
 #endif
 
 	void AddIcon(Ability ability) {
-		var icon = Instantiate(data.abilityPrefab, ui.parent.transform).GetComponent<AbilityIcon>();
+		var icon = ObjectUtil.Instantiate(data.abilityPrefab, ui.parent.transform).GetComponent<AbilityIcon>();
 		aIcons.Add(icon);
 		icon.ability = ability;
 		icon.abilityText.text = ability.data.displayName;
@@ -82,7 +82,7 @@ public class AbilityUIModifier : UnitModifier,
 		RefreshValues();
 	}
 	void AddIcon(Passive passive) {
-		var icon = Instantiate(data.passivePrefab).GetComponent<PassiveIcon>();
+		var icon = ObjectUtil.Instantiate(data.passivePrefab).GetComponent<PassiveIcon>();
 		pIcons.Add(icon);
 		icon.passive = passive;
 		icon.abilityText.text = passive.data.displayName;

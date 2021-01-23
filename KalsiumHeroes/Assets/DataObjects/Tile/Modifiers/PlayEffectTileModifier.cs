@@ -7,7 +7,7 @@ using UnityEngine.VFX;
 
 public class PlayEffectTileModifier : TileModifier, IOnMoveOn_Tile {
 
-	public void OnMoveOn(Unit unit) {
+	public void OnMoveOn(Modifier reason, Unit unit) {
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
 		var pts = container.GetComponent<ParticleSystem>();

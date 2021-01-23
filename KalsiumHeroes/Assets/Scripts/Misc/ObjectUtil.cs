@@ -25,25 +25,35 @@ public static class ObjectUtil {
 			wasActive = true;
 			return new GameObject();
 		} else {
-#if UNITY_EDITOR
-			if (!Application.isPlaying && PrefabUtility.IsPartOfPrefabAsset(gameObject)) {
-				wasActive = gameObject.activeSelf;
-				if (wasActive) gameObject.SetActive(false);
-				var go = (GameObject)PrefabUtility.InstantiatePrefab(gameObject);
-				Debug.Assert(!go.activeSelf);
-				if (wasActive) gameObject.SetActive(true);
-				return go;
-			} else
-#endif
-			{
-				wasActive = gameObject.activeSelf;
-				if (wasActive) gameObject.SetActive(false);
-				var go = GameObject.Instantiate(gameObject);
-				Debug.Assert(!go.activeSelf);
-				if (wasActive) gameObject.SetActive(true);
-				return go;
-			}
+			wasActive = gameObject.activeSelf;
+			if (wasActive) gameObject.SetActive(false);
+			var go = ObjectUtil.Instantiate(gameObject);
+			Debug.Assert(!go.activeSelf);
+			if (wasActive) gameObject.SetActive(true);
+			return go;
 		}
+	}
+
+	/// <summary>
+	/// Instatiates a GameObject and maintains prefab links if appropriate.
+	/// </summary>
+	public static GameObject Instantiate(GameObject gameObject) {
+#if UNITY_EDITOR
+		if (!Application.isPlaying && PrefabUtility.IsPartOfPrefabAsset(gameObject))
+			return (GameObject)PrefabUtility.InstantiatePrefab(gameObject);
+#endif
+		return GameObject.Instantiate(gameObject);
+	}
+
+	/// <summary>
+	/// Instatiates a GameObject and maintains prefab links if appropriate.
+	/// </summary>
+	public static GameObject Instantiate(GameObject gameObject, Transform parent) {
+#if UNITY_EDITOR
+		if (!Application.isPlaying && PrefabUtility.IsPartOfPrefabAsset(gameObject))
+			return (GameObject)PrefabUtility.InstantiatePrefab(gameObject, parent);
+#endif
+		return GameObject.Instantiate(gameObject, parent);
 	}
 
 }

@@ -45,8 +45,11 @@ public class Edge : Master<EdgeModifier, IEdgeOnEvent> {
 		}
 	}
 
-	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
+	/// <summary> Is this Edge considered to be passable by Unit "unit" from Tile "from" to Tile "to". </summary>
 	public bool CanPass(Unit unit, Tile from, Tile to) {
+		if (unit is null) throw new ArgumentNullException(nameof(unit));
+		if (from is null) throw new ArgumentNullException(nameof(from));
+		if (to is null) throw new ArgumentNullException(nameof(to));
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.passable.value;
@@ -60,6 +63,8 @@ public class Edge : Master<EdgeModifier, IEdgeOnEvent> {
 
 	/// <summary> Is this Edge considered to be passable from Tile "from" to Tile "to". </summary>
 	public bool CanPass(Tile from, Tile to) {
+		if (from is null) throw new ArgumentNullException(nameof(from));
+		if (to is null) throw new ArgumentNullException(nameof(to));
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.passable.value;
