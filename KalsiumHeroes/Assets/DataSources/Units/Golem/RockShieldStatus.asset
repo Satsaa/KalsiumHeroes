@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b7f34b40f7cdb47b0b4d5cf12fbcfc, type: 3}
   m_Name: RockShieldStatus
   m_EditorClassIdentifier: 
-  identifier: status_rock_shield
-  componentType:
+  createType:
     _name: RockShieldStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: status_rock_shield
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}
