@@ -35,13 +35,13 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 			v.team = team;
 			v.gameObject.transform.position = position;
 			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz(), v => v.unit == null);
-			if (nearTile) v.MoveTo(nearTile, true);
+			if (nearTile) v.SetPosition(nearTile, true);
 		});
 	}
 
 	public static Unit Create(UnitData source, Tile tile) {
 		return Create<Unit>(source, v => {
-			v.MoveTo(tile, true);
+			v.SetPosition(tile, true);
 		});
 	}
 
@@ -159,7 +159,19 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 		}
 	}
 
-	public bool MoveTo(Tile tile, bool reposition) {
+	public bool CanMoveInDir(TileDir dir, out Tile dirTile) {
+		var pather = UnitPathers.For(modifiers.First<MoveAbility>().data.rangeMode);
+		return CanMoveInDir(dir, pather, out dirTile);
+	}
+	public bool CanMoveInDir(TileDir dir, UnitPather pather, out Tile dirTile) {
+		var from = this.tile;
+		var to = dirTile = from.GetNeighbor(dir);
+		if (to == null) return false;
+		var edge = from.GetEdge(dir);
+		return pather(this, from, edge, to);
+	}
+
+	public bool SetPosition(Tile tile, bool reposition) {
 		if (tile.unit == null || tile.unit == this) {
 			if (this.tile != null) this.tile.unit = null;
 			tile.unit = this;

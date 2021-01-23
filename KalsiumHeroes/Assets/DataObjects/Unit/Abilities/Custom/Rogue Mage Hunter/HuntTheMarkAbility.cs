@@ -9,11 +9,11 @@ public class HuntTheMarkAbility : Ability {
 	public new HuntTheMarkAbilityData data => (HuntTheMarkAbilityData)_data;
 	public override Type dataType => typeof(HuntTheMarkAbilityData);
 
-    public override IEnumerable<Tile> GetTargets() {
-        return base.GetTargets().Where(v => v.unit && TargetHasFreeTiles(v) && v.unit.modifiers.Get<MarkOfPreyStatus>().Any());
-    }
+	public override IEnumerable<Tile> GetTargets() {
+		return base.GetTargets().Where(v => v.unit && TargetHasFreeTiles(v) && v.unit.modifiers.Get<MarkOfPreyStatus>().Any());
+	}
 
-    public override bool IsReady() {
+	public override bool IsReady() {
 		return base.IsReady() && Game.dataObjects.Get<MarkOfPreyStatus>().Where(v => v.unit != unit && TargetHasFreeTiles(v.unit.tile)).Any();
 	}
 
@@ -26,7 +26,7 @@ public class HuntTheMarkAbility : Ability {
 					if (tile.unit.silenced.value) tile.unit.DealCalculatedDamage(this, data.silenceDamage.value, data.damageType);
 					else tile.unit.DealCalculatedDamage(this, data.normalDamage.value, data.damageType);
 					if (tile.unit.modifiers.Get<MarkOfPreyStatus>().Any()) tile.unit.modifiers.Get<MarkOfPreyStatus>().First().Remove();
-					unit.MoveTo(FindClosestTile(tile.unit), true);
+					unit.SetPosition(FindClosestTile(tile.unit), true);
 				}
 			}
 		});

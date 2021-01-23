@@ -148,15 +148,4 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 		return edge;
 	}
 
-	public bool CanMoveTo(Tile tile, Pather pather) {
-		var dir = GetDir(tile);
-		var edge = GetEdge(dir);
-		return pather(this, edge, tile);
-	}
-
-	public bool CanMoveTo(Tile tile, UnitPather pather, Unit unit) {
-		var dir = GetDir(tile);
-		var edge = GetEdge(dir);
-		return pather(unit, this, edge, tile);
-	}
 }

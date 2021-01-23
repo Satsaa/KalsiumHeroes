@@ -96,7 +96,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 			actor.EndAnimations();
 		}
 		ExecuteOn(creator.unit, pathObjects.Last() as Tile);
-		creator.unit.MoveTo(pathObjects.Last() as Tile, false);
+		creator.unit.SetPosition(pathObjects.Last() as Tile, false);
 		return true;
 	}
 

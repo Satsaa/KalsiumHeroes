@@ -10,4 +10,7 @@ public class ShoveAbilityData : AbilityData {
 
 	[Tooltip("This is the root modifier the ability gives the targeted unit")]
 	public ModifierData rootModifier;
+
+	[Tooltip("The maximum amount of tiles the target is shoved.")]
+	public Attribute<int> shoveDist = new Attribute<int>(4);
 }

@@ -61,6 +61,35 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 		}
 	}
 
+	/// <summary> Returns the first Object of type T. </summary>
+	public T First<T>() where T : TObj {
+		var type = typeof(T);
+		if (dict.TryGetValue(type, out var val)) {
+			var res = (val as HashSet<T>).FirstOrDefault();
+			if (res != null) return (T)res;
+		}
+		throw new InvalidOperationException($"No {nameof(Modifier)} of type {typeof(T).Name}.");
+	}
+	/// <summary> Returns the first Object of type T or null if none exist. </summary>
+	public T FirstOrDefault<T>() where T : TObj {
+		var type = typeof(T);
+		if (dict.TryGetValue(type, out var val)) {
+			var res = (val as HashSet<T>).FirstOrDefault();
+			return (T)res;
+		}
+		return default;
+	}
+
+	/// <summary> Returns whether an Object of type T exists. </summary>
+	public bool Contains<T>() where T : TObj {
+		var type = typeof(T);
+		if (dict.TryGetValue(type, out var val)) {
+			var set = val as HashSet<T>;
+			return set.Count > 0;
+		}
+		return false;
+	}
+
 	#region IObjectDict
 
 	void IObjectDict.Add(Object dataObject) => Add((TObj)dataObject);
