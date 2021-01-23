@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
   m_Name: RangedDamageAbility
   m_EditorClassIdentifier: 
-  identifier: ability_ranged_damage
-  componentType:
+  createType:
     _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_ranged_damage
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 6ee84644cb06cbc4d9af7c4de0a6723c, type: 2}
   description: {fileID: 11400000, guid: 1f0f24c9306cfb74f8fb8247c999ae96, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 1
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   damage:
     _value: 40

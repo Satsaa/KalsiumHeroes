@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc32411a3df8d143b63ff095a492ad3, type: 3}
   m_Name: RockShieldAbility
   m_EditorClassIdentifier: 
-  identifier: ability_rock_shield
-  componentType:
+  createType:
     _name: RockShieldAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_rock_shield
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 95e35d00ee6b69b448f0e4f2cdd24efa, type: 2}
   description: {fileID: 0}

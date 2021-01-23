@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e2e27e650a4c543a8bbc986f135aed, type: 3}
   m_Name: CastigationOfCastingAbility
   m_EditorClassIdentifier: 
-  identifier: ability_castigation_of_casting
-  componentType:
+  createType:
     _name: CastigationOfCastingAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_castigation_of_casting
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 5471186b2a2a6c941b2298d9ef335fa9, type: 2}
   description: {fileID: 0}

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e61deeb55bec58499399bdde0259120, type: 3}
   m_Name: ShoveAbility
   m_EditorClassIdentifier: 
-  identifier: ability_shove
-  componentType:
+  createType:
     _name: ShoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_shove
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: dfd03cbccac0d4a4fa79825bb80c3225, type: 2}
   description: {fileID: 11400000, guid: 9390fc83f3de8af40b2ca1552ad084f3, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,6 +40,6 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   rootModifier: {fileID: 11400000, guid: 90fc7f84233e52446b3d2c46fd688605, type: 2}

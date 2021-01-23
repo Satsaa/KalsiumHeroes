@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae7e33d858c99a4a9545bdf4b082d0e, type: 3}
   m_Name: MarkOfCastigationSilenceStatus
   m_EditorClassIdentifier: 
-  identifier: status_mark_of_castigation_silence
-  componentType:
+  createType:
     _name: SilenceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: status_mark_of_castigation_silence
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

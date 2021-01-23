@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a4614b5cdcfad4c91792f9294a4c46, type: 3}
   m_Name: GiveEnergyAbility
   m_EditorClassIdentifier: 
-  identifier: ability_give_energy
-  componentType:
+  createType:
     _name: ChangeEnergyAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_give_energy
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   targetType: 30
@@ -30,7 +30,7 @@ MonoBehaviour:
     _value: 1
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 5
   cooldown:
     _value: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   energyChange:
     _value: 5

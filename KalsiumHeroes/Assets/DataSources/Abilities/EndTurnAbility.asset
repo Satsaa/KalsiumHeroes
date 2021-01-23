@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
   m_Name: EndTurnAbility
   m_EditorClassIdentifier: 
-  identifier: ability_end_turn
-  componentType:
+  createType:
     _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_end_turn
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 65593b70ff61aa3459b277147344f414, type: 2}
   description: {fileID: 11400000, guid: dc75a61fad608ae45a9abeec11e92e54, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,5 +40,5 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 1

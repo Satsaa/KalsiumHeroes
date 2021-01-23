@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6243cad3f117eb04a8fc7108f4b470a7, type: 3}
   m_Name: SideKickAbility
   m_EditorClassIdentifier: 
-  identifier: ability_side_kick
-  componentType:
+  createType:
     _name: SideKickAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_side_kick
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: b79976a7c2384dd449dafbf66c4585da, type: 2}
   description: {fileID: 11400000, guid: e664965360ed40f448281c2fea5884d9, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   movementDamageMultiplier:
     _value: 2

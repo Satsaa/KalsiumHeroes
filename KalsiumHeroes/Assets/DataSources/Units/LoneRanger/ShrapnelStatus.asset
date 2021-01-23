@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30b986eb64b26f4ea1bec213f864fd8, type: 3}
   m_Name: ShrapnelStatus
   m_EditorClassIdentifier: 
-  identifier: status_shrapnel
-  componentType:
+  createType:
     _name: ShrapnelAbilityModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: status_shrapnel
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 31186f39fe7e32640a565e68a150724a, type: 2}
   description: {fileID: 11400000, guid: 4a7d6c6d0b61b6445921cd603082168c, type: 2}

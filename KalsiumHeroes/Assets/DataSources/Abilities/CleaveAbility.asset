@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
   m_Name: CleaveAbility
   m_EditorClassIdentifier: 
-  identifier: ability_cleave
-  componentType:
+  createType:
     _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_cleave
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 3ff9c5bb8feb6244bbd8ba4972dfced9, type: 2}
   description: {fileID: 11400000, guid: f99fc6af0e757474097fbc19d7ab82a1, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 1
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   damage:
     _value: 30

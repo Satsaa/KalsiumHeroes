@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321267cde78eb25429a92fbf58f8ff99, type: 3}
   m_Name: TargetWeakSpotAbility
   m_EditorClassIdentifier: 
-  identifier: ability_target_weak_spot
-  componentType:
+  createType:
     _name: TargetWeakSpotAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_target_weak_spot
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 59936029b2d49184aad1e5b9213cdc88, type: 2}
   description: {fileID: 11400000, guid: e8d09eac6f249aa4fbb481ad5ad69c43, type: 2}

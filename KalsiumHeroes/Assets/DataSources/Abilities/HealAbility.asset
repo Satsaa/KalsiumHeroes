@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4607e96339b954a4781f2cb5b25012a7, type: 3}
   m_Name: HealAbility
   m_EditorClassIdentifier: 
-  identifier: ability_heal
-  componentType:
+  createType:
     _name: HealAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_heal
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: d99ee202441fb174086be5391c4e9d18, type: 2}
   description: {fileID: 11400000, guid: 5dec984b4140bec4f945f0ab16f4e0f5, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 1
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   heal:
     _value: 25

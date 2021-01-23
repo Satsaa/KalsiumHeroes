@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6facac02922bc48a9638f3cf901550, type: 3}
   m_Name: EarthquakeAbility
   m_EditorClassIdentifier: 
-  identifier: ability_earthquake
-  componentType:
+  createType:
     _name: EarthquakeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_earthquake
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 56101509bf78a8548813a79e8d8f9522, type: 2}
   description: {fileID: 0}

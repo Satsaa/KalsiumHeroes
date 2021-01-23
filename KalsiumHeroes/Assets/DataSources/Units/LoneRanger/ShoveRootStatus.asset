@@ -12,16 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae7e33d858c99a4a9545bdf4b082d0e, type: 3}
   m_Name: ShoveRootStatus
   m_EditorClassIdentifier: 
-  identifier: status_shove_root
-  componentType:
+  createType:
     _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: status_shove_root
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 84e113a57938ae34e81967ece200f9d3, type: 2}
   description: {fileID: 11400000, guid: 50079a3cc9e9044418f2ae63e658c702, type: 2}
   sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 1
-  positive: 0
-  dispellable: 1
-  turnDuration:
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
     _value: 1
+  hidden:
+    _value: 0
+  ticks:
+    _value: 1
+    _other: 0
     _enabled: 1
+  tickMode: 0

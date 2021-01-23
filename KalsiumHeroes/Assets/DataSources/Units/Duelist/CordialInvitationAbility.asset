@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64bb5ec9baa2c7543811ff1b7e7d97c9, type: 3}
   m_Name: CordialInvitationAbility
   m_EditorClassIdentifier: 
-  identifier: ability_cordial_invitation
-  componentType:
+  createType:
     _name: CordialInvitationAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_cordial_invitation
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 2064e528c15d4264bbd84f384c107680, type: 2}
   description: {fileID: 11400000, guid: dabbedb97088c294fa830fcc35e1079d, type: 2}

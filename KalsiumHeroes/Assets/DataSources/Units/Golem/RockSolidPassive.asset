@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca94fff44b71e24caddcbd3fdfeeab6, type: 3}
   m_Name: RockSolidPassive
   m_EditorClassIdentifier: 
-  identifier: passive_rock_solid
-  componentType:
+  createType:
     _name: RockSolidPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: passive_rock_solid
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

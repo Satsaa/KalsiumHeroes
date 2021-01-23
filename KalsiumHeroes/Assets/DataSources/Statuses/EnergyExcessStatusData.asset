@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018fcea1c74aa7d448e94b68f9e7cb64, type: 3}
   m_Name: EnergyExcessStatusData
   m_EditorClassIdentifier: 
-  identifier: status_energy_excess
-  componentType:
+  createType:
     _name: EnergyExcessStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: status_energy_excess
   container: {fileID: 4313533834659548896, guid: f66d80d7df9d789439b2bb24af25e0c2, type: 3}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
     _value: 0
@@ -28,9 +28,11 @@ MonoBehaviour:
     _value: 1
   hidden:
     _value: 0
-  turnDuration:
+  ticks:
     _value: 0
+    _other: 0
     _enabled: 0
+  tickMode: 0
   amps:
     weaponSkill:
       _value: 0.05

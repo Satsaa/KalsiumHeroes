@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae7e33d858c99a4a9545bdf4b082d0e, type: 3}
   m_Name: DisarmStatus
   m_EditorClassIdentifier: 
-  identifier: status_disarm
-  componentType:
+  createType:
     _name: DisarmStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: status_disarm
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 5907726c058f19f4e87007f93e53fba5, type: 2}
   description: {fileID: 11400000, guid: 31360d12ca3540944be91a087bbd3381, type: 2}
@@ -27,6 +27,8 @@ MonoBehaviour:
     _value: 1
   hidden:
     _value: 0
-  turnDuration:
+  ticks:
     _value: 2
+    _other: 0
     _enabled: 1
+  tickMode: 0

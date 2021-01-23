@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300035d4948879748b4e7032a12eb642, type: 3}
   m_Name: GroundTile
   m_EditorClassIdentifier: 
-  identifier: tile_ground
-  componentType:
+  createType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  identifier: tile_ground
+  container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
+  baseModifiers: []
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   passable:
     _value: 1
   transparent:

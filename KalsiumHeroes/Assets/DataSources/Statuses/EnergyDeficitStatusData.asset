@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90450df768d12a84dbcd80afefc2edf3, type: 3}
   m_Name: EnergyDeficitStatusData
   m_EditorClassIdentifier: 
-  identifier: status_energy_deficit
-  componentType:
+  createType:
     _name: EnergyDeficitStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: status_energy_deficit
   container: {fileID: 6574234657853972042, guid: f7101482130ebdd43b80ad7d03790535, type: 3}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
     _value: 0
@@ -28,8 +28,10 @@ MonoBehaviour:
     _value: 1
   hidden:
     _value: 0
-  turnDuration:
+  ticks:
     _value: 0
+    _other: 0
     _enabled: 0
+  tickMode: 0
   defenseReduction: 5
   resistanceReduction: 5

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c8de1c73de6bd4cad784fce6835302, type: 3}
   m_Name: SwiftStrikeAbility
   m_EditorClassIdentifier: 
-  identifier: ability_swift_strike
-  componentType:
+  createType:
     _name: SwiftStrikeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_swift_strike
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: b47425188137ac84eac71260e77407b2, type: 2}
   description: {fileID: 0}

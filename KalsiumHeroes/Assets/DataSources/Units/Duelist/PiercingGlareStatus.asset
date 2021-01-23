@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decc52ba8476e774f816a659b73f8c23, type: 3}
   m_Name: PiercingGlareStatus
   m_EditorClassIdentifier: 
-  identifier: status_piercing_glare
-  componentType:
+  createType:
     _name: DisgracefulBehaviourStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: status_piercing_glare
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

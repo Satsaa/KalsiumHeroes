@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b7b9add516b534b862b8cefd976a1b, type: 3}
   m_Name: PickOffAbility
   m_EditorClassIdentifier: 
-  identifier: ability_pickoff
-  componentType:
+  createType:
     _name: PickOffAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_pickoff
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 8d56457c96b5bc94295da0d086dc1065, type: 2}
   description: {fileID: 11400000, guid: d83e28357f42b5c4988757f128344438, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 1
-  energy:
+  energyCost:
     _value: 20
   cooldown:
     _value: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   damage:
     _value: 30

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09020156c3c1f8b489dc197cd103c899, type: 3}
   m_Name: OpportunistPassive
   m_EditorClassIdentifier: 
-  identifier: passive_opportunist
-  componentType:
+  createType:
     _name: OpportunistPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: passive_opportunist
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

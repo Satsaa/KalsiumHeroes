@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0487570fedbc6c6449117c1fcd3742be, type: 3}
   m_Name: InwardsImpassableEdgeModifier
   m_EditorClassIdentifier: 
-  identifier: edgemodifier_inwards_impassable
-  componentType:
+  createType:
     _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: edgemodifier_inwards_impassable
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  displayName: {fileID: 0}
+  description: {fileID: 0}

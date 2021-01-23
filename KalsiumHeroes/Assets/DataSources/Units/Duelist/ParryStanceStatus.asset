@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e51c0386db3c554db23428b2e043c85, type: 3}
   m_Name: ParryStanceStatus
   m_EditorClassIdentifier: 
-  identifier: status_parry_stance
-  componentType:
+  createType:
     _name: ParryStanceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: status_parry_stance
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c31a4845eb13346a50bb3ab11ad64c, type: 3}
   m_Name: EdgeData
   m_EditorClassIdentifier: 
-  identifier: edge_default
-  componentType:
+  createType:
     _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  instantiatee: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
-  description: {fileID: 11400000, guid: 8bbc6c0095bc33e498847215752f66c0, type: 2}
+  identifier: edge_default
+  container: {fileID: 0}
+  baseModifiers: []
+  displayName: {fileID: 0}
+  description: {fileID: 0}

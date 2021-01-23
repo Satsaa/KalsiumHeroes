@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916a8e778dd62164e9746101339a6d22, type: 3}
   m_Name: ShrapnelAbility
   m_EditorClassIdentifier: 
-  identifier: ability_shrapnel
-  componentType:
+  createType:
     _name: ShrapnelAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_shrapnel
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 52a9a273e2ca53840952665d1bfd3937, type: 2}
   description: {fileID: 11400000, guid: ebc281740126c86438cf568ec445259a, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     _value: 2
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   damage:
     _value: 40

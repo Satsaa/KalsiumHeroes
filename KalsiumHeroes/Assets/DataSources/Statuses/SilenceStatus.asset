@@ -12,16 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae7e33d858c99a4a9545bdf4b082d0e, type: 3}
   m_Name: SilenceStatus
   m_EditorClassIdentifier: 
-  identifier: status_silence
-  componentType:
+  createType:
     _name: SilenceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: status_silence
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: f46828e260bf1cb47b606c53e2211a5e, type: 2}
   description: {fileID: 11400000, guid: a8b84b31eeb840645aa1df4d2c9a2a02, type: 2}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  debuffType: 3
-  positive: 0
-  dispellable: 1
-  turnDuration:
+  debuffType:
+    _value: 0
+  positive:
+    _value: 0
+  dispellable:
+    _value: 1
+  hidden:
+    _value: 0
+  ticks:
     _value: 2
+    _other: 0
     _enabled: 1
+  tickMode: 0

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7510cf8c26316a46b0498c02f9a2c1a, type: 3}
   m_Name: ArmorBashAbility
   m_EditorClassIdentifier: 
-  identifier: ability_armor_bash
-  componentType:
+  createType:
     _name: ArmorBashAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: ability_armor_bash
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: b277b317c1eb3b949b16fe827c2f6608, type: 2}
   description: {fileID: 0}

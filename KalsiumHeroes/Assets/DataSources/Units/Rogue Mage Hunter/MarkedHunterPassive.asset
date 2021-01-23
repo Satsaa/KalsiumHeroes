@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf11b2cf7293444395967b426f95cb3, type: 3}
   m_Name: MarkedHunterPassive
   m_EditorClassIdentifier: 
-  identifier: passive_marked_hunter
-  componentType:
+  createType:
     _name: MarkedHunterPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: passive_marked_hunter
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}

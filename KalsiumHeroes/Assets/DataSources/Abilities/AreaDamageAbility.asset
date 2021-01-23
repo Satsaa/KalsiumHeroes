@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
   m_Name: AreaDamageAbility
   m_EditorClassIdentifier: 
-  identifier: ability_area_damage
-  componentType:
+  createType:
     _name: AreaDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: ability_area_damage
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 8967b874518804f46af872452b2bbb94, type: 2}
   description: {fileID: 11400000, guid: ecd4463ed05c3f44ea4e4471190aad32, type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
     _value: 1
   requiresVision:
     _value: 0
-  energy:
+  energyCost:
     _value: 0
   cooldown:
     _value: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   uses:
     _value: 0
     _enabled: 0
-  alwaysCastable:
+  allowMove:
     _value: 0
   primaryDamage:
     _value: 15

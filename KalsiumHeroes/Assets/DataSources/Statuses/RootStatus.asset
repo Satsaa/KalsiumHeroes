@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae7e33d858c99a4a9545bdf4b082d0e, type: 3}
   m_Name: RootStatus
   m_EditorClassIdentifier: 
-  identifier: status_root
-  componentType:
+  createType:
     _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: status_root
   container: {fileID: 0}
   displayName: {fileID: 11400000, guid: 93b1319758abf8c4eb1635cf686e0464, type: 2}
   description: {fileID: 11400000, guid: 5413486dfcf31954c94d280424228d0e, type: 2}
@@ -27,6 +27,8 @@ MonoBehaviour:
     _value: 1
   hidden:
     _value: 0
-  turnDuration:
+  ticks:
     _value: 2
+    _other: 0
     _enabled: 1
+  tickMode: 0

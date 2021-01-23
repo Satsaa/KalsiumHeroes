@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2d7d3c08de69a4896bb7fb877d7ae1, type: 3}
   m_Name: CordialInvitationStatus
   m_EditorClassIdentifier: 
-  identifier: status_cordial_invitation
-  componentType:
+  createType:
     _name: CordialInvitationStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  identifier: status_cordial_invitation
   container: {fileID: 0}
   displayName: {fileID: 0}
   description: {fileID: 0}
@@ -28,9 +28,11 @@ MonoBehaviour:
     _value: 0
   hidden:
     _value: 0
-  turnDuration:
+  ticks:
     _value: 0
+    _other: 0
     _enabled: 0
+  tickMode: 0
   breakRange:
     _value: 4
   disgracefulBehaviour: {fileID: 11400000, guid: c88bd8570f9f47c4088667a325b84925, type: 2}
