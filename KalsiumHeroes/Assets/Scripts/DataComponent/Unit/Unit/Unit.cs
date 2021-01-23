@@ -35,13 +35,13 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 			v.team = team;
 			v.gameObject.transform.position = position;
 			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz(), v => v.unit == null);
-			if (nearTile) v.SetPosition(nearTile, true);
+			if (nearTile) v.SetTile(nearTile, true);
 		});
 	}
 
 	public static Unit Create(UnitData source, Tile tile) {
 		return Create<Unit>(source, v => {
-			v.SetPosition(tile, true);
+			v.SetTile(tile, true);
 		});
 	}
 
@@ -171,7 +171,7 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 		return pather(this, from, edge, to);
 	}
 
-	public bool SetPosition(Tile tile, bool reposition) {
+	public bool SetTile(Tile tile, bool reposition) {
 		if (tile.unit == null || tile.unit == this) {
 			if (this.tile != null) this.tile.unit = null;
 			tile.unit = this;

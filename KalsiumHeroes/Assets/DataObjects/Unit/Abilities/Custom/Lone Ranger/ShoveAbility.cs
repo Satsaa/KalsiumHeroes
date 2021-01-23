@@ -30,7 +30,7 @@ public class ShoveAbility : Ability {
 				ExecuteMoveOff(target, target.tile);
 				ExecuteMoveOver(target, target.tile, next);
 				ExecuteMoveOn(target, next);
-				target.SetPosition(next, true);
+				target.SetTile(next, true);
 			} else {
 				break;
 			}

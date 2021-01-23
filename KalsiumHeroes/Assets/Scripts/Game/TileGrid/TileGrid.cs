@@ -80,7 +80,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		DestroyTile(hex);
 		var res = CreateTile(hex, source);
 		if (unit) {
-			unit.SetPosition(res, false);
+			unit.SetTile(res, false);
 		}
 		return res;
 	}
