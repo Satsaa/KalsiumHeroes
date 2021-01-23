@@ -51,7 +51,17 @@ namespace Muc.Data {
 		}
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize() { }
-		void ISerializationCallbackReceiver.OnAfterDeserialize() => Update();
+		void ISerializationCallbackReceiver.OnAfterDeserialize() {
+			if (!String.IsNullOrEmpty(_name)) {
+				var nameWas = _name;
+				Update();
+				if (type == null) {
+					Debug.LogWarning($"Type for \"{nameWas}\" was not found.");
+				}
+			} else {
+				Update();
+			}
+		}
 	}
 
 	[Serializable]
