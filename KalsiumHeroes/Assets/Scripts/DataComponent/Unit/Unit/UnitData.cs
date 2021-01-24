@@ -44,4 +44,14 @@ public class UnitData : MasterData {
 
 	[Tooltip("Outgoing damage amplifications.")]
 	public Amps amps;
+
+	[Tooltip("Silenced units cannot cast spells."), HideInInspector]
+	public SeededAttribute<bool> silenced = new SeededAttribute<bool>();
+
+	[Tooltip("Disarmed units cannot cast weapon skills."), HideInInspector]
+	public SeededAttribute<bool> disarmed = new SeededAttribute<bool>();
+
+	[Tooltip("Rooted units cannot move."), HideInInspector]
+	public SeededAttribute<bool> rooted = new SeededAttribute<bool>();
+
 }

@@ -120,7 +120,11 @@ namespace Muc.Data {
 					position.xMin += EditorGUIUtility.labelWidth + spacing;
 				}
 				// Dropdown
-				var hint = new GUIContent(label) { text = value.type == null ? "null" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
+				var hint = new GUIContent(label) {
+					text = value.type == null
+						? String.IsNullOrWhiteSpace(value.name) ? "null" : $"Missing ({value.name})"
+						: $"{value.type} ({value.type.Assembly.GetName().Name})"
+				}; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
 					var types = value.GetValidTypes();
 					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(property, type));

@@ -23,7 +23,7 @@ public class HuntTheMarkAbility : Ability {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
-					if (tile.unit.silenced.value) tile.unit.DealCalculatedDamage(this, data.silenceDamage.value, data.damageType);
+					if (tile.unit.data.silenced.value) tile.unit.DealCalculatedDamage(this, data.silenceDamage.value, data.damageType);
 					else tile.unit.DealCalculatedDamage(this, data.normalDamage.value, data.damageType);
 					if (tile.unit.modifiers.Get<MarkOfPreyStatus>().Any()) tile.unit.modifiers.Get<MarkOfPreyStatus>().First().Remove();
 					unit.SetTile(FindClosestTile(tile.unit), true);

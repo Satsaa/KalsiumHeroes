@@ -108,8 +108,8 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public virtual bool IsReady() {
 		if (data.uses.enabled && data.uses.value <= 0) return false;
 		if (data.energyCost.value > unit.data.energy.value) return false;
-		if (data.abilityType == AbilityType.Spell && unit.silenced.value) return false;
-		if (data.abilityType == AbilityType.WeaponSkill && unit.disarmed.value) return false;
+		if (data.abilityType == AbilityType.Spell && unit.data.silenced.value) return false;
+		if (data.abilityType == AbilityType.WeaponSkill && unit.data.disarmed.value) return false;
 		if (data.charges.value > 0) return true;
 		return false;
 	}

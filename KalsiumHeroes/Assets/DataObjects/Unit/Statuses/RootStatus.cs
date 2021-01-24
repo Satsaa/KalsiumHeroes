@@ -7,7 +7,7 @@ public class RootStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.rooted.ConfigureAlterer(add, v => true);
+		unit.data.rooted.ConfigureAlterer(add, v => true);
 	}
 
 }

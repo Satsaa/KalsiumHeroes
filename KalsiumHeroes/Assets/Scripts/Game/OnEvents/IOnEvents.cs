@@ -1,4 +1,6 @@
 
+#nullable enable annotations
+
 public interface IOnEvent { }
 
 public interface IUnitOnEvent : IOnEvent { }
@@ -76,6 +78,10 @@ public interface IOnAnimationEventEnd : IGlobalOnEvent { void OnAnimationEventEn
 
 public interface IOnTargeterStart : IGlobalOnEvent { void OnTargeterStart(Targeter targeter); }
 public interface IOnTargeterEnd : IGlobalOnEvent { void OnTargeterEnd(); }
+
+public interface IOnChangePosition_Unit : IUnitOnEvent { void OnChangePosition(Tile? from, Tile to); }
+public interface IOnChangePosition_Tile : ITileOnEvent { void OnChangePosition(Unit unit, Tile? from, Tile to); }
+public interface IOnChangePosition_Global : IGlobalOnEvent { void OnChangePosition(Unit unit, Tile? from, Tile to); }
 
 public interface IOnMoveOn_Tile : ITileOnEvent { void OnMoveOn(Modifier reason, Unit unit); }
 public interface IOnMoveOn_Unit : IUnitOnEvent { void OnMoveOn(Modifier reason, Tile tile); }

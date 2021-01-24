@@ -7,7 +7,7 @@ public class SilenceStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.silenced.ConfigureAlterer(add, v => true);
+		unit.data.silenced.ConfigureAlterer(add, v => true);
 	}
 
 }

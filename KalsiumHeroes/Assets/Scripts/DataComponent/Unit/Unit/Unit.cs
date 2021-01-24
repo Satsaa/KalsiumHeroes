@@ -14,20 +14,11 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 	public override Type dataType => typeof(UnitData);
 	public static Type modifierDataType => typeof(UnitModifierData);
 
-	[Tooltip("Silenced units cannot cast spells.")]
-	public SeededAttribute<bool> silenced = new SeededAttribute<bool>();
-
-	[Tooltip("Disarmed units cannot cast weapon skills.")]
-	public SeededAttribute<bool> disarmed = new SeededAttribute<bool>();
-
-	[Tooltip("Rooted units cannot move.")]
-	public SeededAttribute<bool> rooted = new SeededAttribute<bool>();
-
+	[field: SerializeField]
+	public Tile tile { get; private set; }
 	public UnitActor actor;
 	public Canvas canvas;
 	public Team team;
-	[field: SerializeField]
-	public Tile tile { get; private set; }
 
 
 	public static Unit Create(UnitData source, Vector3 position, Team team) {
@@ -171,15 +162,20 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 		return pather(this, from, edge, to);
 	}
 
-	public bool SetTile(Tile tile, bool reposition) {
-		if (tile.unit == null || tile.unit == this) {
-			if (this.tile != null) this.tile.unit = null;
-			tile.unit = this;
-			this.tile = tile;
-			if (reposition) gameObject.transform.position = this.tile.center;
-			return true;
-		} else {
-			return tile.unit == this;
+	public void SetTile(Tile tile, bool reposition) {
+		if (tile.unit == this || this.tile == tile) return;
+		if (tile == null) throw new ArgumentNullException(nameof(tile));
+		if (tile.unit == null) throw new InvalidOperationException("Tile contains an Unit!");
+		var orig = this.tile;
+		if (this.tile != null) this.tile.unit = null;
+		tile.unit = this;
+		this.tile = tile;
+		if (reposition) gameObject.transform.position = this.tile.center;
+
+		using (var scope = new OnEvents.Scope()) {
+			this.onEvents.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
+			tile.onEvents.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
+			Game.onEvents.ForEach<IOnChangePosition_Global>(scope, v => v.OnChangePosition(this, orig, tile));
 		}
 	}
 
