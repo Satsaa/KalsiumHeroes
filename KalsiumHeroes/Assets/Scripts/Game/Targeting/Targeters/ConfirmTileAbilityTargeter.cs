@@ -8,7 +8,7 @@ public class ConfirmTileAbilityTargeter : AbilityTargeter {
 
 	public bool confirmed;
 
-	public ConfirmTileAbilityTargeter(Unit unit, Ability ability, Action<Targeter> onComplete, Action<Targeter> onCancel)
+	public ConfirmTileAbilityTargeter(Unit unit, TargetAbility ability, Action<Targeter> onComplete, Action<Targeter> onCancel)
 		: base(unit, ability, onComplete, onCancel) { }
 
 	public override bool IsCompleted() {

@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SideKickAbility : Ability {
+public class SideKickAbility : UnitTargetAbility {
 
 	public new SideKickAbilityData data => (SideKickAbilityData)_data;
 	public override Type dataType => typeof(SideKickAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var speed = unit.data.speed.value;
 			var movement = unit.data.movement.value;
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()].unit;
 			var aoe = GetAffectedArea(target);
 			var movementDamage = movement * data.movementDamageMultiplier.value;
 			var totalDamage = speed * data.speedDamageMultiplier.value + movementDamage;

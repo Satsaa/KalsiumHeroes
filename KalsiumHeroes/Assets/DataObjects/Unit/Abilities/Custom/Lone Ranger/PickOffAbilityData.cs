@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(PickOffAbilityData), menuName = "DataSources/Units/Lone Ranger/" + nameof(PickOffAbilityData))]
-public class PickOffAbilityData : AbilityData {
+public class PickOffAbilityData : UnitTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(PickOffAbility);
 

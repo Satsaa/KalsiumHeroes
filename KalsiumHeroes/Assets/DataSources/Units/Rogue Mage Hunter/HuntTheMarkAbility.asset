@@ -21,15 +21,6 @@ MonoBehaviour:
   description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
-  targetType: 12
-  range:
-    _value: 6
-    _enabled: 1
-  rangeMode: 0
-  radius:
-    _value: 0
-  requiresVision:
-    _value: 0
   energyCost:
     _value: 9
   cooldown:
@@ -43,6 +34,13 @@ MonoBehaviour:
     _enabled: 0
   allowMove:
     _value: 0
+  range:
+    _value: 6
+    _enabled: 1
+  rangeMode: 0
+  requiresVision:
+    _value: 0
+  targetType: 24
   normalDamage:
     _value: 30
   silenceDamage:

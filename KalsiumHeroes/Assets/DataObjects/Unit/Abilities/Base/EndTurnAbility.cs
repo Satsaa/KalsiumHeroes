@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndTurnAbility : Ability {
+public class EndTurnAbility : NoTargetAbility {
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) => default;
-
-	public override Targeter GetTargeter() {
-		return new InstantTargeter(
-			onComplete: t => Game.client.PostEvent(new Events.Turn())
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+		return new InstantAbilityHandler(msg, this, t =>
+			Game.client.PostEvent(new Events.Turn())
 		);
 	}
 }

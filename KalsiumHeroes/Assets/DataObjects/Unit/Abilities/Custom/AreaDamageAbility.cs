@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AreaDamageAbility : Ability {
+public class AreaDamageAbility : TileTargetAbility {
 
 	public new AreaDamageAbilityData data => (AreaDamageAbilityData)_data;
 	public override Type dataType => typeof(AreaDamageAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);

@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class CordialInvitationAbility : Ability {
+public class CordialInvitationAbility : UnitTargetAbility {
 
 	public new CordialInvitationAbilityData data => (CordialInvitationAbilityData)_data;
 	public override Type dataType => typeof(CordialInvitationAbilityData);
 
-	public override IEnumerable<Tile> GetTargets() {
-		return base.GetTargets().Where(v => v.unit && !v.unit.modifiers.Get<CordialInvitationStatus>().Any());
+	public override IEnumerable<Unit> GetTargets() {
+		return base.GetTargets().Where(v => !v.modifiers.Get<CordialInvitationStatus>().Any());
 	}
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()].unit;
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {

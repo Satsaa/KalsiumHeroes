@@ -4,22 +4,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HuntTheMarkAbility : Ability {
+public class HuntTheMarkAbility : UnitTargetAbility {
 
 	public new HuntTheMarkAbilityData data => (HuntTheMarkAbilityData)_data;
 	public override Type dataType => typeof(HuntTheMarkAbilityData);
 
-	public override IEnumerable<Tile> GetTargets() {
-		return base.GetTargets().Where(v => v.unit && TargetHasFreeTiles(v) && v.unit.modifiers.Get<MarkOfPreyStatus>().Any());
+	public override IEnumerable<Unit> GetTargets() {
+		return base.GetTargets().Where(v => v.modifiers.Contains<MarkOfPreyStatus>() && TargetHasFreeTiles(v));
 	}
 
 	public override bool IsReady() {
-		return base.IsReady() && Game.dataObjects.Get<MarkOfPreyStatus>().Where(v => v.unit != unit && TargetHasFreeTiles(v.unit.tile)).Any();
+		return base.IsReady() && Game.dataObjects.Get<MarkOfPreyStatus>().Any(v => v.unit != unit && TargetHasFreeTiles(v.unit));
 	}
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()].unit;
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) {
@@ -32,27 +32,28 @@ public class HuntTheMarkAbility : Ability {
 		});
 	}
 
-	bool TargetHasFreeTiles(Tile tile) {
-		bool freeTile = false;
-		var radius = Game.grid.Ring(tile, 1);
-		foreach (var hex in radius) {
-			if (!hex.unit && hex.data.passable.value) freeTile = true;
+	bool TargetHasFreeTiles(Unit target) {
+		var pather = unit.GetPather();
+		var tile = target.tile;
+		for (int i = 0; i < 6; i++) {
+			if (tile.PathTest(i, pather, unit)) return true;
 		}
-		return freeTile;
+		return false;
 	}
 
 	Tile FindClosestTile(Unit target) {
-		var targetTile = target.tile;
-		var radius = Game.grid.Ring(targetTile, 1);
-		var closestTile = radius.First();
-		foreach (var tile in radius) {
-			if (!tile.unit && tile.data.passable.value) {
-				var distanceA = Game.grid.Distance(closestTile, unit.tile);
-				var distanceB = Game.grid.Distance(tile, unit.tile);
-				if (distanceB < distanceA) closestTile = tile;
-				if (distanceA == distanceB && (closestTile.unit || closestTile.data.passable.value)) closestTile = tile;
+		var pather = unit.GetPather();
+		Tile closestTile = null;
+		float closestDist = float.PositiveInfinity;
+		for (int i = 0; i < 6; i++) {
+			if (target.tile.PathTest(i, pather, unit)) {
+				var tile = target.tile.GetNeighbor(i);
+				var distance = Game.grid.Distance(tile, unit.tile);
+				if (distance < closestDist) {
+					closestTile = tile;
+					closestDist = distance;
+				}
 			}
-			if (!tile.unit && (closestTile.unit || !closestTile.data.passable.value)) closestTile = tile;
 		}
 		return closestTile;
 	}

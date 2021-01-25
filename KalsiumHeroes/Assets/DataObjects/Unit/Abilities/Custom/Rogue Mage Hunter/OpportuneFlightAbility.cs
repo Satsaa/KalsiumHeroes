@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpportuneFlightAbility : Ability {
+public class OpportuneFlightAbility : TileTargetAbility {
 
 	public new OpportuneFlightAbilityData data => (OpportuneFlightAbilityData)_data;
 	public override Type dataType => typeof(OpportuneFlightAbilityData);
@@ -14,7 +14,7 @@ public class OpportuneFlightAbility : Ability {
 		return base.GetTargets().Where(v => Game.grid.Distance(unit.tile, v) == 1 && pather(unit, unit.tile, unit.tile.EdgeBetween(v), v));
 	}
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);

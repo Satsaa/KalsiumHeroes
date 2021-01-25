@@ -198,7 +198,14 @@ public class AbilityUIModifier : UnitModifier,
 				bgImage.enabled = false;
 				abilityButton.onClick.AddListener(() => {
 					if (ability.IsReady()) {
-						Game.targeting.TryStartTargeter(ability.GetTargeter());
+						switch (ability) {
+							case TargetAbility targ:
+								Game.targeting.TryStartTargeter(targ.GetTargeter());
+								break;
+							case NoTargetAbility notarg:
+								notarg.PostDefaultAbilityEvent();
+								break;
+						}
 					}
 				});
 			} else {

@@ -4,13 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAbility : Ability, IOnAbilityCastStart_Unit {
+public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 
 	[HideInInspector] public float usedMovement;
 	[HideInInspector, SerializeField] bool blocked;
 
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new MoveAbilityHandler(msg, this);
 	}
 
@@ -21,13 +21,13 @@ public class MoveAbility : Ability, IOnAbilityCastStart_Unit {
 		return (usedMovement - energyMovement) < unit.data.movement.value && base.IsReady();
 	}
 
-	protected override IEnumerable<Tile> GetTargets_GetRangeTargets(Tile tile) {
+	public override IEnumerable<Tile> GetTargets() {
 		var movement = unit.data.movement.value;
 		var freeMovement = movement - usedMovement;
 		var energyMovement = GetPaidMovement(movement, unit.data.energy.value);
 		var maxCost = freeMovement + energyMovement;
 		var rangeMode = data.rangeMode;
-		var res = Pathing.GetCostField(tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
+		var res = Pathing.GetCostField(unit.tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
 		return res.Where(v => !v.unit); // Ignore tiles with units
 	}
 
@@ -60,7 +60,7 @@ public class MoveAbility : Ability, IOnAbilityCastStart_Unit {
 		var freeMovement = movement - usedMovement;
 		var energyMovement = GetPaidMovement(movement, unit.data.energy.value);
 		return new MoveAbilityTargeter(unit, this, freeMovement, energyMovement,
-			onComplete: t => PostDefaultAbilityEvent(t.selections[0])
+			onComplete: t => PostDefaultAbilityEvent(t.selections.ToArray())
 		) { pather = Pathers.For(data.rangeMode), cc = CostCalculators.For(data.rangeMode) };
 	}
 

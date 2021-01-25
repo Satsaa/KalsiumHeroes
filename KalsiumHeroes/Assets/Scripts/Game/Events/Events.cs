@@ -71,10 +71,10 @@ public class Events {
 	[Serializable]
 	public class Ability : GameEvent {
 
-		/// <summary> ability id. </summary>
-		public string ability;
 		/// <summary> Tile of caster. </summary>
 		public Vector3Int unit;
+		/// <summary> ability id. </summary>
+		public string ability;
 		/// <summary> An ordered list of targeted tiles. </summary>
 		public Vector3Int[] targets;
 
@@ -82,7 +82,7 @@ public class Events {
 			Debug.Log($"{this.GetType().Name}: Called");
 			var unit = Game.grid.tiles[this.unit].unit;
 			var ability = unit.modifiers.Get<global::Ability>().First(a => a.data.identifier == this.ability);
-			EventHandler<Ability> abilityHandler = ability.CreateEventHandler(this);
+			EventHandler<Ability> abilityHandler = ability.CreateHandler(this);
 			ability.OnCast();
 			return abilityHandler;
 		}

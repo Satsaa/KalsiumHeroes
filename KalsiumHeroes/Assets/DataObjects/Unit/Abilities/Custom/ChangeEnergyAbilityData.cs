@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(ChangeEnergyAbilityData), menuName = "DataSources/Abilities/" + nameof(ChangeEnergyAbilityData))]
-public class ChangeEnergyAbilityData : AbilityData {
+public class ChangeEnergyAbilityData : UnitTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(ChangeEnergyAbility);
 

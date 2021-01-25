@@ -4,14 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthquakeAbility : Ability {
+public class EarthquakeAbility : NoTargetAbility {
 
 	public new EarthquakeAbilityData data => (EarthquakeAbilityData)_data;
 	public override Type dataType => typeof(EarthquakeAbilityData);
 
 	private static List<Unit> unitsFound = new List<Unit>();
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			GetAffectedUnits();
 		});

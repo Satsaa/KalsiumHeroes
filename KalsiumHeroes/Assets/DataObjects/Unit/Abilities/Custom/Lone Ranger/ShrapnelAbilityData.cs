@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(ShrapnelAbilityData), menuName = "DataSources/Units/Lone Ranger/" + nameof(ShrapnelAbilityData))]
-public class ShrapnelAbilityData : AbilityData {
+public class ShrapnelAbilityData : TileTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(ShrapnelAbility);
 

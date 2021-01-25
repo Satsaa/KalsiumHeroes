@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(SideKickAbilityData), menuName = "DataSources/Units/Speedrunner/" + nameof(SideKickAbilityData))]
-public class SideKickAbilityData : AbilityData {
+public class SideKickAbilityData : UnitTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(SideKickAbility);
 

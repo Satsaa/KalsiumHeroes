@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(CastigationOfCastingAbilityData), menuName = "DataSources/Units/Rogue Mage Hunter/" + nameof(CastigationOfCastingAbilityData))]
-public class CastigationOfCastingAbilityData : AbilityData {
+public class CastigationOfCastingAbilityData : UnitTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(CastigationOfCastingAbility);
 

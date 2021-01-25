@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Script: {fileID: 11500000, guid: f7faa7691cde67942a02f2c1e9343a97, type: 3}
   m_Name: EndTurnAbility
   m_EditorClassIdentifier: 
   createType:
@@ -29,8 +29,7 @@ MonoBehaviour:
     _value: 0
   requiresVision:
     _value: 0
-  energyCost:
-    _value: 0
+ue: 0
   cooldown:
     _value: 0
     _other: 0

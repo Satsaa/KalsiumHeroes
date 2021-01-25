@@ -7,9 +7,9 @@ using System.Linq;
 public class AbilityTargeter : Targeter {
 
 	public Unit unit;
-	public Ability ability;
+	public TargetAbility ability;
 
-	public AbilityTargeter(Unit unit, Ability ability, Action<Targeter> onComplete, Action<Targeter> onCancel = null) {
+	public AbilityTargeter(Unit unit, TargetAbility ability, Action<Targeter> onComplete, Action<Targeter> onCancel = null) {
 		this.unit = unit;
 		this.ability = ability;
 		this.onComplete = onComplete;
@@ -21,10 +21,24 @@ public class AbilityTargeter : Targeter {
 	}
 
 	public override HashSet<Tile> GetTargets() {
-		return new HashSet<Tile>(ability.GetTargets());
+		switch (ability) {
+			case TileTargetAbility ability:
+				return new HashSet<Tile>(ability.GetTargets());
+			case UnitTargetAbility ability:
+				return new HashSet<Tile>(ability.GetTargets().Select(v => v.tile));
+			default:
+				throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}");
+		}
 	}
 
 	public override HashSet<Tile> GetHover(Tile tile) {
-		return new HashSet<Tile>(ability.GetAffectedArea(tile));
+		switch (ability) {
+			case TileTargetAbility ability:
+				return new HashSet<Tile>(ability.GetAffectedArea(tile));
+			case UnitTargetAbility ability:
+				return new HashSet<Tile>(ability.GetAffectedArea(tile.unit));
+			default:
+				throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}");
+		}
 	}
 }

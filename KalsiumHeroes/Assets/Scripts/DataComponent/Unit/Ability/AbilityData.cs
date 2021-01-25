@@ -6,27 +6,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(AbilityData), menuName = "DataSources/" + nameof(AbilityData))]
-public class AbilityData : UnitModifierData {
+public abstract class AbilityData : UnitModifierData {
 
 	public override Type createTypeConstraint => typeof(Ability);
 
 	[Tooltip("Type of the ability.")]
 	public AbilityType abilityType;
-
-	[Tooltip("Types of valid targets.")]
-	public TargetType targetType;
-
-	[Tooltip("Cast range of the ability.")]
-	public ToggleAttribute<int> range = new ToggleAttribute<int>(1, true);
-
-	[Tooltip("How the range is determined.")]
-	public RangeMode rangeMode;
-
-	[Tooltip("Radius of the affected tiles around the target.")]
-	public Attribute<int> radius = new Attribute<int>(0);
-
-	[Tooltip("Only directly visible Tiles are valid in range?")]
-	public Attribute<bool> requiresVision = new Attribute<bool>(false);
 
 	[Tooltip("The amount of energy required to cast this ability.")]
 	public Attribute<int> energyCost = new Attribute<int>(0);

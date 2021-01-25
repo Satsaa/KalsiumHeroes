@@ -150,8 +150,13 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 		}
 	}
 
+	/// <summary> Gets the pather used by the first MoveAbility of this Unit. </summary>
+	public UnitPather GetPather() {
+		return UnitPathers.For(modifiers.First<MoveAbility>().data.rangeMode);
+	}
+
 	public bool CanMoveInDir(TileDir dir, out Tile dirTile) {
-		var pather = UnitPathers.For(modifiers.First<MoveAbility>().data.rangeMode);
+		var pather = GetPather();
 		return CanMoveInDir(dir, pather, out dirTile);
 	}
 	public bool CanMoveInDir(TileDir dir, UnitPather pather, out Tile dirTile) {
@@ -165,13 +170,16 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 	public void SetTile(Tile tile, bool reposition) {
 		if (tile.unit == this || this.tile == tile) return;
 		if (tile == null) throw new ArgumentNullException(nameof(tile));
-		if (tile.unit == null) throw new InvalidOperationException("Tile contains an Unit!");
+		if (tile.unit != null) throw new InvalidOperationException("Tile contains a Unit!");
+		if (removed) {
+			this.tile = tile;
+			return;
+		}
 		var orig = this.tile;
 		if (this.tile != null) this.tile.unit = null;
 		tile.unit = this;
 		this.tile = tile;
 		if (reposition) gameObject.transform.position = this.tile.center;
-
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
 			tile.onEvents.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));

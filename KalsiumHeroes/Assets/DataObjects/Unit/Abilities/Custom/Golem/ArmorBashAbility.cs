@@ -4,14 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmorBashAbility : Ability {
+public class ArmorBashAbility : UnitTargetAbility {
 
 	public new ArmorBashAbilityData data => (ArmorBashAbilityData)_data;
 	public override Type dataType => typeof(ArmorBashAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()].unit;
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				if (tile.unit) DealDamage(tile.unit, CalculateDamage(tile.unit), data.damageType);

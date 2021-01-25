@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(HealAbilityData), menuName = "DataSources/Abilities/" + nameof(HealAbilityData))]
-public class HealAbilityData : AbilityData {
+public class HealAbilityData : UnitTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(HealAbility);
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(AreaDamageAbilityData), menuName = "DataSources/Abilities/" + nameof(AreaDamageAbilityData))]
-public class AreaDamageAbilityData : AbilityData {
+public class AreaDamageAbilityData : TileTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(AreaDamageAbility);
 

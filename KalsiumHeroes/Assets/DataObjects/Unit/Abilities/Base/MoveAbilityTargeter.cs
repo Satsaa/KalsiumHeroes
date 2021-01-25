@@ -9,7 +9,7 @@ public class MoveAbilityTargeter : PathConfirmAbilityTargeter {
 	public float freeMovement;
 	public float paidMovement;
 
-	public MoveAbilityTargeter(Unit unit, Ability ability, float freeMovement, float paidMovement, Action<Targeter> onComplete, Action<Targeter> onCancel = null)
+	public MoveAbilityTargeter(Unit unit, TargetAbility ability, float freeMovement, float paidMovement, Action<Targeter> onComplete, Action<Targeter> onCancel = null)
 		: base(unit, ability, freeMovement + paidMovement, onComplete, onCancel) {
 		this.freeMovement = freeMovement;
 		this.paidMovement = paidMovement;

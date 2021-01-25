@@ -20,15 +20,6 @@ MonoBehaviour:
   description: {fileID: 11400000, guid: 9390fc83f3de8af40b2ca1552ad084f3, type: 2}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
-  targetType: 12
-  range:
-    _value: 1
-    _enabled: 1
-  rangeMode: 0
-  radius:
-    _value: 0
-  requiresVision:
-    _value: 0
   energyCost:
     _value: 0
   cooldown:
@@ -42,6 +33,13 @@ MonoBehaviour:
     _enabled: 0
   allowMove:
     _value: 0
+  range:
+    _value: 1
+    _enabled: 1
+  rangeMode: 0
+  requiresVision:
+    _value: 0
+  targetType: 24
   rootModifier: {fileID: 11400000, guid: 90fc7f84233e52446b3d2c46fd688605, type: 2}
   shoveDist:
     _value: 4

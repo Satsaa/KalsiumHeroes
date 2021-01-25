@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(EarthquakeAbilityData), menuName = "DataSources/Units/Golem/" + nameof(EarthquakeAbilityData))]
-public class EarthquakeAbilityData : AbilityData {
+public class EarthquakeAbilityData : NoTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(EarthquakeAbility);
 

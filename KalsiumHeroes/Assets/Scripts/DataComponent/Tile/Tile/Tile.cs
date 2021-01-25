@@ -141,6 +141,23 @@ public class Tile : Master<TileModifier, ITileOnEvent> {
 		if (neighbor) neighbor.SetEdge(new CircularInt(direction - 3, 6), edge, false);
 	}
 
+	public bool PathTest(int dir, UnitPather pather, Unit unit) => PathTest((TileDir)dir, pather, unit);
+	public bool PathTest(TileDir dir, UnitPather pather, Unit unit) {
+		var from = this;
+		var edge = GetEdge(dir);
+		var to = GetNeighbor(dir);
+		if (to == null) return false;
+		return pather(unit, from, edge, to);
+	}
+	public bool PathTest(int dir, Pather pather) => PathTest((TileDir)dir, pather);
+	public bool PathTest(TileDir dir, Pather pather) {
+		var from = this;
+		var edge = GetEdge(dir);
+		var to = GetNeighbor(dir);
+		if (to == null) return false;
+		return pather(from, edge, to);
+	}
+
 	public Edge EdgeBetween(Tile tile2) {
 		if (tile2 is null) throw new ArgumentNullException(nameof(tile2));
 		var dir = GetDir(tile2);

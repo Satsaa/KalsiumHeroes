@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(TargetWeakSpotAbilityData), menuName = "DataSources/Units/Duelist/" + nameof(TargetWeakSpotAbilityData))]
-public class TargetWeakSpotAbilityData : AbilityData {
+public class TargetWeakSpotAbilityData : UnitTargetAbilityData {
 	public override Type createTypeConstraint => typeof(TargetWeakSpotAbility);
 
 	public Attribute<float> damage;

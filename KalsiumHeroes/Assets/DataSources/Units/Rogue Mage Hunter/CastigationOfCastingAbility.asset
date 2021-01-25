@@ -21,15 +21,6 @@ MonoBehaviour:
   description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
-  targetType: 12
-  range:
-    _value: 5
-    _enabled: 1
-  rangeMode: 0
-  radius:
-    _value: 0
-  requiresVision:
-    _value: 0
   energyCost:
     _value: 5
   cooldown:
@@ -43,4 +34,11 @@ MonoBehaviour:
     _enabled: 0
   allowMove:
     _value: 0
+  range:
+    _value: 5
+    _enabled: 1
+  rangeMode: 0
+  requiresVision:
+    _value: 0
+  targetType: 24
   markOfCastigationModifier: {fileID: 11400000, guid: 3bfd885416a30824a82f108ed8e6621f, type: 2}

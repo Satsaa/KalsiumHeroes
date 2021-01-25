@@ -58,3 +58,9 @@ MonoBehaviour:
       _value: 0
     pure:
       _value: 0
+  silenced:
+    _value: 0
+  disarmed:
+    _value: 0
+  rooted:
+    _value: 0

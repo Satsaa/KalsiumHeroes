@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c38ed16769f65d4d867b2a1a31c72cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 65ca179e347beed4aadc00708c82330a, type: 3}
   m_Name: SpeedrunnerMoveAbility
   m_EditorClassIdentifier: 
   createType:
@@ -20,15 +20,6 @@ MonoBehaviour:
   description: {fileID: 11400000, guid: f334f53560641b34888c9b746921129e, type: 2}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 0
-  targetType: 1
-  range:
-    _value: 0
-    _enabled: 0
-  rangeMode: 3
-  radius:
-    _value: 0
-  requiresVision:
-    _value: 0
   energyCost:
     _value: 0
   cooldown:
@@ -42,3 +33,12 @@ MonoBehaviour:
     _enabled: 0
   allowMove:
     _value: 1
+  range:
+    _value: 0
+    _enabled: 0
+  rangeMode: 7
+  requiresVision:
+    _value: 0
+  radius:
+    _value: 0
+  targetType: 1

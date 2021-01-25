@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(ShoveAbilityData), menuName = "DataSources/Units/Lone Ranger/" + nameof(ShoveAbilityData))]
-public class ShoveAbilityData : AbilityData {
+public class ShoveAbilityData : UnitTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(ShoveAbility);
 

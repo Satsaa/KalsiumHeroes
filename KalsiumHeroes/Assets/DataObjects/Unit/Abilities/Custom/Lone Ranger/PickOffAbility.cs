@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PickOffAbility : Ability {
+public class PickOffAbility : UnitTargetAbility {
 
 	public new PickOffAbilityData data => (PickOffAbilityData)_data;
 	public override Type dataType => typeof(PickOffAbilityData);
 
-	public override EventHandler<Events.Ability> CreateEventHandler(Events.Ability msg) {
+	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var damage = data.damage.value;
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets.First()].unit;
 			var aoe = GetAffectedArea(target);
 			var finalDamage = CalculateDamage(damage);
 			foreach (var tile in aoe) {
