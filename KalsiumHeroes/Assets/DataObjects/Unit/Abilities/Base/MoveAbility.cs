@@ -28,7 +28,7 @@ public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 		var maxCost = freeMovement + energyMovement;
 		var rangeMode = data.rangeMode;
 		var res = Pathing.GetCostField(unit.tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
-		return res.Where(v => !v.unit); // Ignore tiles with units
+		return res;
 	}
 
 	public float GetPaidMovement(int movement, int energy) {

@@ -26,18 +26,18 @@ public abstract class UnitTargetAbility : TargetAbility {
 		bool self = (data.targetType & UnitTargetType.Self) != 0;
 		bool ally = (data.targetType & UnitTargetType.Ally) != 0;
 		bool enemy = (data.targetType & UnitTargetType.Enemy) != 0;
-		bool neutral = (data.targetType & UnitTargetType.Neutral) != 0;
 
 		var tiles = GetDefaultRangeTiles();
 		tiles = tiles.Where(h => {
-			if (h.unit == null) return false;
-			if (self && h.unit == unit) return true;
-			if (ally && h.unit.team == unit.team && h.unit != this.unit) return true;
-			if (enemy && h.unit.team != unit.team) return true;
-			if (neutral && h.unit.team == Team.Neutral && h.unit != this.unit) return true;
+			if (!h.hasUnits) return false;
+			// TODO: Unit based targeting
+			var tileUnit = h.units.First();
+			if (self && tileUnit == unit) return true;
+			if (ally && tileUnit.team == unit.team && tileUnit != this.unit) return true;
+			if (enemy && tileUnit.team != unit.team) return true;
 			return false;
 		});
 
-		return tiles.Select(v => v.unit);
+		return tiles.Select(v => v.units.First());
 	}
 }

@@ -11,7 +11,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public new AbilityData data => (AbilityData)_data;
 	public override Type dataType => typeof(AbilityData);
 
-	[HideInInspector, SerializeField] public bool isCasting = false;
+	[HideInInspector, SerializeField] public bool isCasting;
 
 	public abstract EventHandler<Events.Ability> CreateHandler(Events.Ability msg);
 

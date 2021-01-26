@@ -17,47 +17,43 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 		var start = Game.grid.tiles[msg.unit];
 		var end = Game.grid.tiles[msg.targets.First()];
 		Debug.Log("Handling move ability event!");
-		if (end.unit) {
-			Debug.LogError("Target Tile is blocked by a unit!");
-		} else {
-			var rangeMode = creator.data.rangeMode;
-			Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
-			animating = true;
-			index = -1;
-			pathObjects.Clear();
+		var rangeMode = creator.data.rangeMode;
+		Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
+		animating = true;
+		index = -1;
+		pathObjects.Clear();
 
-			var movement = creator.unit.data.movement.value;
-			var freeMovement = movement - creator.usedMovement;
-			var energyMovement = creator.GetPaidMovement(movement, creator.unit.data.energy.value);
+		var movement = creator.unit.data.movement.value;
+		var freeMovement = movement - creator.usedMovement;
+		var energyMovement = creator.GetPaidMovement(movement, creator.unit.data.energy.value);
 
-			var cost = result.tiles[result.closest].cost;
-			var energyPayment = creator.GetPaidMovementCost(cost, movement);
-			creator.unit.data.energy.value -= Mathf.FloorToInt(energyPayment);
-			creator.usedMovement += Mathf.Min(freeMovement, cost);
+		var cost = result.tiles[result.closest].cost;
+		var energyPayment = creator.GetPaidMovementCost(cost, movement);
+		creator.unit.data.energy.value -= Mathf.FloorToInt(energyPayment);
+		creator.usedMovement += Mathf.Min(freeMovement, cost);
 
-			// Build list of items to move to
-			{
-				Tile prev = null;
-				foreach (var tile in result.path) {
-					if (prev != null) {
-						var edge = tile.edges[tile.neighbors.ToList().FindIndex(v => v == prev)];
-						pathObjects.Add(edge);
-					}
-					pathObjects.Add(tile);
-					prev = tile;
+		// Build list of items to move to
+		{
+			Tile prev = null;
+			foreach (var tile in result.path) {
+				if (prev != null) {
+					var edge = tile.edges[tile.neighbors.ToList().FindIndex(v => v == prev)];
+					pathObjects.Add(edge);
 				}
+				pathObjects.Add(tile);
+				prev = tile;
 			}
-			var actor = creator.unit.actor;
-			var walkPositions = pathObjects.Select(v => v.transform.position).ToList();
-			for (int i = 0; i < walkPositions.Count; i++) {
-				if ((i + 1) % 2 == 0) {
-					var prev = walkPositions[i - 1];
-					var next = walkPositions[i + 1];
-					walkPositions[i] = Vector3.Lerp(prev, next, 0.5f);
-				}
-			}
-			actor.Walk(walkPositions);
 		}
+		var actor = creator.unit.actor;
+		var walkPositions = pathObjects.Select(v => v.transform.position).ToList();
+		for (int i = 0; i < walkPositions.Count; i++) {
+			if ((i + 1) % 2 == 0) {
+				var prev = walkPositions[i - 1];
+				var next = walkPositions[i + 1];
+				walkPositions[i] = Vector3.Lerp(prev, next, 0.5f);
+			}
+		}
+		actor.Walk(walkPositions);
 	}
 
 	public override void Update() {

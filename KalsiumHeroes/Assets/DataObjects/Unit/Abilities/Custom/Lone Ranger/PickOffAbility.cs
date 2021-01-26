@@ -11,70 +11,28 @@ public class PickOffAbility : UnitTargetAbility {
 
 	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var damage = data.damage.value;
-			var target = Game.grid.tiles[msg.targets.First()].unit;
+			var target = Game.grid.tiles[msg.targets.First()].units[msg.index];
 			var aoe = GetAffectedArea(target);
-			var finalDamage = CalculateDamage(damage);
+			var finalDamage = data.damage.value * GetMultiplier(target);
 			foreach (var tile in aoe) {
-				if (tile.unit) DealDamage(tile.unit, finalDamage, data.damageType);
+				foreach (var unit in tile.units) {
+					DealDamage(unit, finalDamage, data.damageType);
+				}
 			}
 		});
 	}
 
-	float CalculateDamage(float i) {
-		var multiplier = 1f;
-		var h = unit.tile;
-		var radius = Game.grid.Ring(h, 1);
-		bool foundUnit = false;
-		foreach (var tile in radius) {
-			if (tile.unit && tile.unit != this.unit) {
-				foundUnit = true;
-			}
-		}
-		if (foundUnit) {
-			Debug.Log("Unit found within range of 1. Damage dealt: " + i * multiplier + " Multiplier was " + multiplier);
-			return i * multiplier;
-		} else {
-			radius = Game.grid.Ring(h, 2);
-			foreach (var tile in radius) {
-				if (tile.unit && tile.unit != this.unit) {
-					foundUnit = true;
-				}
-			}
-			if (foundUnit) {
-				multiplier = data.bonusDamageMultipliers[0];
-				Debug.Log("Unit found within range of 2. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
-				return i * multiplier;
-			} else {
-				radius = Game.grid.Ring(h, 3);
-				foreach (var tile in radius) {
-					if (tile.unit && tile.unit != this.unit) {
-						foundUnit = true;
-					}
-				}
-				if (foundUnit) {
-					multiplier = data.bonusDamageMultipliers[1];
-					Debug.Log("Unit found within range of 3. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
-					return i * multiplier;
-				} else {
-					radius = Game.grid.Ring(h, 4);
-					foreach (var tile in radius) {
-						if (tile.unit && tile.unit != this.unit) {
-							foundUnit = true;
-						}
-					}
-					if (foundUnit) {
-						multiplier = data.bonusDamageMultipliers[2];
-						Debug.Log("Unit found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
-						return i * multiplier;
-					} else {
-						multiplier = data.bonusDamageMultipliers[3];
-						Debug.Log("No units found within range of 4. Damage dealt " + i * multiplier + " Multiplier was " + multiplier);
-						return i * multiplier;
-					}
+	float GetMultiplier(Unit target) {
+		for (int i = 0; i < data.multipliers.Length; i++) {
+			var mult = data.multipliers[i];
+			var ring = Game.grid.Ring(target.tile, i);
+			foreach (var tile in ring) {
+				if (tile.units.Any(v => data.multiplyingTypes.TargetIsCompatible(target, v))) {
+					return mult;
 				}
 			}
 		}
+		return data.multipliers.Last();
 	}
 
 }

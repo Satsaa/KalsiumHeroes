@@ -13,4 +13,7 @@ public class SpeedGainAbilityData : NoTargetAbilityData {
 
 	[Tooltip("This is the actual speed gain modifier gained from using the spell")]
 	public ModifierData speedGainModifier;
+
+	[Tooltip("Gain speed from units matching any of these unit target types.")]
+	public UnitTargetType teamType;
 }

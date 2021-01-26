@@ -21,15 +21,6 @@ MonoBehaviour:
   description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
-  targetType: 2
-  range:
-    _value: 1
-    _enabled: 0
-  rangeMode: 0
-  radius:
-    _value: 3
-  requiresVision:
-    _value: 0
   energyCost:
     _value: 9
   cooldown:
@@ -44,12 +35,17 @@ MonoBehaviour:
   allowMove:
     _value: 0
   damageType: 1
-  damage1:
-    _value: 40
-  rootModifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
-  damage2:
-    _value: 20
-  slowModifier2: {fileID: 11400000, guid: d8f394ef87492154c8e68d25312f7bbb, type: 2}
-  damage3:
-    _value: 10
-  slowModifier3: {fileID: 11400000, guid: 3d67f7ff942e6e64cbc4ea43f0e5e835, type: 2}
+  affected: 0
+  rings:
+  - damage:
+      _value: 80
+    modifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
+  - damage:
+      _value: 40
+    modifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
+  - damage:
+      _value: 20
+    modifier: {fileID: 11400000, guid: d8f394ef87492154c8e68d25312f7bbb, type: 2}
+  - damage:
+      _value: 10
+    modifier: {fileID: 11400000, guid: 3d67f7ff942e6e64cbc4ea43f0e5e835, type: 2}

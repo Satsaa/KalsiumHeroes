@@ -20,9 +20,13 @@ MonoBehaviour:
   description: {fileID: 0}
   sprite: {fileID: 0}
   passivesAreJustModifiers: 
-  increase1:
-    _value: 10
-  increase2:
-    _value: 5
-  increase3:
-    _value: 3
+  filter: 8
+  rings:
+  - increase:
+      _value: 0
+  - increase:
+      _value: 10
+  - increase:
+      _value: 5
+  - increase:
+      _value: 3

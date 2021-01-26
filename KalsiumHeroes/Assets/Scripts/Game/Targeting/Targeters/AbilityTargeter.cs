@@ -36,7 +36,8 @@ public class AbilityTargeter : Targeter {
 			case TileTargetAbility ability:
 				return new HashSet<Tile>(ability.GetAffectedArea(tile));
 			case UnitTargetAbility ability:
-				return new HashSet<Tile>(ability.GetAffectedArea(tile.unit));
+				if (tile.hasUnits) return new HashSet<Tile>(ability.GetAffectedArea(tile.units.First()));
+				else return new HashSet<Tile>();
 			default:
 				throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}");
 		}

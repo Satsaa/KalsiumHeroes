@@ -11,20 +11,14 @@ public class ShoveAbility : UnitTargetAbility {
 
 	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].unit;
-			var aoe = GetAffectedArea(target);
-			foreach (var tile in aoe) {
-				if (tile.unit) {
-					UnitModifier.Create(tile.unit, data.rootModifier);
-					Shove(tile);
-				}
-			}
+			var target = Game.grid.tiles[msg.targets.First()].units[msg.index];
+			UnitModifier.Create(target, data.rootModifier);
+			Shove(target);
 		});
 	}
 
-	void Shove(Tile tile) {
-		var target = tile.unit;
-		var dir = unit.tile.GetDir(tile);
+	void Shove(Unit target) {
+		var dir = unit.tile.GetDir(target.tile);
 		for (int i = 0; i < data.shoveDist.value; i++) {
 			if (target.CanMoveInDir(dir, out Tile next)) {
 				ExecuteMoveOff(target, target.tile);

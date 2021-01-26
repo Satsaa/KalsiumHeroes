@@ -28,7 +28,7 @@ public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 			Debug.Log("Shield took " + damage + " damage! More damage than shield had HP! Damage taken: " + damage);
 		}
 		if (shield.value <= 0) {
-			Debug.Log("Shield was destroyed!");
+			Debug.Log("Shield was removed!");
 			Remove();
 		}
 	}
@@ -38,7 +38,9 @@ public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 		var h = unit.tile;
 		var radius = Game.grid.Ring(h, data.explosionRadius.value);
 		foreach (var tile in radius) {
-			if (tile.unit) Modifier.Create(tile.unit, data.statusModifier);
+			foreach (var unit in tile.units) {
+				Modifier.Create(unit, data.modifier);
+			}
 		}
 		base.OnExpire();
 	}

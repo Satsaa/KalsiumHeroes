@@ -13,7 +13,9 @@ public class ShrapnelAbilityModifier : UnitModifier, IOnTurnStart_Unit {
 
 	public virtual void OnTurnStart() {
 		foreach (var tile in aoe) {
-			if (tile.unit) tile.unit.DealCalculatedDamage(creator, calculatedDamage, damageType);
+			foreach (var unit in tile.units) {
+				unit.DealCalculatedDamage(creator, calculatedDamage, damageType);
+			}
 		}
 		Debug.Log("Shrapnel?");
 		Remove();

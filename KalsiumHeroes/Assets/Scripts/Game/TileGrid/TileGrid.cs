@@ -73,14 +73,17 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	public Tile ReplaceTile(Hex hex, TileData source) {
-		Unit unit = default;
+		List<Unit> units = default;
 		if (tiles.TryGetValue(hex.pos, out var tile)) {
-			unit = tile.unit;
+			units = tile.units;
 		}
 		DestroyTile(hex);
 		var res = CreateTile(hex, source);
-		if (unit) {
-			unit.SetTile(res, false);
+		if (units != null) {
+			foreach (var unit in units) {
+				unit.SetTile(res, false);
+			}
+			res.units = units;
 		}
 		return res;
 	}

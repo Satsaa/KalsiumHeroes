@@ -31,9 +31,9 @@ public static class UnitPathers {
 		return edge.CanPass(unit, from, to);
 	}
 
-	/// <summary> Returns true if you can advance forward over the Edge and disallows advancing to Tiles with an Unit.</summary>
+	/// <summary> Returns true if you can advance forward over the Edge and disallows advancing to Tiles with a Unit.</summary>
 	public static bool Unphased(Unit unit, Tile from, Edge edge, Tile to) {
-		return to.unit == null && Phased(unit, from, edge, to);
+		return !to.hasUnits && Phased(unit, from, edge, to);
 	}
 
 	/// <summary> Returns true if you can advance forward AND backwards over the Edge.</summary>
@@ -48,7 +48,7 @@ public static class UnitPathers {
 
 	/// <summary> Returns true when there is no unit at Tile "to".</summary>
 	public static bool Flying(Unit unit, Tile from, Edge edge, Tile to) {
-		return to.unit == null;
+		return !to.hasUnits;
 	}
 
 	/// <summary> Returns true always (TM).</summary>

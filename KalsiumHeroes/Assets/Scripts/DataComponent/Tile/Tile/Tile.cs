@@ -8,17 +8,16 @@ using Muc.Extensions;
 using Muc.Numerics;
 
 [ExecuteAlways]
-public class Tile : Master<TileModifier, ITileOnEvent> {
+public class Tile : Master<TileModifier, TileModifierData, ITileOnEvent> {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
 	public new TileData source => (TileData)_source;
 	public new TileData data => (TileData)_data;
 	public override Type dataType => typeof(TileData);
-	public static Type modifierDataType => typeof(TileModifierData);
 
-
-	public Unit unit;
+	public bool hasUnits => units.Any();
+	public List<Unit> units;
 
 	public List<GraveUnit> graveyard;
 	[field: SerializeField] public Highlighter highlighter;

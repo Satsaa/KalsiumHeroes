@@ -17,11 +17,15 @@ public abstract class Modifier : DataObject {
 
 	[Tooltip("Master component for this Modifier."), SerializeField]
 	Master _master;
+
 	public Master master => _master;
 
 	/// <summary> Optional GameObject created for this Modifier </summary>
 	[field: SerializeField]
 	public GameObject container { get; private set; }
+
+	/// <summary> A virtual Modifier is wrapped by a Virtualizer which acts as a layer. </summary>
+	[HideInInspector, SerializeField] public bool virtualized;
 
 	/// <summary> Removes this Modifier </summary>
 	public void Remove() {

@@ -14,7 +14,9 @@ public class SpeedGainAbility : NoTargetAbility {
 			var unitsFound = 0;
 			var aoe = GetAffectedArea();
 			foreach (var tile in aoe) {
-				if (tile.unit && tile.unit != unit) unitsFound++;
+				foreach (var unit in tile.units) {
+					if (data.teamType.TargetIsCompatible(this.unit, unit)) unitsFound++;
+				}
 			}
 			SpeedGainStatus.Create(master, data.speedGainModifier, v => ((SpeedGainStatus)v).unitsFound = unitsFound);
 		});

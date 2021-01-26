@@ -73,6 +73,8 @@ public class Events {
 
 		/// <summary> Tile of caster. </summary>
 		public Vector3Int unit;
+		/// <summary> Index of Unit. </summary>
+		public int index;
 		/// <summary> ability id. </summary>
 		public string ability;
 		/// <summary> An ordered list of targeted tiles. </summary>
@@ -80,7 +82,7 @@ public class Events {
 
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
-			var unit = Game.grid.tiles[this.unit].unit;
+			var unit = Game.grid.tiles[this.unit].units[this.index];
 			var ability = unit.modifiers.Get<global::Ability>().First(a => a.data.identifier == this.ability);
 			EventHandler<Ability> abilityHandler = ability.CreateHandler(this);
 			ability.OnCast();

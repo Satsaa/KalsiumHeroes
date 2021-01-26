@@ -7,12 +7,11 @@ using Muc.Editor;
 using Muc.Extensions;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
+public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTurnStart_Unit {
 
 	public new UnitData source => (UnitData)_source;
 	public new UnitData data => (UnitData)_data;
 	public override Type dataType => typeof(UnitData);
-	public static Type modifierDataType => typeof(UnitModifierData);
 
 	[field: SerializeField]
 	public Tile tile { get; private set; }
@@ -25,8 +24,8 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 		return Create<Unit>(source, v => {
 			v.team = team;
 			v.gameObject.transform.position = position;
-			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz(), v => v.unit == null);
-			if (nearTile) v.SetTile(nearTile, true);
+			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz());
+			v.SetTile(nearTile, true);
 		});
 	}
 
@@ -114,7 +113,7 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 				tile.onEvents.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
 				Game.onEvents.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
 			}
-			tile.unit = null;
+			tile.units.Remove(this);
 			Destroy(gameObject);
 			tile.graveyard.Add(new GraveUnit(this));
 			Remove();
@@ -168,16 +167,14 @@ public class Unit : Master<UnitModifier, IUnitOnEvent>, IOnTurnStart_Unit {
 	}
 
 	public void SetTile(Tile tile, bool reposition) {
-		if (tile.unit == this || this.tile == tile) return;
 		if (tile == null) throw new ArgumentNullException(nameof(tile));
-		if (tile.unit != null) throw new InvalidOperationException("Tile contains a Unit!");
 		if (removed) {
 			this.tile = tile;
 			return;
 		}
 		var orig = this.tile;
-		if (this.tile != null) this.tile.unit = null;
-		tile.unit = this;
+		if (orig != null) orig.units.Remove(this);
+		tile.units.Add(this);
 		this.tile = tile;
 		if (reposition) gameObject.transform.position = this.tile.center;
 		using (var scope = new OnEvents.Scope()) {

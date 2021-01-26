@@ -27,9 +27,9 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public IEnumerable<T> Get<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			return val as HashSet<T>;
-		} else {
-			return new T[0];
+			foreach (T item in val as List<T>) {
+				yield return item;
+			}
 		}
 	}
 
@@ -37,7 +37,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public void Add<T>(T dataObject) where T : TObj {
 		var type = dataObject.GetType();
 		while (true) {
-			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			Type setType = typeof(List<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out var set)) {
 				dict[type] = set = Activator.CreateInstance(setType);
 			}
@@ -52,7 +52,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public void Remove(TObj dataObject) {
 		var type = dataObject.GetType();
 		while (true) {
-			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			Type setType = typeof(List<>).MakeGenericType(new[] { type });
 			var set = dict[type];
 			var method = setType.GetMethod("Remove");
 			method.Invoke(set, new object[] { dataObject });
@@ -65,7 +65,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public T First<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var res = (val as HashSet<T>).FirstOrDefault();
+			var res = (val as List<T>).FirstOrDefault();
 			if (res != null) return (T)res;
 		}
 		throw new InvalidOperationException($"No {nameof(Modifier)} of type {typeof(T).Name}.");
@@ -74,7 +74,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public T FirstOrDefault<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var res = (val as HashSet<T>).FirstOrDefault();
+			var res = (val as List<T>).FirstOrDefault();
 			return (T)res;
 		}
 		return default;
@@ -84,7 +84,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public bool Contains<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var set = val as HashSet<T>;
+			var set = val as List<T>;
 			return set.Count > 0;
 		}
 		return false;
@@ -120,7 +120,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 			var type = Type.GetType(keys[i]);
 			if (type == null) continue;
 			var comps = vals[i].components;
-			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
+			Type setType = typeof(List<>).MakeGenericType(new[] { type });
 			var set = dict[type] = Activator.CreateInstance(setType);
 			var method = setType.GetMethod("Add");
 			foreach (var comp in comps) {

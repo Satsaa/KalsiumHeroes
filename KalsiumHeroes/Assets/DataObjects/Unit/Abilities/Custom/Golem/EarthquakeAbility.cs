@@ -18,28 +18,16 @@ public class EarthquakeAbility : NoTargetAbility {
 	}
 
 	void GetAffectedUnits() {
-		var h = unit.tile;
-		var radius = Game.grid.Ring(h, 1);
-		foreach (var tile in radius) {
-			if (tile.unit && tile.unit != unit) {
-				unitsFound.Add(tile.unit);
-				tile.unit.DealCalculatedDamage(this, data.damage1.value, data.damageType);
-				Modifier.Create(tile.unit, data.rootModifier);
-			}
-		}
-		radius = Game.grid.Ring(h, 2);
-		foreach (var tile in radius) {
-			if (tile.unit && tile.unit != unit && !unitsFound.Contains(tile.unit)) {
-				unitsFound.Add(tile.unit);
-				tile.unit.DealCalculatedDamage(this, data.damage2.value, data.damageType);
-				Modifier.Create(tile.unit, data.slowModifier2);
-			}
-		}
-		radius = Game.grid.Ring(h, 3);
-		foreach (var tile in radius) {
-			if (tile.unit && tile.unit != unit && !unitsFound.Contains(tile.unit)) {
-				tile.unit.DealCalculatedDamage(this, data.damage3.value, data.damageType);
-				Modifier.Create(tile.unit, data.slowModifier3);
+		for (int i = 0; i < data.rings.Length; i++) {
+			var vals = data.rings[i];
+			if (vals.damage.value == 0 && vals.modifier == null) continue;
+			var ring = Game.grid.Ring(unit.tile, i);
+			foreach (var tile in ring) {
+				foreach (var unit in tile.units.Where(v => data.affected.TargetIsCompatible(unit, v))) {
+					unitsFound.Add(unit);
+					unit.DealCalculatedDamage(this, vals.damage.value, data.damageType);
+					Modifier.Create(unit, vals.modifier);
+				}
 			}
 		}
 		unitsFound.Clear();

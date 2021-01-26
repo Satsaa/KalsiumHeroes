@@ -7,11 +7,10 @@ using HexGrid;
 using Muc.Extensions;
 using Muc.Numerics;
 
-public class Edge : Master<EdgeModifier, IEdgeOnEvent> {
+public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
 
 	public new EdgeData data => (EdgeData)_data;
 	public override Type dataType => typeof(EdgeData);
-	public static Type modifierDataType => typeof(EdgeModifierData);
 
 	public Hex hex1;
 	public Hex hex2;

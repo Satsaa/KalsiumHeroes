@@ -2,24 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = nameof(EarthquakeAbilityData), menuName = "DataSources/Units/Golem/" + nameof(EarthquakeAbilityData))]
 public class EarthquakeAbilityData : NoTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(EarthquakeAbility);
 
-	[Header("Global Attributes")]
 	public DamageType damageType;
 
-	[Header("Range 1 Attributes")]
-	public Attribute<float> damage1;
-	public ModifierData rootModifier;
+	[Tooltip("Matching units get affected by this ability.")]
+	public UnitTargetType affected;
 
-	[Header("Range 2 Attributes")]
-	public Attribute<float> damage2;
-	public ModifierData slowModifier2;
+	[Tooltip("Values per ring around caster.")]
+	public RingValues[] rings;
 
-	[Header("Range 3 Attributes")]
-	public Attribute<float> damage3;
-	public ModifierData slowModifier3;
+	[Serializable]
+	public class RingValues {
+		public Attribute<float> damage;
+		public ModifierData modifier;
+	}
 }

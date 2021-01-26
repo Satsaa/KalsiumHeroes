@@ -36,7 +36,7 @@ MonoBehaviour:
   range:
     _value: 0
     _enabled: 0
-  rangeMode: 7
+  rangeMode: 8
   requiresVision:
     _value: 0
   radius:

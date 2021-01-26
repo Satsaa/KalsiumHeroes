@@ -8,10 +8,11 @@ using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public abstract class Master<TMod, TOnEvent> : Master where TMod : Modifier where TOnEvent : IOnEvent {
+public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Modifier where TModData : ModifierData where TOnEvent : IOnEvent {
 
 	public static Type modifierType => typeof(TMod);
 	public static Type onEventType => typeof(TOnEvent);
+	public static Type modifierDataType => typeof(TModData);
 
 	public ObjectDict<TMod> modifiers = new ObjectDict<TMod>();
 	public OnEvents<TOnEvent> onEvents = new OnEvents<TOnEvent>();

@@ -15,16 +15,16 @@ public class CordialInvitationAbility : UnitTargetAbility {
 
 	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].unit;
+			var target = Game.grid.tiles[msg.targets.First()].units[msg.index];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
-				if (tile.unit) {
-					var givenStatus = Modifier.Create<CordialInvitationStatus>(tile.unit, data.statusModifier);
+				foreach (var unit in tile.units) {
+					var givenStatus = Modifier.Create<CordialInvitationStatus>(unit, data.statusModifier);
 					var gainedStatus = Modifier.Create<CordialInvitationStatus>(this.unit, data.statusModifier);
 					givenStatus.data.opponentStatus = gainedStatus;
 					givenStatus.data.opponent = this.unit;
 					gainedStatus.data.opponentStatus = givenStatus;
-					gainedStatus.data.opponent = tile.unit;
+					gainedStatus.data.opponent = unit;
 					gainedStatus.data.duelCaster = this;
 				}
 			}

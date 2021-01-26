@@ -19,7 +19,6 @@ public class UnitItem : RoundStackItem {
 		unitImage.sprite = unit.data.portrait;
 		if (unitText) {
 			unitText.color = unit.team switch {
-				Team.Neutral => Color.yellow,
 				Team.Team1 => Color.green,
 				Team.Team2 => Color.red,
 				_ => Color.magenta,

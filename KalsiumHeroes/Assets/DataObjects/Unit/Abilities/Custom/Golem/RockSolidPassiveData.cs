@@ -5,12 +5,19 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(RockSolidPassiveData), menuName = "DataSources/Units/Golem/" + nameof(RockSolidPassiveData))]
 public class RockSolidPassiveData : PassiveData {
+
 	public override Type createTypeConstraint => typeof(RockSolidPassive);
 
-	[Tooltip("Increase Defense and Resistance from units in range of 1")]
-	public Attribute<int> increase1;
-	[Tooltip("Increase Defense and Resistance from units in range of 2")]
-	public Attribute<int> increase2;
-	[Tooltip("Increase Defense and Resistance from units in range of 3")]
-	public Attribute<int> increase3;
+	[Tooltip("Matching units give resistances.")]
+	public UnitTargetType filter;
+
+	[Tooltip("Rings around the caster and their values")]
+	public Ring[] rings;
+
+	[Serializable]
+	public class Ring {
+
+		[Tooltip("Added Defense and Resistance from units in this ring.")]
+		public Attribute<int> increase;
+	}
 }

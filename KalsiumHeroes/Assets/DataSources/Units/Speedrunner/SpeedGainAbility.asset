@@ -20,15 +20,6 @@ MonoBehaviour:
   description: {fileID: 11400000, guid: 1a1e43e122cc0e2408151a89f60edbd9, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
-  targetType: 2
-  range:
-    _value: 1
-    _enabled: 0
-  rangeMode: 0
-  radius:
-    _value: 2
-  requiresVision:
-    _value: 0
   energyCost:
     _value: 0
   cooldown:
@@ -42,4 +33,7 @@ MonoBehaviour:
     _enabled: 0
   allowMove:
     _value: 1
+  radius:
+    _value: 2
   speedGainModifier: {fileID: 11400000, guid: de7a0bea84f3d5d4e8e753f1a061c087, type: 2}
+  teamType: 8
