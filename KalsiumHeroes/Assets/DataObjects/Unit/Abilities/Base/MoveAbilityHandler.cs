@@ -14,7 +14,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 
 	public MoveAbilityHandler(Events.Ability msg, MoveAbility creator) : base(msg) {
 		this.creator = creator;
-		var start = Game.grid.tiles[msg.unit];
+		var start = Game.grid.tiles[msg.casterTile];
 		var end = Game.grid.tiles[msg.targets.First()];
 		Debug.Log("Handling move ability event!");
 		var rangeMode = creator.data.rangeMode;

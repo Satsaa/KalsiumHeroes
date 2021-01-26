@@ -13,7 +13,7 @@ public class SideKickAbility : UnitTargetAbility {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var speed = unit.data.speed.value;
 			var movement = unit.data.movement.value;
-			var target = Game.grid.tiles[msg.targets.First()].units[msg.index];
+			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
 			var aoe = GetAffectedArea(target);
 			var movementDamage = movement * data.movementDamageMultiplier.value;
 			var totalDamage = speed * data.speedDamageMultiplier.value + movementDamage;

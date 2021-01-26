@@ -72,18 +72,30 @@ public class Events {
 	public class Ability : GameEvent {
 
 		/// <summary> Tile of caster. </summary>
-		public Vector3Int unit;
+		public Vector3Int casterTile;
 		/// <summary> Index of Unit. </summary>
-		public int index;
-		/// <summary> ability id. </summary>
-		public string ability;
-		/// <summary> An ordered list of targeted tiles. </summary>
+		public int casterIndex;
+
+		/// <summary> Index of casted Ability. </summary>
+		public int abilityIndex;
+
+		/// <summary> An ordered list of targeted Tiles. </summary>
 		public Vector3Int[] targets;
+		/// <summary> Indexes of target Tiles. </summary>
+		public int[] targetIndexes;
+
+		public Ability(Vector3Int casterTile, int casterIndex, int abilityIndex, Vector3Int[] targets, int[] targetIndexes) {
+			this.casterTile = casterTile;
+			this.casterIndex = casterIndex;
+			this.abilityIndex = abilityIndex;
+			this.targets = targets;
+			this.targetIndexes = targetIndexes;
+		}
 
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
-			var unit = Game.grid.tiles[this.unit].units[this.index];
-			var ability = unit.modifiers.Get<global::Ability>().First(a => a.data.identifier == this.ability);
+			var unit = Game.grid.tiles[casterTile].units[casterIndex];
+			var ability = unit.modifiers.Get<global::Ability>().ToList()[abilityIndex];
 			EventHandler<Ability> abilityHandler = ability.CreateHandler(this);
 			ability.OnCast();
 			return abilityHandler;

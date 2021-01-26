@@ -11,7 +11,7 @@ public class ShoveAbility : UnitTargetAbility {
 
 	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].units[msg.index];
+			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
 			UnitModifier.Create(target, data.rootModifier);
 			Shove(target);
 		});

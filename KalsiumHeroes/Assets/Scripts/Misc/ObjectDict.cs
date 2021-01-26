@@ -37,12 +37,12 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public void Add<T>(T dataObject) where T : TObj {
 		var type = dataObject.GetType();
 		while (true) {
-			Type setType = typeof(List<>).MakeGenericType(new[] { type });
-			if (!dict.TryGetValue(type, out var set)) {
-				dict[type] = set = Activator.CreateInstance(setType);
+			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			if (!dict.TryGetValue(type, out var list)) {
+				dict[type] = list = Activator.CreateInstance(listType);
 			}
-			var method = setType.GetMethod("Add");
-			method.Invoke(set, new object[] { dataObject });
+			var method = listType.GetMethod("Add");
+			method.Invoke(list, new object[] { dataObject });
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
 		}
@@ -52,10 +52,10 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public void Remove(TObj dataObject) {
 		var type = dataObject.GetType();
 		while (true) {
-			Type setType = typeof(List<>).MakeGenericType(new[] { type });
-			var set = dict[type];
-			var method = setType.GetMethod("Remove");
-			method.Invoke(set, new object[] { dataObject });
+			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			var list = dict[type];
+			var method = listType.GetMethod("Remove");
+			method.Invoke(list, new object[] { dataObject });
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
 		}
@@ -80,12 +80,20 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 		return default;
 	}
 
+	public int IndexOf<T>(T element) where T : TObj {
+		var type = typeof(T);
+		if (dict.TryGetValue(type, out var val)) {
+			return (val as List<T>).IndexOf(element);
+		}
+		return -1;
+	}
+
 	/// <summary> Returns whether an Object of type T exists. </summary>
 	public bool Contains<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var set = val as List<T>;
-			return set.Count > 0;
+			var list = val as List<T>;
+			return list.Count > 0;
 		}
 		return false;
 	}
@@ -120,11 +128,11 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 			var type = Type.GetType(keys[i]);
 			if (type == null) continue;
 			var comps = vals[i].components;
-			Type setType = typeof(List<>).MakeGenericType(new[] { type });
-			var set = dict[type] = Activator.CreateInstance(setType);
-			var method = setType.GetMethod("Add");
+			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			var list = dict[type] = Activator.CreateInstance(listType);
+			var method = listType.GetMethod("Add");
 			foreach (var comp in comps) {
-				method.Invoke(set, new object[] { comp });
+				method.Invoke(list, new object[] { comp });
 			}
 		}
 		keys = null;
