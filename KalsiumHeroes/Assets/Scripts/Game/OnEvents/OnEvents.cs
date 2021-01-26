@@ -57,7 +57,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Returns IOnEvents of type T inside a new List. </summary>
 	public IEnumerable<T> Get<T>() where T : TBase {
 		if (dict.TryGetValue(typeof(T), out var val)) {
-			return new List<T>(val as HashSet<T>);
+			return new List<T>(val as List<T>);
 		} else {
 			return new List<T>();
 		}
@@ -66,22 +66,22 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Invokes action on all IOnEvents of type T. </summary>
 	public void ForEach<T>(Scope scope, Action<T> action) where T : TBase {
 		if (dict.TryGetValue(typeof(T), out var val)) {
-			var set = val as HashSet<T>;
-			var list = SharedList<T>.list;
-			var usingShared = list.Count == 0;
+			var list = val as List<T>;
+			var target = SharedList<T>.list;
+			var usingShared = target.Count == 0;
 			if (usingShared) {
-				list.AddRange(set);
+				target.AddRange(list);
 			} else {
-				list = new List<T>(set);
+				target = new List<T>(list);
 			}
 			try {
-				foreach (var v in list) {
+				foreach (var v in target) {
 					current = scope;
 					action(v);
 				}
 			} finally {
 				// Don't bother clearing if it was created on the spot.
-				if (usingShared) list.Clear();
+				if (usingShared) target.Clear();
 			}
 		}
 	}
@@ -89,22 +89,22 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Adds the OnEvents to the cache. </summary>
 	public void Add(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
-			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			if (!dict.TryGetValue(type, out object set)) {
-				dict[type] = set = Activator.CreateInstance(setType);
+			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			if (!dict.TryGetValue(type, out object list)) {
+				dict[type] = list = Activator.CreateInstance(listType);
 			}
-			var method = setType.GetMethod("Add");
-			method.Invoke(set, new object[] { obj });
+			var method = listType.GetMethod("Add");
+			method.Invoke(list, new object[] { obj });
 		}
 	}
 
 	/// <summary> Removes the OnEvents from the cache. </summary>
 	public void Remove(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
-			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			var set = dict[type];
-			var method = setType.GetMethod("Remove");
-			method.Invoke(set, new object[] { obj });
+			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			var list = dict[type];
+			var method = listType.GetMethod("Remove");
+			method.Invoke(list, new object[] { obj });
 		}
 	}
 
@@ -129,11 +129,11 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 		for (int i = 0; i < keys.Length; i++) {
 			var type = Type.GetType(keys[i]);
 			var objs = vals[i].objs;
-			Type setType = typeof(HashSet<>).MakeGenericType(new[] { type });
-			var set = dict[type] = Activator.CreateInstance(setType);
-			var method = setType.GetMethod("Add");
+			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			var list = dict[type] = Activator.CreateInstance(listType);
+			var method = listType.GetMethod("Add");
 			foreach (var obj in objs) {
-				method.Invoke(set, new object[] { obj });
+				method.Invoke(list, new object[] { obj });
 			}
 		}
 		keys = null;
