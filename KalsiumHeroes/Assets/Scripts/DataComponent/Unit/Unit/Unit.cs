@@ -197,6 +197,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 
 	void IOnTurnStart_Unit.OnTurnStart() {
 		if (Game.rounds.round <= 1) return;
+		Debug.Log(gameObject.name);
 		data.energy.value += data.energyRegen.value;
 		RefreshEnergy();
 	}

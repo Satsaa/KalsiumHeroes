@@ -84,14 +84,6 @@ public class Events {
 		/// <summary> Indexes of target Tiles. </summary>
 		public int[] targetIndexes;
 
-		public Ability(Vector3Int casterTile, int casterIndex, int abilityIndex, Vector3Int[] targets, int[] targetIndexes) {
-			this.casterTile = casterTile;
-			this.casterIndex = casterIndex;
-			this.abilityIndex = abilityIndex;
-			this.targets = targets;
-			this.targetIndexes = targetIndexes;
-		}
-
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
 			var unit = Game.grid.tiles[casterTile].units[casterIndex];

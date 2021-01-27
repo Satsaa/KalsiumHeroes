@@ -26,7 +26,8 @@ public class GridTester : MonoBehaviour {
 	public Draw draw;
 	public enum Draw {
 		None,
-		Line, SmartLine, Radius, Ring, Spiral,
+		Line, SmartLine,
+		Radius, Ring, Spiral,
 		Nearest, NearestSpiralSearch,
 		CostField, DistanceField,
 		Areas, Flood, Vision,
@@ -72,8 +73,8 @@ public class GridTesterEditor : Editor {
 		}
 
 		var distance = Hex.Distance(t.hoverHex, t.mainHex);
-		DrawTile(t.mainHex, ChangeAlpha(Color.red, 0.25f));
-		DrawTile(t.hoverHex, ChangeAlpha(Color.yellow, 0.25f));
+		DrawHex(t.mainHex, ChangeAlpha(Color.red, 0.25f));
+		DrawHex(t.hoverHex, ChangeAlpha(Color.yellow, 0.25f));
 
 
 		if ((t.draw == GridTester.Draw.Line || t.draw == GridTester.Draw.SmartLine)) {
@@ -182,16 +183,16 @@ public class GridTesterEditor : Editor {
 
 		Tile btnTile = null;
 		using (new EditorGUILayout.HorizontalScope()) {
-			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.UpLeft)))) if (GUILayout.Button(nameof(TileDir.UpLeft))) t.main = btnTile;
-			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.UpRight)))) if (GUILayout.Button(nameof(TileDir.UpRight))) t.main = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.UpLeft)))) if (GUILayout.Button(nameof(TileDir.UpLeft))) t.mainHex = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.UpRight)))) if (GUILayout.Button(nameof(TileDir.UpRight))) t.mainHex = btnTile;
 		}
 		using (new EditorGUILayout.HorizontalScope()) {
-			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.Left)))) if (GUILayout.Button(nameof(TileDir.Left))) t.main = btnTile;
-			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.Right)))) if (GUILayout.Button(nameof(TileDir.Right))) t.main = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.Left)))) if (GUILayout.Button(nameof(TileDir.Left))) t.mainHex = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.Right)))) if (GUILayout.Button(nameof(TileDir.Right))) t.mainHex = btnTile;
 		}
 		using (new EditorGUILayout.HorizontalScope()) {
-			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.DownLeft)))) if (GUILayout.Button(nameof(TileDir.DownLeft))) t.main = btnTile;
-			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.DownRight)))) if (GUILayout.Button(nameof(TileDir.DownRight))) t.main = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.DownLeft)))) if (GUILayout.Button(nameof(TileDir.DownLeft))) t.mainHex = btnTile;
+			using (new EditorGUI.DisabledGroupScope(!t.main || !(btnTile = t.main.GetNeighbor(TileDir.DownRight)))) if (GUILayout.Button(nameof(TileDir.DownRight))) t.mainHex = btnTile;
 		}
 
 		EditorGUILayout.Space();
@@ -201,7 +202,7 @@ public class GridTesterEditor : Editor {
 		}
 	}
 
-	private void DrawTile(Hex hex, Color color) {
+	private void DrawHex(Hex hex, Color color) {
 		var wsCorners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToList();
 		wsCorners.Add(wsCorners.First());
 		var array = wsCorners.ToArray();
@@ -213,7 +214,17 @@ public class GridTesterEditor : Editor {
 		}
 	}
 
-	public override bool RequiresConstantRepaint() => true;
+	private Vector3[] noAllocArray = new Vector3[7];
+	private void DrawTile(Tile tile, Color color) {
+		tile.corners.CopyTo(noAllocArray, 0);
+		noAllocArray[6] = noAllocArray[0];
+		using (ColorScope(color)) {
+			Handles.DrawAAConvexPolygon(noAllocArray);
+		}
+		using (ColorScope(Color.black)) {
+			Handles.DrawAAPolyLine(noAllocArray);
+		}
+	}
 
 	private Deferred ColorScope(Color color) {
 		var prevColor = Handles.color;

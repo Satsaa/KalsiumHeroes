@@ -38,8 +38,6 @@ public class GameTesterEditor : Editor {
 
 	GameTester t => (GameTester)target;
 
-	public override bool RequiresConstantRepaint() => true;
-
 	public int index => t.index;
 	Type[] types = Events.events.Values.ToArray();
 	string[] names = Events.events.Values.Select(t => $"{t.Name}").ToArray();
@@ -54,7 +52,7 @@ public class GameTesterEditor : Editor {
 		var dataType = types[index];
 
 		if (t.data == null || t.data.GetType() != dataType) {
-			var val = (GameEvent)Activator.CreateInstance(dataType);
+			var val = (GameEvent)Activator.CreateInstance(dataType, true);
 			val.eventNum = -1;
 			t.data = val;
 		}

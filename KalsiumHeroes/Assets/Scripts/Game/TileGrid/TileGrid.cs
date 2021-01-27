@@ -19,6 +19,8 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	[field: SerializeField]
 	public Vector2Int size { get; private set; }
 
+	public bool drawHexes;
+
 	public TileData defaultTile;
 	public EdgeData defaultEdge;
 
@@ -294,12 +296,13 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	/// <summary>
-	/// Returns an IEnumerable that enumerates existing Tiles in a line from start to end. When no Tile is found, tries again with the other nudge direction.
+	/// Returns an IEnumerable that enumerates existing Tiles in a line from start to end. When no Tile is found or the predicate return false, tries again with the other nudge direction.
 	/// </summary>
 	/// <param name="start">Start Hex</param>
 	/// <param name="end">End Hex</param>
-	/// <param name="altNudge">Use alternate opposite nudge direction? Edge cases will be nudged the other way.</param>
-	public IEnumerable<Tile> SmartLine(Hex start, Hex end) {
+	/// <param name="predicate">Determines whether a Tile is not avoided.</param>
+	public IEnumerable<Tile> SmartLine(Hex start, Hex end, Predicate<Tile> predicate = null) {
+		predicate = predicate ?? (h => true);
 		int dist = Hex.Distance(start, end);
 		var nudge = new Vector3(+1e-06f, +1e-06f, -2e-06f);
 		var altNudge = new Vector3(-1e-06f, -1e-06f, +2e-06f);
@@ -311,7 +314,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 
 		for (int i = 0; i < dist; i++) {
 			var hex = Hex.Lerp(startNudge, endNudge, 1f / dist * i);
-			if (tiles.TryGetValue(hex.Round().pos, out var res1)) {
+			if (tiles.TryGetValue(hex.Round().pos, out var res1) && predicate(res1)) {
 				yield return res1;
 			} else {
 				var altHex = Hex.Lerp(altStartNudge, altEndNudge, 1f / dist * i);
@@ -331,42 +334,8 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="target">The sighted Tile</param>
 	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>
 	public bool HasSight(Hex hex, Hex target, Predicate<Tile> predicate = null) {
-		predicate = predicate ?? (h => h.data.transparent.value);
-		int nudge = 0;
-		var lineA = Line(hex, target, false).GetEnumerator();
-		var lineB = Line(hex, target, true).GetEnumerator();
-
-		while (lineA.MoveNext() && lineB.MoveNext()) {
-			var a = lineA.Current;
-			var b = lineB.Current;
-			switch (nudge) {
-				case 1: {
-						if (Transparent(a)) continue;
-						else return false;
-					}
-				case 2: {
-						if (Transparent(b)) continue;
-						else return false;
-					}
-				default: {
-						var aPass = Transparent(a);
-						var bPass = Transparent(b);
-						if (aPass) {
-							if (!bPass) nudge = 1;
-							continue;
-						} else {
-							nudge = 2;
-							if (bPass) continue;
-							else return false;
-						}
-					}
-			}
-		}
-		return true;
-
-		bool Transparent(Tile a) {
-			return a == null || predicate(a);
-		}
+		predicate = predicate ?? (h => h == null || h.data.transparent.value);
+		return SmartLine(hex, target, v => predicate(v)).All(predicate.Invoke);
 	}
 
 	/// <summary>
@@ -375,9 +344,8 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="seeThrough">Predicate which determines if a Tile is see-through.</param>
 	public IEnumerable<Tile> Vision(Hex hex, int range, Predicate<Tile> seeThrough = null) {
 		var radius = Radius(hex, range);
-		var visible = new HashSet<Tile>();
 		foreach (var radiusTile in radius) {
-			if (HasSight(hex, radiusTile, seeThrough) && visible.Add(radiusTile)) yield return radiusTile;
+			if (HasSight(hex, radiusTile, seeThrough)) yield return radiusTile;
 		}
 	}
 
@@ -452,8 +420,7 @@ public class TileGridEditor : Editor {
 	TileGrid t => (TileGrid)target;
 
 	protected virtual void OnSceneGUI() {
-		var a = typeof(EditorGUI).GetMethod("HasVisibleChildFields", BindingFlags.NonPublic | BindingFlags.Static);
-		var b = a.GetParameters();
+		if (!t.drawHexes) return;
 		foreach (var kv in t.tiles) {
 			var tile = kv.Value;
 			var fillColor = (tile == null || tile.data == null) ? Color.magenta : (tile.data.passable.value ? (

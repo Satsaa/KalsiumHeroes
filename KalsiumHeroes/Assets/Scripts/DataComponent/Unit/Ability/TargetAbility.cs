@@ -15,13 +15,13 @@ public abstract class TargetAbility : Ability {
 	public virtual Targeter GetTargeter() {
 		return new AbilityTargeter(unit, this,
 			onComplete: (targeter) => Game.client.PostEvent(
-				new Events.Ability(
-					casterTile: unit.tile.hex.pos,
-					casterIndex: unit.tile.units.IndexOf(unit),
-					abilityIndex: unit.modifiers.IndexOf<Ability>(this),
-					targets: targeter.selections.Select(v => v.hex.pos).ToArray(),
-					targetIndexes: targeter.selections.Select(v => 0).ToArray() // Todo unit target index
-				)
+				new Events.Ability() {
+					casterTile = unit.tile.hex.pos,
+					casterIndex = unit.tile.units.IndexOf(unit),
+					abilityIndex = unit.modifiers.IndexOf<Ability>(this),
+					targets = targeter.selections.Select(v => v.hex.pos).ToArray(),
+					targetIndexes = targeter.selections.Select(v => 0).ToArray() // Todo unit target index
+				}
 			)
 		);
 	}

@@ -115,8 +115,8 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 		public ObjectArrayContainer(Object[] components) => this.components = components;
 	}
 
-	[SerializeField, HideInInspector] string[] keys;
-	[SerializeField, HideInInspector] ObjectArrayContainer[] vals;
+	[SerializeField] string[] keys;
+	[SerializeField] ObjectArrayContainer[] vals;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
 		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
