@@ -27,7 +27,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public IEnumerable<T> Get<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			foreach (T item in val as List<T>) {
+			foreach (T item in (List<T>)val) {
 				yield return item;
 			}
 		}
@@ -65,7 +65,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public T First<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var res = (val as List<T>).FirstOrDefault();
+			var res = ((List<T>)val).FirstOrDefault();
 			if (res != null) return (T)res;
 		}
 		throw new InvalidOperationException($"No {nameof(Modifier)} of type {typeof(T).Name}.");
@@ -74,16 +74,16 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public T FirstOrDefault<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var res = (val as List<T>).FirstOrDefault();
+			var res = ((List<T>)val).FirstOrDefault();
 			return (T)res;
 		}
 		return default;
 	}
 
-	public int IndexOf<T>(T element) where T : TObj {
+	public int IndexOf<T>(TObj element) where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			return (val as List<T>).IndexOf(element);
+			return ((List<T>)val).IndexOf((T)element);
 		}
 		return -1;
 	}
@@ -92,7 +92,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	public bool Contains<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var list = val as List<T>;
+			var list = (List<T>)val;
 			return list.Count > 0;
 		}
 		return false;

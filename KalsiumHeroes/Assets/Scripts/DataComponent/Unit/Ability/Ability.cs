@@ -116,7 +116,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 		Game.client.PostEvent(new Events.Ability(
 			casterTile: unit.tile.hex.pos,
 			casterIndex: unit.tile.units.IndexOf(unit),
-			abilityIndex: unit.modifiers.IndexOf(this),
+			abilityIndex: unit.modifiers.IndexOf<Ability>(this),
 			targets: targets.Select(v => v.hex.pos).ToArray(),
 			targetIndexes: targets.Select(v => 0).ToArray() // Todo unit target index
 		));

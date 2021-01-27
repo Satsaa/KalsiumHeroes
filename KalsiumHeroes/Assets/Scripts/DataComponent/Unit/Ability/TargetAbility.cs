@@ -18,7 +18,7 @@ public abstract class TargetAbility : Ability {
 				new Events.Ability(
 					casterTile: unit.tile.hex.pos,
 					casterIndex: unit.tile.units.IndexOf(unit),
-					abilityIndex: unit.modifiers.IndexOf(this),
+					abilityIndex: unit.modifiers.IndexOf<Ability>(this),
 					targets: targeter.selections.Select(v => v.hex.pos).ToArray(),
 					targetIndexes: targeter.selections.Select(v => 0).ToArray() // Todo unit target index
 				)
