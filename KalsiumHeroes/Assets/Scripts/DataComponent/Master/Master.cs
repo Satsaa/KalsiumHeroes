@@ -17,10 +17,13 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 	public ObjectDict<TMod> modifiers = new ObjectDict<TMod>();
 	public OnEvents<TOnEvent> onEvents = new OnEvents<TOnEvent>();
 
+	protected override void OnCreate() {
+		onEvents.Add(this);
+	}
+
 	public override void OnCreate(Modifier modifier) {
 		modifiers.Add<TMod>((TMod)modifier);
 		onEvents.Add(modifier);
-		onEvents.Add(this);
 	}
 
 	public override void OnRemove(Modifier modifier) {

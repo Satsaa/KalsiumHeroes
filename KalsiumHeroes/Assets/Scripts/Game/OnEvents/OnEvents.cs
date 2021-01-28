@@ -73,8 +73,16 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 			if (!dict.TryGetValue(type, out object list)) {
 				dict[type] = list = Activator.CreateInstance(listType);
 			}
-			var method = listType.GetMethod("Add");
-			method.Invoke(list, new object[] { obj });
+			var add = listType.GetMethod("Add");
+			add.Invoke(list, new object[] { obj });
+#if DEBUG
+			dynamic dynList = list;
+			var total = 0;
+			foreach (var item in dynList) {
+				if (item == obj) total++;
+			}
+			if (total > 1) Debug.Log($"Added {obj} to {type.Name}. Duplicates exist!");
+#endif
 		}
 	}
 
@@ -82,9 +90,12 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	public void Remove(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
-			var list = dict[type];
-			var method = listType.GetMethod("Remove");
-			method.Invoke(list, new object[] { obj });
+			if (dict.TryGetValue(type, out var list)) {
+				var remove = listType.GetMethod("Remove");
+				remove.Invoke(list, new object[] { obj });
+			} else {
+				Debug.LogWarning($"Couldn't remove {obj} from {type.Name} because the list for that type was missing!");
+			}
 		}
 	}
 
@@ -111,9 +122,9 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 			var objs = vals[i].objs;
 			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			var list = dict[type] = Activator.CreateInstance(listType);
-			var method = listType.GetMethod("Add");
+			var add = listType.GetMethod("Add");
 			foreach (var obj in objs) {
-				method.Invoke(list, new object[] { obj });
+				add.Invoke(list, new object[] { obj });
 			}
 		}
 		keys = null;

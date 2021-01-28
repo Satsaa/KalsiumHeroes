@@ -34,30 +34,44 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 	}
 
 	/// <summary> Adds the Object to the cache. </summary>
-	public void Add<T>(T dataObject) where T : TObj {
-		var type = dataObject.GetType();
+	public void Add<T>(T obj) where T : TObj {
+		var type = obj.GetType();
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out var list)) {
 				dict[type] = list = Activator.CreateInstance(listType);
 			}
-			var method = listType.GetMethod("Add");
-			method.Invoke(list, new object[] { dataObject });
+			var add = listType.GetMethod("Add");
+			add.Invoke(list, new object[] { obj });
+#if DEBUG
+			if (obj is Unit) {
+				dynamic dynList = list;
+				var total = 0;
+				foreach (var item in dynList) {
+					if (item == obj) {
+						total++;
+					}
+				}
+				if (total > 1) {
+					Debug.Log($"Added {obj} to {type.Name}. There is now {total} copies of it???");
+				}
+			}
+#endif
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
 		}
 	}
 
 	/// <summary> Removes the Object from the cache. </summary>
-	public void Remove(TObj dataObject) {
-		var type = dataObject.GetType();
+	public void Remove(TObj obj) {
+		var type = obj.GetType();
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			if (dict.TryGetValue(type, out var list)) {
-				var method = listType.GetMethod("Remove");
-				method.Invoke(list, new object[] { dataObject });
+				var remove = listType.GetMethod("Remove");
+				remove.Invoke(list, new object[] { obj });
 			} else {
-				Debug.LogWarning($"Couldn't remove {dataObject} from {type.Name} because the list for that type was missing!");
+				Debug.LogWarning($"Couldn't remove {obj} from {type.Name} because the list for that type was missing!");
 			}
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
@@ -83,10 +97,10 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 		return default;
 	}
 
-	public int IndexOf<T>(TObj element) where T : TObj {
+	public int IndexOf<T>(TObj obj) where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			return ((List<T>)val).IndexOf((T)element);
+			return ((List<T>)val).IndexOf((T)obj);
 		}
 		return -1;
 	}
@@ -133,9 +147,9 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 			var comps = vals[i].components;
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			var list = dict[type] = Activator.CreateInstance(listType);
-			var method = listType.GetMethod("Add");
+			var add = listType.GetMethod("Add");
 			foreach (var comp in comps) {
-				method.Invoke(list, new object[] { comp });
+				add.Invoke(list, new object[] { comp });
 			}
 		}
 		keys = null;
