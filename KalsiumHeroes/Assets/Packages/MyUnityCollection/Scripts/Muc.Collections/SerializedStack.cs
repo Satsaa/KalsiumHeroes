@@ -166,7 +166,7 @@ namespace Muc.Collections {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(SerializedStack<>), true)]
-	public class SerializedStackDrawer : PropertyDrawer {
+	internal class SerializedStackDrawer : PropertyDrawer {
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			var list = property.FindPropertyRelative("list");
@@ -177,8 +177,6 @@ namespace Muc.Collections {
 			using (PropertyScope(position, label, property, out label)) {
 				var list = property.FindPropertyRelative("list");
 				EditorGUI.PropertyField(position, list, label);
-				var skin = GUI.skin;
-				EditorGUI.DrawTextureTransparent(position, GUI.skin.box.normal.background);
 			}
 		}
 

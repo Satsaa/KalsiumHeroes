@@ -7,17 +7,9 @@ using System.Reflection;
 using System.Collections;
 using Object = UnityEngine.Object;
 using Muc;
+using Muc.Collections;
 
 public class OnEvents {
-
-	protected class SharedList<TBase> where TBase : IOnEvent {
-
-		/// <summary>
-		/// Shared list used when iterating to reduce allocations.
-		/// If the list contains items it is in use and a dedicated list should be used instead.
-		/// </summary>
-		public static List<TBase> list = new List<TBase>();
-	}
 
 	public class Scope : IDisposable {
 		public Scope() => active = true;
@@ -57,7 +49,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Returns IOnEvents of type T inside a new List. </summary>
 	public IEnumerable<T> Get<T>() where T : TBase {
 		if (dict.TryGetValue(typeof(T), out var val)) {
-			return new List<T>(val as List<T>);
+			return new List<T>(val as SafeList<T>);
 		} else {
 			return new List<T>();
 		}
@@ -66,22 +58,10 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Invokes action on all IOnEvents of type T. </summary>
 	public void ForEach<T>(Scope scope, Action<T> action) where T : TBase {
 		if (dict.TryGetValue(typeof(T), out var val)) {
-			var list = val as List<T>;
-			var target = SharedList<T>.list;
-			var usingShared = target.Count == 0;
-			if (usingShared) {
-				target.AddRange(list);
-			} else {
-				target = new List<T>(list);
-			}
-			try {
-				foreach (var v in target) {
-					current = scope;
-					action(v);
-				}
-			} finally {
-				// Don't bother clearing if it was created on the spot.
-				if (usingShared) target.Clear();
+			var list = val as SafeList<T>;
+			foreach (var v in list) {
+				current = scope;
+				action(v);
 			}
 		}
 	}
@@ -89,7 +69,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Adds the OnEvents to the cache. </summary>
 	public void Add(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
-			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out object list)) {
 				dict[type] = list = Activator.CreateInstance(listType);
 			}
@@ -101,7 +81,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 	/// <summary> Removes the OnEvents from the cache. </summary>
 	public void Remove(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
-			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			var list = dict[type];
 			var method = listType.GetMethod("Remove");
 			method.Invoke(list, new object[] { obj });
@@ -129,7 +109,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 		for (int i = 0; i < keys.Length; i++) {
 			var type = Type.GetType(keys[i]);
 			var objs = vals[i].objs;
-			Type listType = typeof(List<>).MakeGenericType(new[] { type });
+			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			var list = dict[type] = Activator.CreateInstance(listType);
 			var method = listType.GetMethod("Add");
 			foreach (var obj in objs) {

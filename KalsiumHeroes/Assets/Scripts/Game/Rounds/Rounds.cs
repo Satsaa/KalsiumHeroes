@@ -13,9 +13,12 @@ public class Rounds {
 	public Unit current {
 		get {
 			var res = units.LastOrDefault();
-			if (!res) {
+			if (res == null) {
 				Gather();
 				res = units.LastOrDefault();
+			} else if (res.removed) {
+				units.RemoveAt(units.Count - 1);
+				return current; // Recursive
 			}
 			return res;
 		}

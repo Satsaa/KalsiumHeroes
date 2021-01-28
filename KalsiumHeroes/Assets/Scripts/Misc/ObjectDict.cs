@@ -53,9 +53,12 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 		var type = dataObject.GetType();
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
-			var list = dict[type];
-			var method = listType.GetMethod("Remove");
-			method.Invoke(list, new object[] { dataObject });
+			if (dict.TryGetValue(type, out var list)) {
+				var method = listType.GetMethod("Remove");
+				method.Invoke(list, new object[] { dataObject });
+			} else {
+				Debug.LogWarning($"Couldn't remove {dataObject} from {type.Name} because the list for that type was missing!");
+			}
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
 		}

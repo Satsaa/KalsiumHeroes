@@ -6,6 +6,7 @@ using UnityEngine;
 using HexGrid;
 using Muc.Extensions;
 using Muc.Numerics;
+using Muc.Collections;
 
 [ExecuteAlways]
 public class Tile : Master<TileModifier, TileModifierData, ITileOnEvent> {
@@ -17,7 +18,7 @@ public class Tile : Master<TileModifier, TileModifierData, ITileOnEvent> {
 	public override Type dataType => typeof(TileData);
 
 	public bool hasUnits => units.Any();
-	public List<Unit> units;
+	public SafeList<Unit> units;
 
 	public List<GraveUnit> graveyard;
 	[field: SerializeField] public Highlighter highlighter;

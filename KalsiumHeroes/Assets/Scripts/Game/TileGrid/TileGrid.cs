@@ -60,7 +60,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 
 	protected void DestroyGrid() {
 		foreach (var tile in Game.grid.tiles.Values.ToList()) {
-			tile.Remove();
+			if (tile != null) tile.Remove();
 		}
 		foreach (var tile in FindObjectsOfType<Tile>()) {
 			ObjectUtil.Destroy(tile);
@@ -75,7 +75,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	}
 
 	public Tile ReplaceTile(Hex hex, TileData source) {
-		List<Unit> units = default;
+		Muc.Collections.SafeList<Unit> units = default;
 		if (tiles.TryGetValue(hex.pos, out var tile)) {
 			units = tile.units;
 		}

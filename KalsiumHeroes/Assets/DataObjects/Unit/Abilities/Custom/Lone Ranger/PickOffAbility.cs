@@ -15,7 +15,7 @@ public class PickOffAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			var finalDamage = data.damage.value * GetMultiplier(target);
 			foreach (var tile in aoe) {
-				foreach (var unit in tile.units.ToList()) {
+				foreach (var unit in tile.units) {
 					DealDamage(unit, finalDamage, data.damageType);
 				}
 			}
