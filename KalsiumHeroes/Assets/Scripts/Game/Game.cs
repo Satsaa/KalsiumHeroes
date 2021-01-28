@@ -6,7 +6,7 @@ using UnityEngine;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [DefaultExecutionOrder(-600)]
-[RequireComponent(typeof(TileGrid), typeof(Rounds), typeof(Targeting))]
+[RequireComponent(typeof(TileGrid), typeof(Targeting))]
 public class Game : MonoBehaviour {
 
 	public static Game instance => _instance;
@@ -49,6 +49,7 @@ public class Game : MonoBehaviour {
 
 	}
 
+	/// <summary> Removes removed DataObjects from the cache and destroys them </summary>
 	private void Flush() {
 		foreach (var dataObject in dataObjects.Get<Master>().Where(v => v.removed).ToList()) {
 			dataObjects.Remove(dataObject);
