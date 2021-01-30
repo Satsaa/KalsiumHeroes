@@ -43,7 +43,7 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 			}
 			var add = listType.GetMethod("Add");
 			add.Invoke(list, new object[] { obj });
-#if DEBUG
+#if DEBUG // Ensure no duplicates are created
 			if (obj is Unit) {
 				dynamic dynList = list;
 				var total = 0;

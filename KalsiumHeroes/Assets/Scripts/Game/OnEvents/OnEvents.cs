@@ -75,7 +75,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 			}
 			var add = listType.GetMethod("Add");
 			add.Invoke(list, new object[] { obj });
-#if DEBUG
+#if DEBUG // Ensure no duplicates are created
 			dynamic dynList = list;
 			var total = 0;
 			foreach (var item in dynList) {
