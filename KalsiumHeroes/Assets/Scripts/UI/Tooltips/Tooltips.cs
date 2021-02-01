@@ -78,10 +78,15 @@ public class Tooltips : MonoBehaviour {
 		Destroy(stack.Pop().gameObject);
 	}
 
-	public bool Show(string id, GameObject creator) {
+	public bool Show(string id, GameObject creator, Rect creatorRect) {
 		var tt = tooltips[id];
+		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
 		if (!stack.Any() || stack.Peek().id != id) {
 			if (stack.Any()) {
+				// Allow creating tooltips only from the top tooltip
 				var top = stack.Peek();
 				var isTopStack = false;
 				var parent = creator.transform;
@@ -94,13 +99,21 @@ public class Tooltips : MonoBehaviour {
 				}
 				if (!isTopStack) return false;
 			}
+
 			framesLeft = frameBuffer;
 			var go = Instantiate(tt, transform);
 			stack.Push(new StackItem(id, go));
 			var rt = (RectTransform)go.transform;
-			var x = Input.mousePosition.x;
-			var y = Input.mousePosition.y + rt.sizeDelta.y / 2;
+			var x = creatorRect.center.x;
+			var y = creatorRect.yMax + rt.pivot.y * rt.rect.height;
 			rt.position = rt.position.SetX(x).SetY(y);
+			var ssRect = RectTransformToScreenSpace(rt);
+			if (ssRect.yMax > Screen.height) {
+				// Position below instead
+				var bx = creatorRect.center.x;
+				var by = creatorRect.yMin - (1 - rt.pivot.y) * rt.rect.height;
+				rt.position = rt.position.SetX(bx).SetY(by);
+			}
 			return true;
 		} else {
 			framesLeft = frameBuffer;
@@ -108,4 +121,9 @@ public class Tooltips : MonoBehaviour {
 		return false;
 	}
 
+	// http://answers.unity.com/answers/1111759/view.html
+	static Rect RectTransformToScreenSpace(RectTransform transform) {
+		Vector2 size = Vector2.Scale(transform.rect.size, transform.lossyScale);
+		return new Rect((Vector2)transform.position - (size * 0.5f), size);
+	}
 }
