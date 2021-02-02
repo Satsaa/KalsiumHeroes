@@ -8,7 +8,10 @@ using Muc.Extensions;
 
 public class Window : MonoBehaviour {
 
-	public bool dragging = false;
+	[HideInInspector] public bool dragging = false;
+	public WindowContent content;
+	public List<WindowResizer> resizers;
+	public WindowToolbar toolbar;
 
 	[Flags]
 	public enum Edge {
@@ -20,7 +23,13 @@ public class Window : MonoBehaviour {
 
 	public RectTransform rectTransform => (RectTransform)transform;
 
-	public void Destroy() {
+	void Reset() {
+		content = GetComponentInChildren<WindowContent>(true);
+		GetComponentsInChildren<WindowResizer>(true, resizers);
+		toolbar = GetComponentInChildren<WindowToolbar>(true);
+	}
+
+	void OnDestroy() {
 		Destroy(gameObject);
 	}
 

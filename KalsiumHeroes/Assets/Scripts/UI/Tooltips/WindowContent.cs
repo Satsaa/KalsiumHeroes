@@ -13,6 +13,8 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(RectTransform))]
 public class WindowContent : UIBehaviour, ILayoutElement, ILayoutGroup, ILayoutController {
 
+	public Window window;
+
 	private RectTransform _rect;
 	protected RectTransform rectTransform => _rect == null ? _rect = GetComponent<RectTransform>() : _rect;
 
@@ -28,6 +30,11 @@ public class WindowContent : UIBehaviour, ILayoutElement, ILayoutGroup, ILayoutC
 	float ILayoutElement.preferredHeight => height;
 	float ILayoutElement.flexibleHeight => height;
 	int ILayoutElement.layoutPriority => 1;
+
+	protected new void Reset() {
+		base.Reset();
+		window = GetComponentInParent<Window>();
+	}
 
 	void ILayoutElement.CalculateLayoutInputHorizontal() {
 
@@ -61,12 +68,28 @@ public class WindowContent : UIBehaviour, ILayoutElement, ILayoutGroup, ILayoutC
 		}
 
 		if (children.Any()) {
-			width = 0;
-			height = 0;
+			var rect = Rect.MinMaxRect(float.PositiveInfinity, float.PositiveInfinity, float.NegativeInfinity, float.NegativeInfinity);
 			foreach (var child in children) {
-				width = Mathf.Max(width, child.localPosition.x + child.rect.xMax);
-				height = Mathf.Max(height, -child.localPosition.y - child.rect.yMin);
+				var pos = child.localPosition;
+				rect.min = new Vector2(
+					Mathf.Min(rect.min.x, pos.x + child.rect.min.x),
+					Mathf.Min(rect.min.y, -pos.y + -child.rect.max.y)
+				);
+				rect.max = new Vector2(
+					Mathf.Max(rect.max.x, pos.x + child.rect.max.x),
+					Mathf.Max(rect.max.y, -pos.y + -child.rect.min.y)
+				);
 			}
+			var neg = new Vector2(rect.min.x, rect.min.y);
+			if (neg != Vector2.zero) {
+				transform.Translate(neg.x, -neg.y, 0);
+				foreach (var child in children) {
+					child.Translate(-neg.x, neg.y, 0);
+				}
+			}
+			width = rect.width;
+			height = rect.height;
+
 		}
 	}
 

@@ -16,8 +16,8 @@ public class WindowResizer : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	public Vector2 cursorHotspot;
 
 	Vector2 lastMousePos;
-	bool dragging = false;
-	bool exited = false;
+	public bool dragging = false;
+	public bool exited = false;
 
 	void Reset() {
 		window = GetComponentInParent<Window>();
@@ -67,6 +67,12 @@ public class WindowResizer : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	public void OnPointerExit(PointerEventData eventData) {
 		exited = true;
+		if (!window.dragging) {
+			Cursor.SetCursor(null, cursorHotspot, CursorMode.Auto);
+		}
+	}
+
+	void OnDisable() {
 		if (!window.dragging) {
 			Cursor.SetCursor(null, cursorHotspot, CursorMode.Auto);
 		}
