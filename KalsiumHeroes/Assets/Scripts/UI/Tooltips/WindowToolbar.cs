@@ -11,6 +11,8 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
 	public Window window;
 
+	public RectTransform rectTransform => (RectTransform)transform;
+
 	Vector2 lastMousePos;
 	bool dragging = false;
 

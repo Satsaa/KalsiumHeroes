@@ -10,91 +10,41 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 
 [ExecuteAlways]
+[DefaultExecutionOrder(-1000)]
 [RequireComponent(typeof(RectTransform))]
-public class WindowContent : UIBehaviour, ILayoutElement, ILayoutGroup, ILayoutController {
+public class WindowContent : UIBehaviour {
 
-	public Window window;
+	public ScrollRect scrollRect;
+	public RectTransform contentRect;
+	public RectTransform contentParent;
 
-	private RectTransform _rect;
-	protected RectTransform rectTransform => _rect == null ? _rect = GetComponent<RectTransform>() : _rect;
+	public RectTransform rectTransform => (RectTransform)transform;
 
-	protected DrivenRectTransformTracker drivens;
-	private List<RectTransform> children = new List<RectTransform>();
+	public void LateUpdate() {
 
-	[SerializeField] float width = 100;
-	float ILayoutElement.minWidth => width;
-	float ILayoutElement.preferredWidth => width;
-	float ILayoutElement.flexibleWidth => width;
-	[SerializeField] float height = 100;
-	float ILayoutElement.minHeight => height;
-	float ILayoutElement.preferredHeight => height;
-	float ILayoutElement.flexibleHeight => height;
-	int ILayoutElement.layoutPriority => 1;
+		if (contentParent.childCount == 0) return;
 
-	protected new void Reset() {
-		base.Reset();
-		window = GetComponentInParent<Window>();
+		var rect = Rect.MinMaxRect(float.PositiveInfinity, float.PositiveInfinity, float.NegativeInfinity, float.NegativeInfinity);
+		foreach (RectTransform child in contentParent) {
+			var pos = child.localPosition;
+			rect.min = new Vector2(
+				Mathf.Min(rect.min.x, pos.x + child.rect.min.x),
+				Mathf.Min(rect.min.y, -pos.y + -child.rect.max.y)
+			);
+			rect.max = new Vector2(
+				Mathf.Max(rect.max.x, pos.x + child.rect.max.x),
+				Mathf.Max(rect.max.y, -pos.y + -child.rect.min.y)
+			);
+		}
+
+		contentRect.sizeDelta = new Vector2(rect.width, rect.height);
+
+		contentParent.localPosition = new Vector3(
+			(rect.width - scrollRect.viewport.rect.width) * (-scrollRect.horizontalScrollbar.value) - rect.xMin,
+			(rect.height - scrollRect.viewport.rect.height) * (scrollRect.verticalScrollbar.isActiveAndEnabled ? 2 - scrollRect.verticalScrollbar.value : 1) - rect.height + rect.yMin + scrollRect.viewport.rect.height,
+			contentParent.localPosition.z
+		);
+
 	}
-
-	void ILayoutElement.CalculateLayoutInputHorizontal() {
-
-		children.Clear();
-		var ignorers = ListPool<ILayoutIgnorer>.Get();
-		for (int i = 0; i < rectTransform.childCount; i++) {
-			var childRect = rectTransform.GetChild(i) as RectTransform;
-			if (childRect == null || !childRect.gameObject.activeInHierarchy)
-				continue;
-
-			childRect.GetComponents<ILayoutIgnorer>(ignorers);
-
-			if (ignorers.Count == 0) {
-				children.Add(childRect);
-				continue;
-			}
-
-			for (int j = 0; j < ignorers.Count; j++) {
-				var ignorer = ignorers[j];
-				if (!ignorer.ignoreLayout) {
-					children.Add(childRect);
-					break;
-				}
-			}
-		}
-		ListPool<ILayoutIgnorer>.Release(ignorers);
-
-		drivens.Clear();
-		foreach (var child in children) {
-			drivens.Add(this, child, DrivenTransformProperties.None);
-		}
-
-		if (children.Any()) {
-			var rect = Rect.MinMaxRect(float.PositiveInfinity, float.PositiveInfinity, float.NegativeInfinity, float.NegativeInfinity);
-			foreach (var child in children) {
-				var pos = child.localPosition;
-				rect.min = new Vector2(
-					Mathf.Min(rect.min.x, pos.x + child.rect.min.x),
-					Mathf.Min(rect.min.y, -pos.y + -child.rect.max.y)
-				);
-				rect.max = new Vector2(
-					Mathf.Max(rect.max.x, pos.x + child.rect.max.x),
-					Mathf.Max(rect.max.y, -pos.y + -child.rect.min.y)
-				);
-			}
-			var neg = new Vector2(rect.min.x, rect.min.y);
-			if (neg != Vector2.zero) {
-				transform.Translate(neg.x, -neg.y, 0);
-				foreach (var child in children) {
-					child.Translate(-neg.x, neg.y, 0);
-				}
-			}
-			width = rect.width;
-			height = rect.height;
-
-		}
-	}
-
-	void ILayoutElement.CalculateLayoutInputVertical() { }
-	void ILayoutController.SetLayoutHorizontal() { }
-	void ILayoutController.SetLayoutVertical() { }
 
 }

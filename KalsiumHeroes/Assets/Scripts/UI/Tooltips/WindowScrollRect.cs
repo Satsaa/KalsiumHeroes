@@ -11,7 +11,9 @@ using UnityEngine.UI;
 public class WindowScrollRect : ScrollRect {
 
 	public GameObject corner;
-	bool doCornerUpdate;
+	int doCornerUpdate;
+
+	public RectTransform rectTransform => (RectTransform)transform;
 
 	public override void CalculateLayoutInputHorizontal() {
 		base.CalculateLayoutInputHorizontal();
@@ -42,7 +44,7 @@ public class WindowScrollRect : ScrollRect {
 
 	public override void Rebuild(CanvasUpdate executing) {
 		base.Rebuild(executing);
-		doCornerUpdate = true;
+		doCornerUpdate++;
 	}
 
 	public override void SetLayoutHorizontal() {
@@ -59,9 +61,9 @@ public class WindowScrollRect : ScrollRect {
 
 	protected override void LateUpdate() {
 		base.LateUpdate();
-		if (doCornerUpdate) {
-			doCornerUpdate = false;
+		if (doCornerUpdate > 0) {
 			UpdateCorner();
+			doCornerUpdate--;
 		}
 	}
 
@@ -95,6 +97,7 @@ public class WindowScrollRect : ScrollRect {
 
 	protected override void OnRectTransformDimensionsChange() {
 		base.OnRectTransformDimensionsChange();
+		doCornerUpdate++;
 		UpdateCorner();
 	}
 
@@ -115,7 +118,7 @@ public class WindowScrollRect : ScrollRect {
 		if (corner) {
 			if (corner.TryGetComponent<WindowResizer>(out var res)) {
 				if (res.dragging) {
-					doCornerUpdate = true;
+					doCornerUpdate++;
 					return;
 				}
 			}

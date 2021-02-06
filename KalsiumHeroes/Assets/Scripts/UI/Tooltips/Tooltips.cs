@@ -17,12 +17,14 @@ public class Tooltips : MonoBehaviour {
 	class StackItem {
 		public string id;
 		public GameObject gameObject;
+		public bool isWindow;
 		public StackItem(string id, GameObject gameObject) { this.id = id; this.gameObject = gameObject; }
 	}
 	[SerializeField] SerializedStack<StackItem> stack;
 	[SerializeField] SerializedDictionary<string, GameObject> tooltips;
 	[SerializeField] int frameBuffer;
 	[SerializeField] int framesLeft;
+	[SerializeField] GameObject windowPrefab;
 
 	private void OnValidate() => Awake();
 	private void Awake() {
@@ -75,7 +77,26 @@ public class Tooltips : MonoBehaviour {
 		}
 	}
 	void Pop() {
-		Destroy(stack.Pop().gameObject);
+		var popped = stack.Pop();
+		if (popped.isWindow) {
+
+		} else {
+			Destroy(popped.gameObject);
+		}
+
+	}
+
+	public bool Windowize() {
+		if (!stack.Any()) return false;
+		var top = stack.Peek();
+		if (top.isWindow) return false;
+		top.isWindow = true;
+		var go = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, transform);
+		var window = go.GetComponent<Window>();
+		var tt = top.gameObject.GetComponent<Tooltip>();
+		tt.MoveContent(window.content.contentParent);
+		tt.transform.position = Vector3.zero;
+		return true;
 	}
 
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
