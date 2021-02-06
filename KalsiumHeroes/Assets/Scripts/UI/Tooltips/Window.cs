@@ -12,6 +12,7 @@ public class Window : MonoBehaviour {
 	public WindowContent content;
 	public List<WindowResizer> resizers;
 	public WindowToolbar toolbar;
+	public WindowScrollRect scrollRect;
 
 	[Flags]
 	public enum Edge {
@@ -27,6 +28,7 @@ public class Window : MonoBehaviour {
 		content = GetComponentInChildren<WindowContent>(true);
 		GetComponentsInChildren<WindowResizer>(true, resizers);
 		toolbar = GetComponentInChildren<WindowToolbar>(true);
+		scrollRect = GetComponentInChildren<WindowScrollRect>(true);
 	}
 
 	protected void Start() {

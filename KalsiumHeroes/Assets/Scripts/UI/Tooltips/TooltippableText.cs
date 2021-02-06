@@ -35,9 +35,11 @@ public class TooltippableText : TextMeshProUGUI, IPointerEnterHandler, IPointerE
 					}
 					rect.center += transform.position.xy();
 					if (rect.Contains(Input.mousePosition)) {
-						Tooltips.instance.Show(id, gameObject, rect);
-						if (Input.GetKeyDown(KeyCode.Mouse0)) {
-							Tooltips.instance.Windowize();
+						if (!Input.GetKey(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse0)) {
+							Tooltips.instance.Show(id, gameObject, rect);
+							if (Input.GetKeyDown(KeyCode.Mouse0)) {
+								Tooltips.instance.Windowize();
+							}
 						}
 					}
 				}

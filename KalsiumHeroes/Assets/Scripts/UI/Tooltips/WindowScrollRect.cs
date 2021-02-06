@@ -44,7 +44,7 @@ public class WindowScrollRect : ScrollRect {
 
 	public override void Rebuild(CanvasUpdate executing) {
 		base.Rebuild(executing);
-		doCornerUpdate++;
+		doCornerUpdate = 2;
 	}
 
 	public override void SetLayoutHorizontal() {
@@ -97,7 +97,7 @@ public class WindowScrollRect : ScrollRect {
 
 	protected override void OnRectTransformDimensionsChange() {
 		base.OnRectTransformDimensionsChange();
-		doCornerUpdate++;
+		doCornerUpdate = 2;
 		UpdateCorner();
 	}
 

@@ -20,9 +20,14 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 		window = GetComponentInParent<Window>();
 	}
 
+	void Start() {
+		window.transform.SetParent(Windows.instance.transform);
+	}
+
 	public void OnPointerDown(PointerEventData eventData) {
 		window.dragging = dragging = true;
 		lastMousePos = eventData.position;
+		Windows.instance.MoveToTop(window.transform);
 	}
 
 	public void Update() {

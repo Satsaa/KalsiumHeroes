@@ -8,6 +8,7 @@ using Muc.Collections;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
 
+[RequireComponent(typeof(Windows))]
 public class Tooltips : MonoBehaviour {
 
 	public static Tooltips instance => _instance;
@@ -91,11 +92,12 @@ public class Tooltips : MonoBehaviour {
 		var top = stack.Peek();
 		if (top.isWindow) return false;
 		top.isWindow = true;
-		var go = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, transform);
+		var go = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.instance.transform);
+		Windows.instance.MoveToTop(go.transform);
 		var window = go.GetComponent<Window>();
-		var tt = top.gameObject.GetComponent<Tooltip>();
+		var tt = top.gameObject.GetComponentInChildren<Tooltip>();
 		tt.MoveContent(window.content.contentParent);
-		tt.transform.position = Vector3.zero;
+		top.gameObject = go;
 		return true;
 	}
 
@@ -122,7 +124,8 @@ public class Tooltips : MonoBehaviour {
 			}
 
 			framesLeft = frameBuffer;
-			var go = Instantiate(tt, transform);
+			var go = Instantiate(tt, Windows.instance.transform);
+			Windows.instance.MoveToTop(go.transform);
 			stack.Push(new StackItem(id, go));
 			var rt = (RectTransform)go.transform;
 			var x = creatorRect.center.x;
