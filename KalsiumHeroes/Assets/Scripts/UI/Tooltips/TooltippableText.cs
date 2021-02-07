@@ -40,6 +40,8 @@ public class TooltippableText : TextMeshProUGUI, IPointerEnterHandler, IPointerE
 							if (Input.GetKeyDown(KeyCode.Mouse0)) {
 								Tooltips.instance.Windowize();
 							}
+						} else {
+							Tooltips.instance.Upkeep(id, gameObject, rect);
 						}
 					}
 				}

@@ -140,7 +140,7 @@ public class AbilityUIModifier : UnitModifier,
 		var pos = cam.WorldToScreenPoint(master.transform.position + data.wsOffset).Add(data.ssOffset);
 
 		// Clamp
-		var ssRect = RectTransformToScreenSpace(ui.areaConstraint);
+		var ssRect = ui.areaConstraint.ScreenRect();
 
 		// Clamp left
 		var minX = pos.x - width / 2f;
@@ -167,11 +167,6 @@ public class AbilityUIModifier : UnitModifier,
 
 		ui.parent.transform.position = pos;
 
-		// http://answers.unity.com/answers/1111759/view.html
-		static Rect RectTransformToScreenSpace(RectTransform transform) {
-			Vector2 size = Vector2.Scale(transform.rect.size, transform.lossyScale);
-			return new Rect((Vector2)transform.position - (size * 0.5f), size);
-		}
 	}
 
 

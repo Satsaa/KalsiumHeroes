@@ -101,6 +101,36 @@ public class Tooltips : MonoBehaviour {
 		return true;
 	}
 
+	public bool Upkeep(string id, GameObject creator, Rect creatorRect) {
+		var tt = tooltips[id];
+		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
+		if (!stack.Any() || stack.Peek().id != id) {
+			if (stack.Any()) {
+				// Allow creating tooltips only from the top tooltip
+				var top = stack.Peek();
+				var isTopStack = false;
+				var parent = creator.transform;
+				while (parent != null) {
+					if (parent == top.gameObject.transform) {
+						isTopStack = true;
+						break;
+					}
+					parent = parent.parent;
+				}
+				if (!isTopStack) return false;
+			}
+
+			framesLeft = frameBuffer;
+			return true;
+		} else {
+			framesLeft = frameBuffer;
+		}
+		return false;
+	}
+
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
 		var tt = tooltips[id];
 		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
@@ -131,7 +161,7 @@ public class Tooltips : MonoBehaviour {
 			var x = creatorRect.center.x;
 			var y = creatorRect.yMax + rt.pivot.y * rt.rect.height;
 			rt.position = rt.position.SetX(x).SetY(y);
-			var ssRect = RectTransformToScreenSpace(rt);
+			var ssRect = rt.ScreenRect();
 			if (ssRect.yMax > Screen.height) {
 				// Position below instead
 				var bx = creatorRect.center.x;
@@ -145,9 +175,4 @@ public class Tooltips : MonoBehaviour {
 		return false;
 	}
 
-	// http://answers.unity.com/answers/1111759/view.html
-	static Rect RectTransformToScreenSpace(RectTransform transform) {
-		Vector2 size = Vector2.Scale(transform.rect.size, transform.lossyScale);
-		return new Rect((Vector2)transform.position - (size * 0.5f), size);
-	}
 }

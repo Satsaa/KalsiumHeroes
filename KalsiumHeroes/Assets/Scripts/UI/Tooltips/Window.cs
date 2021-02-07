@@ -43,14 +43,21 @@ public class Window : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public void FitSize() {
+	public void FitSize(bool keepPosition = false) {
 		content.LateUpdate();
-		var contentRect = (content.contentRect.transform as RectTransform).rect;
+		var oldPos = toolbar.rectTransform.ScreenRect();
+		var rect = content.contentRect.rect;
 		rectTransform.sizeDelta = new Vector2(
-			contentRect.width,
-			contentRect.height + toolbar.rectTransform.rect.height
+			rect.width,
+			rect.height + toolbar.rectTransform.rect.height
 		);
+		if (keepPosition) {
+			var newPos = toolbar.rectTransform.ScreenRect();
+			var diff = new Vector3(newPos.xMin, newPos.yMax) - new Vector3(oldPos.xMin, oldPos.yMax);
+			transform.Translate(-diff);
+		}
 	}
+
 }
 
 #if UNITY_EDITOR

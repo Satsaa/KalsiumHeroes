@@ -15,6 +15,7 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
 	Vector2 lastMousePos;
 	bool dragging = false;
+	float lastClick = float.NegativeInfinity;
 
 	void Reset() {
 		window = GetComponentInParent<Window>();
@@ -25,9 +26,24 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
-		window.dragging = dragging = true;
-		lastMousePos = eventData.position;
-		Windows.instance.MoveToTop(window.transform);
+		switch (eventData.button) {
+
+			case PointerEventData.InputButton.Middle:
+				window.Destroy();
+				break;
+
+			case PointerEventData.InputButton.Left:
+				if (eventData.button == PointerEventData.InputButton.Left) {
+					if (Time.time < lastClick + Windows.instance.doubleClickTime) {
+						window.FitSize(true);
+					} else {
+						window.dragging = dragging = true;
+						lastMousePos = eventData.position;
+					}
+					lastClick = Time.time;
+				}
+				break;
+		}
 	}
 
 	public void Update() {
