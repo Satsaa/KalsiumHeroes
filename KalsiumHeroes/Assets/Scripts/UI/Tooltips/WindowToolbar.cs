@@ -36,10 +36,9 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 				if (eventData.button == PointerEventData.InputButton.Left) {
 					if (Time.time < lastClick + Windows.instance.doubleClickTime) {
 						window.FitSize(true);
-					} else {
-						window.dragging = dragging = true;
-						lastMousePos = eventData.position;
 					}
+					window.dragging = dragging = true;
+					lastMousePos = eventData.position;
 					lastClick = Time.time;
 				}
 				break;

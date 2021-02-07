@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using Muc.Extensions;
 
 [RequireComponent(typeof(Windows))]
+[DefaultExecutionOrder(-1)]
 public class Tooltips : MonoBehaviour {
 
 	public static Tooltips instance => _instance;
@@ -17,8 +18,8 @@ public class Tooltips : MonoBehaviour {
 	[Serializable]
 	class StackItem {
 		public string id;
+		public bool windowed;
 		public GameObject gameObject;
-		public bool isWindow;
 		public StackItem(string id, GameObject gameObject) { this.id = id; this.gameObject = gameObject; }
 	}
 	[SerializeField] SerializedStack<StackItem> stack;
@@ -29,7 +30,6 @@ public class Tooltips : MonoBehaviour {
 
 	private void OnValidate() => Awake();
 	private void Awake() {
-
 		if (_instance != null && _instance != this) {
 			Debug.LogError($"Multiple {nameof(Tooltips)} GameObjects. Exterminating.");
 			ObjectUtil.Destroy(this);
@@ -40,58 +40,52 @@ public class Tooltips : MonoBehaviour {
 
 	}
 
-	private List<RaycastResult> raycasts = new List<RaycastResult>();
 	void Update() {
 		if (stack.Any()) {
-			var top = stack.Peek();
-			var cur = EventSystem.current;
-			if (cur.IsPointerOverGameObject()) {
-				var ptrData = new PointerEventData(cur);
-				ptrData.position = Input.mousePosition;
-				cur.RaycastAll(ptrData, raycasts);
-				if (raycasts.Any()) {
-					var isTopStack = false;
-					var parent = raycasts.First().gameObject.transform;
-					while (parent != null) {
-						if (parent == top.gameObject.transform) {
-							isTopStack = true;
-							break;
-						}
-						parent = parent.parent;
-					}
-					if (isTopStack) {
-						framesLeft = frameBuffer;
-					} else {
-						TryPop();
-					}
-				}
+			if (IsTopHovered()) {
+				framesLeft = frameBuffer;
 			} else {
-				TryPop();
+				if (framesLeft <= 0) {
+					Pop();
+				}
+				framesLeft--;
 			}
-			framesLeft--;
 		}
 	}
 
-	void TryPop() {
-		if (framesLeft <= 0) {
-			Pop();
-		}
-	}
 	void Pop() {
+		Prune();
 		var popped = stack.Pop();
-		if (popped.isWindow) {
+		if (!popped.windowed) Destroy(popped.gameObject);
+	}
 
-		} else {
-			Destroy(popped.gameObject);
+	void Prune() {
+		if (!stack.Any()) return;
+		while (!stack.Peek().gameObject) {
+			stack.Pop();
 		}
+	}
 
+	StackItem Peek() {
+		Prune();
+		return stack.Peek();
+	}
+
+	void Push(StackItem item) {
+		Prune();
+		stack.Push(item);
+	}
+
+	bool Any() {
+		Prune();
+		return stack.Any();
 	}
 
 	public bool Windowize() {
-		if (!stack.Any()) return false;
-		var top = stack.Peek();
-		if (top.isWindow) return false;
-		top.isWindow = true;
+		if (!Any()) return false;
+		var top = Peek();
+		if (top.windowed) return false;
+		top.windowed = true;
 		var go = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.instance.transform);
 		Windows.instance.MoveToTop(go.transform);
 		var window = go.GetComponent<Window>();
@@ -103,26 +97,8 @@ public class Tooltips : MonoBehaviour {
 
 	public bool Upkeep(string id, GameObject creator, Rect creatorRect) {
 		var tt = tooltips[id];
-		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
-		if (!stack.Any() || stack.Peek().id != id) {
-			if (stack.Any()) {
-				// Allow creating tooltips only from the top tooltip
-				var top = stack.Peek();
-				var isTopStack = false;
-				var parent = creator.transform;
-				while (parent != null) {
-					if (parent == top.gameObject.transform) {
-						isTopStack = true;
-						break;
-					}
-					parent = parent.parent;
-				}
-				if (!isTopStack) return false;
-			}
-
+		if (!Any() || Peek().id != id) {
+			if (Any() && !IsTopHovered()) return false;
 			framesLeft = frameBuffer;
 			return true;
 		} else {
@@ -133,37 +109,18 @@ public class Tooltips : MonoBehaviour {
 
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
 		var tt = tooltips[id];
-		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
-		if (!stack.Any() || stack.Peek().id != id) {
-			if (stack.Any()) {
-				// Allow creating tooltips only from the top tooltip
-				var top = stack.Peek();
-				var isTopStack = false;
-				var parent = creator.transform;
-				while (parent != null) {
-					if (parent == top.gameObject.transform) {
-						isTopStack = true;
-						break;
-					}
-					parent = parent.parent;
-				}
-				if (!isTopStack) return false;
-			}
-
+		if (!Any() || Peek().id != id) {
+			if (Any() && !IsTopHovered()) return false;
 			framesLeft = frameBuffer;
 			var go = Instantiate(tt, Windows.instance.transform);
 			Windows.instance.MoveToTop(go.transform);
-			stack.Push(new StackItem(id, go));
+			Push(new StackItem(id, go));
 			var rt = (RectTransform)go.transform;
 			var x = creatorRect.center.x;
 			var y = creatorRect.yMax + rt.pivot.y * rt.rect.height;
 			rt.position = rt.position.SetX(x).SetY(y);
 			var ssRect = rt.ScreenRect();
-			if (ssRect.yMax > Screen.height) {
-				// Position below instead
+			if (ssRect.yMax > Screen.height) { // Clips screen top?
 				var bx = creatorRect.center.x;
 				var by = creatorRect.yMin - (1 - rt.pivot.y) * rt.rect.height;
 				rt.position = rt.position.SetX(bx).SetY(by);
@@ -175,4 +132,25 @@ public class Tooltips : MonoBehaviour {
 		return false;
 	}
 
+	private List<RaycastResult> raycasts = new List<RaycastResult>();
+	private bool IsTopHovered() {
+		if (Any()) {
+			var e = EventSystem.current;
+			if (e.IsPointerOverGameObject()) {
+				var eData = new PointerEventData(e) {
+					position = Input.mousePosition
+				};
+				e.RaycastAll(eData, raycasts);
+				var parent = raycasts.First().gameObject.transform;
+				var top = Peek();
+				while (parent != null) {
+					if (parent == top.gameObject.transform) {
+						return true;
+					}
+					parent = parent.parent;
+				}
+			}
+		}
+		return false;
+	}
 }
