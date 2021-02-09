@@ -7,6 +7,7 @@ using Object = UnityEngine.Object;
 using Muc.Collections;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
+using Muc.Time;
 
 [RequireComponent(typeof(Windows))]
 [DefaultExecutionOrder(-1)]
@@ -24,9 +25,13 @@ public class Tooltips : MonoBehaviour {
 	}
 	[SerializeField] SerializedStack<StackItem> stack;
 	[SerializeField] SerializedDictionary<string, GameObject> tooltips;
-	[SerializeField] int frameBuffer;
-	[SerializeField] int framesLeft;
 	[SerializeField] GameObject windowPrefab;
+	private FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
+	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
+	[SerializeField] Timeout showDelay = new Timeout(0.5f, true);
+	private int lastPing = -1;
+	private string lastId;
+	private bool quickSwitch;
 
 	private void OnValidate() => Awake();
 	private void Awake() {
@@ -35,21 +40,29 @@ public class Tooltips : MonoBehaviour {
 			ObjectUtil.Destroy(this);
 			return;
 		}
-
 		_instance = this;
-
 	}
 
 	void Update() {
 		if (stack.Any()) {
 			if (IsTopHovered()) {
-				framesLeft = frameBuffer;
+				hideFrameDelay.Reset(true);
+				hideDelay.Reset(true);
 			} else {
-				if (framesLeft <= 0) {
-					Pop();
+				hideDelay.paused = false;
+				hideFrameDelay.paused = false;
+				quickSwitch = (lastPing == Time.frameCount || lastPing + 1 == Time.frameCount) && lastId != Peek().id;
+				if (hideDelay.expired || quickSwitch) {
+					if (hideFrameDelay.expired || quickSwitch) {
+						Pop();
+						showDelay.Reset(true);
+						Update();
+						return;
+					}
 				}
-				framesLeft--;
 			}
+		} else if (lastPing + 1 < Time.frameCount) {
+			showDelay.Reset();
 		}
 	}
 
@@ -95,23 +108,37 @@ public class Tooltips : MonoBehaviour {
 		return true;
 	}
 
-	public bool Upkeep(string id, GameObject creator, Rect creatorRect) {
+	public bool Ping(string id, GameObject creator, Rect creatorRect) {
 		var tt = tooltips[id];
+		lastId = id;
+		lastPing = Time.frameCount;
 		if (!Any() || Peek().id != id) {
 			if (Any() && !IsTopHovered()) return false;
-			framesLeft = frameBuffer;
+			hideFrameDelay.Reset(true);
+			hideDelay.Reset(true);
 			return true;
 		} else {
-			framesLeft = frameBuffer;
+			hideFrameDelay.Reset(true);
+			hideDelay.Reset(true);
+			showDelay.Reset(true);
 		}
 		return false;
 	}
 
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
 		var tt = tooltips[id];
+		lastId = id;
+		showDelay.paused = false;
+		if (showDelay.expired || quickSwitch) {
+			showDelay.Reset(true);
+		} else {
+			Ping(id, creator, creatorRect);
+			return false;
+		}
 		if (!Any() || Peek().id != id) {
 			if (Any() && !IsTopHovered()) return false;
-			framesLeft = frameBuffer;
+			hideFrameDelay.Reset(true);
+			hideDelay.Reset(true);
 			var go = Instantiate(tt, Windows.instance.transform);
 			Windows.instance.MoveToTop(go.transform);
 			Push(new StackItem(id, go));
@@ -127,7 +154,8 @@ public class Tooltips : MonoBehaviour {
 			}
 			return true;
 		} else {
-			framesLeft = frameBuffer;
+			hideFrameDelay.Reset(true);
+			hideDelay.Reset(true);
 		}
 		return false;
 	}

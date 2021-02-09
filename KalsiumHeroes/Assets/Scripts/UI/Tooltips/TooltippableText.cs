@@ -41,7 +41,7 @@ public class TooltippableText : TextMeshProUGUI, IPointerEnterHandler, IPointerE
 								Tooltips.instance.Windowize();
 							}
 						} else {
-							Tooltips.instance.Upkeep(id, gameObject, rect);
+							Tooltips.instance.Ping(id, gameObject, rect);
 						}
 					}
 				}

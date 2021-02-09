@@ -36,12 +36,18 @@ namespace Muc.Time {
 		/// <summary>
 		/// Whether this Timeout has been used.
 		/// </summary>
+		[field: SerializeField]
 		public bool used { get; private set; }
 
 		/// <summary>
 		/// Whether this Timeout can currently be used.
 		/// </summary>
 		public bool usable => !paused && !used && Time.time >= pauseAdjustedStart + delay;
+
+		/// <summary>
+		/// Whether the specified delay has passed.
+		/// </summary>
+		public bool expired => Time.time >= pauseAdjustedStart + delay;
 
 		/// <summary>
 		/// Whether this Timeout is paused.
@@ -87,12 +93,32 @@ namespace Muc.Time {
 		/// <summary>
 		/// If the Timeout has remaining uses, returns true and consumes the use, otherwise returns false.
 		/// </summary>
-		/// <returns></returns>
 		public bool Use() {
 			if (usable) {
 				used = true;
 				return true;
 			}
+			return false;
+		}
+
+
+		/// <summary>
+		/// Timeout is reset as if it had just begun.
+		/// </summary>
+		public bool Reset() {
+			used = false;
+			pauseTime = start = Time.time;
+			return false;
+		}
+
+		/// <summary>
+		/// Timeout is reset as if it had just begun.
+		/// </summary>
+		/// <param name="pause">Pause the Timeout?</param>
+		public bool Reset(bool pause) {
+			used = false;
+			pauseTime = start = Time.time;
+			paused = pause;
 			return false;
 		}
 

@@ -36,12 +36,18 @@ namespace Muc.Time {
 		/// <summary>
 		/// Whether this FrameTimeout has been used.
 		/// </summary>
+		[field: SerializeField]
 		public bool used { get; private set; }
 
 		/// <summary>
 		/// Whether this FrameTimeout can currently be used.
 		/// </summary>
 		public bool usable => !paused && !used && Time.frameCount >= pauseAdjustedStart + delay;
+
+		/// <summary>
+		/// Whether the specified delay has passed.
+		/// </summary>
+		public bool expired => Time.frameCount >= pauseAdjustedStart + delay;
 
 		/// <summary>
 		/// Whether this Timeout is paused.
@@ -93,6 +99,27 @@ namespace Muc.Time {
 				used = true;
 				return true;
 			}
+			return false;
+		}
+
+
+		/// <summary>
+		/// FrameTimeout is reset as if it had just begun.
+		/// </summary>
+		public bool Reset() {
+			used = false;
+			pauseTime = start = Time.frameCount;
+			return false;
+		}
+
+		/// <summary>
+		/// FrameTimeout is reset as if it had just begun.
+		/// </summary>
+		/// <param name="pause">Pause the FrameTimeout?</param>
+		public bool Reset(bool pause) {
+			used = false;
+			pauseTime = start = Time.frameCount;
+			paused = pause;
 			return false;
 		}
 

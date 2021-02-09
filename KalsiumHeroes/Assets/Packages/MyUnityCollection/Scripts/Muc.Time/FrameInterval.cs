@@ -43,6 +43,7 @@ namespace Muc.Time {
 		/// <summary>
 		/// Amount of times this FrameInterval has been used.
 		/// </summary>
+		[field: SerializeField]
 		public int used { get; private set; }
 
 		/// <summary>
@@ -122,6 +123,27 @@ namespace Muc.Time {
 		public void Use(Action action) {
 			var iters = Use();
 			for (int i = 0; i < iters; i++) action();
+		}
+
+
+		/// <summary>
+		/// FrameInterval is reset as if it had just begun.
+		/// </summary>
+		public bool Reset() {
+			used = 0;
+			pauseTime = refTime = Time.frameCount;
+			return false;
+		}
+
+		/// <summary>
+		/// FrameInterval is reset as if it had just begun.
+		/// </summary>
+		/// <param name="pause">Pause the FrameInterval?</param>
+		public bool Reset(bool pause) {
+			used = 0;
+			pauseTime = refTime = Time.frameCount;
+			paused = pause;
+			return false;
 		}
 
 	}
