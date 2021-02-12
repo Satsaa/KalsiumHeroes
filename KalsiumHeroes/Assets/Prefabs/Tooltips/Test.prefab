@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 250, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1118775663302067727
 CanvasRenderer:
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81d9389f631d4b47a0d40d3f7e2f5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 0}
-  content: {fileID: 0}
+  index: 0
+  originPrefab: {fileID: 0}
 --- !u!1 &7989116922901557481
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +101,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3995641146115424120}
   - component: {fileID: 5346182244024244603}
-  - component: {fileID: 6502495532246202940}
+  - component: {fileID: 7522616182442729044}
+  - component: {fileID: 3763926774001194650}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -123,10 +124,10 @@ RectTransform:
   m_Father: {fileID: 1627508102906763617}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5346182244024244603
 CanvasRenderer:
@@ -136,7 +137,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7989116922901557481}
   m_CullTransparentMesh: 1
---- !u!114 &6502495532246202940
+--- !u!114 &7522616182442729044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,7 +146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7989116922901557481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46239b8911c2a14fbda621d9c6aab37, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <link="tt_test">test</link> | <link="tt_test2">test2</link>
+  m_text: "<link=\"tt_0\">Tooltip0</link> \n<link=\"tt_1\">Tooltip1</link>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 110.25
+  m_fontSize: 72.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -225,4 +226,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3763926774001194650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7989116922901557481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46239b8911c2a14fbda621d9c6aab37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   hovered: 0
+  text: {fileID: 7522616182442729044}
+  tooltips:
+  - {fileID: 86985814031637562}
+  - {fileID: 86985814031637562, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}

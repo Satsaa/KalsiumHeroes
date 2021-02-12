@@ -11,8 +11,12 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour {
 
+	public int index;
+	public string id;
+	public GameObject creator;
+
 	public virtual void MoveContent(Transform parent) {
-		Destroy(GetComponent<Image>());
 		transform.SetParent(parent);
+		Destroy(GetComponent<Image>());
 	}
 }

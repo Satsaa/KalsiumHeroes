@@ -103,6 +103,15 @@ namespace Muc.Time {
 
 
 		/// <summary>
+		/// Set the Timeout as expired.
+		/// </summary>
+		public bool Expire() {
+			start = Time.time - delay;
+			Debug.Assert(expired);
+			return false;
+		}
+
+		/// <summary>
 		/// Timeout is reset as if it had just begun.
 		/// </summary>
 		public bool Reset() {

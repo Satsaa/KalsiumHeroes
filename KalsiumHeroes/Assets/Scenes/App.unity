@@ -158,7 +158,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &92004677
 MonoBehaviour:
@@ -172,18 +172,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4db3ac37f64c14e9ef4a22d21a326b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stack:
+  tts:
     list: []
   tooltips:
     list:
-    - Key: test
-      Value: {fileID: 86985814031637562, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
-    - Key: test2
-      Value: {fileID: 86985814031637562, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
+    - Key: 0
+      Value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
+    - Key: 1
+      Value: {fileID: 6605500486688000628, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
     keyCollision: 0
-  frameBuffer: 5
-  framesLeft: 0
   windowPrefab: {fileID: 1737476836110038805, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
+  animatorPrefab: {fileID: 6838084557102868388, guid: a3cb85849b888ab47a95a817fc3059cd, type: 3}
+  hideDelay:
+    start: 0
+    _delay: 0.25
+    <used>k__BackingField: 0
+    _paused: 1
+    pauseTime: 0
+  showDelay:
+    start: 0
+    _delay: 0.25
+    <used>k__BackingField: 0
+    _paused: 1
+    pauseTime: 0
 --- !u!114 &92004678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,7 +284,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

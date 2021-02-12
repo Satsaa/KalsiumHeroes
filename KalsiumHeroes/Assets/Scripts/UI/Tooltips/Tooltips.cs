@@ -16,22 +16,18 @@ public class Tooltips : MonoBehaviour {
 	public static Tooltips instance => _instance;
 	private static Tooltips _instance;
 
-	[Serializable]
-	class StackItem {
-		public string id;
-		public bool windowed;
-		public GameObject gameObject;
-		public StackItem(string id, GameObject gameObject) { this.id = id; this.gameObject = gameObject; }
-	}
-	[SerializeField] SerializedStack<StackItem> stack;
-	[SerializeField] SerializedDictionary<string, GameObject> tooltips;
+	[SerializeField] SerializedStack<Tooltip> tts;
+	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
 	[SerializeField] GameObject windowPrefab;
+
+	[SerializeField] GameObject animatorPrefab;
+
 	private FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
 	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
 	[SerializeField] Timeout showDelay = new Timeout(0.5f, true);
-	private int lastPing = -1;
-	private string lastId;
-	private bool quickSwitch;
+
+	string lastPing;
+	int lastPingFrame = -1;
 
 	private void OnValidate() => Awake();
 	private void Awake() {
@@ -44,75 +40,91 @@ public class Tooltips : MonoBehaviour {
 	}
 
 	void Update() {
-		if (stack.Any()) {
+		if (Time.frameCount - lastPingFrame > 1) {
+			showDelay.Reset(true);
+		}
+		if (tts.Any()) {
+			GetHovered(out var hovered);
 			if (IsTopHovered()) {
 				hideFrameDelay.Reset(true);
 				hideDelay.Reset(true);
 			} else {
 				hideDelay.paused = false;
 				hideFrameDelay.paused = false;
-				quickSwitch = (lastPing == Time.frameCount || lastPing + 1 == Time.frameCount) && lastId != Peek().id;
-				if (hideDelay.expired || quickSwitch) {
-					if (hideFrameDelay.expired || quickSwitch) {
-						Pop();
+				if (hideDelay.expired) {
+					if (hideFrameDelay.expired) {
 						showDelay.Reset(true);
-						Update();
+						if (hovered) {
+							print(1);
+							while (hovered.index <= Peek().index - 1 && !(hovered.index == Peek().index - 1 && Peek().id == lastPing)) {
+								Pop();
+							}
+						} else {
+							print(2);
+							while (tts.Count > 0 && !(tts.Count == 1 && Time.frameCount - lastPingFrame <= 1 && Peek().id == lastPing)) {
+								Pop();
+							}
+						}
 						return;
 					}
 				}
 			}
-		} else if (lastPing + 1 < Time.frameCount) {
-			showDelay.Reset();
 		}
 	}
 
 	void Pop() {
 		Prune();
-		var popped = stack.Pop();
-		if (!popped.windowed) Destroy(popped.gameObject);
-	}
-
-	void Prune() {
-		if (!stack.Any()) return;
-		while (!stack.Peek().gameObject) {
-			stack.Pop();
+		var popped = tts.Pop();
+		if (popped.gameObject.GetComponentInParent<Window>()) {
+			popped.index = -1;
+		} else {
+			var animator = popped.gameObject.GetComponentInParent<TooltipAnimator>();
+			if (animator) animator.Hide();
 		}
 	}
 
-	StackItem Peek() {
-		Prune();
-		return stack.Peek();
+	void Prune() {
+		while (tts.Any() && !tts.Peek()) {
+			tts.Pop();
+		}
 	}
 
-	void Push(StackItem item) {
+	Tooltip Peek() {
 		Prune();
-		stack.Push(item);
+		return tts.Peek();
+	}
+
+	void Push(Tooltip item) {
+		Prune();
+		tts.Push(item);
 	}
 
 	bool Any() {
 		Prune();
-		return stack.Any();
+		return tts.Any();
 	}
 
 	public bool Windowize() {
 		if (!Any()) return false;
 		var top = Peek();
-		if (top.windowed) return false;
-		top.windowed = true;
+		if (top.gameObject.GetComponentInParent<Window>()) return false;
 		var go = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.instance.transform);
 		Windows.instance.MoveToTop(go.transform);
 		var window = go.GetComponent<Window>();
 		var tt = top.gameObject.GetComponentInChildren<Tooltip>();
 		tt.MoveContent(window.content.contentParent);
-		top.gameObject = go;
+		var animator = top.gameObject.GetComponentInParent<TooltipAnimator>();
+		if (animator) Destroy(animator.gameObject);
 		return true;
 	}
 
 	public bool Ping(string id, GameObject creator, Rect creatorRect) {
-		var tt = tooltips[id];
-		lastId = id;
-		lastPing = Time.frameCount;
-		if (!Any() || Peek().id != id) {
+		lastPing = id;
+		lastPingFrame = Time.frameCount;
+		if (Any() && Peek().id != id) {
+			showDelay.Reset(true);
+		}
+		if (!Any() || Peek().creator != creator || Peek().id != id) {
 			if (Any() && !IsTopHovered()) return false;
 			hideFrameDelay.Reset(true);
 			hideDelay.Reset(true);
@@ -126,38 +138,63 @@ public class Tooltips : MonoBehaviour {
 	}
 
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
-		var tt = tooltips[id];
-		lastId = id;
+		var prefab = tooltips[id];
 		showDelay.paused = false;
-		if (showDelay.expired || quickSwitch) {
+		var isTop = true;
+		var isPrev = false;
+		if (GetHovered(out var hovered)) {
+			isTop = hovered.index == tts.Count - 1;
+			isPrev = hovered.index == tts.Count - 2;
+		} else {
+			isTop = -1 == tts.Count - 1;
+			isPrev = -1 == tts.Count - 2;
+			print(isTop);
+		}
+		if (!isTop && (!Any() || Peek().id != id)) {
+			// Quick switching
+			if (hovered) {
+				while (tts.Count > hovered.index + 1) {
+					Pop();
+				}
+			} else {
+				while (tts.Count > 0) {
+					Pop();
+				}
+			}
 			showDelay.Reset(true);
 		} else {
-			Ping(id, creator, creatorRect);
-			return false;
-		}
-		if (!Any() || Peek().id != id) {
-			if (Any() && !IsTopHovered()) return false;
-			hideFrameDelay.Reset(true);
-			hideDelay.Reset(true);
-			var go = Instantiate(tt, Windows.instance.transform);
-			Windows.instance.MoveToTop(go.transform);
-			Push(new StackItem(id, go));
-			var rt = (RectTransform)go.transform;
-			var x = creatorRect.center.x;
-			var y = creatorRect.yMax + rt.pivot.y * rt.rect.height;
-			rt.position = rt.position.SetX(x).SetY(y);
-			var ssRect = rt.ScreenRect();
-			if (ssRect.yMax > Screen.height) { // Clips screen top?
-				var bx = creatorRect.center.x;
-				var by = creatorRect.yMin - (1 - rt.pivot.y) * rt.rect.height;
-				rt.position = rt.position.SetX(bx).SetY(by);
+			// Normal delay test
+			if (showDelay.expired) {
+				showDelay.Reset(true);
+			} else {
+				Ping(id, creator, creatorRect);
+				return false;
 			}
-			return true;
-		} else {
-			hideFrameDelay.Reset(true);
-			hideDelay.Reset(true);
 		}
-		return false;
+		hideFrameDelay.Reset(true);
+		hideDelay.Reset(true);
+		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, Windows.instance.transform).GetComponent<TooltipAnimator>();
+		var go = Instantiate(prefab, animator.transform);
+		Windows.instance.MoveToTop(animator.transform);
+		var tt = go.GetComponentInChildren<Tooltip>();
+		tt.id = id;
+		tt.index = tts.Count;
+		tt.creator = creator;
+		Push(tt);
+		var rt = (RectTransform)go.transform;
+		rt.position = new Vector3(creatorRect.center.x, creatorRect.yMax + rt.pivot.y * rt.rect.height);
+		if (rt.ScreenRect().yMax > Screen.height) { // Clips screen top?
+			var bx = creatorRect.center.x;
+			var by = creatorRect.yMin - (1 - rt.pivot.y) * rt.rect.height;
+			animator.transform.Translate(0, creatorRect.height / -2f, 0);
+			rt.position = rt.position.SetX(bx).SetY(by);
+		} else {
+			var ws = rt.position;
+			animator.transform.Translate(0, creatorRect.height / 2f, 0);
+			rt.position = ws;
+		}
+		animator.Show();
+		return true;
 	}
 
 	private List<RaycastResult> raycasts = new List<RaycastResult>();
@@ -179,6 +216,25 @@ public class Tooltips : MonoBehaviour {
 				}
 			}
 		}
+		return false;
+	}
+
+	private bool GetHovered(out Tooltip tooltip) {
+		if (Any()) {
+			var e = EventSystem.current;
+			if (e.IsPointerOverGameObject()) {
+				var eData = new PointerEventData(e) {
+					position = Input.mousePosition
+				};
+				e.RaycastAll(eData, raycasts);
+				var parent = raycasts.First().gameObject.transform;
+				tooltip = parent.GetComponentInParent<Tooltip>();
+				if (tooltip) {
+					return true;
+				}
+			}
+		}
+		tooltip = default;
 		return false;
 	}
 }
