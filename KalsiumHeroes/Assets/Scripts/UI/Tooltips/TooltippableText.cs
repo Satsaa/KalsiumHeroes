@@ -13,7 +13,6 @@ public class TooltippableText : UIBehaviour, IPointerEnterHandler, IPointerExitH
 
 	[SerializeField] bool hovered;
 	[SerializeField] TextMeshProUGUI text;
-	[SerializeField] List<GameObject> tooltips;
 
 	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => hovered = true;
 	void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => hovered = false;

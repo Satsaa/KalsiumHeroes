@@ -25,6 +25,7 @@ public class Tooltips : MonoBehaviour {
 	private FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
 	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
 	[SerializeField] Timeout showDelay = new Timeout(0.5f, true);
+	[SerializeField] Timeout quickSwitchDelay = new Timeout(0.1f, true);
 
 	string lastPing;
 	int lastPingFrame = -1;
@@ -41,7 +42,9 @@ public class Tooltips : MonoBehaviour {
 
 	void Update() {
 		if (Time.frameCount - lastPingFrame > 1) {
+			// Nothing hovered
 			showDelay.Reset(true);
+			quickSwitchDelay.Reset(true);
 		}
 		if (tts.Any()) {
 			GetHovered(out var hovered);
@@ -55,12 +58,10 @@ public class Tooltips : MonoBehaviour {
 					if (hideFrameDelay.expired) {
 						showDelay.Reset(true);
 						if (hovered) {
-							print(1);
 							while (hovered.index <= Peek().index - 1 && !(hovered.index == Peek().index - 1 && Peek().id == lastPing)) {
 								Pop();
 							}
 						} else {
-							print(2);
 							while (tts.Count > 0 && !(tts.Count == 1 && Time.frameCount - lastPingFrame <= 1 && Peek().id == lastPing)) {
 								Pop();
 							}
@@ -121,9 +122,6 @@ public class Tooltips : MonoBehaviour {
 	public bool Ping(string id, GameObject creator, Rect creatorRect) {
 		lastPing = id;
 		lastPingFrame = Time.frameCount;
-		if (Any() && Peek().id != id) {
-			showDelay.Reset(true);
-		}
 		if (!Any() || Peek().creator != creator || Peek().id != id) {
 			if (Any() && !IsTopHovered()) return false;
 			hideFrameDelay.Reset(true);
@@ -139,31 +137,28 @@ public class Tooltips : MonoBehaviour {
 
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
 		var prefab = tooltips[id];
-		showDelay.paused = false;
-		var isTop = true;
-		var isPrev = false;
-		if (GetHovered(out var hovered)) {
-			isTop = hovered.index == tts.Count - 1;
-			isPrev = hovered.index == tts.Count - 2;
-		} else {
-			isTop = -1 == tts.Count - 1;
-			isPrev = -1 == tts.Count - 2;
-			print(isTop);
-		}
+		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
 		if (!isTop && (!Any() || Peek().id != id)) {
 			// Quick switching
-			if (hovered) {
-				while (tts.Count > hovered.index + 1) {
-					Pop();
+			quickSwitchDelay.paused = false;
+			if (quickSwitchDelay.expired) {
+				if (hovered) {
+					while (tts.Count > hovered.index + 1) {
+						Pop();
+					}
+				} else {
+					while (tts.Count > 0) {
+						Pop();
+					}
 				}
+				showDelay.Reset(true);
 			} else {
-				while (tts.Count > 0) {
-					Pop();
-				}
+				Ping(id, creator, creatorRect);
+				return false;
 			}
-			showDelay.Reset(true);
 		} else {
 			// Normal delay test
+			showDelay.paused = false;
 			if (showDelay.expired) {
 				showDelay.Reset(true);
 			} else {
