@@ -65,4 +65,14 @@ public class TooltipAnimator : MonoBehaviour {
 		UpdateAnim();
 	}
 
+	public virtual void FinishAnims() {
+		if (sign < 0) {
+			t = 0;
+		} else if (sign > 0) {
+			t = 1;
+		}
+		t += Time.deltaTime * (1f / duration) * sign;
+		UpdateAnim();
+	}
+
 }

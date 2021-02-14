@@ -11,7 +11,10 @@ public class Library : ScriptableObject {
 
 	public string version = "0.0.0";
 
+	[Tooltip("Library specific DataObjects.")]
 	public List<DataObjectData> sources;
+	[Tooltip("Library specific tooltips. They are linked like tt_lib_ID.")]
+	public SerializedDictionary<string, Tooltip> tooltips;
 
 	private Dictionary<string, DataObjectData> _dict;
 	public Dictionary<string, DataObjectData> dict => _dict ??= BuildDict();

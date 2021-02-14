@@ -16,11 +16,11 @@ public class Tooltips : MonoBehaviour {
 	public static Tooltips instance => _instance;
 	private static Tooltips _instance;
 
-	[SerializeField] SerializedStack<Tooltip> tts;
+	[SerializeField, HideInInspector] SerializedStack<Tooltip> tts;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
-	[SerializeField] GameObject windowPrefab;
+	[SerializeField] Window windowPrefab;
 
-	[SerializeField] GameObject animatorPrefab;
+	[SerializeField] TooltipAnimator animatorPrefab;
 
 	private FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
 	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
@@ -58,7 +58,9 @@ public class Tooltips : MonoBehaviour {
 					if (hideFrameDelay.expired) {
 						showDelay.Reset(true);
 						if (hovered) {
-							while (hovered.index <= Peek().index - 1 && !(hovered.index == Peek().index - 1 && Peek().id == lastPing)) {
+							while (tts.Count > 0 && hovered.index <= Peek().index - 1 &&
+								!(hovered.index == Peek().index - 1 && Peek().id == lastPing)
+							) {
 								Pop();
 							}
 						} else {
@@ -109,17 +111,19 @@ public class Tooltips : MonoBehaviour {
 		if (!Any()) return false;
 		var top = Peek();
 		if (top.gameObject.GetComponentInParent<Window>()) return false;
-		var go = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.instance.transform);
-		Windows.instance.MoveToTop(go.transform);
-		var window = go.GetComponent<Window>();
-		var tt = top.gameObject.GetComponentInChildren<Tooltip>();
-		tt.MoveContent(window.content.contentParent);
-		var animator = top.gameObject.GetComponentInParent<TooltipAnimator>();
+		var animator = top.GetComponentInParent<TooltipAnimator>();
+		if (animator) animator.FinishAnims();
+		var window = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.instance.transform);
+		Windows.instance.MoveToTop(window.gameObject.transform);
+		top.MoveContent(window.content.contentParent);
+		top.root = window.gameObject;
+		window.gameObject.transform.Translate(0, 10, 0);
 		if (animator) Destroy(animator.gameObject);
 		return true;
 	}
 
 	public bool Ping(string id, GameObject creator, Rect creatorRect) {
+		GetTooltipPrefab(id);
 		lastPing = id;
 		lastPingFrame = Time.frameCount;
 		if (!Any() || Peek().creator != creator || Peek().id != id) {
@@ -136,7 +140,10 @@ public class Tooltips : MonoBehaviour {
 	}
 
 	public bool Show(string id, GameObject creator, Rect creatorRect) {
-		var prefab = tooltips[id];
+		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
+		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
 		if (!isTop && (!Any() || Peek().id != id)) {
 			// Quick switching
@@ -168,15 +175,15 @@ public class Tooltips : MonoBehaviour {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, Windows.instance.transform).GetComponent<TooltipAnimator>();
-		var go = Instantiate(prefab, animator.transform);
+		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, Windows.instance.transform);
+		var tt = Instantiate(GetTooltipPrefab(id), animator.transform);
 		Windows.instance.MoveToTop(animator.transform);
-		var tt = go.GetComponentInChildren<Tooltip>();
 		tt.id = id;
 		tt.index = tts.Count;
+		tt.root = tt.gameObject;
 		tt.creator = creator;
 		Push(tt);
-		var rt = (RectTransform)go.transform;
+		var rt = (RectTransform)tt.transform;
 		rt.position = new Vector3(creatorRect.center.x, creatorRect.yMax + rt.pivot.y * rt.rect.height);
 		if (rt.ScreenRect().yMax > Screen.height) { // Clips screen top?
 			var bx = creatorRect.center.x;
@@ -204,7 +211,7 @@ public class Tooltips : MonoBehaviour {
 				var parent = raycasts.First().gameObject.transform;
 				var top = Peek();
 				while (parent != null) {
-					if (parent == top.gameObject.transform) {
+					if (parent == top.root.transform) {
 						return true;
 					}
 					parent = parent.parent;
@@ -231,5 +238,13 @@ public class Tooltips : MonoBehaviour {
 		}
 		tooltip = default;
 		return false;
+	}
+
+	private Tooltip GetTooltipPrefab(string id) {
+		if (id.StartsWith("lib_")) {
+			id = id.Substring(4);
+			return Game.library.tooltips[id];
+		}
+		return tooltips[id];
 	}
 }

@@ -13,10 +13,12 @@ public class Tooltip : MonoBehaviour {
 
 	public int index;
 	public string id;
+	public GameObject root;
 	public GameObject creator;
 
-	public virtual void MoveContent(Transform parent) {
-		transform.SetParent(parent);
+	/// <summary> Removes any background of the tooltip and reparents the content. </summary>
+	public virtual void MoveContent(Transform newParent) {
+		transform.SetParent(newParent);
 		Destroy(GetComponent<Image>());
 	}
 }
