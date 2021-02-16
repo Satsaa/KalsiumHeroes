@@ -72,20 +72,14 @@ public class AbilityUIModifier : UnitModifier,
 	void AddIcon(Ability ability) {
 		var icon = ObjectUtil.Instantiate(data.abilityPrefab, ui.parent.transform).GetComponent<AbilityIcon>();
 		aIcons.Add(icon);
-		icon.ability = ability;
-		icon.abilityText.text = ability.data.displayName;
-		icon.cooldownText.text = "";
-		icon.chargeText.text = "";
-		icon.fgMask.gameObject.SetActive(true);
-		icon.bgImage.enabled = false;
+		icon.SetAbility(ability);
 		RefreshLayout();
 		RefreshValues();
 	}
 	void AddIcon(Passive passive) {
 		var icon = ObjectUtil.Instantiate(data.passivePrefab, ui.parent.transform).GetComponent<PassiveIcon>();
 		pIcons.Add(icon);
-		icon.passive = passive;
-		icon.abilityText.text = passive.data.displayName;
+		icon.SetPassive(passive);
 		RefreshLayout();
 	}
 
@@ -262,13 +256,13 @@ public class AbilityUIModifier : UnitModifier,
 	public void OnTargeterStart(Targeter targeter) {
 		targetAlpha = data.fadeAlpha;
 		if (Game.rounds.current == unit) {
-			foreach (var icon in aIcons) icon.abilityButton.enabled = false;
+			foreach (var icon in aIcons) icon.button.enabled = false;
 		}
 	}
 	public void OnTargeterEnd() {
 		targetAlpha = 1;
 		if (Game.rounds.current == unit) {
-			foreach (var icon in aIcons) icon.abilityButton.enabled = true;
+			foreach (var icon in aIcons) icon.button.enabled = true;
 		}
 	}
 

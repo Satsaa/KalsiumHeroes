@@ -4,14 +4,18 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PassiveIcon : MonoBehaviour {
 
 	[HideInInspector]
 	public Passive passive;
 
-	public Text abilityText;
+	public TMP_Text displayName;
+	public Image sprite;
 
-	public Image image;
-
+	public void SetPassive(Passive passive) {
+		this.passive = passive;
+		displayName.text = passive.data.displayName ?? passive.data.identifier.Replace("_", " ");
+	}
 }

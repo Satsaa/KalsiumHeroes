@@ -180,6 +180,8 @@ MonoBehaviour:
       Value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
     - Key: blue
       Value: {fileID: 6605500486688000628, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
+    - Key: modifier_list
+      Value: {fileID: 3452182197045286548, guid: 4e6fff0ef02c2294aa9e8a58d61d6f7b, type: 3}
     keyCollision: 0
   windowPrefab: {fileID: 7719059669241410485, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
   animatorPrefab: {fileID: 2358715483377159109, guid: a3cb85849b888ab47a95a817fc3059cd, type: 3}

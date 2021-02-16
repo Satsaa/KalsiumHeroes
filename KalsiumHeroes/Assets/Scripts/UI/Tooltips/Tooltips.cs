@@ -92,7 +92,7 @@ public class Tooltips : MonoBehaviour {
 		}
 	}
 
-	Tooltip Peek() {
+	public Tooltip Peek() {
 		Prune();
 		return tts.Peek();
 	}

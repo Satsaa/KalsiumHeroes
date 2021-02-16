@@ -14,7 +14,4 @@ public class OverHeadUI : MonoBehaviour {
 	public RectTransform energyRect;
 	public Text energyText;
 
-	public RectTransform modifierListParent;
-	public GameObject modifierItemPrefab;
-
 }
