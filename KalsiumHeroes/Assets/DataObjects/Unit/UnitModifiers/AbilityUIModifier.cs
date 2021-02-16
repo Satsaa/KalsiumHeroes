@@ -82,7 +82,7 @@ public class AbilityUIModifier : UnitModifier,
 		RefreshValues();
 	}
 	void AddIcon(Passive passive) {
-		var icon = ObjectUtil.Instantiate(data.passivePrefab).GetComponent<PassiveIcon>();
+		var icon = ObjectUtil.Instantiate(data.passivePrefab, ui.parent.transform).GetComponent<PassiveIcon>();
 		pIcons.Add(icon);
 		icon.passive = passive;
 		icon.abilityText.text = passive.data.displayName;
