@@ -182,6 +182,16 @@ MonoBehaviour:
       Value: {fileID: 6605500486688000628, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
     - Key: modifier_list
       Value: {fileID: 3452182197045286548, guid: 4e6fff0ef02c2294aa9e8a58d61d6f7b, type: 3}
+    - Key: modifier_info
+      Value: {fileID: -1094310721017016063, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
+    - Key: unitmodifier_info
+      Value: {fileID: -3472360170317517742, guid: 1df21eb6f17d6db419ecd9d05b518b1f, type: 3}
+    - Key: ability_info
+      Value: {fileID: 1237913112116532911, guid: 978252da3c2c83e4ea63454965dbca82, type: 3}
+    - Key: status_info
+      Value: {fileID: 6405155065534834276, guid: 2f1c6065e6995644798c8a42b3a18e66, type: 3}
+    - Key: passive_info
+      Value: {fileID: 8355412165749399176, guid: 86d875be8477cd3428d5ae56e22c7518, type: 3}
     keyCollision: 0
   windowPrefab: {fileID: 7719059669241410485, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
   animatorPrefab: {fileID: 2358715483377159109, guid: a3cb85849b888ab47a95a817fc3059cd, type: 3}

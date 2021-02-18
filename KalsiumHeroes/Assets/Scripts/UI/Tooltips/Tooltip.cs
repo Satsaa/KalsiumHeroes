@@ -11,10 +11,10 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour {
 
-	public int index;
-	public string id;
-	public GameObject root;
-	public GameObject creator;
+	[HideInInspector] public int index;
+	[HideInInspector] public string id;
+	[HideInInspector] public GameObject root;
+	[HideInInspector] public GameObject creator;
 
 	/// <summary> Removes any background of the tooltip and reparents the content. </summary>
 	public virtual void MoveContent(Transform newParent) {

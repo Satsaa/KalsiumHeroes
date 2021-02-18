@@ -58,7 +58,8 @@ public class Tooltips : MonoBehaviour {
 					if (hideFrameDelay.expired) {
 						showDelay.Reset(true);
 						if (hovered) {
-							while (tts.Count > 0 && hovered.index <= Peek().index - 1 &&
+							while (
+								tts.Count > 0 && hovered.index <= Peek().index - 1 &&
 								!(hovered.index == Peek().index - 1 && Peek().id == lastPing)
 							) {
 								Pop();
@@ -75,7 +76,7 @@ public class Tooltips : MonoBehaviour {
 		}
 	}
 
-	void Pop() {
+	Tooltip Pop() {
 		Prune();
 		var popped = tts.Pop();
 		if (popped.gameObject.GetComponentInParent<Window>()) {
@@ -84,6 +85,7 @@ public class Tooltips : MonoBehaviour {
 			var animator = popped.gameObject.GetComponentInParent<TooltipAnimator>();
 			if (animator) animator.Hide();
 		}
+		return popped;
 	}
 
 	void Prune() {
@@ -139,23 +141,33 @@ public class Tooltips : MonoBehaviour {
 		return false;
 	}
 
-	public bool Show(string id, GameObject creator, Rect creatorRect) {
+	public bool Show(string id, GameObject creator, Rect creatorRect, Action<Tooltip> initializer = null) {
 		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
 		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
 		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
 		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
-		if (!isTop && (!Any() || Peek().id != id)) {
+		if (!isTop && (!Any() || Peek().creator != creator || Peek().id != id)) {
 			// Quick switching
 			quickSwitchDelay.paused = false;
 			if (quickSwitchDelay.expired) {
 				if (hovered) {
-					while (tts.Count > hovered.index + 1) {
-						Pop();
+					while (tts.Count > hovered.index + 2) {
+						Debug.Log($"popped: {Pop().gameObject.name}");
+					}
+					if (Peek().id != id || Peek().creator != creator) {
+						Debug.Log($"Also popped: {Pop().gameObject.name}");
+					} else {
+						return false;
 					}
 				} else {
-					while (tts.Count > 0) {
-						Pop();
+					while (tts.Count > 1) {
+						Debug.Log($"popped: {Pop().gameObject.name}");
+					}
+					if (Peek().id != id || Peek().creator != creator) {
+						Debug.Log($"Also popped: {Pop().gameObject.name}");
+					} else {
+						return false;
 					}
 				}
 				showDelay.Reset(true);
@@ -184,6 +196,13 @@ public class Tooltips : MonoBehaviour {
 		tt.creator = creator;
 		Push(tt);
 		var rt = (RectTransform)tt.transform;
+		if (initializer != null) {
+			initializer(tt);
+		}
+		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		rt.position = new Vector3(creatorRect.center.x, creatorRect.yMax + rt.pivot.y * rt.rect.height);
 		if (rt.ScreenRect().yMax > Screen.height) { // Clips screen top?
 			var bx = creatorRect.center.x;

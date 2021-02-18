@@ -18,5 +18,9 @@ public class UnitModifierIcon : MonoBehaviour {
 		this.modifier = modifier;
 		displayName.text = modifier.data.displayName ?? modifier.data.identifier.Replace("_", " ");
 		sprite.sprite = modifier.data.sprite;
+
+		var modifierTtProvider = GetComponentInChildren<ModifierTooltipProvider>();
+		/* if (modifierTtProvider)  */
+		modifierTtProvider.modifier = modifier;
 	}
 }

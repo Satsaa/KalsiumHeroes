@@ -23,7 +23,7 @@ MonoBehaviour:
   debuffType:
     _value: 0
   positive:
-    _value: 0
+    _value: 1
   dispellable:
     _value: 1
   hidden:

@@ -18,14 +18,7 @@ public class ModifierListTooltipProvider : TooltipProvider {
 	protected override void OnHover() {
 
 		if (!Input.GetKey(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse0)) {
-			if (Tooltips.instance.Show(id, gameObject, rectTransform.rect)) {
-				var tt = Tooltips.instance.Peek();
-				if (tt is ModifierListTooltip mltt) {
-					foreach (var modifier in unit.modifiers.Get<UnitModifier>()) {
-						mltt.AddModifier(modifier);
-					}
-				}
-			}
+			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), Initialize);
 			if (Input.GetKeyDown(KeyCode.Mouse0)) {
 				Tooltips.instance.Windowize();
 			}
@@ -34,4 +27,13 @@ public class ModifierListTooltipProvider : TooltipProvider {
 		}
 	}
 
+	private void Initialize(Tooltip _tooltip) {
+		if (_tooltip is ModifierListTooltip tooltip) {
+			foreach (var modifier in unit.modifiers.Get<UnitModifier>()) {
+				tooltip.AddModifier(modifier);
+			}
+		} else {
+			Debug.LogWarning($"Unexpected {nameof(Tooltip)} type.");
+		}
+	}
 }

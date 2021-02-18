@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 5937903975710380121}
   - component: {fileID: 1128934655608635944}
   m_Layer: 5
-  m_Name: UnitModifierIcon
+  m_Name: ModifierIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 2592609095906676307}
   - component: {fileID: 6665661912334975561}
   - component: {fileID: 1800728379486747121}
+  - component: {fileID: 8784507765834842557}
   m_Layer: 5
   m_Name: Sprite
   m_TagString: Untagged
@@ -277,3 +278,22 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8784507765834842557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266099442342058658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31f9f8de1b29dc4080702dda8ea011b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hovered: 0
+  modifier: {fileID: 0}
+  abilityTooltip: ability_info
+  passiveTooltip: passive_info
+  statusTooltip: status_info
+  unitModifierTooltip: unitmodifier_info
+  modifierTooltip: modifier_info
