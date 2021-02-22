@@ -153,19 +153,19 @@ public class Tooltips : MonoBehaviour {
 			if (quickSwitchDelay.expired) {
 				if (hovered) {
 					while (tts.Count > hovered.index + 2) {
-						Debug.Log($"popped: {Pop().gameObject.name}");
+						Pop();
 					}
 					if (Peek().id != id || Peek().creator != creator) {
-						Debug.Log($"Also popped: {Pop().gameObject.name}");
+						Pop();
 					} else {
 						return false;
 					}
 				} else {
 					while (tts.Count > 1) {
-						Debug.Log($"popped: {Pop().gameObject.name}");
+						Pop();
 					}
 					if (Peek().id != id || Peek().creator != creator) {
-						Debug.Log($"Also popped: {Pop().gameObject.name}");
+						Pop();
 					} else {
 						return false;
 					}

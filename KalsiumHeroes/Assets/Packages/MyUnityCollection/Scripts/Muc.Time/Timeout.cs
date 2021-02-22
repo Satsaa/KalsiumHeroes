@@ -114,21 +114,19 @@ namespace Muc.Time {
 		/// <summary>
 		/// Timeout is reset as if it had just begun.
 		/// </summary>
-		public bool Reset() {
+		public void Reset() {
 			used = false;
 			pauseTime = start = Time.time;
-			return false;
 		}
 
 		/// <summary>
 		/// Timeout is reset as if it had just begun.
 		/// </summary>
 		/// <param name="pause">Pause the Timeout?</param>
-		public bool Reset(bool pause) {
+		public void Reset(bool pause) {
 			used = false;
 			pauseTime = start = Time.time;
 			paused = pause;
-			return false;
 		}
 
 	}

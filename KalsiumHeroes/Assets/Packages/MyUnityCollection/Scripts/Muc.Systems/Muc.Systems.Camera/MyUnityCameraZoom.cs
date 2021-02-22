@@ -42,11 +42,11 @@ namespace Muc.Systems.Camera {
 
 		MyUnityCamera pc;
 
-		void Start() {
+		protected void Start() {
 			pc = gameObject.GetComponent<MyUnityCamera>();
 		}
 
-		void Update() {
+		protected void Update() {
 			if (Input.mouseScrollDelta.y != 0) {
 				var delta = Input.mouseScrollDelta.y;
 				if (delta < 0) {

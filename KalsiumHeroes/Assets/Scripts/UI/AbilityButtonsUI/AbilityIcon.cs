@@ -19,17 +19,7 @@ public class AbilityIcon : MonoBehaviour {
 
 	public Image mask;
 	public Image sprite;
-
-	public void Deconstruct(out Ability ability, out Button abilityButton, out TMP_Text abilityText, out TMP_Text cooldownText, out TMP_Text chargeText, out TMP_Text energyText, out Image fgMask, out Image bgImage) {
-		ability = this.ability;
-		abilityButton = this.button;
-		abilityText = this.displayName;
-		cooldownText = this.cooldownText;
-		energyText = this.energyText;
-		chargeText = this.chargeText;
-		fgMask = this.mask;
-		bgImage = this.sprite;
-	}
+	public Image maskSprite;
 
 	public void SetAbility(Ability ability) {
 		this.ability = ability;
@@ -38,5 +28,6 @@ public class AbilityIcon : MonoBehaviour {
 		chargeText.text = "";
 		mask.gameObject.SetActive(true);
 		sprite.enabled = false;
+		sprite.sprite = maskSprite.sprite = ability.data.sprite;
 	}
 }

@@ -59,14 +59,13 @@ namespace Muc.Systems.Camera {
 		}
 #endif
 
-		// Update is called once per frame
-		void Update() {
+		protected void Update() {
 			if (Input.GetKeyDown(key)) StartDrag();
 			if (Input.GetKey(key)) UpdateDrag();
 		}
 
 		/// <summary> Starts dragging. Can be called externally. </summary>
-		public void StartDrag() {
+		public virtual void StartDrag() {
 			rayOrigin = Camera.main.gameObject.transform.position;
 
 			if (raycastPlaneNormal || raycastPlanePoint) {
@@ -84,7 +83,7 @@ namespace Muc.Systems.Camera {
 		}
 
 		/// <summary> Continue drag. Can be called externally. </summary>
-		public void UpdateDrag() {
+		public virtual void UpdateDrag() {
 			if (!GetMousePoint(plane, out var current)) return;
 
 			var dif = prev - current;
@@ -119,7 +118,7 @@ namespace Muc.Systems.Camera {
 	using UnityEditorInternal;
 
 
-	[CustomEditor(typeof(MyUnityCameraDrag))]
+	[CustomEditor(typeof(MyUnityCameraDrag), true)]
 	internal class MyUnityCameraPlaneEditor : Editor {
 
 		public override void OnInspectorGUI() {

@@ -14,7 +14,9 @@ public class TooltippableText : TooltipProvider {
 	[SerializeField] TextMeshProUGUI text;
 
 	new void OnValidate() {
+#if UNITY_EDITOR // It appears this function doesnt exist in build
 		base.OnValidate();
+#endif
 		if (!text) text = GetComponent<TextMeshProUGUI>();
 	}
 

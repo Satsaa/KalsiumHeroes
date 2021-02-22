@@ -40,13 +40,12 @@ public class AbilityUIModifier : UnitModifier,
 
 	void IOnLateUpdate.OnLateUpdate() {
 		if (!hibernated) {
-			if (true) {
-				var sign = Mathf.Sign(targetAlpha - currentAlpha);
-				currentAlpha += data.alphaFadeSpeed * Time.deltaTime * sign;
-				if (sign > 0) currentAlpha = Mathf.Clamp(currentAlpha, 0, targetAlpha);
-				else currentAlpha = Mathf.Clamp(currentAlpha, targetAlpha, 1);
-				ui.group.alpha = currentAlpha;
-			}
+			var sign = Mathf.Sign(targetAlpha - currentAlpha);
+			currentAlpha += data.alphaFadeSpeed * Time.deltaTime * sign;
+			if (sign > 0) currentAlpha = Mathf.Clamp(currentAlpha, 0, targetAlpha);
+			else currentAlpha = Mathf.Clamp(currentAlpha, targetAlpha, 1);
+			ui.group.alpha = currentAlpha;
+
 			RefreshPosition();
 			nextFrame?.Invoke();
 			nextFrame = null;
@@ -173,21 +172,19 @@ public class AbilityUIModifier : UnitModifier,
 	public void RefreshValues() {
 
 		foreach (var icon in aIcons) {
-			var (ability, abilityButton, abilityText, cooldownText, chargeText, energyText, fgMask, bgImage) = icon;
-			var abilityData = ability.data;
+			var abilityData = icon.ability.data;
 
-
-			chargeText.text = GetChargeText(abilityData);
-			energyText.text = GetEnergyText(abilityData);
-			abilityButton.onClick.RemoveAllListeners();
-			if (Game.events.finished && ability.IsReady()) {
-				fgMask.fillAmount = 1;
-				cooldownText.text = "";
-				fgMask.gameObject.SetActive(true);
-				bgImage.enabled = false;
-				abilityButton.onClick.AddListener(() => {
-					if (ability.IsReady()) {
-						switch (ability) {
+			icon.chargeText.text = GetChargeText(abilityData);
+			icon.energyText.text = GetEnergyText(abilityData);
+			icon.button.onClick.RemoveAllListeners();
+			if (Game.events.finished && icon.ability.IsReady()) {
+				icon.mask.fillAmount = 1;
+				icon.cooldownText.text = "";
+				icon.mask.gameObject.SetActive(true);
+				icon.sprite.enabled = false;
+				icon.button.onClick.AddListener(() => {
+					if (icon.ability.IsReady()) {
+						switch (icon.ability) {
 							case TargetAbility targ:
 								Game.targeting.TryStartTargeter(targ.GetTargeter());
 								break;
@@ -199,15 +196,15 @@ public class AbilityUIModifier : UnitModifier,
 				});
 			} else {
 				if (abilityData.cooldown.other > 0 && abilityData.charges.value <= 0) {
-					cooldownText.text = abilityData.cooldown.value > 0 ? abilityData.cooldown.value.ToString() : "";
-					fgMask.fillAmount = 1 - (float)abilityData.cooldown.value / (float)abilityData.cooldown.other;
-					fgMask.gameObject.SetActive(true);
-					bgImage.enabled = true;
+					icon.cooldownText.text = abilityData.cooldown.value > 0 ? abilityData.cooldown.value.ToString() : "";
+					icon.mask.fillAmount = 1 - (float)abilityData.cooldown.value / (float)abilityData.cooldown.other;
+					icon.mask.gameObject.SetActive(true);
+					icon.sprite.enabled = true;
 				} else {
-					cooldownText.text = "";
-					fgMask.fillAmount = 1;
-					fgMask.gameObject.SetActive(false);
-					bgImage.enabled = true;
+					icon.cooldownText.text = "";
+					icon.mask.fillAmount = 1;
+					icon.mask.gameObject.SetActive(false);
+					icon.sprite.enabled = true;
 				}
 			}
 		}
@@ -246,21 +243,25 @@ public class AbilityUIModifier : UnitModifier,
 
 	public void OnAnimationEventStart(EventHandler handler) {
 		targetAlpha = data.fadeAlpha;
+		ui.group.blocksRaycasts = false;
 		if (Game.rounds.current == unit) RefreshValues();
 	}
 	public void OnAnimationEventEnd() {
 		targetAlpha = 1;
+		ui.group.blocksRaycasts = true;
 		if (Game.rounds.current == unit) RefreshValues();
 	}
 
 	public void OnTargeterStart(Targeter targeter) {
 		targetAlpha = data.fadeAlpha;
+		ui.group.blocksRaycasts = false;
 		if (Game.rounds.current == unit) {
 			foreach (var icon in aIcons) icon.button.enabled = false;
 		}
 	}
 	public void OnTargeterEnd() {
 		targetAlpha = 1;
+		ui.group.blocksRaycasts = true;
 		if (Game.rounds.current == unit) {
 			foreach (var icon in aIcons) icon.button.enabled = true;
 		}

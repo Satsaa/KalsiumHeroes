@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 7266266586984682552}
   - component: {fileID: 7266266586984682555}
   - component: {fileID: 7266266586984682694}
-  - component: {fileID: 7266266586984682695}
-  - component: {fileID: 7266266586984682692}
+  - component: {fileID: 6401616594254409276}
+  - component: {fileID: 7823036885394000072}
+  - component: {fileID: 8687087938433633177}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7266266586984682553}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 14.1, y: 18.02, z: -3.3}
+  m_LocalPosition: {x: 15.57, y: 18.186533, z: -0.9499998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,8 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92dd1311856c704caba736ba87b4b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   cam: {fileID: 7266266586984682554}
+  target: {fileID: 0}
   center: {x: 0, y: 0, z: 0}
   distance: 21
   horRot: 0
@@ -142,7 +143,7 @@ MonoBehaviour:
   zoomSmooth: 0.85
   rotSmooth: 0.85
   displacementSmooth: 0.85
---- !u!114 &7266266586984682695
+--- !u!114 &6401616594254409276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,18 +152,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7266266586984682553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d6dd72364dd03347b202f5b5704d025, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fbd13e8bcaaab04bba7f00d3f495f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   key: 325
   mask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 0
   raycastPlaneNormal: 0
   planeNormal: {x: 0, y: 1, z: 0}
   raycastPlanePoint: 0
   planePoint: {x: 0, y: 0, z: 0}
---- !u!114 &7266266586984682692
+  dragging: 0
+--- !u!114 &7823036885394000072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +173,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7266266586984682553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24c350650582309468592e12b53c61f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e933faa812c8792488bab22b6ce9f8cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 1.2
@@ -179,3 +181,25 @@ MonoBehaviour:
   range: {x: 2, y: 50}
   multiplyByDelta: 0
   alternatives: []
+  freeZoom:
+    start: 0
+    _delay: 0.5
+    <used>k__BackingField: 0
+    _paused: 0
+    pauseTime: 0
+--- !u!114 &8687087938433633177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266266586984682553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95fd475ba36d42409d96609d134e2d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pipeline: {fileID: 0}
+  cam: {fileID: 7266266586984682554}
+  planeDebth: -4.5
+  distanceStepInterveal: 5

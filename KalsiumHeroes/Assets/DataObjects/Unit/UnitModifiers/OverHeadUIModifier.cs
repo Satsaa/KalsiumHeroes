@@ -13,7 +13,6 @@ public class OverHeadUIModifier : UnitModifier, IOnLateUpdate {
 
 	[SerializeField, HideInInspector] Camera cam;
 	[SerializeField, HideInInspector] OverHeadUI ui;
-	[SerializeField, HideInInspector] ModifierListTooltipProvider modifierListTt;
 
 	[SerializeField, HideInInspector] float hpFullWidth;
 	[SerializeField, HideInInspector] float energyFullWidth;
@@ -31,12 +30,10 @@ public class OverHeadUIModifier : UnitModifier, IOnLateUpdate {
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		Debug.Assert(ui = container.GetComponentInChildren<OverHeadUI>());
-		Debug.Assert(modifierListTt = container.GetComponentInChildren<ModifierListTooltipProvider>());
 		Debug.Assert(cam = Camera.main);
+		Debug.Assert(ui = container.GetComponentInChildren<OverHeadUI>());
 		hpFullWidth = ui.hpRect.sizeDelta.x;
 		energyFullWidth = ui.energyRect.sizeDelta.x;
-		modifierListTt.unit = this.unit;
 	}
 
 }

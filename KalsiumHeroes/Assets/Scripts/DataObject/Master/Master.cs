@@ -22,6 +22,11 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 	}
 
 	public override void OnCreate(Modifier modifier) {
+		if (modifier.container) {
+			foreach (var contComp in modifier.container.GetComponentsInChildren<IContainerComponent>()) {
+				contComp.SetMaster(this);
+			}
+		}
 		modifiers.Add<TMod>((TMod)modifier);
 		onEvents.Add(modifier);
 	}

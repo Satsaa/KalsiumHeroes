@@ -17,5 +17,6 @@ public class PassiveIcon : MonoBehaviour {
 	public void SetPassive(Passive passive) {
 		this.passive = passive;
 		displayName.text = passive.data.displayName ?? passive.data.identifier.Replace("_", " ");
+		sprite.sprite = passive.data.sprite;
 	}
 }

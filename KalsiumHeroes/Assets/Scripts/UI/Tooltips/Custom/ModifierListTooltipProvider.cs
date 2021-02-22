@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
 
-public class ModifierListTooltipProvider : TooltipProvider {
+public class ModifierListTooltipProvider : TooltipProvider, IContainerComponent {
 
 	public Unit unit;
 	public string id = "modifier_list";
@@ -36,4 +36,6 @@ public class ModifierListTooltipProvider : TooltipProvider {
 			Debug.LogWarning($"Unexpected {nameof(Tooltip)} type.");
 		}
 	}
+
+	void IContainerComponent.SetMaster(Master master) => unit = (Unit)master;
 }
