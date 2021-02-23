@@ -11,10 +11,7 @@ using Muc.Time;
 
 [RequireComponent(typeof(Windows))]
 [DefaultExecutionOrder(-1)]
-public class Tooltips : MonoBehaviour {
-
-	public static Tooltips instance => _instance;
-	private static Tooltips _instance;
+public class Tooltips : Singleton<Tooltips> {
 
 	[SerializeField, HideInInspector] SerializedStack<Tooltip> tts;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
@@ -29,16 +26,6 @@ public class Tooltips : MonoBehaviour {
 
 	string lastPing;
 	int lastPingFrame = -1;
-
-	private void OnValidate() => Awake();
-	private void Awake() {
-		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {nameof(Tooltips)} GameObjects. Exterminating.");
-			ObjectUtil.Destroy(this);
-			return;
-		}
-		_instance = this;
-	}
 
 	void Update() {
 		if (Time.frameCount - lastPingFrame > 1) {
@@ -115,8 +102,8 @@ public class Tooltips : MonoBehaviour {
 		if (top.gameObject.GetComponentInParent<Window>()) return false;
 		var animator = top.GetComponentInParent<TooltipAnimator>();
 		if (animator) animator.FinishAnims();
-		var window = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.instance.transform);
-		Windows.instance.MoveToTop(window.gameObject.transform);
+		var window = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.transform);
+		Windows.MoveToTop(window.gameObject.transform);
 		top.MoveContent(window.content.contentParent);
 		top.root = window.gameObject;
 		window.gameObject.transform.Translate(0, 10, 0);
@@ -187,9 +174,9 @@ public class Tooltips : MonoBehaviour {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, Windows.instance.transform);
+		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, Windows.transform);
 		var tt = Instantiate(GetTooltipPrefab(id), animator.transform);
-		Windows.instance.MoveToTop(animator.transform);
+		Windows.MoveToTop(animator.transform);
 		tt.id = id;
 		tt.index = tts.Count;
 		tt.root = tt.gameObject;

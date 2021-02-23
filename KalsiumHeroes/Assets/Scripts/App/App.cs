@@ -5,38 +5,19 @@ using UnityEngine.SceneManagement;
 using Muc.Data;
 
 [DefaultExecutionOrder(-900)]
-public class App : MonoBehaviour {
+public class App : Singleton<App> {
 
-	public static App instance => _instance;
 	public static Lang lang => instance._lang;
 	public static UIBG uibg => instance._uibg;
 
-	private static App _instance;
 	[SerializeField] private Lang _lang;
 	[SerializeField] private UIBG _uibg;
 	[SerializeField] private InitDisplay initDisplay;
 
 	[SerializeField] private SceneReference defaultScene;
 
-	private void OnValidate() {
-		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {nameof(App)} GameObjects. Exterminating.");
-			ObjectUtil.Destroy(this);
-			return;
-		}
-
-		_instance = this;
-	}
-
-	private void Awake() {
-
-		OnValidate();
-
-
-	}
-
 	private void Start() {
-
+		// Load default scene if only the App scene is loaded
 		if (SceneManager.sceneCount == 1) {
 			initDisplay.op = SceneManager.LoadSceneAsync(defaultScene.ScenePath, LoadSceneMode.Additive);
 		} else {

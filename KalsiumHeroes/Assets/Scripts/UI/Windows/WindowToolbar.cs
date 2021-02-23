@@ -22,7 +22,7 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	}
 
 	void Start() {
-		window.transform.SetParent(Windows.instance.transform);
+		window.transform.SetParent(Windows.transform);
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {

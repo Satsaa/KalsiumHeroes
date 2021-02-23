@@ -8,27 +8,14 @@ using Muc.Collections;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
 
-public class Windows : MonoBehaviour {
+public class Windows :  Singleton<Windows> {
 
-	public static Windows instance => _instance;
+	public new static Transform transform => _instance.gameObject.transform;
+
 	public float doubleClickTime = 0.5f;
-	private static Windows _instance;
 
-	private void OnValidate() => Awake();
-	private void Awake() {
-
-		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {nameof(Windows)} GameObjects. Exterminating.");
-			ObjectUtil.Destroy(this);
-			return;
-		}
-
-		_instance = this;
-
-	}
-
-	public void MoveToTop(Transform transform) {
-		transform.SetParent(this.transform);
+	public static void MoveToTop(Transform transform) {
+		transform.SetParent(Windows.transform);
 		transform.SetAsLastSibling();
 	}
 
@@ -44,7 +31,7 @@ public class Windows : MonoBehaviour {
 				if (raycasts.Any()) {
 					var window = raycasts.First().gameObject.GetComponentInParent<Window>();
 					if (window) {
-						Windows.instance.MoveToTop(window.transform);
+						Windows.MoveToTop(window.transform);
 					}
 				}
 			}
