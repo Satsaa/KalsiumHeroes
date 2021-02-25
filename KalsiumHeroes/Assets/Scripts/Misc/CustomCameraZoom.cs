@@ -12,7 +12,7 @@ public class CustomCameraZoom : MyUnityCameraZoom {
 	[SerializeField] private Timeout freeZoom = new Timeout(0.25f);
 
 	new protected void Update() {
-		if (App.uibg.hovered || !freeZoom.expired) {
+		if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() || !freeZoom.expired) {
 			if (Input.mouseScrollDelta.y != 0) freeZoom.Reset();
 			base.Update();
 		}

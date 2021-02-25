@@ -47,7 +47,7 @@ public class Targeting : MonoBehaviour {
 
 	void Update() {
 		if (targeter != null) {
-			if (!TryComplete() && App.uibg.hovered) {
+			if (!TryComplete() && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
 
 				var ray = camera.ScreenPointToRay(Input.mousePosition);
 				var hex = Game.grid.RaycastHex(ray);

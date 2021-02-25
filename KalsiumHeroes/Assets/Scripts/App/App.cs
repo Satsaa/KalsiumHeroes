@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Muc.Data;
+using UnityEngine.UI;
 
 [DefaultExecutionOrder(-900)]
 public class App : Singleton<App> {
 
 	public static Lang lang => instance._lang;
-	public static UIBG uibg => instance._uibg;
 
 	[SerializeField] private Lang _lang;
-	[SerializeField] private UIBG _uibg;
 	[SerializeField] private InitDisplay initDisplay;
 
 	[SerializeField] private SceneReference defaultScene;
@@ -24,4 +23,5 @@ public class App : Singleton<App> {
 			Destroy(initDisplay);
 		}
 	}
+
 }

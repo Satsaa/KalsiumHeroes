@@ -10,7 +10,7 @@ public class CustomCameraDrag : MyUnityCameraDrag {
 	[SerializeField, HideInInspector] private bool dragging;
 
 	new protected void Update() {
-		if (Input.GetKeyDown(key) && App.uibg.hovered) StartDrag();
+		if (Input.GetKeyDown(key) && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) StartDrag();
 		if (Input.GetKey(key)) UpdateDrag();
 		else dragging = false;
 	}
