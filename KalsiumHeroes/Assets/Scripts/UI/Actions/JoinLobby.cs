@@ -9,32 +9,28 @@ using TMPro;
 
 public class JoinLobby : MonoBehaviour {
 
-	public MessageBox messageBox;
-	public MessageOption messageOption;
-	public GameObject codeInputPrefab;
+	[SerializeField] MessageBoxPreset messageBoxPreset;
+	[SerializeField] TMP_InputField codeInputPrefab;
 
-	public TextSource title;
-	public TextSource message;
+	[SerializeField] TextSource title;
+	[SerializeField] TextSource message;
 
-	public TextSource cancel;
-	public TextSource join;
+	[SerializeField] TextSource join;
+	[SerializeField] TextSource cancel;
 
 	public void DoJoinLobby() {
-		var msgBox = Instantiate(messageBox);
-		msgBox.SetTitle(title ?? "TITLE");
-		msgBox.SetMessage(message ?? "MESSAGE");
-		var codeInputGo = Instantiate(codeInputPrefab);
-		var codeInputField = codeInputGo.GetComponentInChildren<TMP_InputField>();
-		msgBox.AddCustomObject(codeInputGo);
 
-		// Join
-		var joinOption = msgBox.AddOption(messageOption, () => { OnJoin(codeInputField.text); });
-		joinOption.SetText(join ?? "JOIN");
-		codeInputField.onValueChanged.AddListener((v) => { OnValueChanged(v, joinOption); });
-		OnValueChanged(codeInputField.text, joinOption);
+		var codeInputField = Instantiate(codeInputPrefab);
 
-		// Cancel
-		msgBox.AddOption(messageOption, () => { }).SetText(cancel ?? "CANCEL");
+		var msgBox = messageBoxPreset.Show(title, message,
+			join ?? "JOIN", () => OnJoin(codeInputField.text),
+			cancel ?? "CANCEL", null
+		);
+
+		msgBox.AddCustomObject(codeInputField.gameObject);
+
+		codeInputField.onValueChanged.AddListener((v) => { OnValueChanged(v, msgBox.options[0]); });
+		OnValueChanged("", msgBox.options[0]);
 	}
 
 	void OnValueChanged(string code, MessageOption joinOption) {

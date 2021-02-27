@@ -28,10 +28,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08388c54931bf5b46985b9f89fbd4039, type: 2}
   - {fileID: 11400000, guid: b502cf770b53f3545ad6fa1b830ed615, type: 2}
   - {fileID: 11400000, guid: 8d5fea59e64b07143886a82170581d3d, type: 2}
-  displayName: {fileID: 0}
+  displayName: {fileID: 11400000, guid: 92ebc4b18f281a94ab2776006418d2b4, type: 2}
   description: {fileID: 0}
   lore: {fileID: 0}
   portrait: {fileID: 0}
+  draftCost: 5
   speed:
     _value: 12
   movement:

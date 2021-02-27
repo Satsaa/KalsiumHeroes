@@ -129,7 +129,7 @@ public class Events {
 				case 1:
 					foreach (var info in this.units) {
 						var tile = Game.grid.tiles[info.position];
-						var unitData = Game.library.GetData<UnitData>(info.unit);
+						var unitData = App.library.GetById<UnitData>(info.unit);
 						var unit = Unit.Create(unitData, null);
 						unit.gameObject.transform.parent = Game.instance.transform;
 						unit.gameObject.SetActive(false);

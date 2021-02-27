@@ -26,6 +26,6 @@ public class MessageOption : MonoBehaviour {
 	}
 
 	public virtual void AddAction(System.Action action) {
-		button.onClick.AddListener(() => action());
+		if (action != null) button.onClick.AddListener(() => action());
 	}
 }

@@ -89,63 +89,70 @@ namespace Editors {
 						buttonRect.yMin = buttonRect.yMax - buttonHeight + spacing;
 						buttonRect = EditorGUI.IndentedRect(buttonRect);
 						if (GUI.Button(buttonRect, "Generate Text Assets")) {
+							string category;
+							string name;
+
 							var identifier = property.serializedObject.FindProperty("identifier");
-							if (identifier == null || String.IsNullOrWhiteSpace(identifier.stringValue)) {
-								Debug.LogError("No defined identifier on Object.");
+							if (identifier == null) {
+								category = property.serializedObject.targetObject.GetType().Name;
+								name = property.name;
 							} else {
 								var matches = identifierRegex.Match(identifier.stringValue);
+								if (String.IsNullOrWhiteSpace(identifier.stringValue)) {
+									Debug.LogError("No defined identifier on Object.");
+									return;
+								}
 								if (matches.Groups.Count != 3) {
 									Debug.LogError("Can't parse generation path from identifier.");
-								} else {
-									var category = Nicify(matches.Groups[1].Value);
-									var name = Nicify(matches.Groups[2].Value);
-									var propertyName = whitespaceRegex.Replace(label.text, "");
-
-									var textSource = TextSource.CreateInstance<TextSource>();
-									var assetsPath = $"{Application.dataPath}";
-									var folderPath = $"/Text/{category}/{name}";
-
-									foreach (Lang lang in Enum.GetValues(typeof(Lang))) {
-										Directory.CreateDirectory($"{assetsPath}{folderPath}");
-										File.WriteAllText($"{assetsPath}{folderPath}/{propertyName}_{lang}.txt", $"{identifier.stringValue}.{propertyName}");
-										AssetDatabase.Refresh();
-										var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>($"Assets{folderPath}/{propertyName}_{lang}.txt");
-										textSource.SetText(lang, textAsset);
-									}
-
-									AssetDatabase.CreateAsset(textSource, $"Assets{folderPath}/{propertyName}.asset");
-									property.objectReferenceValue = textSource;
-									EditorGUIUtility.PingObject(textSource);
-									EditorGUIUtility.PingObject(textSource);
-
-									static string Nicify(string str) {
-										if (str.Length == 0) return str;
-										var first = str[0];
-										str = str.Remove(0, 1);
-										str = $"{Char.ToUpper(first)}{str}";
-										var i = 0;
-										while (true && i++ < 100) {
-											var underscore = str.IndexOf("_");
-											if (underscore < 0) break;
-											if (underscore >= str.Length - 1) {
-												str = str.Remove(underscore, 1);
-												break;
-											}
-											var old = str[underscore + 1];
-											str = str.Remove(underscore, 2);
-											str = str.Insert(underscore, Char.ToUpper(old).ToString());
-										}
-										return str;
-									}
+									return;
 								}
+								category = Nicify(matches.Groups[1].Value);
+								name = Nicify(matches.Groups[2].Value);
+							}
+
+							var textSource = TextSource.CreateInstance<TextSource>();
+							var assetsPath = $"{Application.dataPath}";
+							var folderPath = $"/Text/{category}/{name}";
+
+							foreach (Lang lang in Enum.GetValues(typeof(Lang))) {
+								Directory.CreateDirectory($"{assetsPath}{folderPath}");
+								File.WriteAllText($"{assetsPath}{folderPath}/{property.name}_{lang}.txt", $"{name}.{property.name} ({lang})");
+								AssetDatabase.Refresh();
+								var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>($"Assets{folderPath}/{property.name}_{lang}.txt");
+								textSource.SetText(lang, textAsset);
+							}
+
+							AssetDatabase.CreateAsset(textSource, $"Assets{folderPath}/{property.name}.asset");
+							property.objectReferenceValue = textSource;
+							EditorGUIUtility.PingObject(textSource);
+							EditorGUIUtility.PingObject(textSource);
+
+							static string Nicify(string str) {
+								if (str.Length == 0) return str;
+								var first = str[0];
+								str = str.Remove(0, 1);
+								str = $"{Char.ToUpper(first)}{str}";
+								var i = 0;
+								while (true && i++ < 100) {
+									var underscore = str.IndexOf("_");
+									if (underscore < 0) break;
+									if (underscore >= str.Length - 1) {
+										str = str.Remove(underscore, 1);
+										break;
+									}
+									var old = str[underscore + 1];
+									str = str.Remove(underscore, 2);
+									str = str.Insert(underscore, Char.ToUpper(old).ToString());
+								}
+								return str;
 							}
 						}
 					}
 				}
 			}
 		}
-
 	}
+
 }
 #endif
 

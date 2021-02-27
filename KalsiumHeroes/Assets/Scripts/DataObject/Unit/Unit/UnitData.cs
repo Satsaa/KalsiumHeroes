@@ -19,6 +19,9 @@ public class UnitData : MasterData {
 	[Tooltip("The default portrait sprite for this Unit.")]
 	public Sprite portrait;
 
+	[Tooltip("The cost of drafting this Unit.")]
+	public int draftCost = 5;
+
 	[Tooltip("Speed determines when the unit gets to be played. The higher the speed, the higher the priority within any turn.")]
 	public Attribute<int> speed = new Attribute<int>(1);
 

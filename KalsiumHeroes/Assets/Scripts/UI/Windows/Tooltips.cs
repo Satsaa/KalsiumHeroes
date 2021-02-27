@@ -247,10 +247,6 @@ public class Tooltips : Singleton<Tooltips> {
 	}
 
 	private Tooltip GetTooltipPrefab(string id) {
-		if (id.StartsWith("lib_")) {
-			id = id.Substring(4);
-			return Game.library.tooltips[id];
-		}
 		return tooltips[id];
 	}
 }

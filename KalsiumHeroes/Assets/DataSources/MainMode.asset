@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f41566c2e8de7546942c5d92c3d4297, type: 3}
+  m_Name: MainMode
+  m_EditorClassIdentifier: 
+  title: Main
+  version: 0.0.0
+  draft:
+  - unit_lone_ranger
+  - unit_rogue_mage_hunter
+  minDraftCount: 1
+  maxDraftCount: 10
+  maxDraftCost: 50
+  maxCostExceeded: {fileID: 11400000, guid: 82e7bacb752e64e459a450d4f54b731f, type: 2}
+  maxCountExceeded: {fileID: 11400000, guid: e6d2ed20948ebf44ea53c56a03a8cc71, type: 2}
+  minCountNotReached: {fileID: 11400000, guid: 10049d9a24f2dfc459a5009048b970e8, type: 2}
+  unitMissing: {fileID: 11400000, guid: 68a9501adce561e4f970d3acac0f6f3b, type: 2}
