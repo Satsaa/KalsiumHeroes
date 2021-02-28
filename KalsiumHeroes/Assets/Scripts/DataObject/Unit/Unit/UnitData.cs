@@ -19,6 +19,9 @@ public class UnitData : MasterData {
 	[Tooltip("The default portrait sprite for this Unit.")]
 	public Sprite portrait;
 
+	[Tooltip("Actor prefab for this Unit. It is instantiated as a parent.")]
+	public UnitActor actor;
+
 	[Tooltip("The cost of drafting this Unit.")]
 	public int draftCost = 5;
 

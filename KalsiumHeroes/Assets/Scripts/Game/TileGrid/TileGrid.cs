@@ -14,6 +14,7 @@ using Priority_Queue;
 using UnityEngine.Serialization;
 using System.Reflection;
 
+[DisallowMultipleComponent]
 public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 
 	[field: SerializeField]
@@ -204,6 +205,27 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 			return Layout.PointToHex(point).Round();
 		}
 		return default;
+	}
+
+	/// <summary> Returns the Tile under mouse. </summary>
+	public Tile GetHoveredTile(int raycastRadius = 1) => GetHoveredTile(Camera.main, raycastRadius);
+	/// <summary> Returns the Tile under mouse. </summary>
+	public Tile GetHoveredTile(Camera camera, int raycastRadius = 1) {
+		var ray = camera.ScreenPointToRay(Input.mousePosition);
+		var hex = Game.grid.RaycastHex(ray);
+		var main = Game.grid.GetTile(hex);
+		var radius = Game.grid.Radius(hex, raycastRadius);
+		List<(Tile tile, Collider col)> candidates = radius.Select(v => (v, v.gameObject.GetComponent<Collider>())).ToList();
+
+		var tile = main;
+		var minDist = float.PositiveInfinity;
+		foreach (var candidate in candidates) {
+			if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null ? -0.25f : main.gameObject.transform.position.y - 0.25f)) {
+				minDist = hit.distance;
+				tile = candidate.tile;
+			}
+		}
+		return tile;
 	}
 
 	/// <summary> Returns the Tile at point. </summary>

@@ -14,7 +14,7 @@ public abstract class TargetAbility : Ability {
 	/// <summary> Returns a targeter with onComplete and onCancel callbacks. </summary>
 	public virtual Targeter GetTargeter() {
 		return new AbilityTargeter(unit, this,
-			onComplete: (targeter) => Game.client.PostEvent(
+			onComplete: (targeter) => App.client.PostEvent(
 				new Events.Ability() {
 					casterTile = unit.tile.hex.pos,
 					casterIndex = unit.tile.units.IndexOf(unit),

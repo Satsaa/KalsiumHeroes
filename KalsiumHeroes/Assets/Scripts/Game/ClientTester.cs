@@ -9,11 +9,10 @@ using UnityEditor;
 #endif
 
 
-[ExecuteAlways, RequireComponent(typeof(GridTester))]
-public class GameTester : MonoBehaviour {
+[ExecuteAlways, RequireComponent(typeof(Client))]
+public class ClientTester : MonoBehaviour {
 
-	public Game game;
-	public GridTester tester;
+	public Client client;
 
 	[HideInInspector] public int index;
 
@@ -24,8 +23,7 @@ public class GameTester : MonoBehaviour {
 	public object data;
 
 	void OnValidate() {
-		if (game == null) game = GetComponent<Game>();
-		if (tester == null) tester = GetComponent<GridTester>();
+		if (client == null) Debug.Assert((client = GetComponent<Client>()) != null, this);
 	}
 
 }
@@ -33,10 +31,10 @@ public class GameTester : MonoBehaviour {
 
 #if UNITY_EDITOR
 
-[CustomEditor(typeof(GameTester))]
-public class GameTesterEditor : Editor {
+[CustomEditor(typeof(ClientTester))]
+public class ClientTesterEditor : Editor {
 
-	GameTester t => (GameTester)target;
+	ClientTester t => (ClientTester)target;
 
 	public int index => t.index;
 	Type[] types = Events.events.Values.ToArray();
@@ -53,17 +51,16 @@ public class GameTesterEditor : Editor {
 
 		if (t.data == null || t.data.GetType() != dataType) {
 			var val = (GameEvent)Activator.CreateInstance(dataType, true);
-			val.eventNum = -1;
+			val.gameEventNum = -1;
 			t.data = val;
 		}
 
 		if (GUILayout.Button($"Post Event ({eventName})")) {
-			GameEvent e = (GameEvent)t.data;
-			if (e.eventNum == -1) e.eventNum = Game.client.eventNum++;
-			Game.client.PostEvent(e);
+			var e = (GameEvent)t.data;
+			if (e.gameEventNum == -1) e.gameEventNum = Game.instance.gameEventNum++;
+			t.client.PostEvent(e);
 		}
 
-		t.currentPos = t.tester.mainHex.pos;
 		serializedObject.ApplyModifiedProperties();
 
 	}

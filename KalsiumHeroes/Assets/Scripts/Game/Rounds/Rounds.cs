@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-[System.Serializable]
-public class Rounds {
+[DisallowMultipleComponent]
+public class Rounds : MonoBehaviour {
 
 	public List<Unit> units = new List<Unit>();
 

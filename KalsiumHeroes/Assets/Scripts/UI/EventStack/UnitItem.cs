@@ -10,8 +10,6 @@ public class UnitItem : RoundStackItem {
 	public Image unitImage;
 	public Text unitText;
 
-	public const int highlightPriority = Targeting.hoverPriority * 2;
-
 	[HideInInspector] public Highlighter highlighter;
 
 	public void Start() {
@@ -28,17 +26,17 @@ public class UnitItem : RoundStackItem {
 	}
 
 	public void OnDestroy() {
-		if (highlighter) highlighter.Unhighlight(highlightPriority);
+		if (highlighter) highlighter.Unhighlight(Highlighter.highlightPriority);
 	}
 
 	public void OnMouseEnter() {
-		if (highlighter) highlighter.Unhighlight(highlightPriority);
+		if (highlighter) highlighter.Unhighlight(Highlighter.highlightPriority);
 		highlighter = unit.tile.highlighter;
-		highlighter.Highlight(Color.cyan, highlightPriority);
+		highlighter.Highlight(Color.cyan, Highlighter.highlightPriority);
 	}
 
 	public void OnMouseExit() {
-		if (highlighter) highlighter.Unhighlight(highlightPriority);
+		if (highlighter) highlighter.Unhighlight(Highlighter.highlightPriority);
 	}
 
 	/// <summary>

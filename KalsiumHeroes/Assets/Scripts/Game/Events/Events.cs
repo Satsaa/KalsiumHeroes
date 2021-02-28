@@ -6,12 +6,12 @@ using System.Linq;
 
 [Serializable]
 public abstract class GameEvent {
-	public int eventNum;
+	public int gameEventNum;
 	public abstract EventHandler GetHandler();
 }
 
-[Serializable]
-public class Events {
+[DisallowMultipleComponent]
+public class Events : MonoBehaviour {
 
 	[SerializeReference] public List<object> stack = new List<object>();
 	public GameEvent first => (GameEvent)stack[0];
@@ -114,31 +114,38 @@ public class Events {
 
 			/// <summary> Tile to spawn unit at. </summary>
 			public Vector3Int position;
+
+			/// <summary> The team of the unit. </summary>
+			public Team team;
 		}
 
 		/// <summary> Spawned starter units. </summary>
-		public SpawnInfo[] units;
+		public SpawnInfo[] spawns;
 
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
 
-			Game.readyCount++;
+			Game.instance.readyCount++;
 
 			// TODO
-			switch (Game.readyCount) {
+			switch (Game.instance.readyCount) {
 				case 1:
-					foreach (var info in this.units) {
-						var tile = Game.grid.tiles[info.position];
-						var unitData = App.library.GetById<UnitData>(info.unit);
-						var unit = Unit.Create(unitData, null);
-						unit.gameObject.transform.parent = Game.instance.transform;
-						unit.gameObject.SetActive(false);
+				case 2:
+					foreach (var spawn in spawns) {
+						var tile = Game.grid.tiles[spawn.position];
+						var unitData = App.library.GetById<UnitData>(spawn.unit);
+						var unit = Unit.Create(unitData, Game.grid.tiles[spawn.position], spawn.team);
+						unit.actor.gameObject.SetActive(spawn.team == Game.instance.team);
+					}
+					if (Game.instance.readyCount == 2) {
+						foreach (var unit in Game.dataObjects.Get<Unit>()) {
+							unit.actor.gameObject.SetActive(true);
+						}
+						Game.instance.StartGame();
 					}
 					break;
-				case 2:
-					break;
 				default:
-					throw new InvalidOperationException($"Too many readies! ({Game.readyCount})");
+					throw new InvalidOperationException($"Too many readies! ({Game.instance.readyCount})");
 			}
 
 

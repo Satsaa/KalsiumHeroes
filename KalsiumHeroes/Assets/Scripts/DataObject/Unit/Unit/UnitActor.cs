@@ -10,9 +10,6 @@ using static Muc.Editor.GizmosUtil;
 
 public partial class UnitActor : MonoBehaviour {
 
-	[Obsolete("Use GetPos/SetPos for setting position.")]
-	new Transform transform;
-
 	public enum AnimationType {
 		None,
 		Walk,
@@ -26,9 +23,12 @@ public partial class UnitActor : MonoBehaviour {
 
 	void OnDrawGizmos() {
 		if (!Application.isPlaying) return;
-		using (ColorScope(Color.blue))
-			Gizmos.DrawRay(new Ray(GetPos(), base.transform.forward));
+		using (ColorScope(Color.blue)) Gizmos.DrawRay(new Ray(GetPos(), transform.forward));
 		OnDrawGizmosMove();
+	}
+
+	protected void Awake() {
+		transform.parent = Game.instance.transform;
 	}
 
 	protected void Update() {
@@ -61,9 +61,9 @@ public partial class UnitActor : MonoBehaviour {
 		animationType = AnimationType.None;
 	}
 
-	public Vector2 Get2DPos() => base.transform.parent.position.xz();
-	public Vector3 GetPos() => base.transform.parent.position;
-	public void Set2DPos(Vector2 position) => base.transform.parent.position = position.x0y().SetY(base.transform.parent.position.y);
-	public void SetPos(Vector3 position) => base.transform.parent.position = position;
+	public Vector2 Get2DPos() => transform.position.xz();
+	public Vector3 GetPos() => transform.position;
+	public void Set2DPos(Vector2 position) => transform.position = position.x0y().SetY(transform.position.y);
+	public void SetPos(Vector3 position) => transform.position = position;
 
 }

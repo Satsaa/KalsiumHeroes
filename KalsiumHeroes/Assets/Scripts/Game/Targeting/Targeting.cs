@@ -4,17 +4,8 @@ using UnityEngine;
 using System;
 using System.Linq;
 
+[DisallowMultipleComponent]
 public class Targeting : MonoBehaviour {
-
-	public const int targetPriority = 0;
-	public const int selectionPriority = 2;
-	public const int hoverPriority = 4;
-
-	public readonly Color targetColor = new Color(0.25f, 0.75f, 0.25f);
-	public readonly Color selectionColor = new Color(0.1f, 0.7f, 1f);
-	public readonly Color hoverColor = new Color(0.25f, 0.25f, 1f);
-	public readonly Color invalidColor = new Color(0.80f, 0.25f, 0.25f);
-
 
 	private Rounds rm => Game.rounds;
 	private Events e => Game.events;
@@ -49,20 +40,7 @@ public class Targeting : MonoBehaviour {
 		if (targeter != null) {
 			if (!TryComplete() && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
 
-				var ray = camera.ScreenPointToRay(Input.mousePosition);
-				var hex = Game.grid.RaycastHex(ray);
-				var main = Game.grid.GetTile(hex);
-				var area = Game.grid.Radius(hex, 1);
-				List<(Tile tile, Collider col)> candidates = area.Select(v => (v, v.gameObject.GetComponent<Collider>())).ToList();
-
-				var tile = main;
-				var minDist = float.PositiveInfinity;
-				foreach (var candidate in candidates) {
-					if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null ? -0.25f : main.gameObject.transform.position.y - 0.25f)) {
-						minDist = hit.distance;
-						tile = candidate.tile;
-					}
-				}
+				var tile = Game.grid.GetHoveredTile(camera);
 
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
 					if (tile == null) {
@@ -126,24 +104,24 @@ public class Targeting : MonoBehaviour {
 
 
 	void RefreshTargets() {
-		foreach (var target in targets) target.highlighter.Unhighlight(targetPriority);
+		foreach (var target in targets) target.highlighter.Unhighlight(Highlighter.targetPriority);
 		targets = targeter.GetTargets();
-		foreach (var target in targets) target.highlighter.Highlight(targetColor, targetPriority);
+		foreach (var target in targets) target.highlighter.Highlight(Highlighter.targetColor, Highlighter.targetPriority);
 	}
 
 	void UnhighlightSelections() {
-		foreach (var selection in targeter.selections) selection.highlighter.Unhighlight(selectionPriority);
+		foreach (var selection in targeter.selections) selection.highlighter.Unhighlight(Highlighter.selectionPriority);
 	}
 
 	void HighlightSelections() {
-		foreach (var selection in targeter.selections) selection.highlighter.Highlight(selectionColor, selectionPriority);
+		foreach (var selection in targeter.selections) selection.highlighter.Highlight(Highlighter.selectionColor, Highlighter.selectionPriority);
 	}
 
 	void RefreshHovers(Tile tile) {
-		foreach (var hover in hovers) hover.highlighter.Unhighlight(hoverPriority);
+		foreach (var hover in hovers) hover.highlighter.Unhighlight(Highlighter.hoverPriority);
 		if (tile == null || tile.removed) hovers.Clear();
 		else hovers = targeter.GetHover(tile);
-		foreach (var hover in hovers) hover.highlighter.Highlight(hoverIsValid ? hoverColor : invalidColor, hoverPriority);
+		foreach (var hover in hovers) hover.highlighter.Highlight(hoverIsValid ? Highlighter.hoverColor : Highlighter.invalidColor, Highlighter.hoverPriority);
 	}
 
 	public void RefreshCustoms(Dictionary<Tile, (Color, int)> newCustoms) {

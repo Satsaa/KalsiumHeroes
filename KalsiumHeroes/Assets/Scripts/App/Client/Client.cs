@@ -5,13 +5,13 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
-public class Client {
+[DisallowMultipleComponent]
+public class Client : MonoBehaviour {
 
-	public int eventNum = 0;
+	public int globalEventNum = 0;
 
 	public void PostEvent(GameEvent e) {
-		e.eventNum = eventNum++;
+		e.gameEventNum = Game.instance.gameEventNum++;
 
 		var packet = new GameEventPacket(e.GetType().Name, e);
 		var fullJson = JsonUtility.ToJson(packet);

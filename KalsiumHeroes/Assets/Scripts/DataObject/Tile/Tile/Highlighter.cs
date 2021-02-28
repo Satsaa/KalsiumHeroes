@@ -8,6 +8,16 @@ using UnityEngine.Serialization;
 
 public class Highlighter : MonoBehaviour {
 
+	public static readonly Color targetColor = new Color(0.25f, 0.75f, 0.25f);
+	public static readonly Color selectionColor = new Color(0.1f, 0.7f, 1f);
+	public static readonly Color hoverColor = new Color(0.25f, 0.25f, 1f);
+	public static readonly Color invalidColor = new Color(0.80f, 0.25f, 0.25f);
+
+	public const int targetPriority = 0;
+	public const int selectionPriority = 2;
+	public const int hoverPriority = 4;
+	public const int highlightPriority = 8;
+
 	[Serializable]
 	class ColorItem {
 		public Color color;

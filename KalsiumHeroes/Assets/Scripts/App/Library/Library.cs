@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+[DisallowMultipleComponent]
 public class Library : MonoBehaviour {
 
 	[SerializeField] List<DataObjectData> sources;

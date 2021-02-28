@@ -7,10 +7,10 @@ using Object = UnityEngine.Object;
 
 public class ExitGame : MonoBehaviour {
 	public void DoExitGame() {
-		if (Application.isEditor) {
-			UnityEditor.EditorApplication.ExitPlaymode();
-		} else {
-			Application.Quit();
-		}
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.ExitPlaymode();
+#else
+		Application.Quit();
+#endif
 	}
 }

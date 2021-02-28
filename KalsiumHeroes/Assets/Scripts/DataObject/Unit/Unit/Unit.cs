@@ -20,24 +20,29 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 	public Team team;
 
 
-	public static Unit Create(UnitData source, Vector3 position, Team team) {
-		return Create<Unit>(source, v => {
+	public static Unit Create(UnitData source, Vector3 position, Team team, UnitActor actor = null) {
+		var res = Create<Unit>(source, v => {
 			v.team = team;
-			v.gameObject.transform.position = position;
 			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz());
+			v.actor = actor ? actor : Instantiate(source.actor);
 			v.SetTile(nearTile, true);
 		});
+		res.gameObject.transform.SetParent(res.actor.transform, false);
+		return res;
 	}
 
-	public static Unit Create(UnitData source, Tile tile) {
-		return Create<Unit>(source, v => {
+	public static Unit Create(UnitData source, Tile tile, Team team, UnitActor actor = null) {
+		var res = Create<Unit>(source, v => {
+			v.team = team;
+			v.actor = actor ? actor : Instantiate(source.actor);
 			v.SetTile(tile, true);
 		});
+		res.gameObject.transform.SetParent(res.actor.transform, false);
+		return res;
 	}
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		Debug.Assert(actor = gameObject.GetComponentInChildren<UnitActor>());
 		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
@@ -176,7 +181,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 		if (orig != null) orig.units.Remove(this);
 		tile.units.Add(this);
 		this.tile = tile;
-		if (reposition) gameObject.transform.position = this.tile.center;
+		if (reposition) actor.transform.position = this.tile.center;
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
 			tile.onEvents.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));

@@ -32,6 +32,7 @@ MonoBehaviour:
   description: {fileID: 0}
   lore: {fileID: 0}
   portrait: {fileID: 0}
+  actor: {fileID: 4267153226371733055, guid: f725440873d317b4f987ead995abc18c, type: 3}
   draftCost: 5
   speed:
     _value: 12
