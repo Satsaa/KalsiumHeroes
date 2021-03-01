@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAbilityHandler : EventHandler<Events.Ability> {
+public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 
 	public MoveAbility creator;
 
@@ -12,7 +12,7 @@ public class MoveAbilityHandler : EventHandler<Events.Ability> {
 	[SerializeField, HideInInspector] int index;
 	[SerializeField, HideInInspector] List<Master> pathObjects = new List<Master>();
 
-	public MoveAbilityHandler(Events.Ability msg, MoveAbility creator) : base(msg) {
+	public MoveAbilityHandler(GameEvents.Ability msg, MoveAbility creator) : base(msg) {
 		this.creator = creator;
 		var start = Game.grid.tiles[msg.casterTile];
 		var end = Game.grid.tiles[msg.targets.First()];

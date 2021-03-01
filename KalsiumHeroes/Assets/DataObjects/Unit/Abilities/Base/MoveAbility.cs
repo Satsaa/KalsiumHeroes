@@ -10,7 +10,7 @@ public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 	[HideInInspector, SerializeField] bool blocked;
 
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new MoveAbilityHandler(msg, this);
 	}
 

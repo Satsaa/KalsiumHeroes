@@ -9,7 +9,7 @@ public class TargetWeakSpotAbility : UnitTargetAbility {
 	public new TargetWeakSpotAbilityData data => (TargetWeakSpotAbilityData)_data;
 	public override Type dataType => typeof(TargetWeakSpotAbilityData);
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var damage = data.damage.value;
 			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];

@@ -8,6 +8,7 @@ using Muc.Extensions;
 using System.Linq;
 using static Muc.Editor.GizmosUtil;
 
+[RequireComponent(typeof(Animator))]
 public partial class UnitActor : MonoBehaviour {
 
 	public enum AnimationType {
@@ -19,6 +20,7 @@ public partial class UnitActor : MonoBehaviour {
 	}
 
 	[HideInInspector] public AnimationType animationType;
+	[HideInInspector] public Animator animator;
 	public bool animating => animationType != 0;
 
 	void OnDrawGizmos() {
@@ -29,12 +31,14 @@ public partial class UnitActor : MonoBehaviour {
 
 	protected void Awake() {
 		transform.parent = Game.instance.transform;
+		animator = GetComponent<Animator>();
 	}
 
 	protected void Update() {
 		switch (animationType) {
 			case AnimationType.None:
 			case AnimationType.Die:
+				break;
 			case AnimationType.Stagger:
 				break;
 			case AnimationType.Walk:
@@ -56,6 +60,7 @@ public partial class UnitActor : MonoBehaviour {
 				SetPos(spline._controls.Last());
 				moveT = spline._controls.Count - 1;
 				isMoving = false;
+				animator.SetTrigger("Idle");
 				break;
 		}
 		animationType = AnimationType.None;

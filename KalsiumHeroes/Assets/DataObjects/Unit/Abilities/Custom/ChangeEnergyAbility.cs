@@ -9,7 +9,7 @@ public class ChangeEnergyAbility : UnitTargetAbility {
 	public new ChangeEnergyAbilityData data => (ChangeEnergyAbilityData)_data;
 	public override Type dataType => typeof(ChangeEnergyAbilityData);
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
 			var aoe = GetAffectedArea(target);

@@ -17,7 +17,7 @@ public class HuntTheMarkAbility : UnitTargetAbility {
 		return base.IsReady() && Game.dataObjects.Get<MarkOfPreyStatus>().Any(v => v.unit != unit && TargetHasFreeTiles(v.unit));
 	}
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
 			var aoe = GetAffectedArea(target);

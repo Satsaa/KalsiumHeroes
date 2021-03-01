@@ -15,7 +15,7 @@ public abstract class TargetAbility : Ability {
 	public virtual Targeter GetTargeter() {
 		return new AbilityTargeter(unit, this,
 			onComplete: (targeter) => App.client.PostEvent(
-				new Events.Ability() {
+				new GameEvents.Ability() {
 					casterTile = unit.tile.hex.pos,
 					casterIndex = unit.tile.units.IndexOf(unit),
 					abilityIndex = unit.modifiers.IndexOf<Ability>(this),

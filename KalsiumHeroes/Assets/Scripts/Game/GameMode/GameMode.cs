@@ -13,6 +13,8 @@ public abstract class GameMode : ScriptableObject {
 
 	[Tooltip("Selected units for the GameMode")]
 	public string[] draft;
+	public List<Vector3Int> draftPositions;
+	public List<Vector3Int> draftPositionsAlt;
 
 	public abstract bool ValidateDraft(List<string> unitIds, out TextSource failReason);
 

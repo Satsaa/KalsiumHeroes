@@ -4,14 +4,9 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-[Serializable]
-public abstract class GameEvent {
-	public int gameEventNum;
-	public abstract EventHandler GetHandler();
-}
 
 [DisallowMultipleComponent]
-public class Events : MonoBehaviour {
+public class GameEvents : MonoBehaviour {
 
 	[SerializeReference] public List<object> stack = new List<object>();
 	public GameEvent first => (GameEvent)stack[0];
@@ -48,21 +43,8 @@ public class Events : MonoBehaviour {
 	}
 
 
-	public static Dictionary<string, Type> events => _events ?? BuildEventTypes();
-	private static Dictionary<string, Type> _events;
-
-	private static Dictionary<string, Type> BuildEventTypes() {
-		_events = new Dictionary<string, Type>();
-		var nested = typeof(Events).GetNestedTypes().Where(t => t.BaseType == typeof(GameEvent));
-		foreach (var type in nested) {
-			_events.Add(type.Name, type);
-		}
-		return _events;
-	}
-
-	public void QueueEvent(GameEventPacket data) {
-		var ge = (GameEvent)JsonUtility.FromJson(data.json, events[data.name]);
-		stack.Add(ge);
+	public void QueueEvent(GameEvent gameEvent) {
+		stack.Add(gameEvent);
 	}
 
 

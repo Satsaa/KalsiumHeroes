@@ -8,7 +8,7 @@ using System.Linq;
 public class Targeting : MonoBehaviour {
 
 	private Rounds rm => Game.rounds;
-	private Events e => Game.events;
+	private GameEvents e => Game.events;
 	private bool finished => e.finished;
 
 	private Tile prevHoverTile;

@@ -6,13 +6,13 @@ using UnityEngine;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [DefaultExecutionOrder(-600)]
-[RequireComponent(typeof(Events))]
+[RequireComponent(typeof(GameEvents))]
 [RequireComponent(typeof(Rounds))]
 [RequireComponent(typeof(Targeting))]
 [RequireComponent(typeof(TileGrid))]
 public class Game : Singleton<Game> {
 
-	public static Events events => instance._events;
+	public static GameEvents events => instance._events;
 	public static Rounds rounds => instance._rounds;
 	public static Targeting targeting => instance._targeting;
 	public static TileGrid grid => instance._grid;
@@ -21,7 +21,7 @@ public class Game : Singleton<Game> {
 	public static OnEvents<IGlobalOnEvent> onEvents => instance._onEvents;
 	public static bool started => instance._started;
 
-	[SerializeField, HideInInspector] Events _events;
+	[SerializeField, HideInInspector] GameEvents _events;
 	[SerializeField, HideInInspector] Rounds _rounds;
 	[SerializeField, HideInInspector] Targeting _targeting;
 	[SerializeField, HideInInspector] TileGrid _grid;
@@ -35,7 +35,7 @@ public class Game : Singleton<Game> {
 	public Team team;
 
 	protected void Reset() {
-		_events = GetComponent<Events>();
+		_events = GetComponent<GameEvents>();
 		_rounds = GetComponent<Rounds>();
 		_targeting = GetComponent<Targeting>();
 		_grid = GetComponent<TileGrid>();
@@ -47,20 +47,30 @@ public class Game : Singleton<Game> {
 	}
 
 	protected void Start() {
-		foreach (var unitId in Game.mode.draft) {
+		for (int i = 0; i < Game.mode.draft.Length; i++) {
+			var unitId = Game.mode.draft[i];
 			var unitData = App.library.GetById<UnitData>(unitId);
 			var actor = Instantiate(unitData.actor);
 			var spawn = actor.gameObject.AddComponent<SpawnControl>();
 			spawn.source = unitData;
-			spawn.team = Team.Team1;
+			spawn.team = Game.instance.team;
+
+			var positions = Game.mode.draftPositions;
+			Tile tile = i >= positions.Count ? null : Game.grid.GetTile(positions[i]);
+			if (tile) spawn.SetTile(tile);
 		}
 		// !!! Enemy team
-		foreach (var unitId in Game.mode.draft) {
+		for (int i = 0; i < Game.mode.draft.Length; i++) {
+			var unitId = Game.mode.draft[i];
 			var unitData = App.library.GetById<UnitData>(unitId);
 			var actor = Instantiate(unitData.actor);
 			var spawn = actor.gameObject.AddComponent<SpawnControl>();
 			spawn.source = unitData;
-			spawn.team = Team.Team2;
+			spawn.team = Game.instance.team == Team.Team1 ? Team.Team2 : Team.Team1;
+
+			var positions = Game.mode.draftPositionsAlt;
+			Tile tile = i >= positions.Count ? null : Game.grid.GetTile(positions[i]);
+			if (tile) spawn.SetTile(tile);
 		}
 	}
 

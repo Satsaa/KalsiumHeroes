@@ -9,7 +9,7 @@ public class SpeedGainAbility : NoTargetAbility {
 	public new SpeedGainAbilityData data => (SpeedGainAbilityData)_data;
 	public override Type dataType => typeof(SpeedGainAbilityData);
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (Ability) => {
 			var unitsFound = 0;
 			var aoe = GetAffectedArea();

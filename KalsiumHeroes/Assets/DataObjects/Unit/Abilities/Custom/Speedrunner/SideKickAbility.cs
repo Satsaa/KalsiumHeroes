@@ -9,7 +9,7 @@ public class SideKickAbility : UnitTargetAbility {
 	public new SideKickAbilityData data => (SideKickAbilityData)_data;
 	public override Type dataType => typeof(SideKickAbilityData);
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var speed = unit.data.speed.value;
 			var movement = unit.data.movement.value;

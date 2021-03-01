@@ -12,11 +12,11 @@ public class ReadyTeam : MonoBehaviour {
 	[SerializeField] Team team;
 
 	public void DoReadyTeam() {
-		var spawns = new List<Events.Ready.SpawnInfo>();
+		var spawns = new List<GameEvents.Ready.SpawnInfo>();
 		var spawnCtrls = FindObjectsOfType<SpawnControl>();
 		foreach (var spawnCtrl in spawnCtrls) {
 			if (spawnCtrl.team == team) {
-				spawns.Add(new Events.Ready.SpawnInfo() {
+				spawns.Add(new GameEvents.Ready.SpawnInfo() {
 					unit = spawnCtrl.source.identifier,
 					team = team,
 					position = spawnCtrl.tile.hex.pos,
@@ -24,8 +24,13 @@ public class ReadyTeam : MonoBehaviour {
 				Destroy(spawnCtrl.gameObject);
 			}
 		}
+		if (team == Game.instance.team) {
+			Game.mode.draftPositions = spawns.Select(v => v.position).ToList();
+		} else {
+			Game.mode.draftPositionsAlt = spawns.Select(v => v.position).ToList();
+		}
 		App.client.PostEvent(
-			new Events.Ready() {
+			new GameEvents.Ready() {
 				spawns = spawns.ToArray(),
 			}
 		);

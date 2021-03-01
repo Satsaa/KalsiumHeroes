@@ -14,7 +14,7 @@ public class OpportuneFlightAbility : TileTargetAbility {
 		return base.GetTargets().Where(v => Game.grid.Distance(unit.tile, v) == 1 && pather(unit, unit.tile, unit.tile.EdgeBetween(v), v));
 	}
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets.First()];
 			var aoe = GetAffectedArea(target);

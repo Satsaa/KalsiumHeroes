@@ -4,13 +4,13 @@ using System;
 /// <summary>
 /// An ability event handler which immediately executes doEvent.
 /// </summary>
-public class InstantAbilityHandler : EventHandler<Events.Ability> {
+public class InstantAbilityHandler : EventHandler<GameEvents.Ability> {
 
 	public Ability creator;
 	public Action<Ability> doEvent;
 	public bool ended;
 
-	public InstantAbilityHandler(Events.Ability msg, Ability creator, Action<Ability> handler) : base(msg) {
+	public InstantAbilityHandler(GameEvents.Ability msg, Ability creator, Action<Ability> handler) : base(msg) {
 		this.creator = creator;
 		this.doEvent = handler;
 	}

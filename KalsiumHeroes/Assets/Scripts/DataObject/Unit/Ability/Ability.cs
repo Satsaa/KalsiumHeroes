@@ -13,7 +13,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	[HideInInspector, SerializeField] public bool isCasting;
 
-	public abstract EventHandler<Events.Ability> CreateHandler(Events.Ability msg);
+	public abstract EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg);
 
 	public virtual void OnTurnStart() {
 		data.cooldown.value--;
@@ -113,7 +113,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	/// <summary> Sends an Ability event to the server. </summary>
 	public void PostDefaultAbilityEvent(params Tile[] targets) {
-		App.client.PostEvent(new Events.Ability() {
+		App.client.PostEvent(new GameEvents.Ability() {
 			casterTile = unit.tile.hex.pos,
 			casterIndex = unit.tile.units.IndexOf(unit),
 			abilityIndex = unit.modifiers.IndexOf<Ability>(this),

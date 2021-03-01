@@ -7,7 +7,7 @@ using Muc.Editor;
 using Muc.Extensions;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTurnStart_Unit {
+public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTurnStart_Unit, IOnDeath_Unit {
 
 	public new UnitData source => (UnitData)_source;
 	public new UnitData data => (UnitData)_data;
@@ -205,5 +205,9 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 		Debug.Log(gameObject.name);
 		data.energy.value += data.energyRegen.value;
 		RefreshEnergy();
+	}
+
+	void IOnDeath_Unit.OnDeath() {
+		actor.Die();
 	}
 }

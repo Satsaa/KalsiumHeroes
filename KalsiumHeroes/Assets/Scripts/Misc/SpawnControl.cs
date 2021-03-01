@@ -69,24 +69,27 @@ public class SpawnControl : DraggableObject {
 	public void OnDragEnd() {
 		var newTile = Game.grid.GetHoveredTile(camera);
 		if (prevTile) prevTile.highlighter.Unhighlight(Highlighter.hoverPriority);
-		if (newTile) {
-			SpawnControl occupier = default;
-			foreach (var poser in positioners) {
-				if (poser != this && poser.tile == newTile) {
-					occupier = poser;
-					break;
-				}
-			}
-			if (occupier) {
-				occupier.SetTile(tile);
-			}
-			SetTile(newTile);
-		}
+		if (newTile) SetTile(newTile);
 	}
 
-	protected void SetTile(Tile tile) {
-		this.tile = tile;
-		transform.position = tile.center;
+	public void SetTile(Tile newTile) {
+		if (tile == newTile) return;
+		prevTile = tile;
+
+		SpawnControl occupier = default;
+		foreach (var poser in positioners) {
+			if (poser != this && poser.tile == newTile) {
+				occupier = poser;
+				break;
+			}
+		}
+		if (occupier) {
+			occupier.tile = prevTile;
+			occupier.transform.position = prevTile.center;
+		}
+
+		tile = newTile;
+		transform.position = newTile.center;
 	}
 
 }

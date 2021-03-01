@@ -4,38 +4,28 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
+using NativeWebSocket;
 
 [DisallowMultipleComponent]
 public class Client : MonoBehaviour {
+
+	public WebSocket ws;
 
 	public int globalEventNum = 0;
 
 	public void PostEvent(GameEvent e) {
 		e.gameEventNum = Game.instance.gameEventNum++;
 
-		var packet = new GameEventPacket(e.GetType().Name, e);
-		var fullJson = JsonUtility.ToJson(packet);
+		var json = JsonUtility.ToJson(e);
 
 		// Send to server
 
-		ReceiveEvent(fullJson);
+		Receive(json);
 	}
 
-	private void ReceiveEvent(string json) {
-		var packet = JsonUtility.FromJson<GameEventPacket>(json);
-		Game.events.QueueEvent(packet);
+	private void Receive(string json) {
+		var packet = JsonUtility.FromJson<EventPacket>(json);
+		var gameEvent = (GameEvent)JsonUtility.FromJson(json, Packet.types[packet.type]);
+		Game.events.QueueEvent(gameEvent);
 	}
-}
-
-public class GameEventPacket {
-	public GameEventPacket(string name, GameEvent e) {
-		this.name = name;
-		this.json = JsonUtility.ToJson(e);
-	}
-	public GameEventPacket(string name, string json) {
-		this.name = name;
-		this.json = json;
-	}
-	public string name;
-	public string json;
 }

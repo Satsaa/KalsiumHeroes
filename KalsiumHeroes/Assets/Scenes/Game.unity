@@ -4529,6 +4529,7 @@ GameObject:
   - component: {fileID: 145568318}
   - component: {fileID: 145568317}
   - component: {fileID: 145568320}
+  - component: {fileID: 145568321}
   m_Layer: 5
   m_Name: Ready (Self)
   m_TagString: Untagged
@@ -4612,6 +4613,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 145568321}
+        m_TargetAssemblyTypeName: Destroy, Assembly-CSharp
+        m_MethodName: DoDestroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &145568318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4663,6 +4676,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
+--- !u!114 &145568321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145568315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88f54ba52ce2ef469877f04cb347c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &145828124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14455,6 +14480,7 @@ GameObject:
   - component: {fileID: 468520097}
   - component: {fileID: 468520096}
   - component: {fileID: 468520099}
+  - component: {fileID: 468520100}
   m_Layer: 5
   m_Name: Ready (Opponent)
   m_TagString: Untagged
@@ -14538,6 +14564,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 468520100}
+        m_TargetAssemblyTypeName: Destroy, Assembly-CSharp
+        m_MethodName: DoDestroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &468520097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14589,6 +14627,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
+--- !u!114 &468520100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468520094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88f54ba52ce2ef469877f04cb347c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &470763060
 GameObject:
   m_ObjectHideFlags: 0

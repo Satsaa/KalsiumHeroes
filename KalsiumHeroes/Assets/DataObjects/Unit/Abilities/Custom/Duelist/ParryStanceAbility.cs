@@ -8,7 +8,7 @@ public class ParryStanceAbility : NoTargetAbility, IOnAbilityCastEnd_Unit {
 	public new ParryStanceAbilityData data => (ParryStanceAbilityData)_data;
 	public override Type dataType => typeof(ParryStanceAbilityData);
 
-	public override EventHandler<Events.Ability> CreateHandler(Events.Ability msg) {
+	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			Modifier.Create(master, data.statusModifier);
 		});
@@ -16,7 +16,7 @@ public class ParryStanceAbility : NoTargetAbility, IOnAbilityCastEnd_Unit {
 
 	public void OnAbilityCastEnd(Ability ability) {
 		if (ability == this) {
-			App.client.PostEvent(new Events.Turn());
+			App.client.PostEvent(new GameEvents.Turn());
 		}
 	}
 }

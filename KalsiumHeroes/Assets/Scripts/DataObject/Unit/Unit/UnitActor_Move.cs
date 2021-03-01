@@ -19,6 +19,7 @@ public partial class UnitActor {
 
 
 	public void Walk(IEnumerable<Vector3> positions) {
+		animator.SetTrigger("Walk");
 		moveT = 0;
 		spline = new Spline(positions);
 		animationType = AnimationType.Walk;
@@ -27,6 +28,7 @@ public partial class UnitActor {
 	}
 
 	public void Run(IEnumerable<Vector3> positions) {
+		animator.SetTrigger("Walk");
 		moveT = 0;
 		spline = new Spline(positions);
 		animationType = AnimationType.Run;
