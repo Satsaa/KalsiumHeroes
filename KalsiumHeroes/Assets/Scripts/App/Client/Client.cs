@@ -7,25 +7,47 @@ using UnityEngine.Events;
 using NativeWebSocket;
 
 [DisallowMultipleComponent]
-public class Client : MonoBehaviour {
-
-	public WebSocket ws;
+public partial class Client : MonoBehaviour {
 
 	public int globalEventNum = 0;
 
-	public void PostEvent(GameEvent e) {
-		e.gameEventNum = Game.instance.gameEventNum++;
-
-		var json = JsonUtility.ToJson(e);
-
-		// Send to server
-
-		Receive(json);
+	public void Post(Event e) {
+		switch (e) {
+			case GameEvent gameEvent: {
+					gameEvent.gameEventNum = Game.instance.gameEventNum++;
+					gameEvent.code = "TEST";
+					var targetType = typeof(Command<>).MakeGenericType(e.GetType());
+					var command = Activator.CreateInstance(targetType, new object[] { gameEvent });
+					ws.SendText(JsonUtility.ToJson(command));
+				}
+				break;
+			case ClientEvent clientEvent: {
+					var targetType = typeof(Command<>).MakeGenericType(e.GetType());
+					var command = Activator.CreateInstance(targetType, new object[] { clientEvent });
+					ws.SendText(JsonUtility.ToJson(command));
+				}
+				break;
+			default:
+				Debug.LogWarning($"Unspecialized outgoing {nameof(Event)}: {e.GetType().Name}", this);
+				break;
+		}
 	}
 
-	private void Receive(string json) {
-		var packet = JsonUtility.FromJson<EventPacket>(json);
-		var gameEvent = (GameEvent)JsonUtility.FromJson(json, Packet.types[packet.type]);
-		Game.events.QueueEvent(gameEvent);
+	private void TryReceive(string json) {
+		var packet = JsonUtility.FromJson<Command>(json);
+		var targetType = typeof(Command<>).MakeGenericType(Event.types[packet.data.type]);
+		Event e = (JsonUtility.FromJson(json, targetType) as dynamic).data;
+		switch (e) {
+			case GameEvent gameEvent:
+				Game.events.QueueEvent(gameEvent);
+				break;
+			case ClientEvent clientEvent:
+				Debug.Log($"Received {nameof(ClientEvent)}");
+				break;
+			default:
+				Debug.LogWarning($"Unspecialized incoming {nameof(Event)}: {e.GetType().Name}", this);
+				break;
+		}
 	}
+
 }

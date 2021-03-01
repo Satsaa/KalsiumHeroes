@@ -29,7 +29,7 @@ public class ReadyTeam : MonoBehaviour {
 		} else {
 			Game.mode.draftPositionsAlt = spawns.Select(v => v.position).ToList();
 		}
-		App.client.PostEvent(
+		App.client.Post(
 			new GameEvents.Ready() {
 				spawns = spawns.ToArray(),
 			}

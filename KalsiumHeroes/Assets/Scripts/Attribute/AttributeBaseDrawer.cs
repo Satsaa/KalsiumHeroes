@@ -35,7 +35,7 @@ public class AttributeBaseDrawer : PropertyDrawer {
 
 				var obj = GetValues<AttributeBase>(property).First();
 				var objType = obj.GetType();
-				var isRepaint = Event.current.type == EventType.Repaint;
+				var isRepaint = UnityEngine.Event.current.type == EventType.Repaint;
 				var prevExpandAltered = expandAltered;
 				var wasExpanded = false;
 
@@ -77,7 +77,7 @@ public class AttributeBaseDrawer : PropertyDrawer {
 							var val = prop.GetValue(obj);
 							EditorGUI.TextField(pos, val.ToString());
 							if (isRepaint) {
-								wasExpanded |= pos.Contains(Event.current.mousePosition);
+								wasExpanded |= pos.Contains(UnityEngine.Event.current.mousePosition);
 								GUI.changed |= prevExpandAltered != wasExpanded;
 							}
 						}
@@ -94,7 +94,7 @@ public class AttributeBaseDrawer : PropertyDrawer {
 								var val = prop.GetValue(obj);
 								EditorGUI.TextField(pos, val.ToString());
 								if (isRepaint) {
-									wasExpanded |= pos.Contains(Event.current.mousePosition);
+									wasExpanded |= pos.Contains(UnityEngine.Event.current.mousePosition);
 									GUI.changed |= prevExpandAltered != wasExpanded;
 								}
 							}
@@ -115,7 +115,7 @@ public class AttributeBaseDrawer : PropertyDrawer {
 							var val = prop.GetValue(obj);
 							EditorGUI.TextField(pos, val.ToString());
 							if (isRepaint) {
-								wasExpanded |= pos.Contains(Event.current.mousePosition);
+								wasExpanded |= pos.Contains(UnityEngine.Event.current.mousePosition);
 								GUI.changed |= prevExpandAltered != wasExpanded;
 							}
 						}
@@ -132,7 +132,7 @@ public class AttributeBaseDrawer : PropertyDrawer {
 								var val = prop.GetValue(obj);
 								EditorGUI.TextField(pos, val.ToString());
 								if (isRepaint) {
-									wasExpanded |= pos.Contains(Event.current.mousePosition);
+									wasExpanded |= pos.Contains(UnityEngine.Event.current.mousePosition);
 									GUI.changed |= prevExpandAltered != wasExpanded;
 								}
 							}

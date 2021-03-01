@@ -16,7 +16,7 @@ public class ParryStanceAbility : NoTargetAbility, IOnAbilityCastEnd_Unit {
 
 	public void OnAbilityCastEnd(Ability ability) {
 		if (ability == this) {
-			App.client.PostEvent(new GameEvents.Turn());
+			App.client.Post(new GameEvents.Turn());
 		}
 	}
 }

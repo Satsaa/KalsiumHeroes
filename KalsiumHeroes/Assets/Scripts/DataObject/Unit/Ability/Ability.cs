@@ -113,7 +113,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	/// <summary> Sends an Ability event to the server. </summary>
 	public void PostDefaultAbilityEvent(params Tile[] targets) {
-		App.client.PostEvent(new GameEvents.Ability() {
+		App.client.Post(new GameEvents.Ability() {
 			casterTile = unit.tile.hex.pos,
 			casterIndex = unit.tile.units.IndexOf(unit),
 			abilityIndex = unit.modifiers.IndexOf<Ability>(this),

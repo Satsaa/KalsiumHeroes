@@ -12,7 +12,7 @@ public abstract class EventHandler {
 }
 
 [Serializable]
-public abstract class EventHandler<T> : EventHandler where T : EventPacket {
+public abstract class EventHandler<T> : EventHandler where T : Event {
 
 	public T data;
 

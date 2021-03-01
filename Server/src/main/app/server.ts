@@ -9,7 +9,8 @@ import * as u from '../lib/util'
 import * as afs from '../lib/atomicFS'
 import deepClone from '../lib/deepClone'
 
-import * as cmds from './cmds'
+import * as commands from './commands'
+import { Command } from './commands'
 import Game from './game'
 
 export interface Events {
@@ -32,8 +33,7 @@ export default class Server {
   public removeListener: StrictEventEmitter<EventEmitter, Events>['removeListener']
   public emit: StrictEventEmitter<EventEmitter, Events>['emit']
 
-  private games: {[id: number]: Game} = {}
-  private activeGames: {[code: string]: Game} = {}
+  private games: {[code: string]: Game} = {}
 
   /**
    * Server
@@ -58,52 +58,42 @@ export default class Server {
     wss.on('connection', this.onConnection.bind(this))
   }
 
-  private sendCmd(ws: WebSocket, cmd: cmds.Command) {
-    ws.send(JSON.stringify(cmd))
-  }
-  private gameNotFound(ws: WebSocket) {
-    this.sendCmd(ws, { command: 'game_missing', data: { message: 'Game not found.' } })
-  }
-
-  private createGame(): Game {
-    const id = this.makeid()
-    const game = new Game(id)
-    this.activeGames[id] = game
-    return game
-  }
-
-  private makeid(): string {
-    let result = ''
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    do {
-      for (let i = 0; i < 5; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length))
-      }
-    } while (!this.activeGames[result])
-    return result
-  }
-
   private onConnection(this: Server, ws: WebSocket, req: http.IncomingMessage): void {
     ws.on('message', this.onMessage.bind(this, ws))
   }
 
+  private sendCmd(ws: WebSocket, cmd: commands.Command) {
+    ws.send(JSON.stringify(cmd))
+  }
+
+  private createGame(code: string): boolean {
+    if (this.games[code]) return false
+
+    const game = new Game(code)
+    this.games[code] = game
+    return true
+  }
+
   private onMessage(this: Server, ws: WebSocket, message: string): void {
     if (typeof message !== 'string') {
-      this.sendCmd(ws, { command: 'invalid', data: { message: 'Message must be a string' } })
+      this.sendCmd(ws, { command: 'Error', data: { type: 'Error', message: 'Message must be a string' } })
       return
     }
     try {
-      const cmd = cmds.parse(message)
+      const cmd = commands.parse(message)
+      console.log(cmd)
       switch (cmd.command) {
-        case 'game_create': {
-          const game = this.createGame()
-          this.sendCmd(ws, { command: 'game_created', data: { code: game.code } })
-          break
+        case 'GameCreate': {
+          if (this.createGame(cmd.data.code)) {
+            return this.sendCmd(ws, { command: 'Success', data: { type: 'Success', for: cmd.command } })
+          } else {
+            return this.alreadyUsed(ws, cmd)
+          }
         }
 
-        case 'game_event': {
-          const game = this.activeGames[cmd.data.code]
-          if (!game) return this.gameNotFound(ws)
+        case 'GameEvent': {
+          const game = this.games[cmd.data.code]
+          if (!game) return this.gameNotFound(ws, cmd)
 
           // Event is sent to all connected viewers which includes the players
           for (const viewer of game.viewers) {
@@ -113,25 +103,38 @@ export default class Server {
           break
         }
 
-        case 'game_connect': {
-          const game = this.activeGames[cmd.data.code]
-          if (!game) return this.gameNotFound(ws)
-          if (cmd.data.player) {
-            if (cmd.data.player === 1) game.player1 = ws
-            if (cmd.data.player === 2) game.player2 = ws
-          } else if (!game.viewers.includes(ws)) {
-            game.viewers.push(ws)
+        case 'GameConnect': {
+          const game = this.games[cmd.data.code]
+          if (!game) return this.gameNotFound(ws, cmd)
+          switch (cmd.data.player) {
+            case 0:
+              game.player1 = ws
+              break
+
+            case 1:
+              game.player2 = ws
+              break
           }
+          if (!game.viewers.includes(ws)) game.viewers.push(ws)
           break
         }
 
         default: {
-          this.sendCmd(ws, { command: 'unknown', data: { message: `Unknown command: "${cmd.command}"` } })
+          this.sendCmd(ws, { command: 'Error', data: { type: 'Error', message: `Unknown or unexpected command: "${cmd.command}"` } })
           break
         }
       }
     } catch (error) {
-      this.sendCmd(ws, { command: 'invalid', data: { message: 'Malformed message' } })
+      this.sendCmd(ws, { command: 'Error', data: { type: 'Error', message: 'Message caused a server error' } })
     }
+  }
+
+
+  private alreadyUsed(ws: WebSocket, cmd: Command) {
+    this.sendCmd(ws, { command: 'Fail', data: { type: 'Fail', for: cmd.command, message: 'Code already used' } })
+  }
+
+  private gameNotFound(ws: WebSocket, cmd: Command) {
+    this.sendCmd(ws, { command: 'Fail', data: { type: 'Fail', for: cmd.command, message: 'Game not found' } })
   }
 }

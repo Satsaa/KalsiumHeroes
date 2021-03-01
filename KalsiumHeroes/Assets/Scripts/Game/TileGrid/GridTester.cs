@@ -56,7 +56,7 @@ public class GridTesterEditor : Editor {
 
 		if (!grid) return;
 
-		var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+		var ray = HandleUtility.GUIPointToWorldRay(UnityEngine.Event.current.mousePosition);
 		t.hoverHex = grid.RaycastHex(ray);
 
 		var mousePos = Vector2.zero;
@@ -66,7 +66,7 @@ public class GridTesterEditor : Editor {
 		t.hover = grid.GetTile(t.hoverHex);
 		t.main = grid.GetTile(t.mainHex);
 
-		Event e = Event.current;
+		UnityEngine.Event e = UnityEngine.Event.current;
 		if (e.type == EventType.MouseDown && e.button == 0) {
 			t.mainHex = t.hoverHex;
 			e.Use();

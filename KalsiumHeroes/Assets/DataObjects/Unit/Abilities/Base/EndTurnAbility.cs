@@ -6,7 +6,7 @@ public class EndTurnAbility : NoTargetAbility {
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, t =>
-			App.client.PostEvent(new GameEvents.Turn())
+			App.client.Post(new GameEvents.Turn())
 		);
 	}
 }
