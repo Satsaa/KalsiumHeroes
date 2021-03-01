@@ -109,7 +109,7 @@ export default class Server {
           // Event is sent to all connected viewers which includes the players
           for (const viewer of game.viewers) {
             if (viewer.readyState !== WebSocket.OPEN) continue
-            this.sendCmd(ws, cmd)
+            this.sendCmd(viewer, cmd)
           }
           break
         }
