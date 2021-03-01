@@ -20,6 +20,8 @@ export interface Events {
 export interface ServerOptions {
   /** Client data will be loaded from and saved in this directory's "global" folder */
   dataRoot: string
+  port?: number
+  local?: boolean
   pingInterval?: number
 }
 
@@ -41,6 +43,8 @@ export default class Server {
    */
   constructor(options: ServerOptions) {
     this.opts = {
+      port: 8080,
+      local: true,
       pingInterval: 30000,
       ...deepClone(options),
     }
@@ -54,8 +58,15 @@ export default class Server {
     this.removeListener = emitter.removeListener
     this.emit = emitter.emit
 
-    const wss = new WebSocket.Server({ port: 8080 })
-    wss.on('connection', this.onConnection.bind(this))
+    const server = this.opts.local ? undefined : new http.Server()
+
+    if (server) {
+      const wss = new WebSocket.Server({ port: this.opts.port, server })
+      wss.on('connection', this.onConnection.bind(this))
+    } else {
+      const wss = new WebSocket.Server({ port: this.opts.port })
+      wss.on('connection', this.onConnection.bind(this))
+    }
   }
 
   private onConnection(this: Server, ws: WebSocket, req: http.IncomingMessage): void {

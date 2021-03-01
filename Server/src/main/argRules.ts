@@ -4,7 +4,7 @@ export const rules = {
   rules: {
     'manager': {
       aliases: ['m'],
-      usage: ['--manager', 'Run bot with manager. Manager handles autorestarting etc.'],
+      usage: ['--manager', 'Run server with manager. Manager handles autorestarting etc.'],
       value: 'never',
     },
     'inspect-child': {
@@ -27,7 +27,7 @@ export const rules = {
     },
     'global': {
       aliases: ['g'],
-      usage: ['--global [<key>]', 'Set global[key] to bot instance. Defaults to "bot".'],
+      usage: ['--global [<key>]', 'Set global[key] to server instance. Defaults to "app".'],
       value: 'optional',
     },
     'preserve-log': {

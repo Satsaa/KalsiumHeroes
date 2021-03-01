@@ -9,10 +9,11 @@ using NativeWebSocket;
 public partial class Client : MonoBehaviour {
 
 	public WebSocket ws;
+	public string url = "ws://localhost:8080";
 
 	// Start is called before the first frame update
 	async void Start() {
-		ws = new WebSocket("ws://localhost:8080");
+		ws = new WebSocket(url);
 
 		ws.OnOpen += () => {
 			Debug.Log("Connection open!");

@@ -3,6 +3,7 @@ import { onExit } from '../lib/util'
 import { getArgs } from '../argRules'
 import logger, { options as logOpts } from '../logger'
 import Data from '../lib/data'
+import * as secretKey from '../lib/secretKey'
 
 import Server, { ServerOptions } from './server'
 
@@ -38,8 +39,13 @@ export default class App {
 
     const configPath = './cfg/keys.json'
 
+    const port = secretKey.getKey(configPath, 'server', 'port')
+    const local = secretKey.getKey(configPath, 'server', 'local') !== undefined
+
     this.server = new Server({
       dataRoot: './data/',
+      port: typeof port === 'string' ? parseInt(port) : undefined,
+      local,
     })
 
     this.data = new Data('./data/', ['games', 'users'])

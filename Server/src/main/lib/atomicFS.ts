@@ -115,12 +115,6 @@ export const fchown = fsp.fchown
 export const fdatasync = fsp.fdatasync
 
 /**
- * Asynchronous fstat(2) - Get file status.
- * @param handle A `FileHandle`.
- */
-export const fstat = fsp.fstat
-
-/**
  * Asynchronous fsync(2) - synchronize a file's in-core state with the underlying storage device.
  * @param handle A `FileHandle`.
  */
@@ -173,7 +167,7 @@ export const link = async (existingPath: string, newPath: fs.PathLike): Promise<
  * Asynchronous lstat(2) - Get file status. Does not dereference symbolic links.
  * @param path A path to a file.
  */
-export const lstat = async (path: string): Promise<fs.Stats> => queue.queue(fsp.lstat, path)
+export const lstat = async (path: string): Promise<fs.Stats | fs.BigIntStats> => queue.queue(fsp.lstat, path)
 
 /**
  * `Queued`: This action is executed after previous actions are finished on target file.
@@ -286,7 +280,7 @@ export const rmdir = async (path: string): Promise<void> => queue.queue(fsp.rmdi
  * Asynchronous stat(2) - Get file status.
  * @param path A path to a file.
  */
-export const stat = async (path: string): Promise<fs.Stats> => queue.queue(fsp.stat, path)
+export const stat = async (path: string): Promise<fs.Stats | fs.BigIntStats> => queue.queue(fsp.stat, path)
 
 /**
  * Asynchronous symlink(2) - Create a new symbolic link to an existing file.
