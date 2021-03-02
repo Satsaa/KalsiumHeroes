@@ -97,9 +97,10 @@ public class GameEvents : MonoBehaviour {
 			/// <summary> Tile to spawn unit at. </summary>
 			public Vector3Int position;
 
-			/// <summary> The team of the unit. </summary>
-			public Team team;
 		}
+
+		/// <summary> The team of the units. </summary>
+		public Team team;
 
 		/// <summary> Spawned starter units. </summary>
 		public SpawnInfo[] spawns;
@@ -116,14 +117,21 @@ public class GameEvents : MonoBehaviour {
 					foreach (var spawn in spawns) {
 						var tile = Game.grid.tiles[spawn.position];
 						var unitData = App.library.GetById<UnitData>(spawn.unit);
-						var unit = Unit.Create(unitData, Game.grid.tiles[spawn.position], spawn.team);
-						unit.actor.gameObject.SetActive(spawn.team == Game.instance.team);
+						var unit = Unit.Create(unitData, Game.grid.tiles[spawn.position], team);
+						unit.actor.gameObject.SetActive(team == Game.instance.team);
 					}
 					if (Game.instance.readyCount == 2) {
+						foreach (var spawnCtrl in FindObjectsOfType<SpawnControl>()) {
+							Destroy(spawnCtrl.gameObject);
+						}
 						foreach (var unit in Game.dataObjects.Get<Unit>()) {
 							unit.actor.gameObject.SetActive(true);
 						}
 						Game.instance.StartGame();
+					} else {
+						foreach (var spawnCtrl in FindObjectsOfType<SpawnControl>()) {
+							if (spawnCtrl.team == team) Destroy(spawnCtrl.gameObject);
+						}
 					}
 					break;
 				default:

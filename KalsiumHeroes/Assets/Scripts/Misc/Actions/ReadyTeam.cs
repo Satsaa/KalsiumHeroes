@@ -18,7 +18,6 @@ public class ReadyTeam : MonoBehaviour {
 			if (spawnCtrl.team == team) {
 				spawns.Add(new GameEvents.Ready.SpawnInfo() {
 					unit = spawnCtrl.source.identifier,
-					team = team,
 					position = spawnCtrl.tile.hex.pos,
 				});
 				Destroy(spawnCtrl.gameObject);
@@ -32,6 +31,7 @@ public class ReadyTeam : MonoBehaviour {
 		App.client.Post(
 			new GameEvents.Ready() {
 				spawns = spawns.ToArray(),
+				team = team,
 			}
 		);
 	}
