@@ -108,36 +108,34 @@ public class GameEvents : MonoBehaviour {
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
 
-			Game.instance.readyCount++;
-
-			// TODO
-			switch (Game.instance.readyCount) {
-				case 1:
-				case 2:
-					foreach (var spawn in spawns) {
-						var tile = Game.grid.tiles[spawn.position];
-						var unitData = App.library.GetById<UnitData>(spawn.unit);
-						var unit = Unit.Create(unitData, Game.grid.tiles[spawn.position], team);
-						unit.actor.gameObject.SetActive(team == Game.instance.team);
-					}
-					if (Game.instance.readyCount == 2) {
-						foreach (var spawnCtrl in FindObjectsOfType<SpawnControl>()) {
-							Destroy(spawnCtrl.gameObject);
-						}
-						foreach (var unit in Game.dataObjects.Get<Unit>()) {
-							unit.actor.gameObject.SetActive(true);
-						}
-						Game.instance.StartGame();
-					} else {
-						foreach (var spawnCtrl in FindObjectsOfType<SpawnControl>()) {
-							if (spawnCtrl.team == team) Destroy(spawnCtrl.gameObject);
-						}
-					}
-					break;
-				default:
-					throw new InvalidOperationException($"Too many readies! ({Game.instance.readyCount})");
+			if (Game.game.started) {
+				Debug.LogWarning("Readied after Game already started.");
+				return null;
 			}
 
+			foreach (var spawn in spawns) {
+				var tile = Game.grid.tiles[spawn.position];
+				var unitData = App.library.GetById<UnitData>(spawn.unit);
+				var unit = Unit.Create(unitData, Game.grid.tiles[spawn.position], team);
+				unit.actor.gameObject.SetActive(team == Game.game.team);
+			}
+
+			if (!Game.game.readied.Contains(team)) {
+				Game.game.readied.Add(team);
+			}
+
+			if (Game.game.readied.Count == Game.game.mode.teams.Count) {
+				foreach (var spawnCtrl in FindObjectsOfType<SpawnControl>()) {
+					Destroy(spawnCtrl.gameObject);
+				}
+				foreach (var unit in Game.dataObjects.Get<Unit>()) {
+					unit.actor.gameObject.SetActive(true);
+				}
+
+				Game.game.StartGame();
+			}
+
+			using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTeamReady>(scope, v => v.OnTeamReady(team));
 
 			return null;
 		}

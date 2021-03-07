@@ -17,6 +17,18 @@ MonoBehaviour:
   draft:
   - unit_lone_ranger
   - unit_rogue_mage_hunter
+  draftPositions:
+    list:
+    - Key: 0
+      Value:
+      - {x: 1, y: 5, z: -6}
+      - {x: 2, y: 2, z: -4}
+    - Key: 1
+      Value:
+      - {x: 10, y: 5, z: -15}
+      - {x: 14, y: 1, z: -15}
+    keyCollision: 0
+  teams: 0000000001000000
   minDraftCount: 1
   maxDraftCount: 10
   maxDraftCost: 50

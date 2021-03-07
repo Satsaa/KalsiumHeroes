@@ -30,7 +30,7 @@ public partial class UnitActor : MonoBehaviour {
 	}
 
 	protected void Awake() {
-		transform.parent = Game.instance.transform;
+		transform.parent = Game.game.transform;
 		animator = GetComponent<Animator>();
 	}
 

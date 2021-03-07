@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 using UnityEngine.UI;
 using TMPro;
 
-public class JoinLobby : MonoBehaviour {
+public class JoinGame : MonoBehaviour {
 
 	[SerializeField] MessageBoxPreset messageBoxPreset;
 	[SerializeField] TMP_InputField codeInputPrefab;
@@ -18,7 +18,7 @@ public class JoinLobby : MonoBehaviour {
 	[SerializeField] TextSource join;
 	[SerializeField] TextSource cancel;
 
-	public void DoJoinLobby() {
+	public void DoJoinGame() {
 
 		var codeInputField = Instantiate(codeInputPrefab);
 

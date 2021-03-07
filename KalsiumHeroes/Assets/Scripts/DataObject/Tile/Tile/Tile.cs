@@ -37,7 +37,7 @@ public class Tile : Master<TileModifier, TileModifierData, ITileOnEvent> {
 		return Create<Tile>(source, v => {
 			v.gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(source.container.transform.position.y);
 			v.hex = hex;
-			v.gameObject.transform.parent = Game.instance.transform;
+			v.gameObject.transform.parent = Game.game.transform;
 			v.gameObject.name = $"Tile ({hex.x}, {hex.y})";
 			Game.grid.tiles.Add(hex.pos, v);
 			v.highlighter = v.gameObject.GetComponentInChildren<Highlighter>();

@@ -1,16 +1,17 @@
 
 export function parse(data: string): Command {
-  return JSON.parse(data) as Command
+  return JSON.parse(data)
 }
 
 type Implements<T, U extends T> = {}
 
 // List all events
-export type Command = GameEvent | GameCreate | GameConnect | Success | Fail | Error
+export type Command = GameEvent | GameCreate | GameJoin | GameSpectate | Result
 
 export interface GameEvent {
   command: 'GameEvent'
   data: {
+    guid: string
     type: string
     code: string
   }
@@ -19,41 +20,49 @@ export interface GameEvent {
 export interface GameCreate {
   command: 'GameCreate'
   data: {
+    guid: string
     type: 'GameCreate'
     code: string
   }
 }
 
-export interface GameConnect {
-  command: 'GameConnect'
+export interface GameJoin {
+  command: 'GameJoin'
   data: {
-    type: 'GameConnect'
+    guid: string
+    type: 'GameJoin'
     code: string
-    player: -1 | 0 | 1
+    team: number
   }
 }
 
-export interface Success {
-  command: 'Success'
+export interface GameSpectate {
+  command: 'GameSpectate'
   data: {
-    type: 'Success'
-    for: Command['command']
+    guid: string
+    type: 'GameSpectate'
+    code: string
   }
 }
 
-export interface Fail {
-  command: 'Fail'
+export interface Result {
+  command: 'Result'
   data: {
-    type: 'Fail'
-    for: Command['command']
+    type: 'Result'
+    result: ResultType
+    to: string
     message?: string
   }
 }
 
-export interface Error {
-  command: 'Error'
-  data: {
-    type: 'Error'
-    message?: string
-  }
+export enum ResultType {
+  Timeout = -1,
+  Success,
+  Fail,
+  Error,
+}
+
+export enum Team {
+  Team1,
+  Team2,
 }

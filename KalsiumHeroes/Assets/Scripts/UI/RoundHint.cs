@@ -13,7 +13,7 @@ public class RoundHint : MonoBehaviour {
 	}
 
 	void Update() {
-		if (text && Game.instance) {
+		if (text && Game.game) {
 			text.text = $"Round: {Game.rounds.round}";
 		}
 	}

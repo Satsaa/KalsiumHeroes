@@ -1,3 +1,4 @@
+#nullable enable annotations
 
 using System;
 using System.Reflection;
@@ -14,9 +15,30 @@ public static class ClientEvents {
 	}
 
 	[Serializable]
-	public class GameConnect : ClientEvent {
+	public class GameJoin : ClientEvent {
 		public string code;
-		public int player;
+		public Team team;
+	}
+
+	[Serializable]
+	public class GameSpectate : ClientEvent {
+		public string code;
+	}
+
+	[Serializable]
+	public class Result : ClientEvent {
+		public ResultType result;
+		public string to;
+		public string? message;
+	}
+
+
+	public enum ResultType {
+		Timeout = -1,
+		Success,
+		Fail,
+		Error,
+
 	}
 
 }

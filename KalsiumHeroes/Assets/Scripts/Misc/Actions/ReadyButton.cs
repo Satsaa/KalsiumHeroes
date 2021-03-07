@@ -7,9 +7,23 @@ using Object = UnityEngine.Object;
 using UnityEngine.UI;
 using TMPro;
 
-public class ReadyTeam : MonoBehaviour {
+[RequireComponent(typeof(Button))]
+public class ReadyButton : MonoBehaviour, IOnTeamReady {
 
-	[SerializeField] Team team;
+	public Team team;
+	public Button button;
+	public TMP_Text text;
+	[SerializeField] Color readyColor;
+
+	void Awake() {
+		button = GetComponent<Button>();
+		text = GetComponentInChildren<TMP_Text>();
+		Game.onEvents.Add(this);
+	}
+
+	void OnDestroy() {
+		Game.onEvents.Remove(this);
+	}
 
 	public void DoReadyTeam() {
 		var spawns = new List<GameEvents.Ready.SpawnInfo>();
@@ -20,20 +34,20 @@ public class ReadyTeam : MonoBehaviour {
 					unit = spawnCtrl.source.identifier,
 					position = spawnCtrl.tile.hex.pos,
 				});
-				Destroy(spawnCtrl.gameObject);
 			}
 		}
-		if (team == Game.instance.team) {
-			Game.mode.draftPositions = spawns.Select(v => v.position).ToList();
-		} else {
-			Game.mode.draftPositionsAlt = spawns.Select(v => v.position).ToList();
-		}
+		Game.game.mode.draftPositions[team] = spawns.Select(v => v.position).ToList();
 		App.client.Post(
 			new GameEvents.Ready() {
 				spawns = spawns.ToArray(),
 				team = team,
 			}
 		);
+	}
+
+	void IOnTeamReady.OnTeamReady(Team team) {
+		if (team != this.team) return;
+		button.targetGraphic.color = readyColor;
 	}
 
 }

@@ -1,52 +1,85 @@
 
 using System;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.Events;
-using NativeWebSocket;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using static ClientEvents;
+using Muc.Time;
 
 [DisallowMultipleComponent]
 public partial class Client : MonoBehaviour {
 
-	public int globalEventNum = 0;
+	public static Dictionary<string, ClientEventTask> cets = new Dictionary<string, ClientEventTask>();
 
-	public void Post(Event e) {
-		switch (e) {
-			case GameEvent gameEvent: {
-					gameEvent.gameEventNum = Game.instance.gameEventNum++;
-					gameEvent.code = "TEST";
-					var targetType = typeof(Command<>).MakeGenericType(e.GetType());
-					var command = Activator.CreateInstance(targetType, new object[] { gameEvent });
-					ws.SendText(JsonUtility.ToJson(command));
-				}
-				break;
-			case ClientEvent clientEvent: {
-					var targetType = typeof(Command<>).MakeGenericType(e.GetType());
-					var command = Activator.CreateInstance(targetType, new object[] { clientEvent });
-					ws.SendText(JsonUtility.ToJson(command));
-				}
-				break;
-			default:
-				Debug.LogWarning($"Unspecialized outgoing {nameof(Event)}: {e.GetType().Name}", this);
-				break;
+	void Update() {
+		Update_WS();
+		foreach (var cet in cets.Values) {
+			if (cet.timeout.expired) {
+				cet.tcs.TrySetCanceled();
+			}
 		}
 	}
 
+	public Task<Result> Post(ClientEvent e) {
+		// Debug.Log(JsonUtility.ToJson(e));
+		var res = new TaskCompletionSource<Result>();
+		e.guid = Guid.NewGuid().ToString();
+		cets.Add(e.guid, new ClientEventTask(new Timeout(5), res));
+		var targetType = typeof(Command<>).MakeGenericType(e.GetType());
+		var command = Activator.CreateInstance(targetType, new object[] { e });
+		ws.SendText(JsonUtility.ToJson(command));
+		return res.Task;
+	}
+
+	public void Post(GameEvent e) {
+		// Debug.Log(JsonUtility.ToJson(e));
+		e.gameEventNum = Game.game.gameEventNum++;
+		e.code = "TEST";
+		var targetType = typeof(Command<>).MakeGenericType(e.GetType());
+		var command = Activator.CreateInstance(targetType, new object[] { e });
+		ws.SendText(JsonUtility.ToJson(command));
+	}
+
 	private void TryReceive(string json) {
+		Debug.Log(json);
 		var packet = JsonUtility.FromJson<Command>(json);
-		var targetType = typeof(Command<>).MakeGenericType(Event.types[packet.data.type]);
-		Event e = (JsonUtility.FromJson(json, targetType) as dynamic).data;
-		switch (e) {
-			case GameEvent gameEvent:
-				Game.events.QueueEvent(gameEvent);
-				break;
-			case ClientEvent clientEvent:
-				Debug.Log($"Received {nameof(ClientEvent)}");
-				break;
-			default:
-				Debug.LogWarning($"Unspecialized incoming {nameof(Event)}: {e.GetType().Name}", this);
-				break;
+		if (Event.types.TryGetValue(packet.data.type, out var genericParam)) {
+
+			var targetType = typeof(Command<>).MakeGenericType(genericParam);
+			Event e = (JsonUtility.FromJson(json, targetType) as dynamic).data;
+			switch (e) {
+				case Result result:
+					Debug.Log($"Received {nameof(Result)}");
+					if (cets.TryGetValue(result.to, out var tcs)) {
+						tcs.tcs.SetResult(result);
+						cets.Remove(result.to);
+					} else {
+						Debug.LogWarning($"Received result for unknown TaskCompletionSource: {json}");
+					}
+					break;
+				case ClientEvent clientEvent:
+					Debug.Log($"Received {nameof(ClientEvent)}");
+					break;
+				case GameEvent gameEvent:
+					Game.events.QueueEvent(gameEvent);
+					break;
+				default:
+					Debug.LogWarning($"Unspecialized incoming {nameof(Event)}: {e.GetType().Name}", this);
+					break;
+			}
+		}
+	}
+
+
+	public class ClientEventTask {
+
+		public Timeout timeout;
+		public TaskCompletionSource<Result> tcs;
+
+		public ClientEventTask(Timeout timeout, TaskCompletionSource<Result> tcs) {
+			this.timeout = timeout;
+			this.tcs = tcs;
 		}
 	}
 

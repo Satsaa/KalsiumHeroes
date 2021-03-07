@@ -350,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379410, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_Name
-      value: Create Lobby
+      value: Create Game
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_Pivot.x
@@ -454,11 +454,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379414, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DoCreateLobby
+      value: DoCreateGame
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379414, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CreateLobby, Assembly-CSharp
+      value: CreateGame, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379414, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -624,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379410, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_Name
-      value: Join Lobby
+      value: Join Game
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_Pivot.x
@@ -728,11 +728,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379414, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DoJoinLobby
+      value: DoJoinGame
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379414, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: JoinLobby, Assembly-CSharp
+      value: JoinGame, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1092503291807379414, guid: f1393b719ee1d044c87878063220d57d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -762,6 +762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c1944d66e2738439475e0d00c47b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene:
-    sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
-    scenePath: Assets/Scenes/Game.unity
+  messageBoxPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
+  codeInputPrefab: {fileID: 7592392062591246403, guid: 1c4ed4b21d89cdf45a4adc7f315d31bb, type: 3}
+  title: {fileID: 0}
+  message: {fileID: 0}
+  create: {fileID: 0}
+  cancel: {fileID: 0}

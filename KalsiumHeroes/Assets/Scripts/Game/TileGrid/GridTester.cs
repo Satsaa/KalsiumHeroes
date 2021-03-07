@@ -164,13 +164,13 @@ public class GridTesterEditor : Editor {
 				Game.grid.DestroyTile(t.mainHex);
 
 #if UNITY_EDITOR
-				foreach (Transform child in Game.instance.transform) SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
+				foreach (Transform child in Game.game.transform) SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
 #endif
 			} else if (!t.main || t.main.source != t.paintTile) {
 				t.main = Game.grid.ReplaceTile(t.mainHex, t.paintTile);
 
 #if UNITY_EDITOR
-				foreach (Transform child in Game.instance.transform) SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
+				foreach (Transform child in Game.game.transform) SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
 #endif
 			}
 		}

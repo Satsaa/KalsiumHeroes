@@ -28,5 +28,5 @@ public abstract class GameEvent : Event {
 
 
 public abstract class ClientEvent : Event {
-
+	public string guid;
 }

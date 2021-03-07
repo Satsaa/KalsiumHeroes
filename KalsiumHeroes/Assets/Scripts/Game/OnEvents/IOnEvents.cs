@@ -70,6 +70,9 @@ public interface IOnTurnEnd_Global : IGlobalOnEvent { void OnTurnEnd(Unit unit);
 
 public interface IOnRoundStart : IGlobalOnEvent { void OnRoundStart(); }
 
+public interface IOnTeamReady : IGlobalOnEvent { void OnTeamReady(Team team); }
+
+public interface IOnGameInit : IGlobalOnEvent { void OnGameInit(); }
 public interface IOnGameStart : IGlobalOnEvent { void OnGameStart(); }
 public interface IOnGameEnd : IGlobalOnEvent { void OnGameEnd(); }
 

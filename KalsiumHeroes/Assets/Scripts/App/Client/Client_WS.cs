@@ -15,23 +15,21 @@ public partial class Client : MonoBehaviour {
 	async void Start() {
 		ws = new WebSocket(url);
 
-		ws.OnOpen += () => {
+		ws.OnOpen += async () => {
 			Debug.Log("Connection open!");
-			App.client.Post(new ClientEvents.GameCreate() { code = "TEST" });
-			App.client.Post(new ClientEvents.GameConnect() { code = "TEST", player = 0 });
+			await App.client.Post(new ClientEvents.GameCreate() { code = "TEST" });
+			var join = await App.client.Post(new ClientEvents.GameJoin() { code = "TEST", team = Team.Team1 });
+			if (join.result == ClientEvents.ResultType.Fail) { // Try other team
+				await App.client.Post(new ClientEvents.GameJoin() { code = "TEST", team = Team.Team2 });
+			}
 		};
 
-		ws.OnError += (e) => {
-			Debug.Log($"Error! {e}");
-		};
-
-		ws.OnClose += (e) => {
-			Debug.Log("Connection closed!");
-		};
+		ws.OnError += (e) => Debug.Log($"Error! {e}");
+		ws.OnClose += (e) => Debug.Log("Connection closed!");
 
 		ws.OnMessage += (bytes) => {
 			var message = System.Text.Encoding.UTF8.GetString(bytes);
-			Debug.Log("OnMessage! " + message);
+			// Debug.Log("OnMessage! " + message);
 			TryReceive(message);
 		};
 
@@ -39,7 +37,7 @@ public partial class Client : MonoBehaviour {
 		await ws.Connect();
 	}
 
-	void Update() {
+	void Update_WS() {
 #if !UNITY_WEBGL || UNITY_EDITOR
 		ws.DispatchMessageQueue();
 #endif

@@ -12,44 +12,38 @@ namespace Muc.Data {
 #if UNITY_EDITOR
 	using UnityEditor;
 	using UnityEditor.SceneManagement;
-	using UnityEditor.VersionControl;
 #endif
 
 	/// <summary>
 	/// A wrapper that provides the means to safely serialize Scene Asset References.
 	/// </summary>
 	[Serializable]
-	public class SceneReference : ISerializationCallbackReceiver {
+	public class SceneReference
 #if UNITY_EDITOR
-		// What we use in editor to select the scene
-		[SerializeField] private Object sceneAsset;
-		private bool IsValidSceneAsset {
-			get {
-				if (!sceneAsset) return false;
-
-				return sceneAsset is SceneAsset;
-			}
-		}
+		: ISerializationCallbackReceiver
+#endif
+	{
+#if UNITY_EDITOR
+		[SerializeField] internal Object sceneAsset;
+		private bool isValidSceneAsset => sceneAsset && sceneAsset is SceneAsset;
 #endif
 
-		// This should only ever be set during serialization/deserialization!
-		[SerializeField]
-		private string scenePath = string.Empty;
+		[SerializeField] internal string _scenePath = string.Empty;
 
 		// Use this when you want to actually have the scene path
-		public string ScenePath {
+		public string scenePath {
 			get {
 #if UNITY_EDITOR
 				// In editor we always use the asset's path
 				return GetScenePathFromAsset();
 #else
-            // At runtime we rely on the stored path value which we assume was serialized correctly at build time.
-            // See OnBeforeSerialize and OnAfterDeserialize
-            return scenePath;
+				// At runtime we rely on the stored path value which we assume was serialized correctly at build time.
+				// See OnBeforeSerialize and OnAfterDeserialize
+				return _scenePath;
 #endif
 			}
 			set {
-				scenePath = value;
+				_scenePath = value;
 #if UNITY_EDITOR
 				sceneAsset = GetSceneAssetFromPath();
 #endif
@@ -57,13 +51,13 @@ namespace Muc.Data {
 		}
 
 		public static implicit operator string(SceneReference sceneReference) {
-			return sceneReference.ScenePath;
+			return sceneReference.scenePath;
 		}
 
 		// Called to prepare this data for serialization. Stubbed out when not in editor.
 		public void OnBeforeSerialize() {
 #if UNITY_EDITOR
-			HandleBeforeSerialize();
+			DoBeforeSerialize();
 #endif
 		}
 
@@ -71,46 +65,41 @@ namespace Muc.Data {
 		public void OnAfterDeserialize() {
 #if UNITY_EDITOR
 			// We sadly cannot touch assetdatabase during serialization, so defer by a bit.
-			EditorApplication.update += HandleAfterDeserialize;
+			EditorApplication.update += DoAfterDeserialize;
 #endif
 		}
 
 
 
 #if UNITY_EDITOR
-		private SceneAsset GetSceneAssetFromPath() {
-			return string.IsNullOrEmpty(scenePath) ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
-		}
+		private SceneAsset GetSceneAssetFromPath() => string.IsNullOrEmpty(_scenePath) ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(_scenePath);
+		private string GetScenePathFromAsset() => sceneAsset == null ? string.Empty : AssetDatabase.GetAssetPath(sceneAsset);
 
-		private string GetScenePathFromAsset() {
-			return sceneAsset == null ? string.Empty : AssetDatabase.GetAssetPath(sceneAsset);
-		}
-
-		private void HandleBeforeSerialize() {
+		private void DoBeforeSerialize() {
 			// Asset is invalid but have Path to try and recover from
-			if (IsValidSceneAsset == false && string.IsNullOrEmpty(scenePath) == false) {
+			if (isValidSceneAsset == false && string.IsNullOrEmpty(_scenePath) == false) {
 				sceneAsset = GetSceneAssetFromPath();
-				if (sceneAsset == null) scenePath = string.Empty;
+				if (sceneAsset == null) _scenePath = string.Empty;
 
 				EditorSceneManager.MarkAllScenesDirty();
 			}
 			// Asset takes precendence and overwrites Path
 			else {
-				scenePath = GetScenePathFromAsset();
+				_scenePath = GetScenePathFromAsset();
 			}
 		}
 
-		private void HandleAfterDeserialize() {
-			EditorApplication.update -= HandleAfterDeserialize;
+		private void DoAfterDeserialize() {
+			EditorApplication.update -= DoAfterDeserialize;
 			// Asset is valid, don't do anything - Path will always be set based on it when it matters
-			if (IsValidSceneAsset) return;
+			if (isValidSceneAsset) return;
 
 			// Asset is invalid but have path to try and recover from
-			if (string.IsNullOrEmpty(scenePath)) return;
+			if (string.IsNullOrEmpty(_scenePath)) return;
 
 			sceneAsset = GetSceneAssetFromPath();
 			// No asset found, path was invalid. Make sure we don't carry over the old invalid path
-			if (!sceneAsset) scenePath = string.Empty;
+			if (!sceneAsset) _scenePath = string.Empty;
 
 			if (!Application.isPlaying) EditorSceneManager.MarkAllScenesDirty();
 		}
@@ -138,20 +127,10 @@ namespace Muc.Data {
 	/// </summary>
 	[CustomPropertyDrawer(typeof(SceneReference))]
 	public class SceneReferencePropertyDrawer : PropertyDrawer {
-		// The exact name of the asset Object variable in the SceneReference object
-		private const string sceneAssetPropertyString = "sceneAsset";
-		// The exact name of the scene Path variable in the SceneReference object
-		private const string scenePathPropertyString = "scenePath";
 
-		private static readonly RectOffset boxPadding = EditorStyles.helpBox.padding;
-
-
-		// Made these two const btw
 		private const float FOOTER_HEIGHT = 24;
 
-		/// <summary>
-		/// Drawing the 'SceneReference' property
-		/// </summary>
+		/// <summary> Drawing the 'SceneReference' property </summary>
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
 			using (PropertyScope(position, label, property, out label)) {
@@ -176,7 +155,7 @@ namespace Muc.Data {
 					footerRect.yMin += lineHeight + spacing;
 					footerRect.height = FOOTER_HEIGHT;
 					GUI.Box(EditorGUI.IndentedRect(footerRect), GUIContent.none, EditorStyles.helpBox);
-					var itemsRect = boxPadding.Remove(footerRect);
+					var itemsRect = EditorStyles.helpBox.padding.Remove(footerRect);
 
 					var sceneControlID = GUIUtility.GetControlID(FocusType.Passive);
 					if (!buildScene.assetGUID.Empty()) {
@@ -195,17 +174,13 @@ namespace Muc.Data {
 			}
 		}
 
-		/// <summary>
-		/// Ensure that what we draw in OnGUI always has the room it needs
-		/// </summary>
+		/// <summary> Ensure that what we draw in OnGUI always has the room it needs </summary>
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			if (!property.isExpanded) return base.GetPropertyHeight(property, label);
 			return lineHeight + spacing + FOOTER_HEIGHT;
 		}
 
-		/// <summary>
-		/// Draws info box of the provided scene
-		/// </summary>
+		/// <summary> Draws info box of the provided scene </summary>
 		private void DrawSceneInfoGUI(Rect position, BuildUtils.BuildScene buildScene, int sceneControlID) {
 			var disabled = BuildUtils.IsDisabled();
 			var disabledWarning = disabled ? "\n\nWARNING: Build Settings is not checked out and so cannot be modified." : "";
@@ -291,19 +266,17 @@ namespace Muc.Data {
 		}
 
 		private static SerializedProperty GetSceneAssetProperty(SerializedProperty property) {
-			return property.FindPropertyRelative(sceneAssetPropertyString);
+			return property.FindPropertyRelative(nameof(SceneReference.sceneAsset));
 		}
 
 		private static SerializedProperty GetScenePathProperty(SerializedProperty property) {
-			return property.FindPropertyRelative(scenePathPropertyString);
+			return property.FindPropertyRelative(nameof(SceneReference._scenePath));
 		}
 
 		private static class DrawUtils {
-			/// <summary>
-			/// Draw a GUI button, choosing between a short and a long button text based on if it fits
-			/// </summary>
+			/// <summary> Draw a GUI button, choosing between a short and a long button text based on if it fits </summary>
 			public static bool ButtonHelper(Rect position, string msgShort, string msgLong, GUIStyle style, string tooltip = null) {
-				var content = new GUIContent(msgLong) { tooltip = tooltip };
+				var content = new GUIContent(msgLong, tooltip);
 
 				var longWidth = style.CalcSize(content).x;
 				if (longWidth > position.width) content.text = msgShort;
@@ -311,30 +284,23 @@ namespace Muc.Data {
 				return GUI.Button(position, content, style);
 			}
 
-			/// <summary>
-			/// Given a position rect, get its field portion
-			/// </summary>
+			/// <summary> Given a position rect, get its field portion </summary>
 			public static Rect GetFieldRect(Rect position) {
 				position.width -= EditorGUIUtility.labelWidth;
 				position.x += EditorGUIUtility.labelWidth;
 				return position;
 			}
-			/// <summary>
-			/// Given a position rect, get its label portion
-			/// </summary>
+			/// <summary> Given a position rect, get its label portion </summary>
 			public static Rect GetLabelRect(Rect position) {
 				position.width = EditorGUIUtility.labelWidth - spacing;
 				return position;
 			}
 		}
 
-		/// <summary>
-		/// Various BuildSettings interactions
-		/// </summary>
+		/// <summary> Various BuildSettings interactions </summary>
 		private static class BuildUtils {
 			// time in seconds that we have to wait before we query again when IsDisabled() is called.
 			public static float minCheckWait = 3;
-
 			private static float lastTimeChecked;
 			private static bool cachedReadonlyVal = true;
 
@@ -390,9 +356,7 @@ namespace Muc.Data {
 				return !status.assetList[0].IsState(Asset.States.CheckedOutLocal);
 			}
 
-			/// <summary>
-			/// For a given Scene Asset object reference, extract its build settings data, including buildIndex.
-			/// </summary>
+			/// <summary> For a given Scene Asset object reference, extract its build settings data, including buildIndex. </summary>
 			public static BuildScene GetBuildScene(Object sceneObject) {
 
 				var entry = new BuildScene {
@@ -417,9 +381,7 @@ namespace Muc.Data {
 				return entry;
 			}
 
-			/// <summary>
-			/// Enable/Disable a given scene in the buildSettings
-			/// </summary>
+			/// <summary> Enable/Disable a given scene in the buildSettings </summary>
 			public static void SetBuildSceneState(BuildScene buildScene, bool enabled) {
 				var modified = false;
 				var scenesToModify = EditorBuildSettings.scenes;
@@ -431,9 +393,7 @@ namespace Muc.Data {
 				if (modified) EditorBuildSettings.scenes = scenesToModify;
 			}
 
-			/// <summary>
-			/// Display Dialog to add a scene to build settings
-			/// </summary>
+			/// <summary> Display Dialog to add a scene to build settings </summary>
 			public static void AddBuildScene(BuildScene buildScene, bool force = false, bool enabled = true) {
 				if (force == false) {
 					var selection = EditorUtility.DisplayDialogComplex(
@@ -463,9 +423,7 @@ namespace Muc.Data {
 				EditorBuildSettings.scenes = tempScenes.ToArray();
 			}
 
-			/// <summary>
-			/// Display Dialog to remove a scene from build settings (or just disable it)
-			/// </summary>
+			/// <summary> Display Dialog to remove a scene from build settings (or just disable it) </summary>
 			public static void RemoveBuildScene(BuildScene buildScene) {
 
 				if (!EditorUtility.DisplayDialog(
@@ -485,9 +443,7 @@ namespace Muc.Data {
 				}
 			}
 
-			/// <summary>
-			/// Open the default Unity Build Settings window
-			/// </summary>
+			/// <summary> Open the default Unity Build Settings window </summary>
 			public static void OpenBuildSettings() {
 				EditorWindow.GetWindow(typeof(BuildPlayerWindow));
 			}

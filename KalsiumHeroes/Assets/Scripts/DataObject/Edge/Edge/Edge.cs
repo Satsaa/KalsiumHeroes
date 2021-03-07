@@ -26,7 +26,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
 			v.hex1 = tile;
 			v.hex2 = tile.hex.GetNeighbor(dir);
 			v.gameObject.transform.position = (tile.corners[dir] + tile.corners[new CircularInt(dir + 1, 6)]) / 2;
-			v.gameObject.transform.parent = Game.instance.transform;
+			v.gameObject.transform.parent = Game.game.transform;
 			v.gameObject.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {(direction).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
 			tile.SetEdge(dir, v);
 		});

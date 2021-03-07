@@ -10,7 +10,7 @@ import * as afs from '../lib/atomicFS'
 import deepClone from '../lib/deepClone'
 
 import * as commands from './commands'
-import { Command } from './commands'
+import { Command, ResultType } from './commands'
 import Game from './game'
 
 export interface Events {
@@ -87,65 +87,79 @@ export default class Server {
 
   private onMessage(this: Server, ws: WebSocket, message: string): void {
     if (typeof message !== 'string') {
-      this.sendCmd(ws, { command: 'Error', data: { type: 'Error', message: 'Message must be a string' } })
+      this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'Message must be a string' } })
       return
     }
     try {
       const cmd = commands.parse(message)
-      console.log(cmd)
-      switch (cmd.command) {
-        case 'GameCreate': {
-          if (this.createGame(cmd.data.code)) {
-            return this.sendCmd(ws, { command: 'Success', data: { type: 'Success', for: cmd.command } })
-          } else {
-            return this.alreadyUsed(ws, cmd)
+      try {
+        console.log(cmd)
+        switch (cmd.command) {
+          case 'GameCreate': {
+            if (this.createGame(cmd.data.code)) {
+              return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Success, to: cmd.data.guid } })
+            } else {
+              return this.alreadyUsed(ws, cmd)
+            }
+          }
+
+          case 'GameEvent': {
+            const game = this.games[cmd.data.code]
+            if (!game) return this.gameNotFound(ws, cmd)
+
+            // Event is sent to all connected viewers which includes the players
+            for (const viewer of game.viewers) {
+              if (viewer.readyState !== WebSocket.OPEN) continue
+              this.sendCmd(viewer, cmd)
+            }
+            break
+          }
+
+          case 'GameJoin': {
+            const game = this.games[cmd.data.code]
+            if (!game) return this.gameNotFound(ws, cmd)
+
+            // Other live ws occupying team
+            const teamWs = game.players[cmd.data.team]
+            if (teamWs && teamWs !== ws && teamWs.readyState === WebSocket.OPEN) {
+              return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Team occupied' } })
+            }
+
+            game.players[cmd.data.team] = ws
+            if (!game.viewers.includes(ws)) game.viewers.push(ws)
+
+            return this.success(ws, cmd)
+            break
+          }
+
+          case 'GameSpectate': {
+            const game = this.games[cmd.data.code]
+            if (!game) return this.gameNotFound(ws, cmd)
+            if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            return this.success(ws, cmd)
+          }
+
+          default: {
+            return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: `Unknown or unexpected command: "${cmd.command}"` } })
           }
         }
-
-        case 'GameEvent': {
-          const game = this.games[cmd.data.code]
-          if (!game) return this.gameNotFound(ws, cmd)
-
-          // Event is sent to all connected viewers which includes the players
-          for (const viewer of game.viewers) {
-            if (viewer.readyState !== WebSocket.OPEN) continue
-            this.sendCmd(viewer, cmd)
-          }
-          break
-        }
-
-        case 'GameConnect': {
-          const game = this.games[cmd.data.code]
-          if (!game) return this.gameNotFound(ws, cmd)
-          switch (cmd.data.player) {
-            case 0:
-              game.player1 = ws
-              break
-
-            case 1:
-              game.player2 = ws
-              break
-          }
-          if (!game.viewers.includes(ws)) game.viewers.push(ws)
-          break
-        }
-
-        default: {
-          this.sendCmd(ws, { command: 'Error', data: { type: 'Error', message: `Unknown or unexpected command: "${cmd.command}"` } })
-          break
-        }
+      } catch (error) {
+        this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: 'Message caused a server error' } })
       }
     } catch (error) {
-      this.sendCmd(ws, { command: 'Error', data: { type: 'Error', message: 'Message caused a server error' } })
+      this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'Malformed message' } })
     }
   }
 
 
-  private alreadyUsed(ws: WebSocket, cmd: Command) {
-    this.sendCmd(ws, { command: 'Fail', data: { type: 'Fail', for: cmd.command, message: 'Code already used' } })
+  private success(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Success, to: cmd.data.guid } })
+  }
+  private alreadyUsed(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Code already used' } })
   }
 
-  private gameNotFound(ws: WebSocket, cmd: Command) {
-    this.sendCmd(ws, { command: 'Fail', data: { type: 'Fail', for: cmd.command, message: 'Game not found' } })
+  private gameNotFound(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Game not found' } })
   }
 }

@@ -40,7 +40,7 @@ public abstract class DataObject : ScriptableObject {
 #if UNITY_EDITOR
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
-		if (Application.isPlaying && Game.instance) {
+		if (Application.isPlaying && Game.game) {
 			foreach (var dobj in Game.dataObjects.Get<DataObject>().Where(v => v)) {
 				dobj.OnConfigureNonpersistent(true);
 			}

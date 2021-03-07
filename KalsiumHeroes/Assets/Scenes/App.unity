@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -784,7 +784,10 @@ MonoBehaviour:
   initDisplay: {fileID: 1946788572}
   defaultScene:
     sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
-    scenePath: Assets/Scenes/Game.unity
+    _scenePath: Assets/Scenes/Game.unity
+  gameScene:
+    sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
+    _scenePath: Assets/Scenes/Game.unity
 --- !u!4 &1363905730
 Transform:
   m_ObjectHideFlags: 0
@@ -900,7 +903,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8142171530db840aa9833e67dfaaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalEventNum: 0
   url: ws://52.59.252.105:1420
 --- !u!114 &1363905733
 MonoBehaviour:
@@ -914,7 +916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18372bf1e8c774409a3e257e15f60ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsCap: 5
+  fpsCap: 24
   targetFrameRate: 0
   started: 0
 --- !u!1 &1811873850

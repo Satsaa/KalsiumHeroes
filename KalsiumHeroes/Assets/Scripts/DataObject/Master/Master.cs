@@ -18,7 +18,7 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 	public OnEvents<TOnEvent> onEvents = new OnEvents<TOnEvent>();
 
 	protected override void OnCreate() {
-		gameObject.transform.SetParent(Game.instance.transform);
+		gameObject.transform.SetParent(Game.game.transform);
 		onEvents.Add(this);
 	}
 

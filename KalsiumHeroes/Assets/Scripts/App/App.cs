@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Muc.Data;
 using UnityEngine.UI;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 [DefaultExecutionOrder(-900)]
 [RequireComponent(typeof(Library))]
@@ -23,6 +24,7 @@ public class App : Singleton<App> {
 
 	[SerializeField] private InitDisplay initDisplay;
 	[SerializeField] private SceneReference defaultScene;
+	[SerializeField] private SceneReference gameScene;
 
 	protected void Reset() {
 		_library = GetComponent<Library>();
@@ -32,10 +34,30 @@ public class App : Singleton<App> {
 	void Start() {
 		// Load default scene if only the App scene is loaded
 		if (SceneManager.sceneCount == 1) {
-			initDisplay.op = SceneManager.LoadSceneAsync(defaultScene.ScenePath, LoadSceneMode.Additive);
+			initDisplay.op = SceneManager.LoadSceneAsync(defaultScene.scenePath, LoadSceneMode.Additive);
 		} else {
 			Destroy(initDisplay);
 		}
 	}
 
+	public Task<bool> JoinGame(string code, Team team) {
+		var res = new TaskCompletionSource<bool>();
+		var gameScene = SceneManager.GetSceneByPath(this.gameScene.scenePath);
+		if (gameScene.isLoaded) {
+			var unload = SceneManager.UnloadSceneAsync(gameScene);
+			unload.completed += (op) => {
+				var load = SceneManager.LoadSceneAsync(gameScene.buildIndex, LoadSceneMode.Additive);
+				load.completed += (op) => {
+					Game.game.Init(code, team);
+					res.SetResult(true);
+				};
+			};
+		} else {
+			var load = SceneManager.LoadSceneAsync(gameScene.buildIndex, LoadSceneMode.Additive);
+			load.completed += (op) => {
+				res.SetResult(true);
+			};
+		}
+		return res.Task;
+	}
 }
