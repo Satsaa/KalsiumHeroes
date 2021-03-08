@@ -17,6 +17,10 @@ MonoBehaviour:
   draft:
   - unit_lone_ranger
   - unit_rogue_mage_hunter
+  - unit_duelist
+  - unit_golem
+  - unit_speedrunner
+  - unit_test
   draftPositions:
     list:
     - Key: 0
