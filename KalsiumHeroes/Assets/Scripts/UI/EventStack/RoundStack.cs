@@ -36,7 +36,7 @@ public class RoundStack : EventStack<RoundStackItem>, IOnAnimationEventEnd, IOnT
 	}
 
 	void OnDestroy() {
-		Game.onEvents.Remove(this);
+		if (Game.game) Game.onEvents.Remove(this);
 	}
 
 	public void OnAnimationEventEnd() => Refresh();

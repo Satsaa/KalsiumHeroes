@@ -14,7 +14,7 @@ public class ReadyButtons : MonoBehaviour, IOnGameStart, IOnGameInit {
 	[SerializeField] ReadyButton buttonPrefab;
 
 	void Awake() => Game.onEvents.Add(this);
-	void OnDestroy() => Game.onEvents.Remove(this);
+	void OnDestroy() { if (Game.game) Game.onEvents.Remove(this); }
 
 	void IOnGameInit.OnGameInit() {
 		var teams = Game.game.mode.teams;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -265,7 +265,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2022529150}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -510,6 +510,103 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1001 &549092274
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1092503291807379410, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_Name
+      value: MenuButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092503291807379411, guid: f1393b719ee1d044c87878063220d57d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1393b719ee1d044c87878063220d57d, type: 3}
 --- !u!1001 &649934674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,10 +661,6 @@ PrefabInstance:
     - target: {fileID: 3089604120248157947, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
       propertyPath: m_Name
       value: AppCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3089604120248157947, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
@@ -783,11 +876,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64e0f2b5a0bc0c842ac55726d9a291ba, type: 2}
   initDisplay: {fileID: 1946788572}
   defaultScene:
-    sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
-    _scenePath: Assets/Scenes/Game.unity
+    sceneAsset: {fileID: 102900000, guid: 16bf3bab6080e944d9d867facb456b29, type: 3}
+    _scenePath: Assets/Scenes/Menus/MainMenu.unity
   gameScene:
     sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
     _scenePath: Assets/Scenes/Game.unity
+  spinner: {fileID: 8988048943664549819, guid: fede339ae35fd5a4785525c7fe31978f, type: 3}
+  defaultMessageBox: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
+  canvas: {fileID: 265615829}
 --- !u!4 &1363905730
 Transform:
   m_ObjectHideFlags: 0
@@ -1088,3 +1184,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007932431}
   m_CullTransparentMesh: 1
+--- !u!20 &2022529150 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3089604120248157942, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
+  m_PrefabInstance: {fileID: 649934674}
+  m_PrefabAsset: {fileID: 0}

@@ -121,3 +121,5 @@ public interface IOnGetMoveCost_Global : IGlobalOnEvent {
 	void OnGetMoveCost(Tile from, Edge edge, Tile to, ref float current);
 	void OnGetMoveCost(Unit unit, Tile from, Edge edge, Tile to, ref float current);
 }
+
+#nullable disable

@@ -6,6 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading.Tasks;
 
 public class JoinGame : MonoBehaviour {
 
@@ -37,7 +38,20 @@ public class JoinGame : MonoBehaviour {
 		joinOption.SetInteractable(!String.IsNullOrWhiteSpace(code));
 	}
 
-	void OnJoin(string code) {
-		print($"*Joining with code {code}*");
+	async void OnJoin(string code) {
+		var task = App.app.JoinGame(code);
+		var spinner = App.app.ShowSpinner($"Joining with code {code}", task);
+		try {
+			var res = await task;
+			if (res.errored) {
+				App.app.ShowMessage("Error", $"Joining game caused a server error.");
+			}
+			if (res.failed) {
+				App.app.ShowMessage("Fail", $"Joining game failed: {res.message}");
+			}
+		} catch (System.Exception) {
+			App.app.ShowMessage("Error", $"Joining game caused an error.");
+			throw;
+		}
 	}
 }

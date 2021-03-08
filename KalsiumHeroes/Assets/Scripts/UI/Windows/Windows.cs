@@ -10,7 +10,7 @@ using Muc.Extensions;
 
 public class Windows : Singleton<Windows> {
 
-	public new static Transform transform => _instance.gameObject.transform;
+	public new static Transform transform => instance.gameObject.transform;
 
 	public float doubleClickTime = 0.5f;
 

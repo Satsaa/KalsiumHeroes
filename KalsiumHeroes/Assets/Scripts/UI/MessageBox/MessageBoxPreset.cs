@@ -18,13 +18,30 @@ public class MessageBoxPreset : ScriptableObject {
 	[SerializeField] TextSource baseMessage;
 	[SerializeField] TextSource baseOptionText;
 
+	protected virtual void DoTitle(MessageBox msgBox, string title) {
+		msgBox.SetTitle(title);
+	}
+
+	protected virtual void DoMessage(MessageBox msgBox, string message) {
+		msgBox.SetMessage(message);
+	}
+
+	protected virtual void DoCustom(MessageBox msgBox) {
+
+	}
+
+	protected virtual void DoOption(MessageBox msgBox, Action action, string text) {
+		msgBox.AddOption(messageOptionPrefab, action).SetText(text);
+	}
+
 
 	public MessageBox Show(string title = null, string message = null
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title ?? baseTitle);
-		msgBox.SetMessage(message ?? baseMessage);
-		msgBox.AddOption(messageOptionPrefab).SetText(baseOptionText);
+		DoTitle(msgBox, title ?? baseTitle);
+		DoMessage(msgBox, message ?? baseMessage);
+		DoCustom(msgBox);
+		DoOption(msgBox, null, baseOptionText);
 		return msgBox;
 	}
 
@@ -32,9 +49,10 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText1, Action optionAction1
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
 		return msgBox;
 	}
 
@@ -43,10 +61,11 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText2, Action optionAction2
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
 		return msgBox;
 	}
 
@@ -56,11 +75,12 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText3, Action optionAction3
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
-		msgBox.AddOption(messageOptionPrefab, optionAction3).SetText(optionText3);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
+		DoOption(msgBox, optionAction3, optionText3);
 		return msgBox;
 	}
 
@@ -71,12 +91,13 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText4, Action optionAction4
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
-		msgBox.AddOption(messageOptionPrefab, optionAction3).SetText(optionText3);
-		msgBox.AddOption(messageOptionPrefab, optionAction4).SetText(optionText4);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
+		DoOption(msgBox, optionAction3, optionText3);
+		DoOption(msgBox, optionAction4, optionText4);
 		return msgBox;
 	}
 
@@ -88,13 +109,14 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText5, Action optionAction5
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
-		msgBox.AddOption(messageOptionPrefab, optionAction3).SetText(optionText3);
-		msgBox.AddOption(messageOptionPrefab, optionAction4).SetText(optionText4);
-		msgBox.AddOption(messageOptionPrefab, optionAction5).SetText(optionText5);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
+		DoOption(msgBox, optionAction3, optionText3);
+		DoOption(msgBox, optionAction4, optionText4);
+		DoOption(msgBox, optionAction5, optionText5);
 		return msgBox;
 	}
 
@@ -107,14 +129,15 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText6, Action optionAction6
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
-		msgBox.AddOption(messageOptionPrefab, optionAction3).SetText(optionText3);
-		msgBox.AddOption(messageOptionPrefab, optionAction4).SetText(optionText4);
-		msgBox.AddOption(messageOptionPrefab, optionAction5).SetText(optionText5);
-		msgBox.AddOption(messageOptionPrefab, optionAction6).SetText(optionText6);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
+		DoOption(msgBox, optionAction3, optionText3);
+		DoOption(msgBox, optionAction4, optionText4);
+		DoOption(msgBox, optionAction5, optionText5);
+		DoOption(msgBox, optionAction6, optionText6);
 		return msgBox;
 	}
 
@@ -129,15 +152,16 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText7, Action optionAction7
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
-		msgBox.AddOption(messageOptionPrefab, optionAction3).SetText(optionText3);
-		msgBox.AddOption(messageOptionPrefab, optionAction4).SetText(optionText4);
-		msgBox.AddOption(messageOptionPrefab, optionAction5).SetText(optionText5);
-		msgBox.AddOption(messageOptionPrefab, optionAction6).SetText(optionText6);
-		msgBox.AddOption(messageOptionPrefab, optionAction7).SetText(optionText7);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
+		DoOption(msgBox, optionAction3, optionText3);
+		DoOption(msgBox, optionAction4, optionText4);
+		DoOption(msgBox, optionAction5, optionText5);
+		DoOption(msgBox, optionAction6, optionText6);
+		DoOption(msgBox, optionAction7, optionText7);
 		return msgBox;
 	}
 
@@ -152,16 +176,17 @@ public class MessageBoxPreset : ScriptableObject {
 		string optionText8, Action optionAction8
 	) {
 		var msgBox = Instantiate(messageBoxPrefab);
-		msgBox.SetTitle(title);
-		msgBox.SetMessage(message);
-		msgBox.AddOption(messageOptionPrefab, optionAction1).SetText(optionText1);
-		msgBox.AddOption(messageOptionPrefab, optionAction2).SetText(optionText2);
-		msgBox.AddOption(messageOptionPrefab, optionAction3).SetText(optionText3);
-		msgBox.AddOption(messageOptionPrefab, optionAction4).SetText(optionText4);
-		msgBox.AddOption(messageOptionPrefab, optionAction5).SetText(optionText5);
-		msgBox.AddOption(messageOptionPrefab, optionAction6).SetText(optionText6);
-		msgBox.AddOption(messageOptionPrefab, optionAction7).SetText(optionText7);
-		msgBox.AddOption(messageOptionPrefab, optionAction8).SetText(optionText8);
+		DoTitle(msgBox, title);
+		DoMessage(msgBox, message);
+		DoCustom(msgBox);
+		DoOption(msgBox, optionAction1, optionText1);
+		DoOption(msgBox, optionAction2, optionText2);
+		DoOption(msgBox, optionAction3, optionText3);
+		DoOption(msgBox, optionAction4, optionText4);
+		DoOption(msgBox, optionAction5, optionText5);
+		DoOption(msgBox, optionAction6, optionText6);
+		DoOption(msgBox, optionAction7, optionText7);
+		DoOption(msgBox, optionAction8, optionText8);
 		return msgBox;
 	}
 

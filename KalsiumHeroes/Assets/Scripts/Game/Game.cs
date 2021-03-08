@@ -37,7 +37,6 @@ public class Game : Singleton<Game> {
 	[field: SerializeField] public string code { get; private set; }
 	[field: SerializeField] public GameMode mode { get; private set; }
 
-
 	protected void Reset() {
 		_events = GetComponent<GameEvents>();
 		_rounds = GetComponent<Rounds>();
@@ -85,6 +84,8 @@ public class Game : Singleton<Game> {
 		if (!mode.teams.Contains(team)) throw new ArgumentException($"Team not supported by mode. Team: '{team}', Mode: '{mode.title}'", nameof(team));
 		if (inited) throw new InvalidOperationException($"Duplicate call to {nameof(Init)}.");
 		inited = true;
+		this.code = code;
+		this.team = team;
 		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnGameInit>(scope, v => v.OnGameInit());
 	}
 

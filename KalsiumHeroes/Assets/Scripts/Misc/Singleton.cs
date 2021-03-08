@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 
 	public static T instance => _instance;
-	protected static T _instance;
+	private static T _instance;
 
 	protected void OnValidate() {
 		if (_instance != null && _instance != this) {
@@ -26,6 +26,12 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 			return;
 		}
 		_instance = this as T;
+	}
+
+	protected void OnDestroy() {
+		if (_instance == this) {
+			_instance = null;
+		}
 	}
 
 }

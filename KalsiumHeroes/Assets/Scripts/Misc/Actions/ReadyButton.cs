@@ -22,7 +22,7 @@ public class ReadyButton : MonoBehaviour, IOnTeamReady {
 	}
 
 	void OnDestroy() {
-		Game.onEvents.Remove(this);
+		if (Game.game) Game.onEvents.Remove(this);
 	}
 
 	public void DoReadyTeam() {

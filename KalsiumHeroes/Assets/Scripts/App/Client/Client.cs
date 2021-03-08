@@ -10,7 +10,8 @@ using Muc.Time;
 [DisallowMultipleComponent]
 public partial class Client : MonoBehaviour {
 
-	public static Dictionary<string, ClientEventTask> cets = new Dictionary<string, ClientEventTask>();
+	public static Dictionary<string, ClientEventTask> cets => _cets ??= new Dictionary<string, ClientEventTask>();
+	private static Dictionary<string, ClientEventTask> _cets;
 
 	void Update() {
 		Update_WS();
@@ -35,7 +36,7 @@ public partial class Client : MonoBehaviour {
 	public void Post(GameEvent e) {
 		// Debug.Log(JsonUtility.ToJson(e));
 		e.gameEventNum = Game.game.gameEventNum++;
-		e.code = "TEST";
+		e.code = Game.game.code;
 		var targetType = typeof(Command<>).MakeGenericType(e.GetType());
 		var command = Activator.CreateInstance(targetType, new object[] { e });
 		ws.SendText(JsonUtility.ToJson(command));
@@ -50,12 +51,14 @@ public partial class Client : MonoBehaviour {
 			Event e = (JsonUtility.FromJson(json, targetType) as dynamic).data;
 			switch (e) {
 				case Result result:
-					Debug.Log($"Received {nameof(Result)}");
-					if (cets.TryGetValue(result.to, out var tcs)) {
-						tcs.tcs.SetResult(result);
-						cets.Remove(result.to);
-					} else {
-						Debug.LogWarning($"Received result for unknown TaskCompletionSource: {json}");
+					Debug.Log($"Received {nameof(Result)}: {json}");
+					if (!String.IsNullOrWhiteSpace(result.to)) {
+						if (cets.TryGetValue(result.to, out var tcs)) {
+							tcs.tcs.SetResult(result);
+							cets.Remove(result.to);
+						} else {
+							Debug.LogWarning($"Received result for unknown TaskCompletionSource: {json}");
+						}
 					}
 					break;
 				case ClientEvent clientEvent:

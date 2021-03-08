@@ -37,10 +37,21 @@ public class CreateGame : MonoBehaviour {
 		createOption.SetInteractable(!String.IsNullOrWhiteSpace(code));
 	}
 
-	void OnCreate(string code) {
-		App.client.Post(new ClientEvents.GameCreate() {
+	async void OnCreate(string code) {
+		var task = App.client.Post(new ClientEvents.GameCreate() {
 			code = code,
 		});
-		print($"*Joining with code {code}*");
+		try {
+			var res = await task;
+			if (res.errored) {
+				App.app.ShowMessage("Error", $"Game creation caused a server error.");
+			}
+			if (res.failed) {
+				App.app.ShowMessage("Fail", $"Game creation failed: {res.message}");
+			}
+		} catch (System.Exception) {
+			App.app.ShowMessage("Error", $"Game creation caused an error.");
+			throw;
+		}
 	}
 }

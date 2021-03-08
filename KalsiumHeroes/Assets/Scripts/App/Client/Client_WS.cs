@@ -12,16 +12,15 @@ public partial class Client : MonoBehaviour {
 	public string url = "ws://localhost:8080";
 
 	// Start is called before the first frame update
-	async void Start() {
+	void Start() {
+		Connect();
+	}
+
+	async void Connect() {
 		ws = new WebSocket(url);
 
-		ws.OnOpen += async () => {
+		ws.OnOpen += () => {
 			Debug.Log("Connection open!");
-			await App.client.Post(new ClientEvents.GameCreate() { code = "TEST" });
-			var join = await App.client.Post(new ClientEvents.GameJoin() { code = "TEST", team = Team.Team1 });
-			if (join.result == ClientEvents.ResultType.Fail) { // Try other team
-				await App.client.Post(new ClientEvents.GameJoin() { code = "TEST", team = Team.Team2 });
-			}
 		};
 
 		ws.OnError += (e) => Debug.Log($"Error! {e}");
@@ -39,7 +38,11 @@ public partial class Client : MonoBehaviour {
 
 	void Update_WS() {
 #if !UNITY_WEBGL || UNITY_EDITOR
-		ws.DispatchMessageQueue();
+		if (ws == null) {
+			Connect();
+		} else {
+			ws.DispatchMessageQueue();
+		}
 #endif
 	}
 

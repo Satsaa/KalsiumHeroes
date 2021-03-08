@@ -24,7 +24,7 @@ public class RoundStackController : MonoBehaviour, IOnGameStart, IOnRoundStart {
 	}
 
 	void OnDestroy() {
-		Game.onEvents.Remove(this);
+		if (Game.game) Game.onEvents.Remove(this);
 	}
 
 	public void OnGameStart() {

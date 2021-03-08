@@ -30,6 +30,11 @@ public static class ClientEvents {
 		public ResultType result;
 		public string to;
 		public string? message;
+
+		public bool succeeded => result == ResultType.Success;
+		public bool failed => result == ResultType.Fail;
+		public bool errored => result == ResultType.Error;
+		public bool timeouted => result == ResultType.Timeout;
 	}
 
 
@@ -42,3 +47,5 @@ public static class ClientEvents {
 	}
 
 }
+
+#nullable disable
