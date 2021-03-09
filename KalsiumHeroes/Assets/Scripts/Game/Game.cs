@@ -67,13 +67,10 @@ public class Game : Singleton<Game> {
 	}
 
 	void Update() {
-		if (!started) return;
-		_events.Update();
 		using (var scope = new OnEvents.Scope()) _onEvents.ForEach<IOnUpdate>(scope, v => v.OnUpdate());
 	}
 
 	void LateUpdate() {
-		if (!started) return;
 		using (var scope = new OnEvents.Scope()) _onEvents.ForEach<IOnLateUpdate>(scope, v => v.OnLateUpdate());
 	}
 

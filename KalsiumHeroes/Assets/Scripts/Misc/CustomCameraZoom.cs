@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Muc.Systems.Camera;
 using Muc.Time;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
 public class CustomCameraZoom : MyUnityCameraZoom {
 
@@ -17,6 +15,5 @@ public class CustomCameraZoom : MyUnityCameraZoom {
 			base.Update();
 		}
 	}
-
 
 }

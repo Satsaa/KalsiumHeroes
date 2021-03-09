@@ -16,7 +16,7 @@ public class GameEvents : MonoBehaviour {
 	[SerializeReference]
 	private EventHandler eventHandler = null;
 
-	public void Update() {
+	void Update() {
 		if (eventHandler != null) {
 			if (eventHandler.EventHasEnded()) {
 				eventHandler = null;

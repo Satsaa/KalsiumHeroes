@@ -66,7 +66,7 @@ namespace Muc.Systems.Camera {
 
 		/// <summary> Starts dragging. Can be called externally. </summary>
 		public virtual void StartDrag() {
-			rayOrigin = Camera.main.gameObject.transform.position;
+			rayOrigin = pc.cam.gameObject.transform.position;
 
 			if (raycastPlaneNormal || raycastPlanePoint) {
 

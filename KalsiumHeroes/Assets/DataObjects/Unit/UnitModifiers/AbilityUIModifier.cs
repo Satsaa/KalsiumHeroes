@@ -22,7 +22,6 @@ public class AbilityUIModifier : UnitModifier,
 	public new AbilityUIModifierData data => (AbilityUIModifierData)_data;
 	public override Type dataType => typeof(AbilityUIModifierData);
 
-	[SerializeField, HideInInspector] Camera cam;
 	[SerializeField, HideInInspector] Canvas canvas;
 
 	[SerializeField, HideInInspector] private AbilityButtonsUI ui;
@@ -55,7 +54,6 @@ public class AbilityUIModifier : UnitModifier,
 	protected override void OnCreate() {
 		base.OnCreate();
 		Debug.Assert(ui = container.GetComponentInChildren<AbilityButtonsUI>());
-		Debug.Assert(cam = Camera.main);
 		foreach (var ability in unit.modifiers.Get<Ability>()) AddIcon(ability);
 		foreach (var passive in unit.modifiers.Get<Passive>()) AddIcon(passive);
 	}
@@ -130,8 +128,7 @@ public class AbilityUIModifier : UnitModifier,
 	}
 
 	public void RefreshPosition() {
-		if (!cam) return;
-		var pos = cam.WorldToScreenPoint(master.transform.position + data.wsOffset).Add(data.ssOffset);
+		var pos = Camera.main.WorldToScreenPoint(master.transform.position + data.wsOffset).Add(data.ssOffset);
 
 		// Clamp
 		var ssRect = ui.areaConstraint.ScreenRect();

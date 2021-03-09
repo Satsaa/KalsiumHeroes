@@ -1554,10 +1554,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 7266266586984682553, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7266266586984682693, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1604,6 +1600,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
+--- !u!20 &43463428 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7266266586984682554, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
+  m_PrefabInstance: {fileID: 43463427}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &45581140
 GameObject:
   m_ObjectHideFlags: 0
@@ -24555,6 +24556,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -38849,8 +38851,8 @@ GameObject:
   - component: {fileID: 1270279094}
   - component: {fileID: 1270279097}
   - component: {fileID: 1270279099}
-  - component: {fileID: 1270279096}
   - component: {fileID: 1270279095}
+  - component: {fileID: 1270279096}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -38887,7 +38889,7 @@ MonoBehaviour:
   <team>k__BackingField: 0
   <code>k__BackingField: 
   <mode>k__BackingField: {fileID: 11400000, guid: 674cc85c201bc894781f3228627c8fa4, type: 2}
-  startCalled: 0
+  <camera>k__BackingField: {fileID: 43463428}
 --- !u!114 &1270279095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52968,6 +52970,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -56306,6 +56309,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

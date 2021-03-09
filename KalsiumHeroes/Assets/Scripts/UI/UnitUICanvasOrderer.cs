@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class UnitUICanvasOrderer : MonoBehaviour {
 
-	public Camera cam;
 	public Canvas canvas;
 
 	void OnValidate() => Init();
@@ -14,12 +13,11 @@ public class UnitUICanvasOrderer : MonoBehaviour {
 	void Start() => Init();
 
 	void Init() {
-		if (!cam) cam = Camera.main;
 		if (!canvas) canvas = GetComponentInChildren<Canvas>();
 	}
 
 	void LateUpdate() {
-		var distance = Vector3.Distance(transform.position, cam.transform.position);
+		var distance = Vector3.Distance(transform.position, Camera.main.transform.position);
 		canvas.sortingOrder = (int)(distance * -25);
 	}
 }

@@ -37,10 +37,8 @@ public class SpawnControl : DraggableObject {
 	}
 
 	new protected void Awake() {
-		if (!resetCalled) {
-			Reset();
-		}
-		if (!camera) Debug.Assert(camera = Camera.main, this);
+		if (!resetCalled) Reset();
+		camera = Camera.main;
 	}
 
 	protected void OnEnable() {

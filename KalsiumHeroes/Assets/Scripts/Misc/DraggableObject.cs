@@ -35,10 +35,8 @@ public class DraggableObject : MonoBehaviour {
 	}
 
 	protected void Awake() {
-		if (!resetCalled) {
-			Reset();
-		}
-		if (!camera) Debug.Assert(camera = Camera.main, this);
+		if (!resetCalled) Reset();
+		Debug.Assert(camera, this);
 	}
 
 	protected void OnMouseOver() {
