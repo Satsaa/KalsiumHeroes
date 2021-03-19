@@ -38,9 +38,9 @@ public class UnitListItem : UIBehaviour {
 		if (unitEnabled == enabled) return;
 		if (unitData) {
 			if (unitEnabled) {
-				drafter.RemoveFromDraft(unitData.identifier);
+				drafter.RemoveFromDraft(unitData);
 			} else {
-				drafter.AddToDraft(unitData.identifier);
+				drafter.AddToDraft(unitData);
 			}
 		}
 		unitEnabled = enabled;

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-[RequireComponent(typeof(Camera))]
 public class DynamicShadowDistance : MonoBehaviour {
 
 	public UniversalRenderPipelineAsset pipeline;
@@ -13,7 +12,7 @@ public class DynamicShadowDistance : MonoBehaviour {
 	public float distanceStepInterveal = 5;
 
 	void Start() {
-		cam = FindObjectOfType<Camera>();
+		if (!cam) cam = GetComponent<Camera>();
 		if (pipeline == null) {
 			if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urpAsset) {
 				pipeline = urpAsset;

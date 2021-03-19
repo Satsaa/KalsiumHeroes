@@ -26,7 +26,7 @@ public class App : Singleton<App> {
 	[SerializeField] List<GameMode> _gameModes;
 
 	[SerializeField] private InitDisplay initDisplay;
-	[SerializeField] private SceneReference defaultScene;
+	[SerializeField] private Menu defaultMenu;
 	[SerializeField] private SceneReference gameScene;
 	[SerializeField] private LoadingSpinner spinner;
 	[SerializeField] private MessageBoxPreset defaultMessageBox;
@@ -38,9 +38,9 @@ public class App : Singleton<App> {
 	}
 
 	void Start() {
-		// Load default scene if only the App scene is loaded
-		if (SceneManager.sceneCount == 1) {
-			initDisplay.op = SceneManager.LoadSceneAsync(defaultScene.scenePath, LoadSceneMode.Additive);
+		// Show the default menu if GameScene not already loaded
+		if (!SceneManager.GetSceneByPath(gameScene).isLoaded) {
+			Menus.Show(defaultMenu);
 		} else {
 			Destroy(initDisplay);
 		}
@@ -92,6 +92,7 @@ public class App : Singleton<App> {
 		return join;
 	}
 
+
 	/// <summary> Shows the loading spinner </summary>
 	public LoadingSpinner ShowSpinner(string message, Task task) {
 		var res = Instantiate(spinner, canvas.transform);
@@ -113,6 +114,7 @@ public class App : Singleton<App> {
 		res.text = message;
 		return res;
 	}
+
 
 	/// <summary> Shows the default messagebox </summary>
 	public MessageBox ShowMessage(string title, string message) {

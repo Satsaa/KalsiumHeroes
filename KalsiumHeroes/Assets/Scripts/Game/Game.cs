@@ -53,13 +53,16 @@ public class Game : Singleton<Game> {
 		foreach (var team in mode.teams) {
 			for (int i = 0; i < mode.draft.Length; i++) {
 				var unitId = mode.draft[i];
-				var unitData = App.library.GetById<UnitData>(unitId);
-				var actor = Instantiate(unitData.actor);
+				var unitSrc = App.library.GetById<UnitData>(unitId);
+				var actor = Instantiate(unitSrc.actor);
 				var spawn = actor.gameObject.AddComponent<SpawnControl>();
-				spawn.source = unitData;
+				spawn.source = unitSrc;
 				spawn.team = team;
-				if (mode.draftPositions.TryGetValue(team, out var positions)) {
-					Tile tile = i >= positions.Count ? null : Game.grid.GetTile(positions[i]);
+				if (team == Game.game.team) {
+					Tile tile = i >= mode.draftPositions.Length ? null : Game.grid.GetTile(mode.draftPositions[i]);
+					if (tile) spawn.SetTile(tile);
+				} else {
+					Tile tile = i >= mode.altDraftPositions.Length ? null : Game.grid.GetTile(mode.altDraftPositions[i]);
 					if (tile) spawn.SetTile(tile);
 				}
 			}

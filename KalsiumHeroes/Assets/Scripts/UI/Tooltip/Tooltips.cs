@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 using Muc.Extensions;
 using Muc.Time;
 
-[RequireComponent(typeof(Windows))]
 [DefaultExecutionOrder(-1)]
 public class Tooltips : Singleton<Tooltips> {
 

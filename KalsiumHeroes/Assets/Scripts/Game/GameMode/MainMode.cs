@@ -18,24 +18,20 @@ public class MainMode : GameMode {
 	[SerializeField] TextSource minCountNotReached;
 	[SerializeField] TextSource unitMissing;
 
-	public override bool ValidateDraft(List<string> unitIds, out TextSource reason) {
-		if (unitIds.Count < minDraftCount) {
+	public override bool ValidateDraft(IEnumerable<UnitData> unitDatas, out TextSource reason) {
+		var count = unitDatas.Count();
+		if (count < minDraftCount) {
 			reason = minCountNotReached;
 			return false;
 		}
-		if (unitIds.Count > maxDraftCount) {
+		if (count > maxDraftCount) {
 			reason = maxCountExceeded;
 			return false;
 		}
 
 		int cost = 0;
-		foreach (var unitId in unitIds) {
-			if (App.library.TryGetById<UnitData>(unitId, out var unitData)) {
-				cost += unitData.draftCost;
-			} else {
-				reason = unitMissing;
-				return false;
-			}
+		foreach (var unitData in unitDatas) {
+			cost += unitData.draftCost;
 		}
 
 		if (cost > maxDraftCost) {

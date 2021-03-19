@@ -14,33 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Main
   version: 0.0.0
+  draftableUnits:
+  - {fileID: 11400000, guid: a5bd3810ecfa2044284e6969dd03082e, type: 2}
+  - {fileID: 11400000, guid: da3777f504b11294285eca553aa4dd99, type: 2}
+  - {fileID: 11400000, guid: 64a4a65aaf8f65946b04b05291695ea7, type: 2}
+  - {fileID: 11400000, guid: 996e8eb9c5a505a48b7f3f0d127f2a3d, type: 2}
+  - {fileID: 11400000, guid: 46f09f0c9827b7543ac300f4e08d5133, type: 2}
+  - {fileID: 11400000, guid: 62fdae0fbdf9b644990c323d49ce5892, type: 2}
+  teams: 0000000001000000
   draft:
-  - unit_lone_ranger
-  - unit_rogue_mage_hunter
   - unit_duelist
   - unit_golem
+  - unit_lone_ranger
+  - unit_rogue_mage_hunter
   - unit_speedrunner
   - unit_test
   draftPositions:
-    list:
-    - Key: 0
-      Value:
-      - {x: 1, y: 5, z: -6}
-      - {x: 1, y: 3, z: -4}
-      - {x: 1, y: 6, z: -7}
-      - {x: 1, y: 1, z: -2}
-      - {x: 1, y: 4, z: -5}
-      - {x: 1, y: 2, z: -3}
-    - Key: 1
-      Value:
-      - {x: 10, y: 5, z: -15}
-      - {x: 12, y: 3, z: -15}
-      - {x: 11, y: 4, z: -15}
-      - {x: 11, y: 3, z: -14}
-      - {x: 10, y: 4, z: -14}
-      - {x: 11, y: 5, z: -16}
-    keyCollision: 0
-  teams: 0000000001000000
+  - {x: 0, y: 4, z: -4}
+  - {x: 1, y: 3, z: -4}
+  - {x: 0, y: 3, z: -3}
+  - {x: 2, y: 3, z: -5}
+  - {x: 1, y: 4, z: -5}
+  - {x: 0, y: 5, z: -5}
+  altDraft:
+  - unit_duelist
+  - unit_golem
+  - unit_lone_ranger
+  - unit_rogue_mage_hunter
+  - unit_speedrunner
+  - unit_test
+  altDraftPositions:
+  - {x: 9, y: 4, z: -13}
+  - {x: 10, y: 3, z: -13}
+  - {x: 11, y: 2, z: -13}
+  - {x: 11, y: 4, z: -15}
+  - {x: 10, y: 4, z: -14}
+  - {x: 11, y: 3, z: -14}
   minDraftCount: 1
   maxDraftCount: 10
   maxDraftCost: 50

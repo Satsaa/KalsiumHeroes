@@ -15,11 +15,12 @@ public class Drafter : UIBehaviour {
 	[SerializeField] Transform itemParent;
 
 	[SerializeField] GameMode mode;
-	[SerializeField] List<string> draft;
-	[SerializeField] List<UnitListItem> items;
+	[SerializeField] List<UnitData> selection;
 
 	[SerializeField] MessageBoxPreset submitMessageBox;
 	[SerializeField] TextSource submitSuccessMessage;
+
+	[SerializeField] List<UnitListItem> items;
 
 	new protected void Start() {
 		base.Start();
@@ -40,28 +41,28 @@ public class Drafter : UIBehaviour {
 		foreach (var unitData in App.library.GetByType<UnitData>()) {
 			var item = Instantiate(itemPrefab, itemParent);
 
-			item.Init(this, unitData, draft.Contains(unitData.identifier));
+			item.Init(this, unitData, selection.Contains(unitData));
 			items.Add(item);
 		}
 	}
 
-	public void AddToDraft(string unitId) {
-		if (draft.Contains(unitId)) {
+	public void AddToDraft(UnitData unitData) {
+		if (selection.Contains(unitData)) {
 			Debug.LogWarning($"Already selected");
 		} else {
-			draft.Add(unitId);
+			selection.Add(unitData);
 		}
 	}
 
-	public void RemoveFromDraft(string unitId) {
-		if (!draft.Remove(unitId)) {
+	public void RemoveFromDraft(UnitData unitData) {
+		if (!selection.Remove(unitData)) {
 			Debug.LogWarning($"Already removed");
 		}
 	}
 
 	public void Submit() {
 		if (Validate(out var failReason)) {
-			mode.draft = draft.ToArray();
+			mode.draft = selection.Select(v => v.identifier).ToArray();
 			submitMessageBox.Show(message: submitSuccessMessage);
 		} else {
 			submitMessageBox.Show(message: failReason);
@@ -69,7 +70,7 @@ public class Drafter : UIBehaviour {
 	}
 
 	public bool Validate(out TextSource failReason) {
-		if (mode.ValidateDraft(draft, out failReason)) {
+		if (mode.ValidateDraft(selection, out failReason)) {
 			return true;
 		} else {
 			return false;

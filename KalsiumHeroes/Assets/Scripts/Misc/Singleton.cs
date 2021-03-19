@@ -12,18 +12,14 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 
 	protected void OnValidate() {
 		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {typeof(T).Name} GameObjects. You are in big trouble.");
-			ObjectUtil.Destroy(this);
-			return;
+			Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
 		}
 		_instance = this as T;
 	}
 
 	protected void Awake() {
 		if (_instance != null && _instance != this) {
-			Debug.LogError($"Multiple {typeof(T).Name} GameObjects. You are in big trouble.");
-			ObjectUtil.Destroy(this);
-			return;
+			Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
 		}
 		_instance = this as T;
 	}

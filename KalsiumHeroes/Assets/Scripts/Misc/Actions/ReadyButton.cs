@@ -36,7 +36,11 @@ public class ReadyButton : MonoBehaviour, IOnTeamReady {
 				});
 			}
 		}
-		Game.game.mode.draftPositions[team] = spawns.Select(v => v.position).ToList();
+		if (team == Game.game.team) {
+			Game.game.mode.draftPositions = spawns.Select(v => v.position).ToArray();
+		} else {
+			Game.game.mode.altDraftPositions = spawns.Select(v => v.position).ToArray();
+		}
 		App.client.Post(
 			new GameEvents.Ready() {
 				spawns = spawns.ToArray(),

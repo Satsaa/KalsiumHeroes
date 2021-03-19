@@ -60,13 +60,13 @@ export default class Server {
 
     const server = this.opts.local ? undefined : new http.Server()
 
-    if (server) {
-      const wss = new WebSocket.Server({ port: this.opts.port, server })
-      wss.on('connection', this.onConnection.bind(this))
-    } else {
-      const wss = new WebSocket.Server({ port: this.opts.port })
-      wss.on('connection', this.onConnection.bind(this))
-    }
+    const wss = server ?
+      new WebSocket.Server({ port: this.opts.port, server }) :
+      new WebSocket.Server({ port: this.opts.port })
+    const addr = wss.address() as WebSocket.AddressInfo
+
+    wss.on('connection', this.onConnection.bind(this))
+    console.log(`Hosting: ${addr.family} ${addr.address} ${addr.port}`)
   }
 
   private onConnection(this: Server, ws: WebSocket, req: http.IncomingMessage): void {
