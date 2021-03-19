@@ -21,9 +21,10 @@ public class TooltipAnimator : MonoBehaviour {
 	[HideInInspector, SerializeField] float t = 0f;
 	[HideInInspector, SerializeField] int sign = 0;
 
+	protected virtual void Reset() => Awake();
 	protected virtual void OnValidate() => Awake();
 	protected virtual void Awake() {
-		if (group) group = GetComponent<CanvasGroup>();
+		if (!group) group = GetComponent<CanvasGroup>();
 	}
 
 	protected virtual void Update() {
