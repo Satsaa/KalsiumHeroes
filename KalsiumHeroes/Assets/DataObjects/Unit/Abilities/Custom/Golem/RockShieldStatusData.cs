@@ -11,7 +11,6 @@ public class RockShieldStatusData : StatusData {
 
 	public Attribute<int> shieldHP;
 
-	[FormerlySerializedAs("statusModifier")]
 	public UnitModifierData modifier;
 
 	public Attribute<int> explosionRadius;

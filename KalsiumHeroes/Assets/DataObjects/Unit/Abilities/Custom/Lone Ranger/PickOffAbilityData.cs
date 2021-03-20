@@ -16,7 +16,6 @@ public class PickOffAbilityData : UnitTargetAbilityData {
 	[Tooltip("Only units matching any of these unit target types affect the multiplier.")]
 	public UnitTargetType multiplyingTypes;
 
-	[FormerlySerializedAs("bonusDamageMultipliers")]
 	[Tooltip("Damage multipliers based on the distance of the nearest unit of the target.")]
 	public float[] multipliers;
 

@@ -14,11 +14,20 @@ public class Popup : MonoBehaviour {
 	[SerializeField] private TMP_Text title;
 	[SerializeField] private TMP_Text message;
 	[SerializeField] private RectTransform optionsParent;
-	[SerializeField] private List<PopupOption> _options;
+
+	[SerializeField, HideInInspector] private List<PopupOption> _options;
 	public ReadOnlyCollection<PopupOption> options => _options.AsReadOnly();
+
+	protected void Awake() {
+		Popups.instance.popups.Add(this);
+	}
 
 	protected void Start() {
 		transform.localPosition = default;
+	}
+
+	protected void OnDestroy() {
+		Popups.instance.popups.RemoveAll(v => v == this);
 	}
 
 	public virtual void SetTitle(string title) => this.title.text = title;
@@ -34,7 +43,22 @@ public class Popup : MonoBehaviour {
 		var option = Instantiate(optionPrefab, Vector3.zero, Quaternion.identity, optionsParent);
 		option.AddAction(action);
 		_options.Add(option);
+		if (optionPrefab.flags.HasFlag(PopupOption.Flags.Default)) {
+			UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(option.gameObject, null);
+		}
 		return option;
+	}
+
+	public virtual void Hide() {
+		Popups.instance.popups.RemoveAll(v => v == this);
+
+		foreach (var option in options) option.RemoveActions();
+
+		if (TryGetComponent<Animator>(out var animator)) {
+			animator.Play("Hide");
+		} else {
+			Destroy(gameObject);
+		}
 	}
 
 }

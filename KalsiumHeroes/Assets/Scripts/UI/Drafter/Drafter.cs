@@ -4,6 +4,7 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Drafter : UIBehaviour {
@@ -17,7 +18,8 @@ public class Drafter : UIBehaviour {
 	[SerializeField] GameMode mode;
 	[SerializeField] List<UnitData> selection;
 
-	[SerializeField] PopupPreset submitMessageBox;
+	[FormerlySerializedAs("submitMessageBox")]
+	[SerializeField] PopupPreset submitPopup;
 	[SerializeField] TextSource submitSuccessMessage;
 
 	[SerializeField] List<UnitListItem> items;
@@ -63,9 +65,9 @@ public class Drafter : UIBehaviour {
 	public void Submit() {
 		if (Validate(out var failReason)) {
 			mode.draft = selection.Select(v => v.identifier).ToArray();
-			submitMessageBox.Show(message: submitSuccessMessage);
+			submitPopup.Show(submitSuccessMessage);
 		} else {
-			submitMessageBox.Show(message: failReason);
+			submitPopup.Show(failReason);
 		}
 	}
 

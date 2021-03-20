@@ -17,8 +17,19 @@ public class Rounds : MonoBehaviour {
 				Gather();
 				res = units.LastOrDefault();
 			} else if (res.removed) {
-				units.RemoveAt(units.Count - 1);
-				return current; // Recursive
+				var old = res;
+				do {
+					units.RemoveAt(units.Count - 1);
+					res = units.LastOrDefault();
+					if (res == null) {
+						Gather();
+						res = units.LastOrDefault();
+						break;
+					}
+				} while (res.removed);
+				OnTurnEnds(old);
+				OnTurnStarts(res);
+				return res;
 			}
 			return res;
 		}
@@ -48,26 +59,26 @@ public class Rounds : MonoBehaviour {
 
 	public void NextTurn() {
 		units.RemoveAll(v => v == null);
-		OnTurnEnds();
+		OnTurnEnds(current);
 		if (units.Count <= 1) {
 			if (!TryEndGame()) {
 				round++;
 				Gather();
-				OnRoundStarts();
-				OnTurnStarts();
+				OnRoundStarts(current);
+				OnTurnStarts(current);
 			}
 			return;
 		}
 		units.RemoveAt(units.Count - 1);
-		OnTurnStarts();
+		OnTurnStarts(current);
 	}
 
 	public void OnGameStart() {
 		if (!TryEndGame()) {
 			round++;
 			Gather();
-			OnRoundStarts();
-			OnTurnStarts();
+			OnRoundStarts(current);
+			OnTurnStarts(current);
 		}
 	}
 
@@ -79,23 +90,23 @@ public class Rounds : MonoBehaviour {
 		return false;
 	}
 
-	private void OnRoundStarts() {
+	private static void OnRoundStarts(Unit unit) {
 		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart());
 	}
 
-	private void OnTurnEnds() {
+	private static void OnTurnEnds(Unit unit) {
 		using (var scope = new OnEvents.Scope()) {
-			current.onEvents.ForEach<IOnTurnEnd_Unit>(scope, v => v.OnTurnEnd());
-			current.tile.onEvents.ForEach<IOnTurnEnd_Tile>(scope, v => v.OnTurnEnd(current));
-			Game.onEvents.ForEach<IOnTurnEnd_Global>(scope, v => v.OnTurnEnd(current));
+			unit.onEvents.ForEach<IOnTurnEnd_Unit>(scope, v => v.OnTurnEnd());
+			unit.tile.onEvents.ForEach<IOnTurnEnd_Tile>(scope, v => v.OnTurnEnd(unit));
+			Game.onEvents.ForEach<IOnTurnEnd_Global>(scope, v => v.OnTurnEnd(unit));
 		}
 	}
 
-	private void OnTurnStarts() {
+	private static void OnTurnStarts(Unit unit) {
 		using (var scope = new OnEvents.Scope()) {
-			current.onEvents.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
-			current.tile.onEvents.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(current));
-			Game.onEvents.ForEach<IOnTurnStart_Global>(scope, v => v.OnTurnStart(current));
+			unit.onEvents.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
+			unit.tile.onEvents.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(unit));
+			Game.onEvents.ForEach<IOnTurnStart_Global>(scope, v => v.OnTurnStart(unit));
 		}
 	}
 }

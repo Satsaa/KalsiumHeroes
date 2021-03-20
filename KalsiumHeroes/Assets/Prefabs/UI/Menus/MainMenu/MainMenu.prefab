@@ -38,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c1944d66e2738439475e0d00c47b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageBoxPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
+  popupPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
   codeInputPrefab: {fileID: 7592392062591246403, guid: 1c4ed4b21d89cdf45a4adc7f315d31bb, type: 3}
   title: {fileID: 0}
   message: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b931eb4b309036c448efcac5f745b6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageBoxPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
+  popupPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
   codeInputPrefab: {fileID: 7592392062591246403, guid: 1c4ed4b21d89cdf45a4adc7f315d31bb, type: 3}
   title: {fileID: 0}
   message: {fileID: 0}

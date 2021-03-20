@@ -32,10 +32,13 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 		onEvents.Add(modifier);
 	}
 
+	protected override void OnRemove() {
+		onEvents.Remove(this);
+	}
+
 	public override void OnRemove(Modifier modifier) {
 		modifiers.Remove((TMod)modifier);
 		onEvents.Remove(modifier);
-		onEvents.Remove(this);
 	}
 
 	public override List<Modifier> GetRawModifiers() {

@@ -52,11 +52,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 	}
 
 	protected override void OnRemove() {
-		if (!removed) return;
+		Debug.Log("OnRemove");
 		base.OnRemove();
-		if (Game.rounds.current == this) {
-			Game.rounds.NextTurn();
-		}
 	}
 
 	public void Heal(float heal) {
@@ -114,6 +111,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 
 		if (data.health.value <= 0) {
 			using (var scope = new OnEvents.Scope()) {
+				Debug.Log("IOnDeath_Unit");
 				this.onEvents.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
 				tile.onEvents.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
 				Game.onEvents.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
@@ -202,12 +200,13 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 
 	void IOnTurnStart_Unit.OnTurnStart() {
 		if (Game.rounds.round <= 1) return;
-		Debug.Log(gameObject.name);
+		Debug.Log($"Turn start: {gameObject.name}");
 		data.energy.value += data.energyRegen.value;
 		RefreshEnergy();
 	}
 
 	void IOnDeath_Unit.OnDeath() {
+		Debug.Log("OnDeath");
 		actor.Die();
 	}
 }

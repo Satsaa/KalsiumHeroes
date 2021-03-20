@@ -9,7 +9,7 @@ using TMPro;
 
 public class CreateGame : MonoBehaviour {
 
-	[SerializeField] PopupPreset messageBoxPreset;
+	[SerializeField] PopupPreset popupPreset;
 	[SerializeField] TMP_InputField codeInputPrefab;
 
 	[SerializeField] TextSource title;
@@ -22,9 +22,9 @@ public class CreateGame : MonoBehaviour {
 
 		var codeInputField = Instantiate(codeInputPrefab);
 
-		var msgBox = messageBoxPreset.Show(title, message,
-			create ?? "CREATE", () => OnCreate(codeInputField.text),
-			cancel ?? "CANCEL", null
+		var msgBox = popupPreset.Show(title, message,
+			new PopupPreset.Option(create ?? "CREATE", () => OnCreate(codeInputField.text), PopupOption.Flags.Default),
+			new PopupPreset.Option(cancel ?? "CANCEL", null, PopupOption.Flags.Cancel)
 		);
 
 		msgBox.AddCustomObject(codeInputField.gameObject);

@@ -9,10 +9,8 @@ public class AreaDamageAbilityData : TileTargetAbilityData {
 
 	public override Type createTypeConstraint => typeof(AreaDamageAbility);
 
-	[FormerlySerializedAs("primaryDamage")]
 	public Attribute<float> centerDamage;
 
-	[FormerlySerializedAs("secondaryDamage")]
 	public Attribute<float> outerDamage;
 
 	public DamageType damageType;

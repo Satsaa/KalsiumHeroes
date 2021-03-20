@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShrapnelAbilityModifier : UnitModifier, IOnTurnStart_Unit {
+public class ShrapnelAbilityModifier : UnitModifier, IOnTurnStart_Unit, IOnDeath_Unit {
 
 	[HideInInspector] public List<Tile> aoe;
 	[HideInInspector] public Tile target;
@@ -21,4 +21,7 @@ public class ShrapnelAbilityModifier : UnitModifier, IOnTurnStart_Unit {
 		Remove();
 	}
 
+	void IOnDeath_Unit.OnDeath() {
+		Debug.Log("Shrapnel DEATH!");
+	}
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 /// <summary>
@@ -34,10 +35,10 @@ public class CustomInputModule : StandaloneInputModule {
 	}
 
 
-	private List<RaycastResult> raycasts = new List<RaycastResult>();
-	private Vector3[] corners = new Vector3[0];
-	protected bool IsRaycastable(GameObject gameObject) {
-		var e = eventSystem;
+	private static List<RaycastResult> raycasts = new List<RaycastResult>();
+
+	public static bool IsDirectlyRaycastable(GameObject gameObject) {
+		var e = EventSystem.current;
 		if (gameObject.transform is RectTransform rt) {
 			var screenRect = rt.ScreenRect();
 
@@ -55,7 +56,7 @@ public class CustomInputModule : StandaloneInputModule {
 			}
 			return false;
 		}
-		return true;
+		return false;
 	}
 
 
@@ -70,7 +71,7 @@ public class CustomInputModule : StandaloneInputModule {
 		var data = GetBaseEventData();
 
 		// mouse0 check so you cant click and enter at same frame, submitting twice
-		if (input.GetButtonDown(submitButton) && !Input.GetKey(KeyCode.Mouse0) && IsRaycastable(eventSystem.currentSelectedGameObject))
+		if (input.GetButtonDown(submitButton) && !Input.GetKey(KeyCode.Mouse0) && IsDirectlyRaycastable(eventSystem.currentSelectedGameObject))
 			ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.submitHandler);
 
 		if (input.GetButtonDown(cancelButton))
