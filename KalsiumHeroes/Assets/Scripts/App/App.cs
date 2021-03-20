@@ -29,7 +29,6 @@ public class App : Singleton<App> {
 	[SerializeField] private Menu defaultMenu;
 	[SerializeField] private SceneReference gameScene;
 	[SerializeField] private LoadingSpinner spinner;
-	[SerializeField] private MessageBoxPreset defaultMessageBox;
 	[SerializeField] private Canvas canvas;
 
 	protected void Reset() {
@@ -65,7 +64,7 @@ public class App : Singleton<App> {
 	}
 
 	public async Task<Result> JoinGame(string code, Team team) {
-		await Task.Delay(2000);
+		await Task.Delay(1000);
 		var join = await App.client.Post(new GameJoin() { code = code, team = team });
 		if (join.succeeded) {
 			var res = new TaskCompletionSource<bool>();
@@ -115,10 +114,4 @@ public class App : Singleton<App> {
 		return res;
 	}
 
-
-	/// <summary> Shows the default messagebox </summary>
-	public MessageBox ShowMessage(string title, string message) {
-		var res = defaultMessageBox.Show(title, message);
-		return res;
-	}
 }

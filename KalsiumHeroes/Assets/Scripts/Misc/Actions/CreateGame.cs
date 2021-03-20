@@ -9,7 +9,7 @@ using TMPro;
 
 public class CreateGame : MonoBehaviour {
 
-	[SerializeField] MessageBoxPreset messageBoxPreset;
+	[SerializeField] PopupPreset messageBoxPreset;
 	[SerializeField] TMP_InputField codeInputPrefab;
 
 	[SerializeField] TextSource title;
@@ -33,7 +33,7 @@ public class CreateGame : MonoBehaviour {
 		OnValueChanged("", msgBox.options[0]);
 	}
 
-	void OnValueChanged(string code, MessageOption createOption) {
+	void OnValueChanged(string code, PopupOption createOption) {
 		createOption.SetInteractable(!String.IsNullOrWhiteSpace(code));
 	}
 
@@ -44,13 +44,13 @@ public class CreateGame : MonoBehaviour {
 		try {
 			var res = await task;
 			if (res.errored) {
-				App.app.ShowMessage("Error", $"Game creation caused a server error.");
+				Popups.ShowPopup("Error", $"Game creation caused a server error.");
 			}
 			if (res.failed) {
-				App.app.ShowMessage("Fail", $"Game creation failed: {res.message}");
+				Popups.ShowPopup("Fail", $"Game creation failed: {res.message}");
 			}
 		} catch (System.Exception) {
-			App.app.ShowMessage("Error", $"Game creation caused an error.");
+			Popups.ShowPopup("Error", $"Game creation caused an error.");
 			throw;
 		}
 	}

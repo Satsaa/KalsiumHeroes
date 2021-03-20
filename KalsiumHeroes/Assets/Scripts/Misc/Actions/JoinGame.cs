@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 public class JoinGame : MonoBehaviour {
 
-	[SerializeField] MessageBoxPreset messageBoxPreset;
+	[SerializeField] PopupPreset messageBoxPreset;
 	[SerializeField] TMP_InputField codeInputPrefab;
 
 	[SerializeField] TextSource title;
@@ -34,7 +34,7 @@ public class JoinGame : MonoBehaviour {
 		OnValueChanged("", msgBox.options[0]);
 	}
 
-	void OnValueChanged(string code, MessageOption joinOption) {
+	void OnValueChanged(string code, PopupOption joinOption) {
 		joinOption.SetInteractable(!String.IsNullOrWhiteSpace(code));
 	}
 
@@ -44,13 +44,13 @@ public class JoinGame : MonoBehaviour {
 		try {
 			var res = await task;
 			if (res.errored) {
-				App.app.ShowMessage("Error", $"Joining game caused a server error.");
+				Popups.ShowPopup("Error", $"Joining game caused a server error.");
 			}
 			if (res.failed) {
-				App.app.ShowMessage("Fail", $"Joining game failed: {res.message}");
+				Popups.ShowPopup("Fail", $"Joining game failed: {res.message}");
 			}
 		} catch (System.Exception) {
-			App.app.ShowMessage("Error", $"Joining game caused an error.");
+			Popups.ShowPopup("Error", $"Joining game caused an error.");
 			throw;
 		}
 	}

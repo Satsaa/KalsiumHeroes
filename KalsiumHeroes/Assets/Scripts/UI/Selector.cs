@@ -29,7 +29,7 @@ public class Selector : UIBehaviour {
 		var eventSystem = EventSystem.current;
 		var rectTransform = this.rectTransform;
 		var changed = prevSelected != eventSystem.currentSelectedGameObject;
-		if (eventSystem.currentSelectedGameObject) {
+		if (eventSystem.currentSelectedGameObject && eventSystem.currentSelectedGameObject.activeInHierarchy) {
 			if (changed) {
 				animator.Play("Select", -1, 0);
 			}

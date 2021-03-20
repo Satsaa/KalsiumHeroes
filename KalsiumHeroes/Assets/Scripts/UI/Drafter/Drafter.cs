@@ -17,7 +17,7 @@ public class Drafter : UIBehaviour {
 	[SerializeField] GameMode mode;
 	[SerializeField] List<UnitData> selection;
 
-	[SerializeField] MessageBoxPreset submitMessageBox;
+	[SerializeField] PopupPreset submitMessageBox;
 	[SerializeField] TextSource submitSuccessMessage;
 
 	[SerializeField] List<UnitListItem> items;
