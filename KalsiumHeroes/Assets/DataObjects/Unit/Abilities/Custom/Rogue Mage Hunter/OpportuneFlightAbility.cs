@@ -31,8 +31,8 @@ public class OpportuneFlightAbility : TileTargetAbility {
 			if (target.CanMoveInDir(dir, out Tile next)) {
 				ExecuteMoveOff(target, target.tile);
 				ExecuteMoveOver(target, target.tile, next);
-				ExecuteMoveOn(target, next);
 				target.SetTile(next, true);
+				ExecuteMoveOn(target, next);
 			} else {
 				break;
 			}

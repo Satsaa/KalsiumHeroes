@@ -103,6 +103,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 	}
 
 	protected void ExecuteOn(Unit unit, Tile tile) {
+		unit.SetTile(tile, false);
 		creator.ExecuteMoveOn(unit, tile);
 		if (unit.removed) animating = false;
 	}

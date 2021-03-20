@@ -19,6 +19,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 	public Canvas canvas;
 	public Team team;
 
+	public bool isCurrent => Game.rounds.current == this;
+
 
 	public static Unit Create(UnitData source, Vector3 position, Team team, UnitActor actor = null) {
 		var res = Create<Unit>(source, v => {

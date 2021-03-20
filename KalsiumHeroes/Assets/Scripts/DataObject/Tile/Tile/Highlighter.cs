@@ -13,10 +13,16 @@ public class Highlighter : MonoBehaviour {
 	public static readonly Color hoverColor = new Color(0.25f, 0.25f, 1f);
 	public static readonly Color invalidColor = new Color(0.80f, 0.25f, 0.25f);
 
-	public const int targetPriority = 0;
-	public const int selectionPriority = 2;
-	public const int hoverPriority = 4;
-	public const int highlightPriority = 8;
+	public const int currentUnitPriority = 100;
+
+	public const int targetingMin = 1000;
+	public const int targetingMax = 1999;
+
+	public const int targetPriority = 1250;
+	public const int selectionPriority = 1500;
+	public const int hoverPriority = 1750;
+
+	public const int highlightPriority = 2100;
 
 	[Serializable]
 	class ColorItem {
@@ -61,9 +67,10 @@ public class Highlighter : MonoBehaviour {
 		else renderer.material.SetColor("_Color", colors.Last().color);
 	}
 
-	public void Clear() {
-		renderer.enabled = false;
-		colors.Clear();
+	public void ClearRange(int min, int max) {
+		colors.RemoveAll(v => v.priority >= min && v.priority <= max);
+		if (colors.Count == 0) renderer.enabled = false;
+		else renderer.material.SetColor("_Color", colors.Last().color);
 	}
 
 }

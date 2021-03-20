@@ -98,7 +98,9 @@ public class Targeting : MonoBehaviour {
 	void End() {
 		targeter = null;
 		prevHoverTile = null;
-		foreach (var tile in Game.grid.tiles.Values) tile.highlighter.Clear();
+		foreach (var tile in Game.grid.tiles.Values) {
+			tile.highlighter.ClearRange(Highlighter.targetingMin, Highlighter.targetingMax);
+		}
 		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTargeterEnd>(scope, v => v.OnTargeterEnd());
 	}
 
