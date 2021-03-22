@@ -18,7 +18,6 @@ public class ModifierTooltipProvider : TooltipProvider {
 	public string unitModifierTooltip = "unitmodifier_info";
 	public string modifierTooltip = "modifier_info";
 
-	public RectTransform rectTransform => transform as RectTransform;
 
 	protected override void OnHover() {
 

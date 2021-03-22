@@ -8,9 +8,15 @@ using TMPro;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
 
-public abstract class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-	[SerializeField] bool hovered;
+	public RectTransform rectTransform => transform as RectTransform;
+
+	[field: SerializeField, HideInInspector]
+	public bool hovered { get; protected set; }
+
+	[field: SerializeField]
+	public string id { get; protected set; } = "modifier_list";
 
 	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => hovered = true;
 	void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => hovered = false;
@@ -21,6 +27,18 @@ public abstract class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPoin
 		}
 	}
 
-	protected abstract void OnHover();
+	protected virtual void OnHover() {
+		if (!Input.GetKey(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse0)) {
+			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), InitializeTooltip);
+			if (Input.GetKeyDown(KeyCode.Mouse0)) {
+				Tooltips.instance.Windowize();
+			}
+		} else {
+			Tooltips.instance.Ping(id, gameObject, rectTransform.rect);
+		}
+	}
 
+	protected virtual void InitializeTooltip(Tooltip tooltip) {
+
+	}
 }
