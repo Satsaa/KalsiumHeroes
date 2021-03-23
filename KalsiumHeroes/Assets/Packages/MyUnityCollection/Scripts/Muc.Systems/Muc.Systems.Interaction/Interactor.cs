@@ -24,8 +24,6 @@ namespace Muc.Systems.Interaction {
 		[Tooltip("When interacting with a dynamic/movable " + nameof(Interactable) + " ignore collisions of this collider and the target collider")]
 		public Collider associatedCollider;
 
-		public KeyCode key = KeyCode.E;
-
 		[Tooltip(
 			nameof(Type.Hold) + ": Activate on press and deactivate on release.\n\n" +
 			nameof(Type.Toggle) + ": Activate on press and deactivate when pressed again.\n\n" +
@@ -65,12 +63,16 @@ namespace Muc.Systems.Interaction {
 		public TransformHistory transHistory { get; private set; }
 
 		private Vector3 prevForward;
+		private bool pressed;
+		private bool pressedThisFrame;
 
 		void Start() {
 			transHistory = GetComponent<TransformHistory>() ?? gameObject.AddComponent<TransformHistory>();
 		}
 
 		void LateUpdate() {
+			var pressedThisFrame = this.pressedThisFrame;
+			this.pressedThisFrame = false;
 			// If an interaction is happening
 			if (interaction) {
 				// Maybe the interaction was ended somewhere else?
@@ -80,7 +82,7 @@ namespace Muc.Systems.Interaction {
 					LateUpdate();
 					return;
 				}
-				if (type == Type.Toggle ? Input.GetKeyDown(key) : !Input.GetKey(key) || !CompliesWithRestrictions()) {
+				if (type == Type.Toggle ? pressed : !pressedThisFrame || !CompliesWithRestrictions()) {
 					interactable.Deactivate(out var _);
 					return;
 				}
@@ -102,7 +104,7 @@ namespace Muc.Systems.Interaction {
 						}
 						// Check if within the required distance
 						if (hit.distance < maxDistance || Vector3.Distance(pos, hit.collider.ClosestPoint(pos)) < maxDistance) {
-							if (Input.GetKeyDown(key)) {
+							if (pressed) {
 								// Pressed. Activate the interactable
 								switch (type) {
 									case Type.Hold:
@@ -138,6 +140,17 @@ namespace Muc.Systems.Interaction {
 			// Use these values for sight check etc. because the target is moved after the checks
 			// and this object moves independently
 			prevForward = transform.forward;
+		}
+
+		/// <summary>
+		/// Sets the interaction to be started
+		/// </summary>
+		public void SetPressed(bool pressed) {
+			if (this.pressed != (this.pressed = pressed)) {
+				if (pressed) {
+					pressedThisFrame = true;
+				}
+			}
 		}
 
 		bool CompliesWithRestrictions() {

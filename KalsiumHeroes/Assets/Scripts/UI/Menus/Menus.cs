@@ -9,8 +9,6 @@ public class Menus : Singleton<Menus> {
 
 	public new static Transform transform => instance.gameObject.transform;
 
-	public KeyCode closeMenu;
-
 	public List<Menu> menus;
 	public List<Menu> cached;
 
@@ -32,8 +30,8 @@ public class Menus : Singleton<Menus> {
 	public static Menu Show(Menu source, Action<Menu> initializer = null) => instance._Show(source, initializer);
 
 
-	void Update() {
-		if (menus.Count > 0 && menus.Last().allowCloseKey && Input.GetKeyDown(closeMenu)) {
+	public void TryClose() {
+		if (menus.Any() && menus.Last().allowCloseKey) {
 			Pop();
 		}
 	}

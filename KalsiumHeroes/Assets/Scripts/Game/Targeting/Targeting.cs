@@ -37,12 +37,13 @@ public class Targeting : MonoBehaviour {
 	}
 
 	void Update() {
+
 		if (targeter != null) {
 			if (!TryComplete() && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
 
 				var tile = Game.grid.GetHoveredTile(camera);
 
-				if (Input.GetKeyDown(KeyCode.Mouse0)) {
+				if (App.input.primaryDown) {
 					if (tile == null) {
 						TryCancel();
 						return;
@@ -59,7 +60,7 @@ public class Targeting : MonoBehaviour {
 							"Selection changed even though TrySelect returned false. Only modify selections after succesful selection."
 						);
 					}
-				} else if (Input.GetKeyDown(KeyCode.Mouse1)) {
+				} else if (App.input.secondaryDown) {
 					TryCancel();
 					return;
 				} else {

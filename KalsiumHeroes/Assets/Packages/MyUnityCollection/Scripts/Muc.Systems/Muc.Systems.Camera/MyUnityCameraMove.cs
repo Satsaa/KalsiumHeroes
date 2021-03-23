@@ -13,30 +13,28 @@ namespace Muc.Systems.Camera {
 #endif
 	[RequireComponent(typeof(MyUnityCamera))]
 	public class MyUnityCameraMove : MonoBehaviour {
+
+		[SerializeField, HideInInspector] MyUnityCamera mucam;
+
 		public float speed = 0.0025f;
 		public bool multiplyByZoom = true;
-		public KeyCode key = KeyCode.Mouse2;
+		Vector2 prevPos;
+		Vector2 pos;
+		bool moving;
 
-		MyUnityCamera pc;
-		Vector2 prev;
-
-		void Start() {
-			pc = gameObject.GetComponent<MyUnityCamera>();
+		void Awake() {
+			mucam = gameObject.GetComponent<MyUnityCamera>();
 		}
 
-		// Update is called once per frame
-		void Update() {
-
-			if (Input.GetKeyDown(key)) {
-				prev = Input.mousePosition;
+		public virtual void Move(Vector2 delta) {
+			if (enabled && moving) {
+				mucam.displacement += mucam.transform.right * delta.x * speed * (multiplyByZoom ? mucam.distance : 1);
+				mucam.displacement += mucam.transform.up * delta.y * speed * (multiplyByZoom ? mucam.distance : 1);
 			}
+		}
 
-			if (Input.GetKey(key)) {
-				pc.displacement += pc.transform.right * (prev.x - Input.mousePosition.x) * speed * (multiplyByZoom ? pc.distance : 1);
-				pc.displacement += pc.transform.up * (prev.y - Input.mousePosition.y) * speed * (multiplyByZoom ? pc.distance : 1);
-
-				prev = Input.mousePosition;
-			}
+		public virtual void SetMoving(bool moving) {
+			this.moving = moving;
 		}
 	}
 

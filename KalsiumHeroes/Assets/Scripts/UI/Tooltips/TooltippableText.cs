@@ -26,7 +26,7 @@ public class TooltippableText : TooltipProvider {
 	}
 
 	protected override void OnHover() {
-		var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, Input.mousePosition, null);
+		var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, App.input.pointer, null);
 		if (linkIndex >= 0) {
 			var linkInfo = text.textInfo.linkInfo[linkIndex];
 			var src = linkInfo.GetLinkID();
@@ -44,10 +44,10 @@ public class TooltippableText : TooltipProvider {
 					}
 				}
 				rect.center += transform.position.xy();
-				if (rect.Contains(Input.mousePosition)) {
-					if (!Input.GetKey(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse0)) {
+				if (rect.Contains(App.input.pointer)) {
+					if (!App.input.primary || App.input.primaryDown) {
 						Tooltips.instance.Show(id, gameObject, rect);
-						if (Input.GetKeyDown(KeyCode.Mouse0)) {
+						if (App.input.primaryDown) {
 							Tooltips.instance.Windowize();
 						}
 					} else {

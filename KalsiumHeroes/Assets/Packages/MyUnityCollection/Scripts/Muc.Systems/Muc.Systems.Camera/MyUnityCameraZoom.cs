@@ -15,15 +15,6 @@ namespace Muc.Systems.Camera {
 	[RequireComponent(typeof(MyUnityCamera))]
 	public class MyUnityCameraZoom : MonoBehaviour {
 
-		[Serializable]
-		public class Alternative {
-			[Tooltip("Press this key to change the multiplier.")]
-			public KeyCode key = KeyCode.None;
-
-			[Min(0), Tooltip("Distance multiplier multiplier when pressing the key.")]
-			public float multiplier = 0.2f;
-		}
-
 		[Min(0), Tooltip("Distance multiplier.")]
 		public float multiplier = 1.2f;
 
@@ -33,45 +24,43 @@ namespace Muc.Systems.Camera {
 		[Tooltip("Minimum and maximum or distance.")]
 		public Vector2 range = new Vector2(1.2f, 25f);
 
-		[Tooltip("Make the strength of scroll affect the amount of zoom.")]
-		public bool multiplyByDelta = false;
-
-		[Tooltip("Define other multipliers when other keys are pressed. First activated alternative is used.")]
-		public Alternative[] alternatives;
+		[Tooltip("Normalize the input to a length of 1?")]
+		public bool normalize = false;
 
 
-		MyUnityCamera pc;
+		[SerializeField, HideInInspector]
+		private MyUnityCamera mucam;
 
-		protected void Start() {
-			pc = gameObject.GetComponent<MyUnityCamera>();
+
+		protected void Awake() {
+			mucam = gameObject.GetComponent<MyUnityCamera>();
 		}
 
-		protected void Update() {
-			if (Input.mouseScrollDelta.y != 0) {
-				var delta = Input.mouseScrollDelta.y;
+#if UNITY_EDITOR
+		void Start() { } // Display enabled checkbox
+#endif
+
+		/// <summary>
+		/// Sometimes the output value of scroll is a Vector2, then we use the y value. It just happens to be y for normal scroll.
+		/// </summary>
+		public void Zoom(Vector2 amount) {
+			Zoom(amount.y);
+		}
+
+		public virtual void Zoom(float amount) {
+			if (enabled && amount != 0) {
+				var delta = amount;
 				if (delta < 0) {
-					if (pc.distance <= range.y) {
-						var v = (multiplyByDelta ? delta : 1) * Mathf.Max(pc.distance * multiplier - pc.distance, minStep);
-						foreach (var alternative in alternatives) {
-							if (Input.GetKey(alternative.key)) {
-								v *= alternative.multiplier;
-								break;
-							}
-						}
-						pc.distance += v;
-						pc.distance = Mathf.Min(pc.distance, range.y);
+					if (mucam.distance <= range.y) {
+						var v = (normalize ? Mathf.Clamp(delta, -1, 1) : delta) * Mathf.Max(mucam.distance * multiplier - mucam.distance, minStep);
+						mucam.distance -= v;
+						mucam.distance = Mathf.Min(mucam.distance, range.y);
 					}
 				} else {
-					if (pc.distance >= range.x) {
-						float v = (multiplyByDelta ? delta : 1) * Mathf.Max(pc.distance - pc.distance / multiplier, minStep);
-						foreach (var alternative in alternatives) {
-							if (Input.GetKey(alternative.key)) {
-								v *= alternative.multiplier;
-								break;
-							}
-						}
-						pc.distance -= v;
-						pc.distance = Mathf.Max(pc.distance, range.x);
+					if (mucam.distance >= range.x) {
+						float v = (normalize ? Mathf.Clamp(delta, -1, 1) : delta) * Mathf.Max(mucam.distance - mucam.distance / multiplier, minStep);
+						mucam.distance -= v;
+						mucam.distance = Mathf.Max(mucam.distance, range.x);
 					}
 				}
 			}

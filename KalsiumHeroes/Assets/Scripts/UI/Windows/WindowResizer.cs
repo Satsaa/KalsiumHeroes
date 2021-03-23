@@ -37,7 +37,7 @@ public class WindowResizer : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	public void LateUpdate() {
 		if (dragging) {
-			var diff = Input.mousePosition.xy() - lastMousePos;
+			var diff = App.input.pointer - lastMousePos;
 			if (directions.HasFlag(Window.Edge.Left)) {
 				var xDiff = diff.x;
 				window.rectTransform.offsetMin += new Vector2(xDiff, 0);
@@ -54,7 +54,7 @@ public class WindowResizer : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 				var yDiff = diff.y;
 				window.rectTransform.offsetMax += new Vector2(0, yDiff);
 			}
-			lastMousePos = Input.mousePosition.xy();
+			lastMousePos = App.input.pointer;
 		}
 	}
 

@@ -11,17 +11,20 @@ using static ClientEvents;
 [DefaultExecutionOrder(-900)]
 [RequireComponent(typeof(Library))]
 [RequireComponent(typeof(Client))]
+[RequireComponent(typeof(SharedInput))]
 public class App : Singleton<App> {
 
 	public static App app => instance;
 
 	public static Client client => instance._client;
 	public static Library library => instance._library;
+	public static SharedInput input => instance._input;
 	public static Lang lang => instance._lang;
 	public static ReadOnlyCollection<GameMode> gameModes => instance._gameModes.AsReadOnly();
 
 	[SerializeField, HideInInspector] Client _client;
 	[SerializeField, HideInInspector] Library _library;
+	[SerializeField, HideInInspector] SharedInput _input;
 	[SerializeField] Lang _lang;
 	[SerializeField] List<GameMode> _gameModes;
 
@@ -32,8 +35,9 @@ public class App : Singleton<App> {
 	[SerializeField] private Canvas canvas;
 
 	protected void Reset() {
-		_library = GetComponent<Library>();
 		_client = GetComponent<Client>();
+		_library = GetComponent<Library>();
+		_input = GetComponent<SharedInput>();
 	}
 
 	void Start() {

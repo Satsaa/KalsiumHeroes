@@ -47,9 +47,9 @@ public class WindowToolbar : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
 	public void Update() {
 		if (dragging) {
-			var diff = Input.mousePosition.xy() - lastMousePos;
+			var diff = App.input.pointer - lastMousePos;
 			window.transform.Translate(diff);
-			lastMousePos = Input.mousePosition.xy();
+			lastMousePos = App.input.pointer;
 		}
 	}
 

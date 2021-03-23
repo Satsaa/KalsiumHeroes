@@ -71,7 +71,7 @@ public class CustomInputModule : StandaloneInputModule {
 		var data = GetBaseEventData();
 
 		// mouse0 check so you cant click and enter at same frame, submitting twice
-		if (input.GetButtonDown(submitButton) && !Input.GetKey(KeyCode.Mouse0) && IsDirectlyRaycastable(eventSystem.currentSelectedGameObject))
+		if (input.GetButtonDown(submitButton) && !App.input.primary && IsDirectlyRaycastable(eventSystem.currentSelectedGameObject))
 			ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.submitHandler);
 
 		if (input.GetButtonDown(cancelButton))

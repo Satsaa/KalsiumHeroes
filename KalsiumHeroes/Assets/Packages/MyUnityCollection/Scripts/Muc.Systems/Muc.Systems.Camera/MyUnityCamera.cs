@@ -12,11 +12,11 @@ namespace Muc.Systems.Camera {
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.Camera) + "/" + nameof(MyUnityCamera))]
 #endif
-	[RequireComponent(typeof(Camera))]
 	[DefaultExecutionOrder(-1)]
+	[RequireComponent(typeof(Camera))]
 	public class MyUnityCamera : MonoBehaviour {
 
-		public Camera cam;
+		[HideInInspector] public Camera cam;
 		public GameObject target;
 		public Vector3 center;
 		public float distance = 1;

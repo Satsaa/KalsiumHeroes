@@ -45,9 +45,9 @@ public class WindowViewDragger : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
 	public void Update() {
 		if (dragging) {
-			var diff = Input.mousePosition.xy() - lastMousePos;
+			var diff = App.input.pointer - lastMousePos;
 			contentRect.Translate(diff);
-			lastMousePos = Input.mousePosition.xy();
+			lastMousePos = App.input.pointer;
 		}
 	}
 

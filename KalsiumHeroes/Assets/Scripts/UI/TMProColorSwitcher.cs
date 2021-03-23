@@ -4,56 +4,72 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class TMProColorSwitcher : MonoBehaviour
-{
-    TextMeshProUGUI text;
-    Button parentButton;
+public class TMProColorSwitcher : MonoBehaviour {
 
-    public Color normalColor;
-    public Color hoverColor;
-    public Color pressColor;
-    public Color disabledColor;
-    private Color targetColor;
+	public TextMeshProUGUI text;
+	public Button button;
 
-    public AnimationCurve transitionCurve;
-    void Start()
-    {
-        text = GetComponent<TextMeshProUGUI>();
-        if (transform.parent != null) {
-            if (transform.parent.GetComponent<Button>() != null) parentButton = transform.parent.GetComponent<Button>();
-        }
-        if (parentButton != null && !parentButton.interactable) text.color = disabledColor;
-        else text.color = normalColor;
-        targetColor = text.color;
-    }
+	public AnimationCurve transitionCurve;
+	public float transitionDuration = 0.25f;
 
-    void Update()
-    {
-        if (parentButton.interactable) {
-            if (text.color == disabledColor) targetColor = normalColor;
-            if (text.color != targetColor) {
-                ChangeColor();
-            }
-        } else if (targetColor != disabledColor) {
-            targetColor = disabledColor;
-            ChangeColor();
-        }
-    }
+	public Color normalColor;
+	public Color hoverColor;
+	public Color pressColor;
+	public Color disabledColor;
 
-    void ChangeColor() {
-        text.color = targetColor;
-    }
+	Color prevTarget;
+	public Color targetColor =>
+		interactable
+			? pressing
+				? pressColor
+				: hovering
+					? hoverColor
+					: normalColor
+			: disabledColor;
 
-    public void HoverColor() {
-        targetColor = hoverColor;
-    }
+	bool hovering;
+	bool pressing;
+	bool interactable => button ? button.interactable : false;
 
-    public void PressColor() {
-        targetColor = pressColor;
-    }
+	Color fromColor;
+	bool animating;
+	float animStart;
+	float t => (Time.time - animStart) / transitionDuration;
 
-    public void NormalColor() {
-        targetColor = normalColor;
-    }
+	void Reset() {
+		text = GetComponentInChildren<TextMeshProUGUI>();
+		button = transform.GetComponentInParent<Button>();
+		prevTarget = targetColor;
+	}
+
+	void Start() {
+		if (!text) text = GetComponentInChildren<TextMeshProUGUI>();
+		if (!button) button = transform.parent.GetComponentInParent<Button>();
+		fromColor = text.color;
+	}
+
+	void Update() {
+		if (prevTarget != (prevTarget = targetColor)) {
+			fromColor = text.color;
+			animStart = Time.time;
+			animating = fromColor != targetColor;
+		}
+		if (animating) {
+			var t = this.t;
+			if (t >= 1) {
+				text.color = targetColor;
+				animating = false;
+			} else {
+				var v = transitionCurve.Evaluate(t);
+				var color = Color.LerpUnclamped(fromColor, targetColor, v);
+				text.color = color;
+			}
+		}
+	}
+
+	public void OnPointerEnter() => hovering = true;
+	public void OnPointerExit() => hovering = false;
+
+	public void OnPointerDown() => pressing = true;
+	public void OnPointerUp() => pressing = false;
 }

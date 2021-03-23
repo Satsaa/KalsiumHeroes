@@ -211,7 +211,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	public Tile GetHoveredTile(int raycastRadius = 1) => GetHoveredTile(Camera.main, raycastRadius);
 	/// <summary> Returns the Tile under mouse. </summary>
 	public Tile GetHoveredTile(Camera camera, int raycastRadius = 1) {
-		var ray = camera.ScreenPointToRay(Input.mousePosition);
+		var ray = camera.ScreenPointToRay(App.input.pointer);
 		var hex = Game.grid.RaycastHex(ray);
 		var main = Game.grid.GetTile(hex);
 		var radius = Game.grid.Radius(hex, raycastRadius);

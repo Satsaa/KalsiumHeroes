@@ -16,6 +16,9 @@ GameObject:
   - component: {fileID: 6401616594254409276}
   - component: {fileID: 7823036885394000072}
   - component: {fileID: 8687087938433633177}
+  - component: {fileID: 43463431}
+  - component: {fileID: 43463430}
+  - component: {fileID: 43463429}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: MainCamera
@@ -155,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbd13e8bcaaab04bba7f00d3f495f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 325
+  mucam: {fileID: 0}
   mask:
     serializedVersion: 2
     m_Bits: 0
@@ -163,7 +166,6 @@ MonoBehaviour:
   planeNormal: {x: 0, y: 1, z: 0}
   raycastPlanePoint: 0
   planePoint: {x: 0, y: 0, z: 0}
-  dragging: 0
 --- !u!114 &7823036885394000072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,8 +181,8 @@ MonoBehaviour:
   multiplier: 1.2
   minStep: 0.1
   range: {x: 2, y: 50}
-  multiplyByDelta: 0
-  alternatives: []
+  normalize: 1
+  mucam: {fileID: 0}
   freeZoom:
     start: 0
     _delay: 0.5
@@ -203,3 +205,99 @@ MonoBehaviour:
   cam: {fileID: 7266266586984682554}
   planeDebth: -4.5
   distanceStepInterveal: 5
+--- !u!114 &43463431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266266586984682553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50107a27d7495644988468d9b97c5e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionAsset: {fileID: -944628639613478452, guid: da6d1f4d04763ba41a629e9fdd8c4985, type: 3}
+  _actionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
+  onChange:
+    m_PersistentCalls:
+      m_Calls: []
+  onStateChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6401616594254409276}
+        m_TargetAssemblyTypeName: Muc.Systems.Camera.MyUnityCameraDrag, Muc
+        m_MethodName: SetDragging
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPress:
+    m_PersistentCalls:
+      m_Calls: []
+  onRelease:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &43463430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266266586984682553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c34fc9829a5cb44b9aadd7e8d12ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionAsset: {fileID: -944628639613478452, guid: da6d1f4d04763ba41a629e9fdd8c4985, type: 3}
+  _actionId: 387f79c8-fefa-4771-9403-bb7972cba102
+  onChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6401616594254409276}
+        m_TargetAssemblyTypeName: Muc.Systems.Camera.MyUnityCameraDrag, Muc
+        m_MethodName: Drag
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &43463429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7266266586984682553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c34fc9829a5cb44b9aadd7e8d12ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionAsset: {fileID: -944628639613478452, guid: da6d1f4d04763ba41a629e9fdd8c4985, type: 3}
+  _actionId: 0489e84a-4833-4c40-bfae-cea84b696689
+  onChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7823036885394000072}
+        m_TargetAssemblyTypeName: Muc.Systems.Camera.MyUnityCameraZoom, Muc
+        m_MethodName: Zoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -62,6 +62,7 @@ public class Tooltips : Singleton<Tooltips> {
 		}
 	}
 
+
 	Tooltip Pop() {
 		Prune();
 		var popped = tts.Pop();
@@ -210,7 +211,7 @@ public class Tooltips : Singleton<Tooltips> {
 			var e = EventSystem.current;
 			if (e.IsPointerOverGameObject()) {
 				var eData = new PointerEventData(e) {
-					position = Input.mousePosition
+					position = App.input.pointer
 				};
 				e.RaycastAll(eData, raycasts);
 				var parent = raycasts.First().gameObject.transform;
@@ -231,7 +232,7 @@ public class Tooltips : Singleton<Tooltips> {
 			var e = EventSystem.current;
 			if (e.IsPointerOverGameObject()) {
 				var eData = new PointerEventData(e) {
-					position = Input.mousePosition
+					position = App.input.pointer
 				};
 				e.RaycastAll(eData, raycasts);
 				var parent = raycasts.First().gameObject.transform;

@@ -27,7 +27,7 @@ public class Popup : MonoBehaviour {
 	}
 
 	protected void OnDestroy() {
-		Popups.instance.popups.RemoveAll(v => v == this);
+		if (Popups.instance) Popups.instance.popups.RemoveAll(v => v == this);
 	}
 
 	public virtual void SetTitle(string title) => this.title.text = title;

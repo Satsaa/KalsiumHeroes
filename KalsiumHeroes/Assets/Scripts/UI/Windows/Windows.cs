@@ -20,19 +20,18 @@ public class Windows : Singleton<Windows> {
 	}
 
 	private List<RaycastResult> raycasts = new List<RaycastResult>();
-	public void Update() {
-		if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.Mouse2)) {
 
-			var cur = EventSystem.current;
-			if (cur.IsPointerOverGameObject()) {
-				var ptrData = new PointerEventData(cur);
-				ptrData.position = Input.mousePosition;
-				cur.RaycastAll(ptrData, raycasts);
-				if (raycasts.Any()) {
-					var window = raycasts.First().gameObject.GetComponentInParent<Window>();
-					if (window) {
-						Windows.MoveToTop(window.transform);
-					}
+	public void ShowWindowUnderMouse() {
+		var cur = EventSystem.current;
+		if (cur.IsPointerOverGameObject()) {
+			var ptrData = new PointerEventData(cur) {
+				position = App.input.pointer
+			};
+			cur.RaycastAll(ptrData, raycasts);
+			if (raycasts.Any()) {
+				var window = raycasts.First().gameObject.GetComponentInParent<Window>();
+				if (window) {
+					Windows.MoveToTop(window.transform);
 				}
 			}
 		}

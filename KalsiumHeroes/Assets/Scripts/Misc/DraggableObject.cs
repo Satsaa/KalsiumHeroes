@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 
 public class DraggableObject : MonoBehaviour {
 
-	public KeyCode key = KeyCode.Mouse0;
 	new public Camera camera;
 	public Vector3 dragOffset;
 
@@ -40,10 +39,10 @@ public class DraggableObject : MonoBehaviour {
 	}
 
 	protected void OnMouseOver() {
-		if (!dragging && Input.GetKeyDown(key) && !EventSystem.current.currentSelectedGameObject) {
+		if (!dragging && App.input.primaryDown && !EventSystem.current.currentSelectedGameObject) {
 			dragging = true;
 			startPos = transform.position;
-			startScreenPos = Input.mousePosition;
+			startScreenPos = App.input.pointer;
 			startScreenDist = Vector3.Distance(camera.transform.position, transform.position);
 			onDragStart?.Invoke();
 		}
@@ -52,7 +51,7 @@ public class DraggableObject : MonoBehaviour {
 	protected void Update() {
 		if (dragging) {
 			onDrag?.Invoke();
-			if (!Input.GetKey(key)) {
+			if (!App.input.primary) {
 				dragging = false;
 				onDragEnd?.Invoke();
 			}
@@ -60,7 +59,7 @@ public class DraggableObject : MonoBehaviour {
 	}
 
 	public virtual void OnDrag() {
-		var ray = camera.ScreenPointToRay(Input.mousePosition);
+		var ray = camera.ScreenPointToRay(App.input.pointer);
 		var endPos = ray.origin + ray.direction * startScreenDist;
 		transform.position = endPos + dragOffset;
 	}

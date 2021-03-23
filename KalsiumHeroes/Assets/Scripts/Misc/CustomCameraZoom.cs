@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class CustomCameraZoom : MyUnityCameraZoom {
 
-	[Tooltip("Allow zooming even over UI elements after zooming.")]
+	[Tooltip("Allow zooming even over UI elements after zooming for this duration.")]
 	[SerializeField] private Timeout freeZoom = new Timeout(0.25f);
 
-	new protected void Update() {
+	public override void Zoom(float amount) {
 		if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() || !freeZoom.expired) {
-			if (Input.mouseScrollDelta.y != 0) freeZoom.Reset();
-			base.Update();
+			if (amount != 0) freeZoom.Reset();
+			base.Zoom(amount);
 		}
 	}
 

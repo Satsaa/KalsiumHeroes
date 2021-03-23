@@ -29,9 +29,9 @@ public class ModifierTooltipProvider : TooltipProvider {
 			Modifier _ => modifierTooltip,
 		};
 
-		if (!Input.GetKey(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse0)) {
+		if (!App.input.primary || App.input.primaryDown) {
 			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), Initialize);
-			if (Input.GetKeyDown(KeyCode.Mouse0)) {
+			if (App.input.primaryDown) {
 				Tooltips.instance.Windowize();
 			}
 		} else {

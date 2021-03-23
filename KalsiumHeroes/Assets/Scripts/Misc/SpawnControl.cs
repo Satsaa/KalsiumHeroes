@@ -52,7 +52,7 @@ public class SpawnControl : DraggableObject {
 
 	public override void OnDrag() {
 		var plane = new Plane(Vector3.up, 0);
-		var ray = camera.ScreenPointToRay(Input.mousePosition);
+		var ray = camera.ScreenPointToRay(App.input.pointer);
 		if (plane.Raycast(ray, out var enter)) {
 			transform.position = ray.origin + ray.direction * enter + dragOffset;
 		}

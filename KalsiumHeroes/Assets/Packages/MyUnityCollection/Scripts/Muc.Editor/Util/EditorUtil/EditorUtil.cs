@@ -16,6 +16,7 @@ namespace Muc.Editor {
 		public const float indentSize = 15; // kIndentPerLevel
 		public const float lineHeight = 18; // kSingleLineHeight
 		public const float smallLineHeight = 16f; // kSingleSmallLineHeight
+		public const string script = "m_Script";
 
 		public static float spacing => EditorGUIUtility.standardVerticalSpacing; // kControlVerticalSpacing
 
@@ -50,6 +51,23 @@ namespace Muc.Editor {
 
 
 		#region Utility
+
+		/// <summary>
+		/// Draws the grayed out script property.
+		/// </summary>
+		public static void ScriptField(SerializedObject obj) {
+			var prop = obj.FindProperty(script);
+			using (DisabledScope()) EditorGUILayout.PropertyField(prop);
+		}
+
+		/// <summary>
+		/// Draws the grayed out script property.
+		/// </summary>
+		public static void ScriptField(SerializedObject obj, Rect position) {
+			var prop = obj.FindProperty(script);
+			using (DisabledScope()) EditorGUI.PropertyField(position, prop);
+		}
+
 
 		/// <summary>
 		/// Basic? I don't know what that means... simple Types that Unity renders on a single line.
