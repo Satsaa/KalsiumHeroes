@@ -59,3 +59,43 @@ public class TooltippableText : TooltipProvider {
 	}
 
 }
+
+#if UNITY_EDITOR
+namespace Editors {
+
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using UnityEngine;
+	using UnityEditor;
+	using Object = UnityEngine.Object;
+	using static Muc.Editor.PropertyUtil;
+	using static Muc.Editor.EditorUtil;
+
+	[CanEditMultipleObjects]
+	[CustomEditor(typeof(TooltippableText), true)]
+	public class TooltippableTextEditor : Editor {
+
+		TooltippableText t => (TooltippableText)target;
+
+		// SerializedProperty property;
+
+		void OnEnable() {
+			// property = serializedObject.FindProperty(nameof(property));
+		}
+
+		public override void OnInspectorGUI() {
+			serializedObject.Update();
+
+			ScriptField(serializedObject);
+
+			DrawPropertiesExcluding(serializedObject,
+				script,
+				$"<{nameof(TooltipProvider.id)}>k__BackingField"
+			);
+
+			serializedObject.ApplyModifiedProperties();
+		}
+	}
+}
+#endif

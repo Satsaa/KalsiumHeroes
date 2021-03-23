@@ -605,12 +605,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 6
   cursorTexture: {fileID: 2800000, guid: e56c16911b38fe848b5a4150116e1162, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &1704319328269189891
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +713,7 @@ RectTransform:
   m_GameObject: {fileID: 1737476836110038805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8802083, y: 0.8802083, z: 0.8802083}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3082386311340330109}
   - {fileID: 724431256215958733}
@@ -739,7 +739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e35f2e56c19b4eb611d3afd7d796b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragging: 0
   content: {fileID: 8108957716195082509}
   resizers:
   - {fileID: 3765161640784029002}
@@ -753,6 +752,9 @@ MonoBehaviour:
   - {fileID: 0}
   toolbar: {fileID: 1266706289540658622}
   scrollRect: {fileID: 0}
+  allowResize: 1
+  minWidth: 30
+  minHeight: 15
 --- !u!225 &6807928396538660916
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1159,12 +1161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 1
   cursorTexture: {fileID: 2800000, guid: b335f7dbff897bd4b8853d6aabb11125, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &3739663385142421914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,12 +1300,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 4
   cursorTexture: {fileID: 2800000, guid: bc5a094e603c10c4abadceab3b6e7bc7, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &3957588540894353609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,12 +1439,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 8
   cursorTexture: {fileID: 2800000, guid: bc5a094e603c10c4abadceab3b6e7bc7, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &4162285148183138067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,12 +2044,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 10
   cursorTexture: {fileID: 2800000, guid: cd7ce7fc210bb8c409d1f0fbe9c875ab, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &6270662439536683634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2472,12 +2474,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 5
   cursorTexture: {fileID: 2800000, guid: cd7ce7fc210bb8c409d1f0fbe9c875ab, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &8246242398309027661
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,12 +2613,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 2
   cursorTexture: {fileID: 2800000, guid: b335f7dbff897bd4b8853d6aabb11125, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0
 --- !u!1 &8432351061344845945
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,9 +2827,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c543e826af395dd499c631fd95547e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 7719059669241410485}
   directions: 9
   cursorTexture: {fileID: 2800000, guid: e56c16911b38fe848b5a4150116e1162, type: 3}
   cursorHotspot: {x: 16, y: 16}
-  dragging: 0
-  exited: 0
+  window: {fileID: 7719059669241410485}
+  <dragging>k__BackingField: 0
+  <exited>k__BackingField: 0

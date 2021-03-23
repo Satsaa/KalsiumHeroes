@@ -5,14 +5,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
+using UnityEngine.EventSystems;
 
-public class Window : MonoBehaviour {
+public class Window : UIBehaviour {
 
-	[HideInInspector] public bool dragging = false;
+	public bool dragging { get; set; }
+
+	// Hidden
 	public WindowContent content;
 	public List<WindowResizer> resizers;
 	public WindowToolbar toolbar;
 	public WindowScrollRect scrollRect;
+
+	// Shown
+	public bool allowResize = true;
+	[Min(30)] public float minWidth = 30;
+	[Min(15)] public float minHeight = 15;
 
 	[Flags]
 	public enum Edge {
@@ -24,14 +32,16 @@ public class Window : MonoBehaviour {
 
 	public RectTransform rectTransform => (RectTransform)transform;
 
-	void Reset() {
+	new protected void Awake() {
+		base.Awake();
 		content = GetComponentInChildren<WindowContent>(true);
 		GetComponentsInChildren<WindowResizer>(true, resizers);
 		toolbar = GetComponentInChildren<WindowToolbar>(true);
 		scrollRect = GetComponentInChildren<WindowScrollRect>(true);
 	}
 
-	protected void Start() {
+	new protected void Start() {
+		base.Start();
 		FitSize();
 	}
 
@@ -39,20 +49,22 @@ public class Window : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	void OnDestroy() {
+	new protected void OnDestroy() {
+		base.OnDestroy();
 		Destroy(gameObject);
 	}
 
 	public void FitSize(bool keepPosition = false) {
 		content.LateUpdate();
-		var oldPos = toolbar.rectTransform.ScreenRect();
+		var toolBarRect = (RectTransform)toolbar.transform;
+		var oldPos = toolBarRect.ScreenRect();
 		var rect = content.contentRect.rect;
 		rectTransform.sizeDelta = new Vector2(
 			rect.width,
-			rect.height + toolbar.rectTransform.rect.height
+			rect.height + toolBarRect.rect.height
 		);
 		if (keepPosition) {
-			var newPos = toolbar.rectTransform.ScreenRect();
+			var newPos = toolBarRect.ScreenRect();
 			var diff = new Vector3(newPos.xMin, newPos.yMax) - new Vector3(oldPos.xMin, oldPos.yMax);
 			transform.Translate(-diff);
 		}
@@ -78,19 +90,38 @@ namespace Editors {
 
 		Window t => (Window)target;
 
-		// SerializedProperty property;
+		SerializedProperty allowResize;
+		SerializedProperty minWidth;
+		SerializedProperty minHeight;
 
 		void OnEnable() {
-			// property = serializedObject.FindProperty(nameof(property));
+			allowResize = serializedObject.FindProperty(nameof(Window.allowResize));
+			minWidth = serializedObject.FindProperty(nameof(Window.minWidth));
+			minHeight = serializedObject.FindProperty(nameof(Window.minHeight));
 		}
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
 
-			DrawDefaultInspector();
-			if (GUILayout.Button("FitSize")) {
-				t.FitSize();
+			ScriptField(serializedObject);
+
+			EditorGUILayout.PropertyField(allowResize);
+			if (allowResize.boolValue) {
+				EditorGUILayout.PropertyField(minWidth);
+				EditorGUILayout.PropertyField(minHeight);
 			}
+
+
+			DrawPropertiesExcluding(serializedObject,
+				script,
+				nameof(Window.content),
+				nameof(Window.resizers),
+				nameof(Window.toolbar),
+				nameof(Window.scrollRect),
+				allowResize.name,
+				minWidth.name,
+				minHeight.name
+			);
 
 			serializedObject.ApplyModifiedProperties();
 		}

@@ -28,9 +28,9 @@ public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHa
 	}
 
 	protected virtual void OnHover() {
-		if (!Input.GetKey(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse0)) {
+		if (!App.input.primary || App.input.primaryDown) {
 			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), InitializeTooltip);
-			if (Input.GetKeyDown(KeyCode.Mouse0)) {
+			if (App.input.primaryDown) {
 				Tooltips.instance.Windowize();
 			}
 		} else {

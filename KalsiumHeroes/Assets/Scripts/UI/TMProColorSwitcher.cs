@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class TMProColorSwitcher : MonoBehaviour {
+[RequireComponent(typeof(Button))]
+public class TMProColorSwitcher : MonoBehaviour,
+IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler {
 
 	public TextMeshProUGUI text;
 	public Button button;
@@ -67,9 +70,8 @@ public class TMProColorSwitcher : MonoBehaviour {
 		}
 	}
 
-	public void OnPointerEnter() => hovering = true;
-	public void OnPointerExit() => hovering = false;
-
-	public void OnPointerDown() => pressing = true;
-	public void OnPointerUp() => pressing = false;
+	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => hovering = true;
+	void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => hovering = false;
+	void IPointerDownHandler.OnPointerDown(PointerEventData eventData) => pressing = true;
+	void IPointerUpHandler.OnPointerUp(PointerEventData eventData) => pressing = false;
 }
