@@ -58,7 +58,7 @@ public class Window : UIBehaviour {
 		content.LateUpdate();
 		var toolBarRect = (RectTransform)toolbar.transform;
 		var oldPos = toolBarRect.ScreenRect();
-		var rect = content.rectTransform.rect;
+		var rect = content.contentRect.rect;
 		rectTransform.sizeDelta = new Vector2(
 			rect.width,
 			rect.height + toolBarRect.rect.height

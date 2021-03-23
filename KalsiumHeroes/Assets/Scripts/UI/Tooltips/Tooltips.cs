@@ -104,7 +104,7 @@ public class Tooltips : Singleton<Tooltips> {
 		if (animator) animator.FinishAnims();
 		var window = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.transform);
 		Windows.MoveToTop(window.gameObject.transform);
-		top.MoveContent(window.content.transform);
+		top.MoveContent(window.content.contentParent);
 		top.root = window.gameObject;
 		window.gameObject.transform.Translate(0, window.toolbar.rectTransform.sizeDelta.y * window.toolbar.rectTransform.lossyScale.y / 2, 0);
 		if (animator) Destroy(animator.gameObject);

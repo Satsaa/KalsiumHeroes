@@ -57,9 +57,6 @@ public class WindowScrollRect : ScrollRect {
 
 	protected override void LateUpdate() {
 		base.LateUpdate();
-		if (!horizontalScrollbar.enabled) {
-			horizontalScrollbar.value = 0; // This shitter causes the content to move right to left
-		}
 	}
 
 	protected override void OnBeforeTransformParentChanged() {
