@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
 
 public class WindowToolbar : UIBehaviour, IPointerDownHandler, IPointerUpHandler {
 
+	public RectTransform rectTransform => (RectTransform)transform;
+
 	[SerializeField, HideInInspector] Window window;
 	Vector2 lastMousePos;
 	bool dragging = false;

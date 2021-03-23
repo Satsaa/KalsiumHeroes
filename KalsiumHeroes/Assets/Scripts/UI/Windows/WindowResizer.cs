@@ -34,6 +34,7 @@ public class WindowResizer : UIBehaviour, IPointerEnterHandler, IPointerExitHand
 	public void LateUpdate() {
 		if (dragging && window.allowResize) {
 			var diff = relativePointer - startPointer;
+			diff /= window.rectTransform.lossyScale;
 			var scrollRectRectRect = window.scrollRect.rectTransform.rect;
 			if (directions.HasFlag(Window.Edge.Left)) {
 				float value = Mathf.Min(diff.x, scrollRectRectRect.width - window.minWidth);

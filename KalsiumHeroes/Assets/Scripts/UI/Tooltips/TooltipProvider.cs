@@ -21,7 +21,7 @@ public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHa
 	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => hovered = true;
 	void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => hovered = false;
 
-	void Update() {
+	protected void Update() {
 		if (hovered) {
 			OnHover();
 		}

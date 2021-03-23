@@ -10,9 +10,6 @@ using UnityEngine.UI;
 
 public class WindowScrollRect : ScrollRect {
 
-	public GameObject corner;
-	int doCornerUpdate;
-
 	public RectTransform rectTransform => (RectTransform)transform;
 
 	public override void CalculateLayoutInputHorizontal() {
@@ -44,7 +41,6 @@ public class WindowScrollRect : ScrollRect {
 
 	public override void Rebuild(CanvasUpdate executing) {
 		base.Rebuild(executing);
-		doCornerUpdate = 2;
 	}
 
 	public override void SetLayoutHorizontal() {
@@ -61,9 +57,8 @@ public class WindowScrollRect : ScrollRect {
 
 	protected override void LateUpdate() {
 		base.LateUpdate();
-		if (doCornerUpdate > 0) {
-			UpdateCorner();
-			doCornerUpdate--;
+		if (!horizontalScrollbar.enabled) {
+			horizontalScrollbar.value = 0; // This shitter causes the content to move right to left
 		}
 	}
 
@@ -97,8 +92,6 @@ public class WindowScrollRect : ScrollRect {
 
 	protected override void OnRectTransformDimensionsChange() {
 		base.OnRectTransformDimensionsChange();
-		doCornerUpdate = 2;
-		UpdateCorner();
 	}
 
 	protected override void OnTransformParentChanged() {
@@ -113,16 +106,4 @@ public class WindowScrollRect : ScrollRect {
 		base.SetNormalizedPosition(value, axis);
 	}
 
-	void UpdateCorner() {
-		var enableCorner = verticalScrollbar && verticalScrollbar.isActiveAndEnabled && horizontalScrollbar && horizontalScrollbar.isActiveAndEnabled;
-		if (corner) {
-			if (corner.TryGetComponent<WindowResizer>(out var res)) {
-				if (res.dragging) {
-					doCornerUpdate++;
-					return;
-				}
-			}
-			corner.SetActive(enableCorner);
-		}
-	}
 }

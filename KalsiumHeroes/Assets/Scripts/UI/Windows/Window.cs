@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
 
 public class Window : UIBehaviour {
 
+	public RectTransform rectTransform => (RectTransform)transform;
+
 	public bool dragging { get; set; }
 
 	// Hidden
@@ -29,8 +31,6 @@ public class Window : UIBehaviour {
 		Bottom = 4,
 		Top = 8,
 	}
-
-	public RectTransform rectTransform => (RectTransform)transform;
 
 	new protected void Awake() {
 		base.Awake();
@@ -58,7 +58,7 @@ public class Window : UIBehaviour {
 		content.LateUpdate();
 		var toolBarRect = (RectTransform)toolbar.transform;
 		var oldPos = toolBarRect.ScreenRect();
-		var rect = content.contentRect.rect;
+		var rect = content.rectTransform.rect;
 		rectTransform.sizeDelta = new Vector2(
 			rect.width,
 			rect.height + toolBarRect.rect.height

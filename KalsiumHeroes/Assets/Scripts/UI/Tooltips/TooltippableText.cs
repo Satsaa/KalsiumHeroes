@@ -32,7 +32,6 @@ public class TooltippableText : TooltipProvider {
 			var src = linkInfo.GetLinkID();
 			if (src.StartsWith("tt_")) {
 				var id = src.Substring(3);
-
 				var rect = Rect.MinMaxRect(float.PositiveInfinity, float.PositiveInfinity, float.NegativeInfinity, float.NegativeInfinity);
 				for (int i = linkInfo.linkTextfirstCharacterIndex; i <= linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength; i++) {
 					var charInfo = text.textInfo.characterInfo[i];
@@ -43,6 +42,8 @@ public class TooltippableText : TooltipProvider {
 						var b = charInfo.vertex_BR.position.y; rect.yMin = Mathf.Min(rect.yMin, b);
 					}
 				}
+				rect = rect.Scale(transform.lossyScale);
+				rect.center *= transform.lossyScale;
 				rect.center += transform.position.xy();
 				if (rect.Contains(App.input.pointer)) {
 					if (!App.input.primary || App.input.primaryDown) {

@@ -104,9 +104,9 @@ public class Tooltips : Singleton<Tooltips> {
 		if (animator) animator.FinishAnims();
 		var window = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.transform);
 		Windows.MoveToTop(window.gameObject.transform);
-		top.MoveContent(window.content.contentParent);
+		top.MoveContent(window.content.transform);
 		top.root = window.gameObject;
-		window.gameObject.transform.Translate(0, 10, 0);
+		window.gameObject.transform.Translate(0, window.toolbar.rectTransform.sizeDelta.y * window.toolbar.rectTransform.lossyScale.y / 2, 0);
 		if (animator) Destroy(animator.gameObject);
 		return true;
 	}
@@ -190,10 +190,11 @@ public class Tooltips : Singleton<Tooltips> {
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
-		rt.position = new Vector3(creatorRect.center.x, creatorRect.yMax + rt.pivot.y * rt.rect.height);
-		if (rt.ScreenRect().yMax > Screen.height) { // Clips screen top?
+		rt.position = new Vector3(creatorRect.center.x, creatorRect.yMax + rt.pivot.y * rt.rect.height * rt.lossyScale.y);
+		var screenRect = rt.ScreenRect();
+		if (screenRect.yMax > Screen.height) { // Clips screen top?
 			var bx = creatorRect.center.x;
-			var by = creatorRect.yMin - (1 - rt.pivot.y) * rt.rect.height;
+			var by = creatorRect.yMin - (1 - rt.pivot.y) * screenRect.height;
 			animator.transform.Translate(0, creatorRect.height / -2f, 0);
 			rt.position = rt.position.SetX(bx).SetY(by);
 		} else {
