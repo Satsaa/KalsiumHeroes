@@ -69,8 +69,10 @@ public class Tooltips : Singleton<Tooltips> {
 	private Tooltip Pop() {
 		var popped = tts.Last();
 		tts.RemoveAt(tts.Count - 1);
-		popped.index = -1;
-		popped.OnHide();
+		if (popped) {
+			popped.index = -1;
+			popped.OnHide();
+		}
 		return popped;
 	}
 
@@ -174,16 +176,11 @@ public class Tooltips : Singleton<Tooltips> {
 		return true;
 	}
 
-	private List<RaycastResult> raycasts = new List<RaycastResult>();
 	private bool IsTopHovered() {
 		if (tts.Any()) {
-			var e = EventSystem.current;
-			if (e.IsPointerOverGameObject()) {
-				var eData = new PointerEventData(e) {
-					position = App.input.pointer
-				};
-				e.RaycastAll(eData, raycasts);
-				var parent = raycasts.First().gameObject.transform;
+			if (CustomInputModule.IsPointerOverUI()) {
+				var hovered = CustomInputModule.GetHoveredGameObject();
+				var parent = hovered.transform;
 				var top = tts.Last();
 				while (parent != null) {
 					if (parent == top.root.transform) {
@@ -198,13 +195,9 @@ public class Tooltips : Singleton<Tooltips> {
 
 	private bool GetHovered(out Tooltip tooltip) {
 		if (tts.Any()) {
-			var e = EventSystem.current;
-			if (e.IsPointerOverGameObject()) {
-				var eData = new PointerEventData(e) {
-					position = App.input.pointer
-				};
-				e.RaycastAll(eData, raycasts);
-				var parent = raycasts.First().gameObject.transform;
+			if (CustomInputModule.IsPointerOverUI()) {
+				var hovered = CustomInputModule.GetHoveredGameObject();
+				var parent = hovered.transform;
 				tooltip = parent.GetComponentInParent<Tooltip>();
 				if (tooltip) {
 					return true;

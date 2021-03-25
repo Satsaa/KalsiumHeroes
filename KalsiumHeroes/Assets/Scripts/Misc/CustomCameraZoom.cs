@@ -10,7 +10,7 @@ public class CustomCameraZoom : MyUnityCameraZoom {
 	[SerializeField] private Timeout freeZoom = new Timeout(0.25f);
 
 	public override void Zoom(float amount) {
-		if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() || !freeZoom.expired) {
+		if (!CustomInputModule.IsPointerOverUI() || !freeZoom.expired) {
 			if (amount != 0) freeZoom.Reset();
 			base.Zoom(amount);
 		}

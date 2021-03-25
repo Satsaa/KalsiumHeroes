@@ -19,17 +19,11 @@ public class Windows : Singleton<Windows> {
 		transform.SetAsLastSibling();
 	}
 
-	private List<RaycastResult> raycasts = new List<RaycastResult>();
-
 	public void ShowWindowUnderMouse() {
-		var cur = EventSystem.current;
-		if (cur.IsPointerOverGameObject()) {
-			var ptrData = new PointerEventData(cur) {
-				position = App.input.pointer
-			};
-			cur.RaycastAll(ptrData, raycasts);
-			if (raycasts.Any()) {
-				var window = raycasts.First().gameObject.GetComponentInParent<Window>();
+		if (CustomInputModule.IsPointerOverUI()) {
+			var hovered = CustomInputModule.GetHoveredGameObject();
+			if (hovered) {
+				var window = hovered.GetComponentInParent<Window>();
 				if (window) {
 					Windows.MoveToTop(window.transform);
 				}

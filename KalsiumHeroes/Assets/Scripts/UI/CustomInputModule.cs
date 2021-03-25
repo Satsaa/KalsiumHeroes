@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,11 +13,42 @@ using UnityEngine.UI;
 /// <summary>
 /// The main purpose of this is to prevent activating buttons that are not raycastable.
 /// </summary>
-public class CustomInputModule : InputSystemUIInputModule {
+public class CustomInputModule : StandaloneInputModule {
+
+	public static bool IsPointerOverUI(int pointerId = PointerInputModule.kMouseLeftId) {
+		var self = EventSystem.current.currentInputModule as CustomInputModule;
+		if (self == null) throw new InvalidOperationException($"{nameof(IsPointerOverUI)} requires an InputModule of type {nameof(CustomInputModule)} to be in use.");
+		var lastPointer = self.GetLastPointerEventData(pointerId);
+		if (lastPointer != null)
+			return lastPointer.pointerEnter != null && lastPointer.pointerEnter.GetComponent<RectTransform>() != null;
+		return false;
+	}
+
+	public static GameObject GetHoveredGameObject(int pointerId = PointerInputModule.kMouseLeftId) {
+		var self = EventSystem.current.currentInputModule as CustomInputModule;
+		if (self == null) throw new InvalidOperationException($"{nameof(GetHoveredGameObject)} requires an InputModule of type {nameof(CustomInputModule)} to be in use.");
+		var lastPointer = self.GetLastPointerEventData(pointerId);
+		if (lastPointer != null) {
+			return lastPointer.pointerEnter;
+		}
+		return null;
+	}
+
+	public static void RaycastAll(List<RaycastResult> raycastResults, int pointerId = PointerInputModule.kMouseLeftId) {
+		var self = EventSystem.current.currentInputModule as CustomInputModule;
+		if (self == null) throw new InvalidOperationException($"{nameof(RaycastAll)} requires an InputModule of type {nameof(CustomInputModule)} to be in use.");
+		var lastPointer = self.GetLastPointerEventData(pointerId);
+		if (lastPointer != null) {
+			EventSystem.current.RaycastAll(lastPointer, raycastResults);
+		} else {
+			raycastResults.Clear();
+		}
+	}
 
 	/*
-	public override void Process() {
-		if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
+	public override void Process(){
+		if (!eventSystem.isFocused && S
+		houldIgnoreEventsOnNoFocus())
 			return;
 
 		bool usedEvent = SendUpdateEventToSelectedObject();

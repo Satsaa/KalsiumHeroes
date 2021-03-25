@@ -7,7 +7,7 @@ using Muc.Systems.Camera;
 public class CustomCameraDrag : MyUnityCameraDrag {
 
 	protected override void StartDrag() {
-		if (EventSystem.current.IsPointerOverGameObject()) return;
+		if (CustomInputModule.IsPointerOverUI()) return;
 		base.StartDrag();
 	}
 

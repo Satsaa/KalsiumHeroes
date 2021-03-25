@@ -39,7 +39,7 @@ public class Targeting : MonoBehaviour {
 	void Update() {
 
 		if (targeter != null) {
-			if (!TryComplete() && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) {
+			if (!TryComplete() && !CustomInputModule.IsPointerOverUI()) {
 
 				var tile = Game.grid.GetHoveredTile(camera);
 
