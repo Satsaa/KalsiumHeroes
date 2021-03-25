@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Muc.Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
 /// <summary>
 /// The main purpose of this is to prevent activating buttons that are not raycastable.
 /// </summary>
-public class CustomInputModule : StandaloneInputModule {
+public class CustomInputModule : InputSystemUIInputModule {
 
+	/*
 	public override void Process() {
 		if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
 			return;
@@ -86,7 +89,7 @@ public class CustomInputModule : StandaloneInputModule {
 #if UNITY_EDITOR
 		return !UnityEditor.EditorApplication.isRemoteConnected;
 #else
-            return true;
+												return true;
 #endif
 	}
 
@@ -111,4 +114,5 @@ public class CustomInputModule : StandaloneInputModule {
 		}
 		return input.touchCount > 0;
 	}
+	*/
 }

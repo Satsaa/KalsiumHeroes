@@ -11,13 +11,16 @@ using UnityEngine.UI;
 
 public class WindowizableTooltip : Tooltip {
 
-	[SerializeField] Window windowPrefab;
-	[SerializeField] bool disallowWindowization;
-	[SerializeField] List<Object> destroyOnWindowize;
+	[SerializeField, Tooltip("This Window prefab is instantiated for windowization.")]
+	Window windowPrefab;
+
+	[SerializeField, Tooltip("You can add objects to this list that you want to be destroyed when the windowization happens.")]
+	List<Object> destroyOnWindowize;
+
 	[SerializeField, HideInInspector] bool windowized;
 
 	public override void OnCreatorClicked(Rect creatorRect) {
-		if (!disallowWindowization) Windowize(windowPrefab);
+		Windowize(windowPrefab);
 	}
 
 	protected virtual void Windowize(Window windowPrefab) {

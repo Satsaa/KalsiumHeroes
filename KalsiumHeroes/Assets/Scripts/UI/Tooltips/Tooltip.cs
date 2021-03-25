@@ -32,7 +32,6 @@ public class Tooltip : MonoBehaviour {
 
 	/// <summary> This is called when the tooltip is hidden by Tooltips. </summary>
 	public virtual void OnHide() {
-		index = -1;
 		var animator = gameObject.GetComponentInParent<TooltipAnimator>();
 		if (animator) animator.Hide();
 	}
