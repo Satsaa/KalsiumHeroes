@@ -31,7 +31,7 @@ public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHa
 		if (!App.input.primary || App.input.primaryDown) {
 			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), InitializeTooltip);
 			if (App.input.primaryDown) {
-				Tooltips.instance.Windowize();
+				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.ScreenRect());
 			}
 		} else {
 			Tooltips.instance.Ping(id, gameObject, rectTransform.rect);

@@ -177,7 +177,7 @@ namespace Muc.Systems.Input {
 				var selected = options.FindIndex(v => v.id == _actionId.stringValue);
 				if (selected < 0) selected = 0;
 
-				if (selected != (selected = EditorGUILayout.Popup(selected, options.Select(v => $"{v.display}").ToArray()))) {
+				if (selected != (selected = EditorGUILayout.Popup("Input Action", selected, options.Select(v => $"{v.display}").ToArray()))) {
 					_actionId.stringValue = options[selected].id;
 				}
 			}

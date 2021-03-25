@@ -32,7 +32,7 @@ public class ModifierTooltipProvider : TooltipProvider {
 		if (!App.input.primary || App.input.primaryDown) {
 			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), Initialize);
 			if (App.input.primaryDown) {
-				Tooltips.instance.Windowize();
+				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.ScreenRect());
 			}
 		} else {
 			Tooltips.instance.Ping(id, gameObject, rectTransform.rect);

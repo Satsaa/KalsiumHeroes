@@ -12,9 +12,8 @@ using Muc.Time;
 [DefaultExecutionOrder(-1)]
 public class Tooltips : Singleton<Tooltips> {
 
-	[SerializeField, HideInInspector] SerializedStack<Tooltip> tts;
+	[SerializeField, HideInInspector] List<Tooltip> tts;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
-	[SerializeField] Window windowPrefab;
 
 	[SerializeField] TooltipAnimator animatorPrefab;
 
@@ -25,6 +24,7 @@ public class Tooltips : Singleton<Tooltips> {
 
 	string lastPing;
 	int lastPingFrame = -1;
+
 
 	void Update() {
 		if (Time.frameCount - lastPingFrame > 1) {
@@ -45,13 +45,13 @@ public class Tooltips : Singleton<Tooltips> {
 						showDelay.Reset(true);
 						if (hovered) {
 							while (
-								tts.Count > 0 && hovered.index <= Peek().index - 1 &&
-								!(hovered.index == Peek().index - 1 && Peek().id == lastPing)
+								tts.Count > 0 && hovered.index <= tts.Last().index - 1 &&
+								!(hovered.index == tts.Last().index - 1 && tts.Last().id == lastPing)
 							) {
 								Pop();
 							}
 						} else {
-							while (tts.Count > 0 && !(tts.Count == 1 && Time.frameCount - lastPingFrame <= 1 && Peek().id == lastPing)) {
+							while (tts.Count > 0 && !(tts.Count == 1 && Time.frameCount - lastPingFrame <= 1 && tts.Last().id == lastPing)) {
 								Pop();
 							}
 						}
@@ -62,61 +62,30 @@ public class Tooltips : Singleton<Tooltips> {
 		}
 	}
 
+	public void RemoveListing(Tooltip tooltip) {
+		tts.Remove(tooltip);
+	}
 
-	Tooltip Pop() {
-		Prune();
-		var popped = tts.Pop();
-		if (popped.gameObject.GetComponentInParent<Window>()) {
-			popped.index = -1;
-		} else {
-			var animator = popped.gameObject.GetComponentInParent<TooltipAnimator>();
-			if (animator) animator.Hide();
-		}
+	private Tooltip Pop() {
+		var popped = tts.Last();
+		tts.RemoveAt(tts.Count - 1);
+		popped.index = -1;
+		popped.OnHide();
 		return popped;
 	}
 
-	void Prune() {
-		while (tts.Any() && !tts.Peek()) {
-			tts.Pop();
-		}
-	}
-
-	public Tooltip Peek() {
-		Prune();
-		return tts.Peek();
-	}
-
-	void Push(Tooltip item) {
-		Prune();
-		tts.Push(item);
-	}
-
-	bool Any() {
-		Prune();
-		return tts.Any();
-	}
-
-	public bool Windowize() {
-		if (!Any()) return false;
-		var top = Peek();
-		if (top.gameObject.GetComponentInParent<Window>()) return false;
-		var animator = top.GetComponentInParent<TooltipAnimator>();
-		if (animator) animator.FinishAnims();
-		var window = Instantiate(windowPrefab, top.gameObject.transform.position, top.gameObject.transform.rotation, Windows.transform);
-		Windows.MoveToTop(window.gameObject.transform);
-		top.MoveContent(window.content.contentParent);
-		top.root = window.gameObject;
-		window.gameObject.transform.Translate(0, window.toolbar.rectTransform.sizeDelta.y * window.toolbar.rectTransform.lossyScale.y / 2, 0);
-		if (animator) Destroy(animator.gameObject);
-		return true;
+	public void InvokeOnCreatorClicked(Rect creatorRect) {
+		if (!tts.Any()) return;
+		var top = tts.Last();
+		if (top) top.OnCreatorClicked(creatorRect);
 	}
 
 	public bool Ping(string id, GameObject creator, Rect creatorRect) {
 		GetTooltipPrefab(id);
 		lastPing = id;
 		lastPingFrame = Time.frameCount;
-		if (!Any() || Peek().creator != creator || Peek().id != id) {
-			if (Any() && !IsTopHovered()) return false;
+		if (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id) {
+			if (tts.Any() && !IsTopHovered()) return false;
 			hideFrameDelay.Reset(true);
 			hideDelay.Reset(true);
 			return true;
@@ -134,7 +103,7 @@ public class Tooltips : Singleton<Tooltips> {
 		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
 		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
-		if (!isTop && (!Any() || Peek().creator != creator || Peek().id != id)) {
+		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id)) {
 			// Quick switching
 			quickSwitchDelay.paused = false;
 			if (quickSwitchDelay.expired) {
@@ -142,7 +111,7 @@ public class Tooltips : Singleton<Tooltips> {
 					while (tts.Count > hovered.index + 2) {
 						Pop();
 					}
-					if (Peek().id != id || Peek().creator != creator) {
+					if (tts.Last().id != id || tts.Last().creator != creator) {
 						Pop();
 					} else {
 						return false;
@@ -151,7 +120,7 @@ public class Tooltips : Singleton<Tooltips> {
 					while (tts.Count > 1) {
 						Pop();
 					}
-					if (Peek().id != id || Peek().creator != creator) {
+					if (tts.Last().id != id || tts.Last().creator != creator) {
 						Pop();
 					} else {
 						return false;
@@ -174,14 +143,13 @@ public class Tooltips : Singleton<Tooltips> {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, Windows.transform);
+		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, transform);
 		var tt = Instantiate(GetTooltipPrefab(id), animator.transform);
-		Windows.MoveToTop(animator.transform);
 		tt.id = id;
 		tt.index = tts.Count;
 		tt.root = tt.gameObject;
 		tt.creator = creator;
-		Push(tt);
+		tts.Add(tt);
 		var rt = (RectTransform)tt.transform;
 		if (initializer != null) {
 			initializer(tt);
@@ -202,13 +170,13 @@ public class Tooltips : Singleton<Tooltips> {
 			animator.transform.Translate(0, creatorRect.height / 2f, 0);
 			rt.position = ws;
 		}
-		animator.Show();
+		tt.OnShow(animator);
 		return true;
 	}
 
 	private List<RaycastResult> raycasts = new List<RaycastResult>();
 	private bool IsTopHovered() {
-		if (Any()) {
+		if (tts.Any()) {
 			var e = EventSystem.current;
 			if (e.IsPointerOverGameObject()) {
 				var eData = new PointerEventData(e) {
@@ -216,7 +184,7 @@ public class Tooltips : Singleton<Tooltips> {
 				};
 				e.RaycastAll(eData, raycasts);
 				var parent = raycasts.First().gameObject.transform;
-				var top = Peek();
+				var top = tts.Last();
 				while (parent != null) {
 					if (parent == top.root.transform) {
 						return true;
@@ -229,7 +197,7 @@ public class Tooltips : Singleton<Tooltips> {
 	}
 
 	private bool GetHovered(out Tooltip tooltip) {
-		if (Any()) {
+		if (tts.Any()) {
 			var e = EventSystem.current;
 			if (e.IsPointerOverGameObject()) {
 				var eData = new PointerEventData(e) {
@@ -250,4 +218,5 @@ public class Tooltips : Singleton<Tooltips> {
 	private Tooltip GetTooltipPrefab(string id) {
 		return tooltips[id];
 	}
+
 }

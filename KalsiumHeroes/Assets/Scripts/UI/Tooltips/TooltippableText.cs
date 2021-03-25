@@ -49,7 +49,7 @@ public class TooltippableText : TooltipProvider {
 					if (!App.input.primary || App.input.primaryDown) {
 						Tooltips.instance.Show(id, gameObject, rect);
 						if (App.input.primaryDown) {
-							Tooltips.instance.Windowize();
+							Tooltips.instance.InvokeOnCreatorClicked(rect);
 						}
 					} else {
 						Tooltips.instance.Ping(id, gameObject, rect);
