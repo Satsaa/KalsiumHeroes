@@ -992,8 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08d10d928d00784d9ffb86a2ed5f095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tts:
-  - {fileID: 0}
+  tts: []
   tooltips:
     list:
     - Key: modifier_info

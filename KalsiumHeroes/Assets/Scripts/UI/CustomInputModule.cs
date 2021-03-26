@@ -47,8 +47,7 @@ public class CustomInputModule : StandaloneInputModule {
 
 	/*
 	public override void Process(){
-		if (!eventSystem.isFocused && S
-		houldIgnoreEventsOnNoFocus())
+		if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
 			return;
 
 		bool usedEvent = SendUpdateEventToSelectedObject();
