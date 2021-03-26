@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9c1258acb3a2542bbf4be583e4c870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootPrefab: {fileID: 0}
   index: 0
   id: 
   root: {fileID: 0}

@@ -10,21 +10,19 @@ using Muc.Extensions;
 using Muc.Time;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class TooltipAnimator : MonoBehaviour {
 
-	public AnimationCurve scaleCurve;
-	public AnimationCurve alphaCurve;
-
-	public CanvasGroup group;
+public class TooltipRoot : MonoBehaviour {
 
 	[SerializeField] float duration = 0.25f;
+	[SerializeField] AnimationCurve scaleCurve;
+	[SerializeField] AnimationCurve alphaCurve;
+
 	[HideInInspector, SerializeField] float t = 0f;
 	[HideInInspector, SerializeField] int sign = 0;
+	[HideInInspector, SerializeField] CanvasGroup group;
 
-	protected virtual void Reset() => Awake();
-	protected virtual void OnValidate() => Awake();
 	protected virtual void Awake() {
-		if (!group) group = GetComponent<CanvasGroup>();
+		group = GetComponent<CanvasGroup>();
 	}
 
 	protected virtual void Update() {
@@ -75,5 +73,5 @@ public class TooltipAnimator : MonoBehaviour {
 		t += Time.deltaTime * (1f / duration) * sign;
 		UpdateAnim();
 	}
-
 }
+

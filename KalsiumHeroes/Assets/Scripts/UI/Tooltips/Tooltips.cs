@@ -12,16 +12,15 @@ using Muc.Time;
 [DefaultExecutionOrder(-1)]
 public class Tooltips : Singleton<Tooltips> {
 
-	[SerializeField, HideInInspector] List<Tooltip> tts;
-	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
-
-	[SerializeField] TooltipAnimator animatorPrefab;
-
-	private FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
 	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
 	[SerializeField] Timeout showDelay = new Timeout(0.5f, true);
 	[SerializeField] Timeout quickSwitchDelay = new Timeout(0.1f, true);
+	[SerializeField] public TooltipRoot defaultRootPrefab;
+	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
 
+	[SerializeField, HideInInspector]
+	List<Tooltip> tts;
+	FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
 	string lastPing;
 	int lastPingFrame = -1;
 
@@ -145,11 +144,13 @@ public class Tooltips : Singleton<Tooltips> {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var animator = Instantiate(animatorPrefab, creatorRect.center, Quaternion.identity, transform);
-		var tt = Instantiate(GetTooltipPrefab(id), animator.transform);
+		var rootPrefab = GetTooltipPrefab(id).rootPrefab;
+		if (rootPrefab == null) rootPrefab = defaultRootPrefab;
+		var root = Instantiate(rootPrefab, creatorRect.center, Quaternion.identity, transform);
+		var tt = Instantiate(GetTooltipPrefab(id), root.transform);
 		tt.id = id;
 		tt.index = tts.Count;
-		tt.root = tt.gameObject;
+		tt.root = root;
 		tt.creator = creator;
 		tts.Add(tt);
 		var rt = (RectTransform)tt.transform;
@@ -165,14 +166,14 @@ public class Tooltips : Singleton<Tooltips> {
 		if (screenRect.yMax > Screen.height) { // Clips screen top?
 			var bx = creatorRect.center.x;
 			var by = creatorRect.yMin - (1 - rt.pivot.y) * screenRect.height;
-			animator.transform.Translate(0, creatorRect.height / -2f, 0);
+			root.transform.Translate(0, creatorRect.height / -2f, 0);
 			rt.position = rt.position.SetX(bx).SetY(by);
 		} else {
 			var ws = rt.position;
-			animator.transform.Translate(0, creatorRect.height / 2f, 0);
+			root.transform.Translate(0, creatorRect.height / 2f, 0);
 			rt.position = ws;
 		}
-		tt.OnShow(animator);
+		tt.OnShow();
 		return true;
 	}
 

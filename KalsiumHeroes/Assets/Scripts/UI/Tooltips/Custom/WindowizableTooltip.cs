@@ -25,17 +25,15 @@ public class WindowizableTooltip : Tooltip {
 
 	protected virtual void Windowize(Window windowPrefab) {
 		if (gameObject.GetComponentInParent<Window>()) return;
-		var animator = GetComponentInParent<TooltipAnimator>();
-		if (animator) animator.FinishAnims();
+		root.FinishAnims();
 		var window = Instantiate(windowPrefab, gameObject.transform.position, gameObject.transform.rotation, Windows.transform);
 		Windows.MoveToTop(window.gameObject.transform);
 		transform.SetParent(window.content.contentParent);
-		root = window.gameObject;
 		foreach (var destroy in destroyOnWindowize) {
 			Destroy(destroy);
 		}
 		window.gameObject.transform.Translate(0, window.toolbar.rectTransform.sizeDelta.y * window.toolbar.rectTransform.lossyScale.y / 2, 0);
-		if (animator) Destroy(animator.gameObject);
+		Destroy(root.gameObject);
 	}
 
 	public override void OnHide() {

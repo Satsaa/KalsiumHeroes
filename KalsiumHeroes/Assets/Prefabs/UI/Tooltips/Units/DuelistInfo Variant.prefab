@@ -41,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3421777535741531200, guid: 8a1ec4e428dc545499501a1bd4718d42, type: 3}
       propertyPath: m_Name
-      value: DuelistInfo
+      value: DuelistInfo Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3421777535741531200, guid: 8a1ec4e428dc545499501a1bd4718d42, type: 3}
       propertyPath: m_IsActive

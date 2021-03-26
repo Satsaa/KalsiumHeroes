@@ -89,12 +89,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b4836282757d14ea7249a55598ed23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootPrefab: {fileID: 0}
   index: 0
   id: 
   root: {fileID: 0}
   creator: {fileID: 0}
   windowPrefab: {fileID: 7719059669241410485, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
-  disallowWindowization: 0
   destroyOnWindowize:
   - {fileID: 7802256927280855918}
   windowized: 0

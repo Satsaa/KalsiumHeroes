@@ -11,9 +11,12 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour {
 
+	[SerializeField, Tooltip("The TooltipRoot used as the animation origin.")]
+	public TooltipRoot rootPrefab;
+
 	[HideInInspector] public int index;
 	[HideInInspector] public string id;
-	[HideInInspector] public GameObject root;
+	[HideInInspector] public TooltipRoot root;
 	[HideInInspector] public GameObject creator;
 
 	protected void OnDestroy() {
@@ -26,14 +29,13 @@ public class Tooltip : MonoBehaviour {
 	}
 
 	/// <summary> This is called when the tooltip is shown by Tooltips. </summary>
-	public virtual void OnShow(TooltipAnimator animator) {
-		animator.Show();
+	public virtual void OnShow() {
+		root.Show();
 	}
 
 	/// <summary> This is called when the tooltip is hidden by Tooltips. </summary>
 	public virtual void OnHide() {
-		var animator = gameObject.GetComponentInParent<TooltipAnimator>();
-		if (animator) animator.Hide();
+		if (root) root.Hide();
 	}
 }
 

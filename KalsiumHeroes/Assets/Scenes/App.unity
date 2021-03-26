@@ -992,7 +992,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08d10d928d00784d9ffb86a2ed5f095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tts: []
+  hideDelay:
+    start: 0
+    _delay: 0.5
+    <used>k__BackingField: 0
+    _paused: 1
+    pauseTime: 0
+  showDelay:
+    start: 0
+    _delay: 0.5
+    <used>k__BackingField: 0
+    _paused: 1
+    pauseTime: 0
+  quickSwitchDelay:
+    start: 0
+    _delay: 0.1
+    <used>k__BackingField: 0
+    _paused: 1
+    pauseTime: 0
+  defaultRootPrefab: {fileID: 2358715483377159109, guid: a3cb85849b888ab47a95a817fc3059cd, type: 3}
   tooltips:
     list:
     - Key: modifier_info
@@ -1012,25 +1030,7 @@ MonoBehaviour:
     - Key: red
       Value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
     keyCollision: 0
-  animatorPrefab: {fileID: 2358715483377159109, guid: a3cb85849b888ab47a95a817fc3059cd, type: 3}
-  hideDelay:
-    start: 0
-    _delay: 0.5
-    <used>k__BackingField: 0
-    _paused: 1
-    pauseTime: 0
-  showDelay:
-    start: 0
-    _delay: 0.5
-    <used>k__BackingField: 0
-    _paused: 1
-    pauseTime: 0
-  quickSwitchDelay:
-    start: 0
-    _delay: 0.1
-    <used>k__BackingField: 0
-    _paused: 1
-    pauseTime: 0
+  tts: []
 --- !u!1 &1286376790
 GameObject:
   m_ObjectHideFlags: 0
