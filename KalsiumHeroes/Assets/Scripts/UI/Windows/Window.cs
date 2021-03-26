@@ -20,6 +20,7 @@ public class Window : UIBehaviour {
 	public WindowScrollRect scrollRect;
 
 	// Shown
+	[Tooltip("When resize is disabled you can fully remove the scroll rect and use a plain WindowContent")]
 	public bool allowResize = true;
 	[Min(30)] public float minWidth = 30;
 	[Min(15)] public float minHeight = 15;
@@ -55,6 +56,7 @@ public class Window : UIBehaviour {
 	}
 
 	public void FitSize(bool keepPosition = false) {
+		if (!allowResize) return;
 		content.LateUpdate();
 		var toolBarRect = (RectTransform)toolbar.transform;
 		var oldPos = toolBarRect.ScreenRect();
