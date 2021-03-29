@@ -196,6 +196,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      EmberSheet2_2: 1454289618606470609
+      EmberSheet2_0: 2967141030883162270
+      EmberSheet2_3: -5810978906690721725
+      EmberSheet2_1: 5329256760526943927
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
