@@ -21,7 +21,9 @@ namespace Muc.Components.Extended {
 			} else {
 				_instance = this as T;
 			}
+#if UNITY_EDITOR
 			base.OnValidate();
+#endif
 		}
 
 		new protected void Awake() {

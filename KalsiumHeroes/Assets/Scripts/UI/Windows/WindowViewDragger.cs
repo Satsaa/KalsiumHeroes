@@ -22,7 +22,9 @@ public class WindowViewDragger : ExtendedUIBehaviour, IPointerEnterHandler, IPoi
 	public bool exited = false;
 
 	new protected void Reset() {
+#if UNITY_EDITOR
 		base.Reset();
+#endif
 		window = GetComponentInParent<Window>();
 	}
 
