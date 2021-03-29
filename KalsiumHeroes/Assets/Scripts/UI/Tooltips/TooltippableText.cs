@@ -26,7 +26,8 @@ public class TooltippableText : TooltipProvider {
 	}
 
 	protected override void OnHover() {
-		var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, App.input.pointer, null);
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, App.input.pointer, canvasCam, out var pointer);
+		var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, App.input.pointer, canvasCam);
 		if (linkIndex >= 0) {
 			var linkInfo = text.textInfo.linkInfo[linkIndex];
 			var src = linkInfo.GetLinkID();
@@ -36,24 +37,19 @@ public class TooltippableText : TooltipProvider {
 				for (int i = linkInfo.linkTextfirstCharacterIndex; i <= linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength; i++) {
 					var charInfo = text.textInfo.characterInfo[i];
 					if (charInfo.isVisible) {
-						var l = charInfo.vertex_TL.position.x; rect.xMin = Mathf.Min(rect.xMin, l);
-						var t = charInfo.vertex_TL.position.y; rect.yMax = Mathf.Max(rect.yMax, t);
-						var r = charInfo.vertex_BR.position.x; rect.xMax = Mathf.Max(rect.xMax, r);
-						var b = charInfo.vertex_BR.position.y; rect.yMin = Mathf.Min(rect.yMin, b);
+						var l = charInfo.topLeft.x; rect.xMin = Mathf.Min(rect.xMin, l);
+						var t = charInfo.ascender; rect.yMax = Mathf.Max(rect.yMax, t);
+						var r = charInfo.topRight.x; rect.xMax = Mathf.Max(rect.xMax, r);
+						var b = charInfo.descender; rect.yMin = Mathf.Min(rect.yMin, b);
 					}
 				}
-				rect = rect.Scale(transform.lossyScale);
-				rect.center *= transform.lossyScale;
-				rect.center += transform.position.xy();
-				if (rect.Contains(App.input.pointer)) {
-					if (!App.input.primary || App.input.primaryDown) {
-						Tooltips.instance.Show(id, gameObject, rect);
-						if (App.input.primaryDown) {
-							Tooltips.instance.InvokeOnCreatorClicked(rect);
-						}
-					} else {
-						Tooltips.instance.Ping(id, gameObject, rect);
+				if (!App.input.primary || App.input.primaryDown) {
+					Tooltips.instance.Show(id, rectTransform, rect, canvasCam);
+					if (App.input.primaryDown) {
+						Tooltips.instance.InvokeOnCreatorClicked(rect);
 					}
+				} else {
+					Tooltips.instance.Ping(id, rectTransform, rect);
 				}
 			}
 		}

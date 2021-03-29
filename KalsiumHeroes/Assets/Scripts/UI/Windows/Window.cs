@@ -6,18 +6,17 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
 using UnityEngine.EventSystems;
+using Muc.Components.Extended;
 
-public class Window : UIBehaviour {
-
-	public RectTransform rectTransform => (RectTransform)transform;
+public class Window : ExtendedUIBehaviour {
 
 	public bool dragging { get; set; }
 
 	// Hidden
 	public WindowContent content;
-	public List<WindowResizer> resizers;
 	public WindowToolbar toolbar;
 	public WindowScrollRect scrollRect;
+	public List<WindowResizer> resizers;
 
 	// Shown
 	[Tooltip("When resize is disabled you can fully remove the scroll rect and use a plain WindowContent")]
@@ -36,9 +35,9 @@ public class Window : UIBehaviour {
 	new protected void Awake() {
 		base.Awake();
 		content = GetComponentInChildren<WindowContent>(true);
-		GetComponentsInChildren<WindowResizer>(true, resizers);
 		toolbar = GetComponentInChildren<WindowToolbar>(true);
 		scrollRect = GetComponentInChildren<WindowScrollRect>(true);
+		GetComponentsInChildren<WindowResizer>(true, resizers);
 	}
 
 	new protected void Start() {
@@ -58,17 +57,17 @@ public class Window : UIBehaviour {
 	public void FitSize(bool keepPosition = false) {
 		if (!allowResize) return;
 		content.LateUpdate();
-		var toolBarRect = (RectTransform)toolbar.transform;
-		var oldPos = toolBarRect.ScreenRect();
+		var toolBarRect = toolbar.rectTransform;
+		var oldRect = rectTransform.rect;
 		var rect = content.contentRect.rect;
 		rectTransform.sizeDelta = new Vector2(
 			rect.width,
 			rect.height + toolBarRect.rect.height
 		);
 		if (keepPosition) {
-			var newPos = toolBarRect.ScreenRect();
-			var diff = new Vector3(newPos.xMin, newPos.yMax) - new Vector3(oldPos.xMin, oldPos.yMax);
-			transform.Translate(-diff);
+			var newRect = rectTransform.rect;
+			var diff = new Vector3(oldRect.xMin, oldRect.yMax) - new Vector3(newRect.xMin, newRect.yMax);
+			transform.localPosition += diff;
 		}
 	}
 

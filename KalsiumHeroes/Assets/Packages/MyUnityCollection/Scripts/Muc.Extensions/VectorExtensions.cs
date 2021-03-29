@@ -98,6 +98,10 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 SetX(this V2 v, float value) => new V2(value, v.y);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 SetY(this V2 v, float value) => new V2(v.x, value);
 
+		// Add to component
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 AddX(this V2 v, float value) => new V2(v.x + value, v.y);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 AddY(this V2 v, float value) => new V2(v.x, v.y + value);
+
 
 		// Swizzling
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 xx(this V2 v) => new V2(v.x, v.x);
@@ -209,6 +213,11 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 SetX(this V3 v, float value) => new V3(value, v.y, v.z);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 SetY(this V3 v, float value) => new V3(v.x, value, v.z);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 SetZ(this V3 v, float value) => new V3(v.x, v.y, value);
+
+		// Add to component
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 AddX(this V3 v, float value) => new V3(v.x + value, v.y, v.z);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 AddY(this V3 v, float value) => new V3(v.x, v.y + value, v.z);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 AddZ(this V3 v, float value) => new V3(v.x, v.y, v.z + value);
 
 
 		// Swizzling
@@ -395,6 +404,12 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 SetY(this V4 v, float value) => new V4(v.x, value, v.z, v.w);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 SetZ(this V4 v, float value) => new V4(v.x, v.y, value, v.w);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 SetW(this V4 v, float value) => new V4(v.x, v.y, v.z, value);
+
+		// Add to component
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 AddX(this V4 v, float value) => new V4(v.x + value, v.y, v.z, v.w);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 AddY(this V4 v, float value) => new V4(v.x, v.y + value, v.z, v.w);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 AddZ(this V4 v, float value) => new V4(v.x, v.y, v.z + value, v.w);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 AddW(this V4 v, float value) => new V4(v.x, v.y, v.z, v.w + value);
 
 
 		// Swizzling
@@ -810,6 +825,10 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I SetX(this V2I v, int value) => new V2I(value, v.y);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I SetY(this V2I v, int value) => new V2I(v.x, value);
 
+		// Add to component
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I AddX(this V2I v, int value) => new V2I(v.x + value, v.y);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I AddY(this V2I v, int value) => new V2I(v.x, v.y + value);
+
 
 		// Swizzling
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I xx(this V2I v) => new V2I(v.x, v.x);
@@ -894,6 +913,11 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 SetX(this V3 v, int value) => new V3(value, v.y, v.z);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 SetY(this V3 v, int value) => new V3(v.x, value, v.z);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 SetZ(this V3 v, int value) => new V3(v.x, v.y, value);
+
+		// Add to component
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I AddX(this V3I v, int value) => new V3I(v.x + value, v.y, v.z);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I AddY(this V3I v, int value) => new V3I(v.x, v.y + value, v.z);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I AddZ(this V3I v, int value) => new V3I(v.x, v.y, v.z + value);
 
 
 		// Swizzling

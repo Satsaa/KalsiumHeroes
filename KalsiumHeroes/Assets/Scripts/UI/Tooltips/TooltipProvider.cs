@@ -7,10 +7,9 @@ using Object = UnityEngine.Object;
 using TMPro;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
+using Muc.Components.Extended;
 
-public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHandler {
-
-	public RectTransform rectTransform => transform as RectTransform;
+public class TooltipProvider : ExtendedUIBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
 	[field: SerializeField, HideInInspector]
 	public bool hovered { get; protected set; }
@@ -18,7 +17,9 @@ public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHa
 	[field: SerializeField]
 	public string id { get; protected set; } = "modifier_list";
 
-	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => hovered = true;
+	protected Camera canvasCam;
+
+	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) { hovered = true; canvasCam = eventData.enterEventCamera; }
 	void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => hovered = false;
 
 	protected void Update() {
@@ -29,12 +30,12 @@ public class TooltipProvider : UIBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	protected virtual void OnHover() {
 		if (!App.input.primary || App.input.primaryDown) {
-			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), InitializeTooltip);
+			Tooltips.instance.Show(id, rectTransform, rectTransform.rect, canvasCam, InitializeTooltip);
 			if (App.input.primaryDown) {
-				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.ScreenRect());
+				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.rect);
 			}
 		} else {
-			Tooltips.instance.Ping(id, gameObject, rectTransform.rect);
+			Tooltips.instance.Ping(id, rectTransform, rectTransform.rect);
 		}
 	}
 

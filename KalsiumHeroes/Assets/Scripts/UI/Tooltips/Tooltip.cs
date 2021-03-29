@@ -8,35 +8,65 @@ using Muc.Collections;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
 using UnityEngine.UI;
+using Muc.Components.Extended;
 
-public class Tooltip : MonoBehaviour {
+[RequireComponent(typeof(TooltipAnimator))]
+public class Tooltip : ExtendedUIBehaviour {
 
-	[SerializeField, Tooltip("The TooltipRoot used as the animation origin.")]
-	public TooltipRoot rootPrefab;
+	[SerializeField] bool windowizable = true;
+	[Tooltip("The Window prefab used for windowization. Leave empty for default defined by Tooltips.")]
+	[SerializeField] Window windowPrefab;
+	[Tooltip("List of objects to destroy if windowized.")]
+	[SerializeField] List<Object> destroyOnWindowize;
 
 	[HideInInspector] public int index;
 	[HideInInspector] public string id;
-	[HideInInspector] public TooltipRoot root;
-	[HideInInspector] public GameObject creator;
+	[HideInInspector] public RectTransform creator;
+	[HideInInspector] public bool windowized;
 
-	protected void OnDestroy() {
+	[SerializeField, HideInInspector] TooltipAnimator tooltipAnimator;
+
+	new protected void Awake() {
+		base.Awake();
+		tooltipAnimator = GetComponent<TooltipAnimator>();
+	}
+
+	new protected void OnDestroy() {
+		base.OnDestroy();
 		Tooltips.instance.RemoveListing(this);
 	}
 
 	/// <summary> This is called when the user clicks on the source of this Tooltip. </summary>
 	public virtual void OnCreatorClicked(Rect creatorRect) {
-
+		Windowize(windowPrefab);
 	}
 
 	/// <summary> This is called when the tooltip is shown by Tooltips. </summary>
 	public virtual void OnShow() {
-		root.Show();
+		tooltipAnimator.Show();
 	}
 
 	/// <summary> This is called when the tooltip is hidden by Tooltips. </summary>
 	public virtual void OnHide() {
-		if (root) root.Hide();
+		if (windowized) return;
+		tooltipAnimator.Hide();
 	}
+
+	protected virtual void Windowize(Window windowPrefab) {
+		if (!windowizable) return;
+		if (gameObject.GetComponentInParent<Window>()) return;
+		rectTransform.ShiftPivot(new Vector2(0.5f, 0.5f));
+		windowized = true;
+		tooltipAnimator.FinishAnims();
+		var window = Instantiate(windowPrefab ? windowPrefab : Tooltips.instance.defaultWindowPrefab, gameObject.transform.position, gameObject.transform.rotation, Windows.rectTransform);
+		Windows.MoveToTop(window.gameObject.transform);
+		transform.SetParent(window.content.contentParent);
+		foreach (var destroy in destroyOnWindowize) {
+			Destroy(destroy);
+		}
+		window.gameObject.transform.Translate(0, window.toolbar.rectTransform.sizeDelta.y * window.toolbar.rectTransform.lossyScale.y / 2, 0);
+	}
+
 }
 
 #if UNITY_EDITOR
@@ -64,8 +94,17 @@ namespace Editors {
 
 		SerializedProperty scriptProp;
 
+		SerializedProperty windowizable;
+		SerializedProperty windowPrefab;
+		SerializedProperty destroyOnWindowize;
+
 		void OnEnable() {
+
 			scriptProp = serializedObject.FindProperty(script);
+
+			windowizable = serializedObject.FindProperty(nameof(windowizable));
+			windowPrefab = serializedObject.FindProperty(nameof(windowPrefab));
+			destroyOnWindowize = serializedObject.FindProperty(nameof(destroyOnWindowize));
 
 			if (tooltipScripts == null) {
 				tooltipScripts = new List<MonoScript>();
@@ -105,7 +144,18 @@ namespace Editors {
 				return;
 			}
 
-			DrawDefaultInspector();
+			EditorGUILayout.PropertyField(windowizable);
+			if (windowizable.boolValue) {
+				EditorGUILayout.PropertyField(windowPrefab);
+				EditorGUILayout.PropertyField(destroyOnWindowize);
+			}
+
+			DrawPropertiesExcluding(serializedObject,
+				script,
+				windowizable.name,
+				windowPrefab.name,
+				destroyOnWindowize.name
+			);
 
 			serializedObject.ApplyModifiedProperties();
 		}

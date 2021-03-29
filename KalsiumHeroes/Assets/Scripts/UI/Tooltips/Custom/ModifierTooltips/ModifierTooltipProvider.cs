@@ -30,12 +30,12 @@ public class ModifierTooltipProvider : TooltipProvider {
 		};
 
 		if (!App.input.primary || App.input.primaryDown) {
-			Tooltips.instance.Show(id, gameObject, rectTransform.ScreenRect(), Initialize);
+			Tooltips.instance.Show(id, rectTransform, rectTransform.rect, canvasCam, Initialize);
 			if (App.input.primaryDown) {
-				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.ScreenRect());
+				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.rect);
 			}
 		} else {
-			Tooltips.instance.Ping(id, gameObject, rectTransform.rect);
+			Tooltips.instance.Ping(id, rectTransform, rectTransform.rect);
 		}
 	}
 

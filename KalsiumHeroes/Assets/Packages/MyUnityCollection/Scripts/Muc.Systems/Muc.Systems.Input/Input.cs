@@ -15,6 +15,9 @@ namespace Muc.Systems.Input {
 		public T value { get; protected set; }
 		public UnityEvent<T> onChange;
 
+		public void LogValue(T value) {
+			Debug.Log(value);
+		}
 	}
 
 	public abstract class Input : MonoBehaviour {
@@ -109,10 +112,6 @@ namespace Muc.Systems.Input {
 			}
 		}
 #endif
-
-		public void DebugEvent(string message) {
-			Debug.Log(message);
-		}
 
 	}
 

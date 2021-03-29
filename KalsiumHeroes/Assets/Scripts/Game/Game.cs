@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Muc.Components.Extended;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [DefaultExecutionOrder(-600)]

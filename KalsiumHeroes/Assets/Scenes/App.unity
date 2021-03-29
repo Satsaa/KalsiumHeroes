@@ -1010,11 +1010,11 @@ MonoBehaviour:
     <used>k__BackingField: 0
     _paused: 1
     pauseTime: 0
-  defaultRootPrefab: {fileID: 2358715483377159109, guid: a3cb85849b888ab47a95a817fc3059cd, type: 3}
+  defaultWindowPrefab: {fileID: 7719059669241410485, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
   tooltips:
     list:
     - Key: modifier_info
-      Value: {fileID: -1094310721017016063, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
+      Value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
     - Key: ability_info
       Value: {fileID: 1237913112116532911, guid: 978252da3c2c83e4ea63454965dbca82, type: 3}
     - Key: passive_info
@@ -1026,7 +1026,7 @@ MonoBehaviour:
     - Key: modifier_list
       Value: {fileID: 3452182197045286548, guid: 4e6fff0ef02c2294aa9e8a58d61d6f7b, type: 3}
     - Key: blue
-      Value: {fileID: 6605500486688000628, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
+      Value: {fileID: -330549700562887290, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
     - Key: red
       Value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
     keyCollision: 0
@@ -1521,7 +1521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1949976547
 RectTransform:
   m_ObjectHideFlags: 0

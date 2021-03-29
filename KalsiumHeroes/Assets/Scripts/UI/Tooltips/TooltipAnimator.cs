@@ -10,12 +10,11 @@ using Muc.Extensions;
 using Muc.Time;
 
 [RequireComponent(typeof(CanvasGroup))]
-
-public class TooltipRoot : MonoBehaviour {
+public class TooltipAnimator : MonoBehaviour {
 
 	[SerializeField] float duration = 0.25f;
-	[SerializeField] AnimationCurve scaleCurve;
-	[SerializeField] AnimationCurve alphaCurve;
+	[SerializeField] AnimationCurve scaleCurve = new AnimationCurve(new Keyframe(0, 0.75f, 0, 0.6f), new Keyframe(1, 1));
+	[SerializeField] AnimationCurve alphaCurve = new AnimationCurve(new Keyframe(0, 0.00f, 0, 2.0f), new Keyframe(1, 1));
 
 	[HideInInspector, SerializeField] float t = 0f;
 	[HideInInspector, SerializeField] int sign = 0;
@@ -30,7 +29,7 @@ public class TooltipRoot : MonoBehaviour {
 		UpdateAnim();
 	}
 
-	protected void UpdateAnim() {
+	protected virtual void UpdateAnim() {
 		if (t < 0 || t > 1) {
 			sign = 0;
 			enabled = false;

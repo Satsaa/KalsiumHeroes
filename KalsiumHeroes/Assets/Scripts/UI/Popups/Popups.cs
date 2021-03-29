@@ -1,19 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Muc.Data;
-using UnityEngine.UI;
-using System;
-using TMPro;
 using Object = UnityEngine.Object;
 using System.Linq;
+using Muc.Components.Extended;
 
 [RequireComponent(typeof(RectTransform))]
-public class Popups : Singleton<Popups> {
-
-	public static RectTransform rectTransform => instance.transform as RectTransform;
+public class Popups : UISingleton<Popups> {
 
 	[field: SerializeField, Tooltip("Used as the default popup.")]
 	public PopupPreset defaultPopup { get; private set; }

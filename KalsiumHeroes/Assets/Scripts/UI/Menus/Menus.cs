@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Muc.Components.Extended;
 using Object = UnityEngine.Object;
 
 public class Menus : Singleton<Menus> {

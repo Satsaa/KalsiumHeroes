@@ -90,11 +90,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9c1258acb3a2542bbf4be583e4c870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootPrefab: {fileID: 0}
+  windowizable: 1
+  windowPrefab: {fileID: 0}
+  destroyOnWindowize:
+  - {fileID: 7802256927280855918}
   index: 0
   id: 
-  root: {fileID: 0}
   creator: {fileID: 0}
+  windowized: 0
+  tooltipAnimator: {fileID: 0}
   iconPrefab: {fileID: 1128934655608635944, guid: 57c7b4eebde6e9d48a39a83cfaf49725, type: 3}
 --- !u!114 &2842074712910038126
 MonoBehaviour:

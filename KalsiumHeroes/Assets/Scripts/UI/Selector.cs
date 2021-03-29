@@ -12,16 +12,16 @@ public class Selector : UIBehaviour {
 
 	public RectTransform rectTransform => (RectTransform)transform;
 
-	[SerializeField] Animator animator;
-	[SerializeField] Image image;
+	[SerializeField, HideInInspector] Animator animator;
+	[SerializeField, HideInInspector] Image image;
 
 	private GameObject prevSelected;
 	private bool prevSelectedWasNull;
 
 	new protected void Awake() {
 		base.Awake();
-		if (!animator) Debug.Assert(animator = GetComponent<Animator>());
-		if (!image) Debug.Assert(image = GetComponent<Image>());
+		animator = GetComponent<Animator>();
+		image = GetComponent<Image>();
 		UpdateVars();
 	}
 
@@ -34,9 +34,8 @@ public class Selector : UIBehaviour {
 				animator.Play("Select", -1, 0);
 			}
 			if (eventSystem.currentSelectedGameObject.TryGetComponent<RectTransform>(out var rt)) {
-				var screenRect = rt.ScreenRect();
-				rectTransform.position = screenRect.center;
-				rectTransform.sizeDelta = screenRect.size;
+				rectTransform.position = rt.position;
+				rectTransform.sizeDelta = rt.sizeDelta;
 				rectTransform.localScale = rt.lossyScale;
 				rectTransform.rotation = rt.rotation;
 				if (eventSystem.currentSelectedGameObject.TryGetComponent<Image>(out var img)) {
@@ -63,6 +62,7 @@ public class Selector : UIBehaviour {
 	protected void UpdateVars() {
 		image.material.SetVector("Size", rectTransform.sizeDelta);
 		image.material.SetVector("Position", rectTransform.localPosition);
-		image.material.SetVector("Scale", rectTransform.lossyScale);
+		// Incorrect for now
+		//image.material.SetVector("Scale", rectTransform.lossyScale);
 	}
 }

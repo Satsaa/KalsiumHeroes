@@ -6,8 +6,9 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
 using UnityEngine.EventSystems;
+using Muc.Components.Extended;
 
-public class WindowResizer : UIBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler {
+public class WindowResizer : ExtendedUIBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler {
 
 	[Tooltip("The resize direction.")]
 	[SerializeField] Window.Edge directions;
@@ -23,8 +24,8 @@ public class WindowResizer : UIBehaviour, IPointerEnterHandler, IPointerExitHand
 	[field: SerializeField, HideInInspector] public bool dragging { get; protected set; }
 	[field: SerializeField, HideInInspector] public bool exited { get; protected set; }
 
-	Vector2 startPointer;
-	Vector2 relativePointer => App.input.pointer - transform.position.xy();
+	Vector2 lastPointer;
+	Camera canvasCam;
 
 	new protected void Awake() {
 		base.Awake();
@@ -33,8 +34,9 @@ public class WindowResizer : UIBehaviour, IPointerEnterHandler, IPointerExitHand
 
 	public void LateUpdate() {
 		if (dragging && window.allowResize) {
-			var diff = relativePointer - startPointer;
-			diff /= window.rectTransform.lossyScale;
+			RectTransformUtility.ScreenPointToLocalPointInRectangle(Windows.rectTransform, App.input.pointer, canvasCam, out var pointer);
+			var diff = pointer - lastPointer;
+			lastPointer = pointer;
 			var scrollRectRectRect = window.scrollRect.rectTransform.rect;
 			if (directions.HasFlag(Window.Edge.Left)) {
 				float value = Mathf.Min(diff.x, scrollRectRectRect.width - window.minWidth);
@@ -83,7 +85,8 @@ public class WindowResizer : UIBehaviour, IPointerEnterHandler, IPointerExitHand
 	void IPointerDownHandler.OnPointerDown(PointerEventData eventData) {
 		if (window.allowResize) {
 			window.dragging = dragging = true;
-			startPointer = relativePointer;
+			canvasCam = eventData.pressEventCamera;
+			RectTransformUtility.ScreenPointToLocalPointInRectangle(Windows.rectTransform, App.input.pointer, canvasCam, out lastPointer);
 		}
 
 	}

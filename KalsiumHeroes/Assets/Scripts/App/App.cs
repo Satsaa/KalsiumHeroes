@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using static ClientEvents;
+using Muc.Components.Extended;
 
 [DefaultExecutionOrder(-900)]
 [RequireComponent(typeof(Library))]

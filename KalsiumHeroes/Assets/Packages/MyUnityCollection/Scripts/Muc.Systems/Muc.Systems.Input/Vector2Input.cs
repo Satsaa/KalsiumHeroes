@@ -27,6 +27,7 @@ namespace Muc.Systems.Input {
 		internal override bool IsControlSupported(InputControl control) {
 			return control is Vector2Control;
 		}
+
 	}
 
 }

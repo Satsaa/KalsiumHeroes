@@ -6,10 +6,9 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
 using UnityEngine.EventSystems;
+using Muc.Components.Extended;
 
-public class WindowViewDragger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler {
-
-	public RectTransform rectTransform => (RectTransform)transform;
+public class WindowViewDragger : ExtendedUIBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler {
 
 	public Window window;
 
@@ -22,12 +21,14 @@ public class WindowViewDragger : MonoBehaviour, IPointerEnterHandler, IPointerEx
 	bool dragging = false;
 	public bool exited = false;
 
-	void Reset() {
+	new protected void Reset() {
+		base.Reset();
 		window = GetComponentInParent<Window>();
 	}
 
-	void Start() {
-		window.transform.SetParent(Windows.transform);
+	new protected void Start() {
+		base.Start();
+		window.transform.SetParent(Windows.rectTransform);
 	}
 
 

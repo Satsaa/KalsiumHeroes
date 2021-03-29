@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 1627508102906763617}
   - component: {fileID: 1118775663302067727}
   - component: {fileID: 7802256927280855918}
-  - component: {fileID: 6605500486688000628}
+  - component: {fileID: -4108909189832793666}
+  - component: {fileID: -5118234833883391833}
+  - component: {fileID: -330549700562887290}
   m_Layer: 5
   m_Name: Blue
   m_TagString: Untagged
@@ -77,7 +79,83 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6605500486688000628
+--- !u!225 &-4108909189832793666
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86985814031637562}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &-5118234833883391833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86985814031637562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f05fc3db9d0ee1d479ac33f424c7691c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.25
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.75
+      inSlope: 0
+      outSlope: 0.6
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  alphaCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  t: 0
+  sign: 0
+  group: {fileID: 0}
+--- !u!114 &-330549700562887290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,11 +167,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d68aa43c69f9b4b9695555cfbf4982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootPrefab: {fileID: 0}
+  windowizable: 1
+  windowPrefab: {fileID: 0}
+  destroyOnWindowize:
+  - {fileID: 7802256927280855918}
   index: 0
   id: 
-  root: {fileID: 0}
   creator: {fileID: 0}
+  windowized: 0
+  tooltipAnimator: {fileID: 0}
 --- !u!1 &653253492248676262
 GameObject:
   m_ObjectHideFlags: 0

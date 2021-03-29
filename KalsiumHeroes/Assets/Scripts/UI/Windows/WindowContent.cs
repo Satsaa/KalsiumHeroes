@@ -8,13 +8,12 @@ using Muc.Extensions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+using Muc.Components.Extended;
 
 [ExecuteAlways]
 [DefaultExecutionOrder(-1000)]
 [RequireComponent(typeof(RectTransform))]
-public class WindowContent : UIBehaviour {
-
-	public RectTransform rectTransform => (RectTransform)transform;
+public class WindowContent : ExtendedUIBehaviour {
 
 	public Window window;
 

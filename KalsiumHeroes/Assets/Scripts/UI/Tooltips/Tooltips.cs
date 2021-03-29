@@ -8,14 +8,15 @@ using Muc.Collections;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
 using Muc.Time;
+using Muc.Components.Extended;
 
 [DefaultExecutionOrder(-1)]
-public class Tooltips : Singleton<Tooltips> {
+public class Tooltips : UISingleton<Tooltips> {
 
 	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
 	[SerializeField] Timeout showDelay = new Timeout(0.5f, true);
 	[SerializeField] Timeout quickSwitchDelay = new Timeout(0.1f, true);
-	[SerializeField] public TooltipRoot defaultRootPrefab;
+	[SerializeField] public Window defaultWindowPrefab;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
 
 	[SerializeField, HideInInspector]
@@ -75,14 +76,21 @@ public class Tooltips : Singleton<Tooltips> {
 		return popped;
 	}
 
-	public void InvokeOnCreatorClicked(Rect creatorRect) {
+	//TODO: Only works for top tooltip
+	public void InvokeOnCreatorClicked(Rect innerRect) {
 		if (!tts.Any()) return;
 		var top = tts.Last();
-		if (top) top.OnCreatorClicked(creatorRect);
+		if (top) top.OnCreatorClicked(innerRect);
 	}
 
-	public bool Ping(string id, GameObject creator, Rect creatorRect) {
-		GetTooltipPrefab(id);
+	/// <summary>
+	/// Pings a Tooltip so it doesn't get automatically hidden.
+	/// </summary>
+	/// <param name="id">Identifier of the Tooltip. Identifiers are listed in the tooltips list.</param>
+	/// <param name="creator">The RectTransform of the UI object that is creating the Tooltip.</param>
+	/// <param name="innerRect">A Rect in the space of <b>creator</b> that represents an area where the Tooltip is created from.</param>
+	/// <returns>True if the ping succeeds.</returns>
+	public bool Ping(string id, RectTransform creator, Rect innerRect) {
 		lastPing = id;
 		lastPingFrame = Time.frameCount;
 		if (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id) {
@@ -98,11 +106,35 @@ public class Tooltips : Singleton<Tooltips> {
 		return false;
 	}
 
-	public bool Show(string id, GameObject creator, Rect creatorRect, Action<Tooltip> initializer = null) {
-		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMin, creatorRect.yMin, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMin, creatorRect.yMax, 0), Color.red);
-		Debug.DrawLine(new Vector3(creatorRect.xMax, creatorRect.yMax, 0), new Vector3(creatorRect.xMax, creatorRect.yMin, 0), Color.red);
+	/// <summary>
+	/// Shows a Tooltip after called in update for a sufficient duration and other checks pass.
+	/// </summary>
+	/// <param name="id">Identifier of the Tooltip. Identifiers are listed in the tooltips list.</param>
+	/// <param name="creator">The RectTransform of the UI object that is creating the Tooltip.</param>
+	/// <param name="innerRect">A Rect in the space of <b>creator</b> that represents an area where the Tooltip is created from. Use RectTransform.rect to use the whole object.</param>
+	/// <param name="canvasCamera">Camera of the associated Canvas, if any.</param>
+	/// <param name="initializer">Optional intializer function ran before layouting.</param>
+	/// <returns>True when the specific Tooltip was shown.</returns>
+	public bool Show(string id, RectTransform creator, Rect innerRect, Camera canvasCamera, Action<Tooltip> initializer = null) {
+
+		var creatorCenter = creator.transform.TransformPoint(innerRect.center);
+		var creatorMin = creator.transform.TransformPoint(innerRect.min);
+		var creatorMax = creator.transform.TransformPoint(innerRect.max);
+		var creatorTop = creator.transform.TransformPoint(innerRect.center + new Vector2(0, innerRect.height / 2));
+		var creatorBot = creator.transform.TransformPoint(innerRect.center + new Vector2(0, -innerRect.height / 2));
+
+#if UNITY_EDITOR
+		{ // Draw a rectangle around the innerRect
+			var creatorXMinYMax = creator.transform.TransformPoint(new Vector2(innerRect.xMin, innerRect.yMax));
+			var creatorXMaxYMin = creator.transform.TransformPoint(new Vector2(innerRect.xMax, innerRect.yMin));
+
+			Debug.DrawLine(creatorMin, creatorXMinYMax, Color.blue);
+			Debug.DrawLine(creatorMin, creatorXMaxYMin, Color.blue);
+			Debug.DrawLine(creatorMax, creatorXMinYMax, Color.blue);
+			Debug.DrawLine(creatorMax, creatorXMaxYMin, Color.blue);
+		}
+#endif
+
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
 		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id)) {
 			// Quick switching
@@ -129,7 +161,7 @@ public class Tooltips : Singleton<Tooltips> {
 				}
 				showDelay.Reset(true);
 			} else {
-				Ping(id, creator, creatorRect);
+				Ping(id, creator, innerRect);
 				return false;
 			}
 		} else {
@@ -138,19 +170,15 @@ public class Tooltips : Singleton<Tooltips> {
 			if (showDelay.expired) {
 				showDelay.Reset(true);
 			} else {
-				Ping(id, creator, creatorRect);
+				Ping(id, creator, innerRect);
 				return false;
 			}
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var rootPrefab = GetTooltipPrefab(id).rootPrefab;
-		if (rootPrefab == null) rootPrefab = defaultRootPrefab;
-		var root = Instantiate(rootPrefab, creatorRect.center, Quaternion.identity, transform);
-		var tt = Instantiate(GetTooltipPrefab(id), root.transform);
+		var tt = Instantiate(tooltips[id], transform);
 		tt.id = id;
 		tt.index = tts.Count;
-		tt.root = root;
 		tt.creator = creator;
 		tts.Add(tt);
 		var rt = (RectTransform)tt.transform;
@@ -161,18 +189,16 @@ public class Tooltips : Singleton<Tooltips> {
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
-		rt.position = new Vector3(creatorRect.center.x, creatorRect.yMax + rt.pivot.y * rt.rect.height * rt.lossyScale.y);
-		var screenRect = rt.ScreenRect();
-		if (screenRect.yMax > Screen.height) { // Clips screen top?
-			var bx = creatorRect.center.x;
-			var by = creatorRect.yMin - (1 - rt.pivot.y) * screenRect.height;
-			root.transform.Translate(0, creatorRect.height / -2f, 0);
-			rt.position = rt.position.SetX(bx).SetY(by);
-		} else {
-			var ws = rt.position;
-			root.transform.Translate(0, creatorRect.height / 2f, 0);
-			rt.position = ws;
+
+		rt.position = creatorTop;
+		rt.pivot = rt.pivot.SetY(0);
+
+		var topScreenPos = RectTransformUtility.WorldToScreenPoint(canvasCamera, rt.TransformPoint(rt.rect.max)).y;
+		if (topScreenPos > Screen.height) {
+			rt.position = creatorBot;
+			rt.pivot = rt.pivot.SetY(1);
 		}
+
 		tt.OnShow();
 		return true;
 	}
@@ -184,7 +210,7 @@ public class Tooltips : Singleton<Tooltips> {
 				var parent = hovered.transform;
 				var top = tts.Last();
 				while (parent != null) {
-					if (parent == top.root.transform) {
+					if (parent == top.transform) {
 						return true;
 					}
 					parent = parent.parent;
@@ -207,10 +233,6 @@ public class Tooltips : Singleton<Tooltips> {
 		}
 		tooltip = default;
 		return false;
-	}
-
-	private Tooltip GetTooltipPrefab(string id) {
-		return tooltips[id];
 	}
 
 }

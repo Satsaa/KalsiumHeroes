@@ -7,15 +7,14 @@ using Object = UnityEngine.Object;
 using Muc.Collections;
 using UnityEngine.EventSystems;
 using Muc.Extensions;
+using Muc.Components.Extended;
 
-public class Windows : Singleton<Windows> {
-
-	public new static Transform transform => instance.gameObject.transform;
+public class Windows : UISingleton<Windows> {
 
 	public float doubleClickTime = 0.5f;
 
 	public static void MoveToTop(Transform transform) {
-		transform.SetParent(Windows.transform);
+		transform.SetParent(Windows.rectTransform);
 		transform.SetAsLastSibling();
 	}
 

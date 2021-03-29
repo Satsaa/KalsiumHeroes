@@ -6,31 +6,36 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
 using UnityEngine.EventSystems;
+using Muc.Components.Extended;
 
-public class WindowToolbar : UIBehaviour, IPointerDownHandler, IPointerUpHandler {
-
-	public RectTransform rectTransform => (RectTransform)transform;
+public class WindowToolbar : ExtendedUIBehaviour, IPointerDownHandler, IPointerUpHandler {
 
 	[SerializeField, HideInInspector] Window window;
-	Vector2 lastMousePos;
+	Vector2 lastPointer;
 	bool dragging = false;
 	float lastClick = float.NegativeInfinity;
+	protected Camera canvasCam;
+
 
 	new protected void Awake() {
 		base.Awake();
 		window = GetComponentInParent<Window>();
-		window.transform.SetParent(Windows.transform);
+		window.transform.SetParent(Windows.rectTransform);
 	}
 
 	public void Update() {
 		if (dragging) {
-			var diff = App.input.pointer - lastMousePos;
+			Debug.Assert(RectTransformUtility.ScreenPointToLocalPointInRectangle(Windows.rectTransform, App.input.pointer, canvasCam, out var pointer));
+			var diff = pointer - lastPointer;
+			diff *= window.rectTransform.lossyScale;
 			window.transform.Translate(diff);
-			lastMousePos = App.input.pointer;
+			lastPointer = pointer;
 		}
 	}
 
 	void IPointerDownHandler.OnPointerDown(PointerEventData eventData) {
+		canvasCam = eventData.pressEventCamera;
+
 		switch (eventData.button) {
 
 			case PointerEventData.InputButton.Middle:
@@ -43,8 +48,8 @@ public class WindowToolbar : UIBehaviour, IPointerDownHandler, IPointerUpHandler
 						window.FitSize(true);
 					}
 					window.dragging = dragging = true;
-					lastMousePos = eventData.position;
 					lastClick = Time.time;
+					Debug.Assert(RectTransformUtility.ScreenPointToLocalPointInRectangle(Windows.rectTransform, App.input.pointer, canvasCam, out lastPointer));
 				}
 				break;
 		}
