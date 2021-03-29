@@ -30,14 +30,26 @@ namespace Muc.Systems.RenderImages {
 			if (Application.isPlaying) {
 				rt = null;
 				renderObject = null;
+				CreateRenderObject();
+				RefreshTexture();
 			}
 		}
 
 		protected override void Start() {
 			base.Start();
+		}
+
+		protected override void OnEnable() {
+			base.OnEnable();
 			if (Application.isPlaying) {
-				CreateRenderObject();
-				RefreshTexture();
+				if (renderObject) renderObject.gameObject.SetActive(true);
+			}
+		}
+
+		protected override void OnDisable() {
+			base.OnDisable();
+			if (Application.isPlaying) {
+				if (renderObject) renderObject.gameObject.SetActive(false);
 			}
 		}
 
