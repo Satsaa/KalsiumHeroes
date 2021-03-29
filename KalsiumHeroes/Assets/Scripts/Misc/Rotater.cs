@@ -37,6 +37,6 @@ public class Rotater : MonoBehaviour {
 		var rng = (rng1 + rng2 + rng3 + rng4 + rng5 + rng6 + rng7 + rng8 + rng9 + rng10) / 10;
 		rotation += rng * Time.deltaTime;
 		rotation = rotation.Clamp(-maxRotation, maxRotation);
-		transform.Rotate(rotation.Pow(1) * Time.deltaTime);
+		transform.Rotate(rotation * Time.deltaTime);
 	}
 }
