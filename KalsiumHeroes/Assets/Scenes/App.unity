@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.22380304, g: 0.24376729, b: 0.26534945, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -150,7 +150,7 @@ RectTransform:
   m_GameObject: {fileID: 90773060}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.83981484, y: 0.83981484, z: 0.83981484}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -294,7 +294,7 @@ RectTransform:
   - {fileID: 1264278286}
   - {fileID: 484434428}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -542,6 +542,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3089604120248157942, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 63
+      objectReference: {fileID: 0}
     - target: {fileID: 3089604120248157943, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -592,6 +596,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5d728cae59df4340810e1d047e8af26, type: 3}
+--- !u!1 &753050694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 753050695}
+  - component: {fileID: 753050696}
+  m_Layer: 5
+  m_Name: RenderObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &753050695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753050694}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1000, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &753050696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753050694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcef991c0a6d934d8d0360633d8bc3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 2500
+  steps: 1
+  dir: 0
+  dirI: 0
+  pos: {x: 0, y: 0}
 --- !u!1 &908611261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,7 +1201,7 @@ MonoBehaviour:
   _gameModes:
   - {fileID: 11400000, guid: 674cc85c201bc894781f3228627c8fa4, type: 2}
   initDisplay: {fileID: 1946788572}
-  defaultMenu: {fileID: 8817570415106419547, guid: 54c68561acc680a4398699c966319e60, type: 3}
+  defaultMenu: {fileID: 3297345020336114265, guid: 0b3ec27671243864780138946eb9a700, type: 3}
   gameScene:
     sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
     _scenePath: Assets/Scenes/Game.unity
@@ -1516,12 +1568,12 @@ GameObject:
   - component: {fileID: 1949976549}
   - component: {fileID: 1949976548}
   m_Layer: 5
-  m_Name: Red
+  m_Name: TooltipTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1949976547
 RectTransform:
   m_ObjectHideFlags: 0
