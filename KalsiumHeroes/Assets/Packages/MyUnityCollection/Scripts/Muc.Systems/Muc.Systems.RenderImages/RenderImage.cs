@@ -19,8 +19,18 @@ namespace Muc.Systems.RenderImages {
 	public class RenderImage : RawImage {
 
 		[SerializeField] internal RenderObject renderPrefab;
+
+		[SerializeField, Range(0, 1)] internal float renderScale = 1;
+		[SerializeField] internal bool useScale = false;
+
+		[SerializeField] internal Antialiasing antialiasing = Antialiasing.None;
 		[SerializeField] internal RenderTextureFormat format = RenderTextureFormat.ARGB32;
-		[SerializeField] internal int debthBits = 16;
+		[SerializeField] internal DebthBits debthBits = DebthBits.Bits24Stencil;
+		[SerializeField] internal bool enableMipMaps = false;
+		[SerializeField] internal bool autoGenerateMips = false;
+		[SerializeField] internal bool dynamicScaling = false;
+		[SerializeField] internal FilterMode filterMode = FilterMode.Point;
+		[SerializeField, Range(0, 16)] internal int anisoLevel = 0;
 
 		[SerializeField] internal RenderTexture rt;
 		[SerializeField] internal RenderObject renderObject;
@@ -31,7 +41,7 @@ namespace Muc.Systems.RenderImages {
 				rt = null;
 				renderObject = null;
 				CreateRenderObject();
-				RefreshTexture();
+				RefreshValues();
 			}
 		}
 
@@ -69,7 +79,7 @@ namespace Muc.Systems.RenderImages {
 		protected override void OnRectTransformDimensionsChange() {
 			base.OnRectTransformDimensionsChange();
 			if (rt == null) return;
-			RefreshTexture();
+			RefreshValues();
 		}
 
 
@@ -79,22 +89,60 @@ namespace Muc.Systems.RenderImages {
 			RenderObjects.instance.AddObject(renderObject);
 		}
 
-		protected virtual void RefreshTexture() {
+		protected internal void RefreshValues() {
 			if (!Application.isPlaying) return;
-			var doRefresh = false;
 
-			var resolution = (rectTransform.rect.size * rectTransform.lossyScale).FloorInt();
-			if (!rt || resolution != rt.texelSize) doRefresh = true;
+			var resolution = (rectTransform.rect.size * rectTransform.lossyScale).Mul(renderScale).Abs().RoundInt().Max(1);
 
-			if (doRefresh) {
-				if (rt) rt.Release();
-				rt = new RenderTexture(resolution.x, resolution.y, debthBits, format);
-				texture = rt;
-				if (renderObject != null) {
-					renderObject.camera.targetTexture = rt;
-					renderObject.rendered = false;
-				}
+			if (!rt) RecreateTexture();
+			else if (resolution != rt.texelSize) RecreateTexture();
+			else if (rt.useMipMap != enableMipMaps) RecreateTexture();
+			else if (rt.autoGenerateMips != (autoGenerateMips && enableMipMaps)) RecreateTexture();
+			else if (rt.antiAliasing != (int)antialiasing) RecreateTexture();
+			else if (rt.useDynamicScale != dynamicScaling) RecreateTexture();
+			else {
+				rt.filterMode = filterMode;
+				rt.anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0;
 			}
+		}
+
+		protected internal void RecreateTexture() {
+			if (!Application.isPlaying) return;
+
+			var resolution = (rectTransform.rect.size * rectTransform.lossyScale).Mul(renderScale).Abs().RoundInt().Max(1);
+
+			var descriptor = new RenderTextureDescriptor(resolution.x, resolution.y, format, (int)debthBits);
+			descriptor.useMipMap = enableMipMaps;
+			descriptor.autoGenerateMips = autoGenerateMips && enableMipMaps;
+			descriptor.msaaSamples = (int)antialiasing;
+			descriptor.useDynamicScale = dynamicScaling;
+
+			if (rt) rt.Release();
+			texture = rt = new RenderTexture(descriptor);
+			rt.name = $"{name} ({resolution.x}x{resolution.y})";
+
+			rt.filterMode = filterMode;
+			rt.anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0;
+
+			if (renderObject != null) {
+				renderObject.camera.targetTexture = rt;
+				renderObject.OnTextureChange();
+			}
+		}
+
+
+		internal enum DebthBits {
+			None = 0,
+			Bits16 = 16,
+			Bits24Stencil = 24,
+			Bits32Stencil = 32
+		}
+
+		internal enum Antialiasing {
+			None = 1,
+			AA2 = 2,
+			AA4 = 4,
+			AA8 = 8
 		}
 
 	}
@@ -121,21 +169,59 @@ namespace Muc.Systems.RenderImages {
 		RenderImage t => (RenderImage)target;
 
 		SerializedProperty renderPrefab;
+		SerializedProperty renderScale;
+		SerializedProperty useScale;
+		SerializedProperty antialiasing;
+		SerializedProperty format;
+		SerializedProperty debthBits;
+		SerializedProperty enableMipMaps;
+		SerializedProperty autoGenerateMips;
+		SerializedProperty dynamicScaling;
+		SerializedProperty filterMode;
+		SerializedProperty anisoLevel;
 
 		protected override void OnEnable() {
 			base.OnEnable();
 			renderPrefab = serializedObject.FindProperty(nameof(RenderImage.renderPrefab));
+			renderScale = serializedObject.FindProperty(nameof(RenderImage.renderScale));
+			useScale = serializedObject.FindProperty(nameof(RenderImage.useScale));
+			antialiasing = serializedObject.FindProperty(nameof(RenderImage.antialiasing));
+			format = serializedObject.FindProperty(nameof(RenderImage.format));
+			debthBits = serializedObject.FindProperty(nameof(RenderImage.debthBits));
+			enableMipMaps = serializedObject.FindProperty(nameof(RenderImage.enableMipMaps));
+			autoGenerateMips = serializedObject.FindProperty(nameof(RenderImage.autoGenerateMips));
+			dynamicScaling = serializedObject.FindProperty(nameof(RenderImage.dynamicScaling));
+			filterMode = serializedObject.FindProperty(nameof(RenderImage.filterMode));
+			anisoLevel = serializedObject.FindProperty(nameof(RenderImage.anisoLevel));
 		}
 
 		public override void OnInspectorGUI() {
 			base.OnInspectorGUI();
 			serializedObject.Update();
 
+			using (DisabledScope(Application.isPlaying)) EditorGUILayout.PropertyField(renderPrefab);
+
 			EditorGUILayout.Space();
 
-			EditorGUILayout.PropertyField(renderPrefab);
+			EditorGUI.BeginChangeCheck();
+
+			EditorGUILayout.PropertyField(renderScale);
+			EditorGUILayout.PropertyField(useScale);
+			EditorGUILayout.PropertyField(antialiasing);
+			EditorGUILayout.PropertyField(format);
+			EditorGUILayout.PropertyField(debthBits);
+			EditorGUILayout.PropertyField(enableMipMaps);
+			using (DisabledScope(!enableMipMaps.boolValue)) EditorGUILayout.PropertyField(autoGenerateMips);
+			EditorGUILayout.PropertyField(dynamicScaling);
+			EditorGUILayout.PropertyField(filterMode);
+			using (DisabledScope(debthBits.intValue != 0)) EditorGUILayout.PropertyField(anisoLevel);
 
 			serializedObject.ApplyModifiedProperties();
+			if (EditorGUI.EndChangeCheck()) {
+				foreach (RenderImage target in targets) {
+					target.RefreshValues();
+				}
+			}
 		}
 	}
 }

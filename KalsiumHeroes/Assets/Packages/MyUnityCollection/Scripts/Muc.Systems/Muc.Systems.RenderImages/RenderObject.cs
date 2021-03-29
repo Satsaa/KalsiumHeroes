@@ -1,7 +1,7 @@
 
 
 namespace Muc.Systems.RenderImages {
-
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
@@ -19,9 +19,17 @@ namespace Muc.Systems.RenderImages {
 	[RequireComponent(typeof(Camera))]
 	public class RenderObject : MonoBehaviour {
 
-		[SerializeField] protected UpdateMode updateMode = UpdateMode.Initialize;
 		[SerializeField] protected Transform renderRoot;
-		[HideInInspector] public bool rendered = false;
+
+		[SerializeField] private UpdateMode _updateMode = UpdateMode.Initialize;
+		protected UpdateMode updateMode {
+			get => _updateMode;
+			set {
+				if (_updateMode == value) return;
+				_updateMode = value;
+				camera.enabled = _updateMode == UpdateMode.Always;
+			}
+		}
 
 		private Camera _camera;
 		new public Camera camera {
@@ -32,25 +40,23 @@ namespace Muc.Systems.RenderImages {
 		}
 
 		protected void Awake() {
-			camera.enabled = false;
+			camera.enabled = updateMode == UpdateMode.Always;
 			Debug.Assert(renderRoot, this);
+		}
+
+		protected void Start() {
+			if (updateMode == UpdateMode.Initialize) {
+				camera.Render();
+			}
 		}
 
 		protected void OnDestroy() {
 			Destroy(gameObject);
 		}
 
-		protected void LateUpdate() {
-			switch (updateMode) {
-				case UpdateMode.Initialize:
-					if (!rendered) {
-						rendered = true;
-						camera.Render();
-					}
-					break;
-				case UpdateMode.Always:
-					camera.Render();
-					break;
+		public void OnTextureChange() {
+			if (updateMode == UpdateMode.Initialize) {
+				camera.Render();
 			}
 		}
 
@@ -60,6 +66,7 @@ namespace Muc.Systems.RenderImages {
 			[Tooltip("While never means never it does not mean you cannot manually call Render().")]
 			Never,
 		}
+
 	}
 
 }

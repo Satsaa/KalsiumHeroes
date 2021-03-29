@@ -28,9 +28,7 @@ namespace Muc.Extensions {
 
 		// Util
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V2 v, V2 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V2 v, V2I smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray2D RayTo(this V2 v, V2 vector) => new Ray2D(v, (vector - v).normalized);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray2D RayTo(this V2 v, V2I vector) => new Ray2D(v, (vector - v).normalized);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 x0y(this V2 v) => new V3(v.x, 0, v.y);
 
 
@@ -61,8 +59,26 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Sqrt(this V2 v) => new V2(Mathf.Sqrt(v.x), Mathf.Sqrt(v.y));
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Atan2(this V2 v, float b) => new V2(Mathf.Atan2(v.x, b), Mathf.Atan2(v.y, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Atan2(this V2 v, V2 b) => new V2(Mathf.Atan2(v.x, b.x), Mathf.Atan2(v.y, b.y));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Clamp(this V2 v, float min, float max) => new V2(Mathf.Clamp(v.x, min, max), Mathf.Clamp(v.y, min, max));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Clamp(this V2 v, V2 min, V2 max) => new V2(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Pow(this V2 v, float p) => new V2(Mathf.Pow(v.x, p), Mathf.Pow(v.y, p));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Pow(this V2 v, V2 p) => new V2(Mathf.Pow(v.x, p.x), Mathf.Pow(v.y, p.y));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2 v, float a) => new V2(Mathf.Min(v.x, a), Mathf.Min(v.y, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2 v, float a) => new V2(Mathf.Max(v.x, a), Mathf.Max(v.y, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2 v, float a, float b) => new V2(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2 v, float a, float b) => new V2(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2 v, float a, float b, float c) => new V2(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2 v, float a, float b, float c) => new V2(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2 v, V2 a) => new V2(Mathf.Min(v.x, a.x), Mathf.Min(v.y, a.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2 v, V2 a) => new V2(Mathf.Max(v.x, a.x), Mathf.Max(v.y, a.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2 v, V2 a, V2 b) => new V2(Mathf.Min(v.x, a.x, b.x), Mathf.Min(v.y, a.y, b.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2 v, V2 a, V2 b) => new V2(Mathf.Max(v.x, a.x, b.x), Mathf.Max(v.y, a.y, b.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2 v, V2 a, V2 b, V2 c) => new V2(Mathf.Min(v.x, a.x, b.x, c.x), Mathf.Min(v.y, a.y, b.y, c.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2 v, V2 a, V2 b, V2 c) => new V2(Mathf.Max(v.x, a.x, b.x, c.x), Mathf.Max(v.y, a.y, b.y, c.y));
+
 
 
 		// Vector on vector action
@@ -72,26 +88,12 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Mul(this V2 v, V2 b) => v * b; // new V2(v.x * b.x, v.y * b.y);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Rem(this V2 v, V2 b) => new V2(v.x % b.x, v.y % b.y);
 
-		// Vector on meme vector action
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Add(this V2 v, V2I b) => v + b; // new V2(v.x + b.x, v.y + b.y);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Sub(this V2 v, V2I b) => v - b; // new V2(v.x - b.x, v.y - b.y);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Div(this V2 v, V2I b) => v / b; // new V2(v.x / b.x, v.y / b.y);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Mul(this V2 v, V2I b) => v * b; // new V2(v.x * b.x, v.y * b.y);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Rem(this V2 v, V2I b) => new V2(v.x % b.x, v.y % b.y);
-
 		// Vector on float action
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Add(this V2 v, float b) => new V2(v.x + b, v.y + b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Sub(this V2 v, float b) => new V2(v.x - b, v.y - b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Div(this V2 v, float b) => v / b; // new V2(v.x / b, v.y / b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Mul(this V2 v, float b) => v * b; // new V2(v.x * b, v.y * b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Rem(this V2 v, float b) => new V2(v.x % b, v.y % b);
-
-		// Vector on int action
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Add(this V2 v, int b) => new V2(v.x + b, v.y + b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Sub(this V2 v, int b) => new V2(v.x - b, v.y - b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Div(this V2 v, int b) => v / b; // new V2(v.x / b, v.y / b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Mul(this V2 v, int b) => v * b; // new V2(v.x * b, v.y * b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Rem(this V2 v, int b) => new V2(v.x % b, v.y % b);
 
 
 		// Set component
@@ -143,9 +145,7 @@ namespace Muc.Extensions {
 
 		// Util
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V3 v, V3 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V3 v, V3I smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray RayTo(this V3 v, V3 vector) => new Ray(v, (vector - v).normalized);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray RayTo(this V3 v, V3I vector) => new Ray(v, (vector - v).normalized);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 x0z(this V3 v) => new V3(v.x, 0, v.z);
 
 
@@ -176,8 +176,25 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Sqrt(this V3 v) => new V3(Mathf.Sqrt(v.x), Mathf.Sqrt(v.y), Mathf.Sqrt(v.z));
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Atan2(this V3 v, float b) => new V3(Mathf.Atan2(v.x, b), Mathf.Atan2(v.y, b), Mathf.Atan2(v.z, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Atan2(this V3 v, V3 b) => new V3(Mathf.Atan2(v.x, b.x), Mathf.Atan2(v.y, b.y), Mathf.Atan2(v.z, b.z));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Clamp(this V3 v, float min, float max) => new V3(Mathf.Clamp(v.x, min, max), Mathf.Clamp(v.y, min, max), Mathf.Clamp(v.z, min, max));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Clamp(this V3 v, V3 min, V3 max) => new V3(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.x, max.x), Mathf.Clamp(v.z, min.x, max.x));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Pow(this V3 v, float p) => new V3(Mathf.Pow(v.x, p), Mathf.Pow(v.y, p), Mathf.Pow(v.z, p));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Pow(this V3 v, V3 p) => new V3(Mathf.Pow(v.x, p.x), Mathf.Pow(v.y, p.y), Mathf.Pow(v.z, p.z));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3 v, float a) => new V3(Mathf.Min(v.x, a), Mathf.Min(v.y, a), Mathf.Min(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3 v, float a) => new V3(Mathf.Max(v.x, a), Mathf.Max(v.y, a), Mathf.Max(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3 v, float a, float b) => new V3(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b), Mathf.Min(v.z, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3 v, float a, float b) => new V3(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b), Mathf.Max(v.z, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3 v, float a, float b, float c) => new V3(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c), Mathf.Min(v.z, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3 v, float a, float b, float c) => new V3(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c), Mathf.Max(v.z, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3 v, V3 a) => new V3(Mathf.Min(v.x, a.x), Mathf.Min(v.y, a.y), Mathf.Min(v.z, a.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3 v, V3 a) => new V3(Mathf.Max(v.x, a.x), Mathf.Max(v.y, a.y), Mathf.Max(v.z, a.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3 v, V3 a, V3 b) => new V3(Mathf.Min(v.x, a.x, b.x), Mathf.Min(v.y, a.y, b.y), Mathf.Min(v.z, a.z, b.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3 v, V3 a, V3 b) => new V3(Mathf.Max(v.x, a.x, b.x), Mathf.Max(v.y, a.y, b.y), Mathf.Max(v.z, a.z, b.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3 v, V3 a, V3 b, V3 c) => new V3(Mathf.Min(v.x, a.x, b.x, c.x), Mathf.Min(v.y, a.y, b.y, c.y), Mathf.Min(v.z, a.z, b.z, c.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3 v, V3 a, V3 b, V3 c) => new V3(Mathf.Max(v.x, a.x, b.x, c.x), Mathf.Max(v.y, a.y, b.y, c.y), Mathf.Max(v.z, a.z, b.z, c.z));
 
 
 		// Vector on vector action
@@ -187,26 +204,12 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Mul(this V3 v, V3 b) => new V3(v.x * b.x, v.y * b.y, v.z * b.z);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Rem(this V3 v, V3 b) => new V3(v.x % b.x, v.y % b.y, v.z % b.z);
 
-		// Vector on meme vector action
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Add(this V3 v, V3I b) => v + b; // new V3(v.x + b.x, v.y + b.y, v.z + b.z);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Sub(this V3 v, V3I b) => v - b; // new V3(v.x - b.x, v.y - b.y, v.z - b.z);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Div(this V3 v, V3I b) => new V3(v.x / b.x, v.y / b.y, v.z / b.z);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Mul(this V3 v, V3I b) => new V3(v.x * b.x, v.y * b.y, v.z * b.z);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Rem(this V3 v, V3I b) => new V3(v.x % b.x, v.y % b.y, v.z % b.z);
-
 		// Vector on float action
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Add(this V3 v, float b) => new V3(v.x + b, v.y + b, v.z + b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Sub(this V3 v, float b) => new V3(v.x - b, v.y - b, v.z - b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Div(this V3 v, float b) => v / b; // new V3(v.x / b, v.y / b, v.z / b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Mul(this V3 v, float b) => v * b; // new V3(v.x * b, v.y * b, v.z * b);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Rem(this V3 v, float b) => new V3(v.x % b, v.y % b, v.z % b);
-
-		// Vector on int action
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Add(this V3 v, int b) => new V3(v.x + b, v.y + b, v.z + b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Sub(this V3 v, int b) => new V3(v.x - b, v.y - b, v.z - b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Div(this V3 v, int b) => v / b; // new V3(v.x / b, v.y / b, v.z / b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Mul(this V3 v, int b) => v * b; // new V3(v.x * b, v.y * b, v.z * b);
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Rem(this V3 v, int b) => new V3(v.x % b, v.y % b, v.z % b);
 
 
 		// Set component
@@ -373,8 +376,25 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Sqrt(this V4 v) => new V4(Mathf.Sqrt(v.x), Mathf.Sqrt(v.y), Mathf.Sqrt(v.z), Mathf.Sqrt(v.w));
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Atan2(this V4 v, float b) => new V4(Mathf.Atan2(v.x, b), Mathf.Atan2(v.y, b), Mathf.Atan2(v.z, b), Mathf.Atan2(v.w, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Atan2(this V4 v, V4 b) => new V4(Mathf.Atan2(v.x, b.x), Mathf.Atan2(v.y, b.y), Mathf.Atan2(v.z, b.z), Mathf.Atan2(v.w, b.w));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Clamp(this V4 v, float min, float max) => new V4(Mathf.Clamp(v.x, min, max), Mathf.Clamp(v.y, min, max), Mathf.Clamp(v.z, min, max), Mathf.Clamp(v.w, min, max));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Clamp(this V4 v, V4 min, V4 max) => new V4(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y), Mathf.Clamp(v.z, min.z, max.z), Mathf.Clamp(v.w, min.w, max.w));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Pow(this V4 v, float p) => new V4(Mathf.Pow(v.x, p), Mathf.Pow(v.y, p), Mathf.Pow(v.z, p), Mathf.Pow(v.w, p));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Pow(this V4 v, V4 p) => new V4(Mathf.Pow(v.x, p.x), Mathf.Pow(v.y, p.y), Mathf.Pow(v.z, p.z), Mathf.Pow(v.w, p.w));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Min(this V4 v, float a) => new V4(Mathf.Min(v.x, a), Mathf.Min(v.y, a), Mathf.Min(v.z, a), Mathf.Min(v.w, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Max(this V4 v, float a) => new V4(Mathf.Max(v.x, a), Mathf.Max(v.y, a), Mathf.Max(v.z, a), Mathf.Max(v.w, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Min(this V4 v, float a, float b) => new V4(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b), Mathf.Min(v.z, a, b), Mathf.Min(v.w, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Max(this V4 v, float a, float b) => new V4(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b), Mathf.Max(v.z, a, b), Mathf.Max(v.w, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Min(this V4 v, float a, float b, float c) => new V4(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c), Mathf.Min(v.z, a, b, c), Mathf.Min(v.w, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Max(this V4 v, float a, float b, float c) => new V4(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c), Mathf.Max(v.z, a, b, c), Mathf.Max(v.w, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Min(this V4 v, V4 a) => new V4(Mathf.Min(v.x, a.x), Mathf.Min(v.y, a.y), Mathf.Min(v.z, a.z), Mathf.Min(v.w, a.w));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Max(this V4 v, V4 a) => new V4(Mathf.Max(v.x, a.x), Mathf.Max(v.y, a.y), Mathf.Max(v.z, a.z), Mathf.Max(v.w, a.w));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Min(this V4 v, V4 a, V4 b) => new V4(Mathf.Min(v.x, a.x, b.x), Mathf.Min(v.y, a.y, b.y), Mathf.Min(v.z, a.z, b.z), Mathf.Min(v.w, a.w, b.w));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Max(this V4 v, V4 a, V4 b) => new V4(Mathf.Max(v.x, a.x, b.x), Mathf.Max(v.y, a.y, b.y), Mathf.Max(v.z, a.z, b.z), Mathf.Max(v.w, a.w, b.w));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Min(this V4 v, V4 a, V4 b, V4 c) => new V4(Mathf.Min(v.x, a.x, b.x, c.x), Mathf.Min(v.y, a.y, b.y, c.y), Mathf.Min(v.z, a.z, b.z, c.z), Mathf.Min(v.w, a.w, b.w, c.w));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Max(this V4 v, V4 a, V4 b, V4 c) => new V4(Mathf.Max(v.x, a.x, b.x, c.x), Mathf.Max(v.y, a.y, b.y, c.y), Mathf.Max(v.z, a.z, b.z, c.z), Mathf.Max(v.w, a.w, b.w, c.w));
 
 
 		// Vector on vector action
@@ -764,9 +784,7 @@ namespace Muc.Extensions {
 		#region Vector2Int
 
 		// Util
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V2I v, V2I smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V2I v, V2 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray2D RayTo(this V2I v, V2I vector) => new Ray2D(v, ((V2)vector - v).normalized);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray2D RayTo(this V2I v, V2 vector) => new Ray2D(v, (vector - v).normalized);
 
 
@@ -788,8 +806,33 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Sqrt(this V2I v) => new V2(Mathf.Sqrt(v.x), Mathf.Sqrt(v.y));
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Atan2(this V2I v, float y) => new V2(Mathf.Atan2(v.x, y), Mathf.Atan2(v.y, y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Atan2(this V2I v, V2 y) => new V2(Mathf.Atan2(v.x, v.y), Mathf.Atan2(v.y, v.y));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Clamp(this V2I v, int min, int max) => new V2I(Mathf.Clamp(v.x, min, max), Mathf.Clamp(v.y, min, max));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Clamp(this V2I v, V2I min, V2I max) => new V2I(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Clamp(this V2I v, V2 min, V2 max) => new V2(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Pow(this V2I v, float p) => new V2(Mathf.Pow(v.x, p), Mathf.Pow(v.y, p));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Pow(this V2I v, V2 p) => new V2(Mathf.Pow(v.x, p.x), Mathf.Pow(v.y, p.y));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Min(this V2I v, int a) => new V2I(Mathf.Min(v.x, a), Mathf.Min(v.y, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Max(this V2I v, int a) => new V2I(Mathf.Max(v.x, a), Mathf.Max(v.y, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Min(this V2I v, int a, int b) => new V2I(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Max(this V2I v, int a, int b) => new V2I(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Min(this V2I v, int a, int b, int c) => new V2I(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Max(this V2I v, int a, int b, int c) => new V2I(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2I v, float a) => new V2(Mathf.Min(v.x, a), Mathf.Min(v.y, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2I v, float a) => new V2(Mathf.Max(v.x, a), Mathf.Max(v.y, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2I v, float a, float b) => new V2(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2I v, float a, float b) => new V2(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Min(this V2I v, float a, float b, float c) => new V2(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2 Max(this V2I v, float a, float b, float c) => new V2(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Min(this V2I v, V2I a) => new V2I(Mathf.Min(v.x, a.x), Mathf.Min(v.y, a.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Max(this V2I v, V2I a) => new V2I(Mathf.Max(v.x, a.x), Mathf.Max(v.y, a.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Min(this V2I v, V2I a, V2I b) => new V2I(Mathf.Min(v.x, a.x, b.x), Mathf.Min(v.y, a.y, b.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Max(this V2I v, V2I a, V2I b) => new V2I(Mathf.Max(v.x, a.x, b.x), Mathf.Max(v.y, a.y, b.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Min(this V2I v, V2I a, V2I b, V2I c) => new V2I(Mathf.Min(v.x, a.x, b.x, c.x), Mathf.Min(v.y, a.y, b.y, c.y));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V2I Max(this V2I v, V2I a, V2I b, V2I c) => new V2I(Mathf.Max(v.x, a.x, b.x, c.x), Mathf.Max(v.y, a.y, b.y, c.y));
 
 
 		// Vector on meme vector action
@@ -852,9 +895,7 @@ namespace Muc.Extensions {
 		#region Vector3Int
 
 		// Util
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V3I v, V3I smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V3I v, V3 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray RayTo(this V3I v, V3I vector) => new Ray(v, ((V3)vector - v).normalized);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray RayTo(this V3I v, V3 vector) => new Ray(v, (vector - v).normalized);
 
 
@@ -876,8 +917,33 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Sqrt(this V3I v) => new V3(Mathf.Sqrt(v.x), Mathf.Sqrt(v.y), Mathf.Sqrt(v.z));
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Atan2(this V3I v, float a) => new V3(Mathf.Atan2(v.x, a), Mathf.Atan2(v.y, a), Mathf.Atan2(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Atan2(this V3I v, V3 a) => new V3(Mathf.Atan2(v.x, a.x), Mathf.Atan2(v.y, a.y), Mathf.Atan2(v.z, a.z));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Clamp(this V3I v, int min, int max) => new V3I(Mathf.Clamp(v.x, min, max), Mathf.Clamp(v.y, min, max), Mathf.Clamp(v.z, min, max));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Clamp(this V3I v, V3I min, V3I max) => new V3I(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y), Mathf.Clamp(v.z, min.z, max.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Clamp(this V3I v, V3 min, V3 max) => new V3(Mathf.Clamp(v.x, min.x, max.x), Mathf.Clamp(v.y, min.y, max.y), Mathf.Clamp(v.z, min.z, max.z));
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Pow(this V3I v, float p) => new V3(Mathf.Pow(v.x, p), Mathf.Pow(v.y, p), Mathf.Pow(v.z, p));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Pow(this V3I v, V3 p) => new V3(Mathf.Pow(v.x, p.x), Mathf.Pow(v.y, p.y), Mathf.Pow(v.z, p.z));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Min(this V3I v, int a) => new V3I(Mathf.Min(v.x, a), Mathf.Min(v.y, a), Mathf.Min(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Max(this V3I v, int a) => new V3I(Mathf.Max(v.x, a), Mathf.Max(v.y, a), Mathf.Max(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Min(this V3I v, int a, int b) => new V3I(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b), Mathf.Min(v.z, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Max(this V3I v, int a, int b) => new V3I(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b), Mathf.Max(v.z, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Min(this V3I v, int a, int b, int c) => new V3I(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c), Mathf.Min(v.z, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Max(this V3I v, int a, int b, int c) => new V3I(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c), Mathf.Max(v.z, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3I v, float a) => new V3(Mathf.Min(v.x, a), Mathf.Min(v.y, a), Mathf.Min(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3I v, float a) => new V3(Mathf.Max(v.x, a), Mathf.Max(v.y, a), Mathf.Max(v.z, a));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3I v, float a, float b) => new V3(Mathf.Min(v.x, a, b), Mathf.Min(v.y, a, b), Mathf.Min(v.z, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3I v, float a, float b) => new V3(Mathf.Max(v.x, a, b), Mathf.Max(v.y, a, b), Mathf.Max(v.z, a, b));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Min(this V3I v, float a, float b, float c) => new V3(Mathf.Min(v.x, a, b, c), Mathf.Min(v.y, a, b, c), Mathf.Min(v.z, a, b, c));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Max(this V3I v, float a, float b, float c) => new V3(Mathf.Max(v.x, a, b, c), Mathf.Max(v.y, a, b, c), Mathf.Max(v.z, a, b, c));
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Min(this V3I v, V3I a) => new V3I(Mathf.Min(v.x, a.x), Mathf.Min(v.y, a.y), Mathf.Min(v.z, a.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Max(this V3I v, V3I a) => new V3I(Mathf.Max(v.x, a.x), Mathf.Max(v.y, a.y), Mathf.Max(v.z, a.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Min(this V3I v, V3I a, V3I b) => new V3I(Mathf.Min(v.x, a.x, b.x), Mathf.Min(v.y, a.y, b.y), Mathf.Min(v.z, a.z, b.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Max(this V3I v, V3I a, V3I b) => new V3I(Mathf.Max(v.x, a.x, b.x), Mathf.Max(v.y, a.y, b.y), Mathf.Max(v.z, a.z, b.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Min(this V3I v, V3I a, V3I b, V3I c) => new V3I(Mathf.Min(v.x, a.x, b.x, c.x), Mathf.Min(v.y, a.y, b.y, c.y), Mathf.Min(v.z, a.z, b.z, c.z));
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Max(this V3I v, V3I a, V3I b, V3I c) => new V3I(Mathf.Max(v.x, a.x, b.x, c.x), Mathf.Max(v.y, a.y, b.y, c.y), Mathf.Max(v.z, a.z, b.z, c.z));
 
 
 		// Vector on vector action
