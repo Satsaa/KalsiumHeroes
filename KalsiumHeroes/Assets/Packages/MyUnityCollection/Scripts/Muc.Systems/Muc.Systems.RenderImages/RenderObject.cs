@@ -19,8 +19,6 @@ namespace Muc.Systems.RenderImages {
 	[RequireComponent(typeof(Camera))]
 	public class RenderObject : MonoBehaviour {
 
-		[SerializeField] protected Transform renderRoot;
-
 		[SerializeField] private UpdateMode _updateMode = UpdateMode.Initialize;
 		protected UpdateMode updateMode {
 			get => _updateMode;
@@ -32,12 +30,24 @@ namespace Muc.Systems.RenderImages {
 		}
 
 		private Camera _camera;
-		new public Camera camera {
+		new protected Camera camera {
 			get {
 				if (_camera == null) _camera = GetComponent<Camera>();
 				return _camera;
 			}
 		}
+
+		[SerializeField] protected Transform renderRoot;
+		[SerializeField] protected RenderTexture rt;
+
+		[field: SerializeField] public List<RenderImage> renderImages { get; private set; } = new List<RenderImage>();
+		public RenderImage driver => renderImages.First();
+		public Vector2Int targetRes => renderImages.Aggregate(driver.rawResolution, (acc, v) => !v.enabled ? acc : acc.Max(v.rawResolution)).Mul(driver.renderScale).RoundInt().Max(1);
+
+		protected internal bool doCheckEnable;
+		protected internal bool doValueCheck;
+		protected bool doTextureReset;
+
 
 		protected void Awake() {
 			camera.enabled = updateMode == UpdateMode.Always;
@@ -50,20 +60,55 @@ namespace Muc.Systems.RenderImages {
 			}
 		}
 
+		protected void LateUpdate() {
+			if (doCheckEnable) {
+				doCheckEnable = false;
+				var active = renderImages.Any(v => v.isActiveAndEnabled);
+				gameObject.SetActive(active);
+			}
+			if (doValueCheck) {
+				doValueCheck = false;
+				if (!rt) doTextureReset = true;
+				else if (rt.texelSize != targetRes) doTextureReset = true;
+				else if (rt.useMipMap != driver.enableMipMaps) doTextureReset = true;
+				else if (rt.autoGenerateMips != (driver.autoGenerateMips && driver.enableMipMaps)) doTextureReset = true;
+				else if (rt.antiAliasing != (int)driver.antialiasing) doTextureReset = true;
+				else if (rt.useDynamicScale != driver.dynamicScaling) doTextureReset = true;
+				else if (rt.filterMode != driver.filterMode) doTextureReset = true;
+				else if (rt.anisoLevel != (driver.debthBits == RenderImage.DebthBits.None ? driver.anisoLevel : 0)) doTextureReset = true;
+			}
+			if (doTextureReset) {
+				doTextureReset = false;
+				rt = driver.CreateTexture(targetRes);
+				camera.targetTexture = rt;
+				if (updateMode == UpdateMode.Initialize) {
+					camera.Render();
+				}
+				foreach (var renderImage in renderImages) renderImage.texture = rt;
+			}
+		}
+
 		protected void OnDestroy() {
 			Destroy(gameObject);
 		}
 
-		public void OnTextureChange() {
-			if (updateMode == UpdateMode.Initialize) {
-				camera.Render();
+
+		internal void RemoveDependent(RenderImage renderImage) {
+			renderImages.Remove(renderImage);
+			if (!renderImages.Any()) {
+				Destroy(gameObject);
 			}
 		}
+
+		internal void AddDependent(RenderImage renderImage) {
+			renderImages.Add(renderImage);
+			doValueCheck = true;
+		}
+
 
 		protected enum UpdateMode {
 			Always,
 			Initialize,
-			[Tooltip("While never means never it does not mean you cannot manually call Render().")]
 			Never,
 		}
 

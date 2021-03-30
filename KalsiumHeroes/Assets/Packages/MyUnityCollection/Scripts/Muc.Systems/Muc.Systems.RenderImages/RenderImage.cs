@@ -16,12 +16,12 @@ namespace Muc.Systems.RenderImages {
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.RenderImages) + "/" + nameof(RenderImage))]
 #endif
-	public class RenderImage : RawImage {
+	public sealed class RenderImage : RawImage {
 
 		[SerializeField] internal RenderObject renderPrefab;
+		[SerializeField] internal bool shareRenderPrefab;
 
 		[SerializeField, Range(0, 1)] internal float renderScale = 1;
-		[SerializeField] internal bool useScale = false;
 
 		[SerializeField] internal Antialiasing antialiasing = Antialiasing.None;
 		[SerializeField] internal RenderTextureFormat format = RenderTextureFormat.ARGB32;
@@ -32,84 +32,65 @@ namespace Muc.Systems.RenderImages {
 		[SerializeField] internal FilterMode filterMode = FilterMode.Point;
 		[SerializeField, Range(0, 16)] internal int anisoLevel = 0;
 
-		[SerializeField] internal RenderTexture rt;
 		[SerializeField] internal RenderObject renderObject;
+
+		public Vector2 rawResolution => (rectTransform.rect.size * scale);
+		public Vector2Int resolution => (rectTransform.rect.size * scale).Mul(renderScale).RoundInt().Max(1);
+		private Vector3 scale;
 
 		protected override void Awake() {
 			base.Awake();
 			if (Application.isPlaying) {
-				rt = null;
 				renderObject = null;
-				CreateRenderObject();
-				RefreshValues();
 			}
-		}
-
-		protected override void Start() {
-			base.Start();
 		}
 
 		protected override void OnEnable() {
 			base.OnEnable();
 			if (Application.isPlaying) {
-				if (renderObject) renderObject.gameObject.SetActive(true);
+				if (!renderObject) {
+					renderObject = RenderObjects.instance.GetObject(renderPrefab, shareRenderPrefab);
+					renderObject.AddDependent(this);
+					var canvas = GetComponentInParent<Canvas>();
+					if (canvas && canvas.rootCanvas) scale = canvas.rootCanvas.transform.localScale;
+				}
+				renderObject.gameObject.SetActive(true);
+				renderObject.doValueCheck = true;
 			}
 		}
 
 		protected override void OnDisable() {
 			base.OnDisable();
 			if (Application.isPlaying) {
-				if (renderObject) renderObject.gameObject.SetActive(false);
+				if (renderObject) {
+					renderObject.doCheckEnable = true;
+					renderObject.doValueCheck = true;
+				}
 			}
 		}
 
 		protected override void OnDestroy() {
 			base.OnDestroy();
 			if (Application.isPlaying) {
-				if (rt) {
-					rt.Release();
-					texture = null;
-				}
 				if (renderObject) {
-					Destroy(renderObject.gameObject);
+					renderObject.RemoveDependent(this);
 				}
 			}
 		}
 
 		protected override void OnRectTransformDimensionsChange() {
 			base.OnRectTransformDimensionsChange();
-			if (rt == null) return;
-			RefreshValues();
-		}
-
-
-		protected virtual void CreateRenderObject() {
-			renderObject = Instantiate(renderPrefab, RenderObjects.instance.transform);
-			renderObject.camera.targetTexture = rt;
-			RenderObjects.instance.AddObject(renderObject);
-		}
-
-		protected internal void RefreshValues() {
-			if (!Application.isPlaying) return;
-
-			var resolution = (rectTransform.rect.size * rectTransform.lossyScale).Mul(renderScale).Abs().RoundInt().Max(1);
-
-			if (!rt) RecreateTexture();
-			else if (resolution != rt.texelSize) RecreateTexture();
-			else if (rt.useMipMap != enableMipMaps) RecreateTexture();
-			else if (rt.autoGenerateMips != (autoGenerateMips && enableMipMaps)) RecreateTexture();
-			else if (rt.antiAliasing != (int)antialiasing) RecreateTexture();
-			else if (rt.useDynamicScale != dynamicScaling) RecreateTexture();
-			else {
-				rt.filterMode = filterMode;
-				rt.anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0;
+			if (Application.isPlaying) {
+				if (renderObject) {
+					renderObject.doValueCheck = true;
+					var canvas = GetComponentInParent<Canvas>();
+					if (canvas && canvas.rootCanvas) scale = canvas.rootCanvas.transform.localScale;
+				}
 			}
 		}
 
-		protected internal void RecreateTexture() {
-			if (!Application.isPlaying) return;
-
-			var resolution = (rectTransform.rect.size * rectTransform.lossyScale).Mul(renderScale).Abs().RoundInt().Max(1);
+		internal RenderTexture CreateTexture(Vector2Int resolution) {
+			if (!Application.isPlaying) return null;
 
 			var descriptor = new RenderTextureDescriptor(resolution.x, resolution.y, format, (int)debthBits);
 			descriptor.useMipMap = enableMipMaps;
@@ -117,17 +98,12 @@ namespace Muc.Systems.RenderImages {
 			descriptor.msaaSamples = (int)antialiasing;
 			descriptor.useDynamicScale = dynamicScaling;
 
-			if (rt) rt.Release();
-			texture = rt = new RenderTexture(descriptor);
-			rt.name = $"{name} ({resolution.x}x{resolution.y})";
+			var res = new RenderTexture(descriptor);
+			res.name = $"{nameof(RenderImage)} ({resolution.x}x{resolution.y})";
 
-			rt.filterMode = filterMode;
-			rt.anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0;
-
-			if (renderObject != null) {
-				renderObject.camera.targetTexture = rt;
-				renderObject.OnTextureChange();
-			}
+			res.filterMode = filterMode;
+			res.anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0;
+			return res;
 		}
 
 
@@ -169,8 +145,8 @@ namespace Muc.Systems.RenderImages {
 		RenderImage t => (RenderImage)target;
 
 		SerializedProperty renderPrefab;
+		SerializedProperty shareRenderPrefab;
 		SerializedProperty renderScale;
-		SerializedProperty useScale;
 		SerializedProperty antialiasing;
 		SerializedProperty format;
 		SerializedProperty debthBits;
@@ -183,8 +159,8 @@ namespace Muc.Systems.RenderImages {
 		protected override void OnEnable() {
 			base.OnEnable();
 			renderPrefab = serializedObject.FindProperty(nameof(RenderImage.renderPrefab));
+			shareRenderPrefab = serializedObject.FindProperty(nameof(RenderImage.shareRenderPrefab));
 			renderScale = serializedObject.FindProperty(nameof(RenderImage.renderScale));
-			useScale = serializedObject.FindProperty(nameof(RenderImage.useScale));
 			antialiasing = serializedObject.FindProperty(nameof(RenderImage.antialiasing));
 			format = serializedObject.FindProperty(nameof(RenderImage.format));
 			debthBits = serializedObject.FindProperty(nameof(RenderImage.debthBits));
@@ -199,14 +175,17 @@ namespace Muc.Systems.RenderImages {
 			base.OnInspectorGUI();
 			serializedObject.Update();
 
-			using (DisabledScope(Application.isPlaying)) EditorGUILayout.PropertyField(renderPrefab);
-
 			EditorGUILayout.Space();
 
+			using (DisabledScope(Application.isPlaying)) {
+				EditorGUILayout.PropertyField(renderPrefab);
+				EditorGUILayout.PropertyField(shareRenderPrefab);
+			}
+
+			EditorGUILayout.Space();
 			EditorGUI.BeginChangeCheck();
 
 			EditorGUILayout.PropertyField(renderScale);
-			EditorGUILayout.PropertyField(useScale);
 			EditorGUILayout.PropertyField(antialiasing);
 			EditorGUILayout.PropertyField(format);
 			EditorGUILayout.PropertyField(debthBits);
@@ -219,7 +198,7 @@ namespace Muc.Systems.RenderImages {
 			serializedObject.ApplyModifiedProperties();
 			if (EditorGUI.EndChangeCheck()) {
 				foreach (RenderImage target in targets) {
-					target.RefreshValues();
+					if (target.renderObject) target.renderObject.doValueCheck = true;
 				}
 			}
 		}

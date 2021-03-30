@@ -1,9 +1,9 @@
-Shader "RenderTexture"
+Shader "UI/RenderTexture"
 {
 	Properties
 	{
 		[NoScaleOffset]_MainTex("_MainTex", 2D) = "white" {}
-
+		
 		_Stencil("Stencil ID", Float) = 0
 		_StencilComp("StencilComp", Float) = 8
 		_StencilOp("StencilOp", Float) = 0
@@ -33,7 +33,7 @@ Shader "RenderTexture"
 			Lighting Off
 			ZWrite Off
 			ZTest [unity_GUIZTestMode]
-			Blend SrcAlpha OneMinusSrcAlpha
+			Blend One OneMinusSrcAlpha
 			ColorMask [_ColorMask]
 
 			Stencil{
@@ -43,13 +43,6 @@ Shader "RenderTexture"
 				ReadMask [_StencilReadMask]
 				WriteMask [_StencilWriteMask]
 			}
-
-
-			// Debug
-			// <None>
-
-			// --------------------------------------------------
-			// Pass
 
 			HLSLPROGRAM
 
@@ -68,6 +61,7 @@ Shader "RenderTexture"
 
 			// Defines
 			#define _SURFACE_TYPE_TRANSPARENT 1
+			#define _ALPHAPREMULTIPLY_ON 1
 			#define ATTRIBUTES_NEED_NORMAL
 			#define ATTRIBUTES_NEED_TANGENT
 			#define ATTRIBUTES_NEED_TEXCOORD0
@@ -127,6 +121,7 @@ Shader "RenderTexture"
 			struct SurfaceDescriptionInputs
 			{
 				float4 uv0;
+				float4 VertexColor;
 			};
 			struct VertexDescriptionInputs
 			{
@@ -200,6 +195,7 @@ Shader "RenderTexture"
 			// Graph Properties
 			CBUFFER_START(UnityPerMaterial)
 			float4 _MainTex_TexelSize;
+			half _Float;
 			CBUFFER_END
 
 			// Object and Global properties
@@ -208,16 +204,7 @@ Shader "RenderTexture"
 			SAMPLER(sampler_MainTex);
 
 			// Graph Functions
-			
-			void Unity_OneMinus_half(half In, out half Out)
-			{
-				Out = 1 - In;
-			}
-
-			void Unity_Subtract_half4(half4 A, half4 B, out half4 Out)
-			{
-				Out = A - B;
-			}
+			// GraphFunctions: <None>
 
 			/* WARNING: $splice Could not find named fragment 'CustomInterpolatorPreVertex' */
 
@@ -260,11 +247,8 @@ Shader "RenderTexture"
 				half _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_G_5 = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.g;
 				half _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_B_6 = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.b;
 				half _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_A_7 = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.a;
-				half _OneMinus_ea5724814fd1456086fcecd9e7aac54a_Out_1;
-				Unity_OneMinus_half(_SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_A_7, _OneMinus_ea5724814fd1456086fcecd9e7aac54a_Out_1);
-				half4 _Subtract_a47e533121ac4fbdb0a71a700adfa0d3_Out_2;
-				Unity_Subtract_half4(_SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0, (_OneMinus_ea5724814fd1456086fcecd9e7aac54a_Out_1.xxxx), _Subtract_a47e533121ac4fbdb0a71a700adfa0d3_Out_2);
-				surface.BaseColor = (_Subtract_a47e533121ac4fbdb0a71a700adfa0d3_Out_2.xyz);
+				surface.BaseColor = (_SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.xyz);
+				surface.BaseColor = surface.BaseColor * IN.VertexColor.w;
 				surface.Alpha = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_A_7;
 				return surface;
 			}
@@ -294,9 +278,10 @@ Shader "RenderTexture"
 
 
 
-				output.uv0 =                         input.texCoord0;
+				output.uv0 = input.texCoord0;
+				output.VertexColor = input.color;
 				#if defined(SHADER_STAGE_FRAGMENT) && defined(VARYINGS_NEED_CULLFACE)
-					#define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN output.FaceSign =                    IS_FRONT_VFACE(input.cullFace, true, false);
+					#define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN output.FaceSign = IS_FRONT_VFACE(input.cullFace, true, false);
 				#else
 					#define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN
 				#endif
@@ -326,7 +311,7 @@ Shader "RenderTexture"
 			Lighting Off
 			ZWrite Off
 			ZTest [unity_GUIZTestMode]
-			Blend SrcAlpha OneMinusSrcAlpha
+			Blend One OneMinusSrcAlpha
 			ColorMask [_ColorMask]
 
 			Stencil{
@@ -336,8 +321,7 @@ Shader "RenderTexture"
 				ReadMask [_StencilReadMask]
 				WriteMask [_StencilWriteMask]
 			}
-
-
+			
 			HLSLPROGRAM
 
 			// Pragmas
@@ -355,6 +339,7 @@ Shader "RenderTexture"
 
 			// Defines
 			#define _SURFACE_TYPE_TRANSPARENT 1
+			#define _ALPHAPREMULTIPLY_ON 1
 			#define ATTRIBUTES_NEED_NORMAL
 			#define ATTRIBUTES_NEED_TANGENT
 			#define ATTRIBUTES_NEED_TEXCOORD0
@@ -414,6 +399,7 @@ Shader "RenderTexture"
 			struct SurfaceDescriptionInputs
 			{
 				float4 uv0;
+				float4 VertexColor;
 			};
 			struct VertexDescriptionInputs
 			{
@@ -465,7 +451,7 @@ Shader "RenderTexture"
 				Varyings output;
 				output.positionCS = input.positionCS;
 				output.texCoord0 = input.interp0.xyzw;
-				output.color = input.interp1.xyzw; 
+				output.color = input.interp1.xyzw;
 				#if UNITY_ANY_INSTANCING_ENABLED
 					output.instanceID = input.instanceID;
 				#endif
@@ -487,6 +473,7 @@ Shader "RenderTexture"
 			// Graph Properties
 			CBUFFER_START(UnityPerMaterial)
 			float4 _MainTex_TexelSize;
+			half _Float;
 			CBUFFER_END
 
 			// Object and Global properties
@@ -495,16 +482,7 @@ Shader "RenderTexture"
 			SAMPLER(sampler_MainTex);
 
 			// Graph Functions
-			
-			void Unity_OneMinus_half(half In, out half Out)
-			{
-				Out = 1 - In;
-			}
-
-			void Unity_Subtract_half4(half4 A, half4 B, out half4 Out)
-			{
-				Out = A - B;
-			}
+			// GraphFunctions: <None>
 
 			/* WARNING: $splice Could not find named fragment 'CustomInterpolatorPreVertex' */
 
@@ -547,11 +525,8 @@ Shader "RenderTexture"
 				half _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_G_5 = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.g;
 				half _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_B_6 = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.b;
 				half _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_A_7 = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.a;
-				half _OneMinus_ea5724814fd1456086fcecd9e7aac54a_Out_1;
-				Unity_OneMinus_half(_SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_A_7, _OneMinus_ea5724814fd1456086fcecd9e7aac54a_Out_1);
-				half4 _Subtract_a47e533121ac4fbdb0a71a700adfa0d3_Out_2;
-				Unity_Subtract_half4(_SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0, (_OneMinus_ea5724814fd1456086fcecd9e7aac54a_Out_1.xxxx), _Subtract_a47e533121ac4fbdb0a71a700adfa0d3_Out_2);
-				surface.BaseColor = (_Subtract_a47e533121ac4fbdb0a71a700adfa0d3_Out_2.xyz);
+				surface.BaseColor = (_SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_RGBA_0.xyz);
+				surface.BaseColor = surface.BaseColor * IN.VertexColor.w;
 				surface.Alpha = _SampleTexture2D_a30fb39cbcea49a494784ce9f304166d_A_7;
 				return surface;
 			}
@@ -581,9 +556,10 @@ Shader "RenderTexture"
 
 
 
-				output.uv0 =                         input.texCoord0;
+				output.uv0 = input.texCoord0;
+				output.VertexColor = input.color;
 				#if defined(SHADER_STAGE_FRAGMENT) && defined(VARYINGS_NEED_CULLFACE)
-					#define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN output.FaceSign =                    IS_FRONT_VFACE(input.cullFace, true, false);
+					#define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN output.FaceSign = IS_FRONT_VFACE(input.cullFace, true, false);
 				#else
 					#define BUILD_SURFACE_DESCRIPTION_INPUTS_OUTPUT_FACESIGN
 				#endif

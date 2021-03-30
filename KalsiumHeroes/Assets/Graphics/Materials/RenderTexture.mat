@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RenderTexture
   m_Shader: {fileID: 4800000, guid: 46d5c1a2f8925774ebde1b0b3f115d81, type: 3}
-  m_ShaderKeywords: FILTER_POINT
+  m_ShaderKeywords: FILTER_POINT UNITY_UI_ALPHACLIP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -137,6 +137,7 @@ Material:
     - _DstBlend: 10
     - _EnableExternalAlpha: 0
     - _EnvironmentReflections: 1
+    - _Float: 0
     - _Focus: -100
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -162,7 +163,7 @@ Material:
     - _StencilWriteMask: 255
     - _Strength: 0.2
     - _Surface: 1
-    - _UseUIAlphaClip: 0
+    - _UseUIAlphaClip: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:

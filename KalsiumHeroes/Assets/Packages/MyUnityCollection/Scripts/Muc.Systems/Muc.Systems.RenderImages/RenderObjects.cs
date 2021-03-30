@@ -17,39 +17,43 @@ namespace Muc.Systems.RenderImages {
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.RenderImages) + "/" + nameof(RenderObjects))]
 #endif
-	public class RenderObjects : Singleton<RenderObjects> {
+	public class RenderObjects : Singleton<RenderObjects>, ISerializationCallbackReceiver {
 
 		[SerializeField] float distance = 200;
 
-		[SerializeField, HideInInspector] int steps = 1;
-		[SerializeField, HideInInspector] int dir; // 0 - 3
-		[SerializeField, HideInInspector] int dirI;
 		[SerializeField, HideInInspector] Vector2Int pos;
+		[SerializeField, HideInInspector] int steps = 1; // Steps for direction
+		[SerializeField, HideInInspector] int dir; // 0 - 3
+		[SerializeField, HideInInspector] int dirI; // Steps taken in a direction
 
-		public void AddObject(RenderObject renderObject) {
+		Dictionary<RenderObject, RenderObject> shareds = new Dictionary<RenderObject, RenderObject>();
+
+		public RenderObject GetObject(RenderObject prefab, bool shared) {
+			var res = default(RenderObject);
+			if (!shared || !(res = GetSharedObject(prefab))) {
+				res = Instantiate(prefab, transform);
+				if (shared) shareds.Add(prefab, res);
+			}
 			var scaledPos = pos.Mul(distance);
-			renderObject.transform.localPosition = scaledPos.x0y();
-
+			res.transform.localPosition = scaledPos.x0y();
 			AdvancePos();
+			return res;
+		}
 
+		private RenderObject GetSharedObject(RenderObject prefab) {
+			shareds.TryGetValue(prefab, out var res);
+			return res;
 		}
 
 		void AdvancePos() {
 
-			switch (dir) {
-				case 0:
-					pos += new Vector2Int(1, 0);
-					break;
-				case 1:
-					pos += new Vector2Int(0, 1);
-					break;
-				case 2:
-					pos += new Vector2Int(-1, 0);
-					break;
-				case 3:
-					pos += new Vector2Int(0, -1);
-					break;
-			}
+			pos += dir switch {
+				3 => new Vector2Int(0, -1),
+				2 => new Vector2Int(-1, 0),
+				1 => new Vector2Int(0, 1),
+				_ => new Vector2Int(1, 0),
+			};
+
 			dirI++;
 			if (dirI >= steps) {
 				dir++;
@@ -61,7 +65,16 @@ namespace Muc.Systems.RenderImages {
 			}
 		}
 
+		[SerializeField, HideInInspector] List<RenderObject> shareds_keys;
+		[SerializeField, HideInInspector] List<RenderObject> shareds_values;
+		void ISerializationCallbackReceiver.OnBeforeSerialize() {
+			shareds_keys = shareds.Keys.ToList();
+			shareds_values = shareds.Values.ToList();
+		}
 
+		void ISerializationCallbackReceiver.OnAfterDeserialize() {
+			shareds = shareds_keys.Zip(shareds_values, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v); ;
+		}
 	}
 
 }
