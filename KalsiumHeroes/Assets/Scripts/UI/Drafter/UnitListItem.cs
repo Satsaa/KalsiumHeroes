@@ -29,7 +29,7 @@ public class UnitListItem : UIBehaviour {
 		this.drafter = drafter;
 		this.unitData = unitData;
 		this.unitEnabled = enabled;
-		sprite.sprite = unitData.portrait;
+		sprite.sprite = unitData.staticPortrait;
 		displayName.text = unitData.displayName;
 		toggle.isOn = unitEnabled;
 	}

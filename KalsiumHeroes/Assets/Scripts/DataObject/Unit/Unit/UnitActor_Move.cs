@@ -41,7 +41,7 @@ public partial class UnitActor {
 		var point = spline.Eval(moveT);
 		var futurePoint = spline.Eval(moveT + 0.1f);
 		SetPos(point);
-		base.transform.LookAt(futurePoint.SetY(base.transform.position.y));
+		base.transform.LookAt(futurePoint.SetY(base.transform.localPosition.y));
 		if (moveT >= spline._controls.Count - 1) {
 			EndAnimations();
 		}

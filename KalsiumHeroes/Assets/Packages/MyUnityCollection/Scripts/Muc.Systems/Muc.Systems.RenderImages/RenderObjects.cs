@@ -30,7 +30,7 @@ namespace Muc.Systems.RenderImages {
 
 		public RenderObject GetObject(RenderObject prefab, bool shared) {
 			var res = default(RenderObject);
-			if (!shared || !(res = GetSharedObject(prefab))) {
+			if (!shared || (res = GetSharedObject(prefab)) == null) {
 				res = Instantiate(prefab, transform);
 				if (shared) shareds.Add(prefab, res);
 			}

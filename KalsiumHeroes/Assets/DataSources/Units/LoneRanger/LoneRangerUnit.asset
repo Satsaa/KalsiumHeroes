@@ -30,7 +30,8 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: 42f86a866cda1d443a677a06699c8b8d, type: 2}
   description: {fileID: 11400000, guid: bc31a1daa4660eb458469dc8fcf65240, type: 2}
   lore: {fileID: 11400000, guid: 1f04b3f76c37205448bc0a6cebf7d491, type: 2}
-  portrait: {fileID: 21300000, guid: 2223b0a570b66ee42b3e0a79f0789b2a, type: 3}
+  portrait: {fileID: 9008834760869199539, guid: 83e41df96c36f6443a8fa29625e4b94c, type: 3}
+  staticPortrait: {fileID: 21300000, guid: 6a7ac9e8c26b12440bf2b1da2ca97794, type: 3}
   actor: {fileID: 6516154736034674579, guid: 77aa66bdd77010d428a6bcfae7bf3941, type: 3}
   draftCost: 5
   speed:

@@ -51,7 +51,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1949581172395357958, guid: 469588af71fdb4b479a6c1702e7ca221, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 385a35de2366c224b9225897fb35bd2b, type: 2}
     - target: {fileID: 3350909135444724319, guid: 469588af71fdb4b479a6c1702e7ca221, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 385a35de2366c224b9225897fb35bd2b, type: 2}
+    - target: {fileID: 6780362015937500799, guid: 469588af71fdb4b479a6c1702e7ca221, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 385a35de2366c224b9225897fb35bd2b, type: 2}
@@ -59,5 +67,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoneRangerActor
       objectReference: {fileID: 0}
+    - target: {fileID: 7704234573844013857, guid: 469588af71fdb4b479a6c1702e7ca221, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 385a35de2366c224b9225897fb35bd2b, type: 2}
+    - target: {fileID: 8643104947620128911, guid: 469588af71fdb4b479a6c1702e7ca221, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 385a35de2366c224b9225897fb35bd2b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 469588af71fdb4b479a6c1702e7ca221, type: 3}

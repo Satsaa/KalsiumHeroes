@@ -16,23 +16,23 @@ namespace Muc.Systems.RenderImages {
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.RenderImages) + "/" + nameof(RenderImage))]
 #endif
-	public sealed class RenderImage : RawImage {
+	public class RenderImage : RawImage {
 
-		[SerializeField] internal RenderObject renderPrefab;
-		[SerializeField] internal bool shareRenderPrefab;
+		[SerializeField] protected internal RenderObject renderPrefab;
+		[SerializeField] protected internal bool shareRenderPrefab;
 
-		[SerializeField, Range(0, 1)] internal float renderScale = 1;
+		[SerializeField, Range(0, 1)] protected internal float renderScale = 1;
 
-		[SerializeField] internal Antialiasing antialiasing = Antialiasing.None;
-		[SerializeField] internal RenderTextureFormat format = RenderTextureFormat.ARGB32;
-		[SerializeField] internal DebthBits debthBits = DebthBits.Bits24Stencil;
-		[SerializeField] internal bool enableMipMaps = false;
-		[SerializeField] internal bool autoGenerateMips = false;
-		[SerializeField] internal bool dynamicScaling = false;
-		[SerializeField] internal FilterMode filterMode = FilterMode.Point;
-		[SerializeField, Range(0, 16)] internal int anisoLevel = 0;
+		[SerializeField] protected internal Antialiasing antialiasing = Antialiasing.None;
+		[SerializeField] protected internal RenderTextureFormat format = RenderTextureFormat.ARGB32;
+		[SerializeField] protected internal DebthBits debthBits = DebthBits.Bits24Stencil;
+		[SerializeField] protected internal bool enableMipMaps = false;
+		[SerializeField] protected internal bool autoGenerateMips = false;
+		[SerializeField] protected internal bool dynamicScaling = false;
+		[SerializeField] protected internal FilterMode filterMode = FilterMode.Point;
+		[SerializeField, Range(0, 16)] protected internal int anisoLevel = 0;
 
-		[SerializeField] internal RenderObject renderObject;
+		[SerializeField, HideInInspector] protected internal RenderObject renderObject;
 
 		public Vector2 rawResolution => (rectTransform.rect.size * scale);
 		public Vector2Int resolution => (rectTransform.rect.size * scale).Mul(renderScale).RoundInt().Max(1);
@@ -47,7 +47,7 @@ namespace Muc.Systems.RenderImages {
 
 		protected override void OnEnable() {
 			base.OnEnable();
-			if (Application.isPlaying) {
+			if (Application.isPlaying && renderPrefab) {
 				if (!renderObject) {
 					renderObject = RenderObjects.instance.GetObject(renderPrefab, shareRenderPrefab);
 					renderObject.AddDependent(this);
@@ -89,7 +89,17 @@ namespace Muc.Systems.RenderImages {
 			}
 		}
 
-		internal RenderTexture CreateTexture(Vector2Int resolution) {
+		public virtual void SetRenderObject(RenderObject renderPrefab) {
+			if (renderObject) {
+				renderObject.RemoveDependent(this);
+				renderObject.doCheckEnable = true;
+				renderObject.doValueCheck = true;
+			}
+			this.renderPrefab = renderPrefab;
+			if (isActiveAndEnabled) OnEnable();
+		}
+
+		protected virtual internal RenderTexture CreateTexture(Vector2Int resolution) {
 			if (!Application.isPlaying) return null;
 
 			var descriptor = new RenderTextureDescriptor(resolution.x, resolution.y, format, (int)debthBits);
@@ -107,14 +117,14 @@ namespace Muc.Systems.RenderImages {
 		}
 
 
-		internal enum DebthBits {
+		protected internal enum DebthBits {
 			None = 0,
 			Bits16 = 16,
 			Bits24Stencil = 24,
 			Bits32Stencil = 32
 		}
 
-		internal enum Antialiasing {
+		protected internal enum Antialiasing {
 			None = 1,
 			AA2 = 2,
 			AA4 = 4,
@@ -194,6 +204,30 @@ namespace Muc.Systems.RenderImages {
 			EditorGUILayout.PropertyField(dynamicScaling);
 			EditorGUILayout.PropertyField(filterMode);
 			using (DisabledScope(debthBits.intValue != 0)) EditorGUILayout.PropertyField(anisoLevel);
+
+			DrawPropertiesExcluding(serializedObject,
+				script,
+				renderPrefab.name,
+				shareRenderPrefab.name,
+				renderScale.name,
+				antialiasing.name,
+				format.name,
+				debthBits.name,
+				enableMipMaps.name,
+				autoGenerateMips.name,
+				dynamicScaling.name,
+				filterMode.name,
+				anisoLevel.name,
+				"m_Texture",
+				"m_Texture",
+				"m_UVRect",
+				"m_OnCullStateChanged",
+				m_Color.name,
+				m_Material.name,
+				m_RaycastTarget.name,
+				m_RaycastPadding.name,
+				m_Maskable.name
+			);
 
 			serializedObject.ApplyModifiedProperties();
 			if (EditorGUI.EndChangeCheck()) {

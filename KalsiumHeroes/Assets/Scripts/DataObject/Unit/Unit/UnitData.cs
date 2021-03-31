@@ -1,5 +1,6 @@
 
 using System;
+using Muc.Systems.RenderImages;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
@@ -16,8 +17,11 @@ public class UnitData : MasterData {
 	[Tooltip("Lore text of the Unit.")]
 	public TextSource lore;
 
-	[Tooltip("The default portrait sprite for this Unit.")]
-	public Sprite portrait;
+	[Tooltip("The RenderObject used to render this unit in portraits.")]
+	public RenderObject portrait;
+
+	[Tooltip("Static portrait sprite.")]
+	public Sprite staticPortrait;
 
 	[Tooltip("Actor prefab for this Unit. It is instantiated as a parent.")]
 	public UnitActor actor;

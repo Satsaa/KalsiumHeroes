@@ -30,7 +30,7 @@ public partial class UnitActor : MonoBehaviour {
 	}
 
 	protected void Awake() {
-		transform.parent = Game.game.transform;
+		if (!transform.parent) transform.parent = Game.game.transform;
 		animator = GetComponent<Animator>();
 	}
 
@@ -66,9 +66,9 @@ public partial class UnitActor : MonoBehaviour {
 		animationType = AnimationType.None;
 	}
 
-	public Vector2 Get2DPos() => transform.position.xz();
-	public Vector3 GetPos() => transform.position;
-	public void Set2DPos(Vector2 position) => transform.position = position.x0y().SetY(transform.position.y);
-	public void SetPos(Vector3 position) => transform.position = position;
+	public Vector2 Get2DPos() => transform.localPosition.xz();
+	public Vector3 GetPos() => transform.localPosition;
+	public void Set2DPos(Vector2 localPosition) => transform.localPosition = localPosition.x0y().SetY(transform.localPosition.y);
+	public void SetPos(Vector3 localPosition) => transform.localPosition = localPosition;
 
 }

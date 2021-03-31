@@ -32,7 +32,8 @@ MonoBehaviour:
   displayName: {fileID: 11400000, guid: 92ebc4b18f281a94ab2776006418d2b4, type: 2}
   description: {fileID: 0}
   lore: {fileID: 0}
-  portrait: {fileID: 0}
+  portrait: {fileID: 9008834760869199539, guid: 3e0ac8cebb63bc742b63c3c3d0cbcb82, type: 3}
+  staticPortrait: {fileID: 21300000, guid: 6191e5c6f0e861b4484c47265ca0c2af, type: 3}
   actor: {fileID: 4267153226371733055, guid: f725440873d317b4f987ead995abc18c, type: 3}
   draftCost: 5
   speed:

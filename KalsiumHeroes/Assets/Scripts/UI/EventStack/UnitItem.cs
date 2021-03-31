@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using Muc.Systems.RenderImages;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,13 +9,24 @@ public class UnitItem : RoundStackItem {
 
 	public Image frame;
 	public Image unitImage;
+	public RenderImage unitRenderImage;
 	public Text unitText;
 
 	[HideInInspector] public Highlighter highlighter;
 
-	public void Start() {
+	new protected void Awake() {
+		base.Awake();
+	}
 
-		unitImage.sprite = unit.data.portrait;
+	protected void Start() {
+
+		if (unit.data.portrait) {
+			unitRenderImage.SetRenderObject(unit.data.portrait);
+			unitImage.enabled = false;
+		} else {
+			unitImage.sprite = unit.data.staticPortrait;
+			unitRenderImage.enabled = false;
+		}
 		if (unitText) {
 			unitText.color = unit.team switch {
 				Team.Team1 => Color.green,

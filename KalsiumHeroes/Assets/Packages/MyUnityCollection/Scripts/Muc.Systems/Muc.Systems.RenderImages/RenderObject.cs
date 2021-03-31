@@ -37,10 +37,10 @@ namespace Muc.Systems.RenderImages {
 			}
 		}
 
-		[SerializeField] protected Transform renderRoot;
-		[SerializeField] protected RenderTexture rt;
+		[SerializeField] public Transform renderRoot;
+		[SerializeField, HideInInspector] protected RenderTexture rt;
 
-		[field: SerializeField] public List<RenderImage> renderImages { get; private set; } = new List<RenderImage>();
+		[field: SerializeField, HideInInspector] public List<RenderImage> renderImages { get; private set; } = new List<RenderImage>();
 		public RenderImage driver => renderImages.First();
 		public Vector2Int targetRes => renderImages.Aggregate(driver.rawResolution, (acc, v) => !v.enabled ? acc : acc.Max(v.rawResolution)).Mul(driver.renderScale).RoundInt().Max(1);
 
