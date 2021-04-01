@@ -12,8 +12,8 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = nameof(PopupPreset), menuName = "KalsiumHeroes/" + nameof(PopupPreset))]
 public class PopupPreset : ScriptableObject {
 
-	[SerializeField] Popup popupPrefab;
-	[SerializeField] PopupOption optionPrefab;
+	[SerializeField] internal Popup popupPrefab;
+	[SerializeField] internal PopupOption optionPrefab;
 
 	[SerializeField] TextSource baseTitle;
 	[SerializeField] TextSource baseMessage;
@@ -57,6 +57,11 @@ public class PopupPreset : ScriptableObject {
 
 	public Popup Show(string message, params Option[] options) => Show(null, message, options);
 	public Popup Show(string title, string message, params Option[] options) {
+		if (popupPrefab == null || optionPrefab == null) {
+			Debug.LogError($"{nameof(popupPrefab)} or {nameof(optionPrefab)} is not set. Alternatively a reference may be broken and you need to reassign them in editor. To do that double click this message and press the reassign button.", this);
+			if (popupPrefab == null) throw new ArgumentNullException($"Argument cannot be null.", nameof(popupPrefab));
+			if (optionPrefab == null) throw new ArgumentNullException($"Argument cannot be null.", nameof(optionPrefab));
+		}
 		var msgBox = Instantiate(popupPrefab);
 		msgBox.gameObject.transform.SetParent(Popups.rectTransform);
 		DoTitle(msgBox, title);
@@ -69,3 +74,66 @@ public class PopupPreset : ScriptableObject {
 	}
 
 }
+
+
+#if UNITY_EDITOR
+namespace Editors {
+
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using UnityEngine;
+	using UnityEditor;
+	using Object = UnityEngine.Object;
+	using static Muc.Editor.PropertyUtil;
+	using static Muc.Editor.EditorUtil;
+
+	[CanEditMultipleObjects]
+	[CustomEditor(typeof(PopupPreset), true)]
+	public class PopupPresetEditor : Editor {
+
+		PopupPreset t => (PopupPreset)target;
+
+		SerializedProperty popupPrefab;
+		SerializedProperty optionPrefab;
+
+		void OnEnable() {
+			popupPrefab = serializedObject.FindProperty(nameof(PopupPreset.popupPrefab));
+			optionPrefab = serializedObject.FindProperty(nameof(PopupPreset.optionPrefab));
+		}
+
+		public override void OnInspectorGUI() {
+			DrawDefaultInspector();
+
+			using (DisabledScope(Application.isPlaying)) {
+				if (GUILayout.Button($"{(Application.isPlaying ? "Disabled in play. " : "")}Reassign fields (may fix missing ref exception)")) {
+					serializedObject.Update();
+
+					var oldPops = new Popup[targets.Length];
+					var oldOpts = new PopupOption[targets.Length];
+
+					for (int i = 0; i < targets.Length; i++) {
+						var target = (PopupPreset)targets[i];
+						oldPops[i] = target.popupPrefab;
+						oldOpts[i] = target.optionPrefab;
+						target.popupPrefab = null;
+						target.optionPrefab = null;
+					}
+
+					serializedObject.ApplyModifiedProperties();
+					serializedObject.Update();
+
+					for (int i = 0; i < targets.Length; i++) {
+						var target = (PopupPreset)targets[i];
+						target.popupPrefab = oldPops[i];
+						target.optionPrefab = oldOpts[i];
+					}
+
+					serializedObject.ApplyModifiedProperties();
+				}
+			}
+
+		}
+	}
+}
+#endif
