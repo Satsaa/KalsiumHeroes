@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.HighDefinition;
 
 public class DynamicShadowDistance : MonoBehaviour {
 
-	public UniversalRenderPipelineAsset pipeline;
+	public HDRenderPipelineAsset pipeline;
 	public Camera cam;
 	public float planeDebth = -8;
 	public float distanceStepInterveal = 5;
@@ -14,7 +14,7 @@ public class DynamicShadowDistance : MonoBehaviour {
 	void Start() {
 		if (!cam) cam = GetComponent<Camera>();
 		if (pipeline == null) {
-			if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urpAsset) {
+			if (GraphicsSettings.currentRenderPipeline is HDRenderPipelineAsset urpAsset) {
 				pipeline = urpAsset;
 			} else {
 				Debug.LogWarning("Incompatible pipeline. Only URP pipeline is supported.");
@@ -28,7 +28,7 @@ public class DynamicShadowDistance : MonoBehaviour {
 			var plane = new Plane(Vector3.up, new Vector3(0, planeDebth, 0));
 			if (plane.Raycast(ray, out var dist)) {
 				Debug.DrawRay(ray.origin, ray.direction * dist, Color.green);
-				pipeline.shadowDistance = dist - dist % distanceStepInterveal;
+				//pipeline.shadowDistance = dist - dist % distanceStepInterveal;
 			}
 		}
 	}

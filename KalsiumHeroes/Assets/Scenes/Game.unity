@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1249,7 +1249,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1395,7 +1395,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1444,7 +1444,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1554,6 +1554,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 7266266586984682554, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
+      propertyPath: m_HDR
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266266586984682554, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
+      propertyPath: m_AllowMSAA
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7266266586984682693, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1598,7 +1606,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7266266586984682555, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
 --- !u!1 &45581140
 GameObject:
@@ -1657,7 +1666,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -1676,7 +1685,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -1927,7 +1936,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -1991,7 +2000,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -2025,7 +2034,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -2452,7 +2461,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -2515,7 +2524,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -2578,7 +2587,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -2641,7 +2650,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -2810,7 +2819,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -2829,7 +2838,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -2848,7 +2857,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3210,7 +3219,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3424,7 +3433,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3443,7 +3452,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3462,8 +3471,7 @@ MonoBehaviour:
   m_Name: InwardsImpassableEdgeModifier(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: 
   identifier: edgemodifier_inwards_impassable
   container: {fileID: 0}
   displayName: {fileID: 0}
@@ -3599,7 +3607,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3618,7 +3626,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3637,7 +3645,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3656,7 +3664,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3675,7 +3683,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3694,7 +3702,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -3895,7 +3903,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -4040,7 +4048,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -4059,7 +4067,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -4093,7 +4101,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -4343,7 +4351,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -4362,7 +4370,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -4603,7 +4611,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -4622,7 +4630,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5047,7 +5055,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5110,7 +5118,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5189,7 +5197,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5268,7 +5276,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5287,7 +5295,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5306,7 +5314,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5468,7 +5476,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5487,7 +5495,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5536,7 +5544,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -5614,7 +5622,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5633,7 +5641,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5740,7 +5748,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -5910,7 +5918,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -5944,7 +5952,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6111,7 +6119,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -6145,7 +6153,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6164,7 +6172,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -6258,7 +6266,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6277,7 +6285,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6326,7 +6334,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6345,7 +6353,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -6379,7 +6387,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6428,7 +6436,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6491,7 +6499,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6510,7 +6518,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6573,7 +6581,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6592,7 +6600,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6611,7 +6619,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6876,7 +6884,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6895,7 +6903,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -6914,7 +6922,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -6948,7 +6956,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7011,7 +7019,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7030,7 +7038,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7101,7 +7109,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7120,7 +7128,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7169,7 +7177,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7188,7 +7196,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7401,7 +7409,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7420,7 +7428,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7590,7 +7598,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -7938,7 +7946,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8165,7 +8173,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8244,7 +8252,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -8322,7 +8330,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -8460,7 +8468,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -8546,7 +8554,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8639,7 +8647,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8658,7 +8666,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8849,7 +8857,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8898,7 +8906,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -8917,7 +8925,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -9116,7 +9124,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -9150,7 +9158,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -9184,7 +9192,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -9262,7 +9270,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -9363,7 +9371,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -9709,7 +9717,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -9935,7 +9943,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -9984,7 +9992,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10003,7 +10011,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -10037,7 +10045,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10056,7 +10064,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10119,7 +10127,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10302,7 +10310,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -10515,7 +10523,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -10549,7 +10557,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10730,7 +10738,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10809,7 +10817,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -10924,7 +10932,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11031,7 +11039,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11050,7 +11058,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11143,7 +11151,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11344,7 +11352,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11363,7 +11371,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11412,7 +11420,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11596,7 +11604,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11615,7 +11623,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11678,7 +11686,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11697,7 +11705,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11746,7 +11754,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11765,7 +11773,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11828,7 +11836,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11847,7 +11855,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -11926,7 +11934,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -12178,7 +12186,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -12437,8 +12445,7 @@ MonoBehaviour:
   m_Name: InwardsImpassableEdgeModifier(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: 
   identifier: edgemodifier_inwards_impassable
   container: {fileID: 0}
   displayName: {fileID: 0}
@@ -12456,7 +12463,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -12505,7 +12512,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -12568,7 +12575,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -12662,7 +12669,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -12696,7 +12703,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -12730,7 +12737,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -12929,7 +12936,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -13030,7 +13037,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -13244,7 +13251,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -13604,7 +13611,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -13623,7 +13630,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -13859,7 +13866,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -13908,7 +13915,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -13927,7 +13934,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -14034,7 +14041,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -14215,7 +14222,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -14443,7 +14450,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -14506,7 +14513,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -14628,7 +14635,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -14735,7 +14742,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -14799,7 +14806,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -15193,7 +15200,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15242,7 +15249,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15261,7 +15268,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15280,7 +15287,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15299,7 +15306,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15370,7 +15377,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15510,7 +15517,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15529,7 +15536,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -15905,7 +15912,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -16254,7 +16261,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -16273,7 +16280,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -16292,7 +16299,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -16808,7 +16815,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -16887,7 +16894,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -16921,7 +16928,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -16940,7 +16947,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -17055,7 +17062,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -17210,7 +17217,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -17407,7 +17414,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -17426,7 +17433,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -17445,7 +17452,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -17874,7 +17881,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -18081,7 +18088,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -18206,7 +18213,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -18277,7 +18284,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -18341,7 +18348,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -18405,7 +18412,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -18774,7 +18781,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -18837,7 +18844,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -18856,7 +18863,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -18979,7 +18986,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -19356,7 +19363,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -19434,7 +19441,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -19512,7 +19519,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -19620,7 +19627,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -19727,7 +19734,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -19887,7 +19894,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -19950,7 +19957,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -19969,7 +19976,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -20704,7 +20711,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -20723,7 +20730,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -20801,7 +20808,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -20820,7 +20827,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -20839,7 +20846,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -20873,7 +20880,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -20966,7 +20973,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -20985,7 +20992,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21260,7 +21267,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21309,7 +21316,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21372,7 +21379,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21391,7 +21398,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21440,7 +21447,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -21600,7 +21607,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21619,7 +21626,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21638,7 +21645,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21657,7 +21664,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21808,7 +21815,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21827,7 +21834,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -21957,7 +21964,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21976,7 +21983,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -21995,7 +22002,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -22044,7 +22051,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -22063,7 +22070,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -22187,7 +22194,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -22206,7 +22213,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -22467,7 +22474,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -22851,7 +22858,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -23025,8 +23032,7 @@ MonoBehaviour:
   m_Name: InwardsImpassableEdgeModifier(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: 
   identifier: edgemodifier_inwards_impassable
   container: {fileID: 0}
   displayName: {fileID: 0}
@@ -23582,7 +23588,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -23601,7 +23607,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -23709,7 +23715,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -23728,7 +23734,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -23926,7 +23932,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -23975,7 +23981,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24090,7 +24096,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24230,7 +24236,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24279,7 +24285,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24463,7 +24469,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24482,7 +24488,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24501,7 +24507,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -24598,7 +24604,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779851705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.55, y: -10, z: 5.25}
+  m_LocalPosition: {x: 13.55, y: -15, z: 5.25}
   m_LocalScale: {x: 4000, y: 1, z: 5000}
   m_Children: []
   m_Father: {fileID: 0}
@@ -24773,7 +24779,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25000,7 +25006,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25019,7 +25025,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25068,7 +25074,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -25193,7 +25199,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25377,7 +25383,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25426,7 +25432,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -25682,7 +25688,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25821,7 +25827,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25840,7 +25846,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25941,7 +25947,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25960,7 +25966,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -25979,7 +25985,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -26058,7 +26064,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -26129,7 +26135,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -26163,7 +26169,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -26316,7 +26322,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -26678,7 +26684,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -26793,7 +26799,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27035,7 +27041,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27106,7 +27112,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27125,7 +27131,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -27159,7 +27165,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27313,7 +27319,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27504,7 +27510,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27553,7 +27559,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27572,7 +27578,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -27606,7 +27612,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27625,7 +27631,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27644,7 +27650,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27693,7 +27699,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -27938,7 +27944,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -28061,7 +28067,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -28124,7 +28130,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -28203,7 +28209,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -28417,7 +28423,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -28690,7 +28696,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -28709,7 +28715,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -28954,7 +28960,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -29138,7 +29144,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -29253,7 +29259,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -29376,7 +29382,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -29587,7 +29593,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -29621,12 +29627,131 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
   displayName: {fileID: 0}
   description: {fileID: 0}
+--- !u!1 &945038832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7266266586984682553, guid: a5a07061cd2ca7a4383af0ce3d48949d, type: 3}
+  m_PrefabInstance: {fileID: 43463427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &945038833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945038832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c1ce4fb46143f46bc5cb5224c934f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearColorMode: 0
+  backgroundColorHDR: {r: 0.025, g: 0.07, b: 0.19, a: 0}
+  clearDepth: 1
+  volumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  volumeAnchorOverride: {fileID: 0}
+  antialiasing: 0
+  SMAAQuality: 2
+  dithering: 0
+  stopNaNs: 0
+  taaSharpenStrength: 0.5
+  TAAQuality: 1
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
+  physicalParameters:
+    m_Iso: 200
+    m_ShutterSpeed: 0.005
+    m_Aperture: 16
+    m_BladeCount: 5
+    m_Curvature: {x: 2, y: 11}
+    m_BarrelClipping: 0.25
+    m_Anamorphism: 0
+  flipYMode: 0
+  xrRendering: 1
+  fullscreenPassthrough: 0
+  allowDynamicResolution: 0
+  customRenderingSettings: 0
+  invertFaceCulling: 0
+  probeLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  hasPersistentHistory: 0
+  exposureTarget: {fileID: 0}
+  m_RenderingPathCustomFrameSettings:
+    bitDatas:
+      data1: 72198262773251917
+      data2: 13763000468760363032
+    lodBias: 1
+    lodBiasMode: 0
+    lodBiasQualityLevel: 0
+    maximumLODLevel: 0
+    maximumLODLevelMode: 0
+    maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
+    materialQuality: 0
+  renderingPathCustomFrameSettingsOverrideMask:
+    mask:
+      data1: 0
+      data2: 0
+  defaultFrameSettings: 0
+  m_Version: 7
+  m_ObsoleteRenderingPath: 0
+  m_ObsoleteFrameSettings:
+    overrides: 0
+    enableShadow: 0
+    enableContactShadows: 0
+    enableShadowMask: 0
+    enableSSR: 0
+    enableSSAO: 0
+    enableSubsurfaceScattering: 0
+    enableTransmission: 0
+    enableAtmosphericScattering: 0
+    enableVolumetrics: 0
+    enableReprojectionForVolumetrics: 0
+    enableLightLayers: 0
+    enableExposureControl: 1
+    diffuseGlobalDimmer: 0
+    specularGlobalDimmer: 0
+    shaderLitMode: 0
+    enableDepthPrepassWithDeferredRendering: 0
+    enableTransparentPrepass: 0
+    enableMotionVectors: 0
+    enableObjectMotionVectors: 0
+    enableDecals: 0
+    enableRoughRefraction: 0
+    enableTransparentPostpass: 0
+    enableDistortion: 0
+    enablePostprocess: 0
+    enableOpaqueObjects: 0
+    enableTransparentObjects: 0
+    enableRealtimePlanarReflection: 0
+    enableMSAA: 0
+    enableAsyncCompute: 0
+    runLightListAsync: 0
+    runSSRAsync: 0
+    runSSAOAsync: 0
+    runContactShadowsAsync: 0
+    runVolumeVoxelizationAsync: 0
+    lightLoopSettings:
+      overrides: 0
+      enableDeferredTileAndCluster: 0
+      enableComputeLightEvaluation: 0
+      enableComputeLightVariants: 0
+      enableComputeMaterialVariants: 0
+      enableFptlForForwardOpaque: 0
+      enableBigTilePrepass: 0
+      isFptlEnabled: 0
 --- !u!114 &945803843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30010,7 +30135,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30133,7 +30258,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30388,7 +30513,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -30422,7 +30547,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30441,7 +30566,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30460,7 +30585,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30479,7 +30604,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -30604,7 +30729,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30667,7 +30792,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -30805,7 +30930,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30950,7 +31075,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -30999,7 +31124,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31078,7 +31203,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -31112,7 +31237,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31222,7 +31347,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31337,7 +31462,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31356,7 +31481,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31405,7 +31530,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -31521,7 +31646,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31655,6 +31780,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021390984}
   - component: {fileID: 1021390983}
+  - component: {fileID: 1021390985}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -31674,16 +31800,16 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 85000
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0.91
+    m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -31715,7 +31841,7 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
@@ -31738,6 +31864,128 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1021390985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021390982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Intensity: 85000
+  m_EnableSpotReflector: 1
+  m_LuxAtDistance: 1
+  m_InnerSpotPercent: 0
+  m_SpotIESCutoffPercent: 100
+  m_LightDimmer: 1
+  m_VolumetricDimmer: 1
+  m_LightUnit: 2
+  m_FadeDistance: 10000
+  m_VolumetricFadeDistance: 10000
+  m_AffectDiffuse: 1
+  m_AffectSpecular: 1
+  m_NonLightmappedOnly: 0
+  m_ShapeWidth: 0.5
+  m_ShapeHeight: 0.5
+  m_AspectRatio: 1
+  m_ShapeRadius: 0.025
+  m_SoftnessScale: 1
+  m_UseCustomSpotLightShadowCone: 0
+  m_CustomSpotLightShadowCone: 30
+  m_MaxSmoothness: 0.99
+  m_ApplyRangeAttenuation: 1
+  m_DisplayAreaLightEmissiveMesh: 0
+  m_AreaLightCookie: {fileID: 0}
+  m_IESPoint: {fileID: 0}
+  m_IESSpot: {fileID: 0}
+  m_IncludeForRayTracing: 1
+  m_AreaLightShadowCone: 120
+  m_UseScreenSpaceShadows: 0
+  m_InteractsWithSky: 1
+  m_AngularDiameter: 0.5
+  m_FlareSize: 2
+  m_FlareTint: {r: 1, g: 1, b: 1, a: 1}
+  m_FlareFalloff: 4
+  m_SurfaceTexture: {fileID: 0}
+  m_SurfaceTint: {r: 1, g: 1, b: 1, a: 1}
+  m_Distance: 1.5e+11
+  m_UseRayTracedShadows: 0
+  m_NumRayTracingSamples: 4
+  m_FilterTracedShadow: 1
+  m_FilterSizeTraced: 16
+  m_SunLightConeAngle: 0.5
+  m_LightShadowRadius: 0.5
+  m_SemiTransparentShadow: 0
+  m_ColorShadow: 1
+  m_DistanceBasedFiltering: 0
+  m_EvsmExponent: 15
+  m_EvsmLightLeakBias: 0
+  m_EvsmVarianceBias: 0.00001
+  m_EvsmBlurPasses: 0
+  m_LightlayersMask: 1
+  m_LinkShadowLayers: 1
+  m_ShadowNearPlane: 0.1
+  m_BlockerSampleCount: 24
+  m_FilterSampleCount: 16
+  m_MinFilterSize: 0.1
+  m_KernelSize: 5
+  m_LightAngle: 1
+  m_MaxDepthBias: 0.001
+  m_ShadowResolution:
+    m_Override: 512
+    m_UseOverride: 0
+    m_Level: 2
+  m_ShadowDimmer: 1
+  m_VolumetricShadowDimmer: 1
+  m_ShadowFadeDistance: 10000
+  m_UseContactShadow:
+    m_Override: 0
+    m_UseOverride: 1
+    m_Level: 2
+  m_RayTracedContactShadow: 0
+  m_ShadowTint: {r: 0, g: 0, b: 0, a: 1}
+  m_PenumbraTint: 0
+  m_NormalBias: 0.75
+  m_SlopeBias: 0.5
+  m_ShadowUpdateMode: 0
+  m_AlwaysDrawDynamicShadows: 0
+  m_UpdateShadowOnLightMovement: 0
+  m_CachedShadowTranslationThreshold: 0.01
+  m_CachedShadowAngularThreshold: 0.5
+  m_BarnDoorAngle: 90
+  m_BarnDoorLength: 0.05
+  m_preserveCachedShadow: 0
+  m_OnDemandShadowRenderOnPlacement: 1
+  m_ShadowCascadeRatios:
+  - 0.05
+  - 0.2
+  - 0.3
+  m_ShadowCascadeBorders:
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  m_ShadowAlgorithm: 0
+  m_ShadowVariant: 0
+  m_ShadowPrecision: 0
+  useOldInspector: 0
+  useVolumetric: 1
+  featuresFoldout: 1
+  m_AreaLightEmissiveMeshShadowCastingMode: 0
+  m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
+  m_AreaLightEmissiveMeshLayer: -1
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
 --- !u!114 &1022882056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31751,7 +31999,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31800,7 +32048,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -31819,7 +32067,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32170,7 +32418,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32189,7 +32437,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32252,7 +32500,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -32650,7 +32898,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32669,7 +32917,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32806,7 +33054,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32825,7 +33073,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -32964,7 +33212,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -32998,7 +33246,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33017,7 +33265,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33080,7 +33328,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33203,7 +33451,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -33393,7 +33641,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33412,7 +33660,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33431,7 +33679,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33524,7 +33772,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33573,7 +33821,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33683,7 +33931,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -33895,7 +34143,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33914,7 +34162,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -33963,7 +34211,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34056,7 +34304,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -34134,7 +34382,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34153,7 +34401,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34312,7 +34560,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34515,7 +34763,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34578,7 +34826,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34597,7 +34845,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34660,7 +34908,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34753,7 +35001,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34772,7 +35020,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -34850,7 +35098,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34869,7 +35117,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34888,7 +35136,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -34937,7 +35185,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35046,7 +35294,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35153,7 +35401,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35315,7 +35563,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35334,7 +35582,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35353,7 +35601,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35446,7 +35694,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -35795,7 +36043,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -35995,7 +36243,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36208,7 +36456,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36227,7 +36475,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36320,7 +36568,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36399,7 +36647,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -36493,7 +36741,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36572,7 +36820,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -36650,7 +36898,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36669,7 +36917,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36688,7 +36936,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36979,7 +37227,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -36998,7 +37246,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -37316,7 +37564,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -37629,7 +37877,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -37909,7 +38157,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -37958,7 +38206,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -37977,7 +38225,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -38419,7 +38667,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -38438,7 +38686,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -38694,7 +38942,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -38713,7 +38961,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -38776,7 +39024,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -38848,6 +39096,7 @@ GameObject:
   - component: {fileID: 1270279099}
   - component: {fileID: 1270279095}
   - component: {fileID: 1270279096}
+  - component: {fileID: 1270279100}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -39811,6 +40060,104 @@ MonoBehaviour:
     version: 1
     00000000:
       type: {class: , ns: , asm: }
+--- !u!114 &1270279100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270279093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb046809e433f641a492c7ab2a5194b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  order:
+  - _name: ImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: MoveCostEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: OutwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: PlayEffectTileModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: AddModifierAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: AreaDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: ChangeEnergyAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: CordialInvitationAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: CordialInvitationStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: DisgracefulBehaviourStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: OpportunistPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: ParryStanceAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: ParryStanceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: TargetWeakSpotAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: ArmorBashAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: EarthquakeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: RockShieldAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: RockShieldStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: HealAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: PickOffAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: ShoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: ShrapnelAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: ShrapnelAbilityModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: CastigationOfCastingAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: HuntTheMarkAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: MarkedHunterPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: MarkOfCastigationStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: MarkOfPreyStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: OpportuneFlightAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: SwiftStrikeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: SideKickAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: SpeedGainAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: SpeedGainStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: DefenseChangeStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: DisarmStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: DotStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: EnergyDeficitStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: EnergyExcessStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: MovementChangeStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: SilenceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: AbilityUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: OverHeadUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: TileHighlighterModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: RoundStack, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: RoundStackController, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  - _name: ReadyButton, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  - _name: ReadyButtons, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &1271446637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39994,7 +40341,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40192,7 +40539,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40302,7 +40649,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40351,7 +40698,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40370,7 +40717,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40477,7 +40824,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40658,7 +41005,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40751,7 +41098,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40770,7 +41117,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -40833,7 +41180,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -41172,7 +41519,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41191,7 +41538,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41336,7 +41683,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41355,7 +41702,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41404,7 +41751,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41423,7 +41770,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41494,7 +41841,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41653,7 +42000,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -41672,7 +42019,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -42428,7 +42775,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -42521,7 +42868,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -42585,7 +42932,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -42619,7 +42966,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -42875,7 +43222,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -42985,7 +43332,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -43262,7 +43609,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -43326,7 +43673,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -43405,7 +43752,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -43575,7 +43922,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -43661,7 +44008,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -43724,7 +44071,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -43846,7 +44193,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -43939,7 +44286,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -43973,7 +44320,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -43992,7 +44339,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44011,7 +44358,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -44089,7 +44436,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44108,7 +44455,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44127,7 +44474,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -44161,7 +44508,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44375,7 +44722,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44446,7 +44793,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44553,7 +44900,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44572,7 +44919,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44591,7 +44938,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44654,7 +45001,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44829,7 +45176,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44848,7 +45195,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44867,7 +45214,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -44974,7 +45321,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -45292,7 +45639,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -45539,7 +45886,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -45664,7 +46011,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -45698,7 +46045,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -45717,7 +46064,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -45736,7 +46083,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -45814,7 +46161,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -45848,7 +46195,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -45867,7 +46214,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -46469,7 +46816,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -46518,7 +46865,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -46537,7 +46884,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -46608,7 +46955,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -46642,7 +46989,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -46900,7 +47247,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47007,7 +47354,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47191,7 +47538,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47344,8 +47691,7 @@ MonoBehaviour:
   m_Name: InwardsImpassableEdgeModifier(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: 
   identifier: edgemodifier_inwards_impassable
   container: {fileID: 0}
   displayName: {fileID: 0}
@@ -47393,7 +47739,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47607,7 +47953,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47626,7 +47972,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47645,7 +47991,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47708,7 +48054,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -47757,7 +48103,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48018,7 +48364,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48037,7 +48383,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48405,7 +48751,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -48439,7 +48785,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48546,7 +48892,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48655,7 +49001,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48704,7 +49050,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48888,7 +49234,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -48951,7 +49297,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -49091,7 +49437,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -49110,7 +49456,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -49129,7 +49475,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -49239,7 +49585,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -49421,7 +49767,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -49640,7 +49986,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -50322,7 +50668,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -50371,7 +50717,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -50442,7 +50788,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -50663,8 +51009,7 @@ MonoBehaviour:
   m_Name: InwardsImpassableEdgeModifier(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: InwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _name: 
   identifier: edgemodifier_inwards_impassable
   container: {fileID: 0}
   displayName: {fileID: 0}
@@ -50904,7 +51249,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -50923,7 +51268,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -50942,7 +51287,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -50961,7 +51306,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51150,7 +51495,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51257,7 +51602,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51276,7 +51621,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51295,7 +51640,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51314,7 +51659,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51489,7 +51834,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -51791,7 +52136,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52114,7 +52459,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -52170,7 +52515,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52189,7 +52534,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -52395,7 +52740,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52488,7 +52833,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52581,7 +52926,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52644,7 +52989,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52663,7 +53008,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -52727,7 +53072,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -52746,7 +53091,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -52854,7 +53199,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -53118,7 +53463,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -53496,7 +53841,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -53641,7 +53986,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -53770,7 +54115,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -53789,7 +54134,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -53808,7 +54153,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54033,7 +54378,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54052,7 +54397,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -54086,7 +54431,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54105,7 +54450,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54420,7 +54765,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54439,7 +54784,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54576,7 +54921,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -54684,7 +55029,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54747,7 +55092,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54928,7 +55273,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -54999,7 +55344,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -55191,7 +55536,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -55422,7 +55767,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -55729,7 +56074,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -55778,7 +56123,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -55812,7 +56157,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -56369,7 +56714,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -56583,7 +56928,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -56602,7 +56947,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -56776,7 +57121,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -56886,7 +57231,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -56996,7 +57341,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -57030,7 +57375,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -57101,7 +57446,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -57330,7 +57675,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -57643,7 +57988,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -57692,7 +58037,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -57979,7 +58324,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -58109,7 +58454,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -58352,7 +58697,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -58467,7 +58812,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -58649,7 +58994,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -58836,7 +59181,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -58855,7 +59200,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -58874,7 +59219,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -58893,7 +59238,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59016,7 +59361,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -59050,7 +59395,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59099,7 +59444,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59118,7 +59463,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59137,7 +59482,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59342,7 +59687,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -59511,7 +59856,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59574,7 +59919,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -59734,7 +60079,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -59827,7 +60172,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -59861,7 +60206,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -59986,7 +60331,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -60101,7 +60446,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -60187,7 +60532,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -60206,7 +60551,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -60447,7 +60792,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -61029,7 +61374,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -61108,7 +61453,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -61142,7 +61487,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -61161,7 +61506,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -61307,7 +61652,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -61447,7 +61792,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -61658,7 +62003,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -61876,7 +62221,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -61939,7 +62284,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -62003,7 +62348,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62184,7 +62529,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62203,7 +62548,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -62237,7 +62582,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -62301,7 +62646,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62372,7 +62717,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62391,7 +62736,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62432,7 +62777,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62677,7 +63022,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -62755,7 +63100,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62774,7 +63119,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62867,7 +63212,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -62886,7 +63231,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -63322,7 +63667,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -63341,7 +63686,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -63635,7 +63980,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -63654,7 +63999,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -63769,7 +64114,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -63788,7 +64133,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -63866,7 +64211,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -63915,7 +64260,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64148,7 +64493,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64167,7 +64512,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64276,7 +64621,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64325,7 +64670,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64523,7 +64868,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -64587,7 +64932,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64688,7 +65033,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -64825,7 +65170,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -65205,7 +65550,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -65327,7 +65672,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -65548,7 +65893,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -65567,7 +65912,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -65638,7 +65983,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -65778,7 +66123,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -66006,7 +66351,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -66198,7 +66543,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -66261,7 +66606,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -66371,7 +66716,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -66405,7 +66750,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -66439,7 +66784,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -66983,7 +67328,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -67076,7 +67421,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -67268,7 +67613,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -67287,7 +67632,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
@@ -67306,7 +67651,7 @@ MonoBehaviour:
   m_Name: GroundTile(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: tile_ground
   container: {fileID: 194248088727427243, guid: 741552137c685484a85dcdd7b8204340, type: 3}
   baseModifiers: []
@@ -67450,7 +67795,7 @@ MonoBehaviour:
   m_Name: EdgeData(Clone)
   m_EditorClassIdentifier: 
   createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+    _name: 
   identifier: edge_default
   container: {fileID: 0}
   baseModifiers: []
