@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8094221125119363517
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 4
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -20,20 +7,21 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BogFog
-  m_Shader: {fileID: -6465566751694194690, guid: 15d40d91fda9a8d4a91d6a5d9dbdc411, type: 3}
+  m_Name: Team1 2
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2999
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 8291f2d3fe69f324f9cd756126e8482d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -57,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8291f2d3fe69f324f9cd756126e8482d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -89,33 +77,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_2cd548bd6f9a45dfae07c4d150873b6d: 0.15
-    - Vector1_6e112a3ecbe048ff9cbe207497b45f73: 10
-    - Vector1_72ad1d3bdc6d488594b0b4239a7c0efa: -0.6
-    - Vector1_877922aead8c4e6f89ad8cf7ae3f58a8: 0.027
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Dist: 10
-    - _DitherStrength: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FogPower: 0.6
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Mode: 0
-    - _NoiseScale: 0.6
-    - _NoiseScale2: 0.15
     - _OcclusionStrength: 1
-    - _Parallax: 0.02
+    - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -123,22 +101,24 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_7d2a4d7c3351408ab00bef25adfb03f8: {r: 0.10746703, g: 0.1387347, b: 0.14150938, a: 1}
-    - Vector2_76ce2f626dae4293bdad08edabe683ee: {r: 0.92, g: 1.05, b: 0, a: 0}
-    - Vector2_b88203ad998d4c0fb61f206e5d4c2312: {r: 0.9, g: 0.68, b: 0, a: 0}
-    - Vector2_e6f3626f1e2944f4a169a9c18a58a81e: {r: 0.92, g: 1.17, b: 0, a: 0}
-    - Vector3_6261a30c523340aab5b10851c3d202db: {r: 0.25, g: 0.36, b: 0.25, a: 0}
-    - _BaseColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
+    - _BaseColor: {r: 0.08627448, g: 0.8, b: 0.24670644, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Fog: {r: 0.18307228, g: 0.20754719, b: 0.19775723, a: 0}
-    - _NoiseMoveSpeed: {r: 0.2, g: 0.4, b: 0.2, a: 0}
-    - _NoiseMoveSpeed2: {r: 0.08, g: 0.2, b: -0.2, a: 0}
-    - _NoiseScale: {r: 0.4, g: 0, b: 1.25, a: 0}
-    - _NoiseScale2: {r: 0.1, g: 0, b: 0.4, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &1877837747839877766
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 4

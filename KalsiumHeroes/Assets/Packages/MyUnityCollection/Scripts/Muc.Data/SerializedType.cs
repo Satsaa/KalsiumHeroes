@@ -10,17 +10,6 @@ namespace Muc.Data {
 	public class SerializedType : ISerializationCallbackReceiver {
 
 		public static implicit operator Type(SerializedType t) => t?.type;
-		public static explicit operator SerializedType(Type t) => new SerializedType(t);
-
-		public static bool operator ==(SerializedType a, SerializedType b) => (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null)) ? object.ReferenceEquals(a, b) : a.type == b.type;
-		public static bool operator !=(SerializedType a, SerializedType b) => (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null)) ? !object.ReferenceEquals(a, b) : a.type != b.type;
-
-		public SerializedType(Type type) {
-			this.type = type;
-		}
-		public SerializedType(string typeName) {
-			this.name = typeName;
-		}
 
 		[NonSerialized]
 		protected bool updated = false;
@@ -60,8 +49,8 @@ namespace Muc.Data {
 
 		public virtual IEnumerable<Type> GetValidTypes() {
 			return AppDomain.CurrentDomain.GetAssemblies()
-				.SelectMany(v => v.GetTypes())
-				.Where(v => v.IsClass || v.IsInterface || v.IsValueType);
+					.SelectMany(v => v.GetTypes())
+					.Where(v => v.IsClass || v.IsInterface || v.IsValueType);
 		}
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize() { }
@@ -76,31 +65,12 @@ namespace Muc.Data {
 				Update();
 			}
 		}
-
-		public override bool Equals(object obj) {
-			if (obj is SerializedType other) {
-				return this.type == other.type;
-			}
-			return base.Equals(obj);
-		}
-
-		public override int GetHashCode() {
-			return this?.type?.GetHashCode() ?? 0;
-		}
-
-		public override string ToString() {
-			return $"{type}";
-		}
 	}
 
 	[Serializable]
 	public class SerializedType<T> : SerializedType {
 
 		public static implicit operator Type(SerializedType<T> t) => t?.type;
-		public static explicit operator SerializedType<T>(Type t) => new SerializedType<T>(t);
-
-		public SerializedType(Type type) : base(type) { }
-		public SerializedType(string typeName) : base(typeName) { }
 
 		protected override void Update() {
 			var newtype = Type.GetType(_name ?? "");
@@ -110,11 +80,11 @@ namespace Muc.Data {
 
 		public override IEnumerable<Type> GetValidTypes() {
 			return AppDomain.CurrentDomain.GetAssemblies()
-				.SelectMany(v => v.GetTypes())
-				.Where(v =>
-					(v.IsClass || v.IsInterface || v.IsValueType) &&
-					(v == typeof(T) || typeof(T).IsAssignableFrom(v))
-				);
+					.SelectMany(v => v.GetTypes())
+					.Where(v =>
+							(v.IsClass || v.IsInterface || v.IsValueType) &&
+							(v == typeof(T) || typeof(T).IsAssignableFrom(v))
+					);
 		}
 	}
 

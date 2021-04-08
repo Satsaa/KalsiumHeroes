@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Muc.Systems.Camera;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(Camera))]
 public class CameraDisabler : MonoBehaviour {
