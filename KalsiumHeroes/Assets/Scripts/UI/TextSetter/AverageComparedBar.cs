@@ -1,0 +1,87 @@
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
+using Object = UnityEngine.Object;
+using Muc.Extensions;
+
+public class AverageComparedBar : ValueReceiver<UnitData> {
+
+	[SerializeField] BarType barType;
+
+	[SerializeField] TextSource displayNameText;
+	[SerializeField] TMPro.TMP_Text displayName;
+	[SerializeField] TMPro.TMP_Text value;
+
+	[SerializeField] float maxValue;
+	[SerializeField] RectTransform baseFiller;
+	[SerializeField] RectTransform underFiller;
+	[SerializeField] RectTransform overFiller;
+
+	protected void Start() {
+		displayName.text = displayNameText ?? Enum.GetName(typeof(BarType), barType);
+	}
+
+	protected override void ReceiveValue(UnitData data) {
+
+		if (data) {
+
+			var current = barType switch {
+				BarType.Health => data.health.value,
+				BarType.Defense => data.defense.value,
+				BarType.Resistance => data.resistance.value,
+				BarType.Speed => data.speed.value,
+				BarType.Movement => data.movement.value,
+				BarType.Energy => data.energy.value,
+				BarType.EnergyRegen => data.energyRegen.value,
+				BarType.MaxEnergy => data.energy.other,
+				_ => throw new ArgumentOutOfRangeException("Not a valid enum value", nameof(barType)),
+			};
+
+			var average = barType switch {
+				BarType.Health => App.library.GetByType<UnitData>().Average(v => v.health.value),
+				BarType.Defense => (float)App.library.GetByType<UnitData>().Average(v => (float)v.defense.value),
+				BarType.Resistance => (float)App.library.GetByType<UnitData>().Average(v => (float)v.resistance.value),
+				BarType.Speed => (float)App.library.GetByType<UnitData>().Average(v => (float)v.speed.value),
+				BarType.Movement => (float)App.library.GetByType<UnitData>().Average(v => (float)v.movement.value),
+				BarType.Energy => (float)App.library.GetByType<UnitData>().Average(v => (float)v.energy.value),
+				BarType.EnergyRegen => (float)App.library.GetByType<UnitData>().Average(v => (float)v.energyRegen.value),
+				BarType.MaxEnergy => (float)App.library.GetByType<UnitData>().Average(v => (float)v.energy.other),
+				_ => throw new ArgumentOutOfRangeException("Not a valid enum value", nameof(barType)),
+			};
+
+			if (value) {
+				value.text = current.ToString();
+			}
+
+			if (baseFiller) {
+				var fract = current / maxValue;
+				baseFiller.gameObject.SetActive(fract > 0);
+				baseFiller.anchorMin = baseFiller.anchorMin.SetX(0);
+				baseFiller.anchorMax = baseFiller.anchorMax.SetX(fract);
+
+			}
+
+			var averageFract = average / maxValue;
+
+			if (underFiller) {
+				var fract = (average - current) / maxValue;
+				underFiller.gameObject.SetActive(fract > 0);
+				underFiller.anchorMin = underFiller.anchorMin.SetX(averageFract - fract);
+				underFiller.anchorMax = underFiller.anchorMax.SetX(averageFract);
+			}
+
+			if (overFiller) {
+				var fract = (current - average) / maxValue;
+				overFiller.gameObject.SetActive(fract > 0);
+				overFiller.anchorMin = overFiller.anchorMin.SetX(averageFract);
+				overFiller.anchorMax = overFiller.anchorMax.SetX(averageFract + fract);
+			}
+
+
+		}
+
+	}
+
+}

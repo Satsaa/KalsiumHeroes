@@ -189,7 +189,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_enableExtraPadding: 0
+  m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
@@ -620,8 +620,8 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
+  m_enableExtraPadding: 1
+  checkPaddingRequired: 1
   m_isRichText: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
@@ -792,7 +792,7 @@ MonoBehaviour:
   itemParent: {fileID: 2155938345858090686}
   mode: {fileID: 11400000, guid: 674cc85c201bc894781f3228627c8fa4, type: 2}
   selection: []
-  submitMessageBox: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
+  submitPopup: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
   submitSuccessMessage: {fileID: 11400000, guid: 083ea946ac938b34ebc2f7dc869f0097, type: 2}
   items: []
 --- !u!1 &2155938345996943603
@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_enableExtraPadding: 0
+  m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1

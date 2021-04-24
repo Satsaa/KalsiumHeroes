@@ -5,14 +5,14 @@ using System;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
 
-public abstract class MasterData : DataObjectData {
+public abstract class MasterData : DetailsObjectData {
 
 	public override Type createTypeConstraint => typeof(Master);
 
-	[Tooltip("Instantiated GameObject when this Master is created")]
+	[Tooltip("Instantiated GameObject when the Master is created")]
 	public GameObject container;
 
-	[Tooltip("Created modifiers for this master.")]
+	[Tooltip("Automatically created modifiers for the Master.")]
 	public List<ModifierData> baseModifiers;
 
 }

@@ -182,7 +182,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 34.461853}
+  m_AnchoredPosition: {x: 0, y: 37.60547}
   m_SizeDelta: {x: 795, y: 957}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &264585226864355385
@@ -740,6 +740,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 8108957716195082509}
+  toolbar: {fileID: 1266706289540658622}
+  scrollRect: {fileID: 0}
   resizers:
   - {fileID: 3765161640784029002}
   - {fileID: 1867190446963303462}
@@ -750,11 +752,10 @@ MonoBehaviour:
   - {fileID: 2870936602439190513}
   - {fileID: 2250002240264921044}
   - {fileID: 0}
-  toolbar: {fileID: 1266706289540658622}
-  scrollRect: {fileID: 0}
   allowResize: 1
   minWidth: 30
   minHeight: 15
+  contentFallback: {fileID: 0}
 --- !u!225 &6807928396538660916
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1008,7 +1009,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_enableExtraPadding: 0
+  m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
@@ -1588,7 +1589,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5035868202488900113}
   m_HandleRect: {fileID: 8450902576748318910}
   m_Direction: 2
-  m_Value: 0.96070486
+  m_Value: 0.95712036
   m_Size: 0.08359457
   m_NumberOfSteps: 0
   m_OnValueChanged:

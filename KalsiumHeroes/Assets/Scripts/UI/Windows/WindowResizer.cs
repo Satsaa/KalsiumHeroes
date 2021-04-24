@@ -37,21 +37,21 @@ public class WindowResizer : ExtendedUIBehaviour, IPointerEnterHandler, IPointer
 			RectTransformUtility.ScreenPointToLocalPointInRectangle(Windows.rectTransform, App.input.pointer, canvasCam, out var pointer);
 			var diff = pointer - lastPointer;
 			lastPointer = pointer;
-			var scrollRectRectRect = window.scrollRect.rectTransform.rect;
+			var contentRect = window.scrollRect == null ? window.contentFallback.rect : window.scrollRect.rectTransform.rect;
 			if (directions.HasFlag(Window.Edge.Left)) {
-				float value = Mathf.Min(diff.x, scrollRectRectRect.width - window.minWidth);
+				float value = Mathf.Min(diff.x, contentRect.width - window.minWidth);
 				window.rectTransform.offsetMin += new Vector2(value, 0);
 			}
 			if (directions.HasFlag(Window.Edge.Right)) {
-				float value = Mathf.Max(diff.x, window.minWidth - scrollRectRectRect.width);
+				float value = Mathf.Max(diff.x, window.minWidth - contentRect.width);
 				window.rectTransform.offsetMax += new Vector2(value, 0);
 			}
 			if (directions.HasFlag(Window.Edge.Bottom)) {
-				float value = Mathf.Min(diff.y, scrollRectRectRect.height - window.minHeight);
+				float value = Mathf.Min(diff.y, contentRect.height - window.minHeight);
 				window.rectTransform.offsetMin += new Vector2(0, value);
 			}
 			if (directions.HasFlag(Window.Edge.Top)) {
-				float value = Mathf.Max(diff.y, window.minHeight - scrollRectRectRect.height);
+				float value = Mathf.Max(diff.y, window.minHeight - contentRect.height);
 				window.rectTransform.offsetMax += new Vector2(0, value);
 			}
 		}

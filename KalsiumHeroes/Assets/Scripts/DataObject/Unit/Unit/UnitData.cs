@@ -8,14 +8,11 @@ public class UnitData : MasterData {
 
 	public override Type createTypeConstraint => typeof(Unit);
 
-	[Tooltip("Display name of the Unit.")]
-	public TextSource displayName;
-
-	[Tooltip("Description of the Unit.")]
-	public TextSource description;
-
 	[Tooltip("Lore text of the Unit.")]
 	public TextSource lore;
+
+	[Tooltip("The RenderObject used to render this unit in previews.")]
+	public RenderObject preview;
 
 	[Tooltip("The RenderObject used to render this unit in portraits.")]
 	public RenderObject portrait;

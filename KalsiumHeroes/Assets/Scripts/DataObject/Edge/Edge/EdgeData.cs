@@ -10,9 +10,4 @@ public class EdgeData : MasterData {
 
 	public override Type createTypeConstraint => typeof(Edge);
 
-	[Tooltip("Display name of the Edge.")]
-	public TextSource displayName;
-
-	[Tooltip("Description of the Edge.")]
-	public TextSource description;
 }

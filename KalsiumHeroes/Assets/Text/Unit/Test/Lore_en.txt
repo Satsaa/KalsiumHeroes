@@ -1,1 +1,1 @@
-The Test Unit was created for testing in the testing phase of Kalsium Heroes.
+The Test Unit is used for testing everything related to Units.

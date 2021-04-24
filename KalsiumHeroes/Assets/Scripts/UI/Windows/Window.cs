@@ -23,6 +23,7 @@ public class Window : ExtendedUIBehaviour {
 	public bool allowResize = true;
 	[Min(30)] public float minWidth = 30;
 	[Min(15)] public float minHeight = 15;
+	public RectTransform contentFallback;
 
 	[Flags]
 	public enum Edge {
@@ -55,7 +56,7 @@ public class Window : ExtendedUIBehaviour {
 	}
 
 	public void FitSize(bool keepPosition = false) {
-		if (!allowResize) return;
+		if (!allowResize || !content) return;
 		content.LateUpdate();
 		var toolBarRect = toolbar.rectTransform;
 		var oldRect = rectTransform.rect;
@@ -94,11 +95,13 @@ namespace Editors {
 		SerializedProperty allowResize;
 		SerializedProperty minWidth;
 		SerializedProperty minHeight;
+		SerializedProperty contentFallback;
 
 		void OnEnable() {
 			allowResize = serializedObject.FindProperty(nameof(Window.allowResize));
 			minWidth = serializedObject.FindProperty(nameof(Window.minWidth));
 			minHeight = serializedObject.FindProperty(nameof(Window.minHeight));
+			contentFallback = serializedObject.FindProperty(nameof(Window.contentFallback));
 		}
 
 		public override void OnInspectorGUI() {
@@ -110,6 +113,7 @@ namespace Editors {
 			if (allowResize.boolValue) {
 				EditorGUILayout.PropertyField(minWidth);
 				EditorGUILayout.PropertyField(minHeight);
+				EditorGUILayout.PropertyField(contentFallback);
 			}
 
 
@@ -121,7 +125,8 @@ namespace Editors {
 				nameof(Window.scrollRect),
 				allowResize.name,
 				minWidth.name,
-				minHeight.name
+				minHeight.name,
+				contentFallback.name
 			);
 
 			serializedObject.ApplyModifiedProperties();

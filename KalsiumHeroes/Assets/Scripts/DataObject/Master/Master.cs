@@ -46,7 +46,7 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 	}
 }
 
-public abstract class Master : DataObject {
+public abstract class Master : DetailsObject {
 
 	public new MasterData data => (MasterData)_data;
 	public override Type dataType => typeof(MasterData);
