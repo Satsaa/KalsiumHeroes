@@ -159,27 +159,19 @@ namespace Muc.Editor {
 			if (container == null)
 				return null;
 			var type = container.GetType();
-			var members = type.GetMember(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-			for (int i = 0; i < members.Length; ++i) {
-				if (members[i] is FieldInfo field)
-					return field.GetValue(container);
-				else if (members[i] is PropertyInfo property)
-					return property.GetValue(container);
+			var field = GetField(type, name);
+			if (field != null) {
+				return field.GetValue(container);
 			}
 			return null;
 		}
 
 		static void SetMemberValue(object container, string name, object value) {
 			var type = container.GetType();
-			var members = type.GetMember(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-			for (int i = 0; i < members.Length; ++i) {
-				if (members[i] is FieldInfo field) {
-					field.SetValue(container, value);
-					return;
-				} else if (members[i] is PropertyInfo property) {
-					property.SetValue(container, value);
-					return;
-				}
+			var field = GetField(type, name);
+			if (field != null) {
+				field.SetValue(container, value);
+				return;
 			}
 			Debug.LogError($"Failed to set member {container}.{name} via reflection");
 		}
@@ -188,7 +180,18 @@ namespace Muc.Editor {
 			if (component.propertyName == null)
 				return null;
 			else
-				return container.GetType().GetField(component.propertyName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
+				return GetField(container.GetType(), component.propertyName);
+		}
+
+		static FieldInfo GetField(Type type, string name) {
+			var current = type;
+			while (current != null) {
+				var field = current.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+				if (field != null)
+					return field;
+				current = current.BaseType;
+			}
+			return null;
 		}
 
 	}

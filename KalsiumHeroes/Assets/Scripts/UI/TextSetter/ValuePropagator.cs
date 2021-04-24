@@ -25,9 +25,10 @@ namespace Editors {
 	using Object = UnityEngine.Object;
 	using static Muc.Editor.PropertyUtil;
 	using static Muc.Editor.EditorUtil;
+	using UnityEditor.SceneManagement;
 
 	[CanEditMultipleObjects]
-	[CustomEditor(typeof(ValuePropagator), true)]
+	[CustomEditor(typeof(ValuePropagator))]
 	public class ValuePropagatorEditor : Editor {
 
 		ValuePropagator t => (ValuePropagator)target;
@@ -43,7 +44,7 @@ namespace Editors {
 
 			DrawDefaultInspector();
 
-			using (DisabledScope(!Application.isPlaying || !value.objectReferenceValue)) {
+			using (DisabledScope(!Application.isPlaying || !value.objectReferenceValue || PrefabStageUtility.GetPrefabStage(t.gameObject) != null)) {
 				if (GUILayout.Button("Propagate Value")) {
 					t.Propagate();
 				}

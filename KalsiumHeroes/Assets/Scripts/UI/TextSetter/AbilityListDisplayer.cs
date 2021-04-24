@@ -10,6 +10,8 @@ public class AbilityListDisplayer : ValueReceiver<UnitData, Unit> {
 	[SerializeField] GameObject prefab;
 	[SerializeField, HideInInspector] List<GameObject> instantiates;
 
+	[SerializeField, HideInInspector] Unit target;
+
 	protected override void ReceiveValue(UnitData data) {
 		foreach (var instantiate in instantiates) {
 			Destroy(instantiate);
@@ -25,6 +27,12 @@ public class AbilityListDisplayer : ValueReceiver<UnitData, Unit> {
 	protected override void ReceiveValue(Unit unit) {
 		ReceiveValue(unit.data);
 		//TODO
+	}
+
+	protected void OnDestroy() {
+		if (target) {
+			target.onEvents.Remove(this);
+		}
 	}
 
 }

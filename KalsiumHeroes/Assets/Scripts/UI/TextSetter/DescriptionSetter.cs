@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 public class DescriptionSetter : ValueReceiver<DetailsObjectData> {
 
 	protected override void ReceiveValue(DetailsObjectData data) {
-		GetComponent<TMPro.TMP_Text>().text = data.description;
+		GetComponent<TMPro.TMP_Text>().text = data.description ?? $"{data.GetType().Name}.{nameof(DetailsObjectData.description)}";
 	}
 
 }

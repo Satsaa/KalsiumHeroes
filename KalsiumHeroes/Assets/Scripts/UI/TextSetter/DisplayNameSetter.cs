@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 public class DisplayNameSetter : ValueReceiver<DetailsObjectData> {
 
 	protected override void ReceiveValue(DetailsObjectData data) {
-		GetComponent<TMPro.TMP_Text>().text = data.displayName;
+		GetComponent<TMPro.TMP_Text>().text = data.displayName ?? $"{data.GetType().Name}.{nameof(DetailsObjectData.displayName)}";
 	}
 
 }

@@ -18,7 +18,7 @@ public static class ObjectUtil {
 			Object.Destroy(obj);
 	}
 
-	/// <summary> Instates gameObject without triggering it's Awake and disabling it. </summary>
+	/// <summary> Instantiates gameObject without triggering it's Awake and disabling it. </summary>
 	/// <param name="wasActive">Whether the cloned object was active.</param>
 	public static GameObject UnawokenGameObject(GameObject gameObject, out bool wasActive) {
 		if (gameObject == null) {

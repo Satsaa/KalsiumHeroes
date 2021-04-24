@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 public class LoreSetter : ValueReceiver<UnitData> {
 
 	protected override void ReceiveValue(UnitData data) {
-		GetComponent<TMPro.TMP_Text>().text = data.lore;
+		GetComponent<TMPro.TMP_Text>().text = data.lore ?? $"{data.GetType().Name}.{nameof(UnitData.lore)}";
 	}
 
 }
