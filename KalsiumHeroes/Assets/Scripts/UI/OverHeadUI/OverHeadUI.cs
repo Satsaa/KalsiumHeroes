@@ -15,6 +15,4 @@ public class OverHeadUI : MonoBehaviour {
 	public RectTransform energyRect;
 	public TMP_Text energyText;
 
-	ModifierListTooltipProvider displayName;
-
 }
