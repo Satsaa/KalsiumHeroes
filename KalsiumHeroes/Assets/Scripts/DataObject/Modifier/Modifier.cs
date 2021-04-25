@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 /// <summary>
 /// Base class for all Modifiers of Masters.
 /// </summary>
-public abstract class Modifier : DetailsObject {
+public abstract class Modifier : DataObject {
 
 	public new ModifierData source => (ModifierData)_source;
 	public new ModifierData data => (ModifierData)_data;

@@ -179,11 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
-    _name: 
-  typeConstraint2:
-    _name: 
-  typeConstraint3:
-    _name: 
+    _name: UnitModifierData, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &4043331149630880184
 GameObject:
   m_ObjectHideFlags: 0

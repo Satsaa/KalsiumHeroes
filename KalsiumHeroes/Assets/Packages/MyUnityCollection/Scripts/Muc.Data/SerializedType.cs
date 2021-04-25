@@ -34,10 +34,7 @@ namespace Muc.Data {
 			}
 			set {
 				_type = value;
-#if UNITY_EDITOR
-				if (_type != null || Application.isPlaying)
-#endif
-					_name = _type?.AssemblyQualifiedName;
+				_name = _type?.AssemblyQualifiedName;
 			}
 		}
 
@@ -49,8 +46,8 @@ namespace Muc.Data {
 
 		public virtual IEnumerable<Type> GetValidTypes() {
 			return AppDomain.CurrentDomain.GetAssemblies()
-					.SelectMany(v => v.GetTypes())
-					.Where(v => v.IsClass || v.IsInterface || v.IsValueType);
+				.SelectMany(v => v.GetTypes())
+				.Where(v => v.IsClass || v.IsInterface || v.IsValueType);
 		}
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize() { }
@@ -80,11 +77,11 @@ namespace Muc.Data {
 
 		public override IEnumerable<Type> GetValidTypes() {
 			return AppDomain.CurrentDomain.GetAssemblies()
-					.SelectMany(v => v.GetTypes())
-					.Where(v =>
-							(v.IsClass || v.IsInterface || v.IsValueType) &&
-							(v == typeof(T) || typeof(T).IsAssignableFrom(v))
-					);
+				.SelectMany(v => v.GetTypes())
+				.Where(v =>
+					(v.IsClass || v.IsInterface || v.IsValueType) &&
+					(v == typeof(T) || typeof(T).IsAssignableFrom(v))
+				);
 		}
 	}
 
@@ -122,7 +119,7 @@ namespace Muc.Data {
 				// Dropdown
 				var hint = new GUIContent(label) {
 					text = value == null ? "ERROR" : value.type == null
-						? String.IsNullOrWhiteSpace(value.name) ? "null" : $"Missing ({value.name})"
+						? String.IsNullOrWhiteSpace(value.name) ? "None" : $"Missing ({value.name})"
 						: $"{value.type} ({value.type.Assembly.GetName().Name})"
 				}; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {

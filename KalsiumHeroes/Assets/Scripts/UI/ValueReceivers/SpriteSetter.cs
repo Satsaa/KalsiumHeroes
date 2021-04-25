@@ -5,20 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using UnityEngine.UI;
+using IHas;
 
 [RequireComponent(typeof(Image))]
-public class SpriteSetter : ValueReceiver<PassiveData, AbilityData, UnitModifierData> {
+public class SpriteSetter : ValueReceiver<IHasSprite> {
 
-	protected override void ReceiveValue(PassiveData data) {
-		GetComponent<Image>().sprite = data.sprite;
-	}
-
-	protected override void ReceiveValue(AbilityData data) {
-		GetComponent<Image>().sprite = data.sprite;
-	}
-
-	protected override void ReceiveValue(UnitModifierData data) {
-		GetComponent<Image>().sprite = data.sprite;
+	protected override void ReceiveValue(IHasSprite obj) {
+		GetComponent<Image>().sprite = obj.sprite;
 	}
 
 }

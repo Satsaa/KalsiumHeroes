@@ -33,11 +33,16 @@ public abstract class ValueReceiver : MonoBehaviour {
 		}
 	}
 
-	public virtual void TryGiveValue(object value) {
+	public bool TryGiveValue(object value) {
+		return TryHandleValue(value);
+	}
+
+	public void GiveValue(object value) {
 		if (!TryHandleValue(value)) {
 			throw new ArgumentException("Value is not valid", nameof(value));
 		}
 	}
+
 	protected abstract bool TryHandleValue(object value);
 }
 

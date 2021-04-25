@@ -4,7 +4,7 @@ using UnityEngine;
 using Muc.Data;
 
 [CreateAssetMenu(fileName = nameof(ModifierData), menuName = "DataSources/" + nameof(ModifierData))]
-public abstract class ModifierData : DetailsObjectData {
+public abstract class ModifierData : DataObjectData {
 
 	public override Type createTypeConstraint => typeof(Modifier);
 

@@ -15,8 +15,6 @@ MonoBehaviour:
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: unit_lone_ranger
-  displayName: {fileID: 11400000, guid: 42f86a866cda1d443a677a06699c8b8d, type: 2}
-  description: {fileID: 11400000, guid: bc31a1daa4660eb458469dc8fcf65240, type: 2}
   container: {fileID: 4841974498028539211, guid: 2c6a0ce3066aa0548a9772b25193fcfa, type: 3}
   baseModifiers:
   - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
@@ -29,10 +27,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0573a3e5a1b7e2444aaa08757477463c, type: 2}
   - {fileID: 11400000, guid: 1c02de160193e194d9bacaa24b7522b4, type: 2}
   - {fileID: 11400000, guid: 0efa7d0572be3d14d848f789fafd38da, type: 2}
+  displayName: {fileID: 11400000, guid: 42f86a866cda1d443a677a06699c8b8d, type: 2}
+  description: {fileID: 11400000, guid: bc31a1daa4660eb458469dc8fcf65240, type: 2}
   lore: {fileID: 11400000, guid: 1f04b3f76c37205448bc0a6cebf7d491, type: 2}
+  sprite: {fileID: 21300000, guid: 6a7ac9e8c26b12440bf2b1da2ca97794, type: 3}
   preview: {fileID: 9008834760869199539, guid: 3c707a08949ae884ea8cac21de6e2343, type: 3}
   portrait: {fileID: 9008834760869199539, guid: 83e41df96c36f6443a8fa29625e4b94c, type: 3}
-  staticPortrait: {fileID: 21300000, guid: 6a7ac9e8c26b12440bf2b1da2ca97794, type: 3}
   actor: {fileID: 6516154736034674579, guid: 77aa66bdd77010d428a6bcfae7bf3941, type: 3}
   draftCost: 5
   speed:

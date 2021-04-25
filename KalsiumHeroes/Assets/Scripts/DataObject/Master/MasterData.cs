@@ -5,7 +5,7 @@ using System;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
 
-public abstract class MasterData : DetailsObjectData {
+public abstract class MasterData : DataObjectData {
 
 	public override Type createTypeConstraint => typeof(Master);
 

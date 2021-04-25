@@ -1,24 +1,37 @@
 
 using System;
+using IHas;
 using Muc.Systems.RenderImages;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
-public class UnitData : MasterData {
+public class UnitData : MasterData, IHasDisplayName, IHasDescription, IHasLore, IHasSprite {
 
 	public override Type createTypeConstraint => typeof(Unit);
 
+	TextSource IHasDisplayName.displayName => displayName;
+	TextSource IHasDescription.description => description;
+	TextSource IHasLore.lore => lore;
+	Sprite IHasSprite.sprite => sprite;
+
+	[Tooltip("Display name of the Unit.")]
+	public TextSource displayName;
+
+	[Tooltip("Description of the Unit.")]
+	public TextSource description;
+
 	[Tooltip("Lore text of the Unit.")]
 	public TextSource lore;
+
+	[Tooltip("Static sprite.")]
+	[UnityEngine.Serialization.FormerlySerializedAs("staticPortrait")]
+	public Sprite sprite;
 
 	[Tooltip("The RenderObject used to render this unit in previews.")]
 	public RenderObject preview;
 
 	[Tooltip("The RenderObject used to render this unit in portraits.")]
 	public RenderObject portrait;
-
-	[Tooltip("Static portrait sprite.")]
-	public Sprite staticPortrait;
 
 	[Tooltip("Actor prefab for this Unit. It is instantiated as a parent.")]
 	public UnitActor actor;

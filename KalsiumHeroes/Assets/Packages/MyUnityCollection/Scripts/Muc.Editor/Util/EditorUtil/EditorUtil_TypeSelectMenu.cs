@@ -158,7 +158,7 @@ namespace Muc.Editor {
 					var count = 0;
 					var menu = new GenericMenu();
 					if (includeNull && node.source == null) {
-						menu.AddItem(new GUIContent("null"), true, () => onSelect(null));
+						menu.AddItem(new GUIContent("None"), selected.Contains(null), () => onSelect(null));
 					}
 					if (node.source != null) {
 						if (count++ >= maxSingleMenuCount) return menu;
@@ -184,7 +184,7 @@ namespace Muc.Editor {
 				types.Sort(new TypeNameAndNamespaceComparer());
 				var menu = new GenericMenu();
 				if (includeNull) {
-					menu.AddItem(new GUIContent("null"), true, () => onSelect(null));
+					menu.AddItem(new GUIContent("None"), selected.Contains(null), () => onSelect(null));
 				}
 				foreach (var type in types) {
 					UnityEngine.GUIContent content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
@@ -196,7 +196,7 @@ namespace Muc.Editor {
 				types.Sort(new TypeNameAndNamespaceComparer());
 				var menu = new GenericMenu();
 				if (includeNull) {
-					menu.AddItem(new GUIContent("null"), true, () => onSelect(null));
+					menu.AddItem(new GUIContent("None"), selected.Contains(null), () => onSelect(null));
 				}
 				foreach (var type in types) {
 					var content = new GUIContent($"{type} ({type.Assembly.GetName().Name})");

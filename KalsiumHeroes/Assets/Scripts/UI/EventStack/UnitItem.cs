@@ -24,7 +24,7 @@ public class UnitItem : RoundStackItem {
 			unitRenderImage.SetRenderObject(unit.data.portrait);
 			unitImage.enabled = false;
 		} else {
-			unitImage.sprite = unit.data.staticPortrait;
+			unitImage.sprite = unit.data.sprite;
 			unitRenderImage.enabled = false;
 		}
 		if (unitText) {

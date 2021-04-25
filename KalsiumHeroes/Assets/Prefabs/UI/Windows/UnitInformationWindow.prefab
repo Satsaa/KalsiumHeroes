@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 4425208416471655491}
   - component: {fileID: 4292106847030494639}
   m_Layer: 5
-  m_Name: UnitBioText
+  m_Name: LoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -626,6 +626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8adcf63d6253f43995196f5a927c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
 --- !u!114 &4292106847030494639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +731,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2146377432798408474}
   m_HandleRect: {fileID: 2146377432798408475}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1979,6 +1981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0440dab512e7774fa26892ca2036370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
 --- !u!1 &5119813102203346504
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,6 +3331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a7c81701fd90f47b574c59b8c2b335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
 --- !u!1 &8803938880187643518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3597,6 +3603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a7c81701fd90f47b574c59b8c2b335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
 --- !u!1 &8803938880543575613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3686,8 +3694,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8803938881324236148}
   m_HandleRect: {fileID: 8803938881324236151}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9999999
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4263,8 +4271,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7666a1f93af0c40aed6ed65d2430a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
   prefab: {fileID: 4043331150635913133, guid: 0a1ef817788398a4caa3e356bad4167a, type: 3}
   instantiates: []
+  target: {fileID: 0}
 --- !u!114 &4934960899213295671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4366,7 +4379,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8803938881238140234}
   m_HandleRect: {fileID: 8803938881238140237}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
