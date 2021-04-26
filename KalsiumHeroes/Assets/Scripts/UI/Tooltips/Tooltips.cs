@@ -109,13 +109,13 @@ public class Tooltips : UISingleton<Tooltips> {
 	/// <summary>
 	/// Shows a Tooltip after called in update for a sufficient duration and other checks pass.
 	/// </summary>
-	/// <param name="id">Identifier of the Tooltip. Identifiers are listed in the tooltips list.</param>
+	/// <param name="query">Query string for the Tooltip. Format: "{tooltip_id}[:{data_id}]..."</param>
 	/// <param name="creator">The RectTransform of the UI object that is creating the Tooltip.</param>
 	/// <param name="innerRect">A Rect in the space of <b>creator</b> that represents an area where the Tooltip is created from. Use RectTransform.rect to use the whole object.</param>
 	/// <param name="canvasCamera">Camera of the associated Canvas, if any.</param>
 	/// <param name="initializer">Optional intializer function ran before layouting.</param>
 	/// <returns>True when the specific Tooltip was shown.</returns>
-	public bool Show(string id, RectTransform creator, Rect innerRect, Camera canvasCamera, Action<Tooltip> initializer = null) {
+	public bool Show(string query, RectTransform creator, Rect innerRect, Camera canvasCamera, Action<Tooltip> initializer = null) {
 
 		var creatorCenter = creator.transform.TransformPoint(innerRect.center);
 		var creatorMin = creator.transform.TransformPoint(innerRect.min);
@@ -134,6 +134,8 @@ public class Tooltips : UISingleton<Tooltips> {
 			Debug.DrawLine(creatorMax, creatorXMaxYMin, Color.blue);
 		}
 #endif
+
+		Parse(query, out var id, out var datas);
 
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
 		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id)) {
@@ -176,7 +178,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var tt = Instantiate(tooltips[id], transform);
+		var tt = InstantiateTooltip(tooltips[id], datas);
 		tt.id = id;
 		tt.index = tts.Count;
 		tt.creator = creator;
@@ -233,6 +235,37 @@ public class Tooltips : UISingleton<Tooltips> {
 		}
 		tooltip = default;
 		return false;
+	}
+
+	private Tooltip GetTooltip(string query, out string tooltipId, out string[] identifiers) {
+		Parse(query, out tooltipId, out identifiers);
+		return tooltips[query];
+	}
+
+	private Tooltip InstantiateTooltip(Tooltip tooltip, string[] identifiers) {
+		var res = Instantiate(tooltip, transform);
+		if (identifiers != null) {
+			foreach (var identifier in identifiers) {
+				try {
+					var data = App.library.GetById<DataObjectData>(identifier);
+					ValueReceiver.SendValue(res.gameObject, data);
+				} catch (KeyNotFoundException) {
+					Debug.LogError($"Object for identifier \"{identifier}\" not found.", this);
+				}
+			}
+		}
+		return res;
+	}
+
+	private void Parse(string query, out string tooltipId, out string[] identifiers) {
+		var colonised = query.Split(':');
+		if (colonised.Length > 1) {
+			identifiers = new string[colonised.Length - 1];
+			Array.Copy(colonised, 1, identifiers, 0, colonised.Length - 1);
+		} else {
+			identifiers = null;
+		}
+		tooltipId = colonised[0];
 	}
 
 }

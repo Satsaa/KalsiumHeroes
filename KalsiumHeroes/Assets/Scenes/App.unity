@@ -1075,14 +1075,6 @@ MonoBehaviour:
     list:
     - Key: modifier_info
       Value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
-    - Key: ability_info
-      Value: {fileID: 1237913112116532911, guid: 978252da3c2c83e4ea63454965dbca82, type: 3}
-    - Key: passive_info
-      Value: {fileID: 8355412165749399176, guid: 86d875be8477cd3428d5ae56e22c7518, type: 3}
-    - Key: status_info
-      Value: {fileID: 6405155065534834276, guid: 2f1c6065e6995644798c8a42b3a18e66, type: 3}
-    - Key: unitmodifier_info
-      Value: {fileID: -3472360170317517742, guid: 1df21eb6f17d6db419ecd9d05b518b1f, type: 3}
     - Key: modifier_list
       Value: {fileID: 3452182197045286548, guid: 4e6fff0ef02c2294aa9e8a58d61d6f7b, type: 3}
     - Key: blue
@@ -1978,6 +1970,7 @@ GameObject:
   - component: {fileID: 1949976550}
   - component: {fileID: 1949976549}
   - component: {fileID: 1949976548}
+  - component: {fileID: 1949976551}
   m_Layer: 5
   m_Name: TooltipTest
   m_TagString: Untagged
@@ -2002,7 +1995,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1949976548
 MonoBehaviour:
@@ -2039,7 +2032,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <link="tt_unit_info>unit_info</link>
+  m_text: <link="tt_blue:unit_test>tt_blue:unit_test</link>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2073,8 +2066,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2082,7 +2075,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -2116,6 +2109,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1949976546}
   m_CullTransparentMesh: 1
+--- !u!114 &1949976551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949976546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &2007932431
 GameObject:
   m_ObjectHideFlags: 0

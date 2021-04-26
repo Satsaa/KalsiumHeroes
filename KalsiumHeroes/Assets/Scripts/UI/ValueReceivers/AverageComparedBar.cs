@@ -13,6 +13,8 @@ public class AverageComparedBar : ValueReceiver<UnitData> {
 	[SerializeField] TextSource displayNameText;
 	[SerializeField] TMPro.TMP_Text displayName;
 	[SerializeField] TMPro.TMP_Text value;
+	[SerializeField, Tooltip("Formatting for the value text. 0 = current value, 1 = max value, 2 = average value, 3 = linear difference from average, 4 = percentage difference from average.")]
+	string valueFormat = "{0}";
 
 	[SerializeField] float maxValue;
 	[SerializeField] RectTransform baseFiller;
@@ -52,7 +54,12 @@ public class AverageComparedBar : ValueReceiver<UnitData> {
 			};
 
 			if (value) {
-				value.text = current.ToString();
+				var _0 = current;
+				var _1 = maxValue;
+				var _2 = average;
+				var _3 = current - average;
+				var _4 = (current - average) / average * 100; // Difference from average as percentage
+				value.text = String.Format(valueFormat, _0, _1, _2, _3, _4);
 			}
 
 			if (baseFiller) {

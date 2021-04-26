@@ -14,8 +14,11 @@ public class TooltipProvider : ExtendedUIBehaviour, IPointerEnterHandler, IPoint
 	[field: SerializeField, HideInInspector]
 	public bool hovered { get; protected set; }
 
-	[field: SerializeField]
-	public string id { get; protected set; } = "modifier_list";
+	[field: SerializeField, UnityEngine.Serialization.FormerlySerializedAs("id")]
+	public string query { get; protected set; } = "modifier_list";
+
+	[SerializeField, Tooltip("List of values to send with to the Tooltip.")]
+	public List<Object> additionalData;
 
 	protected Camera canvasCam;
 
@@ -30,16 +33,18 @@ public class TooltipProvider : ExtendedUIBehaviour, IPointerEnterHandler, IPoint
 
 	protected virtual void OnHover() {
 		if (!App.input.primary || App.input.primaryDown) {
-			Tooltips.instance.Show(id, rectTransform, rectTransform.rect, canvasCam, InitializeTooltip);
+			Tooltips.instance.Show(query, rectTransform, rectTransform.rect, canvasCam, InitializeTooltip);
 			if (App.input.primaryDown) {
 				Tooltips.instance.InvokeOnCreatorClicked(rectTransform.rect);
 			}
 		} else {
-			Tooltips.instance.Ping(id, rectTransform, rectTransform.rect);
+			Tooltips.instance.Ping(query, rectTransform, rectTransform.rect);
 		}
 	}
 
 	protected virtual void InitializeTooltip(Tooltip tooltip) {
-
+		foreach (var data in additionalData) {
+			ValueReceiver.SendValue(tooltip.gameObject, data);
+		}
 	}
 }

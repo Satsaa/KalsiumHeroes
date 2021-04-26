@@ -658,10 +658,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a18549fdc46d21408cbcec2a2f376e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
   barType: 0
   displayNameText: {fileID: 0}
   displayName: {fileID: 4174204878886713770}
   value: {fileID: 4174204879599723953}
+  valueFormat: '{0}'
   maxValue: 10
   baseFiller: {fileID: 4174204879041040116}
   underFiller: {fileID: 4174204878390101986}
