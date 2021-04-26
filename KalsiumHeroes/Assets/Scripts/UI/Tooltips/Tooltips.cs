@@ -135,7 +135,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		}
 #endif
 
-		Parse(query, out var id, out var datas);
+		Parse(query, out var id, out var values);
 
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
 		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().query != query)) {
@@ -178,7 +178,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var tt = InstantiateTooltip(tooltips[id], datas);
+		var tt = InstantiateTooltip(tooltips[id], values);
 		tt.query = query;
 		tt.index = tts.Count;
 		tt.creator = creator;
@@ -237,33 +237,38 @@ public class Tooltips : UISingleton<Tooltips> {
 		return false;
 	}
 
-	private Tooltip GetTooltip(string query, out string tooltipId, out string[] identifiers) {
-		Parse(query, out tooltipId, out identifiers);
+	private Tooltip GetTooltip(string query, out string tooltipId, out string[] values) {
+		Parse(query, out tooltipId, out values);
 		return tooltips[query];
 	}
 
-	private Tooltip InstantiateTooltip(Tooltip tooltip, string[] identifiers) {
+	private Tooltip InstantiateTooltip(Tooltip tooltip, string[] parameters) {
 		var res = Instantiate(tooltip, transform);
-		if (identifiers != null) {
-			foreach (var identifier in identifiers) {
-				try {
-					var data = App.library.GetById<DataObjectData>(identifier);
-					ValueReceiver.SendValue(res.gameObject, data);
-				} catch (KeyNotFoundException) {
-					Debug.LogError($"Object for identifier \"{identifier}\" not found.", this);
+		if (parameters != null) {
+			foreach (var param in parameters) {
+				if ((param[0] == '\'' && param[param.Length - 1] == '\'') || (param[0] == '"' && param[param.Length - 1] == '"')) {
+					var value = param.Substring(1, param.Length - 2);
+					ValueReceiver.SendValue(res.gameObject, value);
+				} else {
+					try {
+						var data = App.library.GetById<DataObjectData>(param);
+						ValueReceiver.SendValue(res.gameObject, data);
+					} catch (KeyNotFoundException) {
+						Debug.LogError($"Object for identifier \"{param}\" not found.", this);
+					}
 				}
 			}
 		}
 		return res;
 	}
 
-	private void Parse(string query, out string tooltipId, out string[] identifiers) {
+	private void Parse(string query, out string tooltipId, out string[] parameters) {
 		var colonised = query.Split(':');
 		if (colonised.Length > 1) {
-			identifiers = new string[colonised.Length - 1];
-			Array.Copy(colonised, 1, identifiers, 0, colonised.Length - 1);
+			parameters = new string[colonised.Length - 1];
+			Array.Copy(colonised, 1, parameters, 0, colonised.Length - 1);
 		} else {
-			identifiers = null;
+			parameters = null;
 		}
 		tooltipId = colonised[0];
 	}
