@@ -20,7 +20,7 @@ public class Tooltip : ExtendedUIBehaviour {
 	[SerializeField] List<Object> destroyOnWindowize;
 
 	[HideInInspector] public int index;
-	[HideInInspector] public string id;
+	[HideInInspector] public string query;
 	[HideInInspector] public RectTransform creator;
 	[HideInInspector] public bool windowized;
 

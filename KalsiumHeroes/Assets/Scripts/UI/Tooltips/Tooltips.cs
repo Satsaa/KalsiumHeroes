@@ -46,12 +46,12 @@ public class Tooltips : UISingleton<Tooltips> {
 						if (hovered) {
 							while (
 								tts.Count > 0 && hovered.index <= tts.Last().index - 1 &&
-								!(hovered.index == tts.Last().index - 1 && tts.Last().id == lastPing)
+								!(hovered.index == tts.Last().index - 1 && tts.Last().query == lastPing)
 							) {
 								Pop();
 							}
 						} else {
-							while (tts.Count > 0 && !(tts.Count == 1 && Time.frameCount - lastPingFrame <= 1 && tts.Last().id == lastPing)) {
+							while (tts.Count > 0 && !(tts.Count == 1 && Time.frameCount - lastPingFrame <= 1 && tts.Last().query == lastPing)) {
 								Pop();
 							}
 						}
@@ -86,14 +86,14 @@ public class Tooltips : UISingleton<Tooltips> {
 	/// <summary>
 	/// Pings a Tooltip so it doesn't get automatically hidden.
 	/// </summary>
-	/// <param name="id">Identifier of the Tooltip. Identifiers are listed in the tooltips list.</param>
+	/// <param name="query">Tooltip query.</param>
 	/// <param name="creator">The RectTransform of the UI object that is creating the Tooltip.</param>
 	/// <param name="innerRect">A Rect in the space of <b>creator</b> that represents an area where the Tooltip is created from.</param>
 	/// <returns>True if the ping succeeds.</returns>
-	public bool Ping(string id, RectTransform creator, Rect innerRect) {
-		lastPing = id;
+	public bool Ping(string query, RectTransform creator, Rect innerRect) {
+		lastPing = query;
 		lastPingFrame = Time.frameCount;
-		if (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id) {
+		if (!tts.Any() || tts.Last().creator != creator || tts.Last().query != query) {
 			if (tts.Any() && !IsTopHovered()) return false;
 			hideFrameDelay.Reset(true);
 			hideDelay.Reset(true);
@@ -138,7 +138,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		Parse(query, out var id, out var datas);
 
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
-		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().id != id)) {
+		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().query != query)) {
 			// Quick switching
 			quickSwitchDelay.paused = false;
 			if (quickSwitchDelay.expired) {
@@ -146,7 +146,7 @@ public class Tooltips : UISingleton<Tooltips> {
 					while (tts.Count > hovered.index + 2) {
 						Pop();
 					}
-					if (tts.Last().id != id || tts.Last().creator != creator) {
+					if (tts.Last().query != query || tts.Last().creator != creator) {
 						Pop();
 					} else {
 						return false;
@@ -155,7 +155,7 @@ public class Tooltips : UISingleton<Tooltips> {
 					while (tts.Count > 1) {
 						Pop();
 					}
-					if (tts.Last().id != id || tts.Last().creator != creator) {
+					if (tts.Last().query != query || tts.Last().creator != creator) {
 						Pop();
 					} else {
 						return false;
@@ -163,7 +163,7 @@ public class Tooltips : UISingleton<Tooltips> {
 				}
 				showDelay.Reset(true);
 			} else {
-				Ping(id, creator, innerRect);
+				Ping(query, creator, innerRect);
 				return false;
 			}
 		} else {
@@ -172,14 +172,14 @@ public class Tooltips : UISingleton<Tooltips> {
 			if (showDelay.expired) {
 				showDelay.Reset(true);
 			} else {
-				Ping(id, creator, innerRect);
+				Ping(query, creator, innerRect);
 				return false;
 			}
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
 		var tt = InstantiateTooltip(tooltips[id], datas);
-		tt.id = id;
+		tt.query = query;
 		tt.index = tts.Count;
 		tt.creator = creator;
 		tts.Add(tt);
