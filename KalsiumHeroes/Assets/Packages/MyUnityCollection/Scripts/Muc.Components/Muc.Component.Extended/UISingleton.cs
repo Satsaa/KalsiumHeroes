@@ -16,12 +16,16 @@ namespace Muc.Components.Extended {
 		new public static RectTransform rectTransform => instance.rectTransform;
 
 		new protected void OnValidate() {
-			if (_instance != null && _instance != this) {
-				Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
-			} else {
-				_instance = this as T;
-			}
+#if UNITY_EDITOR // Prevent activation in prefabs
+			if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null) {
+#endif
+				if (_instance != null && _instance != this) {
+					Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
+				} else {
+					_instance = this as T;
+				}
 #if UNITY_EDITOR
+			}
 			base.OnValidate();
 #endif
 		}

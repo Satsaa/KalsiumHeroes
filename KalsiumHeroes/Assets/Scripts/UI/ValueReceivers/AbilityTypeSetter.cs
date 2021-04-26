@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Muc.Data;
 
 [RequireComponent(typeof(TMPro.TMP_Text))]
 public class AbilityTypeSetter : ValueReceiver<AbilityData, PassiveData> {

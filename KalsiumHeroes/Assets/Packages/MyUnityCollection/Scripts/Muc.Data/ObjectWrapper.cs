@@ -49,7 +49,7 @@ namespace Muc.Data {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(ObjectWrapper<>), true)]
-	public class ObjectWrapperDrawer : PropertyDrawer {
+	internal class ObjectWrapperDrawer : PropertyDrawer {
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

@@ -126,7 +126,7 @@ namespace Muc.Data {
 	/// If scene is valid, provides basic buttons to interact with the scene's role in Build Settings.
 	/// </summary>
 	[CustomPropertyDrawer(typeof(SceneReference))]
-	public class SceneReferencePropertyDrawer : PropertyDrawer {
+	internal class SceneReferencePropertyDrawer : PropertyDrawer {
 
 		private const float FOOTER_HEIGHT = 24;
 

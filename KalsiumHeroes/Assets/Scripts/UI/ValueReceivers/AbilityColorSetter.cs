@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using UnityEngine.UI;
+using Muc.Data;
 
 [RequireComponent(typeof(Graphic))]
 public class AbilityColorSetter : ValueReceiver<AbilityData, PassiveData> {

@@ -101,7 +101,7 @@ namespace Muc.Data {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(SerializedType), true)]
-	public class SerializedTypeDrawer : PropertyDrawer {
+	internal class SerializedTypeDrawer : PropertyDrawer {
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

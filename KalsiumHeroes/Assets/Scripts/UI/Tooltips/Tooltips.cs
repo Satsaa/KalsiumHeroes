@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using Muc.Extensions;
 using Muc.Time;
 using Muc.Components.Extended;
+using Muc.Data;
 
 [DefaultExecutionOrder(-1)]
 public class Tooltips : UISingleton<Tooltips> {
@@ -113,7 +114,7 @@ public class Tooltips : UISingleton<Tooltips> {
 	/// <param name="creator">The RectTransform of the UI object that is creating the Tooltip.</param>
 	/// <param name="innerRect">A Rect in the space of <b>creator</b> that represents an area where the Tooltip is created from. Use RectTransform.rect to use the whole object.</param>
 	/// <param name="canvasCamera">Camera of the associated Canvas, if any.</param>
-	/// <param name="initializer">Optional intializer function ran before layouting.</param>
+	/// <param name="initializer">Optional intializer function ran before layouting.  </param>
 	/// <returns>True when the specific Tooltip was shown.</returns>
 	public bool Show(string query, RectTransform creator, Rect innerRect, Camera canvasCamera, Action<Tooltip> initializer = null) {
 
