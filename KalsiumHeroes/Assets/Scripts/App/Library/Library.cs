@@ -11,7 +11,7 @@ using Muc.Data;
 public class Library : MonoBehaviour {
 
 	[SerializeField] List<DataObjectData> sources;
-	public SerializedDictionary<string, DataObjectData> dict => _dict ??= BuildDict();
+	public SerializedDictionary<string, DataObjectData> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
 	private SerializedDictionary<string, DataObjectData> _dict;
 
 

@@ -26,6 +26,12 @@ public class Tooltips : UISingleton<Tooltips> {
 	string lastPing;
 	int lastPingFrame = -1;
 
+	[Identifier]
+	public string test1;
+
+	[Identifier(typeof(UnitData))]
+	public string test2;
+
 
 	void Update() {
 		if (Time.frameCount - lastPingFrame > 1) {
@@ -253,16 +259,6 @@ public class Tooltips : UISingleton<Tooltips> {
 
 	private static object ParseParamValue(string param) {
 		switch (param[0]) {
-			case '"':
-				if (param[param.Length - 1] != '"') {
-					throw new ArgumentException(MakeThrowString("The string parameter must be terminated with a matching quote."), "query");
-				}
-				return param.Substring(1, param.Length - 2);
-			case '\'':
-				if (param[param.Length - 1] != '\'') {
-					throw new ArgumentException(MakeThrowString("The string parameter must be terminated with a matching quote."), "query");
-				}
-				return param.Substring(1, param.Length - 2);
 			case '#':
 				if (!int.TryParse(param.Substring(1), out var instanceId)) {
 					throw new ArgumentException(MakeThrowString("The instance id is not a valid integer."), "query");
