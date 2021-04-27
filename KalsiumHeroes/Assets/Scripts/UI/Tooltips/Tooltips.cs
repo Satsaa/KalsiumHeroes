@@ -179,7 +179,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		}
 		hideFrameDelay.Reset(true);
 		hideDelay.Reset(true);
-		var tt = InstantiateTooltip(tooltips[id], values);
+		var tt = InstantiateTooltip(id, values);
 		tt.query = query;
 		tt.index = tts.Count;
 		tt.creator = creator;
@@ -243,35 +243,90 @@ public class Tooltips : UISingleton<Tooltips> {
 		return tooltips[query];
 	}
 
-	private Tooltip InstantiateTooltip(Tooltip tooltip, string[] parameters) {
-		var res = Instantiate(tooltip, transform);
-		if (parameters != null) {
-			foreach (var param in parameters) {
-				if ((param[0] == '\'' && param[param.Length - 1] == '\'') || (param[0] == '"' && param[param.Length - 1] == '"')) {
-					var value = param.Substring(1, param.Length - 2);
-					ValueReceiver.SendValue(res.gameObject, value);
-				} else {
-					try {
-						var data = App.library.GetById<DataObjectData>(param);
-						ValueReceiver.SendValue(res.gameObject, data);
-					} catch (KeyNotFoundException) {
-						Debug.LogError($"Object for identifier \"{param}\" not found.", this);
-					}
-				}
-			}
+	private Tooltip InstantiateTooltip(string id, string[] parameters) {
+		var res = Instantiate(tooltips[id], transform);
+		foreach (var param in parameters) {
+			ValueReceiver.SendValue(res.gameObject, ParseParamValue(param));
 		}
 		return res;
 	}
 
-	private void Parse(string query, out string tooltipId, out string[] parameters) {
-		var colonised = query.Split(':');
-		if (colonised.Length > 1) {
-			parameters = new string[colonised.Length - 1];
-			Array.Copy(colonised, 1, parameters, 0, colonised.Length - 1);
-		} else {
-			parameters = null;
+	private static object ParseParamValue(string param) {
+		switch (param[0]) {
+			case '"':
+				if (param[param.Length - 1] != '"') {
+					throw new ArgumentException(MakeThrowString("The string parameter must be terminated with a matching quote."), "query");
+				}
+				return param.Substring(1, param.Length - 2);
+			case '\'':
+				if (param[param.Length - 1] != '\'') {
+					throw new ArgumentException(MakeThrowString("The string parameter must be terminated with a matching quote."), "query");
+				}
+				return param.Substring(1, param.Length - 2);
+			case '#':
+				if (!int.TryParse(param.Substring(1), out var instanceId)) {
+					throw new ArgumentException(MakeThrowString("The instance id is not a valid integer."), "query");
+				}
+				var obj = ObjectUtil.FindObjectFromInstanceID(instanceId);
+				if (obj is null) {
+					throw new ArgumentException(MakeThrowString("The instance id does not result in a valid Object."), "query");
+				}
+				return obj;
+			default:
+				switch (param) {
+					case "true":
+						return true;
+					case "false":
+						return false;
+					default:
+						if (param.Contains('.')) {
+							return float.Parse(param, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+						} else if (param.All(c => c >= '0' && c <= '9')) {
+							return int.Parse(param, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+						} else {
+							var data = App.library.GetById<DataObjectData>(param);
+							if (data == null) throw new ArgumentException(MakeThrowString($"The identifier specified {nameof(DataObject)} was not found."), "query");
+							return data;
+						}
+				}
 		}
-		tooltipId = colonised[0];
+		string MakeThrowString(string reason) => $"Invalid tooltip query parameter: \"${param}\". {reason}";
+	}
+
+	private void Parse(string query, out string tooltipId, out string[] parameters) {
+
+		var tokens = new List<string>();
+
+		var token = "";
+		var dashing = false;
+
+		foreach (var current in query) {
+			if (dashing) {
+				dashing = false;
+				token += current;
+			} else {
+				if (current == '\\') {
+					dashing = true;
+					continue;
+				} else {
+					if (current == ':') {
+						tokens.Add(token);
+						token = "";
+						continue;
+					}
+					token += current;
+				}
+			}
+		}
+
+		tokens.Add(token);
+
+		tooltipId = tokens.First();
+		parameters = tokens.Skip(1).ToArray();
+
+		// Debug.Log(query);
+		// Debug.Log(String.Join(" | ", parameters));
+
 	}
 
 }

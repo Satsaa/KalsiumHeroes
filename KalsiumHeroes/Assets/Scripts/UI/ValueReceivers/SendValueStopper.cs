@@ -27,12 +27,6 @@ namespace Editors {
 
 		SendValueStopper t => (SendValueStopper)target;
 
-		// SerializedProperty property;
-
-		void OnEnable() {
-			// property = serializedObject.FindProperty(nameof(property));
-		}
-
 		public override void OnInspectorGUI() {
 			EditorGUILayout.LabelField("Stops SendValue from parent GameObjects.");
 		}

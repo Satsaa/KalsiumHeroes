@@ -14,11 +14,14 @@ namespace Muc.Components.Extended {
 		private static T _instance;
 
 		protected void OnValidate() {
-			if (_instance != null && _instance != this) {
-				Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
-			} else {
-				_instance = this as T;
-			}
+#if UNITY_EDITOR // Prevent activation in prefabs
+			if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null)
+#endif
+				if (_instance != null && _instance != this) {
+					Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
+				} else {
+					_instance = this as T;
+				}
 		}
 
 		protected void Awake() {

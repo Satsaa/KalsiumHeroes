@@ -5,6 +5,7 @@ using UnityEditor;
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System.Reflection;
 
 public static class ObjectUtil {
 
@@ -54,6 +55,19 @@ public static class ObjectUtil {
 			return (GameObject)PrefabUtility.InstantiatePrefab(gameObject, parent);
 #endif
 		return GameObject.Instantiate(gameObject, parent);
+	}
+
+	/// <summary>
+	/// Finds an Object based on an instance id. Instance ids can be obtained with <c>Object.GetInstanceId()</c>.
+	/// </summary>
+	/// <param name="instanceId">Integer returned by Object.GetInstanceId().</param>
+	/// <returns>Returns the Object with the provided instance id or null if none was found.</returns>
+	public static UnityEngine.Object FindObjectFromInstanceID(int instanceId) => findObjectFromInstanceID(instanceId);
+	private static Func<int, UnityEngine.Object> findObjectFromInstanceID = null;
+
+	static ObjectUtil() {
+		var methodInfo = typeof(UnityEngine.Object).GetMethod("FindObjectFromInstanceID", BindingFlags.NonPublic | BindingFlags.Static);
+		findObjectFromInstanceID = (Func<int, UnityEngine.Object>)Delegate.CreateDelegate(typeof(Func<int, UnityEngine.Object>), methodInfo);
 	}
 
 }
