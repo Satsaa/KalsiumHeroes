@@ -1,7 +1,8 @@
 ﻿
 
-// Original author: Erik Eriksson
-// MIT License
+// License: MIT
+// Original Author: Erik Eriksson (2020)
+// Original Code: https://github.com/upscalebaby/generic-serializable-dictionary
 
 namespace Muc.Data {
 

@@ -1,7 +1,10 @@
 
 
-// Original author: JohannesMP (2018-08-12)
-// A wrapper that provides the means to safely serialize Scene Asset References.
+// License: MIT
+// Original Author: JohannesMP (2017)
+// Original Author: S. Tarık Çetin (2019)
+// Original Code: https://github.com/JohannesMP/unity-scene-reference
+
 
 namespace Muc.Data {
 
