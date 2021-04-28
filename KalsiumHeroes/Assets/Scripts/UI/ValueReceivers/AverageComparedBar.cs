@@ -6,14 +6,14 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
 
-public class AverageComparedBar : ValueReceiver<UnitData> {
+public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnTakeDamage_Unit, IOnHeal_Unit, IOnAnimationEventEnd {
 
 	[SerializeField] BarType barType;
 
 	[SerializeField] TextSource displayNameText;
 	[SerializeField] TMPro.TMP_Text displayName;
 	[SerializeField] TMPro.TMP_Text value;
-	[SerializeField, Tooltip("Formatting for the value text. 0 = current value, 1 = max value, 2 = average value, 3 = linear difference from average, 4 = percentage difference from average.")]
+	[SerializeField, Tooltip("Formatting string for the value text. {0} = current value, {1} = max value, {2} = average value, {3} = linear difference from average, {4} = percentage difference from average.")]
 	string valueFormat = "{0}";
 
 	[SerializeField] float maxValue;
@@ -21,11 +21,21 @@ public class AverageComparedBar : ValueReceiver<UnitData> {
 	[SerializeField] RectTransform underFiller;
 	[SerializeField] RectTransform overFiller;
 
-	protected void Start() {
-		displayName.text = displayNameText ?? Enum.GetName(typeof(BarType), barType);
+	protected override void ReceiveValue(UnitData data) {
+		UpdateValue(data);
 	}
 
-	protected override void ReceiveValue(UnitData data) {
+	protected override void ReceiveValue(Unit target) {
+		this.target = target;
+		UpdateValue(target.data);
+		Hook(target);
+	}
+
+
+	[SerializeField, HideInInspector]
+	protected Unit target;
+
+	protected void UpdateValue(UnitData data) {
 
 		if (data) {
 
@@ -90,5 +100,11 @@ public class AverageComparedBar : ValueReceiver<UnitData> {
 		}
 
 	}
+
+	public void OnTurnStart() { if (barType == BarType.Energy) UpdateValue(target.data); }
+	public void OnAbilityCastStart(Ability ability) { if (barType == BarType.Energy) UpdateValue(target.data); }
+	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) { if (barType == BarType.Health) UpdateValue(target.data); }
+	public void OnHeal(ref float value) { if (barType == BarType.Health) UpdateValue(target.data); }
+	public void OnAnimationEventEnd() => UpdateValue(target.data);
 
 }

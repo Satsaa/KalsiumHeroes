@@ -15,18 +15,19 @@ public abstract class TileModifier : Modifier {
 
 	protected new void OnCreate() {
 		base.OnCreate();
-		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnCreate(this);
+		using (var scope = new OnEvents.Scope()) {
+			tile.onEvents.ForEach<IOnTileModifierCreate_Tile>(scope, v => v.OnTileModifierCreate(this));
+			Game.onEvents.ForEach<IOnTileModifierCreate_Global>(scope, v => v.OnTileModifierCreate(this));
+		}
 	}
 
 	protected new void OnRemove() {
-		foreach (var other in tile.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
+		using (var scope = new OnEvents.Scope()) {
+			tile.onEvents.ForEach<IOnTileModifierRemove_Tile>(scope, v => v.OnTileModifierRemove(this));
+			Game.onEvents.ForEach<IOnTileModifierRemove_Global>(scope, v => v.OnTileModifierRemove(this));
+		}
 		base.OnRemove();
 	}
-
-	/// <summary> When any other TileModifier is being added. </summary>
-	public virtual void OnCreate(TileModifier modifier) { }
-	/// <summary> When any other TileModifier is being removed. </summary>
-	public virtual void OnRemove(TileModifier modifier) { }
 
 }
 

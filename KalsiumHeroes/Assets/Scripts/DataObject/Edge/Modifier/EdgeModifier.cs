@@ -24,23 +24,21 @@ public abstract class EdgeModifier : Modifier {
 		});
 	}
 
-	public void Init(Tile context) {
-	}
-
 	protected override void OnCreate() {
 		base.OnCreate();
-		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnCreate(this);
+		using (var scope = new OnEvents.Scope()) {
+			edge.onEvents.ForEach<IOnEdgeModifierCreate_Edge>(scope, v => v.OnEdgeModifierCreate(this));
+			Game.onEvents.ForEach<IOnEdgeModifierCreate_Global>(scope, v => v.OnEdgeModifierCreate(this));
+		}
 	}
 
-	protected override void OnRemove() {
-		foreach (var other in edge.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
+	protected new void OnRemove() {
+		using (var scope = new OnEvents.Scope()) {
+			edge.onEvents.ForEach<IOnEdgeModifierRemove_Edge>(scope, v => v.OnEdgeModifierRemove(this));
+			Game.onEvents.ForEach<IOnEdgeModifierRemove_Global>(scope, v => v.OnEdgeModifierRemove(this));
+		}
 		base.OnRemove();
 	}
-
-	/// <summary> When any other EdgeModifier is being added. </summary>
-	public virtual void OnCreate(EdgeModifier modifier) { }
-	/// <summary> When any other EdgeModifier is being removed. </summary>
-	public virtual void OnRemove(EdgeModifier modifier) { }
 
 }
 

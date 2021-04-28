@@ -1093,6 +1093,8 @@ MonoBehaviour:
       value: {fileID: 3963258878849324368, guid: 86d875be8477cd3428d5ae56e22c7518, type: 3}
     keyCollision: 0
   tts: []
+  test1: 
+  test2: 
 --- !u!1 &1286376790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,8 +1691,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1cdae7c5b2231184db4f55867743794f, type: 2}
   - {fileID: 11400000, guid: 74111644a7fa8424ab6a6d5257c7e0af, type: 2}
   - {fileID: 11400000, guid: 991ff85893bb5f14dab4f51cf19c088b, type: 2}
-  - {fileID: 11400000, guid: 6574ac652aca19c43be642970d6c76b5, type: 2}
-  - {fileID: 11400000, guid: a15af9eb71372c24eb4dc6b8ea9bb35d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 8c2989e900e352047af570f2512be146, type: 2}
   - {fileID: 11400000, guid: 9df62c4917eb3444eb07b15caa30d531, type: 2}
   - {fileID: 11400000, guid: c88bd8570f9f47c4088667a325b84925, type: 2}
@@ -2053,7 +2055,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <link="tt_blue:unit_test>tt_blue:unit_test</link> | <link="tt_blue:69">tt_blue:69'></link>
+  m_text: <link="tt_blue:unit_test>tt_blue:unit_test</link> | <link="tt_blue:69&quot;">tt_blue:69'></link>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

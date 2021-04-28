@@ -320,9 +320,6 @@ public class Tooltips : UISingleton<Tooltips> {
 		tooltipId = tokens.First();
 		parameters = tokens.Skip(1).ToArray();
 
-		// Debug.Log(query);
-		// Debug.Log(String.Join(" | ", parameters));
-
 	}
 
 }

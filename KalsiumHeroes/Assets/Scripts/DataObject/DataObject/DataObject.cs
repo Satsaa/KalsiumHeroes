@@ -23,8 +23,6 @@ public abstract class DataObject : ScriptableObject {
 	[field: SerializeField, HideInInspector]
 	public bool removed { get; protected set; }
 
-	public virtual void OnCreate(Modifier modifier) { }
-	public virtual void OnRemove(Modifier modifier) { }
 
 	protected virtual void OnCreate() { }
 	protected virtual void OnRemove() { }

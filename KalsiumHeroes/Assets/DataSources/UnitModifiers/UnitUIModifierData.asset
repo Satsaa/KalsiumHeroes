@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333d0d65b62a5bb478a63a730b3760e3, type: 3}
+  m_Name: UnitUIModifierData
+  m_EditorClassIdentifier: 
+  createType:
+    _name: UnitUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
+  identifier: unitmodifier_test_ui
+  container: {fileID: 1199709513546497089, guid: 5917dcf2b5a3899408677521a316c666, type: 3}
+  displayName: {fileID: 0}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  trackingOffset: {x: 0, y: 0, z: 0}
+  screenOffset: {x: 0, y: 0}
+  pixelOffset: {x: 0, y: 0}
+  clampToScreen: 1
+  clampMin: {x: 0.25, y: 0}
+  clampMax: {x: 1, y: 1}

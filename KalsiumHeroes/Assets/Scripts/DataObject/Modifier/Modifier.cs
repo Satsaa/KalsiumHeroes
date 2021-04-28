@@ -32,9 +32,11 @@ public abstract class Modifier : DataObject {
 		if (removed) return;
 		removed = true;
 
-		master.OnRemove(this);
+		master.DetachModifier(this);
 		Game.dataObjects.Remove(this);
 		Game.onEvents.Remove(this);
+
+		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
 
 		OnConfigureNonpersistent(false);
 		OnRemove();
@@ -62,7 +64,7 @@ public abstract class Modifier : DataObject {
 			modifier.container.transform.rotation = source.container.transform.localRotation;
 		}
 
-		master.OnCreate(modifier);
+		master.AttachModifier(modifier);
 		Game.dataObjects.Add(modifier);
 		Game.onEvents.Add(modifier);
 
@@ -70,6 +72,8 @@ public abstract class Modifier : DataObject {
 
 		modifier.OnConfigureNonpersistent(true);
 		modifier.OnCreate();
+
+		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnModifierCreate>(scope, v => v.OnModifierCreate(modifier));
 
 		return modifier;
 	}

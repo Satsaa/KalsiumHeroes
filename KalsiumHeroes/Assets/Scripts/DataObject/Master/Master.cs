@@ -16,13 +16,14 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 
 	public ObjectDict<TMod> modifiers = new ObjectDict<TMod>();
 	public OnEvents<TOnEvent> onEvents = new OnEvents<TOnEvent>();
+	public override OnEvents rawOnEvents => onEvents;
 
 	protected override void OnCreate() {
 		gameObject.transform.SetParent(Game.game.transform);
 		onEvents.Add(this);
 	}
 
-	public override void OnCreate(Modifier modifier) {
+	public sealed override void AttachModifier(Modifier modifier) {
 		if (modifier.container) {
 			foreach (var contComp in modifier.container.GetComponentsInChildren<IContainerComponent>()) {
 				contComp.SetMaster(this);
@@ -36,7 +37,7 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 		onEvents.Remove(this);
 	}
 
-	public override void OnRemove(Modifier modifier) {
+	public sealed override void DetachModifier(Modifier modifier) {
 		modifiers.Remove((TMod)modifier);
 		onEvents.Remove(modifier);
 	}
@@ -55,6 +56,8 @@ public abstract class Master : DataObject {
 	[field: SerializeField]
 	public GameObject gameObject { get; private set; }
 	public Transform transform => gameObject.transform;
+
+	public abstract OnEvents rawOnEvents { get; }
 
 	public void Remove() {
 		if (removed) return;
@@ -91,6 +94,10 @@ public abstract class Master : DataObject {
 
 		return master;
 	}
+
+	public abstract void AttachModifier(Modifier modifier);
+
+	public abstract void DetachModifier(Modifier modifier);
 
 	public abstract List<Modifier> GetRawModifiers();
 

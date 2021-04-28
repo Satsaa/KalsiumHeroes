@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 using Muc;
 using Muc.Collections;
 
-public class OnEvents {
+public abstract class OnEvents {
 
 	public class Scope : IDisposable {
 		public Scope() => active = true;
@@ -34,6 +34,13 @@ public class OnEvents {
 		remove { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish -= value; }
 		add { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish += value; }
 	}
+
+
+	/// <summary> Adds an OnEvents to the cache. </summary>
+	public abstract void Add(Object obj);
+
+	/// <summary> Removes an OnEvents from the cache. </summary>
+	public abstract void Remove(Object obj);
 
 }
 
@@ -66,8 +73,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 		}
 	}
 
-	/// <summary> Adds the OnEvents to the cache. </summary>
-	public void Add(Object obj) {
+	public override void Add(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out object list)) {
@@ -86,8 +92,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 		}
 	}
 
-	/// <summary> Removes the OnEvents from the cache. </summary>
-	public void Remove(Object obj) {
+	public override void Remove(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			if (dict.TryGetValue(type, out var list)) {

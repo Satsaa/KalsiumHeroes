@@ -11,6 +11,33 @@ public interface IGlobalOnEvent : IOnEvent { }
 public interface IOnUpdate : IGlobalOnEvent { void OnUpdate(); }
 public interface IOnLateUpdate : IGlobalOnEvent { void OnLateUpdate(); }
 
+
+public interface IOnModifierCreate : IGlobalOnEvent { void OnModifierCreate(Modifier modifier); }
+public interface IOnModifierRemove : IGlobalOnEvent { void OnModifierRemove(Modifier modifier); }
+
+public interface IOnUnitModifierCreate_Unit : IUnitOnEvent { void OnUnitModifierCreate(UnitModifier modifier); }
+public interface IOnUnitModifierCreate_Tile : ITileOnEvent { void OnUnitModifierCreate(UnitModifier modifier); }
+public interface IOnUnitModifierCreate_Global : IGlobalOnEvent { void OnUnitModifierCreate(UnitModifier modifier); }
+
+public interface IOnUnitModifierRemove_Unit : IUnitOnEvent { void OnUnitModifierRemove(UnitModifier modifier); }
+public interface IOnUnitModifierRemove_Tile : ITileOnEvent { void OnUnitModifierRemove(UnitModifier modifier); }
+public interface IOnUnitModifierRemove_Global : IGlobalOnEvent { void OnUnitModifierRemove(UnitModifier modifier); }
+
+
+public interface IOnTileModifierCreate_Tile : ITileOnEvent { void OnTileModifierCreate(TileModifier modifier); }
+public interface IOnTileModifierCreate_Global : IGlobalOnEvent { void OnTileModifierCreate(TileModifier modifier); }
+
+public interface IOnTileModifierRemove_Tile : ITileOnEvent { void OnTileModifierRemove(TileModifier modifier); }
+public interface IOnTileModifierRemove_Global : IGlobalOnEvent { void OnTileModifierRemove(TileModifier modifier); }
+
+
+public interface IOnEdgeModifierCreate_Edge : IEdgeOnEvent { void OnEdgeModifierCreate(EdgeModifier modifier); }
+public interface IOnEdgeModifierCreate_Global : IGlobalOnEvent { void OnEdgeModifierCreate(EdgeModifier modifier); }
+
+public interface IOnEdgeModifierRemove_Edge : IEdgeOnEvent { void OnEdgeModifierRemove(EdgeModifier modifier); }
+public interface IOnEdgeModifierRemove_Global : IGlobalOnEvent { void OnEdgeModifierRemove(EdgeModifier modifier); }
+
+
 public interface IOnAbilityCastStart_Unit : IUnitOnEvent { void OnAbilityCastStart(Ability ability); }
 public interface IOnAbilityCastStart_Tile : ITileOnEvent { void OnAbilityCastStart(Ability ability); }
 public interface IOnAbilityCastStart_Global : IGlobalOnEvent { void OnAbilityCastStart(Ability ability); }

@@ -14,18 +14,21 @@ public abstract class UnitModifier : Modifier {
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnCreate(this);
+		using (var scope = new OnEvents.Scope()) {
+			unit.onEvents.ForEach<IOnUnitModifierCreate_Unit>(scope, v => v.OnUnitModifierCreate(this));
+			unit.tile.onEvents.ForEach<IOnUnitModifierCreate_Tile>(scope, v => v.OnUnitModifierCreate(this));
+			Game.onEvents.ForEach<IOnUnitModifierCreate_Global>(scope, v => v.OnUnitModifierCreate(this));
+		}
 	}
 
 	protected override void OnRemove() {
-		foreach (var other in unit.modifiers.Get().Where(mod => mod != this)) other.OnRemove(this);
+		using (var scope = new OnEvents.Scope()) {
+			unit.onEvents.ForEach<IOnUnitModifierRemove_Unit>(scope, v => v.OnUnitModifierRemove(this));
+			unit.tile.onEvents.ForEach<IOnUnitModifierRemove_Tile>(scope, v => v.OnUnitModifierRemove(this));
+			Game.onEvents.ForEach<IOnUnitModifierRemove_Global>(scope, v => v.OnUnitModifierRemove(this));
+		}
 		base.OnRemove();
 	}
-
-	/// <summary> When any other UnitModifier is being added. </summary>
-	public virtual void OnCreate(UnitModifier modifier) { }
-	/// <summary> When any other UnitModifier is being removed. </summary>
-	public virtual void OnRemove(UnitModifier modifier) { }
 
 }
 

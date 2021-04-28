@@ -7,10 +7,28 @@ using Object = UnityEngine.Object;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Toggle))]
-public class HiddenSetter : ValueReceiver<StatusData> {
+public class HiddenSetter : ValueHooker<StatusData, Status>, IOnAnimationEventEnd {
 
 	protected override void ReceiveValue(StatusData data) {
-		GetComponent<Toggle>().isOn = data.hidden.value;
+		UpdateValue(data);
 	}
+
+	protected override void ReceiveValue(Status status) {
+		target = status;
+		UpdateValue(status.data);
+		Hook(status.unit);
+	}
+
+
+	[SerializeField, HideInInspector]
+	protected Status target;
+	protected Toggle comp;
+
+	protected void UpdateValue(StatusData data) {
+		if (!comp) comp = GetComponent<Toggle>();
+		comp.isOn = data.hidden.value;
+	}
+
+	public void OnAnimationEventEnd() => UpdateValue(target.data);
 
 }
