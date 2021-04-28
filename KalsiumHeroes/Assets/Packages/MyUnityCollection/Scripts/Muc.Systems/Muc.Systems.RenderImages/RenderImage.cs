@@ -90,6 +90,7 @@ namespace Muc.Systems.RenderImages {
 		}
 
 		public virtual void SetRenderObject(RenderObject renderPrefab) {
+			if (this.renderPrefab == renderPrefab) return;
 			if (renderObject) {
 				renderObject.RemoveDependent(this);
 				renderObject.doCheckEnable = true;

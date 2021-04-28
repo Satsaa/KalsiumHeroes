@@ -50,11 +50,12 @@ namespace Muc.Systems.RenderImages {
 
 
 		protected void Awake() {
-			camera.enabled = updateMode == UpdateMode.Always;
-			Debug.Assert(renderRoot, this);
+			camera.enabled = false;
 		}
 
 		protected void Start() {
+			camera.enabled = updateMode == UpdateMode.Always;
+			Debug.Assert(renderRoot, this);
 			if (updateMode == UpdateMode.Initialize) {
 				camera.Render();
 			}
