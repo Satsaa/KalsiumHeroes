@@ -42,6 +42,7 @@ namespace Muc.Systems.RenderImages {
 
 		private RenderObject GetSharedObject(RenderObject prefab) {
 			shareds.TryGetValue(prefab, out var res);
+			if (res == null) shareds.Remove(prefab);
 			return res;
 		}
 
