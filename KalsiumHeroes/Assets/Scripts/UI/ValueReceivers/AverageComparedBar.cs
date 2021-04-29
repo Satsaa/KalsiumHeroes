@@ -5,21 +5,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Extensions;
+using UnityEngine.UI;
 
 public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnTakeDamage_Unit, IOnHeal_Unit, IOnAnimationEventEnd {
 
 	[SerializeField] BarType barType;
 
-	[SerializeField] TextSource displayNameText;
-	[SerializeField] TMPro.TMP_Text displayName;
 	[SerializeField] TMPro.TMP_Text value;
 	[SerializeField, Tooltip("Formatting string for the value text. {0} = current value, {1} = max value, {2} = average value, {3} = linear difference from average, {4} = percentage difference from average.")]
 	string valueFormat = "{0}";
 
 	[SerializeField] float maxValue;
-	[SerializeField] RectTransform baseFiller;
-	[SerializeField] RectTransform underFiller;
-	[SerializeField] RectTransform overFiller;
+	[SerializeField] Image baseFiller;
+	[SerializeField] Image underFiller;
+	[SerializeField] Image overFiller;
 
 	protected override void ReceiveValue(UnitData data) {
 		UpdateValue(data);
@@ -75,8 +74,9 @@ public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit
 			if (baseFiller) {
 				var fract = current / maxValue;
 				baseFiller.gameObject.SetActive(fract > 0);
-				baseFiller.anchorMin = baseFiller.anchorMin.SetX(0);
-				baseFiller.anchorMax = baseFiller.anchorMax.SetX(fract);
+				RectTransform rt = baseFiller.rectTransform;
+				rt.anchorMin = rt.anchorMin.SetX(0);
+				rt.anchorMax = rt.anchorMax.SetX(fract);
 
 			}
 
@@ -85,15 +85,17 @@ public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit
 			if (underFiller) {
 				var fract = (average - current) / maxValue;
 				underFiller.gameObject.SetActive(fract > 0);
-				underFiller.anchorMin = underFiller.anchorMin.SetX(averageFract - fract);
-				underFiller.anchorMax = underFiller.anchorMax.SetX(averageFract);
+				RectTransform rt = underFiller.rectTransform;
+				rt.anchorMin = rt.anchorMin.SetX(averageFract - fract);
+				rt.anchorMax = rt.anchorMax.SetX(averageFract);
 			}
 
 			if (overFiller) {
 				var fract = (current - average) / maxValue;
 				overFiller.gameObject.SetActive(fract > 0);
-				overFiller.anchorMin = overFiller.anchorMin.SetX(averageFract);
-				overFiller.anchorMax = overFiller.anchorMax.SetX(averageFract + fract);
+				RectTransform rt = overFiller.rectTransform;
+				rt.anchorMin = rt.anchorMin.SetX(averageFract);
+				rt.anchorMax = rt.anchorMax.SetX(averageFract + fract);
 			}
 
 

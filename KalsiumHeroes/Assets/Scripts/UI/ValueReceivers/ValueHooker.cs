@@ -38,8 +38,8 @@ public abstract class ValueHooker<T1, T2> : ValueReceiver<T1, T2> {
 
 	protected void Hook(Master master) {
 		if (hooker) Unhook();
-		hooker.rawOnEvents.Add(this);
 		hooker = master;
+		hooker.rawOnEvents.Add(this);
 	}
 
 	protected void Unhook() {

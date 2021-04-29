@@ -8,19 +8,20 @@ using UnityEngine.UI;
 using Muc.Data;
 
 [RequireComponent(typeof(Graphic))]
-public class AbilityColorSetter : ValueReceiver<AbilityData, PassiveData> {
+public class TeamColorSetter : ValueReceiver<Unit, Team> {
 
-	[SerializeField] Color passiveColor;
-	[SerializeField] SerializedDictionary<AbilityType, Color> colors;
+	[SerializeField] SerializedDictionary<Team, Color> colors;
 
-	protected override void ReceiveValue(AbilityData data) {
-		if (colors.TryGetValue(data.abilityType, out var color)) {
+	protected override void ReceiveValue(Unit target) {
+		if (colors.TryGetValue(target.team, out var color)) {
 			GetComponent<Graphic>().color = color;
 		}
 	}
 
-	protected override void ReceiveValue(PassiveData data) {
-		GetComponent<Graphic>().color = passiveColor;
+	protected override void ReceiveValue(Team team) {
+		if (colors.TryGetValue(team, out var color)) {
+			GetComponent<Graphic>().color = color;
+		}
 	}
 
 }

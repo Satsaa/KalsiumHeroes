@@ -17,6 +17,9 @@ public class UnitUIModifierData : UnitModifierData {
 	[Tooltip("Offset of the UI/container in pixels (affected by scaling).")]
 	public Vector2Int pixelOffset;
 
+	[Tooltip("Send the Unit object as a value to the " + nameof(ValueReceiver) + "s in the container.")]
+	public bool sendUnit = true;
+
 	[Tooltip("Clamp the container RectTransform inside the screen.")]
 	public bool clampToScreen;
 

@@ -49,6 +49,9 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 
 	protected override void OnCreate() {
 		rect = container.GetComponent<RectTransform>();
+		if (data.sendUnit) {
+			ValueReceiver.SendValue(container, unit);
+		}
 	}
 
 }
