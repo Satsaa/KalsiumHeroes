@@ -26,16 +26,31 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnTurnStart_Uni
 	float referenceWidth = -1;
 	[SerializeField, HideInInspector]
 	float referenceWidthScale = -1;
+	[SerializeField, HideInInspector]
+	bool awoken = false;
+	[SerializeField, HideInInspector]
+	Graphic graphic;
 
-	// Called when dimensions of a RectTransform change
-	protected void OnRectTransformDimensionsChange() {
-		if (setWidthScale && Application.isPlaying) {
+	protected void Awake() {
+		awoken = true;
+		graphic = GetComponent<Graphic>();
+		if (setWidthScale) {
 			var currentWidth = ((RectTransform)transform).rect.width;
 
 			if (referenceWidth == -1) referenceWidth = currentWidth;
-			if (referenceWidthScale == -1) referenceWidthScale = GetComponent<Graphic>().material.GetFloat("WidthScale");
+			if (referenceWidthScale == -1) referenceWidthScale = graphic.material.GetFloat("WidthScale");
 
-			GetComponent<Graphic>().materialForRendering.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
+			graphic.material = new Material(graphic.material); // We must clone the material to not share properties.
+
+			graphic.material.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
+		}
+	}
+
+	// Called when dimensions of a RectTransform change
+	protected void OnRectTransformDimensionsChange() {
+		if (setWidthScale && awoken && Application.isPlaying) {
+			var currentWidth = ((RectTransform)transform).rect.width;
+			graphic.material.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
 		}
 	}
 
@@ -82,18 +97,10 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnTurnStart_Uni
 			};
 			maxValue = Mathf.Max(current, maxValue);
 
-			var graphic = GetComponent<Graphic>();
-			var material = graphic.materialForRendering;
-
-			if (setMaxValue) material.SetFloat("MaxValue", maxValue);
-
+			if (setMaxValue) graphic.material.SetFloat("MaxValue", maxValue);
 			if (setWidthScale) {
 				var currentWidth = ((RectTransform)transform).rect.width;
-
-				if (referenceWidth == -1) referenceWidth = currentWidth;
-				if (referenceWidthScale == -1) referenceWidthScale = GetComponent<Graphic>().material.GetFloat("WidthScale");
-
-				material.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
+				graphic.material.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
 			}
 
 		}

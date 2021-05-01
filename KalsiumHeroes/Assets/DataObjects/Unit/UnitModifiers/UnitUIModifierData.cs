@@ -20,6 +20,7 @@ public class UnitUIModifierData : UnitModifierData {
 	[Tooltip("Send the Unit object as a value to the " + nameof(ValueReceiver) + "s in the container.")]
 	public bool sendUnit = true;
 
+	[Space(5)]
 	[Tooltip("Clamp the container RectTransform inside the screen.")]
 	public bool clampToScreen;
 
@@ -27,5 +28,25 @@ public class UnitUIModifierData : UnitModifierData {
 	public Vector2 clampMin = new Vector2(0, 0);
 	[Tooltip("Clamp area. (0,0),(1,1) = whole screen, (0.5,0.5),(1,1) = quarter of the screen.")]
 	public Vector2 clampMax = new Vector2(1, 1);
+
+	[Space(5)]
+	[Tooltip("Scale the container based on distance to the camera.")]
+	public ScaleMode scaleMode;
+
+	[Tooltip("Scale curve. Note that time is not normalized but based on linear distance.")]
+	public AnimationCurve scaleCurve = AnimationCurve.EaseInOut(25, 1, 50, 0.1f);
+
+	public enum ScaleMode {
+		[Tooltip("No scaling!?!?")]
+		None,
+		[Tooltip("Scale based on the distance of the camera from the tracking position.")]
+		Distance,
+		[Tooltip("Scale based on the height of the camera.")]
+		CameraHeight,
+		[Tooltip("Scale based on the height difference of the camera and the Unit.")]
+		HeightDifference,
+		[Tooltip("Scale based on the height difference of the camera and the Tile.")]
+		TileHeightDifference,
+	}
 
 }

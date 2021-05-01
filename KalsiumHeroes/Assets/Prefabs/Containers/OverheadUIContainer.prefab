@@ -99,6 +99,8 @@ MonoBehaviour:
   setWidthScale: 1
   referenceWidth: -1
   referenceWidthScale: -1
+  awoken: 0
+  graphic: {fileID: 0}
   target: {fileID: 0}
 --- !u!1 &823853548168102989
 GameObject:

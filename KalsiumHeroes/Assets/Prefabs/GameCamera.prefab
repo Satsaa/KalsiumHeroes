@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multiplier: 1.2
   minStep: 0.1
-  range: {x: 2, y: 50}
+  range: {x: 2, y: 57.73503}
   normalize: 1
   mucam: {fileID: 0}
   freeZoom:

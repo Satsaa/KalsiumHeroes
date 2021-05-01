@@ -44,6 +44,20 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 
 			}
 
+			if (data.scaleMode > 0) {
+
+				var t = data.scaleMode switch {
+					UnitUIModifierData.ScaleMode.Distance => Vector3.Distance(Camera.main.transform.position, master.transform.position + data.trackingOffset),
+					UnitUIModifierData.ScaleMode.CameraHeight => Camera.main.transform.position.y,
+					UnitUIModifierData.ScaleMode.HeightDifference => Camera.main.transform.position.y - (master.transform.position.y + data.trackingOffset.y),
+					UnitUIModifierData.ScaleMode.TileHeightDifference => Camera.main.transform.position.y - unit.tile.center.y,
+					_ => throw new ArgumentOutOfRangeException("Invalid enum value.", nameof(UnitUIModifierData.scaleMode)),
+				};
+				var scale = data.scaleCurve.Evaluate(t);
+				container.transform.localScale = new Vector3(scale, scale, scale);
+
+			}
+
 		}
 	}
 
