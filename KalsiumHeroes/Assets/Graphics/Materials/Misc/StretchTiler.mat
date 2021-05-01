@@ -20,9 +20,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DividerTiler
-  m_Shader: {fileID: -6465566751694194690, guid: fee4bc7d9eb699640afae3ff6e0365db, type: 3}
-  m_ShaderKeywords: FILTER_POINT HUEENABLE UNITY_UI_ALPHACLIP
+  m_Name: StretchTiler
+  m_Shader: {fileID: 4800000, guid: 0d0d5ad0aeda868478aa398543bacb56, type: 3}
+  m_ShaderKeywords: FILTER_POINT HUEENABLE SHOWFIRSTHALF UNITY_UI_ALPHACLIP USEREFERENCEVALUES
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1b096e4ecda3a4d4484427aa82e86b77, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
@@ -123,14 +123,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - BlockSize: 25
     - BlockValue: 250
     - Dividers: 0
     - FILTER: 1
     - HUEENABLE: 1
-    - MaxValue: 1000
+    - MaxValue: 100
+    - RawTiling: 0.01
     - ReferenceDivicers: 10
-    - SHOWFIRSTHALF: 0
-    - WidthScale: 20
+    - SHOWFIRSTHALF: 1
+    - USEREFERENCEVALUES: 1
+    - WidthScale: 24.101757
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1

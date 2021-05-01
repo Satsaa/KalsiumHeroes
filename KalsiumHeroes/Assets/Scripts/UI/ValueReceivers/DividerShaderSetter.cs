@@ -7,14 +7,37 @@ using Object = UnityEngine.Object;
 using Muc.Extensions;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-public class AttributeBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnTakeDamage_Unit, IOnHeal_Unit, IOnAnimationEventEnd {
+[RequireComponent(typeof(Graphic))]
+public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnTakeDamage_Unit, IOnHeal_Unit, IOnAnimationEventEnd {
 
 	[SerializeField]
 	BarType barType;
 
 	[SerializeField, Tooltip("This value is used for the maximum value if the attribute doesn't have one.")]
 	float fallbackMaxValue = 100;
+
+	[SerializeField, Tooltip("Set property named \"MaxValue\" to the maximum value of the attribute.")]
+	bool setMaxValue = true;
+
+	[SerializeField, Tooltip("Scale the property named \"WidthScale\" with .")]
+	bool setWidthScale = true;
+
+	[SerializeField, HideInInspector]
+	float referenceWidth = -1;
+	[SerializeField, HideInInspector]
+	float referenceWidthScale = -1;
+
+	// Called when dimensions of a RectTransform change
+	protected void OnRectTransformDimensionsChange() {
+		if (setWidthScale && Application.isPlaying) {
+			var currentWidth = ((RectTransform)transform).rect.width;
+
+			if (referenceWidth == -1) referenceWidth = currentWidth;
+			if (referenceWidthScale == -1) referenceWidthScale = GetComponent<Graphic>().material.GetFloat("WidthScale");
+
+			GetComponent<Graphic>().materialForRendering.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
+		}
+	}
 
 	protected override void ReceiveValue(UnitData data) {
 		UpdateValue(data);
@@ -32,7 +55,7 @@ public class AttributeBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnA
 
 	protected void UpdateValue(UnitData data) {
 
-		if (data) {
+		if (data && (setMaxValue || setWidthScale)) {
 
 			var current = barType switch {
 				BarType.Health => data.health.value,
@@ -43,7 +66,7 @@ public class AttributeBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnA
 				BarType.Energy => data.energy.value,
 				BarType.EnergyRegen => data.energyRegen.value,
 				BarType.MaxEnergy => data.energy.other,
-				_ => throw new ArgumentOutOfRangeException("Not a valid enum value", nameof(barType)),
+				_ => throw new ArgumentOutOfRangeException("Not a valid enum value.", nameof(barType)),
 			};
 
 			var maxValue = barType switch {
@@ -55,26 +78,23 @@ public class AttributeBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnA
 				BarType.Energy => data.energy.other,
 				BarType.EnergyRegen => fallbackMaxValue,
 				BarType.MaxEnergy => data.energy.other,
-				_ => throw new ArgumentOutOfRangeException("Not a valid enum value", nameof(barType)),
+				_ => throw new ArgumentOutOfRangeException("Not a valid enum value.", nameof(barType)),
 			};
 			maxValue = Mathf.Max(current, maxValue);
 
+			var graphic = GetComponent<Graphic>();
+			var material = graphic.materialForRendering;
 
-			var fract = current / maxValue;
+			if (setMaxValue) material.SetFloat("MaxValue", maxValue);
 
-			var image = GetComponent<Image>();
+			if (setWidthScale) {
+				var currentWidth = ((RectTransform)transform).rect.width;
 
-			image.gameObject.SetActive(fract > 0);
-			RectTransform rt = image.rectTransform;
+				if (referenceWidth == -1) referenceWidth = currentWidth;
+				if (referenceWidthScale == -1) referenceWidthScale = GetComponent<Graphic>().material.GetFloat("WidthScale");
 
-			var correction = 0f;
-			if (image.type is Image.Type.Sliced or Image.Type.Tiled && image.hasBorder) {
-				var pixels = (image.sprite.border.x * (1 - fract) * (1 / image.pixelsPerUnitMultiplier));
-				correction += pixels / (rt.rect.width * ((rt.anchorMax.x - rt.anchorMin.x) * -1 + 2));
-				correction *= 2;
+				material.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
 			}
-			rt.anchorMin = rt.anchorMin.SetX(0);
-			rt.anchorMax = rt.anchorMax.SetX(fract + correction);
 
 		}
 

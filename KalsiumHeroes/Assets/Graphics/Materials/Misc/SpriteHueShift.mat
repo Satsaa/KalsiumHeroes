@@ -123,8 +123,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - BlockSize: 50
     - FILTER: 1
     - HUEENABLE: 1
+    - MaxValue: 100
+    - RawTiling: 0.25
+    - WidthScale: 0.12
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1

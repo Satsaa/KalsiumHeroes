@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6016079517742993577}
   - component: {fileID: 7777476603815652355}
   m_Layer: 0
-  m_Name: EdgeModel
+  m_Name: SquishedCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
