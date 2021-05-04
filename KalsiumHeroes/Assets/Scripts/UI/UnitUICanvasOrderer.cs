@@ -26,6 +26,7 @@ public class UnitUICanvasOrderer : MonoBehaviour {
 	}
 
 	void LateUpdate() {
+		if (orderers == null) return;
 		distance = Vector3.Distance(transform.position, Camera.main.transform.position);
 		if (this == orderers.Last()) {
 			orderers.Sort((a, b) => a.distance.CompareTo(b.distance));
