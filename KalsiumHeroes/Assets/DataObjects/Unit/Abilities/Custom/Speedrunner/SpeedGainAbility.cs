@@ -18,7 +18,7 @@ public class SpeedGainAbility : NoTargetAbility {
 					if (data.teamType.TargetIsCompatible(this.unit, unit)) unitsFound++;
 				}
 			}
-			SpeedGainStatus.Create(master, data.speedGainModifier, v => ((SpeedGainStatus)v).unitsFound = unitsFound);
+			SpeedGainStatus.Create(master, data.speedGainModifier, v => ((SpeedGainStatus)v).Init(unitsFound));
 		});
 	}
 

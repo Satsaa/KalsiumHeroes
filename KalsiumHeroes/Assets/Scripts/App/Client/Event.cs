@@ -18,7 +18,7 @@ public class Event {
 	public Event() => this.type = this.GetType().Name;
 }
 
-
+[Serializable]
 public abstract class GameEvent : Event {
 	public int gameEventNum;
 	public string code;
@@ -26,7 +26,7 @@ public abstract class GameEvent : Event {
 	public override string command => nameof(GameEvent);
 }
 
-
+[Serializable]
 public abstract class ClientEvent : Event {
 	public string guid;
 }

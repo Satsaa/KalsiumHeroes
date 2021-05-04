@@ -8,9 +8,16 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 	public new ParryStanceStatusData data => (ParryStanceStatusData)_data;
 	public override Type dataType => typeof(ParryStanceStatusData);
 
+	protected Alterer<int> defenseAlterer;
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.data.defense.ConfigureAlterer(add, v => v + data.defenseIncrease.value);
+		var alt = unit.data.defense.ConfigureValueAlterer(add, this,
+			applier: (v, a) => v + a,
+			updater: () => data.defenseIncrease.value,
+			updateEvents: new[] {
+				data.defenseIncrease.onValueChanged
+			}
+		);
 	}
 
 

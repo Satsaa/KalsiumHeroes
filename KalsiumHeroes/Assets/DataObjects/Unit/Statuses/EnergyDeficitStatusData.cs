@@ -7,10 +7,10 @@ public class EnergyDeficitStatusData : StatusData {
 
 	public override Type createTypeConstraint => typeof(EnergyDeficitStatus);
 
-	[Tooltip("Amount of defense reductions per stack.")]
-	public int defenseReduction = 5;
+	[Tooltip("Amount of defense change per stack.")]
+	public Attribute<int> defenseChange = new(-5);
 
-	[Tooltip("Amount of resistance reductions per stack.")]
-	public int resistanceReduction = 5;
+	[Tooltip("Amount of resistance change per stack.")]
+	public Attribute<int> resistanceChange = new(-5);
 
 }

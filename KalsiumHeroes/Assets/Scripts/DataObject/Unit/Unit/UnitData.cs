@@ -66,12 +66,12 @@ public class UnitData : MasterData, IHasDisplayName, IHasDescription, IHasLore, 
 	public Amps amps;
 
 	[Tooltip("Silenced units cannot cast spells."), HideInInspector]
-	public SeededAttribute<bool> silenced = new SeededAttribute<bool>();
+	public Attribute<bool> silenced = new();
 
 	[Tooltip("Disarmed units cannot cast weapon skills."), HideInInspector]
-	public SeededAttribute<bool> disarmed = new SeededAttribute<bool>();
+	public Attribute<bool> disarmed = new();
 
 	[Tooltip("Rooted units cannot move."), HideInInspector]
-	public SeededAttribute<bool> rooted = new SeededAttribute<bool>();
+	public Attribute<bool> rooted = new();
 
 }

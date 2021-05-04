@@ -1,50 +1,73 @@
 ﻿
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEngine.Serialization;
-using System;
-using System.Security;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class ToggleAttribute<T> : Attribute<T> {
 
-	[SerializeField]
-	[Tooltip("Attribute is enabled?")]
-	private bool _enabled;
+	[field: SerializeField, Tooltip("Attribute is enabled?"), UnityEngine.Serialization.FormerlySerializedAs("_enabled")]
+	public bool rawEnabled { get; protected set; }
 
-	public virtual bool enabled {
-		get => enabledAlterers.Aggregate(_enabled, (current, alt) => alt(current));
-		set => _enabled = value;
-	}
+	public Muc.Data.Event onEnabledChanged = new();
 
-	protected HashSet<Func<bool, bool>> enabledAlterers = new HashSet<Func<bool, bool>>();
+	private List<Alterer<bool>> enabledAlterers = new();
+	private bool enabledCached;
+	private bool cachedEnabled;
 
-
-	public ToggleAttribute(bool enabled = true) {
-		_enabled = enabled;
-	}
-	public ToggleAttribute(T value, bool enabled = true) : base(value) {
-		_enabled = enabled;
+	public bool enabled {
+		get => enabledCached ? cachedEnabled : cachedEnabled = enabledAlterers.Aggregate(rawEnabled, (v, alt) => alt.Apply(v));
+		set { rawEnabled = value; enabledCached = false; onEnabledChanged?.Invoke(); }
 	}
 
 
+	public ToggleAttribute(T value = default, bool enabled = true) : base(value) {
+		rawEnabled = enabled;
+	}
 
-	/// <summary> Adds or removes a function that alters what the value property returns. </summary>
-	public bool ConfigureEnabledAlterer(bool add, Func<bool, bool> alterer) {
-		if (add) return enabledAlterers.Add(alterer);
-		else return enabledAlterers.Remove(alterer);
+
+	/// <summary> Adds or removes Alterers. When add is false all Alterers are removed by the creator regardless of the alterers argument.</summary>
+	public Alterer<bool, T2> ConfigureEnabledAlterer<T2>(bool add, Object creator, Func<bool, T2, bool> applier, Func<T2> updater, params Muc.Data.Event[] updateEvents) {
+		Alterer<bool, T2> res = null;
+		if (add) {
+			res = new(creator, updater, applier, () => onEnabledChanged?.Invoke());
+			enabledAlterers.Add(res);
+			if (updateEvents != null) {
+				foreach (var upEvent in updateEvents) {
+					upEvent.ConfigureListener(add, res.Update);
+				}
+			}
+		} else {
+			if (updateEvents != null) {
+				foreach (var alt in enabledAlterers.Where(v => v.creator == creator)) {
+					foreach (var upEvent in updateEvents) {
+						upEvent.ConfigureListener(add, alt.Update);
+					}
+				}
+			}
+			enabledAlterers.RemoveAll(v => v.creator == creator);
+		}
+		enabledCached = false;
+		onEnabledChanged?.Invoke();
+		return res;
+	}
+
+	/// <summary> Removes all Alterers created by the creator object. </summary>
+	public void RemoveEnabledAlterers(Object creator) {
+		enabledAlterers.RemoveAll(v => v.creator == creator);
+		enabledCached = false;
+		onEnabledChanged?.Invoke();
 	}
 
 	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
 		switch (attributeProperty) {
-			case AttributeProperty.Primary: return !_value.Equals(value);
+			case AttributeProperty.Primary: return !rawValue.Equals(value);
 			case AttributeProperty.Secondary: return false;
-			case AttributeProperty.Enabled: return !_enabled.Equals(enabled);
+			case AttributeProperty.Enabled: return !rawEnabled.Equals(enabled);
 			default: return false;
 		}
 	}
-
-	public override string GetEditorLabel(AttributeProperty attributeProperty) => "";
 
 }

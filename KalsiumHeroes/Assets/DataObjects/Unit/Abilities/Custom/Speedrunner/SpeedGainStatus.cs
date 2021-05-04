@@ -8,19 +8,29 @@ public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 	public new SpeedGainStatusData data => (SpeedGainStatusData)_data;
 	public override Type dataType => typeof(SpeedGainStatusData);
 
-	public int unitsFound;
+	protected int unitsFound = -1;
+
+	public void Init(int unitsFound) {
+		if (this.unitsFound != -1) throw new InvalidOperationException("Yall can't call Init twice.");
+		this.unitsFound = unitsFound;
+	}
+
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		var oldMt = unit.data.movement.value;
-		unit.data.movement.ConfigureAlterer(add, v => v + data.movementGain.value * unitsFound);
-		Debug.Log($"Old Movement: {oldMt} New Movement: {unit.data.movement.value}");
-		var oldSpd = unit.data.speed.value;
-		unit.data.speed.ConfigureAlterer(add, v => v + data.speedGain.value * unitsFound);
-		Debug.Log($"Old Speed: {oldSpd} New Speed: {unit.data.speed.value}");
+		unit.data.movement.ConfigureValueAlterer(add, this,
+			applier: (v, a) => v + a,
+			updater: () => data.movementGain.value * unitsFound,
+			updateEvents: new[] { data.movementGain.onValueChanged }
+		);
+		unit.data.speed.ConfigureValueAlterer(add, this,
+			applier: (v, a) => v + a,
+			updater: () => data.speedGain.value * unitsFound,
+			updateEvents: new[] { data.speedGain.onValueChanged }
+		);
 	}
 
 	public virtual void OnGetEstimatedSpeed(int roundsAhead, ref int current) {
-		if (!TurnDurationWouldHaveExpired(roundsAhead)) current += data.speedGain.value * unitsFound;
+		if (!WouldHaveExpired(roundsAhead)) current += data.speedGain.value * unitsFound;
 	}
 }

@@ -56,13 +56,13 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 	/// <summary> When this UnitModifier expires because the tick duration was reached. </summary>
 	public virtual void OnExpire() => Remove();
 
-	/// <summary> Based on statusEffectData.tickDuration check if this status would have expired after the provided round count. </summary>
-	public bool HasExpired() {
+	/// <summary> Check if this status has expired. </summary>
+	public virtual bool HasExpired() {
 		return data.ticks.enabled && data.ticks.value >= data.ticks.other;
 	}
 
-	/// <summary> Based on statusEffectData.tickDuration check if this status would have expired after the provided round count. </summary>
-	public bool TurnDurationWouldHaveExpired(int roundsAhead) {
+	/// <summary> Check if this status would have expired after the provided round count. </summary>
+	public virtual bool WouldHaveExpired(int roundsAhead) {
 		if (Game.rounds.HasFinishedTurn(unit)) roundsAhead--;
 		return data.ticks.enabled && data.ticks.value - roundsAhead <= 0;
 	}

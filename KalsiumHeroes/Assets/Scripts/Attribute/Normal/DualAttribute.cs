@@ -1,29 +1,66 @@
 ﻿
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEngine.Serialization;
-using System;
-using System.Security;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class DualAttribute<T> : Attribute<T> {
 
-	[SerializeField]
-	[Tooltip("Secondary value")]
-	protected T _other;
+	[field: SerializeField, Tooltip("Secondary value"), UnityEngine.Serialization.FormerlySerializedAs("_other")]
+	public T rawOther { get; protected set; }
 
-	public virtual T other {
-		get => otherAlterers.Aggregate(_other, (current, alt) => alt(current));
-		set => _other = value;
+	public Muc.Data.Event onOtherChanged = new();
+
+	private List<Alterer<T>> otherAlterers = new();
+	private bool otherCached;
+	private T cachedOther;
+
+	public T other {
+		get => otherCached ? cachedOther : cachedOther = otherAlterers.Aggregate(rawOther, (v, alt) => alt.Apply(v));
+		set { rawOther = value; otherCached = false; onOtherChanged?.Invoke(); }
 	}
 
-	protected HashSet<Func<T, T>> otherAlterers = new HashSet<Func<T, T>>();
+
+	public DualAttribute(T value = default, T other = default) : base(value) {
+		rawOther = other;
+	}
 
 
-	public DualAttribute() { }
-	public DualAttribute(T value, T other) : base(value) {
-		_other = other;
+	/// <summary> Adds or removes Alterers. When add is false all Alterers are removed by the creator regardless of the alterers argument.</summary>
+	public Alterer<T, T2> ConfigureOtherAlterer<T2>(bool add, Object creator, Func<T, T2, T> applier, Func<T2> updater, params Muc.Data.Event[] updateEvents) {
+		Alterer<T, T2> res = null;
+		if (add) {
+			res = new(creator, updater, applier, () => onOtherChanged?.Invoke());
+			otherAlterers.Add(res);
+			if (updateEvents != null) {
+				foreach (var upEvent in updateEvents) {
+					upEvent.ConfigureListener(add, res.Update);
+				}
+			}
+		} else {
+			if (updateEvents != null) {
+				foreach (var alt in otherAlterers.Where(v => v.creator == creator)) {
+					foreach (var upEvent in updateEvents) {
+						upEvent.ConfigureListener(add, alt.Update);
+					}
+				}
+			}
+			otherAlterers.RemoveAll(v => v.creator == creator);
+		}
+		otherCached = false;
+		onOtherChanged?.Invoke();
+		return res;
+	}
+
+	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
+		switch (attributeProperty) {
+			case AttributeProperty.Primary: return !rawValue.Equals(value);
+			case AttributeProperty.Secondary: return !rawOther.Equals(other);
+			case AttributeProperty.Enabled: return false;
+			default: return false;
+		}
 	}
 
 
@@ -41,30 +78,6 @@ public class DualAttribute<T> : Attribute<T> {
 			value = min;
 		} else {
 			LimitValue();
-		}
-	}
-
-	/// <summary> Adds or removes a function that alters what the value property returns. </summary>
-	public bool ConfigureOtherAlterer(bool add, Func<T, T> alterer) {
-		if (add) return otherAlterers.Add(alterer);
-		else return otherAlterers.Remove(alterer);
-	}
-
-	public override bool HasAlteredValue(AttributeProperty attributeProperty) {
-		switch (attributeProperty) {
-			case AttributeProperty.Primary: return !_value.Equals(value);
-			case AttributeProperty.Secondary: return !_other.Equals(other);
-			case AttributeProperty.Enabled: return false;
-			default: return false;
-		}
-	}
-
-	public override string GetEditorLabel(AttributeProperty attributeProperty) {
-		switch (attributeProperty) {
-			case AttributeProperty.Primary: return "Value";
-			case AttributeProperty.Secondary: return "Other";
-			case AttributeProperty.Enabled: return "";
-			default: return "Unknown";
 		}
 	}
 

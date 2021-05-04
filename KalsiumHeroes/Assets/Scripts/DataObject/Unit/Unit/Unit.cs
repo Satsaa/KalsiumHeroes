@@ -191,7 +191,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 
 	/// <summary> Gets the estimated speed of this unit after a number of rounds have passed. </summary>
 	public int GetEstimatedSpeed(int roundsAhead) {
-		var speed = data.speed.unalteredValue;
+		var speed = data.speed.rawValue;
 		using (var scope = new OnEvents.Scope()) {
 			this.onEvents.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
 			tile.onEvents.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
