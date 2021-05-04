@@ -11,9 +11,12 @@ public class ToggleAttribute<T> : Attribute<T> {
 	[field: SerializeField, Tooltip("Attribute is enabled?"), UnityEngine.Serialization.FormerlySerializedAs("_enabled")]
 	public bool rawEnabled { get; protected set; }
 
-	public Muc.Data.Event onEnabledChanged = new();
+	private Muc.Data.Event _onEnabledChanged;
+	public Muc.Data.Event onEnabledChanged => _onEnabledChanged ??= new();
 
-	private List<Alterer<bool>> enabledAlterers = new();
+	private List<Alterer<bool>> _enabledAlterers;
+	private List<Alterer<bool>> enabledAlterers => _enabledAlterers ??= new();
+
 	private bool enabledCached;
 	private bool cachedEnabled;
 

@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ec254aeae48794a9a1626e5aaac2d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _updateMode: 0
+  _updateMode: 1
   renderRoot: {fileID: 6079027935062521162}
   rt: {fileID: 0}
   <renderImages>k__BackingField: []

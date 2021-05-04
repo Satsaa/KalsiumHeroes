@@ -11,9 +11,11 @@ public class DualAttribute<T> : Attribute<T> {
 	[field: SerializeField, Tooltip("Secondary value"), UnityEngine.Serialization.FormerlySerializedAs("_other")]
 	public T rawOther { get; protected set; }
 
-	public Muc.Data.Event onOtherChanged = new();
+	private Muc.Data.Event _onOtherChanged;
+	public Muc.Data.Event onOtherChanged => _onOtherChanged ??= new();
 
-	private List<Alterer<T>> otherAlterers = new();
+	private List<Alterer<T>> _otherAlterers;
+	private List<Alterer<T>> otherAlterers => _otherAlterers ??= new();
 	private bool otherCached;
 	private T cachedOther;
 

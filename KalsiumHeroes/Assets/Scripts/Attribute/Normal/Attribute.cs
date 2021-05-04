@@ -11,9 +11,11 @@ public class Attribute<T> : AttributeBase {
 	[field: SerializeField, Tooltip("Primary value"), UnityEngine.Serialization.FormerlySerializedAs("_value")]
 	public T rawValue { get; protected set; }
 
-	public Muc.Data.Event onValueChanged = new();
+	private Muc.Data.Event _onValueChanged;
+	public Muc.Data.Event onValueChanged => _onValueChanged ??= new();
 
-	private List<Alterer<T>> valueAlterers = new();
+	private List<Alterer<T>> _valueAlterers;
+	private List<Alterer<T>> valueAlterers => _valueAlterers ??= new();
 	private bool valueCached;
 	private T cachedValue;
 

@@ -9,7 +9,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	public new EnergyExcessStatusData data => (EnergyExcessStatusData)_data;
 	public override Type dataType => typeof(EnergyExcessStatusData);
 
-	[HideInInspector, SerializeField] Attribute<int> stacks;
+	[HideInInspector, SerializeField] Attribute<int> stacks = new();
 	[HideInInspector, SerializeField] bool didCalculateDamage;
 
 	protected override void OnConfigureNonpersistent(bool add) {

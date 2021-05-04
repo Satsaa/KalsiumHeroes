@@ -12,7 +12,7 @@ namespace Muc.Systems.Camera {
 #else
 	[AddComponentMenu("MyUnityCollection/" + nameof(Muc.Systems.Camera) + "/" + nameof(MyUnityCamera))]
 #endif
-	[DefaultExecutionOrder(-1)]
+	[DefaultExecutionOrder(-1000)]
 	[RequireComponent(typeof(Camera))]
 	public class MyUnityCamera : MonoBehaviour {
 
