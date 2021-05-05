@@ -731,8 +731,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2146377432798408474}
   m_HandleRect: {fileID: 2146377432798408475}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4275,8 +4275,12 @@ MonoBehaviour:
     _name: 
   typeConstraint2:
     _name: 
+  hooker: {fileID: 0}
   prefab: {fileID: 4043331150635913133, guid: 0a1ef817788398a4caa3e356bad4167a, type: 3}
-  instantiates: []
+  statics: []
+  dynamics:
+    list: []
+    keyCollision: 0
   target: {fileID: 0}
 --- !u!114 &4934960899213295671
 MonoBehaviour:
@@ -4379,7 +4383,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8803938881238140234}
   m_HandleRect: {fileID: 8803938881238140237}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
