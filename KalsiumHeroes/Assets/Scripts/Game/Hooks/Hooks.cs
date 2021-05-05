@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 using Muc;
 using Muc.Collections;
 
-public abstract class OnEvents {
+public abstract class Hooks {
 
 	public class Scope : IDisposable {
 		public Scope() => active = true;
@@ -29,7 +29,7 @@ public abstract class OnEvents {
 
 	public static bool executing => current != null;
 
-	/// <summary> This event is Invoked ONCE after the execution of IOnEvents in the current scope ends. </summary>
+	/// <summary> This event is Invoked ONCE after the execution of IHooks in the current scope ends. </summary>
 	public static event Action onFinishEvent {
 		remove { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish -= value; }
 		add { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish += value; }
@@ -37,23 +37,23 @@ public abstract class OnEvents {
 
 
 	/// <summary> Adds an OnEvents to the cache. </summary>
-	public abstract void Add(Object obj);
+	public abstract void Hook(Object obj);
 
 	/// <summary> Removes an OnEvents from the cache. </summary>
-	public abstract void Remove(Object obj);
+	public abstract void Unhook(Object obj);
 
 }
 
 /// <summary>
-/// Stores IOnEvents in collections based on their types.
+/// Stores IHooks in collections based on their types.
 /// </summary>
 [Serializable]
-public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TBase : IOnEvent {
+public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : IHook {
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
 
 
-	/// <summary> Returns IOnEvents of type T inside a new List. </summary>
+	/// <summary> Returns IHooks of type T inside a new List. </summary>
 	public IEnumerable<T> Get<T>() where T : TBase {
 		if (dict.TryGetValue(typeof(T), out var val)) {
 			return new List<T>(val as SafeList<T>);
@@ -62,7 +62,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 		}
 	}
 
-	/// <summary> Invokes action on all IOnEvents of type T. </summary>
+	/// <summary> Invokes action on all IHooks of type T. </summary>
 	public void ForEach<T>(Scope scope, Action<T> action) where T : TBase {
 		if (dict.TryGetValue(typeof(T), out var val)) {
 			var list = val as SafeList<T>;
@@ -73,7 +73,7 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 		}
 	}
 
-	public override void Add(Object obj) {
+	public override void Hook(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out object list)) {
@@ -87,12 +87,12 @@ public class OnEvents<TBase> : OnEvents, ISerializationCallbackReceiver where TB
 			foreach (var item in dynList) {
 				if (item == obj) total++;
 			}
-			if (total > 1) Debug.Log($"Added {obj} to {type.Name}. Duplicates exist!");
+			if (total > 1) Debug.Log($"Added {obj} to {type.Name}. ${total} duplicates exist!");
 #endif
 		}
 	}
 
-	public override void Remove(Object obj) {
+	public override void Unhook(Object obj) {
 		foreach (var type in obj.GetType().GetInterfaces()) {
 			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
 			if (dict.TryGetValue(type, out var list)) {

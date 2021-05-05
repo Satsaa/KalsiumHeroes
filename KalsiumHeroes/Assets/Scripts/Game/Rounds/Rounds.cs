@@ -84,29 +84,29 @@ public class Rounds : MonoBehaviour {
 
 	private bool TryEndGame() {
 		if (Game.dataObjects.Get<Unit>().Count() <= 1) {
-			using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnGameEnd>(scope, v => v.OnGameEnd());
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameEnd>(scope, v => v.OnGameEnd());
 			return true;
 		}
 		return false;
 	}
 
 	private static void OnRoundStarts(Unit unit) {
-		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart());
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart());
 	}
 
 	private static void OnTurnEnds(Unit unit) {
-		using (var scope = new OnEvents.Scope()) {
-			unit.onEvents.ForEach<IOnTurnEnd_Unit>(scope, v => v.OnTurnEnd());
-			unit.tile.onEvents.ForEach<IOnTurnEnd_Tile>(scope, v => v.OnTurnEnd(unit));
-			Game.onEvents.ForEach<IOnTurnEnd_Global>(scope, v => v.OnTurnEnd(unit));
+		using (var scope = new Hooks.Scope()) {
+			unit.hooks.ForEach<IOnTurnEnd_Unit>(scope, v => v.OnTurnEnd());
+			unit.tile.hooks.ForEach<IOnTurnEnd_Tile>(scope, v => v.OnTurnEnd(unit));
+			Game.hooks.ForEach<IOnTurnEnd_Global>(scope, v => v.OnTurnEnd(unit));
 		}
 	}
 
 	private static void OnTurnStarts(Unit unit) {
-		using (var scope = new OnEvents.Scope()) {
-			unit.onEvents.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
-			unit.tile.onEvents.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(unit));
-			Game.onEvents.ForEach<IOnTurnStart_Global>(scope, v => v.OnTurnStart(unit));
+		using (var scope = new Hooks.Scope()) {
+			unit.hooks.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
+			unit.tile.hooks.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(unit));
+			Game.hooks.ForEach<IOnTurnStart_Global>(scope, v => v.OnTurnStart(unit));
 		}
 	}
 }

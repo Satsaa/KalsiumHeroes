@@ -8,19 +8,19 @@ using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Modifier where TModData : ModifierData where TOnEvent : IOnEvent {
+public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifier where TModData : ModifierData where THook : IHook {
 
 	public static Type modifierType => typeof(TMod);
-	public static Type onEventType => typeof(TOnEvent);
+	public static Type hookType => typeof(THook);
 	public static Type modifierDataType => typeof(TModData);
 
 	public ObjectDict<TMod> modifiers = new ObjectDict<TMod>();
-	public OnEvents<TOnEvent> onEvents = new OnEvents<TOnEvent>();
-	public override OnEvents rawOnEvents => onEvents;
+	public Hooks<THook> hooks = new Hooks<THook>();
+	public override Hooks rawOnEvents => hooks;
 
 	protected override void OnCreate() {
 		gameObject.transform.SetParent(Game.game.transform);
-		onEvents.Add(this);
+		hooks.Hook(this);
 	}
 
 	public sealed override void AttachModifier(Modifier modifier) {
@@ -30,16 +30,16 @@ public abstract class Master<TMod, TModData, TOnEvent> : Master where TMod : Mod
 			}
 		}
 		modifiers.Add<TMod>((TMod)modifier);
-		onEvents.Add(modifier);
+		hooks.Hook(modifier);
 	}
 
 	protected override void OnRemove() {
-		onEvents.Remove(this);
+		hooks.Unhook(this);
 	}
 
 	public sealed override void DetachModifier(Modifier modifier) {
 		modifiers.Remove((TMod)modifier);
-		onEvents.Remove(modifier);
+		hooks.Unhook(modifier);
 	}
 
 	public override List<Modifier> GetRawModifiers() {
@@ -57,14 +57,14 @@ public abstract class Master : DataObject {
 	public GameObject gameObject { get; private set; }
 	public Transform transform => gameObject.transform;
 
-	public abstract OnEvents rawOnEvents { get; }
+	public abstract Hooks rawOnEvents { get; }
 
 	public void Remove() {
 		if (removed) return;
 		removed = true;
 
 		Game.dataObjects.Remove(this);
-		Game.onEvents.Remove(this);
+		Game.hooks.Unhook(this);
 
 		OnConfigureNonpersistent(false);
 		OnRemove();
@@ -81,7 +81,7 @@ public abstract class Master : DataObject {
 		master._data = Instantiate(source);
 
 		Game.dataObjects.Add(master);
-		Game.onEvents.Add(master);
+		Game.hooks.Hook(master);
 
 		initializer?.Invoke(master);
 

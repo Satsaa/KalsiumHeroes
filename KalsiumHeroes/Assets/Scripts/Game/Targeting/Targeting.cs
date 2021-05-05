@@ -26,7 +26,7 @@ public class Targeting : MonoBehaviour {
 		this.targeter = targeter;
 		prevHoverTile = null;
 		RefreshTargets();
-		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTargeterStart>(scope, v => v.OnTargeterStart(targeter));
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnTargeterStart>(scope, v => v.OnTargeterStart(targeter));
 		TryComplete();
 		return true;
 	}
@@ -102,7 +102,7 @@ public class Targeting : MonoBehaviour {
 		foreach (var tile in Game.grid.tiles.Values) {
 			tile.highlighter.ClearRange(Highlighter.targetingMin, Highlighter.targetingMax);
 		}
-		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTargeterEnd>(scope, v => v.OnTargeterEnd());
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnTargeterEnd>(scope, v => v.OnTargeterEnd());
 	}
 
 

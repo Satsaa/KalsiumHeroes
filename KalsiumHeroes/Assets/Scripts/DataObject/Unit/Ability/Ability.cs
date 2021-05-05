@@ -28,10 +28,10 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public virtual void OnAnimationEventEnd() {
 		if (isCasting) {
 			isCasting = false;
-			using (var scope = new OnEvents.Scope()) {
-				unit.onEvents.ForEach<IOnAbilityCastEnd_Unit>(scope, v => v.OnAbilityCastEnd(this));
-				unit.tile.onEvents.ForEach<IOnAbilityCastEnd_Tile>(scope, v => v.OnAbilityCastEnd(this));
-				Game.onEvents.ForEach<IOnAbilityCastEnd_Global>(scope, v => v.OnAbilityCastEnd(this));
+			using (var scope = new Hooks.Scope()) {
+				unit.hooks.ForEach<IOnAbilityCastEnd_Unit>(scope, v => v.OnAbilityCastEnd(this));
+				unit.tile.hooks.ForEach<IOnAbilityCastEnd_Tile>(scope, v => v.OnAbilityCastEnd(this));
+				Game.hooks.ForEach<IOnAbilityCastEnd_Global>(scope, v => v.OnAbilityCastEnd(this));
 			}
 		}
 	}
@@ -56,10 +56,10 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 		unit.data.energy.value -= data.energyCost.value;
 		unit.RefreshEnergy();
 
-		using (var scope = new OnEvents.Scope()) {
-			unit.onEvents.ForEach<IOnAbilityCastStart_Unit>(scope, v => v.OnAbilityCastStart(this));
-			unit.tile.onEvents.ForEach<IOnAbilityCastStart_Tile>(scope, v => v.OnAbilityCastStart(this));
-			Game.onEvents.ForEach<IOnAbilityCastStart_Global>(scope, v => v.OnAbilityCastStart(this));
+		using (var scope = new Hooks.Scope()) {
+			unit.hooks.ForEach<IOnAbilityCastStart_Unit>(scope, v => v.OnAbilityCastStart(this));
+			unit.tile.hooks.ForEach<IOnAbilityCastStart_Tile>(scope, v => v.OnAbilityCastStart(this));
+			Game.hooks.ForEach<IOnAbilityCastStart_Global>(scope, v => v.OnAbilityCastStart(this));
 		}
 	}
 
@@ -102,11 +102,11 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 				Debug.LogWarning($"Unexpected {nameof(DamageType)} {damageType.ToString()}.");
 				break;
 		}
-		using (var scope = new OnEvents.Scope()) {
+		using (var scope = new Hooks.Scope()) {
 			var (_damage, _damageType) = (damage, damageType);
-			unit.onEvents.ForEach<IOnCalculateDamage_Unit>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
-			unit.tile.onEvents.ForEach<IOnCalculateDamage_Tile>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
-			Game.onEvents.ForEach<IOnCalculateDamage_Global>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			unit.hooks.ForEach<IOnCalculateDamage_Unit>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			unit.tile.hooks.ForEach<IOnCalculateDamage_Tile>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			Game.hooks.ForEach<IOnCalculateDamage_Global>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
 			(damage, damageType) = (_damage, _damageType);
 		}
 	}

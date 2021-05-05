@@ -13,8 +13,8 @@ public class ReadyButtons : MonoBehaviour, IOnGameStart, IOnGameInit {
 	[SerializeField] bool allowEnemyReady;
 	[SerializeField] ReadyButton buttonPrefab;
 
-	void Awake() => Game.onEvents.Add(this);
-	void OnDestroy() { if (Game.game) Game.onEvents.Remove(this); }
+	void Awake() => Game.hooks.Hook(this);
+	void OnDestroy() { if (Game.game) Game.hooks.Unhook(this); }
 
 	void IOnGameInit.OnGameInit() {
 		var teams = Game.game.mode.teams;

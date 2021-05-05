@@ -7,7 +7,7 @@ using HexGrid;
 using Muc.Extensions;
 using Muc.Numerics;
 
-public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
+public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 
 	public new EdgeData data => (EdgeData)_data;
 	public override Type dataType => typeof(EdgeData);
@@ -52,10 +52,10 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.passable.value;
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(unit, from, to, ref value));
-			unit.onEvents.ForEach<IOnGetCanPass_Unit>(scope, v => v.OnGetCanPass(from, this, to, ref value));
-			Game.onEvents.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(unit, from, this, to, ref value));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(unit, from, to, ref value));
+			unit.hooks.ForEach<IOnGetCanPass_Unit>(scope, v => v.OnGetCanPass(from, this, to, ref value));
+			Game.hooks.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(unit, from, this, to, ref value));
 		}
 		return value;
 	}
@@ -67,9 +67,9 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.passable.value;
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(from, to, ref value));
-			Game.onEvents.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(from, this, to, ref value));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(from, to, ref value));
+			Game.hooks.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(from, this, to, ref value));
 		}
 		return value;
 	}
@@ -79,10 +79,10 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.moveCost.value;
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(unit, from, to, ref value));
-			unit.onEvents.ForEach<IOnGetMoveCost_Unit>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
-			Game.onEvents.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(unit, from, this, to, ref value));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(unit, from, to, ref value));
+			unit.hooks.ForEach<IOnGetMoveCost_Unit>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
+			Game.hooks.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(unit, from, this, to, ref value));
 		}
 		return Mathf.Max(0, value);
 	}
@@ -92,9 +92,9 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeOnEvent> {
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
 		var value = to.data.moveCost.value;
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(from, to, ref value));
-			Game.onEvents.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(from, to, ref value));
+			Game.hooks.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
 		}
 		return Mathf.Max(0, value);
 	}

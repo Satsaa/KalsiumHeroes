@@ -9,7 +9,7 @@ using Muc.Numerics;
 using Muc.Collections;
 
 [ExecuteAlways]
-public class Tile : Master<TileModifier, TileModifierData, ITileOnEvent> {
+public class Tile : Master<TileModifier, TileModifierData, ITileHook> {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 

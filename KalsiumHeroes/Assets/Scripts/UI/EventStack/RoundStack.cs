@@ -23,7 +23,7 @@ public class RoundStack : EventStack<RoundStackItem>, IOnAnimationEventEnd, IOnT
 	protected new void Awake() {
 		base.Awake();
 		thisItem = GetComponent<StackItem>();
-		Game.onEvents.Add(this);
+		Game.hooks.Hook(this);
 	}
 
 	void Start() {
@@ -36,7 +36,7 @@ public class RoundStack : EventStack<RoundStackItem>, IOnAnimationEventEnd, IOnT
 	}
 
 	void OnDestroy() {
-		if (Game.game) Game.onEvents.Remove(this);
+		if (Game.game) Game.hooks.Unhook(this);
 	}
 
 	public void OnAnimationEventEnd() => Refresh();

@@ -20,14 +20,14 @@ public class Game : Singleton<Game> {
 	public static Targeting targeting => instance._targeting;
 	public static TileGrid grid => instance._grid;
 	public static ObjectDict<DataObject> dataObjects => instance._dataObjects;
-	public static OnEvents<IGlobalOnEvent> onEvents => instance._onEvents;
+	public static Hooks<IGlobalHook> hooks => instance._hooks;
 
 	[SerializeField, HideInInspector] GameEvents _events;
 	[SerializeField, HideInInspector] Rounds _rounds;
 	[SerializeField, HideInInspector] Targeting _targeting;
 	[SerializeField, HideInInspector] TileGrid _grid;
 	[SerializeField] ObjectDict<DataObject> _dataObjects = new ObjectDict<DataObject>();
-	[SerializeField] OnEvents<IGlobalOnEvent> _onEvents = new OnEvents<IGlobalOnEvent>();
+	[SerializeField] Hooks<IGlobalHook> _hooks = new Hooks<IGlobalHook>();
 
 	[field: SerializeField] public bool inited { get; private set; }
 	[field: SerializeField] public bool started { get; private set; }
@@ -71,11 +71,11 @@ public class Game : Singleton<Game> {
 	}
 
 	void Update() {
-		using (var scope = new OnEvents.Scope()) _onEvents.ForEach<IOnUpdate>(scope, v => v.OnUpdate());
+		using (var scope = new Hooks.Scope()) _hooks.ForEach<IOnUpdate>(scope, v => v.OnUpdate());
 	}
 
 	void LateUpdate() {
-		using (var scope = new OnEvents.Scope()) _onEvents.ForEach<IOnLateUpdate>(scope, v => v.OnLateUpdate());
+		using (var scope = new Hooks.Scope()) _hooks.ForEach<IOnLateUpdate>(scope, v => v.OnLateUpdate());
 	}
 
 	/// <summary> Initializes the game </summary>
@@ -87,7 +87,7 @@ public class Game : Singleton<Game> {
 		inited = true;
 		this.code = code;
 		this.team = team;
-		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnGameInit>(scope, v => v.OnGameInit());
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameInit>(scope, v => v.OnGameInit());
 	}
 
 	/// <summary> Starts the game </summary>
@@ -96,7 +96,7 @@ public class Game : Singleton<Game> {
 		if (!inited) throw new InvalidOperationException($"{nameof(Init)} must be called before calling {nameof(StartGame)}");
 		started = true;
 		_rounds.OnGameStart();
-		using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnGameStart>(scope, v => v.OnGameStart());
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameStart>(scope, v => v.OnGameStart());
 	}
 
 	/// <summary> Removes removed DataObjects from the cache and destroys them </summary>

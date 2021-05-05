@@ -16,13 +16,13 @@ public abstract class ValueHooker<T> : ValueReceiver<T> {
 
 	protected void Hook(Master master) {
 		if (target) Unhook();
-		target.rawOnEvents.Add(this);
+		target.rawOnEvents.Hook(this);
 		target = master;
 	}
 
 	protected void Unhook() {
 		if (!target) return;
-		target.rawOnEvents.Remove(this);
+		target.rawOnEvents.Unhook(this);
 		target = null;
 	}
 
@@ -39,12 +39,12 @@ public abstract class ValueHooker<T1, T2> : ValueReceiver<T1, T2> {
 	protected void Hook(Master master) {
 		if (hooker) Unhook();
 		hooker = master;
-		hooker.rawOnEvents.Add(this);
+		hooker.rawOnEvents.Hook(this);
 	}
 
 	protected void Unhook() {
 		if (!hooker) return;
-		hooker.rawOnEvents.Remove(this);
+		hooker.rawOnEvents.Unhook(this);
 		hooker = null;
 	}
 
@@ -60,13 +60,13 @@ public abstract class ValueHooker<T1, T2, T3> : ValueReceiver<T1, T2, T3> {
 
 	protected void Hook(Master master) {
 		if (target) Unhook();
-		target.rawOnEvents.Add(this);
+		target.rawOnEvents.Hook(this);
 		target = master;
 	}
 
 	protected void Unhook() {
 		if (!target) return;
-		target.rawOnEvents.Remove(this);
+		target.rawOnEvents.Unhook(this);
 		target = null;
 	}
 
@@ -82,13 +82,13 @@ public abstract class ValueHooker<T1, T2, T3, T4> : ValueReceiver<T1, T2, T3, T4
 
 	protected void Hook(Master master) {
 		if (target) Unhook();
-		target.rawOnEvents.Add(this);
+		target.rawOnEvents.Hook(this);
 		target = master;
 	}
 
 	protected void Unhook() {
 		if (!target) return;
-		target.rawOnEvents.Remove(this);
+		target.rawOnEvents.Unhook(this);
 		target = null;
 	}
 
@@ -105,13 +105,13 @@ public abstract class ValueHooker<T1, T2, T3, T4, T5> : ValueReceiver<T1, T2, T3
 
 	protected void Hook(Master master) {
 		if (target) Unhook();
-		target.rawOnEvents.Add(this);
+		target.rawOnEvents.Hook(this);
 		target = master;
 	}
 
 	protected void Unhook() {
 		if (!target) return;
-		target.rawOnEvents.Remove(this);
+		target.rawOnEvents.Unhook(this);
 		target = null;
 	}
 

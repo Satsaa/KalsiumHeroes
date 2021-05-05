@@ -16,7 +16,7 @@ public class RoundStackController : MonoBehaviour, IOnGameStart, IOnRoundStart {
 	protected void Awake() {
 		rt = GetComponent<RectTransform>();
 		es = GetComponent<EventStack>();
-		Game.onEvents.Add(this);
+		Game.hooks.Hook(this);
 	}
 
 	protected void Update() {
@@ -24,7 +24,7 @@ public class RoundStackController : MonoBehaviour, IOnGameStart, IOnRoundStart {
 	}
 
 	void OnDestroy() {
-		if (Game.game) Game.onEvents.Remove(this);
+		if (Game.game) Game.hooks.Unhook(this);
 	}
 
 	public void OnGameStart() {

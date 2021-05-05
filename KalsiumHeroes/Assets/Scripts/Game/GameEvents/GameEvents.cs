@@ -20,7 +20,7 @@ public class GameEvents : MonoBehaviour {
 		if (eventHandler != null) {
 			if (eventHandler.EventHasEnded()) {
 				eventHandler = null;
-				using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
+				using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 			} else {
 				eventHandler.Update();
 				return;
@@ -31,10 +31,10 @@ public class GameEvents : MonoBehaviour {
 				eventHandler = first.GetHandler();
 				if (eventHandler != null) {
 					eventHandler.Update();
-					using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(eventHandler));
+					using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(eventHandler));
 				}
 			} catch (Exception) {
-				using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
+				using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 				throw;
 			} finally {
 				stack.RemoveAt(0);
@@ -135,7 +135,7 @@ public class GameEvents : MonoBehaviour {
 				Game.game.StartGame();
 			}
 
-			using (var scope = new OnEvents.Scope()) Game.onEvents.ForEach<IOnTeamReady>(scope, v => v.OnTeamReady(team));
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnTeamReady>(scope, v => v.OnTeamReady(team));
 
 			return null;
 		}

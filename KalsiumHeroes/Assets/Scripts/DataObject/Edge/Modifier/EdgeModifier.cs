@@ -26,16 +26,16 @@ public abstract class EdgeModifier : Modifier {
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		using (var scope = new OnEvents.Scope()) {
-			edge.onEvents.ForEach<IOnEdgeModifierCreate_Edge>(scope, v => v.OnEdgeModifierCreate(this));
-			Game.onEvents.ForEach<IOnEdgeModifierCreate_Global>(scope, v => v.OnEdgeModifierCreate(this));
+		using (var scope = new Hooks.Scope()) {
+			edge.hooks.ForEach<IOnEdgeModifierCreate_Edge>(scope, v => v.OnEdgeModifierCreate(this));
+			Game.hooks.ForEach<IOnEdgeModifierCreate_Global>(scope, v => v.OnEdgeModifierCreate(this));
 		}
 	}
 
 	protected new void OnRemove() {
-		using (var scope = new OnEvents.Scope()) {
-			edge.onEvents.ForEach<IOnEdgeModifierRemove_Edge>(scope, v => v.OnEdgeModifierRemove(this));
-			Game.onEvents.ForEach<IOnEdgeModifierRemove_Global>(scope, v => v.OnEdgeModifierRemove(this));
+		using (var scope = new Hooks.Scope()) {
+			edge.hooks.ForEach<IOnEdgeModifierRemove_Edge>(scope, v => v.OnEdgeModifierRemove(this));
+			Game.hooks.ForEach<IOnEdgeModifierRemove_Global>(scope, v => v.OnEdgeModifierRemove(this));
 		}
 		base.OnRemove();
 	}

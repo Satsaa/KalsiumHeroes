@@ -18,11 +18,11 @@ public class ReadyButton : MonoBehaviour, IOnTeamReady {
 	void Awake() {
 		button = GetComponent<Button>();
 		text = GetComponentInChildren<TMP_Text>();
-		Game.onEvents.Add(this);
+		Game.hooks.Hook(this);
 	}
 
 	void OnDestroy() {
-		if (Game.game) Game.onEvents.Remove(this);
+		if (Game.game) Game.hooks.Unhook(this);
 	}
 
 	public void DoReadyTeam() {

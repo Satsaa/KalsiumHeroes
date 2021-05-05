@@ -14,18 +14,18 @@ public abstract class UnitModifier : Modifier {
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		using (var scope = new OnEvents.Scope()) {
-			unit.onEvents.ForEach<IOnUnitModifierCreate_Unit>(scope, v => v.OnUnitModifierCreate(this));
-			unit.tile.onEvents.ForEach<IOnUnitModifierCreate_Tile>(scope, v => v.OnUnitModifierCreate(this));
-			Game.onEvents.ForEach<IOnUnitModifierCreate_Global>(scope, v => v.OnUnitModifierCreate(this));
+		using (var scope = new Hooks.Scope()) {
+			unit.hooks.ForEach<IOnUnitModifierCreate_Unit>(scope, v => v.OnUnitModifierCreate(this));
+			unit.tile.hooks.ForEach<IOnUnitModifierCreate_Tile>(scope, v => v.OnUnitModifierCreate(this));
+			Game.hooks.ForEach<IOnUnitModifierCreate_Global>(scope, v => v.OnUnitModifierCreate(this));
 		}
 	}
 
 	protected override void OnRemove() {
-		using (var scope = new OnEvents.Scope()) {
-			unit.onEvents.ForEach<IOnUnitModifierRemove_Unit>(scope, v => v.OnUnitModifierRemove(this));
-			unit.tile.onEvents.ForEach<IOnUnitModifierRemove_Tile>(scope, v => v.OnUnitModifierRemove(this));
-			Game.onEvents.ForEach<IOnUnitModifierRemove_Global>(scope, v => v.OnUnitModifierRemove(this));
+		using (var scope = new Hooks.Scope()) {
+			unit.hooks.ForEach<IOnUnitModifierRemove_Unit>(scope, v => v.OnUnitModifierRemove(this));
+			unit.tile.hooks.ForEach<IOnUnitModifierRemove_Tile>(scope, v => v.OnUnitModifierRemove(this));
+			Game.hooks.ForEach<IOnUnitModifierRemove_Global>(scope, v => v.OnUnitModifierRemove(this));
 		}
 		base.OnRemove();
 	}

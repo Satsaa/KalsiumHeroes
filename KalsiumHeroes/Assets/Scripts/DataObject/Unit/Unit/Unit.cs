@@ -7,7 +7,7 @@ using Muc.Editor;
 using Muc.Extensions;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTurnStart_Unit, IOnDeath_Unit {
+public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit {
 
 	public new UnitData source => (UnitData)_source;
 	public new UnitData data => (UnitData)_data;
@@ -46,10 +46,10 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 	protected override void OnCreate() {
 		base.OnCreate();
 		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
-			tile.onEvents.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
-			Game.onEvents.ForEach<IOnSpawn_Global>(scope, v => v.OnSpawn(this));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
+			tile.hooks.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
+			Game.hooks.ForEach<IOnSpawn_Global>(scope, v => v.OnSpawn(this));
 		}
 	}
 
@@ -59,10 +59,10 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 	}
 
 	public void Heal(float heal) {
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnHeal_Unit>(scope, v => v.OnHeal(ref heal));
-			tile.onEvents.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
-			Game.onEvents.ForEach<IOnHeal_Global>(scope, v => v.OnHeal(this, ref heal));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnHeal_Unit>(scope, v => v.OnHeal(ref heal));
+			tile.hooks.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
+			Game.hooks.ForEach<IOnHeal_Global>(scope, v => v.OnHeal(this, ref heal));
 		}
 		data.health.value += Mathf.Max(0, heal);
 		data.health.ClampValue();
@@ -70,26 +70,26 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 
 	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
 	public void DealCalculatedDamage(Modifier source, float damage, DamageType type) {
-		using (var scope = new OnEvents.Scope()) {
+		using (var scope = new Hooks.Scope()) {
 			switch (source) {
 				case UnitModifier um:
-					um.unit.onEvents.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(um, this, damage, type));
-					Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(um, this, damage, type));
+					um.unit.hooks.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(um, this, damage, type));
+					Game.hooks.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(um, this, damage, type));
 					break;
 				case TileModifier tm:
-					tm.tile.onEvents.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(tm, this, damage, type));
-					Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(tm, this, damage, type));
+					tm.tile.hooks.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(tm, this, damage, type));
+					Game.hooks.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(tm, this, damage, type));
 					break;
 				case EdgeModifier em:
-					em.edge.onEvents.ForEach<IOnDealDamage_Edge>(scope, v => v.OnDealDamage(em, this, damage, type));
-					Game.onEvents.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
+					em.edge.hooks.ForEach<IOnDealDamage_Edge>(scope, v => v.OnDealDamage(em, this, damage, type));
+					Game.hooks.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
 					break;
 			}
 		}
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
-			tile.onEvents.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
-			Game.onEvents.ForEach<IOnTakeDamage_Global>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
+			tile.hooks.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
+			Game.hooks.ForEach<IOnTakeDamage_Global>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
 		}
 		switch (type) {
 			case DamageType.Physical:
@@ -112,11 +112,11 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 		}
 
 		if (data.health.value <= 0) {
-			using (var scope = new OnEvents.Scope()) {
+			using (var scope = new Hooks.Scope()) {
 				Debug.Log("IOnDeath_Unit");
-				this.onEvents.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
-				tile.onEvents.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
-				Game.onEvents.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
+				this.hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
+				tile.hooks.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
+				Game.hooks.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
 			}
 			tile.units.Remove(this);
 			Destroy(gameObject);
@@ -129,28 +129,28 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 	public void RefreshEnergy() {
 		var deficit = 0 - data.energy.value;
 		if (deficit > 0) {
-			using (var scope = new OnEvents.Scope()) {
-				this.onEvents.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
-				tile.onEvents.ForEach<IOnEnergyDeficit_Tile>(scope, v => v.OnEnergyDeficit(this, deficit));
-				Game.onEvents.ForEach<IOnEnergyDeficit_Global>(scope, v => v.OnEnergyDeficit(this, deficit));
+			using (var scope = new Hooks.Scope()) {
+				this.hooks.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
+				tile.hooks.ForEach<IOnEnergyDeficit_Tile>(scope, v => v.OnEnergyDeficit(this, deficit));
+				Game.hooks.ForEach<IOnEnergyDeficit_Global>(scope, v => v.OnEnergyDeficit(this, deficit));
 			}
 		}
 		var excess = data.energy.value - data.energy.other;
 		if (excess > 0) {
-			using (var scope = new OnEvents.Scope()) {
-				this.onEvents.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
-				tile.onEvents.ForEach<IOnEnergyExcess_Tile>(scope, v => v.OnEnergyExcess(this, excess));
-				Game.onEvents.ForEach<IOnEnergyExcess_Global>(scope, v => v.OnEnergyExcess(this, excess));
+			using (var scope = new Hooks.Scope()) {
+				this.hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
+				tile.hooks.ForEach<IOnEnergyExcess_Tile>(scope, v => v.OnEnergyExcess(this, excess));
+				Game.hooks.ForEach<IOnEnergyExcess_Global>(scope, v => v.OnEnergyExcess(this, excess));
 			}
 		}
 		data.energy.ClampValue();
 	}
 
 	public void Dispell() {
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnDispell_Unit>(scope, v => v.OnDispell());
-			tile.onEvents.ForEach<IOnDispell_Tile>(scope, v => v.OnDispell(this));
-			Game.onEvents.ForEach<IOnDispell_Global>(scope, v => v.OnDispell(this));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnDispell_Unit>(scope, v => v.OnDispell());
+			tile.hooks.ForEach<IOnDispell_Tile>(scope, v => v.OnDispell(this));
+			Game.hooks.ForEach<IOnDispell_Global>(scope, v => v.OnDispell(this));
 		}
 	}
 
@@ -182,20 +182,20 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitOnEvent>, IOnTur
 		tile.units.Add(this);
 		this.tile = tile;
 		if (reposition) actor.transform.position = this.tile.center;
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
-			tile.onEvents.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
-			Game.onEvents.ForEach<IOnChangePosition_Global>(scope, v => v.OnChangePosition(this, orig, tile));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
+			tile.hooks.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
+			Game.hooks.ForEach<IOnChangePosition_Global>(scope, v => v.OnChangePosition(this, orig, tile));
 		}
 	}
 
 	/// <summary> Gets the estimated speed of this unit after a number of rounds have passed. </summary>
 	public int GetEstimatedSpeed(int roundsAhead) {
 		var speed = data.speed.rawValue;
-		using (var scope = new OnEvents.Scope()) {
-			this.onEvents.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
-			tile.onEvents.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
-			Game.onEvents.ForEach<IOnGetEstimatedSpeed_Global>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
+			tile.hooks.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
+			Game.hooks.ForEach<IOnGetEstimatedSpeed_Global>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
 		}
 		return speed;
 	}
