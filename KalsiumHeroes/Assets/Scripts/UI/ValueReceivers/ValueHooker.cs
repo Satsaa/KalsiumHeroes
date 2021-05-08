@@ -8,22 +8,22 @@ using Muc.Data;
 
 public abstract class ValueHooker<T> : ValueReceiver<T> {
 
-	protected bool hooked => target;
+	protected bool hooked => hooker;
 
-	[SerializeField, HideInInspector] Master target;
+	[SerializeField, HideInInspector] Master hooker;
 
 	protected void OnDestroy() => Unhook();
 
 	protected void Hook(Master master) {
-		if (target) Unhook();
-		target.rawOnEvents.Hook(this);
-		target = master;
+		if (hooker) Unhook();
+		hooker = master;
+		hooker.rawOnEvents.Hook(this);
 	}
 
 	protected void Unhook() {
-		if (!target) return;
-		target.rawOnEvents.Unhook(this);
-		target = null;
+		if (!hooker) return;
+		hooker.rawOnEvents.Unhook(this);
+		hooker = null;
 	}
 
 }

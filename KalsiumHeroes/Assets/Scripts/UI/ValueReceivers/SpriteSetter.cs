@@ -8,10 +8,16 @@ using UnityEngine.UI;
 using IHas;
 
 [RequireComponent(typeof(Image))]
-public class SpriteSetter : ValueReceiver<IHasSprite> {
+public class SpriteSetter : ValueReceiver<IHasSprite, DataObject> {
 
 	protected override void ReceiveValue(IHasSprite obj) {
 		GetComponent<Image>().sprite = obj.sprite;
+	}
+
+	protected override void ReceiveValue(DataObject obj) {
+		if (obj.data is IHasSprite hasSprite) {
+			GetComponent<Image>().sprite = hasSprite.sprite;
+		}
 	}
 
 }

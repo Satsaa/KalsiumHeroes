@@ -27,7 +27,7 @@ public class InstantAbilityHandler : EventHandler<GameEvents.Ability> {
 
 	public override void Update() {
 		if (ended) return;
-		doEvent(creator);
 		ended = true;
+		doEvent(creator);
 	}
 }

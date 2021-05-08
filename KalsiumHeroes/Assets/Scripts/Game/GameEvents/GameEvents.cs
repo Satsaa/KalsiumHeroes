@@ -8,10 +8,10 @@ using System.Linq;
 [DisallowMultipleComponent]
 public class GameEvents : MonoBehaviour {
 
-	[SerializeReference] public List<object> stack = new List<object>();
-	public GameEvent first => (GameEvent)stack[0];
+	public List<GameEvent> stack = new List<GameEvent>(); //!!! Serialization works? was [SerializeReference] and List<object>
+	public GameEvent first => stack[0];
 
-	public bool finished => eventHandler == null;
+	public bool animating => eventHandler != null;
 
 	[SerializeReference]
 	private EventHandler eventHandler = null;

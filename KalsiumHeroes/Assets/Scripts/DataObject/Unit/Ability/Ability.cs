@@ -28,11 +28,14 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public virtual void OnAnimationEventEnd() {
 		if (isCasting) {
 			isCasting = false;
-			using (var scope = new Hooks.Scope()) {
-				unit.hooks.ForEach<IOnAbilityCastEnd_Unit>(scope, v => v.OnAbilityCastEnd(this));
-				unit.tile.hooks.ForEach<IOnAbilityCastEnd_Tile>(scope, v => v.OnAbilityCastEnd(this));
-				Game.hooks.ForEach<IOnAbilityCastEnd_Global>(scope, v => v.OnAbilityCastEnd(this));
-			}
+			//!!! Is work? No onFinishEvent before
+			Hooks.onFinishEvent += () => {
+				using (var scope = new Hooks.Scope()) {
+					unit.hooks.ForEach<IOnAbilityCastEnd_Unit>(scope, v => v.OnAbilityCastEnd(this));
+					unit.tile.hooks.ForEach<IOnAbilityCastEnd_Tile>(scope, v => v.OnAbilityCastEnd(this));
+					Game.hooks.ForEach<IOnAbilityCastEnd_Global>(scope, v => v.OnAbilityCastEnd(this));
+				}
+			};
 		}
 	}
 

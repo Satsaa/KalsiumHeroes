@@ -80,19 +80,6 @@ Shader "UI/StretchTiler"
 			// PassKeywords: <None>
 			// GraphKeywords: <None>
 			
-			#pragma shader_feature_local _ USEREFERENCEVALUES
-			#pragma shader_feature_local _ SHOWFIRSTHALF
-
-			#if defined(USEREFERENCEVALUES) && defined(SHOWFIRSTHALF)
-				#define KEYWORD_PERMUTATION_0
-			#elif defined(USEREFERENCEVALUES)
-				#define KEYWORD_PERMUTATION_1
-			#elif defined(SHOWFIRSTHALF)
-				#define KEYWORD_PERMUTATION_2
-			#else
-				#define KEYWORD_PERMUTATION_3
-			#endif
-
 			// Defines
 			#define _SURFACE_TYPE_TRANSPARENT 1
 			#define _ALPHAPREMULTIPLY_ON 1

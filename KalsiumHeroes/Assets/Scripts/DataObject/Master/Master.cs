@@ -23,6 +23,13 @@ public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifi
 		hooks.Hook(this);
 	}
 
+	protected override void OnRemove() {
+		hooks.Unhook(this);
+		foreach (var modifier in modifiers.ToList()) {
+			modifier.Remove();
+		}
+	}
+
 	public sealed override void AttachModifier(Modifier modifier) {
 		if (modifier.container) {
 			foreach (var contComp in modifier.container.GetComponentsInChildren<IContainerComponent>()) {
@@ -31,10 +38,6 @@ public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifi
 		}
 		modifiers.Add<TMod>((TMod)modifier);
 		hooks.Hook(modifier);
-	}
-
-	protected override void OnRemove() {
-		hooks.Unhook(this);
 	}
 
 	public sealed override void DetachModifier(Modifier modifier) {

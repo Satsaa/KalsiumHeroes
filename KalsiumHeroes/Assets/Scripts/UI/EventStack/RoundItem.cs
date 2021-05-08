@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class RoundItem : EventStackItem {
 
-	public Text hint;
 	public int round;
 	[HideInInspector] public bool removed;
 
 	void Start() {
-		hint.text = $"Round {round}";
 		removed = false;
+		ValueReceiver.SendValue(gameObject, round);
 	}
 
 	new void Update() {

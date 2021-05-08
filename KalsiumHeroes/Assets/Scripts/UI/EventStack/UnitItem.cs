@@ -7,11 +7,6 @@ using UnityEngine.UI;
 
 public class UnitItem : RoundStackItem {
 
-	public Image frame;
-	public Image unitImage;
-	public RenderImage unitRenderImage;
-	public Text unitText;
-
 	[HideInInspector] public Highlighter highlighter;
 
 	new protected void Awake() {
@@ -19,22 +14,7 @@ public class UnitItem : RoundStackItem {
 	}
 
 	protected void Start() {
-
-		if (unit.data.portrait) {
-			unitRenderImage.SetRenderObject(unit.data.portrait);
-			unitImage.enabled = false;
-		} else {
-			unitImage.sprite = unit.data.sprite;
-			unitRenderImage.enabled = false;
-		}
-		if (unitText) {
-			unitText.color = unit.team switch {
-				Team.Team1 => Color.green,
-				Team.Team2 => Color.red,
-				_ => Color.magenta,
-			};
-			unitText.text = unit.data.displayName;
-		}
+		ValueReceiver.SendValue(gameObject, unit);
 	}
 
 	public void OnDestroy() {
@@ -51,8 +31,4 @@ public class UnitItem : RoundStackItem {
 		if (highlighter) highlighter.Unhighlight(Highlighter.highlightPriority);
 	}
 
-	/// <summary>
-	/// When this item is first in the stack and reached target position
-	/// </summary>
-	public virtual void OnReachZero(RoundStack rs) { }
 }

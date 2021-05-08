@@ -9,7 +9,7 @@ public class Targeting : MonoBehaviour {
 
 	private Rounds rm => Game.rounds;
 	private GameEvents e => Game.events;
-	private bool finished => e.finished;
+	private bool targeting => e.animating;
 
 	private Tile prevHoverTile;
 

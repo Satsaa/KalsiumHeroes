@@ -32,7 +32,7 @@ public class TileHighlighterModifier : UnitModifier, IOnTurnStart_Unit, IOnTurnE
 	}
 
 	void Highlight(Tile tile) {
-		if (tile && (!data.hideDuringAnimation || Game.events.finished)) {
+		if (tile && (!data.hideDuringAnimation || !Game.events.animating)) {
 			var color = unit.team == Game.instance.team ? data.ownTeamColor : data.otherTeamColor;
 			tile.highlighter.Highlight(color, Highlighter.currentUnitPriority);
 		}

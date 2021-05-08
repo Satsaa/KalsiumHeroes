@@ -13,7 +13,7 @@ public abstract class Hooker : MonoBehaviour {
 	}
 
 	protected void OnDestroy() {
-		Game.hooks.Unhook(this);
+		if (Game.game) Game.hooks.Unhook(this);
 	}
 
 }

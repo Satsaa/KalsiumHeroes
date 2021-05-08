@@ -17,7 +17,7 @@ public interface IObjectDict {
 /// Stores Objects in collections based on their types.
 /// </summary>
 [Serializable]
-public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict where TObj : Object {
+public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceiver, IObjectDict where TObj : Object {
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
 
@@ -114,6 +114,13 @@ public class ObjectDict<TObj> : ISerializationCallbackReceiver, IObjectDict wher
 		}
 		return false;
 	}
+
+	#region IEnumerable
+
+	public IEnumerator<TObj> GetEnumerator() => Get().GetEnumerator();
+	IEnumerator IEnumerable.GetEnumerator() => Get().GetEnumerator();
+
+	#endregion
 
 	#region IObjectDict
 

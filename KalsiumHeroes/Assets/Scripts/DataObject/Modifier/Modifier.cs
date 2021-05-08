@@ -27,7 +27,7 @@ public abstract class Modifier : DataObject {
 	/// <summary> A virtual Modifier is wrapped by a Virtualizer which acts as a layer. </summary>
 	[HideInInspector, SerializeField] public bool virtualized;
 
-	/// <summary> Removes this Modifier </summary>
+	/// <summary> Removes this Modifier from the Master and the game. </summary>
 	public void Remove() {
 		if (removed) return;
 		removed = true;
@@ -36,10 +36,14 @@ public abstract class Modifier : DataObject {
 		Game.dataObjects.Remove(this);
 		Game.hooks.Unhook(this);
 
-		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
+		if (!master.removed) {
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
+		}
 
 		OnConfigureNonpersistent(false);
-		OnRemove();
+		if (!master.removed) {
+			OnRemove();
+		}
 		if (container) ObjectUtil.Destroy(container);
 	}
 

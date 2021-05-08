@@ -7,21 +7,23 @@ namespace Muc.Collections {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	// Maybe this can be optimized by copying the list before it changes if it is being enumerated?
+
 	/// <summary>
 	/// Like a normal List but enumeration doesn't throw if the collection is changed, and the enumerated objects don't change.
 	/// </summary>
 	[Serializable]
 	public class SafeList<T> : ICollection<T>, IEnumerable<T>, IList<T>, IReadOnlyCollection<T>, IReadOnlyList<T> {
 
-		public SafeList() { list = new List<T>(); }
-		public SafeList(IEnumerable<T> collection) { list = new List<T>(collection); }
-		public SafeList(int capacity) { list = new List<T>(capacity); }
+		public SafeList() => list = new List<T>();
+		public SafeList(IEnumerable<T> collection) => list = new List<T>(collection);
+		public SafeList(int capacity) => list = new List<T>(capacity);
 
 		[SerializeField]
 		private List<T> list;
 		private List<T> enumerationTarget;
 
-		public T this[int index] { get => list[index]; set => list[index] = value; }
+		public T this[int index] { get => list[index]; set { list[index] = value; enumerationTarget = null; } }
 
 		public int Count => list.Count;
 

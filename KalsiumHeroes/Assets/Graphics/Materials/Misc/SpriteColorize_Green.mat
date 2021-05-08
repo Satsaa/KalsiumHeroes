@@ -20,9 +20,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpriteHueShift
-  m_Shader: {fileID: -6465566751694194690, guid: 3389103f1481e2e46a9ba5e506b3bef1, type: 3}
-  m_ShaderKeywords: FILTER_POINT HUEENABLE UNITY_UI_ALPHACLIP
+  m_Name: SpriteColorize_Green
+  m_Shader: {fileID: 4800000, guid: bfb5de03bb2acdf42945c174c4434d6d, type: 3}
+  m_ShaderKeywords: COLORSPACE_LINEAR FILTER_POINT HUEENABLE UNITY_UI_ALPHACLIP USEOVERLAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -124,10 +124,14 @@ Material:
     m_Ints: []
     m_Floats:
     - BlockSize: 50
+    - COLORSPACE: 0
     - FILTER: 1
     - HUEENABLE: 1
     - MaxValue: 100
+    - Overlap: 0.25
+    - OverlapStart: 0.5
     - RawTiling: 0.25
+    - USEOVERLAP: 1
     - WidthScale: 0.12
     - _AlphaClip: 0
     - _Blend: 0
@@ -172,6 +176,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
+    - OverlapColor: {r: 0, g: 1, b: 0.0029821396, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0.46666667}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
