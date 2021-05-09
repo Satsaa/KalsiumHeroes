@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: SpriteColorize
   m_Shader: {fileID: 4800000, guid: bfb5de03bb2acdf42945c174c4434d6d, type: 3}
-  m_ShaderKeywords: COLORSPACE_LINEAR FILTER_POINT HUEENABLE UNITY_UI_ALPHACLIP USEOVERLAP
+  m_ShaderKeywords: COLORSPACE_LINEAR
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -131,7 +131,7 @@ Material:
     - Overlap: 0.25
     - OverlapStart: 0.5
     - RawTiling: 0.25
-    - USEOVERLAP: 1
+    - USEOVERLAP: 0
     - WidthScale: 0.12
     - _AlphaClip: 0
     - _Blend: 0

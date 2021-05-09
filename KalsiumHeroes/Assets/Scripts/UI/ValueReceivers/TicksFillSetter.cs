@@ -7,8 +7,8 @@ using Object = UnityEngine.Object;
 using IHas;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Toggle))]
-public class PositiveSetter : ValueHooker<StatusData, Status>, IOnAnimationEventEnd {
+[RequireComponent(typeof(Image))]
+public class TicksFillSetter : ValueHooker<StatusData, Status>, IOnAnimationEventEnd {
 
 	protected override void ReceiveValue(StatusData data) {
 		UpdateValue(data);
@@ -26,7 +26,7 @@ public class PositiveSetter : ValueHooker<StatusData, Status>, IOnAnimationEvent
 	protected Toggle comp;
 
 	protected void UpdateValue(StatusData data) {
-		GetComponent<Toggle>().isOn = data.positive.value;
+		GetComponent<Image>().fillAmount = data.ticks.enabled ? (float)data.ticks.value / (float)data.ticks.other : 1;
 	}
 
 	public void OnAnimationEventEnd() => UpdateValue(target.data);

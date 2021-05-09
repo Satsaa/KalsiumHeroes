@@ -7,8 +7,11 @@ using Object = UnityEngine.Object;
 using IHas;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Toggle))]
-public class PositiveSetter : ValueHooker<StatusData, Status>, IOnAnimationEventEnd {
+[RequireComponent(typeof(Graphic))]
+public class PositiveColorSetter : ValueHooker<StatusData, Status>, IOnAnimationEventEnd {
+
+	[SerializeField] Color positiveColor = Color.green;
+	[SerializeField] Color negativeColor = Color.red;
 
 	protected override void ReceiveValue(StatusData data) {
 		UpdateValue(data);
@@ -23,10 +26,9 @@ public class PositiveSetter : ValueHooker<StatusData, Status>, IOnAnimationEvent
 
 	[SerializeField, HideInInspector]
 	protected Status target;
-	protected Toggle comp;
 
 	protected void UpdateValue(StatusData data) {
-		GetComponent<Toggle>().isOn = data.positive.value;
+		GetComponent<Graphic>().color = data.positive.value ? positiveColor : negativeColor;
 	}
 
 	public void OnAnimationEventEnd() => UpdateValue(target.data);
