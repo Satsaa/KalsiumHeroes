@@ -6,10 +6,10 @@ using Object = UnityEngine.Object;
 
 public class UnfocusedFramerate : MonoBehaviour {
 
-	public int fpsCap = 5;
+	[SerializeField] int fpsCap = 5;
 
-	public int targetFrameRate;
-	public bool started;
+	[SerializeField, HideInInspector] int targetFrameRate;
+	[SerializeField, HideInInspector] bool started;
 
 
 	void Start() {

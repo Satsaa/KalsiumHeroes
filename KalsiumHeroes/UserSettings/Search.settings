@@ -2,7 +2,6 @@ trackSelection = true
 fetchPreview = true
 wantsMore = false
 keepOpen = false
-itemIconSize = 1
 queryFolder = "Assets"
 onBoardingDoNotAskAgain = true
 showPackageIndexes = false
@@ -10,6 +9,11 @@ showStatusBar = false
 scopes = {
 }
 providers = {
+	expression = {
+		active = true
+		priority = 2
+		defaultAction = null
+	}
 	asset = {
 		active = true
 		priority = 25
@@ -35,6 +39,11 @@ providers = {
 		priority = 90
 		defaultAction = null
 	}
+	performance = {
+		active = false
+		priority = 100
+		defaultAction = null
+	}
 	scene = {
 		active = true
 		priority = 50
@@ -48,4 +57,7 @@ providers = {
 }
 recentSearches = [
 ]
+searchItemFavorites = [
+]
 savedSearchesSortOrder = 0
+showSavedSearchPanel = false

@@ -35,9 +35,6 @@
             "m_Id": "b5fb589b82e44e339d47b97499571bf0"
         },
         {
-            "m_Id": "e54c6704095c470fa4322f35ca1e3a92"
-        },
-        {
             "m_Id": "e894eb586bb74c35ac965e4e9f1e95ca"
         },
         {
@@ -508,8 +505,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 0.0,
-            "y": 0.0
+            "x": -0.000016689300537109375,
+            "y": 12.000009536743164
         },
         "m_Blocks": [
             {
@@ -531,9 +528,6 @@
         "m_Blocks": [
             {
                 "m_Id": "b5fb589b82e44e339d47b97499571bf0"
-            },
-            {
-                "m_Id": "e54c6704095c470fa4322f35ca1e3a92"
             },
             {
                 "m_Id": "e894eb586bb74c35ac965e4e9f1e95ca"
@@ -3080,31 +3074,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.ColorRGBAMaterialSlot",
-    "m_ObjectId": "cfe83601f0414e5db77fe29df3b8a4cc",
-    "m_Id": 0,
-    "m_DisplayName": "Sprite Mask",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "SpriteMask",
-    "m_StageCapability": 2,
-    "m_Value": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0,
-        "w": 1.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "d0dfb11977504547b00f04c394c3bf78",
     "m_Id": 2,
@@ -3372,39 +3341,6 @@
         "y": 0.0
     },
     "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "e54c6704095c470fa4322f35ca1e3a92",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.SpriteMask",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "cfe83601f0414e5db77fe29df3b8a4cc"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.SpriteMask"
 }
 
 {

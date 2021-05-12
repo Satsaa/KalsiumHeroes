@@ -21,22 +21,22 @@ EditorUserSettings:
       value: 0209015650065c095f0f5f73477a5e4414164f7c2e2c2336782f1936e7e4676e
       flags: 0
     RecentlyUsedScenePath-5:
-      value: 0600505254565059585e5f7246715c44414f1a7c2f2e7f667e2a4837bbb26460
-      flags: 0
-    RecentlyUsedScenePath-6:
       value: 565507510454595e595d097445210f44414e1e2c75707e312b7c1c36e6b3633b
       flags: 0
+    RecentlyUsedScenePath-6:
+      value: 5553525356005f025f5f582111215e4414164c7f7c717769792f1e6be6b06068
+      flags: 0
     RecentlyUsedScenePath-7:
-      value: 01500c5357015f585b080d7040720e44464f492c282d2335797e1e32b5b5326b
+      value: 0600505254565059585e5f7246715c44414f1a7c2f2e7f667e2a4837bbb26460
       flags: 0
     RecentlyUsedScenePath-8:
-      value: 5553525356005f025f5f582111215e4414164c7f7c717769792f1e6be6b06068
+      value: 01500c5357015f585b080d7040720e44464f492c282d2335797e1e32b5b5326b
       flags: 0
     RecentlyUsedScenePath-9:
       value: 5a0351555d0408035e08587247705b44414f1a7d7c7a73322b704e35b1e66c68
       flags: 0
     UnityEditor.ShaderGraph.Blackboard:
-      value: 18135939215a0a5004000b0e15254b524c030a3f2964643d120d1230e9e93a3fd6e826abbd2e2d293c4ead313b08042de6030a0afa240c0d020be94c4baf5e435d8715fa32c70d15d11612dacc11fee5d3c5d1fe9ab1b7968e93e2ffcbc3e7e2f0b3ffe0e8b0be9af8ffaeffff8e85dd8390e3949c8899daa7
+      value: 18135939215a0a5004000b0e15254b524c030a3f2964643d120d1230e9e93a3fd6e826abbd2e2d293c4ead313b08042de6030a0afa240c0d020be94c4ba65e435d8715fa32c70d15d11612dacc11fee5d3c5d1fe9ab1b3968e93e2ffcbc3e7e2f0b3ffe0e8b0be9af8ffaeffff8e85dd8390e3949c8899daa7
       flags: 0
     UnityEditor.ShaderGraph.FloatingWindowsLayout2:
       value: 181344140043005e1a220d3b1f364b524c0c5a27130c293326201334cee5322ca0bd30e8eb293a707b0fd0180b3d0a36fc0d3d04e649500d1002ee0b5dbd1d2c27c00ad113cb1e10e41f1addc80993b9859884a69ae6d8f0d1cda9e8fbfefaf9f9dea3fdb9ade882f0ffb0e1e380cafbf2c3adc18e9cd285a2908b80ee859c8395949c9483d4888d97ddbd90bf
@@ -61,3 +61,4 @@ EditorUserSettings:
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
   m_VCAllowAsyncUpdate: 1
+  m_ArtifactGarbageCollection: 1

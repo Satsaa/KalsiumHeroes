@@ -30,6 +30,7 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V2 v, V2 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray2D RayTo(this V2 v, V2 vector) => new Ray2D(v, (vector - v).normalized);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 x0y(this V2 v) => new V3(v.x, 0, v.y);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 Expand(this V2 v, float z) => new V3(v.x, v.y, z);
 
 
 		// Math
@@ -147,6 +148,7 @@ namespace Muc.Extensions {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V3 v, V3 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray RayTo(this V3 v, V3 vector) => new Ray(v, (vector - v).normalized);
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3 x0z(this V3 v) => new V3(v.x, 0, v.z);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V4 Expand(this V3 v, float w) => new V4(v.x, v.y, v.z, w);
 
 
 		// Math
@@ -786,6 +788,7 @@ namespace Muc.Extensions {
 		// Util
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsLongerThan(this V2I v, V2 smaller) => v.sqrMagnitude > smaller.sqrMagnitude;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static Ray2D RayTo(this V2I v, V2 vector) => new Ray2D(v, (vector - v).normalized);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static V3I Expand(this V2I v, int z) => new V3I(v.x, v.y, z);
 
 
 		// Math
