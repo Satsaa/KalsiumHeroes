@@ -279,6 +279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4971522543795299535}
   - component: {fileID: 3683563392536784834}
+  - component: {fileID: 4899379435886950362}
   m_Layer: 6
   m_Name: Rotater
   m_TagString: Untagged
@@ -295,7 +296,7 @@ Transform:
   m_GameObject: {fileID: 6938282838177939323}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 7.55}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 5.127, y: 5.127, z: 5.127}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5875539807929790404}
@@ -314,4 +315,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab108d55ed94fd4e98910ce21bb1e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRotation: 90
+  mult: 100
+--- !u!114 &4899379435886950362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6938282838177939323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c34fc9829a5cb44b9aadd7e8d12ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionAsset: {fileID: -944628639613478452, guid: da6d1f4d04763ba41a629e9fdd8c4985, type: 3}
+  _actionId: 387f79c8-fefa-4771-9403-bb7972cba102
+  onChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3683563392536784834}
+        m_TargetAssemblyTypeName: Rotater, Assembly-CSharp
+        m_MethodName: OnPoint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

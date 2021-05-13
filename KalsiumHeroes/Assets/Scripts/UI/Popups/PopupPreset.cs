@@ -106,30 +106,8 @@ namespace Editors {
 			DrawDefaultInspector();
 
 			using (DisabledScope(Application.isPlaying)) {
-				if (GUILayout.Button($"{(Application.isPlaying ? "Disabled in play. " : "")}Reassign fields (may fix missing ref exception)")) {
-					serializedObject.Update();
-
-					var oldPops = new Popup[targets.Length];
-					var oldOpts = new PopupOption[targets.Length];
-
-					for (int i = 0; i < targets.Length; i++) {
-						var target = (PopupPreset)targets[i];
-						oldPops[i] = target.popupPrefab;
-						oldOpts[i] = target.optionPrefab;
-						target.popupPrefab = null;
-						target.optionPrefab = null;
-					}
-
-					serializedObject.ApplyModifiedProperties();
-					serializedObject.Update();
-
-					for (int i = 0; i < targets.Length; i++) {
-						var target = (PopupPreset)targets[i];
-						target.popupPrefab = oldPops[i];
-						target.optionPrefab = oldOpts[i];
-					}
-
-					serializedObject.ApplyModifiedProperties();
+				if (GUILayout.Button("Trigger recompile (may fix missing ref exception)")) {
+					UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
 				}
 			}
 

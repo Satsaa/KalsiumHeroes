@@ -655,13 +655,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: DisplayName
       objectReference: {fileID: 0}
-    - target: {fileID: 5762229632496979693, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
-      propertyPath: m_fontSize
-      value: 11.1
+    - target: {fileID: 3796653037657260920, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5762229632496979693, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
+      propertyPath: m_fontSize
+      value: 11.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5762229632496979693, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 99d0fe92fde8f874e8ad8f7d684d8dea, type: 2}
+    - target: {fileID: 5762229632496979693, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
       propertyPath: m_VerticalAlignment
-      value: 1024
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7411108287116439517, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
