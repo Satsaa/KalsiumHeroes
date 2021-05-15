@@ -37,7 +37,6 @@ public class ExtraInfoInput : ButtonInput {
 
 	void Start() {
 		var action = actionAsset.FindAction(actionId);
-		Debug.Log($"action = {action}");
 		if (action != null) {
 			var pressPoint = InputSystem.settings.defaultButtonPressPoint;
 			if (action.activeControl is ButtonControl bc) {
@@ -46,7 +45,6 @@ public class ExtraInfoInput : ButtonInput {
 			var val = action.ReadValue<float>();
 			var pressed = val >= pressPoint;
 			graphic.enabled = pressed;
-			Debug.Log($"pressed = {pressed}");
 			if (pressed) {
 				ShowExtraInfo();
 			}
