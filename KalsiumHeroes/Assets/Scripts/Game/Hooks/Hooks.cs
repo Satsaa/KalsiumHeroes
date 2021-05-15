@@ -82,10 +82,10 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 			var add = listType.GetMethod("Add");
 			add.Invoke(list, new object[] { obj });
 #if DEBUG // Ensure no duplicates are created
-			dynamic dynList = list;
+			var dynList = list as IEnumerable;
 			var total = 0;
 			foreach (var item in dynList) {
-				if (item == obj) total++;
+				if (obj.Equals(item)) total++;
 			}
 			if (total > 1) Debug.Log($"Added {obj} to {type.Name}. ${total} duplicates exist!");
 #endif
