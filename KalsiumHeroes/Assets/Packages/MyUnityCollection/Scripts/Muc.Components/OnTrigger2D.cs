@@ -76,7 +76,7 @@ namespace Muc.Components {
 
 
 #if UNITY_EDITOR
-namespace Muc.Components {
+namespace Muc.Components.Editor {
 
 	using System;
 	using System.Linq;
@@ -86,7 +86,7 @@ namespace Muc.Components {
 	using UnityEditor;
 
 	[CustomEditor(typeof(OnTrigger2D))]
-	internal class OnTrigger2DEditor : Editor {
+	public class OnTrigger2DEditor : Editor {
 
 		private OnTrigger2D t { get => (OnTrigger2D)target; }
 

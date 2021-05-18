@@ -1,12 +1,16 @@
 ﻿
 
+using System;
+using UnityEngine;
+
 namespace Muc.Numerics {
 
 	/// <summary> A decimal which loops from the specified threshold value to zero. The value never reaches the threshold. </summary>
-	public readonly struct CircularDecimal {
+	[Serializable]
+	public struct CircularDecimal {
 
-		public readonly decimal value;
-		public readonly decimal threshold;
+		[field: SerializeField] public decimal value { get; private set; }
+		[field: SerializeField] public decimal threshold { get; private set; }
 
 		public static CircularDecimal operator +(CircularDecimal a, decimal b) => new CircularDecimal(a.value + b, a.threshold);
 		public static CircularDecimal operator ++(CircularDecimal a) => new CircularDecimal(a.value + 1m, a.threshold);

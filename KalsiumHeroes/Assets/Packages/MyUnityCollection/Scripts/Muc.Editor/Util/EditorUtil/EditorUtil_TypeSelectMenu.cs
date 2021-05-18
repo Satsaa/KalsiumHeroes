@@ -72,6 +72,15 @@ namespace Muc.Editor {
 			}
 		}
 
+		/// <summary>
+		/// Converts the property name to a string that is used for serialization of the backing field of the property.
+		/// </summary>
+		/// <param name="propertyName">The name of the property which has a serialized automatically generated backing field.</param>
+		/// <returns>Name used in serialization</returns>
+		public static string GetBackingFieldName(string propertyName) {
+			return $"<{propertyName}>k__BackingField";
+		}
+
 
 		/// <summary>
 		/// Creates a Type selection menu. Types are shown in a hierarchy if there are more than 100 types.

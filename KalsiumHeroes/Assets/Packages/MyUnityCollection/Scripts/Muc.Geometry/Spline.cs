@@ -9,22 +9,22 @@ namespace Muc.Geometry {
 	[Serializable]
 	public class Spline {
 
-		public float _tension = 0f;
-		public float _alpha = 0.5f;
-		public List<Vector3> _controls;
+		public float tension = 0f;
+		public float alpha = 0.5f;
+		public List<Vector3> controls;
 
 		public Spline(IEnumerable<Vector3> controls, float alpha = 0.5f, float tension = 0f) {
-			_alpha = alpha;
-			_tension = tension;
-			_controls = controls.ToList();
+			this.alpha = alpha;
+			this.tension = tension;
+			this.controls = controls.ToList();
 		}
 
 		public IEnumerable<Vector3> RenderSpline(int tesselation) {
 
-			var first = 2 * _controls[0] - _controls[1];
-			var last = 2 * _controls.Last() - _controls[_controls.Count - 2];
+			var first = 2 * controls[0] - controls[1];
+			var last = 2 * controls.Last() - controls[controls.Count - 2];
 
-			for (float t = 0; t <= _controls.Count - 1; t += 1f / tesselation) {
+			for (float t = 0; t <= controls.Count - 1; t += 1f / tesselation) {
 				var p = Eval(t);
 				yield return p;
 			}
@@ -32,21 +32,21 @@ namespace Muc.Geometry {
 
 		public Vector3 Eval(float t) {
 
-			if (t <= 0) return _controls.First();
-			if (t >= _controls.Count - 1) return _controls.Last();
+			if (t <= 0) return controls.First();
+			if (t >= controls.Count - 1) return controls.Last();
 
-			var first = 2 * _controls[0] - _controls[1];
-			var last = 2 * _controls.Last() - _controls[_controls.Count - 2];
+			var first = 2 * controls[0] - controls[1];
+			var last = 2 * controls.Last() - controls[controls.Count - 2];
 
 			var i = Mathf.FloorToInt(t);
 
-			var p0 = i - 1 < 0 ? first : _controls[i - 1];
-			var p1 = _controls[i];
-			var p2 = _controls[i + 1];
-			var p3 = i + 2 >= _controls.Count ? last : _controls[i + 2];
+			var p0 = i - 1 < 0 ? first : controls[i - 1];
+			var p1 = controls[i];
+			var p2 = controls[i + 1];
+			var p3 = i + 2 >= controls.Count ? last : controls[i + 2];
 
 			t %= 1f;
-			return Eval(p0, p1, p2, p3, t, _alpha, _tension);
+			return Eval(p0, p1, p2, p3, t, alpha, tension);
 
 		}
 

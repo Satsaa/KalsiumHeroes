@@ -35,7 +35,7 @@ namespace Muc.Systems.Values {
 
 		internal static ValueSettings GetDefaultInstance() {
 #if UNITY_EDITOR
-			return Editor.MucProjectSettings.instance.defaultValueSettingsInstance;
+			return Muc.Editor.MucProjectSettings.instance.defaultValueSettingsInstance;
 #else
       		return null;
 #endif
@@ -217,7 +217,7 @@ namespace Muc.Systems.Values {
 
 
 #if UNITY_EDITOR
-namespace Muc.Systems.Values {
+namespace Muc.Systems.Values.Editor {
 
 	using System.Reflection;
 	using System.Collections;
@@ -229,7 +229,7 @@ namespace Muc.Systems.Values {
 
 
 	[CustomEditor(typeof(ValueSettings))]
-	internal class ValueSettingsEditor : Editor {
+	public class ValueSettingsEditor : Editor {
 
 		private readonly Dictionary<ValueSettings.OrderData, CacheData> cache = new Dictionary<ValueSettings.OrderData, CacheData>();
 

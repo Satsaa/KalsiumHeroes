@@ -57,8 +57,8 @@ public partial class UnitActor : MonoBehaviour {
 				break;
 			case AnimationType.Run:
 			case AnimationType.Walk:
-				SetPos(spline._controls.Last());
-				moveT = spline._controls.Count - 1;
+				SetPos(spline.controls.Last());
+				moveT = spline.controls.Count - 1;
 				isMoving = false;
 				animator.SetTrigger("Idle");
 				break;

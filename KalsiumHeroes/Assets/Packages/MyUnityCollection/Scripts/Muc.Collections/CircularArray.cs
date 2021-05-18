@@ -9,10 +9,12 @@ namespace Muc.Collections {
 	using System.Collections.ObjectModel;
 
 	using Muc.Numerics;
+	using UnityEngine;
 
 	/// <summary>
 	/// Represents a first-in, first-out fixed size collection of items.
 	/// </summary>
+	[Serializable]
 	public class CircularArray<T> : IEnumerable<T>, IEnumerable, ICloneable, IReadOnlyCollection<T>, IReadOnlyList<T> {
 
 		public T this[int index] {
@@ -22,8 +24,8 @@ namespace Muc.Collections {
 
 		public int Length { get => data.Length; set => Resize(value); }
 
-		private T[] data;
-		private CircularInt head;
+		[SerializeField] private T[] data;
+		[SerializeField] private CircularInt head;
 
 		public CircularArray(IEnumerable<T> collection) {
 			data = collection.ToArray();

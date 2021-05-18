@@ -88,7 +88,7 @@ namespace Editors {
 
 			DrawPropertiesExcluding(serializedObject,
 				script,
-				$"<{nameof(TooltipProvider.query)}>k__BackingField"
+				GetBackingFieldName(nameof(TooltipProvider.query))
 			);
 
 			serializedObject.ApplyModifiedProperties();

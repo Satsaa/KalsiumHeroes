@@ -70,7 +70,7 @@ namespace Muc.Components {
 }
 
 #if UNITY_EDITOR && ENABLE_LEGACY_INPUT_MANAGER
-namespace Muc.Components {
+namespace Muc.Components.Editor {
 
 	using System;
 	using System.Linq;
@@ -83,7 +83,7 @@ namespace Muc.Components {
 
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(OnInput), true)]
-	internal class OnInputEditor : Editor {
+	public class OnInputEditor : Editor {
 
 		OnInput t => (OnInput)target;
 

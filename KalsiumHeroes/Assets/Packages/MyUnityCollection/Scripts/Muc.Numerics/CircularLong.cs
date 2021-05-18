@@ -1,12 +1,16 @@
 ﻿
 
+using System;
+using UnityEngine;
+
 namespace Muc.Numerics {
 
 	/// <summary> A long which loops from the specified threshold value to zero. The value never reaches the threshold. </summary>
-	public readonly struct CircularLong {
+	[Serializable]
+	public struct CircularLong {
 
-		public readonly long value;
-		public readonly long threshold;
+		[field: SerializeField] public long value { get; private set; }
+		[field: SerializeField] public long threshold { get; private set; }
 
 		public static CircularLong operator +(CircularLong a, long b) => new CircularLong(a.value + b, a.threshold);
 		public static CircularLong operator ++(CircularLong a) => new CircularLong(a.value + 1, a.threshold);

@@ -154,7 +154,7 @@ namespace Muc.Collections {
 
 
 #if UNITY_EDITOR
-namespace Muc.Collections {
+namespace Muc.Collections.Editor {
 
 	using System;
 	using System.Linq;
@@ -166,7 +166,7 @@ namespace Muc.Collections {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(SerializedStack<>), true)]
-	internal class SerializedStackDrawer : PropertyDrawer {
+	public class SerializedStackDrawer : PropertyDrawer {
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			var list = property.FindPropertyRelative("list");

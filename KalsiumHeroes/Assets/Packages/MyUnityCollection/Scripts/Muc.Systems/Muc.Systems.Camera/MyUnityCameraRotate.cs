@@ -44,7 +44,7 @@ namespace Muc.Systems.Camera {
 }
 
 #if UNITY_EDITOR
-namespace Muc.Systems.Camera {
+namespace Muc.Systems.Camera.Editor {
 
 	using System;
 	using System.Linq;
@@ -57,7 +57,7 @@ namespace Muc.Systems.Camera {
 
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(MyUnityCameraRotate), true)]
-	internal class MyUnityCameraRotateEditor : Editor {
+	public class MyUnityCameraRotateEditor : Editor {
 
 		MyUnityCameraRotate t => (MyUnityCameraRotate)target;
 

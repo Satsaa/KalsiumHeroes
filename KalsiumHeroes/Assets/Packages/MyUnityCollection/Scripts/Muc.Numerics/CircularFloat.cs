@@ -1,12 +1,16 @@
 ﻿
 
+using System;
+using UnityEngine;
+
 namespace Muc.Numerics {
 
 	/// <summary> A float which loops from the specified threshold value to zero. The value never reaches the threshold. </summary>
-	public readonly struct CircularFloat {
+	[Serializable]
+	public struct CircularFloat {
 
-		public readonly float value;
-		public readonly float threshold;
+		[field: SerializeField] public float value { get; private set; }
+		[field: SerializeField] public float threshold { get; private set; }
 
 		public static CircularFloat operator +(CircularFloat a, float b) => new CircularFloat(a.value + b, a.threshold);
 		public static CircularFloat operator ++(CircularFloat a) => new CircularFloat(a.value + 1f, a.threshold);

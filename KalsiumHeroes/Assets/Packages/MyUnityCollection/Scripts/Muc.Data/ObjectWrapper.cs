@@ -36,7 +36,7 @@ namespace Muc.Data {
 
 
 #if UNITY_EDITOR
-namespace Muc.Data {
+namespace Muc.Data.Editor {
 
 	using System;
 	using System.Linq;
@@ -49,7 +49,7 @@ namespace Muc.Data {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(ObjectWrapper<>), true)]
-	internal class ObjectWrapperDrawer : PropertyDrawer {
+	public class ObjectWrapperDrawer : PropertyDrawer {
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 

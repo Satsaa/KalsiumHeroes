@@ -1,12 +1,16 @@
 ﻿
 
+using System;
+using UnityEngine;
+
 namespace Muc.Numerics {
 
 	/// <summary> A double which loops from the specified threshold value to zero. The value never reaches the threshold. </summary>
-	public readonly struct CircularDouble {
+	[Serializable]
+	public struct CircularDouble {
 
-		public readonly double value;
-		public readonly double threshold;
+		[field: SerializeField] public double value { get; private set; }
+		[field: SerializeField] public double threshold { get; private set; }
 
 		public static CircularDouble operator +(CircularDouble a, double b) => new CircularDouble(a.value + b, a.threshold);
 		public static CircularDouble operator ++(CircularDouble a) => new CircularDouble(a.value + 1d, a.threshold);

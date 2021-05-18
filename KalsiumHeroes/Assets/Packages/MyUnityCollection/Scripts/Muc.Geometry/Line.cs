@@ -1,10 +1,10 @@
 
 
 namespace Muc.Geometry {
-
+	using System;
 	using UnityEngine;
 
-	[System.Serializable]
+	[Serializable]
 	public struct Line {
 
 		public Vector3 start;
@@ -52,7 +52,7 @@ namespace Muc.Geometry {
 				case Side.End:
 					return end;
 				default:
-					throw new System.Exception("No valid point was found on the line. This should never happen on valid Lines");
+					throw new Exception("No valid point was found on the line. This should never happen on valid Lines");
 			}
 		}
 

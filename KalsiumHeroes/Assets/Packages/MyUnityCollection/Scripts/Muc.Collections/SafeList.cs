@@ -7,7 +7,7 @@ namespace Muc.Collections {
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	// Maybe this can be optimized by copying the list before it changes if it is being enumerated?
+	// Maybe this can be optimized by copying the list only if it is going to change while enumeration is active?
 
 	/// <summary>
 	/// Like a normal List but enumeration doesn't throw if the collection is changed, and the enumerated objects don't change.
@@ -72,7 +72,7 @@ namespace Muc.Collections {
 }
 
 #if UNITY_EDITOR
-namespace Muc.Collections {
+namespace Muc.Collections.Editor {
 
 	using System;
 	using System.Linq;
@@ -85,7 +85,7 @@ namespace Muc.Collections {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(SafeList<>), true)]
-	internal class SafeListDrawer : PropertyDrawer {
+	public class SafeListDrawer : PropertyDrawer {
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			var prop = property.FindPropertyRelative("list");

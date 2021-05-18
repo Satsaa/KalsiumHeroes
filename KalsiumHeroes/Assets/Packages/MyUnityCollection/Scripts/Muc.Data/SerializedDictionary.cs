@@ -142,7 +142,7 @@ namespace Muc.Data {
 
 
 #if UNITY_EDITOR
-namespace Muc.Data {
+namespace Muc.Data.Editor {
 
 	using System;
 	using System.Linq;
@@ -155,7 +155,7 @@ namespace Muc.Data {
 
 	[CanEditMultipleObjects]
 	[CustomPropertyDrawer(typeof(SerializedDictionary<,>), true)]
-	internal class SerializedDictionaryDrawer : PropertyDrawer {
+	public class SerializedDictionaryDrawer : PropertyDrawer {
 
 		public override void OnGUI(Rect pos, SerializedProperty property, GUIContent label) {
 			// Draw list.

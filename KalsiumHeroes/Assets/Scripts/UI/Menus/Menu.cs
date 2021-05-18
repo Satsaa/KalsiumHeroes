@@ -94,7 +94,7 @@ namespace Editors {
 		SerializedProperty reuse;
 
 		void OnEnable() {
-			reuse = serializedObject.FindProperty($"<{nameof(global::Menu.reuse)}>k__BackingField");
+			reuse = serializedObject.FindProperty(GetBackingFieldName(nameof(global::Menu.reuse)));
 		}
 
 		public override void OnInspectorGUI() {
@@ -103,7 +103,7 @@ namespace Editors {
 			if (reuse.boolValue) {
 				DrawPropertiesExcluding(serializedObject, "m_Script");
 			} else {
-				DrawPropertiesExcluding(serializedObject, "m_Script", $"<{nameof(global::Menu.persist)}>k__BackingField");
+				DrawPropertiesExcluding(serializedObject, "m_Script", GetBackingFieldName(nameof(global::Menu.persist)));
 			}
 
 			serializedObject.ApplyModifiedProperties();

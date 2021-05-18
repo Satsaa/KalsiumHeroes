@@ -112,7 +112,7 @@ namespace Muc.Data {
 
 
 #if UNITY_EDITOR
-namespace Muc.Data {
+namespace Muc.Data.Editor {
 
 	using System;
 	using System.Linq;
@@ -129,9 +129,9 @@ namespace Muc.Data {
 	/// If scene is valid, provides basic buttons to interact with the scene's role in Build Settings.
 	/// </summary>
 	[CustomPropertyDrawer(typeof(SceneReference))]
-	internal class SceneReferencePropertyDrawer : PropertyDrawer {
+	public class SceneReferencePropertyDrawer : PropertyDrawer {
 
-		private const float FOOTER_HEIGHT = 24;
+		protected const float FOOTER_HEIGHT = 24;
 
 		/// <summary> Drawing the 'SceneReference' property </summary>
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {

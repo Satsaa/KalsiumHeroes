@@ -76,7 +76,7 @@ namespace Muc.Components {
 
 
 #if UNITY_EDITOR
-namespace Muc.Components {
+namespace Muc.Components.Editor {
 
 	using System.Reflection;
 	using System.Linq;
@@ -85,7 +85,7 @@ namespace Muc.Components {
 	using UnityEditor;
 
 	[CustomEditor(typeof(OnCollision))]
-	internal class OnCollisionEditor : Editor {
+	public class OnCollisionEditor : Editor {
 
 		private OnCollision t { get => (OnCollision)target; }
 

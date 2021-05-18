@@ -1,12 +1,16 @@
 ﻿
 
+using System;
+using UnityEngine;
+
 namespace Muc.Numerics {
 
 	/// <summary> An integer which loops from the specified threshold value to zero. The value never reaches the threshold. </summary>
-	public readonly struct CircularInt {
+	[Serializable]
+	public struct CircularInt {
 
-		public readonly int value;
-		public readonly int threshold;
+		[field: SerializeField] public int value { get; private set; }
+		[field: SerializeField] public int threshold { get; private set; }
 
 		public static CircularInt operator +(CircularInt a, int b) => new CircularInt(a.value + b, a.threshold);
 		public static CircularInt operator ++(CircularInt a) => new CircularInt(a.value + 1, a.threshold);

@@ -118,7 +118,7 @@ namespace Muc.Systems.Input {
 }
 
 #if UNITY_EDITOR
-namespace Muc.Systems.Input {
+namespace Muc.Systems.Input.Editor {
 
 	using System;
 	using System.Linq;
@@ -130,10 +130,11 @@ namespace Muc.Systems.Input {
 	using static Muc.Editor.EditorUtil;
 	using UnityEngine.InputSystem;
 	using System.Reflection;
+	using Input = Muc.Systems.Input.Input;
 
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(Input), true)]
-	internal class InputSourceEditor : Editor {
+	public class InputSourceEditor : Editor {
 
 		Input t => (Input)target;
 

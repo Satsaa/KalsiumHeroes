@@ -42,13 +42,13 @@ public partial class UnitActor {
 		var futurePoint = spline.Eval(moveT + 0.1f);
 		SetPos(point);
 		base.transform.LookAt(futurePoint.SetY(base.transform.localPosition.y));
-		if (moveT >= spline._controls.Count - 1) {
+		if (moveT >= spline.controls.Count - 1) {
 			EndAnimations();
 		}
 	}
 
 	private void OnDrawGizmosMove() {
-		if (!isMoving || spline._controls.Count < 2) return;
+		if (!isMoving || spline.controls.Count < 2) return;
 		var points = spline.RenderSpline(8);
 
 		int i = 0;

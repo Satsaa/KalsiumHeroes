@@ -137,7 +137,7 @@ namespace Muc.Systems.RenderImages {
 }
 
 #if UNITY_EDITOR
-namespace Muc.Systems.RenderImages {
+namespace Muc.Systems.RenderImages.Editor {
 
 	using System;
 	using System.Linq;
@@ -151,7 +151,7 @@ namespace Muc.Systems.RenderImages {
 
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(RenderImage), true)]
-	internal class RenderImageEditor : RawImageEditor {
+	public class RenderImageEditor : RawImageEditor {
 
 		RenderImage t => (RenderImage)target;
 

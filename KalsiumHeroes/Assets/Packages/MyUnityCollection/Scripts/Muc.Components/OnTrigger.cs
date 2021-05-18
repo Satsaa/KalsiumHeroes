@@ -76,7 +76,7 @@ namespace Muc.Components {
 
 
 #if UNITY_EDITOR
-namespace Muc.Components {
+namespace Muc.Components.Editor {
 
 	using System.Linq;
 	using System.Reflection;
@@ -85,7 +85,7 @@ namespace Muc.Components {
 	using UnityEditor;
 
 	[CustomEditor(typeof(OnTrigger))]
-	internal class OnTriggerEditor : Editor {
+	public class OnTriggerEditor : Editor {
 
 		private OnTrigger t { get => (OnTrigger)target; }
 
