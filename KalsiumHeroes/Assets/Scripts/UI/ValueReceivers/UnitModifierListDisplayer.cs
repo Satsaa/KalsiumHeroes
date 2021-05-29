@@ -110,6 +110,6 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 		}
 	}
 
-	public void OnUnitModifierCreate(UnitModifier modifier) => CreateItem(modifier);
-	public void OnUnitModifierRemove(UnitModifier modifier) => RemoveItem(modifier);
+	public void OnUnitModifierCreate(UnitModifier modifier) { if (acceptedTypes.Any(v => v.type.IsAssignableFrom(modifier.GetType()))) CreateItem(modifier); }
+	public void OnUnitModifierRemove(UnitModifier modifier) { if (acceptedTypes.Any(v => v.type.IsAssignableFrom(modifier.GetType()))) RemoveItem(modifier); }
 }

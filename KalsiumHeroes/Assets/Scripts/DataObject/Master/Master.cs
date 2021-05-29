@@ -16,7 +16,7 @@ public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifi
 
 	public ObjectDict<TMod> modifiers = new ObjectDict<TMod>();
 	public Hooks<THook> hooks = new Hooks<THook>();
-	public override Hooks rawOnEvents => hooks;
+	public override Hooks rawHooks => hooks;
 
 	protected override void OnCreate() {
 		gameObject.transform.SetParent(Game.game.transform);
@@ -60,7 +60,7 @@ public abstract class Master : DataObject {
 	public GameObject gameObject { get; private set; }
 	public Transform transform => gameObject.transform;
 
-	public abstract Hooks rawOnEvents { get; }
+	public abstract Hooks rawHooks { get; }
 
 	public void Remove() {
 		if (removed) return;

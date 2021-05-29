@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 4773633885370973018}
   - component: {fileID: 7288412380952301774}
   - component: {fileID: 6181066373443363364}
+  - component: {fileID: 3489734548303403291}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -403,6 +404,26 @@ MonoBehaviour:
     - key: 1
       value: {r: 1, g: 0, b: 0, a: 1}
     keyCollision: 0
+--- !u!114 &3489734548303403291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901610641956579511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3adc8070c37f1a6428743c74b9bbcf09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  hooker: {fileID: 0}
+  barType: 0
+  fallbackMaxValue: 100
+  target: {fileID: 0}
 --- !u!1 &4371330282576497774
 GameObject:
   m_ObjectHideFlags: 0

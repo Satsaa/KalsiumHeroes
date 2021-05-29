@@ -9,21 +9,23 @@ using System;
 public class Rounds : MonoBehaviour {
 
 	public List<Unit> units = new List<Unit>();
+	[SerializeField] private int index;
 
+	private Unit currentOrDefault => index >= units.Count ? null : units[index];
 	public Unit current {
 		get {
-			var res = units.LastOrDefault();
+			var res = currentOrDefault;
 			if (res == null) {
 				Gather();
-				res = units.LastOrDefault();
+				res = currentOrDefault;
 			} else if (res.removed) {
 				var old = res;
 				do {
-					units.RemoveAt(units.Count - 1);
-					res = units.LastOrDefault();
+					index++;
+					res = currentOrDefault;
 					if (res == null) {
 						Gather();
-						res = units.LastOrDefault();
+						res = currentOrDefault;
 						break;
 					}
 				} while (res.removed);
@@ -35,32 +37,45 @@ public class Rounds : MonoBehaviour {
 		}
 	}
 
-	[field: SerializeField] public int round { get; private set; }
+	[field: SerializeField] public int round { get; private set; } = -1;
 
 	void Sort() {
-		units.Sort((a, b) => a.data.speed.value.CompareTo(b.data.speed.value));
+		units.Sort((a, b) => b.data.speed.value.CompareTo(a.data.speed.value));
 	}
 
 	public List<Unit> GetEstimatedOrder(int roundsAhead) {
+		if (roundsAhead < 0) {
+			throw new IndexOutOfRangeException();
+		} else if (roundsAhead == 0) {
+			return this.units.ToList();
+		}
 		var units = Game.dataObjects.Get<Unit>().Where(v => v).ToList();
-		units.Sort((a, b) => a.GetEstimatedSpeed(roundsAhead).CompareTo(b.GetEstimatedSpeed(roundsAhead)));
+		units.Sort((a, b) => b.GetEstimatedSpeed(roundsAhead).CompareTo(a.GetEstimatedSpeed(roundsAhead)));
 		return units.ToList();
 	}
 
 	void Gather() {
+		index = 0;
 		units = Game.dataObjects.Get<Unit>().Where(v => v).ToList();
 		Sort();
 	}
 
 	/// <summary> Whether unit's turn has already passed during this round. </summary>
 	public bool HasFinishedTurn(Unit unit) {
-		return !units.Contains(unit);
+		for (int i = index; i < units.Count; i++) {
+			if (unit == units[i]) return false;
+		}
+		return true;
 	}
 
 	public void NextTurn() {
-		units.RemoveAll(v => v == null);
 		OnTurnEnds(current);
-		if (units.Count <= 1) {
+		index++;
+		while (true) {
+			if (currentOrDefault == null || currentOrDefault.removed) index++;
+			break;
+		}
+		if (index >= units.Count) {
 			if (!TryEndGame()) {
 				round++;
 				Gather();
@@ -69,7 +84,6 @@ public class Rounds : MonoBehaviour {
 			}
 			return;
 		}
-		units.RemoveAt(units.Count - 1);
 		OnTurnStarts(current);
 	}
 

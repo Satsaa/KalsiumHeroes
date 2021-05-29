@@ -6,19 +6,23 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Data;
 
-public abstract class ValueReceiver : MonoBehaviour {
+interface IValueReceiver {
+	bool TryHandleValue(object value);
+}
+
+public abstract class ValueReceiver : MonoBehaviour, IValueReceiver {
 
 	/// <summary> Sends the value to the GameObject and it't children </summary>
 	public static void SendValue(GameObject gameObject, object value, bool onlyChildren = false, bool _isFirst = true) {
 		if (!onlyChildren) {
-			var receivers = UnityEngine.Pool.ListPool<ValueReceiver>.Get();
+			var receivers = UnityEngine.Pool.ListPool<IValueReceiver>.Get();
 			try {
-				gameObject.GetComponents<ValueReceiver>(receivers);
+				gameObject.GetComponents<IValueReceiver>(receivers);
 				foreach (var receiver in receivers) {
-					receiver.TryGiveValue(value);
+					receiver.TryHandleValue(value);
 				}
 			} finally {
-				UnityEngine.Pool.ListPool<ValueReceiver>.Release(receivers);
+				UnityEngine.Pool.ListPool<IValueReceiver>.Release(receivers);
 			}
 
 			if (_isFirst || !gameObject.TryGetComponent<SendValueStopper>(out var _)) {
@@ -33,17 +37,7 @@ public abstract class ValueReceiver : MonoBehaviour {
 		}
 	}
 
-	public bool TryGiveValue(object value) {
-		return TryHandleValue(value);
-	}
-
-	public void GiveValue(object value) {
-		if (!TryHandleValue(value)) {
-			throw new ArgumentException("Value is not valid", nameof(value));
-		}
-	}
-
-	protected abstract bool TryHandleValue(object value);
+	public abstract bool TryHandleValue(object value);
 }
 
 public abstract class ValueReceiver<T> : ValueReceiver {
@@ -55,7 +49,7 @@ public abstract class ValueReceiver<T> : ValueReceiver {
 		yield return typeof(T);
 	}
 
-	protected override bool TryHandleValue(object value) {
+	public override bool TryHandleValue(object value) {
 		var handled = value is T && (typeConstraint1.type == null || value.GetType().IsSubclassOf(typeConstraint1));
 		if (handled) ReceiveValue((T)value);
 		return handled;
@@ -75,7 +69,7 @@ public abstract class ValueReceiver<T1, T2> : ValueReceiver<T1> {
 		yield return typeof(T2);
 	}
 
-	protected override bool TryHandleValue(object value) {
+	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
 		var handled = value is T2 && (typeConstraint2.type == null || value.GetType().IsSubclassOf(typeConstraint2));
@@ -98,7 +92,7 @@ public abstract class ValueReceiver<T1, T2, T3> : ValueReceiver<T1, T2> {
 		yield return typeof(T3);
 	}
 
-	protected override bool TryHandleValue(object value) {
+	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
 		var handled = value is T3 && (typeConstraint3.type == null || value.GetType().IsSubclassOf(typeConstraint3));
@@ -122,7 +116,7 @@ public abstract class ValueReceiver<T1, T2, T3, T4> : ValueReceiver<T1, T2, T3> 
 		yield return typeof(T4);
 	}
 
-	protected override bool TryHandleValue(object value) {
+	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
 		var handled = value is T4 && (typeConstraint4.type == null || value.GetType().IsSubclassOf(typeConstraint4));
@@ -148,7 +142,7 @@ public abstract class ValueReceiver<T1, T2, T3, T4, T5> : ValueReceiver<T1, T2, 
 		yield return typeof(T5);
 	}
 
-	protected override bool TryHandleValue(object value) {
+	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
 		var handled = value is T5 && (typeConstraint5.type == null || value.GetType().IsSubclassOf(typeConstraint5));

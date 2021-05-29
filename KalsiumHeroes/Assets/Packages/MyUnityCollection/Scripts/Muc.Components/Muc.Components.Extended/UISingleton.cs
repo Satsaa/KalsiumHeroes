@@ -17,10 +17,11 @@ namespace Muc.Components.Extended {
 
 		new protected void OnValidate() {
 #if UNITY_EDITOR // Prevent activation in prefabs
-			if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null) {
+			if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null && !UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject)) {
 #endif
 				if (_instance != null && _instance != this) {
-					Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
+					Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!", this);
+					Debug.LogWarning($"Main instance of {typeof(T).Name}: {_instance}", _instance);
 				} else {
 					_instance = this as T;
 				}
@@ -32,7 +33,8 @@ namespace Muc.Components.Extended {
 
 		new protected void Awake() {
 			if (_instance != null && _instance != this) {
-				Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!");
+				Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!", this);
+				Debug.LogWarning($"Main instance of {typeof(T).Name}: {_instance}", _instance);
 			} else {
 				_instance = this as T;
 			}

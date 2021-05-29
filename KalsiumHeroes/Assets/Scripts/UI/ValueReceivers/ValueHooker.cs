@@ -17,12 +17,14 @@ public abstract class ValueHooker<T> : ValueReceiver<T> {
 	protected void Hook(Master master) {
 		if (hooker) Unhook();
 		hooker = master;
-		hooker.rawOnEvents.Hook(this);
+		hooker.rawHooks.Hook(this);
+		Game.hooks.Hook(this);
 	}
 
 	protected void Unhook() {
 		if (!hooker) return;
-		hooker.rawOnEvents.Unhook(this);
+		hooker.rawHooks.Unhook(this);
+		if (Game.game && Game.hooks != null) Game.hooks.Unhook(this);
 		hooker = null;
 	}
 
@@ -39,12 +41,14 @@ public abstract class ValueHooker<T1, T2> : ValueReceiver<T1, T2> {
 	protected void Hook(Master master) {
 		if (hooker) Unhook();
 		hooker = master;
-		hooker.rawOnEvents.Hook(this);
+		hooker.rawHooks.Hook(this);
+		Game.hooks.Hook(this);
 	}
 
 	protected void Unhook() {
 		if (!hooker) return;
-		hooker.rawOnEvents.Unhook(this);
+		hooker.rawHooks.Unhook(this);
+		if (Game.game && Game.hooks != null) Game.hooks.Unhook(this);
 		hooker = null;
 	}
 
@@ -52,44 +56,48 @@ public abstract class ValueHooker<T1, T2> : ValueReceiver<T1, T2> {
 
 public abstract class ValueHooker<T1, T2, T3> : ValueReceiver<T1, T2, T3> {
 
-	protected bool hooked => target;
+	protected bool hooked => hooker;
 
-	[SerializeField, HideInInspector] Master target;
+	[SerializeField, HideInInspector] Master hooker;
 
 	protected void OnDestroy() => Unhook();
 
 	protected void Hook(Master master) {
-		if (target) Unhook();
-		target.rawOnEvents.Hook(this);
-		target = master;
+		if (hooker) Unhook();
+		hooker = master;
+		hooker.rawHooks.Hook(this);
+		Game.hooks.Hook(this);
 	}
 
 	protected void Unhook() {
-		if (!target) return;
-		target.rawOnEvents.Unhook(this);
-		target = null;
+		if (!hooker) return;
+		hooker.rawHooks.Unhook(this);
+		if (Game.game && Game.hooks != null) Game.hooks.Unhook(this);
+		hooker = null;
 	}
 
 }
 
 public abstract class ValueHooker<T1, T2, T3, T4> : ValueReceiver<T1, T2, T3, T4> {
 
-	protected bool hooked => target;
+	protected bool hooked => hooker;
 
-	[SerializeField, HideInInspector] Master target;
+	[SerializeField, HideInInspector] Master hooker;
 
 	protected void OnDestroy() => Unhook();
 
 	protected void Hook(Master master) {
-		if (target) Unhook();
-		target.rawOnEvents.Hook(this);
-		target = master;
+		if (hooker) Unhook();
+		hooker = master;
+		hooker.rawHooks.Hook(this);
+		Game.hooks.Hook(this);
 	}
 
 	protected void Unhook() {
-		if (!target) return;
-		target.rawOnEvents.Unhook(this);
-		target = null;
+		if (!hooker) return;
+		hooker.rawHooks.Unhook(this);
+		if (Game.game && Game.hooks != null) Game.hooks.Unhook(this);
+		hooker = null;
 	}
 
 }
@@ -97,22 +105,24 @@ public abstract class ValueHooker<T1, T2, T3, T4> : ValueReceiver<T1, T2, T3, T4
 
 public abstract class ValueHooker<T1, T2, T3, T4, T5> : ValueReceiver<T1, T2, T3, T4, T5> {
 
-	protected bool hooked => target;
+	protected bool hooked => hooker;
 
-	[SerializeField, HideInInspector] Master target;
+	[SerializeField, HideInInspector] Master hooker;
 
 	protected void OnDestroy() => Unhook();
 
 	protected void Hook(Master master) {
-		if (target) Unhook();
-		target.rawOnEvents.Hook(this);
-		target = master;
+		if (hooker) Unhook();
+		hooker = master;
+		hooker.rawHooks.Hook(this);
+		Game.hooks.Hook(this);
 	}
 
 	protected void Unhook() {
-		if (!target) return;
-		target.rawOnEvents.Unhook(this);
-		target = null;
+		if (!hooker) return;
+		hooker.rawHooks.Unhook(this);
+		if (Game.game && Game.hooks != null) Game.hooks.Unhook(this);
+		hooker = null;
 	}
 
 }

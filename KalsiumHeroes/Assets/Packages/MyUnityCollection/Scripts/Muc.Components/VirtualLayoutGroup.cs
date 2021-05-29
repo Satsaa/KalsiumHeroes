@@ -10,7 +10,7 @@ namespace Muc.Components {
 	using UnityEngine.EventSystems;
 	using UnityEngine.Pool;
 	using Muc.Components.Extended;
-	using static VirtualLayoutElement;
+	using Muc.Extensions;
 
 #if (MUC_HIDE_COMPONENTS || MUC_HIDE_GENERAL_COMPONENTS)
 	[AddComponentMenu("")]
@@ -18,298 +18,707 @@ namespace Muc.Components {
 	[AddComponentMenu("MyUnityCollection/General/" + nameof(VirtualLayoutGroup))]
 #endif
 	[DefaultExecutionOrder(5)]
-	public class VirtualLayoutGroup : ExtendedUIBehaviour, ILayoutElement {
+	public class VirtualLayoutGroup : ExtendedUIBehaviour {
 
-		public class Storage : ScriptableObject {
+		public enum Direction { Right, Left, Up, Down, }
 
-			[field: SerializeReference] public Data data { get; protected internal set; }
-			[field: SerializeField] public VirtualLayoutElement element { get; set; }
-			[field: SerializeField] public int index { get; protected internal set; }
-			[field: SerializeField] public float start { get; protected internal set; }
-			[field: SerializeField] public float size { get; protected internal set; }
-			public float end => start + size;
+		public abstract class Item : ScriptableObject {
+
+			public VirtualLayoutGroup group;
+			public float size;
+
+			public abstract void Position(float position);
+			public abstract void Offset(float offset, bool animate = false);
+			public abstract void Show();
+			public abstract void Hide();
+			public abstract void Remove();
+			public virtual void Update() { }
+			public virtual void Init() { }
+
+			protected void ConfigureUpdates(bool enable) => group.ConfigureUpdates(this, enable);
+
+			public void SetSize(float size) {
+				var oldSize = this.size;
+				this.size = size;
+				group.UpdateSize(this, oldSize);
+			}
 
 		}
+
+		public class PrefabItem : Item {
+
+			public int creationIndex;
+			public bool calculateSize;
+			public bool createOnInit;
+			public RectTransform prefab;
+			public RectTransform item;
+
+			[field: SerializeField] public bool destroy { get; private set; }
+
+			public override void Init() {
+				base.Init();
+				if (calculateSize) {
+					var prefabSize = prefab.rect.size;
+					if (group.IsVert()) {
+						size = group.rectTransform.rect.width * prefabSize.y / prefabSize.x;
+					} else {
+						size = group.rectTransform.rect.height * prefabSize.x / prefabSize.y;
+					}
+				}
+				if (createOnInit) {
+					if (!item) {
+						item = Instantiate(prefab, group.transform);
+						group.SetItemRect(item, size);
+					}
+					item.gameObject.SetActive(false);
+				}
+			}
+
+			public override void Position(float position) {
+				if (item) group.SetPos(item, position);
+			}
+			public override void Offset(float offset, bool animate) {
+				if (item) group.OffsetPos(item, offset);
+			}
+			public override void Show() {
+				if (!item) {
+					item = Instantiate(prefab, group.transform);
+					group.SetItemRect(item, size);
+				}
+				item.gameObject.SetActive(true);
+			}
+			public override void Remove() {
+				if (item) Destroy(item.gameObject);
+				item = null;
+			}
+			public override void Hide() {
+				if (item) {
+					if (destroy) {
+						if (item) Destroy(item.gameObject);
+						item = null;
+					} else {
+						item.gameObject.SetActive(false);
+					}
+				}
+			}
+		}
+
+		public class AnimatedItem : PrefabItem {
+
+			[Serializable]
+			protected class Animation {
+				public float prevEval = 0f;
+				public float time = 0f;
+				public float offset;
+			}
+
+			[SerializeField] protected float animationTargetPosition;
+			[SerializeField] protected List<Animation> animations = new List<Animation>();
+			[SerializeField] protected bool hidden;
+
+			public override void Show() {
+				hidden = false;
+				base.Show();
+			}
+
+			public override void Hide() {
+				hidden = true;
+				if (!animating) {
+					base.Hide();
+				}
+			}
+
+			public override void Position(float position) {
+				if (animating) {
+					var offset = position - animationTargetPosition;
+					Offset(offset, true);
+				} else {
+					base.Position(position);
+				}
+			}
+
+			public override void Offset(float offset, bool animate) {
+				if (item) {
+					if (animate && item.gameObject.activeSelf) {
+						if (!animating) {
+							item.SetAsLastSibling();
+							ConfigureUpdates(true);
+							animationTargetPosition = group.Pos(item);
+						}
+						animations.Add(new() { offset = offset });
+						animationTargetPosition += offset;
+					} else {
+						base.Offset(offset, animate);
+						animationTargetPosition += offset;
+					}
+				}
+			}
+
+			public override void Update() {
+				for (int i = 0; i < animations.Count; i++) {
+					var animation = animations[i];
+					animation.time = Mathf.Min(1, animation.time + Time.deltaTime / group.animationDuration);
+					var eval = group.animationCurve.Evaluate(animation.time);
+					var evalChange = eval - animation.prevEval;
+					animation.prevEval = eval;
+					group.OffsetPos(item, evalChange * animation.offset);
+					if (animation.time >= 1) {
+						animations.RemoveAt(i);
+						i--;
+					}
+				}
+				if (!animating) {
+					if (hidden) Hide();
+					ConfigureUpdates(false);
+				}
+			}
+
+			public bool animating => animations.Any();
+
+			protected void StopAnimating() {
+				if (animating) {
+					if (hidden) Hide();
+					animations.Clear();
+					ConfigureUpdates(false);
+				}
+			}
+		}
+
+		[field: SerializeField] public Direction direction { get; private set; }
+		public bool expandToViewSize = true;
+		public float animationDuration = 1;
+		public AnimationCurve animationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
 		public RectTransform testPrefab;
+		public IReadOnlyList<Item> listItems => items;
 
-		[field: SerializeField] public bool vertical { private set; get; } = false;
+		private HashSet<Item> updateds;
+		[field: SerializeField, HideInInspector] protected List<Item> items;
 
-		[SerializeField] protected float spacing = 0;
+		[field: SerializeField, HideInInspector] protected float position;
+		[field: SerializeField, HideInInspector] protected float oldPosition;
+		[field: SerializeField, HideInInspector] protected float viewSize;
 
-		[SerializeField] protected List<Storage> items;
-		[SerializeField] protected int visI;
-		[SerializeField] protected int visCount = 0;
-		[SerializeField] protected int dir = 0;
+		[field: SerializeField, HideInInspector] protected float firstPos;
+		[field: SerializeField, HideInInspector] protected int firstVisible;
+		[field: SerializeField, HideInInspector] protected float lastPos;
+		[field: SerializeField, HideInInspector] protected int lastVisible = -1;
 
-		[SerializeField] protected float prevPos = 0;
-
-		public virtual void UpdateVisibility(int direction = 0) {
-			if (!items.Any()) return;
-			float startPos = 0;
-			float endPos = 0;
-			if (visCount > 0) {
-				startPos = items[visI].start;
-				endPos = items[visI + visCount - 1].end;
+		[field: SerializeField, HideInInspector] public bool dirty;
+		[field: SerializeField, HideInInspector] private float _size;
+		public float size {
+			get => _size;
+			protected set {
+				_size = value;
+				UpdateRectSize();
 			}
-			var vis = GetVisibleArea();
-			var midPos = vis.x + (vis.y - vis.x) / 2;
-			if (direction == 0 && prevPos == vis.x) return;
-			dir = direction != 0 ? direction : prevPos < vis.x ? 1 : -1;
-			prevPos = vis.x;
+		}
 
-			// Visibility completely changed
-			if (vis.x > endPos || vis.y < startPos) {
-				DoFull();
-				if (visCount == 0) {
-					if (vis.y < startPos) {
-						visI = 0;
-						visI = 0;
-					} else {
-						visI = items.Count;
+		protected void UpdateRectSize() {
+			var size = expandToViewSize ? Mathf.Max(viewSize, _size) : _size;
+			rectTransform.SetSizeWithCurrentAnchors(IsVert() ? RectTransform.Axis.Vertical : RectTransform.Axis.Horizontal, size);
+		}
+
+		protected override void Awake() {
+			base.Awake();
+			rectTransform.pivot = direction switch {
+				Direction.Right => rectTransform.pivot.SetX(0),
+				Direction.Left => rectTransform.pivot.SetX(1),
+				Direction.Up => rectTransform.pivot.SetY(0),
+				Direction.Down => rectTransform.pivot.SetY(1),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
+			UpdateViewSize();
+			UpdateRectSize();
+		}
+
+		private List<Item> clone;
+		private bool cloneReady;
+		protected virtual void Update() {
+			if (updateds == null || !updateds.Any()) return;
+
+			if (!cloneReady) {
+				cloneReady = true;
+				clone ??= new();
+				int cur = clone.Count;
+				int target = updateds.Count;
+				if (target < cur) clone.RemoveRange(target, cur - target);
+				else if (target > cur) clone.AddRange(Enumerable.Repeat(default(Item), target - cur));
+
+				int i = 0;
+				foreach (var updated in updateds) {
+					clone[i] = updated;
+					i++;
+				}
+			}
+
+			foreach (var updated in clone) {
+				updated.Update();
+			}
+		}
+
+		// Call manually from e.g. scroll rect
+		public void Refresh() => Refresh(default);
+		protected void Refresh(float animation) {
+			UpdateViewSize();
+			var parent = transform.parent as RectTransform;
+			position = -Select(transform.localPosition.Add(IsNeg() ? -(Vector2.one - parent.pivot) * parent.rect.size : parent.pivot * parent.rect.size));
+			var change = position - oldPosition;
+			if ((change == 0 && !dirty) || items.Count == 0) return;
+			var up = change >= 0;
+			oldPosition = position;
+
+			if (up || dirty) {
+				UpCheck();
+			}
+			if (!up || dirty) {
+				DownCheck();
+			}
+
+			dirty = false;
+
+			void UpCheck() {
+				// Show items that became visible upwards
+				if (lastVisible < items.Count) {
+					var pos = lastVisible == -1 ? 0 : lastPos + items[lastVisible].size;
+					for (int i = lastVisible + 1; i < items.Count; i++) {
+						var item = items[i];
+						var vis = Visibility(pos, pos + item.size);
+						if (vis == 0) {
+							item.Show();
+							if (animation != 0) {
+								item.Position(pos + animation);
+								item.Offset(-animation, true);
+							} else {
+								item.Position(pos);
+							}
+							lastVisible = i;
+							lastPos = pos;
+						} else if (vis == 1) {
+							break;
+						}
+						pos += item.size;
 					}
 				}
+				// Hide items that became invisible downwards
+				{
+					var pos = firstPos;
+					for (int i = firstVisible; i < items.Count; i++) {
+						var item = items[i];
+						var vis = Visibility(pos, pos + item.size);
+						if (vis < 0) {
+							item.Hide();
+							firstVisible = i + 1;
+							pos += item.size;
+							firstPos = pos;
+						} else {
+							break;
+						}
+					}
+				}
+			}
+			void DownCheck() {
+				// Show items that became visible downwards
+				{
+					var pos = firstPos;
+					for (int i = firstVisible - 1; i >= 0; i--) {
+						var item = items[i];
+						pos -= item.size;
+						var vis = Visibility(pos, pos + item.size);
+						if (vis == 0) {
+							item.Show();
+							if (animation != 0) {
+								item.Position(pos - animation);
+								item.Offset(animation, true);
+							} else {
+								item.Position(pos);
+							}
+							firstVisible = i;
+							firstPos = pos;
+						} else if (vis == -1) {
+							break;
+						}
+					}
+				}
+				// Hide items that became invisible upwards
+				{
+					var pos = lastPos;
+					for (int i = lastVisible; i >= 0; i--) {
+						var item = items[i];
+						var vis = Visibility(pos, pos + item.size);
+						if (vis > 0) {
+							item.Hide();
+							if (i == 0) {
+								lastVisible = -1;
+								pos = 0;
+							} else {
+								lastVisible = i - 1;
+								pos -= items[i - 1].size;
+							}
+							lastPos = pos;
+						} else {
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		public void UpdateSize(Item item, float oldSize) {
+			for (int i = 0; i < lastVisible; i++) {
+				if (items[i] == item) {
+					UpdateSize(i, oldSize);
+					return;
+				}
+			}
+
+		}
+		public void UpdateSize(int index, float oldSize) {
+			var diff = items[index].size - oldSize;
+			if (index < lastVisible) {
+				lastPos += diff;
+			}
+			if (index < firstVisible) {
+				firstPos += diff;
+			}
+			for (int i = Mathf.Max(index + 1, firstVisible); i <= lastVisible; i++) {
+				items[i].Offset(diff, index >= firstVisible);
+			}
+			size += diff;
+			if (index >= firstVisible) {
+				dirty = true;
+				Refresh(-diff);
+			} else {
+				OffsetPos(rectTransform, -diff);
+			}
+		}
+
+		public bool UpdateViewSize() {
+			var prev = viewSize;
+			viewSize = Mathf.Abs(Select((transform.parent.transform as RectTransform).rect.size));
+			dirty |= prev != viewSize;
+			var res = prev != viewSize;
+			if (res) UpdateRectSize();
+			return res;
+		}
+
+		internal void ConfigureUpdates(Item item, bool enabled) {
+			updateds ??= new();
+			if (enabled ? updateds.Add(item) : updateds.Remove(item)) cloneReady = false;
+		}
+
+		public virtual void Add(Item item) {
+			item.group = this;
+			item.Init();
+			items.Add(item);
+			size += item.size;
+			dirty = true;
+			Refresh();
+		}
+
+		public virtual void MoveItem(int from, int to) {
+			if (from < 0 || from > items.Count) throw new IndexOutOfRangeException();
+			if (to < 0 || to > items.Count) throw new IndexOutOfRangeException();
+			if (from == to) return;
+
+			var item = items[from];
+
+			var fromPos = 0f;
+			if (from >= firstVisible) {
+				fromPos = firstPos;
+				for (int i = firstVisible; i < items.Count; i++) {
+					var other = items[i];
+					if (i == from) {
+						break;
+					}
+					fromPos += other.size;
+				}
+			} else {
+				fromPos = firstPos;
+				for (int i = firstVisible; i >= 0; i--) {
+					var other = items[i];
+					fromPos -= other.size;
+					if (i == from) {
+						break;
+					}
+				}
+			}
+
+			if (from < to) {
+				// Move item upstream
+				// 3 -> 7
+				// 0,1,2,3[4,5,6,7]8,9 <- Offset items
+				// 0,1,2,4,5,6,7[3]8,9 Move item to new position
+				for (int i = Mathf.Max(from + 1, firstVisible); i <= Mathf.Min(to, lastVisible); i++) {
+					items[i].Offset(-item.size, true);
+				}
+
+				if (to < lastVisible) {
+					// target = lastPos + (lastVisible == to ? item.size : items[lastVisible].size);
+					var toPos = lastPos + items[lastVisible].size;
+					for (int i = lastVisible; i >= firstVisible; i--) {
+						var other = items[i];
+						if (i == to) {
+							toPos -= item.size;
+							break;
+						}
+						toPos -= other.size;
+					}
+					item.Show();
+					if (from < firstVisible || from > lastVisible) item.Position(fromPos);
+					item.Offset(toPos - fromPos, true);
+				} else {
+					var toPos = lastPos;
+					for (int i = lastVisible; i < items.Count; i++) {
+						var other = items[i];
+						if (i == to) {
+							toPos += other.size - item.size;
+							break;
+						}
+						toPos += other.size;
+					}
+					item.Show();
+					item.Position(fromPos);
+					item.Offset(toPos - fromPos, true);
+					item.Hide();
+				}
+
+				if (from < firstVisible && to >= firstVisible) {
+					firstPos -= item.size;
+					firstVisible--;
+				}
+				if (from <= lastVisible && to >= lastVisible) {
+					lastPos -= from == lastVisible ? lastVisible == 0 ? 0 : items[lastVisible - 1].size : item.size;
+					lastVisible--;
+				}
+			} else {
+				// Move item downstream
+				// 7 -> 3
+				// 0,1,2[3,4,5,6]7,8,9 -> Offset items
+				// 0,1,2[7]3,4,5,6,8,9 Move item to new position
+				for (int i = Mathf.Max(to, firstVisible); i <= Mathf.Min(from - 1, lastVisible); i++) {
+					items[i].Offset(item.size, true);
+				}
+
+				if (to >= firstVisible) {
+					var toPos = firstPos;
+					for (int i = firstVisible; i <= lastVisible; i++) {
+						var other = items[i];
+						if (i == to) break;
+						toPos += other.size;
+					}
+					item.Show();
+					if (from < firstVisible || from > lastVisible) item.Position(fromPos);
+					item.Offset(toPos - fromPos, true);
+				} else {
+					var toPos = firstPos + items[firstVisible].size;
+					for (int i = firstVisible; i >= 0; i--) {
+						var other = items[i];
+						toPos -= other.size;
+						if (i == to) {
+							break;
+						}
+					}
+					item.Show();
+					item.Position(fromPos);
+					item.Offset(toPos - fromPos, true);
+					item.Hide();
+				}
+
+				if (from >= firstVisible && to < firstVisible) {
+					firstPos += item.size;
+					firstVisible++;
+				}
+				if (from >= lastVisible && to <= lastVisible) {
+					lastPos += item.size;
+					lastVisible++;
+				}
+			}
+			items.RemoveAt(from);
+			items.Insert(to, item);
+			dirty = true;
+			Refresh(item.size);
+		}
+
+		public virtual void RemoveAt(int index) {
+			var item = items[index];
+			for (int i = Mathf.Max(index + 1, firstVisible); i <= lastVisible; i++) {
+				items[i].Offset(-item.size, true);
+			}
+			if (index < firstVisible) {
+				firstVisible--;
+				firstPos -= item.size;
+				OffsetPos(rectTransform, item.size);
+			}
+			if (index < lastVisible) {
+				lastVisible--;
+				lastPos -= item.size;
+			} else if (index == lastVisible) {
+				lastVisible--;
+				lastPos -= items[index - 1].size;
+			}
+
+			item.Remove();
+			ConfigureUpdates(item, false);
+			items.RemoveAt(index);
+			size -= item.size;
+			dirty = true;
+			Refresh(item.size);
+		}
+
+		public virtual void Insert(int index, Item item) {
+			if (index < 0 || index > items.Count) throw new IndexOutOfRangeException();
+			item.group = this;
+			item.Init();
+			if (index <= firstVisible) { // Before first visible
+				for (int i = firstVisible; i <= lastVisible; i++) {
+					items[i].Offset(item.size);
+				}
+				firstVisible++;
+				firstPos += item.size;
+				lastVisible++;
+				lastPos += item.size;
+				items.Insert(index, item);
+				size += item.size;
+				OffsetPos(rectTransform, -item.size);
+				return;
+			} else if (index <= lastVisible) { // Within visible area
+				for (int i = index; i <= lastVisible; i++) {
+					items[i].Offset(item.size, true);
+				}
+				lastVisible++;
+				lastPos += item.size;
+				items.Insert(index, item);
+				size += item.size;
+				var pos = firstPos;
+				for (int i = firstVisible; i <= lastVisible; i++) {
+					var other = items[i];
+					if (i == index) {
+						item.Show();
+						other.Position(pos);
+						break;
+					}
+					pos += other.size;
+				}
+				dirty = true;
+				Refresh(item.size);
 				return;
 			}
-			ShowNew();
-			HideOld();
-
-			void DoFull() {
-				for (int i = visI; i <= visI + visCount && i < items.Count; i++) {
-					Hide(items[i]);
-				}
-
-				var count = 0;
-				var first = -1;
-				for (int i = dir == 1 ? visI : visI + visCount - 1; dir == 1 ? i < items.Count : i >= 0; i += dir) {
-					var item = items[i];
-					if (Visibility(item.start, item.end) == 0) {
-						Show(item);
-						if (first == -1) first = i;
-						count++;
-					} else if (first != -1) {
-						break;
-					}
-				}
-				if (first == -1) {
-					visI = dir == 1 ? items.Count - 1 : 0;
-				} else {
-					visI = dir == 1 ? first : first - count + 1;
-				}
-				visCount = count;
-				if (visI <= -1) {
-					Debug.LogWarning("visI invalid");
-				}
-			}
-
-			void ShowNew() {
-				for (int i = dir == 1 ? visI + visCount : visI - 1; dir == 1 ? i < items.Count : i >= 0; i += dir) {
-					var item = items[i];
-					if (Visibility(item.start, item.end) == 0) {
-						Show(item);
-						if (dir == -1) visI--;
-						visCount++;
-					} else {
-						break;
-					}
-				}
-			}
-
-			void HideOld() {
-				for (int i = dir == 1 ? visI : visI + visCount - 1; dir == 1 ? i < items.Count : i >= 0; i += dir) {
-					var item = items[i];
-					if (Visibility(item.start, item.end) != 0) {
-						Hide(item);
-						if (dir == 1) visI++;
-						visCount--;
-					} else {
-						break;
-					}
-				}
-			}
-		}
-
-		protected override void OnRectTransformDimensionsChange() {
-			base.OnRectTransformDimensionsChange();
-			UpdateVisibility();
-		}
-
-		public Vector2 GetVisibleArea() {
-			var parent = (RectTransform)transform.parent;
-			return new(
-				vertical ? parent.rect.yMin - transform.localPosition.y : parent.rect.xMin - transform.localPosition.x,
-				vertical ? parent.rect.yMax - transform.localPosition.y : parent.rect.xMax - transform.localPosition.x
-			);
+			items.Insert(index, item);
+			size += item.size;
 		}
 
 		/// <summary> Returns -1 if before the visible part, 0 if inside, and 1 if after. </summary>
-		public int Visibility(float start, float end) {
-			var visibility = GetVisibleArea();
-			if (end < visibility.x) return -1;
-			if (start > visibility.y) return 1;
+		public virtual int Visibility(float start, float end) {
+			if (end < position) return -1;
+			if (start > position + viewSize) return 1;
 			return 0;
 		}
 
-		public float GetSize(RectTransform rt) {
-			var constraint = vertical ? rectTransform.rect.width : rectTransform.rect.height;
-			var rect = rt.rect;
-			return vertical ? rect.height / (rect.width / constraint) : rect.width / (rect.height / constraint);
+		protected void SetPos(RectTransform rect, float inset) => rect.localPosition = Select(rect.localPosition, inset + Size(rect) * Pivot(rect));
+		protected void OffsetPos(RectTransform rect, float offset) => rect.localPosition += ToPos(offset);
+
+		protected float Pivot(RectTransform rt) => Select(rt.pivot);
+		protected float Size(RectTransform rt) => Select(rt.sizeDelta);
+		protected float Pos(RectTransform rt) => Select(rt.localPosition) - Size(rt) * Pivot(rt);
+		protected Vector3 ToPos(float value) => Select(0, value);
+
+		protected void SetItemRect(RectTransform rt, float size) {
+			rt.anchorMin = direction switch {
+				Direction.Right => new(0, 0),
+				Direction.Left => new(1, 0),
+				Direction.Up => new(0, 0),
+				Direction.Down => new(0, 1),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
+			rt.anchorMax = direction switch {
+				Direction.Right => new(0, 1),
+				Direction.Left => new(1, 1),
+				Direction.Up => new(1, 0),
+				Direction.Down => new(1, 1),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
+			rt.sizeDelta = Select(0, size).Abs();
+			rt.anchoredPosition = default;
 		}
 
-		public virtual void MoveElement(int from, int to) {
-			if (from == to) return;
-			if (from < 0 || from > items.Count || to < 0 || to > items.Count) throw new IndexOutOfRangeException();
-
-			var item = items[from];
-			items.RemoveAt(from);
-			items.Insert(to, item);
-
-			if (from < to) {
-				// 3 -> 7
-				// 1,2,3,4,5,6,7,8,9
-				// 1,2[4,5,6,7]3,8,9 <-
-				for (int i = from; i < to; i++) {
-					var other = items[i];
-					other.index--;
-					if (!other.element && Visibility(other.start - item.size, other.end - item.size) == 0) {
-						other.element = other.data.CreateElement(other, this);
-						PlaceElement(other);
-					}
-					other.start -= item.size;
-					if (other.element) {
-						ApplyElementMovement(other, -item.size);
-					}
-				}
-			} else {
-
-				// 7 -> 3
-				// 1,2,3,4,5,6,7,8,9
-				// 1,2,7[3,4,5,6]8,9 ->
-				for (int i = to + 1; i <= from; i++) {
-					var other = items[i];
-					other.index++;
-					if (!other.element && Visibility(other.start + item.size, other.end + item.size) == 0) {
-						other.element = other.data.CreateElement(other, this);
-						PlaceElement(other);
-					}
-					other.start += item.size;
-					if (other.element) {
-						ApplyElementMovement(other, item.size);
-					}
-				}
-			}
-
-			var newPos = to == 0 ? 0 : items[to - 1].end;
-			if (!item.element && Visibility(newPos, newPos + item.size) == 0) {
-				item.element = item.data.CreateElement(item, this);
-				PlaceElement(item);
-			}
-			if (item.element) ApplyElementMovement(item, newPos - item.start);
-			item.start = newPos;
-			item.index = to;
-
-			UpdateVisibility(1);
-			UpdateVisibility(-1);
-
+		protected bool IsNeg() {
+			return direction switch {
+				Direction.Right => false,
+				Direction.Left => true,
+				Direction.Up => false,
+				Direction.Down => true,
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
 
-		protected virtual void ApplyElementMovement(Storage storage, float change) {
-			PlaceElement(storage);
+		protected bool IsVert() {
+			return direction switch {
+				Direction.Right => false,
+				Direction.Left => false,
+				Direction.Up => true,
+				Direction.Down => true,
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
 
-		public virtual Storage InsertElement(int index, RectTransform prefab) => InsertElement(index, new Data() { prefab = prefab });
-		public virtual Storage InsertElement(int index, Data data) {
-			if (index < 0 || index > items.Count) throw new IndexOutOfRangeException();
-			var res = CreateStorage(index, data, default);
-			var size = res.size = GetSize(data.prefab);
-
-			var pos = res.start = index == 0 || !items.Any() ? 0 : items[index - 1].end;
-			if (Visibility(res.start, res.end) == 0) {
-				Show(res);
-				visCount++;
-			}
-
-			items.Insert(index, res);
-
-			for (int i = index + 1; i < items.Count; i++) {
-				var item = items[i];
-				item.start += size;
-				item.index++;
-				if (item.element) {
-					if (index < visI) {
-						PlaceElement(item);
-					} else {
-						ApplyElementMovement(item, size);
-					}
-				}
-			}
-			if (index < visI) {
-				rectTransform.localPosition -= new Vector3(vertical ? 0 : size, vertical ? size : 0);
-			}
-
-			LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
-			return res;
+		protected float CondNeg(float value) {
+			return IsNeg() ? -value : value;
 		}
 
-		public virtual Storage AddElement(RectTransform prefab) => AddElement(new Data() { prefab = prefab });
-		public virtual Storage AddElement(Data data) {
-			var res = CreateStorage(items.Count, data, default);
-			var size = res.size = GetSize(data.prefab);
-			var pos = res.start = items.Any() ? items.Last().end : 0;
-			if (visI + visCount - 1 == items.Count || Visibility(res.start, res.end) == 0) {
-				Show(res);
-				visCount++;
-			}
-			items.Add(res);
-			LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
-			return res;
+		protected float Select(Vector2 source) {
+			return direction switch {
+				Direction.Right => source.x,
+				Direction.Left => -source.x,
+				Direction.Up => source.y,
+				Direction.Down => -source.y,
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
 
-		protected virtual void Show(Storage storage) {
-			if (!storage.element) {
-				storage.element = storage.data.CreateElement(storage, this);
-				PlaceElement(storage);
-			}
+		protected Vector2 Select(Vector2 zero, Vector2 value) {
+			return direction switch {
+				Direction.Right => new(value.x, zero.y),
+				Direction.Left => new(-value.x, zero.y),
+				Direction.Up => new(zero.x, value.y),
+				Direction.Down => new(zero.x, -value.y),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
 
-		protected virtual void Hide(Storage storage) {
-			if (storage.element) {
-				storage.element.UpdateData(storage.data);
-				storage.element.OnHide(this);
-				storage.element = null;
-			}
+		protected Vector2 Select(float zero, Vector2 value) {
+			return direction switch {
+				Direction.Right => new(value.x, zero),
+				Direction.Left => new(-value.x, zero),
+				Direction.Up => new(zero, value.y),
+				Direction.Down => new(zero, -value.y),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
 
-		protected Storage CreateStorage(int index, Data data, VirtualLayoutElement element) {
-			var res = Storage.CreateInstance<Storage>();
-			res.data = data;
-			res.index = index;
-			res.element = element;
-			return res;
+		protected Vector2 Select(Vector2 zero, float value) {
+			return direction switch {
+				Direction.Right => new(value, zero.y),
+				Direction.Left => new(-value, zero.y),
+				Direction.Up => new(zero.x, value),
+				Direction.Down => new(zero.x, -value),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
 
-		protected void PlaceElement(Storage storage) {
-			var rt = (RectTransform)storage.element.transform;
-			rt.SetInsetAndSizeFromParentEdge(vertical ? RectTransform.Edge.Top : RectTransform.Edge.Left, storage.start, storage.size);
-			rt.anchorMin = new(vertical ? 0 : rt.anchorMin.x, vertical ? rt.anchorMin.y : 0);
-			rt.anchorMax = new(vertical ? 1 : rt.anchorMax.x, vertical ? rt.anchorMax.y : 1);
-			rt.offsetMin = new(vertical ? 0 : rt.offsetMin.x, vertical ? rt.offsetMin.y : 0);
-			rt.offsetMax = new(vertical ? 0 : rt.offsetMax.x, vertical ? rt.offsetMax.y : 0);
+		protected Vector2 Select(float zero, float value) {
+			return direction switch {
+				Direction.Right => new(value, zero),
+				Direction.Left => new(-value, zero),
+				Direction.Up => new(zero, value),
+				Direction.Down => new(zero, -value),
+				_ => throw new InvalidOperationException($"{nameof(direction)} is invalid: {direction}"),
+			};
 		}
-
-		float ILayoutElement.minWidth => -1;
-		float ILayoutElement.preferredWidth => vertical ? -1 : items.Any() ? items.Last().end : -1;
-		float ILayoutElement.flexibleWidth => -1;
-		float ILayoutElement.minHeight => -1;
-		float ILayoutElement.preferredHeight => !vertical ? -1 : items.Any() ? items.Last().end : 0;
-		float ILayoutElement.flexibleHeight => -1;
-		int ILayoutElement.layoutPriority => 0;
-		void ILayoutElement.CalculateLayoutInputHorizontal() { }
-		void ILayoutElement.CalculateLayoutInputVertical() { }
 
 	}
-}
 
+}
 
 #if UNITY_EDITOR
 namespace Muc.Components.Editor {
@@ -322,55 +731,89 @@ namespace Muc.Components.Editor {
 	using Object = UnityEngine.Object;
 	using static Muc.Editor.PropertyUtil;
 	using static Muc.Editor.EditorUtil;
-	using UnityEngine.UI;
 	using static Muc.Components.VirtualLayoutGroup;
 
 	[CanEditMultipleObjects]
 	[CustomEditor(typeof(VirtualLayoutGroup), true)]
-	public class VirtualLayoutGroupEditor : Editor {
-
-		[Serializable]
-		public class CustomData : VirtualLayoutElement.Data {
-			public Color color;
-			public override VirtualLayoutElement CreateElement(Storage storage, VirtualLayoutGroup group) {
-				var res = base.CreateElement(storage, group);
-				res.GetComponentInChildren<Graphic>().color = color;
-				return res;
-			}
-		}
+	public class VirtualLayoutGroup2Editor : Editor {
 
 		VirtualLayoutGroup t => (VirtualLayoutGroup)target;
 
-		// SerializedProperty property;
+		SerializedProperty direction;
 
 		void OnEnable() {
-			// property = serializedObject.FindProperty(nameof(property));
+			direction = serializedObject.FindProperty(GetBackingFieldName(nameof(VirtualLayoutGroup.direction)));
 		}
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
 
+			switch ((Direction)direction.intValue) {
+				case Direction.Right:
+					if (t.rectTransform.pivot.x != 0) EditorGUILayout.HelpBox("Pivot.X will be set to 0.", MessageType.Warning);
+					break;
+				case Direction.Left:
+					if (t.rectTransform.pivot.x != 1) EditorGUILayout.HelpBox("Pivot.X will be set to 1.", MessageType.Warning);
+					break;
+				case Direction.Up:
+					if (t.rectTransform.pivot.y != 0) EditorGUILayout.HelpBox("Pivot.Y will be set to 0.", MessageType.Warning);
+					break;
+				case Direction.Down:
+					if (t.rectTransform.pivot.y != 1) EditorGUILayout.HelpBox("Pivot.Y will be set to 1.", MessageType.Warning);
+					break;
+			}
+
 			DrawDefaultInspector();
 
-			if (GUILayout.Button("Insert test element at 10")) {
-				t.InsertElement(10, new CustomData() {
-					prefab = t.testPrefab,
-					color = Color.Lerp(Color.green, Color.blue, UnityEngine.Random.value),
-				});
+			if (GUILayout.Button("Add 1")) {
+				var item = Item.CreateInstance<AnimatedItem>();
+				item.prefab = t.testPrefab;
+				item.size = UnityEngine.Random.Range(5, 10) * 10f;
+				item.creationIndex = t.listItems.Count;
+				t.Add(item);
 			}
-			if (GUILayout.Button("Add test element")) {
-				t.AddElement(new CustomData() {
-					prefab = t.testPrefab,
-					color = Color.Lerp(Color.green, Color.red, UnityEngine.Random.value),
-				});
-			}
-			if (GUILayout.Button("Add 100 test elements")) {
-				for (int i = 0; i < 100; i++) {
-					t.AddElement(new CustomData() {
-						prefab = t.testPrefab,
-						color = Color.Lerp(Color.green, Color.red, UnityEngine.Random.value),
-					});
+			if (GUILayout.Button("Add 10")) {
+				for (int i = 0; i < 10; i++) {
+					var item = Item.CreateInstance<AnimatedItem>();
+					item.prefab = t.testPrefab;
+					item.size = UnityEngine.Random.Range(5, 10) * 10f;
+					item.creationIndex = t.listItems.Count;
+					t.Add(item);
 				}
+			}
+			if (GUILayout.Button("Insert at 20")) {
+				var item = Item.CreateInstance<AnimatedItem>();
+				item.prefab = t.testPrefab;
+				item.size = UnityEngine.Random.Range(5, 10) * 10f;
+				item.creationIndex = -t.listItems.Count;
+				t.Insert(20, item);
+			}
+			if (GUILayout.Button("Remove at 20")) {
+				t.RemoveAt(20);
+			}
+			if (GUILayout.Button("Move 25 to 20")) {
+				t.MoveItem(25, 20);
+			}
+			if (GUILayout.Button("Move 20 to 25")) {
+				t.MoveItem(20, 25);
+			}
+			if (GUILayout.Button("Move 50 to 20")) {
+				t.MoveItem(50, 20);
+			}
+			if (GUILayout.Button("Move 20 to 50")) {
+				t.MoveItem(20, 50);
+			}
+			if (GUILayout.Button("Halve size of 20")) {
+				var item = t.listItems[20];
+				var oldSize = item.size;
+				item.size /= 2;
+				t.UpdateSize(20, oldSize);
+			}
+			if (GUILayout.Button("Double size of 20")) {
+				var item = t.listItems[20];
+				var oldSize = item.size;
+				item.size *= 2;
+				t.UpdateSize(20, oldSize);
 			}
 
 			serializedObject.ApplyModifiedProperties();

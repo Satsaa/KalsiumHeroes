@@ -27,6 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 752bb0df403122f4f80d922f6cbefc96, type: 2}
   - {fileID: 11400000, guid: 2752847404be97a46ba3c5ea86bb9783, type: 2}
   - {fileID: 11400000, guid: a82a72e75573d194987c2e1e7408fe45, type: 2}
+  - {fileID: 11400000, guid: a58f77eff4ab92142abb6c63451e96e6, type: 2}
   displayName: {fileID: 11400000, guid: 17f3c728518b7c045ba4e3fd957c4c72, type: 2}
   description: {fileID: 11400000, guid: e63ce89955fd74b41bb77e9f66bc1448, type: 2}
   lore: {fileID: 11400000, guid: 717090cce5af1e84c9697e8ec0e073ff, type: 2}
@@ -36,37 +37,37 @@ MonoBehaviour:
   actor: {fileID: 4267153226371733055, guid: 3f444bc7de6003c4488cca5a6715d5d6, type: 3}
   draftCost: 5
   speed:
-    _value: 2
+    <rawValue>k__BackingField: 2
   movement:
-    _value: 5
+    <rawValue>k__BackingField: 5
   health:
-    _value: 100
-    _other: 100
+    <rawValue>k__BackingField: 100
+    <rawOther>k__BackingField: 100
   energy:
-    _value: 10
-    _other: 20
+    <rawValue>k__BackingField: 10
+    <rawOther>k__BackingField: 20
   energyRegen:
-    _value: 5
+    <rawValue>k__BackingField: 5
   defense:
-    _value: 0
+    <rawValue>k__BackingField: 0
   resistance:
-    _value: 20
+    <rawValue>k__BackingField: 20
   amps:
     weaponSkill:
-      _value: 0
+      <rawValue>k__BackingField: 0
     spell:
-      _value: 0
+      <rawValue>k__BackingField: 0
     skill:
-      _value: 0
+      <rawValue>k__BackingField: 0
     physical:
-      _value: 0
+      <rawValue>k__BackingField: 0
     magical:
-      _value: 0
+      <rawValue>k__BackingField: 0
     pure:
-      _value: 0
+      <rawValue>k__BackingField: 0
   silenced:
-    _value: 0
+    <rawValue>k__BackingField: 0
   disarmed:
-    _value: 0
+    <rawValue>k__BackingField: 0
   rooted:
-    _value: 0
+    <rawValue>k__BackingField: 0

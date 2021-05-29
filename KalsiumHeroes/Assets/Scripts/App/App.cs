@@ -43,11 +43,11 @@ public class App : Singleton<App> {
 
 	void Start() {
 		// Show the default menu if GameScene not already loaded
-		if (!SceneManager.GetSceneByPath(gameScene).isLoaded) {
-			Menus.Show(defaultMenu);
-		} else {
-			Destroy(initDisplay);
+		if (SceneManager.GetSceneByPath(gameScene).isLoaded) {
+			SceneManager.UnloadSceneAsync(gameScene);
 		}
+		Menus.Show(defaultMenu);
+		Destroy(initDisplay);
 	}
 
 	public async Task<Result> CreateGame(string code) {

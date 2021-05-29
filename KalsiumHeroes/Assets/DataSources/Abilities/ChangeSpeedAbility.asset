@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3752a1edb04215b44aa4e63c26366cfc, type: 3}
+  m_Name: ChangeSpeedAbility
+  m_EditorClassIdentifier: 
+  createType:
+    _name: ChangeSpeedAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  identifier: ability_change_speed
+  container: {fileID: 0}
+  displayName: {fileID: 11400000, guid: 93f631cff4b06e24985236ba39c049b7, type: 2}
+  description: {fileID: 0}
+  sprite: {fileID: 0}
+  abilityType: 0
+  energyCost:
+    <rawValue>k__BackingField: 0
+  cooldown:
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 0
+  charges:
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
+  uses:
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
+  allowMove:
+    <rawValue>k__BackingField: 0
+  range:
+    <rawValue>k__BackingField: 1
+    <rawEnabled>k__BackingField: 1
+  rangeMode: 0
+  requiresVision:
+    <rawValue>k__BackingField: 0
+  targetType: 2147483647
+  speedChange:
+    <rawValue>k__BackingField: 5

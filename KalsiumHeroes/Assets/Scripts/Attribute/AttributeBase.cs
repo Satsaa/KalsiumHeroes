@@ -45,9 +45,9 @@ namespace Editors {
 			using (RestoreLabelWidthScope())
 			using (RestoreFieldWidthScope()) {
 
-				var enabledProperty = property.FindPropertyRelative("_enabled");
-				var valueProperty = property.FindPropertyRelative("_value");
-				var otherProperty = property.FindPropertyRelative("_other");
+				var enabledProperty = property.FindPropertyRelative(GetBackingFieldName(nameof(ToggleAttribute<int>.rawEnabled)));
+				var valueProperty = property.FindPropertyRelative(GetBackingFieldName(nameof(Attribute<int>.rawValue)));
+				var otherProperty = property.FindPropertyRelative(GetBackingFieldName(nameof(DualAttribute<int>.rawOther)));
 
 				var fieldInfo = GetFieldInfo(property);
 				var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;

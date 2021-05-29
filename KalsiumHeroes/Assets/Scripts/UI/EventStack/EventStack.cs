@@ -3,163 +3,199 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Muc.Extensions;
+using UnityEngine.Pool;
 
-[Serializable]
-public class EventStackItemContainer<T> where T : EventStackItem {
-	public T item;
-	public float width;
-	public float targetPosition;
-	public EventStackItemContainer(T item, float targetPosition) {
-		this.item = item;
-		this.targetPosition = targetPosition;
-		this.width = item.width;
-	}
-}
+public class EventStack : Muc.Components.VirtualLayoutGroup, IOnAnimationEventEnd, IOnRoundStart, IOnGameStart {
 
-public class EventStack : EventStack<EventStackItem> { }
-
-public class EventStack<T> : MonoBehaviour where T : EventStackItem {
-
-	[SerializeField]
-	protected List<EventStackItemContainer<T>> _stack;
-	public IReadOnlyList<EventStackItemContainer<T>> stack => _stack;
-
-	protected void Awake() {
-		_stack.RemoveAll(v => v.item == null);
-		var pos = 0f;
-		for (int i = 0; i < stack.Count; i++) {
-			var cont = stack[i];
-			cont.width = cont.item.width;
-			cont.targetPosition = pos;
-			pos += cont.width;
-		}
+	[Serializable]
+	protected class Tracker {
+		public int round;
+		public int index;
+		public List<Unit> units;
+		public bool updated;
 	}
 
-	protected void Update() {
-		_stack.RemoveAll(v => v.item == null);
-		var pos = 0f;
-		for (int i = 0; i < stack.Count; i++) {
-			var cont = stack[i];
+	public static EventStack eventStack => _instance;
+	private static EventStack _instance;
 
-			cont.item.canvas.sortingOrder = -i;
+	[Min(1)]
+	public int futureRounds = 5;
+	[SerializeField] protected RectTransform shade;
+	[SerializeField] protected RectTransform reticle;
+	[SerializeField] protected RectTransform roundPrefab;
+	[SerializeField] protected RectTransform unitPrefab;
 
-			var newWidth = cont.item.width;
-			var widthDiff = newWidth - cont.width;
-			if (widthDiff != 0) {
-				InstantPush(i + 1, widthDiff);
-			}
-			cont.width = newWidth;
+	[SerializeField] protected List<Tracker> trackers;
 
-			if (pos != cont.targetPosition) {
-				cont.item.StartReposition(pos - cont.targetPosition);
-				cont.targetPosition = pos;
-			}
-			pos += newWidth;
-		}
-	}
-
-	public void Add(T item) {
-		Insert(_stack.Count, item);
-	}
-
-	public void Insert(int index, T item) {
-		item.transform.SetParent(transform);
-		item.transform.localPosition = item.transform.localPosition.SetX(CalculateTargetPosition(index));
-		var cont = new EventStackItemContainer<T>(item, Mathf.RoundToInt(item.transform.localPosition.x));
-		_stack.Insert(index, cont);
-		item.OnAdd();
-	}
-
-	public void Reposition(int oldIndex, int newIndex) {
-		var cont = _stack[oldIndex];
-		_stack.RemoveAt(oldIndex);
-		_stack.Insert(newIndex, cont);
-	}
-
-	private void InstantPush(int startIndex, float offset) {
-		for (int i = startIndex; i < _stack.Count; i++) {
-			var cont = _stack[i];
-			if (cont.item != null) {
-				cont.item.rt.localPosition += new Vector3(offset, 0, 0);
-				cont.targetPosition += offset;
-			}
-		}
-	}
-
-
-	private float CalculateTargetPosition(int index) {
-		var pos = 0f;
-		for (int i = 0; i < index; i++) {
-			pos += _stack[i].item.width;
-		}
-		return pos;
-	}
-
-	public float MaxX() {
-		return _stack.Aggregate(0, (acc, cur) => !cur.item ? acc : Mathf.Max(acc, Mathf.RoundToInt(cur.item.rt.localPosition.x + cur.item.width)));
-	}
-
-	public void RemoveAt(int index) {
-		_stack[index].item.StartRemove();
-	}
-
-}
-
-#if UNITY_EDITOR
-namespace Editors {
-
-	using System.Reflection;
-	using System.Linq;
-
-	using UnityEngine;
-	using UnityEditor;
-	using UnityEngine.UI;
-	using static Muc.Editor.EditorUtil;
-
-	[CustomEditor(typeof(EventStack<>))]
-	internal class EventStackEditor : Editor {
-
-		public int insertIndex;
-
-		public int destroyIndex;
-
-		public int repositionIndex1;
-		public int repositionIndex2;
-
-		private EventStack<EventStackItem> t => (EventStack<EventStackItem>)target;
-
-		public override void OnInspectorGUI() {
-			using (HorizontalScope()) {
-				insertIndex = EditorGUILayout.IntField(insertIndex);
-				if (GUILayout.Button($"Insert item at {EndOffArraysize(insertIndex)}")) {
-					var last = t.stack.Last();
-					var newItem = Instantiate(last.item);
-					newItem.GetComponentInChildren<Image>().color = new Color(Random.value, Random.value, Random.value);
-					t.Insert(EndOffArraysize(insertIndex), newItem);
-				}
-			}
-			using (HorizontalScope()) {
-				destroyIndex = EditorGUILayout.IntField(destroyIndex);
-				if (GUILayout.Button($"Destroy item at {EndOffArraysize(destroyIndex)}")) {
-					t.RemoveAt(EndOffArraysize(destroyIndex));
-				}
-			}
-			using (HorizontalScope()) {
-				repositionIndex1 = EditorGUILayout.IntField(repositionIndex1);
-				repositionIndex2 = EditorGUILayout.IntField(repositionIndex2);
-				if (GUILayout.Button($"Reposition item at {EndOffArraysize(repositionIndex1)} to {EndOffArraysize(repositionIndex2)}")) {
-					t.Reposition(EndOffArraysize(repositionIndex1), EndOffArraysize(repositionIndex2));
-				}
-			}
-			DrawDefaultInspector();
-		}
-
-		private int EndOffArraysize(int index) {
-			if (index >= 0) return index;
-			return t.stack.Count + index;
-		}
-	}
-
-}
+	protected override void OnValidate() {
+		base.OnValidate();
+#if UNITY_EDITOR // Prevent activation in prefabs
+		if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null && !UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject))
 #endif
+			if (_instance != null && _instance != this) {
+				Debug.LogWarning($"Multiple {typeof(EventStack).Name} GameObjects!", this);
+				Debug.LogWarning($"Main instance of {typeof(EventStack).Name}: {_instance}", _instance);
+			} else {
+				_instance = this as EventStack;
+			}
+	}
+
+	protected override void Awake() {
+		base.Awake();
+		if (_instance != null && _instance != this) {
+			Debug.LogWarning($"Multiple {typeof(EventStack).Name} GameObjects!", this);
+			Debug.LogWarning($"Main instance of {typeof(EventStack).Name}: {_instance}", _instance);
+		} else {
+			_instance = this as EventStack;
+		}
+		Game.hooks.Hook(this);
+	}
+
+	protected override void OnDestroy() {
+		base.OnDestroy();
+		if (_instance == this) {
+			_instance = null;
+		}
+		if (Game.game) Game.hooks.Unhook(this);
+	}
+
+	public void MoveReticle(Unit unit) {
+		var current = trackers[Game.rounds.round];
+		var unitIndex = 0;
+		for (int i = 0; i < current.units.Count; i++) {
+			var other = current.units[i];
+			if (other == unit) {
+				unitIndex = current.index + i;
+				break;
+			}
+		}
+		var pos = 0f;
+		for (int i = 0; i <= unitIndex; i++) {
+			var item = items[i];
+			pos += item.size;
+		}
+		pos -= items[unitIndex].size / 2;
+		SetPos(reticle, pos);
+
+	}
+
+	protected void CreateRound() {
+		var round = trackers.Any() ? trackers.Last().round + 1 : 0;
+
+		var roundItem = AnimatedItem.CreateInstance<AnimatedItem>();
+		roundItem.prefab = roundPrefab;
+		roundItem.calculateSize = true;
+		roundItem.createOnInit = true;
+		base.Add(roundItem);
+		ValueReceiver.SendValue(roundItem.item.gameObject, round);
+
+		var units = Game.rounds.GetEstimatedOrder(round - Game.rounds.round);
+
+		trackers.Add(new() {
+			round = round,
+			index = items.Count,
+			units = units,
+		});
+
+		foreach (var unit in units) {
+			var unitItem = AnimatedItem.CreateInstance<AnimatedItem>();
+			unitItem.prefab = unitPrefab;
+			unitItem.calculateSize = true;
+			unitItem.createOnInit = true;
+			base.Add(unitItem);
+			ValueReceiver.SendValue(unitItem.item.gameObject, unit);
+			ValueReceiver.SendValue(unitItem.item.gameObject, round);
+		}
+
+	}
+
+	protected class ToFrom {
+		public int from;
+		public int to;
+		public ToFrom(int from, int to) {
+			this.from = from;
+			this.to = to;
+		}
+		public override string ToString() {
+			return $"{from}, {to}";
+		}
+	}
+
+	public void OnAnimationEventEnd() {
+		for (int i = Game.rounds.round + 1; i < trackers.Count; i++) {
+			var tracker = trackers[i];
+			var oldUnits = tracker.units;
+			var newUnits = Game.rounds.GetEstimatedOrder(i - Game.rounds.round);
+			if (oldUnits.Count == newUnits.Count && oldUnits.SequenceEqual(newUnits)) {
+				continue;
+			}
+
+			var removed = ListPool<int>.Get();
+			for (int j = 0; j < oldUnits.Count; j++) {
+				var oldUnit = oldUnits[j];
+				if (!newUnits.Contains(oldUnit)) removed.Add(j);
+			}
+			for (int j = removed.Count - 1; j >= 0; j--) {
+				var removeAt = removed[j];
+				base.RemoveAt(tracker.index + removeAt);
+				oldUnits.RemoveAt(removeAt);
+			}
+			if (removed.Any()) {
+				for (int j = i + 1; j < trackers.Count; j++) {
+					var other = trackers[j].index -= removed.Count;
+				}
+			}
+			ListPool<int>.Release(removed);
+
+			var moves = ListPool<ToFrom>.Get();
+			for (int j = 0; j < oldUnits.Count; j++) {
+				moves.Add(new ToFrom(j, newUnits.IndexOf(oldUnits[j])));
+			}
+			moves.Sort((a, b) => a.to - b.to);
+			for (int j = 0; j < moves.Count; j++) {
+				var move = moves[j];
+				if (move.from != move.to) {
+					base.MoveItem(tracker.index + move.from, tracker.index + move.to);
+					for (int k = j + 1; k < moves.Count; k++) {
+						var other = moves[k];
+						if (other.from <= move.from) {
+							other.from++;
+						}
+					}
+				}
+			}
+			ListPool<ToFrom>.Release(moves);
+
+			tracker.units = newUnits;
+
+		}
+	}
+
+	public void OnRoundStart() {
+		if (Game.rounds.round > 0) {
+			var tracker = trackers[Game.rounds.round - 1];
+			var lastIndex = tracker.index + tracker.units.Count - 1;
+			var pos = 0f;
+			for (int i = 0; i <= lastIndex; i++) {
+				var item = items[i];
+				pos += item.size;
+			}
+			shade.sizeDelta = shade.sizeDelta.SetX(pos);
+		}
+		CreateRound();
+	}
+
+	public void OnGameStart() {
+		for (int i = 0; i < futureRounds; i++) {
+			CreateRound();
+		}
+	}
+
+	public override void Add(Item item) => throw new InvalidOperationException("Not allowed");
+	public override void Insert(int index, Item item) => throw new InvalidOperationException("Not allowed");
+	public override void MoveItem(int from, int to) => throw new InvalidOperationException("Not allowed");
+	public override void RemoveAt(int index) => throw new InvalidOperationException("Not allowed");
+
+}
