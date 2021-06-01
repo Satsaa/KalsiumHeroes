@@ -47,6 +47,15 @@ namespace Muc.Editor {
 			return res;
 		}
 
+		public static Rect LabelAndFieldRect() => FieldRect(EditorGUIUtility.singleLineHeight);
+		public static Rect LabelAndFieldFieldRect(float height) {
+			Rect res = default;
+			res.xMin = indentLevel * indentSize;
+			res.xMax = indentLevel * indentSize + labelWidth + fieldWidth;
+			res.height = height;
+			return res;
+		}
+
 		#endregion
 
 

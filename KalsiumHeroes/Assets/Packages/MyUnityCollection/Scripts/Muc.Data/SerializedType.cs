@@ -55,7 +55,7 @@ namespace Muc.Data {
 			if (!String.IsNullOrEmpty(_name)) {
 				var nameWas = _name;
 				Update();
-				if (type == null) {
+				if (_type == null) {
 					Debug.LogWarning($"Type for \"{nameWas}\" was not found.");
 				}
 			} else {
@@ -117,11 +117,16 @@ namespace Muc.Data.Editor {
 					position.xMin += EditorGUIUtility.labelWidth + spacing;
 				}
 				// Dropdown
-				var hint = new GUIContent(label) {
-					text = value == null ? "ERROR" : value.type == null
-						? String.IsNullOrWhiteSpace(value.name) ? "None" : $"Missing ({value.name})"
-						: $"{value.type} ({value.type.Assembly.GetName().Name})"
-				}; // Inherit state from label
+				var hint = new GUIContent(label) { // Copy main label
+					text =
+						value == null
+							? "ERROR"
+							: value.type == null
+								? String.IsNullOrWhiteSpace(value.name)
+									? "None"
+									: $"Missing ({value.name})"
+								: $"{value.type} ({value.type.Assembly.GetName().Name})"
+				};
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
 					var types = value.GetValidTypes();
 					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(property, type), true);
@@ -131,7 +136,7 @@ namespace Muc.Data.Editor {
 		}
 
 
-		private static void OnSelect(SerializedProperty property, Type type) {
+		protected static void OnSelect(SerializedProperty property, Type type) {
 			var values = GetValues<SerializedType>(property);
 			Undo.RecordObjects(property.serializedObject.targetObjects, $"Set {property.name}");
 			foreach (var value in values) value.type = type;

@@ -50,7 +50,7 @@ public abstract class ValueReceiver<T> : ValueReceiver {
 	}
 
 	public override bool TryHandleValue(object value) {
-		var handled = value is T && (typeConstraint1.type == null || value.GetType().IsSubclassOf(typeConstraint1));
+		var handled = value is T && (typeConstraint1.type == null || typeConstraint1.type.IsAssignableFrom(value.GetType()));
 		if (handled) ReceiveValue((T)value);
 		return handled;
 	}
@@ -72,7 +72,7 @@ public abstract class ValueReceiver<T1, T2> : ValueReceiver<T1> {
 	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
-		var handled = value is T2 && (typeConstraint2.type == null || value.GetType().IsSubclassOf(typeConstraint2));
+		var handled = value is T2 && (typeConstraint2.type == null || typeConstraint2.type.IsAssignableFrom(value.GetType()));
 		if (handled) ReceiveValue((T2)value);
 		return handled || baseHandled;
 	}
@@ -95,7 +95,7 @@ public abstract class ValueReceiver<T1, T2, T3> : ValueReceiver<T1, T2> {
 	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
-		var handled = value is T3 && (typeConstraint3.type == null || value.GetType().IsSubclassOf(typeConstraint3));
+		var handled = value is T3 && (typeConstraint3.type == null || typeConstraint3.type.IsAssignableFrom(value.GetType()));
 		if (handled) ReceiveValue((T3)value);
 		return handled || baseHandled;
 	}
@@ -119,7 +119,7 @@ public abstract class ValueReceiver<T1, T2, T3, T4> : ValueReceiver<T1, T2, T3> 
 	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
-		var handled = value is T4 && (typeConstraint4.type == null || value.GetType().IsSubclassOf(typeConstraint4));
+		var handled = value is T4 && (typeConstraint4.type == null || typeConstraint4.type.IsAssignableFrom(value.GetType()));
 		if (handled) ReceiveValue((T4)value);
 		return handled || baseHandled;
 	}
@@ -145,7 +145,7 @@ public abstract class ValueReceiver<T1, T2, T3, T4, T5> : ValueReceiver<T1, T2, 
 	public override bool TryHandleValue(object value) {
 		var baseHandled = base.TryHandleValue(value);
 
-		var handled = value is T5 && (typeConstraint5.type == null || value.GetType().IsSubclassOf(typeConstraint5));
+		var handled = value is T5 && (typeConstraint5.type == null || typeConstraint5.type.IsAssignableFrom(value.GetType()));
 		if (handled) ReceiveValue((T5)value);
 		return handled || baseHandled;
 	}

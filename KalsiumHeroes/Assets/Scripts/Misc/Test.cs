@@ -7,10 +7,17 @@ using Object = UnityEngine.Object;
 
 public class Test : MonoBehaviour {
 
+	public Attribute<float> appeal;
+	public string defense = "lol";
+
+	public AttributeSelector<float> test;
+
 	void Start() { }
 
 	public void DoTest() {
-		Debug.Log($"TryGetComponent<Test>(out var comp) = {TryGetComponent<Test>(out var comp)}, comp = {comp}");
+		Debug.Log($"test.GetValue(this) => {test.GetValue(this)}");
+		Debug.Log($"test.GetOther(this) => {test.GetOther(this)}");
+		Debug.Log($"test.GetEnabled(this) => {test.GetEnabled(this)}");
 	}
 
 }
@@ -35,6 +42,8 @@ namespace Editors {
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
+
+			DrawDefaultInspector();
 
 			if (GUILayout.Button(nameof(Test.DoTest))) {
 				t.DoTest();

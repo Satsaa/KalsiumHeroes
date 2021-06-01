@@ -141,7 +141,7 @@ namespace Muc.Editor {
 			if (types.Count > splitHierarchyLimit) {
 				types.Sort(new TypeNamespaceComparer());
 
-				var position = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
+				var position = Event.current == null ? Vector2.zero : GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
 
 				var root = new TypeMenuNode("Root", null);
 				var current = root;
