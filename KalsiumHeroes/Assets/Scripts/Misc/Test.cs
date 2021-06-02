@@ -8,16 +8,24 @@ using Object = UnityEngine.Object;
 public class Test : MonoBehaviour {
 
 	public Attribute<float> appeal;
+	public Attribute<int> health;
 	public string defense = "lol";
 
 	public AttributeSelector<float> test;
+	public NumericAttributeSelector numTest;
 
 	void Start() { }
 
-	public void DoTest() {
+	public void DoTest1() {
 		Debug.Log($"test.GetValue(this) => {test.GetValue(this)}");
 		Debug.Log($"test.GetOther(this) => {test.GetOther(this)}");
 		Debug.Log($"test.GetEnabled(this) => {test.GetEnabled(this)}");
+	}
+
+	public void DoTest2() {
+		Debug.Log($"numTest.GetValue(this) => {numTest.GetValue(this)}");
+		Debug.Log($"numTest.GetOther(this) => {numTest.GetOther(this)}");
+		Debug.Log($"numTest.GetEnabled(this) => {numTest.GetEnabled(this)}");
 	}
 
 }
@@ -45,8 +53,12 @@ namespace Editors {
 
 			DrawDefaultInspector();
 
-			if (GUILayout.Button(nameof(Test.DoTest))) {
-				t.DoTest();
+			if (GUILayout.Button(nameof(Test.DoTest1))) {
+				t.DoTest1();
+			}
+
+			if (GUILayout.Button(nameof(Test.DoTest2))) {
+				t.DoTest2();
 			}
 
 			serializedObject.ApplyModifiedProperties();

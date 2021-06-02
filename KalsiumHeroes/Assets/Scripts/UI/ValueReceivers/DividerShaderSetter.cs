@@ -8,13 +8,9 @@ using Muc.Extensions;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Graphic))]
-public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnTakeDamage_Unit, IOnHeal_Unit, IOnAnimationEventEnd {
+public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnAnimationEventEnd {
 
-	[SerializeField]
-	BarType barType;
-
-	[SerializeField, Tooltip("This value is used for the maximum value if the attribute doesn't have one.")]
-	float fallbackMaxValue = 100;
+	[SerializeField] NumericAttributeSelector attribute;
 
 	[SerializeField, Tooltip("Set property named \"MaxValue\" to the maximum value of the attribute.")]
 	bool setMaxValue = true;
@@ -72,29 +68,8 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnTurnStart_Uni
 
 		if (data && (setMaxValue || setWidthScale)) {
 
-			var current = barType switch {
-				BarType.Health => data.health.value,
-				BarType.Defense => data.defense.value,
-				BarType.Resistance => data.resistance.value,
-				BarType.Speed => data.speed.value,
-				BarType.Movement => data.movement.value,
-				BarType.Energy => data.energy.value,
-				BarType.EnergyRegen => data.energyRegen.value,
-				BarType.MaxEnergy => data.energy.other,
-				_ => throw new ArgumentOutOfRangeException("Not a valid enum value.", nameof(barType)),
-			};
-
-			var maxValue = barType switch {
-				BarType.Health => data.health.other,
-				BarType.Defense => fallbackMaxValue,
-				BarType.Resistance => fallbackMaxValue,
-				BarType.Speed => fallbackMaxValue,
-				BarType.Movement => fallbackMaxValue,
-				BarType.Energy => data.energy.other,
-				BarType.EnergyRegen => fallbackMaxValue,
-				BarType.MaxEnergy => data.energy.other,
-				_ => throw new ArgumentOutOfRangeException("Not a valid enum value.", nameof(barType)),
-			};
+			var current = attribute.GetValue(data);
+			var maxValue = attribute.GetOther(data);
 			maxValue = Mathf.Max(current, maxValue);
 
 			if (setMaxValue) graphic.material.SetFloat("MaxValue", maxValue);
@@ -107,10 +82,6 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnTurnStart_Uni
 
 	}
 
-	public void OnTurnStart() { if (barType == BarType.Energy) UpdateValue(target.data); }
-	public void OnAbilityCastStart(Ability ability) { if (barType == BarType.Energy) UpdateValue(target.data); }
-	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) { if (barType == BarType.Health) UpdateValue(target.data); }
-	public void OnHeal(ref float value) { if (barType == BarType.Health) UpdateValue(target.data); }
 	public void OnAnimationEventEnd() => UpdateValue(target.data);
 
 }

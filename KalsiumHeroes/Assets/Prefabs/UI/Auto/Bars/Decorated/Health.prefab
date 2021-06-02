@@ -181,6 +181,10 @@ PrefabInstance:
       propertyPath: barType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4661099292838214380, guid: a5126d2e26c5d6a45b6f591f7e9d3966, type: 3}
+      propertyPath: attribute.field.<fieldName>k__BackingField
+      value: health
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5126d2e26c5d6a45b6f591f7e9d3966, type: 3}
 --- !u!1 &4934827236864043398 stripped

@@ -4,46 +4,56 @@ using UnityEngine;
 using Muc.Data;
 using System.Reflection;
 
+// Supports floats and ints simultaneously
+
 [Serializable]
-public class AttributeSelector<T> {
+public class NumericAttributeSelector {
 
-	[field: SerializeField] private AttributeFieldName field;
+	[field: SerializeField] private NumericAttributeFieldName field;
 
-	[field: SerializeField] private T fallbackValue;
-	[field: SerializeField] private T fallbackOther;
+	[field: SerializeField] private float fallbackValue;
+	[field: SerializeField] private float fallbackOther;
 	[field: SerializeField] private bool fallbackEnabled = true;
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private Attribute<T> attributeCached;
+	private AttributeBase attributeCached;
 
-	public Attribute<T> GetAttribute(object source) {
+	public AttributeBase GetAttribute(object source) {
 		UpdateCache(source);
 		return attributeCached;
 	}
 
-	public T GetValue(object source) {
-		UpdateCache(source);
-		if (attributeCached != null) return attributeCached.value;
-		return fallbackValue;
-	}
-	public T GetRawValue(object source) {
-		UpdateCache(source);
-		if (attributeCached != null) return attributeCached.rawValue;
-		return fallbackValue;
-	}
-
-	public T GetOther(object source) {
+	public float GetValue(object source) {
 		UpdateCache(source);
 		return attributeCached switch {
-			DualAttribute<T> att => att.other,
+			Attribute<float> att => att.value,
+			Attribute<int> att => att.value,
+			_ => fallbackValue,
+		};
+	}
+	public float GetRawValue(object source) {
+		UpdateCache(source);
+		return attributeCached switch {
+			Attribute<float> att => att.rawValue,
+			Attribute<int> att => att.rawValue,
+			_ => fallbackValue,
+		};
+	}
+
+	public float GetOther(object source) {
+		UpdateCache(source);
+		return attributeCached switch {
+			DualAttribute<float> att => att.other,
+			DualAttribute<int> att => att.other,
 			_ => fallbackOther,
 		};
 	}
-	public T GetRawOther(object source) {
+	public float GetRawOther(object source) {
 		UpdateCache(source);
 		return attributeCached switch {
-			DualAttribute<T> att => att.rawOther,
+			DualAttribute<float> att => att.rawOther,
+			DualAttribute<int> att => att.rawOther,
 			_ => fallbackOther,
 		};
 	}
@@ -51,16 +61,20 @@ public class AttributeSelector<T> {
 	public bool GetEnabled(object source) {
 		UpdateCache(source);
 		return attributeCached switch {
-			ToggleDualAttribute<T> att => att.enabled,
-			ToggleAttribute<T> att => att.enabled,
+			ToggleDualAttribute<float> att => att.enabled,
+			ToggleDualAttribute<int> att => att.enabled,
+			ToggleAttribute<float> att => att.enabled,
+			ToggleAttribute<int> att => att.enabled,
 			_ => fallbackEnabled,
 		};
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
 		return attributeCached switch {
-			ToggleDualAttribute<T> att => att.rawEnabled,
-			ToggleAttribute<T> att => att.rawEnabled,
+			ToggleDualAttribute<float> att => att.rawEnabled,
+			ToggleDualAttribute<int> att => att.rawEnabled,
+			ToggleAttribute<float> att => att.rawEnabled,
+			ToggleAttribute<int> att => att.rawEnabled,
 			_ => fallbackEnabled,
 		};
 	}
@@ -78,9 +92,11 @@ public class AttributeSelector<T> {
 				var fieldInfo = source.GetType().GetField(field.fieldName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
-					if (value is Attribute<T> attribute) {
-						attributeCached = attribute;
-					}
+					this.attributeCached = value switch {
+						Attribute<float> att => att,
+						Attribute<int> att => att,
+						_ => null,
+					};
 				}
 			}
 		}
@@ -88,17 +104,17 @@ public class AttributeSelector<T> {
 
 #if DEBUG // Wow so defensive
 	[Obsolete("Pass the containing object instead.")]
-	public T GetValue(Attribute<T> attribute) => throw new ArgumentException();
+	public float GetValue(AttributeBase attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public T GetRawValue(Attribute<T> attribute) => throw new ArgumentException();
+	public float GetRawValue(AttributeBase attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public T GetOther(Attribute<T> attribute) => throw new ArgumentException();
+	public float GetOther(AttributeBase attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public T GetRawOther(Attribute<T> attribute) => throw new ArgumentException();
+	public float GetRawOther(AttributeBase attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public bool GetEnabled(Attribute<T> attribute) => throw new ArgumentException();
+	public bool GetEnabled(AttributeBase attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public bool GetRawEnabled(Attribute<T> attribute) => throw new ArgumentException();
+	public bool GetRawEnabled(AttributeBase attribute) => throw new ArgumentException();
 #endif
 }
 
@@ -110,8 +126,8 @@ namespace Editors {
 	using static Muc.Editor.EditorUtil;
 
 	[CanEditMultipleObjects]
-	[CustomPropertyDrawer(typeof(AttributeSelector<>), true)]
-	public class AttributeSelectorDrawer : PropertyDrawer {
+	[CustomPropertyDrawer(typeof(NumericAttributeSelector), true)]
+	public class NumericAttributeSelectorDrawer : PropertyDrawer {
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			return property.isExpanded ? 5 * (lineHeight + spacing) : base.GetPropertyHeight(property, label);

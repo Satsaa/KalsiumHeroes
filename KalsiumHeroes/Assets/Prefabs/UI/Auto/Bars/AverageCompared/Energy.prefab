@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: maxValue
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 2923354972933952288, guid: 0dc6c624c3016ca46af650b0d69f148b, type: 3}
+      propertyPath: attribute.field.<fieldName>k__BackingField
+      value: energy
+      objectReference: {fileID: 0}
     - target: {fileID: 4174204880051682648, guid: 0dc6c624c3016ca46af650b0d69f148b, type: 3}
       propertyPath: m_Name
       value: Energy

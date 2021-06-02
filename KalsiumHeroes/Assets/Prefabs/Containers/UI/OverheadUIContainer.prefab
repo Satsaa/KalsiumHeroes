@@ -94,8 +94,12 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 0
-  fallbackMaxValue: 100
+  attribute:
+    field:
+      <fieldName>k__BackingField: health
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   setMaxValue: 1
   setWidthScale: 1
   referenceWidth: -1
@@ -256,9 +260,13 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 6
+  attribute:
+    field:
+      <fieldName>k__BackingField: energy
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   format: '{0}'
-  fallbackMaxValue: 20
   target: {fileID: 0}
 --- !u!1 &1199709513546497089
 GameObject:
@@ -421,8 +429,12 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 0
-  fallbackMaxValue: 100
+  attribute:
+    field:
+      <fieldName>k__BackingField: health
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   target: {fileID: 0}
 --- !u!1 &4371330282576497774
 GameObject:
@@ -577,9 +589,13 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 0
+  attribute:
+    field:
+      <fieldName>k__BackingField: health
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   format: '{0}'
-  fallbackMaxValue: 1000
   target: {fileID: 0}
 --- !u!1001 &4655195466634732868
 PrefabInstance:

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4833195056223336906}
   - component: {fileID: 5295450594133409711}
   m_Layer: 5
-  m_Name: Shade
+  m_Name: RayBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

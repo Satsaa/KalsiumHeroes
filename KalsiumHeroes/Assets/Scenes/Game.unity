@@ -8274,9 +8274,13 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 6
+  attribute:
+    field:
+      <fieldName>k__BackingField: energy
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   format: 'Max: {1}'
-  fallbackMaxValue: 20
   target: {fileID: 0}
 --- !u!114 &255031198
 MonoBehaviour:
@@ -8521,9 +8525,13 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 6
+  attribute:
+    field:
+      <fieldName>k__BackingField: energy
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   format: 'Current AP: {0}'
-  fallbackMaxValue: 20
   target: {fileID: 0}
 --- !u!114 &261678026
 MonoBehaviour:
@@ -33109,6 +33117,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health
       objectReference: {fileID: 0}
+    - target: {fileID: 9003949016275677083, guid: c2b2db611e2fcb14faf9ea941cab0cda, type: 3}
+      propertyPath: attribute.field.<fieldName>k__BackingField
+      value: health
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2b2db611e2fcb14faf9ea941cab0cda, type: 3}
 --- !u!224 &1006453561 stripped
@@ -40983,6 +40995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units: []
+  index: 0
   <round>k__BackingField: -1
 --- !u!114 &1270279097
 MonoBehaviour:
@@ -68439,9 +68452,13 @@ MonoBehaviour:
   typeConstraint2:
     _name: 
   hooker: {fileID: 0}
-  barType: 7
+  attribute:
+    field:
+      <fieldName>k__BackingField: energyRegen
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
   format: 'Regen: {0}'
-  fallbackMaxValue: 20
   target: {fileID: 0}
 --- !u!114 &2060945020
 MonoBehaviour:

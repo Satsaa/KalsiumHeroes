@@ -16,13 +16,13 @@ public class AttributeFieldName {
 	public virtual IEnumerable<string> GetFieldNames() {
 		if (cache == null) {
 			var list = AppDomain.CurrentDomain.GetAssemblies()
-						.SelectMany(v => v.GetTypes())
-							.Where(v
-								=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-								&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
-							).SelectMany(v => v.GetFields()
-								.Where(f => typeof(AttributeBase).IsAssignableFrom(f.FieldType))
-								.Select(v => v.Name)).ToList();
+				.SelectMany(v => v.GetTypes())
+					.Where(v
+						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
+						&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
+					).SelectMany(v => v.GetFields()
+						.Where(f => typeof(AttributeBase).IsAssignableFrom(f.FieldType))
+						.Select(v => v.Name)).ToList();
 			list.Sort();
 			cache = list;
 
@@ -40,13 +40,13 @@ public class AttributeFieldName<T> : AttributeFieldName {
 	public override IEnumerable<string> GetFieldNames() {
 		if (cache == null) {
 			var list = AppDomain.CurrentDomain.GetAssemblies()
-						.SelectMany(v => v.GetTypes())
-							.Where(v
-								=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-								&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
-							).SelectMany(v => v.GetFields()
-								.Where(f => typeof(Attribute<T>).IsAssignableFrom(f.FieldType))
-								.Select(v => v.Name)).ToList();
+				.SelectMany(v => v.GetTypes())
+					.Where(v
+						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
+						&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
+					).SelectMany(v => v.GetFields()
+						.Where(f => typeof(Attribute<T>).IsAssignableFrom(f.FieldType))
+						.Select(v => v.Name)).ToList();
 			list.Sort();
 			cache = list;
 
@@ -55,6 +55,31 @@ public class AttributeFieldName<T> : AttributeFieldName {
 	}
 
 }
+
+[Serializable]
+public class NumericAttributeFieldName : AttributeFieldName {
+
+	protected static IEnumerable<string> cache;
+
+	public override IEnumerable<string> GetFieldNames() {
+		if (cache == null) {
+			var list = AppDomain.CurrentDomain.GetAssemblies()
+				.SelectMany(v => v.GetTypes())
+					.Where(v
+						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
+						&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
+					).SelectMany(v => v.GetFields()
+						.Where(f => typeof(Attribute<float>).IsAssignableFrom(f.FieldType) || typeof(Attribute<int>).IsAssignableFrom(f.FieldType))
+						.Select(v => v.Name)).ToList();
+			list.Sort();
+			cache = list;
+
+		}
+		return cache;
+	}
+
+}
+
 
 
 #if UNITY_EDITOR
@@ -79,21 +104,25 @@ namespace Editors {
 
 			using (PropertyScope(position, label, property, out label)) {
 
-				if (!noLabel) {
-					EditorGUI.LabelField(position, label);
-					position.xMin += EditorGUIUtility.labelWidth + spacing;
-				}
+				const int dropDownWidth = 20;
+
+				var propertyPos = position;
+				propertyPos.width -= dropDownWidth;
 
 				var fieldName = property.FindPropertyRelative(GetBackingFieldName("fieldName"));
+				EditorGUI.PropertyField(propertyPos, fieldName, label);
 
-				if (EditorGUI.DropdownButton(position, new GUIContent(fieldName.stringValue), FocusType.Keyboard)) {
+				var dropDownPos = position;
+				dropDownPos.xMin += position.width - dropDownWidth;
+
+				if (EditorGUI.DropdownButton(dropDownPos, GUIContent.none, FocusType.Keyboard)) {
 					var fnVal = GetFirstValue<AttributeFieldName>(property);
 					var names = fnVal.GetFieldNames();
 					var menu = new GenericMenu();
 					foreach (var name in names) {
 						menu.AddItem(new GUIContent(name), fieldName.stringValue == name, () => OnSelect(fieldName, name));
 					}
-					menu.DropDown(position);
+					menu.DropDown(dropDownPos);
 				}
 
 			}

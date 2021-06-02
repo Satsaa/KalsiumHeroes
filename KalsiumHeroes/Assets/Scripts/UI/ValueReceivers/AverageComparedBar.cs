@@ -7,12 +7,12 @@ using Object = UnityEngine.Object;
 using Muc.Extensions;
 using UnityEngine.UI;
 
-public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit, IOnAbilityCastStart_Unit, IOnTakeDamage_Unit, IOnHeal_Unit, IOnAnimationEventEnd {
+public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnAnimationEventEnd {
 
-	[SerializeField] BarType barType;
+	[SerializeField] NumericAttributeSelector attribute;
 
 	[SerializeField] TMPro.TMP_Text value;
-	[SerializeField, Tooltip("Formatting string for the value text. {0} = current value, {1} = max value, {2} = average value, {3} = linear difference from average, {4} = percentage difference from average.")]
+	[SerializeField, Tooltip("Formatting string for the value text.\n{0} = current value,\n{1} = max value,\n{2} = average value,\n{3} = linear difference from average,\n{4} = percentage difference from average.")]
 	string valueFormat = "{0}";
 
 	[SerializeField] float maxValue;
@@ -38,29 +38,9 @@ public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit
 
 		if (data) {
 
-			var current = barType switch {
-				BarType.Health => data.health.value,
-				BarType.Defense => data.defense.value,
-				BarType.Resistance => data.resistance.value,
-				BarType.Speed => data.speed.value,
-				BarType.Movement => data.movement.value,
-				BarType.Energy => data.energy.value,
-				BarType.EnergyRegen => data.energyRegen.value,
-				BarType.MaxEnergy => data.energy.other,
-				_ => throw new ArgumentOutOfRangeException("Not a valid enum value", nameof(barType)),
-			};
+			var current = attribute.GetValue(data);
 
-			var average = barType switch {
-				BarType.Health => App.library.GetByType<UnitData>().Average(v => v.health.value),
-				BarType.Defense => (float)App.library.GetByType<UnitData>().Average(v => (float)v.defense.value),
-				BarType.Resistance => (float)App.library.GetByType<UnitData>().Average(v => (float)v.resistance.value),
-				BarType.Speed => (float)App.library.GetByType<UnitData>().Average(v => (float)v.speed.value),
-				BarType.Movement => (float)App.library.GetByType<UnitData>().Average(v => (float)v.movement.value),
-				BarType.Energy => (float)App.library.GetByType<UnitData>().Average(v => (float)v.energy.value),
-				BarType.EnergyRegen => (float)App.library.GetByType<UnitData>().Average(v => (float)v.energyRegen.value),
-				BarType.MaxEnergy => (float)App.library.GetByType<UnitData>().Average(v => (float)v.energy.other),
-				_ => throw new ArgumentOutOfRangeException("Not a valid enum value", nameof(barType)),
-			};
+			var average = App.library.GetByType<UnitData>().Average(v => attribute.GetValue(v));
 
 			if (value) {
 				var _0 = current;
@@ -103,10 +83,6 @@ public class AverageComparedBar : ValueHooker<UnitData, Unit>, IOnTurnStart_Unit
 
 	}
 
-	public void OnTurnStart() { if (barType == BarType.Energy) UpdateValue(target.data); }
-	public void OnAbilityCastStart(Ability ability) { if (barType == BarType.Energy) UpdateValue(target.data); }
-	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) { if (barType == BarType.Health) UpdateValue(target.data); }
-	public void OnHeal(ref float value) { if (barType == BarType.Health) UpdateValue(target.data); }
 	public void OnAnimationEventEnd() => UpdateValue(target.data);
 
 }

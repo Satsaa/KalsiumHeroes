@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: barType
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1692340652082640553, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
+      propertyPath: attribute.field.<fieldName>k__BackingField
+      value: movement
+      objectReference: {fileID: 0}
     - target: {fileID: 2199161456323677431, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -103,9 +107,17 @@ PrefabInstance:
       propertyPath: barType
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3140652795740945513, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
+      propertyPath: attribute.field.<fieldName>k__BackingField
+      value: movement
+      objectReference: {fileID: 0}
     - target: {fileID: 3746191624236010850, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
       propertyPath: barType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746191624236010850, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
+      propertyPath: attribute.field.<fieldName>k__BackingField
+      value: movement
       objectReference: {fileID: 0}
     - target: {fileID: 7747631845881345519, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
       propertyPath: m_Name

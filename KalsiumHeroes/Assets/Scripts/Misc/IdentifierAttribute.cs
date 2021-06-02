@@ -36,34 +36,31 @@ namespace Editors {
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			using (PropertyScope(position, label, property, out label)) {
-				if (property.serializedObject.targetObjects.Length > 1) {
-					EditorGUI.PropertyField(position, property, label);
-				} else {
-					const int dropDownWidth = 20;
 
-					var propertyPos = position;
-					propertyPos.width -= dropDownWidth;
+				const int dropDownWidth = 20;
 
-					EditorGUI.PropertyField(propertyPos, property, label);
+				var propertyPos = position;
+				propertyPos.width -= dropDownWidth;
 
-					var dropDownPos = position;
-					dropDownPos.xMin += position.width - dropDownWidth;
+				EditorGUI.PropertyField(propertyPos, property, label);
 
-					if (EditorGUI.DropdownButton(dropDownPos, GUIContent.none, FocusType.Keyboard)) {
-						var a = attribute as IdentifierAttribute;
-						var v = GetFirstValue<string>(property);
-						var menu = new GenericMenu();
-						var sorted = App.library.dict.Values.ToList();
-						sorted.Sort((a, b) => a.identifier.CompareTo(b.identifier));
-						foreach (var data in sorted) {
-							if (a.objectType == null || a.objectType.IsAssignableFrom(data.GetType())) {
-								menu.AddItem(new GUIContent(data.identifier), data.identifier == v, () => {
-									SetValue(property, data.identifier);
-								});
-							}
+				var dropDownPos = position;
+				dropDownPos.xMin += position.width - dropDownWidth;
+
+				if (EditorGUI.DropdownButton(dropDownPos, GUIContent.none, FocusType.Keyboard)) {
+					var a = attribute as IdentifierAttribute;
+					var v = GetFirstValue<string>(property);
+					var menu = new GenericMenu();
+					var sorted = App.library.dict.Values.ToList();
+					sorted.Sort((a, b) => a.identifier.CompareTo(b.identifier));
+					foreach (var data in sorted) {
+						if (a.objectType == null || a.objectType.IsAssignableFrom(data.GetType())) {
+							menu.AddItem(new GUIContent(data.identifier), data.identifier == v, () => {
+								SetValue(property, data.identifier);
+							});
 						}
-						menu.ShowAsContext();
 					}
+					menu.ShowAsContext();
 				}
 			}
 		}

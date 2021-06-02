@@ -1492,7 +1492,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appeal:
-    <rawValue>k__BackingField: 0
+    <rawValue>k__BackingField: 1.36
+  health:
+    <rawValue>k__BackingField: 3
   defense: lol
   test:
     field:
@@ -1500,6 +1502,12 @@ MonoBehaviour:
     fallbackValue: 69
     fallbackOther: 420
     fallbackEnabled: 0
+  numTest:
+    field:
+      <fieldName>k__BackingField: appeal
+    fallbackValue: 69.69
+    fallbackOther: 420.42
+    fallbackEnabled: 1
 --- !u!1 &1811873850
 GameObject:
   m_ObjectHideFlags: 0
