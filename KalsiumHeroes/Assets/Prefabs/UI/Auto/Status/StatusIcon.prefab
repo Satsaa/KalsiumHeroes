@@ -127,17 +127,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 4394817371925585347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4fd61910247f0247966ac6739c081d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fc1621db044c814e82c9a031a7b12e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  hooker: {fileID: 0}
-  positiveColor: {r: 0, g: 0.80784315, b: 0.003921569, a: 1}
-  negativeColor: {r: 0.80784315, g: 0, b: 0, a: 1}
-  target: {fileID: 0}
+  colors:
+    list:
+    - key: 0
+      value: {r: 0, g: 1, b: 0.003575325, a: 1}
+    - key: 1
+      value: {r: 1, g: 0, b: 0, a: 1}
+    keyCollision: 0
 --- !u!114 &4722145930124858270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,15 +150,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 4394817371925585347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201f82fc887c54d4088bf79ddccc8078, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d56bbf04a08b324f879b27921f1a1cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  hooker: {fileID: 0}
-  target: {fileID: 0}
+  selector:
+    field:
+      <attributeName>k__BackingField: ticks
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 1
+      enabled: 1
+    overrideOther:
+      value: 1
+      enabled: 1
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6345290309932106396}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_fillAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5302289986576746764
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,13 +284,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 5302289986576746764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a90fc3695a038104eb9e5a2613bf17bc, type: 3}
+  m_Script: {fileID: 11500000, guid: d7ef776a9a8bfe648bb9db0958eb413f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: sprite
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 733613503776096085}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1 &9216495840610404585
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,17 +415,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 9216495840610404585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4fd61910247f0247966ac6739c081d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1fc1621db044c814e82c9a031a7b12e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  hooker: {fileID: 0}
-  positiveColor: {r: 0, g: 0.20784314, b: 0, a: 1}
-  negativeColor: {r: 0.25490198, g: 0, b: 0, a: 1}
-  target: {fileID: 0}
+  colors:
+    list:
+    - key: 0
+      value: {r: 0.02745098, g: 0.20784314, b: 0.02745098, a: 1}
+    - key: 1
+      value: {r: 0.25490198, g: 0, b: 0, a: 1}
+    keyCollision: 0
 --- !u!1001 &6565506240250657010
 PrefabInstance:
   m_ObjectHideFlags: 0

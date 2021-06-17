@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: attribute.field.<fieldName>k__BackingField
       value: resistance
       objectReference: {fileID: 0}
+    - target: {fileID: 2923354972933952288, guid: c48eb9d950786444cbf62f6a870f80b8, type: 3}
+      propertyPath: selector.field.<attributeName>k__BackingField
+      value: resistance
+      objectReference: {fileID: 0}
     - target: {fileID: 4174204878390101987, guid: c48eb9d950786444cbf62f6a870f80b8, type: 3}
       propertyPath: m_Color.b
       value: 0.31764707

@@ -233,6 +233,14 @@ namespace Muc.Data {
 	[CustomPropertyDrawer(typeof(SerializedDictionaryKeyValuePair<,>), true)]
 	public class SerializedKeyValuePairDrawer : PropertyDrawer {
 
+		private static readonly GUIContent keyContent = new GUIContent("K", "Key");
+		private static readonly GUIContent valueContent = new GUIContent("V", "Value");
+
+		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
+			var value = property.FindPropertyRelative(nameof(SerializedDictionaryKeyValuePair<string, string>.value));
+			return Mathf.Max(lineHeight, EditorGUI.GetPropertyHeight(value, label));
+		}
+
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 
 			var propPos = position;
@@ -246,6 +254,7 @@ namespace Muc.Data {
 
 				var keyRect = position;
 				keyRect.width /= 2;
+				keyRect.height = lineHeight;
 
 				var valueRect = keyRect;
 				valueRect.x += keyRect.width;
@@ -253,8 +262,8 @@ namespace Muc.Data {
 				keyRect.width -= 2;
 				valueRect.width += 2;
 
-				using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, new GUIContent("K", "Key"));
-				using (LabelWidthScope(14)) EditorGUI.PropertyField(valueRect, value, new GUIContent(" V", "Value"));
+				using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, keyContent);
+				using (LabelWidthScope(14)) EditorGUI.PropertyField(valueRect, value, valueContent);
 			}
 		}
 

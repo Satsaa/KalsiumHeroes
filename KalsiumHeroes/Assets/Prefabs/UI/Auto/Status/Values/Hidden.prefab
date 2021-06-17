@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 15901960890317903}
   m_Father: {fileID: 3051169396698485760}
@@ -104,6 +105,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6548749273409043160}
   m_RootOrder: 0
@@ -179,6 +181,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6548749273409043160}
   m_Father: {fileID: 0}
@@ -246,8 +249,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 6239722062025589099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9f72978e1811948a7ff7ec3a44d59e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ce153c51dc03bd4e93e5447661a0a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
+  typeConstraint2:
+    _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: hidden
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4925003413650350047}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+        m_MethodName: set_isOn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0

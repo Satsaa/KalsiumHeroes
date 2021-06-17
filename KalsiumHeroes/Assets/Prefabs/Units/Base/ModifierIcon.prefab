@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3129434696061317874}
   - component: {fileID: 5269159684825902045}
   - component: {fileID: 8366495848533371860}
+  - component: {fileID: 7320725373554269373}
   m_Layer: 5
   m_Name: DisplayName
   m_TagString: Untagged
@@ -29,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5937903975710380121}
   m_RootOrder: 1
@@ -147,8 +149,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee30ec6ea334a6d4a838d676710fbd8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hovered: 0
+  <hovered>k__BackingField: 0
+  <query>k__BackingField: modifier_list
+  additionalData: []
   text: {fileID: 5269159684825902045}
+--- !u!114 &7320725373554269373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2901498067619424142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: displayName
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5269159684825902045}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1 &4298021054131525013
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +216,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5937903975710380121}
-  - component: {fileID: 1128934655608635944}
   m_Layer: 5
   m_Name: ModifierIcon
   m_TagString: Untagged
@@ -176,6 +233,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2592609095906676307}
   - {fileID: 4667936960863073756}
@@ -187,21 +245,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 52, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1128934655608635944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298021054131525013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13e19e35544fc8848bc0e1b8afe3608c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modifier: {fileID: 0}
-  displayName: {fileID: 5269159684825902045}
-  sprite: {fileID: 1800728379486747121}
 --- !u!1 &7266099442342058658
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +274,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5937903975710380121}
   m_RootOrder: 0
@@ -287,13 +331,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 7266099442342058658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a31f9f8de1b29dc4080702dda8ea011b, type: 3}
+  m_Script: {fileID: 11500000, guid: d7ef776a9a8bfe648bb9db0958eb413f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hovered: 0
-  modifier: {fileID: 0}
-  abilityTooltip: ability_info
-  passiveTooltip: passive_info
-  statusTooltip: status_info
-  unitModifierTooltip: unitmodifier_info
-  modifierTooltip: modifier_info
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: sprite
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1800728379486747121}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0

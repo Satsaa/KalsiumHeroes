@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -144,8 +145,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 2295609344957960409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5926643f405634149809ad1da362476e, type: 3}
+  m_Script: {fileID: 11500000, guid: 250210b1949e99747a9361c4b586d368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
+  typeConstraint2:
+    _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: tickMode
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  translations:
+    list: []
+    keyCollision: 0
+  enumType:
+    _name: 
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7624920986887267151}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

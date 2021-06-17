@@ -14,13 +14,18 @@ namespace Muc.Editor {
 		#region Variables
 
 		public const float indentSize = 15; // kIndentPerLevel
+		public const float spaceSize = 6; // kDefaultSpacing
 		public const float lineHeight = 18; // kSingleLineHeight
 		public const float smallLineHeight = 16f; // kSingleSmallLineHeight
+		public const float prefixPaddingRight = 2f; // kPrefixPaddingRight
+		public const float helpBoxHeight = 38f;
 		public const string script = "m_Script";
 
 		public static float spacing => EditorGUIUtility.standardVerticalSpacing; // kControlVerticalSpacing
 
+		public static float indent => indentLevel * indentSize;
 		public static int indentLevel { get => EditorGUI.indentLevel; set => EditorGUI.indentLevel = value; }
+		public static float indentedLabelWidth => labelWidth - indent;
 		public static float labelWidth { get => EditorGUIUtility.labelWidth; set => EditorGUIUtility.labelWidth = value; }
 		public static float fieldWidth { get => EditorGUIUtility.fieldWidth; set => EditorGUIUtility.fieldWidth = value; }
 
@@ -29,76 +34,16 @@ namespace Muc.Editor {
 
 		#region Rects
 
-		public static Rect LabelRect() => LabelRect(EditorGUIUtility.singleLineHeight);
-		public static Rect LabelRect(float height) {
-			Rect res = default;
-			res.xMin = indentLevel * indentSize;
-			res.width = labelWidth;
-			res.height = height;
-			return res;
+		public static Rect GetControlRect(float height = lineHeight) {
+			return EditorGUI.IndentedRect(EditorGUILayout.GetControlRect(true, height));
 		}
 
-		public static Rect FieldRect() => FieldRect(EditorGUIUtility.singleLineHeight);
-		public static Rect FieldRect(float height) {
-			Rect res = default;
-			res.xMin = indentLevel * indentSize + labelWidth;
-			res.width = fieldWidth;
-			res.height = height;
-			return res;
+		public static Rect LabelRect(Rect totalPosition) {
+			return new(totalPosition.x + indent, totalPosition.y, labelWidth - indent, lineHeight);
 		}
 
-		public static Rect LabelAndFieldRect() => FieldRect(EditorGUIUtility.singleLineHeight);
-		public static Rect LabelAndFieldFieldRect(float height) {
-			Rect res = default;
-			res.xMin = indentLevel * indentSize;
-			res.xMax = indentLevel * indentSize + labelWidth + fieldWidth;
-			res.height = height;
-			return res;
-		}
-
-		#endregion
-
-
-		#region Utility
-
-		/// <summary>
-		/// Draws the grayed out script property.
-		/// </summary>
-		public static void ScriptField(SerializedObject obj) {
-			var prop = obj.FindProperty(script);
-			using (DisabledScope()) EditorGUILayout.PropertyField(prop);
-		}
-
-		/// <summary>
-		/// Draws the grayed out script property.
-		/// </summary>
-		public static void ScriptField(SerializedObject obj, Rect position) {
-			var prop = obj.FindProperty(script);
-			using (DisabledScope()) EditorGUI.PropertyField(position, prop);
-		}
-
-
-		/// <summary>
-		/// Basic? I don't know what that means... simple Types that Unity renders on a single line.
-		/// </summary>
-		public static bool TypeIsBasic(Type type) {
-			return type.IsEnum ||
-				type.IsPrimitive ||
-				type == typeof(string) ||
-				type == typeof(Color) ||
-				type == typeof(LayerMask) ||
-				type == typeof(Vector2) ||
-				type == typeof(Vector3) ||
-				type == typeof(Vector4) ||
-				type == typeof(Rect) ||
-				type == typeof(AnimationCurve) ||
-				type == typeof(Bounds) ||
-				type == typeof(Gradient) ||
-				type == typeof(Quaternion) ||
-				type == typeof(Vector2Int) ||
-				type == typeof(Vector3Int) ||
-				type == typeof(RectInt) ||
-				type == typeof(BoundsInt);
+		public static Rect FieldRect(Rect totalPosition) {
+			return new(totalPosition.x + labelWidth + prefixPaddingRight, totalPosition.y, totalPosition.width - labelWidth - prefixPaddingRight, totalPosition.height); ;
 		}
 
 		#endregion

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using IHas;
 
 [RequireComponent(typeof(TMPro.TMP_Text))]
 public class TypeNameSetter : ValueReceiver<object> {

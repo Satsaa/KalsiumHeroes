@@ -19,11 +19,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -41,11 +41,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -63,11 +63,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -85,11 +85,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -107,11 +107,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -129,11 +129,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4, T5> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4, T5> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -151,11 +151,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4, T5, T6> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4, T5, T6> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -173,11 +173,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4, T5, T6, T7> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4, T5, T6, T7> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -195,11 +195,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -217,11 +217,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 
@@ -239,11 +239,11 @@ namespace Muc.Data {
 		}
 
 		public void AddListener(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) {
-			listeners -= listener;
+			listeners += listener;
 		}
 
 		public void RemoveListener(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) {
-			listeners += listener;
+			listeners -= listener;
 		}
 	}
 

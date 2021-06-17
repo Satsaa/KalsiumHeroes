@@ -8266,22 +8266,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 255031195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f40f17d73ddfc945a74857e992d5f74, type: 3}
+  m_Script: {fileID: 11500000, guid: ca1b3256f8902894d9bb3018f71ecc8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  hooker: {fileID: 0}
-  attribute:
+  selector:
     field:
-      <fieldName>k__BackingField: energy
+      <attributeName>k__BackingField: energy
+      <attributeType>k__BackingField:
+        _name: 
     fallbackValue: 0
     fallbackOther: 0
     fallbackEnabled: 1
-  format: 'Max: {1}'
-  target: {fileID: 0}
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  enabledFormat: 'Max: {1}'
+  disabledFormat: "Max: \u221E"
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 255031198}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &255031198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8517,22 +8551,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 261678023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f40f17d73ddfc945a74857e992d5f74, type: 3}
+  m_Script: {fileID: 11500000, guid: ca1b3256f8902894d9bb3018f71ecc8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  hooker: {fileID: 0}
-  attribute:
+  selector:
     field:
-      <fieldName>k__BackingField: energy
+      <attributeName>k__BackingField: energy
+      <attributeType>k__BackingField:
+        _name: 
     fallbackValue: 0
     fallbackOther: 0
     fallbackEnabled: 1
-  format: 'Current AP: {0}'
-  target: {fileID: 0}
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  enabledFormat: 'Current AP: {0}'
+  disabledFormat: 'Current AP: 0'
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 261678026}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &261678026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41892,10 +41960,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventHandler:
-    id: 0
+    rid: -2
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
       type: {class: , ns: , asm: }
 --- !u!114 &1271446637
 MonoBehaviour:
@@ -68444,22 +68513,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 2060945017}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f40f17d73ddfc945a74857e992d5f74, type: 3}
+  m_Script: {fileID: 11500000, guid: ca1b3256f8902894d9bb3018f71ecc8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  hooker: {fileID: 0}
-  attribute:
+  selector:
     field:
-      <fieldName>k__BackingField: energyRegen
+      <attributeName>k__BackingField: energyRegen
+      <attributeType>k__BackingField:
+        _name: 
     fallbackValue: 0
     fallbackOther: 0
     fallbackEnabled: 1
-  format: 'Regen: {0}'
-  target: {fileID: 0}
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  enabledFormat: 'Regen: {0}'
+  disabledFormat: 'Regen: 0'
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2060945020}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2060945020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71134,13 +71237,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 4423157419525297266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a7c81701fd90f47b574c59b8c2b335, type: 3}
+  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: displayName
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6946479542049758321}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!224 &9106138204592296291
 RectTransform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,14 @@ PrefabInstance:
       propertyPath: attribute.field.<fieldName>k__BackingField
       value: resistance
       objectReference: {fileID: 0}
+    - target: {fileID: 1692340652082640553, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
+      propertyPath: selector.field.<attributeName>k__BackingField
+      value: resistance
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899851204644967230, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
+      propertyPath: selector.field.<attributeName>k__BackingField
+      value: resistance
+      objectReference: {fileID: 0}
     - target: {fileID: 2199161456323677431, guid: f46ffa7134acb654cb6f56086a35e877, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

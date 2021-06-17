@@ -57,6 +57,10 @@ PrefabInstance:
       propertyPath: barType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 419117074914261785, guid: a5126d2e26c5d6a45b6f591f7e9d3966, type: 3}
+      propertyPath: selector.field.<attributeName>k__BackingField
+      value: health
+      objectReference: {fileID: 0}
     - target: {fileID: 4420692151622931738, guid: a5126d2e26c5d6a45b6f591f7e9d3966, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -183,6 +187,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4661099292838214380, guid: a5126d2e26c5d6a45b6f591f7e9d3966, type: 3}
       propertyPath: attribute.field.<fieldName>k__BackingField
+      value: health
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661099292838214380, guid: a5126d2e26c5d6a45b6f591f7e9d3966, type: 3}
+      propertyPath: selector.field.<attributeName>k__BackingField
       value: health
       objectReference: {fileID: 0}
     m_RemovedComponents: []

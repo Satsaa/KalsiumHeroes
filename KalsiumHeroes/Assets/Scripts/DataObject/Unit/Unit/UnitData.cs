@@ -1,18 +1,12 @@
 
 using System;
-using IHas;
 using Muc.Systems.RenderImages;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(UnitData), menuName = "DataSources/" + nameof(UnitData))]
-public class UnitData : MasterData, IHasDisplayName, IHasDescription, IHasLore, IHasSprite {
+public class UnitData : MasterData {
 
 	public override Type createTypeConstraint => typeof(Unit);
-
-	TextSource IHasDisplayName.displayName => displayName;
-	TextSource IHasDescription.description => description;
-	TextSource IHasLore.lore => lore;
-	Sprite IHasSprite.sprite => sprite;
 
 	[Tooltip("Display name of the Unit.")]
 	public TextSource displayName;

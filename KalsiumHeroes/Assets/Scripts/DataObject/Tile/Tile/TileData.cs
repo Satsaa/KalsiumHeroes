@@ -2,22 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using IHas;
 using UnityEngine;
 using static UnityEngine.Mathf;
 
 [CreateAssetMenu(fileName = nameof(TileData), menuName = "DataSources/" + nameof(TileData))]
-public class TileData : MasterData, IHasDisplayName, IHasDescription {
+public class TileData : MasterData {
 
 	public override Type createTypeConstraint => typeof(Tile);
 
 	[Tooltip("Display name of the Tile.")]
 	public TextSource displayName;
-	TextSource IHasDisplayName.displayName => displayName;
 
 	[Tooltip("Description of the Tile.")]
 	public TextSource description;
-	TextSource IHasDescription.description => description;
 
 	[Tooltip("Is this tile considered passable?")]
 	public Attribute<bool> passable = new Attribute<bool>(true);

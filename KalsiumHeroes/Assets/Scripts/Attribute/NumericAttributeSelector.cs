@@ -15,6 +15,9 @@ public class NumericAttributeSelector {
 	[field: SerializeField] private float fallbackOther;
 	[field: SerializeField] private bool fallbackEnabled = true;
 
+	[field: SerializeField, Tooltip("Override value if the attribute is disabled.")] private ToggleValue<float> overrideValue;
+	[field: SerializeField, Tooltip("Override other if the attribute is disabled.")] private ToggleValue<float> overrideOther;
+
 	private object sourceCached;
 	private string fieldNameCached;
 	private AttributeBase attributeCached;
@@ -26,36 +29,36 @@ public class NumericAttributeSelector {
 
 	public float GetValue(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
+		return TryOverrideValue(source, attributeCached switch {
 			Attribute<float> att => att.value,
 			Attribute<int> att => att.value,
 			_ => fallbackValue,
-		};
+		});
 	}
 	public float GetRawValue(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
+		return TryOverrideValue(source, attributeCached switch {
 			Attribute<float> att => att.rawValue,
 			Attribute<int> att => att.rawValue,
 			_ => fallbackValue,
-		};
+		});
 	}
 
 	public float GetOther(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
+		return TryOverrideOther(source, attributeCached switch {
 			DualAttribute<float> att => att.other,
 			DualAttribute<int> att => att.other,
 			_ => fallbackOther,
-		};
+		});
 	}
 	public float GetRawOther(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
+		return TryOverrideOther(source, attributeCached switch {
 			DualAttribute<float> att => att.rawOther,
 			DualAttribute<int> att => att.rawOther,
 			_ => fallbackOther,
-		};
+		});
 	}
 
 	public bool GetEnabled(object source) {
@@ -79,17 +82,25 @@ public class NumericAttributeSelector {
 		};
 	}
 
+	protected float TryOverrideValue(object source, float value) {
+		return !overrideValue.enabled || GetEnabled(source) ? value : overrideValue.value;
+	}
+
+	protected float TryOverrideOther(object source, float value) {
+		return !overrideOther.enabled || GetEnabled(source) ? value : overrideOther.value;
+	}
+
 	protected void UpdateCache(object source) {
 #if UNITY_EDITOR
-		if (!Application.isPlaying || (sourceCached != source || fieldNameCached != field.fieldName)) {
+		if (!Application.isPlaying || (sourceCached != source || fieldNameCached != field.attributeName)) {
 #else
 		if (sourceCached != source || fieldNameCached != field.fieldName) {
 #endif
 			sourceCached = source;
-			fieldNameCached = field.fieldName;
+			fieldNameCached = field.attributeName;
 			attributeCached = null;
-			if (!String.IsNullOrEmpty(field.fieldName)) {
-				var fieldInfo = source.GetType().GetField(field.fieldName);
+			if (!String.IsNullOrEmpty(field.attributeName)) {
+				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
 					this.attributeCached = value switch {
@@ -130,7 +141,7 @@ namespace Editors {
 	public class NumericAttributeSelectorDrawer : PropertyDrawer {
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-			return property.isExpanded ? 5 * (lineHeight + spacing) : base.GetPropertyHeight(property, label);
+			return property.isExpanded ? 7 * (lineHeight + spacing) : base.GetPropertyHeight(property, label);
 		}
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {

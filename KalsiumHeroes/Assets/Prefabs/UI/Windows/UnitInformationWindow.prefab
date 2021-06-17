@@ -629,13 +629,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 2146377432291495053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea8adcf63d6253f43995196f5a927c59, type: 3}
+  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: lore
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2146377432291495055}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!114 &4292106847030494639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2002,11 +2040,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 4088236541218681605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0440dab512e7774fa26892ca2036370, type: 3}
+  m_Script: {fileID: 11500000, guid: e80e16f92fb295240bd8e9fde5b50b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
+  typeConstraint2:
+    _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: preview
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8784229057806719754}
+        m_TargetAssemblyTypeName: Muc.Systems.RenderImages.RenderImage, Muc
+        m_MethodName: SetRenderObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1 &5119813102203346504
 GameObject:
   m_ObjectHideFlags: 0
@@ -3367,13 +3445,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 8803938880017834621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a7c81701fd90f47b574c59b8c2b335, type: 3}
+  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: displayName
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8803938880017834619}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1 &8803938880187643518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,13 +3760,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 8803938880530907048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4a7c81701fd90f47b574c59b8c2b335, type: 3}
+  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: displayName
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: {fileID: 0}
+    fallbackOther: {fileID: 0}
+    fallbackEnabled: 1
+    overrideValue:
+      value: {fileID: 0}
+      enabled: 0
+    overrideOther:
+      value: {fileID: 0}
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8803938880530907062}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1 &8803938880543575613
 GameObject:
   m_ObjectHideFlags: 0

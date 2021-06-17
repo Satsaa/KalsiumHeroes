@@ -36,7 +36,7 @@ public abstract class ValueHooker<T1, T2> : ValueReceiver<T1, T2> {
 
 	[SerializeField, HideInInspector] Master hooker;
 
-	protected void OnDestroy() => Unhook();
+	protected virtual void OnDestroy() => Unhook();
 
 	protected void Hook(Master master) {
 		if (hooker) Unhook();

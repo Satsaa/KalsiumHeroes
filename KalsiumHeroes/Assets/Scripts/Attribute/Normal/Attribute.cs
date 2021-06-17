@@ -15,13 +15,20 @@ public class Attribute<T> : AttributeBase {
 	public Muc.Data.Event onValueChanged => _onValueChanged ??= new();
 
 	private List<Alterer<T>> _valueAlterers;
-	private List<Alterer<T>> valueAlterers => _valueAlterers ??= new();
-	private bool valueCached;
-	private T cachedValue;
+	protected List<Alterer<T>> valueAlterers => _valueAlterers ??= new();
+	protected bool valueCached;
+	protected T cachedValue;
 
-	public T value {
-		get => valueCached ? cachedValue : cachedValue = valueAlterers.Aggregate(rawValue, (v, alt) => alt.Apply(v));
-		set { rawValue = value; valueCached = false; onValueChanged?.Invoke(); }
+	public virtual T value {
+		get {
+			if (valueCached) return cachedValue;
+			cachedValue = valueAlterers.Aggregate(rawValue, (v, alt) => alt.Apply(v));
+			valueCached = true;
+			return cachedValue;
+		}
+		set {
+			rawValue = value; valueCached = false; onValueChanged?.Invoke();
+		}
 	}
 
 

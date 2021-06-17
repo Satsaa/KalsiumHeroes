@@ -32,6 +32,9 @@ MonoBehaviour:
     - key: 3
       value: {r: 0, g: 0.02520442, b: 1, a: 1}
     keyCollision: 0
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2331325026568911666
 PrefabInstance:
   m_ObjectHideFlags: 0

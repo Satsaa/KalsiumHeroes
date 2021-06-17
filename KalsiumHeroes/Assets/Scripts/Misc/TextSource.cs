@@ -24,7 +24,7 @@ public class TextSource : ScriptableObject {
 		}
 	}
 
-	protected string text {
+	public string text {
 		get {
 			var asset = assets.Find(v => v.lang == App.lang).asset;
 			if (asset == null) return "";

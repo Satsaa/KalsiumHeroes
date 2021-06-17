@@ -11,7 +11,7 @@ public class AttributeFieldName {
 
 	private static IEnumerable<string> cache;
 
-	[field: SerializeField] public string fieldName { get; private set; }
+	[field: SerializeField] public string attributeName { get; private set; }
 
 	public virtual IEnumerable<string> GetFieldNames() {
 		if (cache == null) {
@@ -22,7 +22,7 @@ public class AttributeFieldName {
 						&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
 					).SelectMany(v => v.GetFields()
 						.Where(f => typeof(AttributeBase).IsAssignableFrom(f.FieldType))
-						.Select(v => v.Name)).ToList();
+						.Select(v => v.Name)).Distinct().ToList();
 			list.Sort();
 			cache = list;
 
@@ -46,7 +46,7 @@ public class AttributeFieldName<T> : AttributeFieldName {
 						&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
 					).SelectMany(v => v.GetFields()
 						.Where(f => typeof(Attribute<T>).IsAssignableFrom(f.FieldType))
-						.Select(v => v.Name)).ToList();
+						.Select(v => v.Name)).Distinct().ToList();
 			list.Sort();
 			cache = list;
 
@@ -109,8 +109,8 @@ namespace Editors {
 				var propertyPos = position;
 				propertyPos.width -= dropDownWidth;
 
-				var fieldName = property.FindPropertyRelative(GetBackingFieldName("fieldName"));
-				EditorGUI.PropertyField(propertyPos, fieldName, label);
+				var attributeName = property.FindPropertyRelative(GetBackingFieldName("attributeName"));
+				EditorGUI.PropertyField(propertyPos, attributeName, label);
 
 				var dropDownPos = position;
 				dropDownPos.xMin += position.width - dropDownWidth;
@@ -120,7 +120,7 @@ namespace Editors {
 					var names = fnVal.GetFieldNames();
 					var menu = new GenericMenu();
 					foreach (var name in names) {
-						menu.AddItem(new GUIContent(name), fieldName.stringValue == name, () => OnSelect(fieldName, name));
+						menu.AddItem(new GUIContent(name), attributeName.stringValue == name, () => OnSelect(attributeName, name));
 					}
 					menu.DropDown(dropDownPos);
 				}
