@@ -21,26 +21,17 @@ MonoBehaviour:
   description: {fileID: 11400000, guid: b996278258db1e546a4e1ec20e123a20, type: 2}
   sprite: {fileID: 0}
   abilityType: 1
-  targetType: 2
-  range:
-    _value: 1
-    _enabled: 0
-  rangeMode: 0
-  radius:
-    _value: 0
-  requiresVision:
-    _value: 0
   energyCost:
-    _value: 8
+    <rawValue>k__BackingField: 8
   cooldown:
-    _value: 0
-    _other: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 0
+    <rawValue>k__BackingField: 0
   statusModifier: {fileID: 11400000, guid: 3f0b22a989c643a4baa9fc23541dda91, type: 2}

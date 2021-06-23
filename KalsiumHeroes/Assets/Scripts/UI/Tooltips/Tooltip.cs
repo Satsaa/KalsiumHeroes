@@ -26,7 +26,7 @@ public class Tooltip : ExtendedUIBehaviour {
 
 	[SerializeField, HideInInspector] TooltipAnimator tooltipAnimator;
 
-	new protected void Awake() {
+	protected override void Awake() {
 		base.Awake();
 		tooltipAnimator = GetComponent<TooltipAnimator>();
 	}

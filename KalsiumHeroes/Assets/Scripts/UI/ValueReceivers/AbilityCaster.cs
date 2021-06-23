@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 public class AbilityCaster : ValueHooker<Ability>, IOnAbilityCastStart_Global, IOnAbilityCastEnd_Global, IOnAnimationEventStart, IOnAnimationEventEnd {
 
 	public void Cast() {
-		if (target && Game.rounds.current == target.unit && !Game.events.animating && target.IsReady()) {
+		if (target && Game.rounds.unit == target.unit && !Game.events.animating && target.IsReady()) {
 			switch (target) {
 				case TargetAbility targ:
 					Game.targeting.TryStartTargeter(targ.GetTargeter());

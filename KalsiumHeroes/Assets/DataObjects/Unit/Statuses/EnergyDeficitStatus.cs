@@ -12,7 +12,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	[SerializeField] Attribute<int> stacks = new();
 	[SerializeField] int stacksDuringOwnTurn;
 
-	bool ownTurn => Game.rounds.current == unit;
+	bool ownTurn => Game.rounds.unit == unit;
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);

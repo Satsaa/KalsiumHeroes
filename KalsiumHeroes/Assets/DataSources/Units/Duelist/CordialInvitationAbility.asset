@@ -22,23 +22,23 @@ MonoBehaviour:
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:
-    _value: 12
+    <rawValue>k__BackingField: 12
   cooldown:
-    _value: 0
-    _other: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 1
+    <rawValue>k__BackingField: 1
   range:
-    _value: 4
-    _enabled: 1
+    <rawValue>k__BackingField: 4
+    <rawEnabled>k__BackingField: 1
   rangeMode: 0
   requiresVision:
-    _value: 0
+    <rawValue>k__BackingField: 0
   targetType: 24
   statusModifier: {fileID: 11400000, guid: 9df62c4917eb3444eb07b15caa30d531, type: 2}

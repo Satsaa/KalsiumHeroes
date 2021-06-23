@@ -34,7 +34,6 @@ public abstract class DataObject : ScriptableObject {
 	/// </summary>
 	protected virtual void OnConfigureNonpersistent(bool add) { }
 
-
 #if UNITY_EDITOR
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {

@@ -31,6 +31,10 @@ public class Bar : NumericDataFieldReader {
 
 		var correction = 0f;
 		if (image.type is Image.Type.Sliced or Image.Type.Tiled && image.hasBorder) {
+
+			rt.anchorMin = rt.anchorMin.SetX(0);
+			rt.anchorMax = rt.anchorMax.SetX(1);
+
 			var pixels = (image.sprite.border.x * (1 - fract) * (1 / image.pixelsPerUnitMultiplier));
 			correction += pixels / (rt.rect.width * ((rt.anchorMax.x - rt.anchorMin.x) * -1 + 2));
 			correction *= 2;

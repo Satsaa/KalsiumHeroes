@@ -21,8 +21,22 @@ public class ToggleAttribute<T> : Attribute<T> {
 	private bool cachedEnabled;
 
 	public bool enabled {
-		get => enabledCached ? cachedEnabled : cachedEnabled = enabledAlterers.Aggregate(rawEnabled, (v, alt) => alt.Apply(v));
-		set { rawEnabled = value; enabledCached = false; onEnabledChanged?.Invoke(); }
+		get {
+			if (enabledCached)
+#if UNITY_EDITOR
+				if (Application.isPlaying)
+#endif
+					return cachedEnabled;
+			cachedEnabled = enabledAlterers.Aggregate(rawEnabled, (v, alt) => alt.Apply(v));
+			enabledCached = true;
+			return cachedEnabled;
+		}
+		set {
+			if (rawEnabled.Equals(value)) return;
+			rawEnabled = value;
+			enabledCached = false;
+			onEnabledChanged?.Invoke();
+		}
 	}
 
 

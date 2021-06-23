@@ -20,8 +20,22 @@ public class DualAttribute<T> : Attribute<T> {
 	private T cachedOther;
 
 	public T other {
-		get => otherCached ? cachedOther : cachedOther = otherAlterers.Aggregate(rawOther, (v, alt) => alt.Apply(v));
-		set { rawOther = value; otherCached = false; onOtherChanged?.Invoke(); }
+		get {
+			if (otherCached)
+#if UNITY_EDITOR
+				if (Application.isPlaying)
+#endif
+					return cachedOther;
+			cachedOther = otherAlterers.Aggregate(rawOther, (v, alt) => alt.Apply(v));
+			otherCached = true;
+			return cachedOther;
+		}
+		set {
+			if (rawOther.Equals(value)) return;
+			rawOther = value;
+			otherCached = false;
+			onOtherChanged?.Invoke();
+		}
 	}
 
 

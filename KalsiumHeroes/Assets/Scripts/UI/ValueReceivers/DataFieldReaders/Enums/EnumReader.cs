@@ -10,7 +10,6 @@ using Muc.Data;
 public abstract class EnumReader<T> : DataFieldReader<T> where T : Enum {
 
 	[SerializeField] SerializedDictionary<T, TextSource> translations;
-	[SerializeField, HideInInspector] SerializedType<T> enumType;
 
 	[SerializeField, Tooltip("Invoked when the attribute changes in any way or the reader is initialized. The name of the enum value is returned.")]
 	protected UnityEvent<string> onUpdate;

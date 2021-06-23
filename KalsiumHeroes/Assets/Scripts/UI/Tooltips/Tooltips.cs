@@ -20,18 +20,10 @@ public class Tooltips : UISingleton<Tooltips> {
 	[SerializeField] public Window defaultWindowPrefab;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
 
-	[SerializeField, HideInInspector]
-	List<Tooltip> tts;
+	[SerializeField, HideInInspector] List<Tooltip> tts;
 	FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
 	string lastPing;
 	int lastPingFrame = -1;
-
-	[Identifier]
-	public string test1;
-
-	[Identifier(typeof(UnitData))]
-	public string test2;
-
 
 	void Update() {
 		if (Time.frameCount - lastPingFrame > 1) {
@@ -71,6 +63,10 @@ public class Tooltips : UISingleton<Tooltips> {
 
 	public void RemoveListing(Tooltip tooltip) {
 		tts.Remove(tooltip);
+	}
+
+	public bool TooltipExists(string tooltipId) {
+		return tooltips.ContainsKey(tooltipId);
 	}
 
 	private Tooltip Pop() {
@@ -246,7 +242,8 @@ public class Tooltips : UISingleton<Tooltips> {
 
 	private Tooltip GetTooltip(string query, out string tooltipId, out string[] values) {
 		Parse(query, out tooltipId, out values);
-		return tooltips[query];
+		tooltips.TryGetValue(query, out var res);
+		return res;
 	}
 
 	private Tooltip InstantiateTooltip(string id, string[] parameters) {

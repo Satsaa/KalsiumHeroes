@@ -3,6 +3,7 @@ using UnityEngine;
 using Muc.Data;
 using System;
 using UnityEngine.Serialization;
+using System.Text.RegularExpressions;
 
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
 public abstract class DataObjectData : ScriptableObject {
@@ -15,6 +16,31 @@ public abstract class DataObjectData : ScriptableObject {
 
 	[Tooltip("String identifier of this DataObject. (\"unit_oracle\")")]
 	public string identifier;
+
+	private static Regex removeData = new(@"Data$");
+	private static Regex snakeCase = new(@"(?<![A-Z]|^)(?=[A-Z]+)|(?<=[A-Z])(?=[A-Z][a-z])");
+	private string _tooltip;
+	public string tooltip {
+		get {
+			if (_tooltip != null) return _tooltip;
+			var current = this.GetType();
+			while (true) {
+				if (current == typeof(DataObjectData)) {
+					return _tooltip = "data_object";
+				} else {
+					var converted = current.FullName;
+					converted = removeData.Replace(converted, "");
+					converted = snakeCase.Replace(converted, "_");
+					converted = converted.ToLowerInvariant();
+					converted += "_info";
+					if (Tooltips.instance.TooltipExists(converted)) {
+						return _tooltip = converted;
+					}
+				}
+				current = current.BaseType;
+			}
+		}
+	}
 
 }
 

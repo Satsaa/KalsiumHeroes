@@ -13,6 +13,7 @@ using Muc.Components.Extended;
 [RequireComponent(typeof(Library))]
 [RequireComponent(typeof(Client))]
 [RequireComponent(typeof(SharedInput))]
+[RequireComponent(typeof(CommonText))]
 public class App : Singleton<App> {
 
 	public static App app => instance;
@@ -20,12 +21,14 @@ public class App : Singleton<App> {
 	public static Client client => instance._client;
 	public static Library library => instance._library;
 	public static SharedInput input => instance._input;
+	public static CommonText commonText => instance._commonText;
 	public static Lang lang => instance._lang;
 	public static ReadOnlyCollection<GameMode> gameModes => instance._gameModes.AsReadOnly();
 
 	[SerializeField, HideInInspector] Client _client;
 	[SerializeField, HideInInspector] Library _library;
 	[SerializeField, HideInInspector] SharedInput _input;
+	[SerializeField, HideInInspector] CommonText _commonText;
 	[SerializeField] Lang _lang;
 	[SerializeField] List<GameMode> _gameModes;
 
@@ -39,6 +42,7 @@ public class App : Singleton<App> {
 		_client = GetComponent<Client>();
 		_library = GetComponent<Library>();
 		_input = GetComponent<SharedInput>();
+		_commonText = GetComponent<CommonText>();
 	}
 
 	void Start() {

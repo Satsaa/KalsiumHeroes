@@ -32,7 +32,7 @@ public class PickOffAbility : UnitTargetAbility {
 				}
 			}
 		}
-		return data.multipliers.Last();
+		return data.multipliers.LastOrDefault();
 	}
 
 }

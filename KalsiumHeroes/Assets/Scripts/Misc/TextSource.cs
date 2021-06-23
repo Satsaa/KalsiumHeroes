@@ -8,6 +8,7 @@ using UnityEngine;
 public class TextSource : ScriptableObject {
 
 	public static implicit operator string(TextSource v) => v ? v.text : null;
+	public override string ToString() => this;
 
 	[Serializable]
 	protected class Pair {

@@ -13,7 +13,7 @@ namespace Muc.Components.Extended {
 		public static T instance => _instance;
 		private static T _instance;
 
-		protected void OnValidate() {
+		protected virtual void OnValidate() {
 #if UNITY_EDITOR // Prevent activation in prefabs
 			if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null && !UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject))
 #endif

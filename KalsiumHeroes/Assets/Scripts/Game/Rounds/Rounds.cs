@@ -11,21 +11,21 @@ public class Rounds : MonoBehaviour {
 	public List<Unit> units = new List<Unit>();
 	[SerializeField] private int index;
 
-	private Unit currentOrDefault => index >= units.Count ? null : units[index];
-	public Unit current {
+	private Unit unitOrNull => index >= units.Count ? null : units[index];
+	public Unit unit {
 		get {
-			var res = currentOrDefault;
+			var res = unitOrNull;
 			if (res == null) {
 				Gather();
-				res = currentOrDefault;
+				res = unitOrNull;
 			} else if (res.removed) {
 				var old = res;
 				do {
 					index++;
-					res = currentOrDefault;
+					res = unitOrNull;
 					if (res == null) {
 						Gather();
-						res = currentOrDefault;
+						res = unitOrNull;
 						break;
 					}
 				} while (res.removed);
@@ -69,30 +69,30 @@ public class Rounds : MonoBehaviour {
 	}
 
 	public void NextTurn() {
-		OnTurnEnds(current);
+		OnTurnEnds(unit);
 		index++;
 		while (true) {
-			if (currentOrDefault == null || currentOrDefault.removed) index++;
+			if (unitOrNull == null || unitOrNull.removed) index++;
 			break;
 		}
 		if (index >= units.Count) {
 			if (!TryEndGame()) {
 				round++;
 				Gather();
-				OnRoundStarts(current);
-				OnTurnStarts(current);
+				OnRoundStarts(unit);
+				OnTurnStarts(unit);
 			}
 			return;
 		}
-		OnTurnStarts(current);
+		OnTurnStarts(unit);
 	}
 
 	public void OnGameStart() {
 		if (!TryEndGame()) {
 			round++;
 			Gather();
-			OnRoundStarts(current);
-			OnTurnStarts(current);
+			OnRoundStarts(unit);
+			OnTurnStarts(unit);
 		}
 	}
 

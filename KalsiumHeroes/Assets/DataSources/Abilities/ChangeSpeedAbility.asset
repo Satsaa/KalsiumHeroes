@@ -25,7 +25,7 @@ MonoBehaviour:
     <rawValue>k__BackingField: 0
   cooldown:
     <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
     <rawValue>k__BackingField: 1
     <rawOther>k__BackingField: 1

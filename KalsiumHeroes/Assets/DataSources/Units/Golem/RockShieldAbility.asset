@@ -21,26 +21,17 @@ MonoBehaviour:
   description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
-  targetType: 2
-  range:
-    _value: 1
-    _enabled: 1
-  rangeMode: 0
-  radius:
-    _value: 0
-  requiresVision:
-    _value: 0
   energyCost:
-    _value: 4
+    <rawValue>k__BackingField: 4
   cooldown:
-    _value: 0
-    _other: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 0
+    <rawValue>k__BackingField: 0
   rockShieldModifier: {fileID: 11400000, guid: 97c4fc5897354a34799ece19b7f5e15d, type: 2}

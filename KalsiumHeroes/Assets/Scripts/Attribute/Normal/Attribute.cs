@@ -21,13 +21,20 @@ public class Attribute<T> : AttributeBase {
 
 	public virtual T value {
 		get {
-			if (valueCached) return cachedValue;
+			if (valueCached)
+#if UNITY_EDITOR
+				if (Application.isPlaying)
+#endif
+					return cachedValue;
 			cachedValue = valueAlterers.Aggregate(rawValue, (v, alt) => alt.Apply(v));
 			valueCached = true;
 			return cachedValue;
 		}
 		set {
-			rawValue = value; valueCached = false; onValueChanged?.Invoke();
+			// if (rawValue.Equals(value)) return;
+			rawValue = value;
+			valueCached = false;
+			onValueChanged?.Invoke();
 		}
 	}
 

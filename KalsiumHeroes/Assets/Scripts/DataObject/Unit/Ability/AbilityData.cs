@@ -18,14 +18,14 @@ public abstract class AbilityData : UnitModifierData {
 
 	[AttributeLabels("Current", "Max")]
 	[Tooltip("How many turns it takes for this ability to gain a charge.")]
-	public DualAttribute<int> cooldown = new(0, 0);
+	public DualAttribute<int> cooldown = new(0, 1);
 
 	[AttributeLabels("Current", "Max")]
 	[Tooltip("How many charges does the ability have.")]
 	public DualAttribute<int> charges = new(1, 1);
 
 	[Tooltip("How many times can the ability be cast in total.")]
-	public ToggleAttribute<int> uses = new(default, false);
+	public ToggleAttribute<int> uses = new(0, false);
 
 	[Tooltip("Can the unit move after this spell is cast?")]
 	public Attribute<bool> allowMove = new(false);

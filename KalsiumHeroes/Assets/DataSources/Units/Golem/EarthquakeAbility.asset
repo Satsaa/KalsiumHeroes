@@ -22,30 +22,30 @@ MonoBehaviour:
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:
-    _value: 9
+    <rawValue>k__BackingField: 9
   cooldown:
-    _value: 0
-    _other: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 0
+    <rawValue>k__BackingField: 0
   damageType: 1
   affected: 0
   rings:
   - damage:
-      _value: 80
+      <rawValue>k__BackingField: 80
     modifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
   - damage:
-      _value: 40
+      <rawValue>k__BackingField: 40
     modifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
   - damage:
-      _value: 20
+      <rawValue>k__BackingField: 20
     modifier: {fileID: 11400000, guid: d8f394ef87492154c8e68d25312f7bbb, type: 2}
   - damage:
-      _value: 10
+      <rawValue>k__BackingField: 10
     modifier: {fileID: 11400000, guid: 3d67f7ff942e6e64cbc4ea43f0e5e835, type: 2}

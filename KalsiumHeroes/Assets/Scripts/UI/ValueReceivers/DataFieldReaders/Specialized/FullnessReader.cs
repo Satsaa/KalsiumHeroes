@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class FullnessReader : NumericDataFieldReader {
 
+	[SerializeField] bool inverse;
 	[SerializeField] UnityEvent<float> onUpdate;
 
 	protected override void OnReceive() => Handle();
@@ -18,6 +19,7 @@ public class FullnessReader : NumericDataFieldReader {
 	protected virtual void Handle() {
 		var value = selector.GetValue(data) / selector.GetOther(data);
 		if (float.IsNaN(value)) value = 1;
+		if (inverse) value = 1 - value;
 		onUpdate.Invoke(value);
 	}
 

@@ -21,30 +21,33 @@ MonoBehaviour:
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   energyCost:
-    _value: 20
+    <rawValue>k__BackingField: 20
   cooldown:
-    _value: 0
-    _other: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 0
+    <rawValue>k__BackingField: 0
   range:
-    _value: 1
-    _enabled: 0
+    <rawValue>k__BackingField: 1
+    <rawEnabled>k__BackingField: 0
   rangeMode: 0
   requiresVision:
-    _value: 1
+    <rawValue>k__BackingField: 1
   targetType: 24
   damage:
-    _value: 30
-  bonusDamageMultipliers:
-  - 1.1
-  - 1.25
+    <rawValue>k__BackingField: 30
+  damageType: 1
+  multiplyingTypes: 0
+  multipliers:
+  - 0
+  - 0.2
+  - 0.5
+  - 1
   - 1.5
   - 2
-  damageType: 1

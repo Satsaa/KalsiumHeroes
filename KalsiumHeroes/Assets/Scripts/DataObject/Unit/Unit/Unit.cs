@@ -7,19 +7,19 @@ using Muc.Editor;
 using Muc.Extensions;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit {
+public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
 	public new UnitData source => (UnitData)_source;
 	public new UnitData data => (UnitData)_data;
 	public override Type dataType => typeof(UnitData);
 
-	[field: SerializeField]
-	public Tile tile { get; private set; }
+	[field: SerializeField] public Tile tile { get; private set; }
+	[field: SerializeField] public int spawnRound { get; private set; }
 	public UnitActor actor;
 	public Canvas canvas;
 	public Team team;
 
-	public bool isCurrent => Game.rounds.current == this;
+	public bool isCurrent => Game.rounds.unit == this;
 
 
 	public static Unit Create(UnitData source, Vector3 position, Team team, UnitActor actor = null) {
@@ -201,7 +201,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	}
 
 	void IOnTurnStart_Unit.OnTurnStart() {
-		if (Game.rounds.round <= 1) return;
+		if (Game.rounds.round <= spawnRound) return;
 		Debug.Log($"Turn start: {gameObject.name}");
 		data.energy.value += data.energyRegen.value;
 		RefreshEnergy();
@@ -210,5 +210,9 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	void IOnDeath_Unit.OnDeath() {
 		Debug.Log("OnDeath");
 		actor.Die();
+	}
+
+	void IOnSpawn_Unit.OnSpawn() {
+		spawnRound = Mathf.Max(0, Game.rounds.round);
 	}
 }

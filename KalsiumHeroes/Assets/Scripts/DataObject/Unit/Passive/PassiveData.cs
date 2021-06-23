@@ -9,6 +9,4 @@ public class PassiveData : UnitModifierData {
 
 	public override Type createTypeConstraint => typeof(Passive);
 
-	[Tooltip("Passives are currently Modifiers which are shown as abilities.")]
-	public string passivesAreJustModifiers;
 }

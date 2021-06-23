@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5255152979920766339}
   - component: {fileID: 2221547581587875109}
   - component: {fileID: 7788045605568339307}
+  - component: {fileID: 1805536362812316476}
+  - component: {fileID: 7195461212298107207}
   m_Layer: 5
   m_Name: CooldownText
   m_TagString: Untagged
@@ -34,8 +36,8 @@ RectTransform:
   m_Father: {fileID: 4043331150635913134}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.1, y: 0.1}
+  m_AnchorMax: {x: 0.9, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -195,6 +197,137 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1805536362812316476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331569493884445808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdbd49baff50b4341aa220497ea1f25b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  cooldownSelector:
+    field:
+      <attributeName>k__BackingField: cooldown
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  chargesSelector:
+    field:
+      <attributeName>k__BackingField: charges
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  hideWhenFullyCharged: 1
+  hideIfMaxIsOneOrLess: 1
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 331569493884445808}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  data: {fileID: 0}
+  listenered: 0
+--- !u!114 &7195461212298107207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331569493884445808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3679d6b4dd5b0e4f97a58be82c544c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  selector:
+    field:
+      <attributeName>k__BackingField: charges
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  selectClosest: 1
+  defaultParam: {r: 0, g: 0, b: 0, a: 1}
+  parameters:
+    list:
+    - key: 0
+      value: {r: 0, g: 0, b: 0, a: 1}
+    - key: 1
+      value: {r: 0, g: 0, b: 0, a: 0.5019608}
+    keyCollision: 0
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2221547581587875109}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_color
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2031456488052192519
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +340,7 @@ GameObject:
   - component: {fileID: 6605167935741863938}
   - component: {fileID: 8545931114244911019}
   - component: {fileID: 8794579319446555056}
+  - component: {fileID: 3587524364808843869}
   m_Layer: 5
   m_Name: ChargeText
   m_TagString: Untagged
@@ -229,8 +363,8 @@ RectTransform:
   m_Father: {fileID: 4043331150635913134}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.95, y: 0.95}
+  m_AnchorMin: {x: 0.1, y: 0.1}
+  m_AnchorMax: {x: 0.9, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -390,6 +524,54 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3587524364808843869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031456488052192519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e04915f588815f4faef289029451769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  chargesSelector:
+    field:
+      <attributeName>k__BackingField: charges
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2031456488052192519}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1 &2541451333940544689
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,8 +606,8 @@ RectTransform:
   m_Father: {fileID: 4043331150635913134}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.05}
-  m_AnchorMax: {x: 0.95, y: 1}
+  m_AnchorMin: {x: 0.1, y: 0.1}
+  m_AnchorMax: {x: 0.9, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -711,8 +893,9 @@ GameObject:
   - component: {fileID: 938054078889036204}
   - component: {fileID: 8509923255052843394}
   - component: {fileID: 4897570929972301812}
+  - component: {fileID: 6089117906926120204}
   m_Layer: 5
-  m_Name: Mask (Inverse)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -799,7 +982,71 @@ MonoBehaviour:
   m_GameObject: {fileID: 6831530961997666556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ca68393f81e4fd4aadb6323c1028ac7, type: 3}
+  m_Script: {fileID: 11500000, guid: 976b440d7c541a747b6edb783857f712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: 
+  typeConstraint2:
+    _name: 
+  cooldownSelector:
+    field:
+      <attributeName>k__BackingField: cooldown
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  chargesSelector:
+    field:
+      <attributeName>k__BackingField: charges
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  inverse: 0
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 938054078889036204}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_fillAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  data: {fileID: 0}
+  listenered: 0
+--- !u!114 &6089117906926120204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6831530961997666556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3679d6b4dd5b0e4f97a58be82c544c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
@@ -808,18 +1055,18 @@ MonoBehaviour:
     _name: 
   selector:
     field:
-      <attributeName>k__BackingField: cooldown
+      <attributeName>k__BackingField: charges
       <attributeType>k__BackingField:
         _name: 
-    fallbackValue: 1
-    fallbackOther: 1
+    fallbackValue: 0
+    fallbackOther: 0
     fallbackEnabled: 1
     overrideValue:
-      value: 1
-      enabled: 1
+      value: 0
+      enabled: 0
     overrideOther:
-      value: 1
-      enabled: 1
+      value: 0
+      enabled: 0
     swap: 0
   onValue:
     m_PersistentCalls:
@@ -832,12 +1079,33 @@ MonoBehaviour:
       m_Calls: []
   data: {fileID: 0}
   listenered: 0
+  selectClosest: 1
+  defaultParam: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  parameters:
+    list:
+    - key: 0
+      value: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - key: 1
+      value: {r: 1, g: 1, b: 1, a: 1}
+    keyCollision: 0
   onUpdate:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 938054078889036204}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
-        m_MethodName: set_fillAmount
+      - m_Target: {fileID: 3792137111612406040}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Graphic, UnityEngine.UI
+        m_MethodName: set_color
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3792137112631744451}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Graphic, UnityEngine.UI
+        m_MethodName: set_color
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -861,7 +1129,7 @@ GameObject:
   - component: {fileID: 7850665372909795655}
   - component: {fileID: 3435970456647136021}
   m_Layer: 5
-  m_Name: Mask
+  m_Name: Mask (Inverse)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,39 +1216,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 7003225677302558779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d56bbf04a08b324f879b27921f1a1cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 976b440d7c541a747b6edb783857f712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  selector:
+  cooldownSelector:
     field:
       <attributeName>k__BackingField: cooldown
       <attributeType>k__BackingField:
         _name: 
-    fallbackValue: 1
-    fallbackOther: 1
+    fallbackValue: 0
+    fallbackOther: 0
     fallbackEnabled: 1
     overrideValue:
-      value: 1
-      enabled: 1
+      value: 0
+      enabled: 0
     overrideOther:
-      value: 1
-      enabled: 1
+      value: 0
+      enabled: 0
     swap: 0
-  onValue:
-    m_PersistentCalls:
-      m_Calls: []
-  onOther:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  data: {fileID: 0}
-  listenered: 0
+  chargesSelector:
+    field:
+      <attributeName>k__BackingField: charges
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  inverse: 1
   onUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -996,6 +1269,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  data: {fileID: 0}
+  listenered: 0
 --- !u!1001 &6204645943146260971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1361,6 +1636,28 @@ PrefabInstance:
 --- !u!114 &3792137113549313452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7582012536491846924, guid: 020a8bddd2778a94fab0677d9f1a270b, type: 3}
+  m_PrefabInstance: {fileID: 6744378657659762848}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3792137111612406040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7582012538061226424, guid: 020a8bddd2778a94fab0677d9f1a270b, type: 3}
+  m_PrefabInstance: {fileID: 6744378657659762848}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3792137112631744451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7582012536916324195, guid: 020a8bddd2778a94fab0677d9f1a270b, type: 3}
   m_PrefabInstance: {fileID: 6744378657659762848}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

@@ -16,10 +16,11 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public abstract EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg);
 
 	public virtual void OnTurnStart() {
+		if (Game.rounds.round <= unit.spawnRound) return;
 		data.cooldown.value--;
 		if (data.cooldown.value <= 0) {
 			data.charges.value++;
-			if (data.cooldown.value <= 0 && data.cooldown.other <= 0) data.charges.ResetValue();
+			if (data.cooldown.other <= 0) data.charges.ResetValue();
 			else data.charges.LimitValue();
 			data.cooldown.ResetValue();
 		}
