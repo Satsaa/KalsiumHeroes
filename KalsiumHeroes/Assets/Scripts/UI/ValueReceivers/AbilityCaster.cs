@@ -8,14 +8,22 @@ using Object = UnityEngine.Object;
 public class AbilityCaster : ValueHooker<Ability>, IOnAbilityCastStart_Global, IOnAbilityCastEnd_Global, IOnAnimationEventStart, IOnAnimationEventEnd {
 
 	public void Cast() {
-		if (target && Game.rounds.unit == target.unit && !Game.events.animating && target.IsReady()) {
-			switch (target) {
-				case TargetAbility targ:
-					Game.targeting.TryStartTargeter(targ.GetTargeter());
-					break;
-				case NoTargetAbility notarg:
-					notarg.PostDefaultAbilityEvent();
-					break;
+		if (target && Game.rounds.unit == target.unit) {
+			if (Game.targeting.targeting) {
+				if (!Game.targeting.TryCancel()) return;
+			}
+			if (Game.events.animating && Game.events.handler is EventHandler<GameEvents.Ability>) {
+				Game.events.TryEndEvent();
+			}
+			if (!Game.events.animating && target.IsReady()) {
+				switch (target) {
+					case TargetAbility targ:
+						Game.targeting.TryStartTargeter(targ.GetTargeter());
+						break;
+					case NoTargetAbility notarg:
+						notarg.PostDefaultAbilityEvent();
+						break;
+				}
 			}
 		}
 	}

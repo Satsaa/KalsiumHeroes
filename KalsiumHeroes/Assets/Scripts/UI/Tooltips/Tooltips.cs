@@ -25,7 +25,11 @@ public class Tooltips : UISingleton<Tooltips> {
 	string lastPing;
 	int lastPingFrame = -1;
 
-	void Update() {
+	protected virtual void Update() {
+		if (Game.game && Game.targeting.targeting) {
+			while (tts.Count > 0) Pop();
+			return;
+		}
 		if (Time.frameCount - lastPingFrame > 1) {
 			// Nothing hovered
 			showDelay.Reset(true);
@@ -94,6 +98,7 @@ public class Tooltips : UISingleton<Tooltips> {
 	/// <param name="innerRect">A Rect in the space of <b>creator</b> that represents an area where the Tooltip is created from.</param>
 	/// <returns>True if the ping succeeds.</returns>
 	public bool Ping(string query, RectTransform creator, Rect innerRect) {
+		if (Game.game && Game.targeting.targeting) return false;
 		lastPing = query;
 		lastPingFrame = Time.frameCount;
 		if (!tts.Any() || tts.Last().creator != creator || tts.Last().query != query) {
@@ -119,6 +124,7 @@ public class Tooltips : UISingleton<Tooltips> {
 	/// <param name="initializer">Optional intializer function ran before layouting.  </param>
 	/// <returns>True when the specific Tooltip was shown.</returns>
 	public bool Show(string query, RectTransform creator, Rect innerRect, Camera canvasCamera, Action<Tooltip> initializer = null) {
+		if (Game.game && Game.targeting.targeting) return false;
 
 		var creatorCenter = creator.transform.TransformPoint(innerRect.center);
 		var creatorMin = creator.transform.TransformPoint(innerRect.min);
@@ -206,6 +212,14 @@ public class Tooltips : UISingleton<Tooltips> {
 
 		tt.OnShow();
 		return true;
+	}
+
+	public bool Hide(string query, RectTransform creator) {
+		if (tts.Any() && tts.Last().creator == creator && tts.Last().query == query) {
+			Pop();
+			return true;
+		}
+		return false;
 	}
 
 	private bool IsTopHovered() {

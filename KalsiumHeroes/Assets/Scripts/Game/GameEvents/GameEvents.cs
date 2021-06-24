@@ -11,27 +11,27 @@ public class GameEvents : MonoBehaviour {
 	public List<GameEvent> stack = new List<GameEvent>(); //!!! Serialization works? was [SerializeReference] and List<object>
 	public GameEvent first => stack[0];
 
-	public bool animating => eventHandler != null;
+	public bool animating => handler != null;
 
-	[SerializeReference]
-	private EventHandler eventHandler = null;
+	[field: SerializeReference]
+	public EventHandler handler { get; private set; } = null;
 
 	void Update() {
-		if (eventHandler != null) {
-			if (eventHandler.EventHasEnded()) {
-				eventHandler = null;
+		if (handler != null) {
+			if (handler.EventHasEnded()) {
+				handler = null;
 				using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 			} else {
-				eventHandler.Update();
+				handler.Update();
 				return;
 			}
 		}
 		if (stack.Count > 0) {
 			try {
-				eventHandler = first.GetHandler();
-				if (eventHandler != null) {
-					eventHandler.Update();
-					using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(eventHandler));
+				handler = first.GetHandler();
+				if (handler != null) {
+					handler.Update();
+					using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(handler));
 				}
 			} catch (Exception) {
 				using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
@@ -46,6 +46,16 @@ public class GameEvents : MonoBehaviour {
 	public void QueueEvent(GameEvent gameEvent) {
 		stack.Add(gameEvent);
 	}
+
+	public bool TryEndEvent() {
+		if (handler == null || handler.EventHasEnded()) return false;
+		if (handler.TryEnd()) {
+			Update();
+			return true;
+		}
+		return false;
+	}
+
 
 
 	// DO NOT CHANGE CLASS NAMES OF DEPLOYED GameEvents

@@ -62,7 +62,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 		if (index + 1 <= actor.moveT) {
 			index++;
 			if (index >= pathObjects.Count - 1) {
-				End();
+				TryEnd();
 				return;
 			}
 			var prev = pathObjects[index];
@@ -83,7 +83,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 		return !animating;
 	}
 
-	public override bool End() {
+	public override bool TryEnd() {
 		if (!animating) return true;
 		animating = false;
 		while (index < pathObjects.Count - 1) {

@@ -7,16 +7,16 @@ using System.Linq;
 [DisallowMultipleComponent]
 public class Targeting : MonoBehaviour {
 
+	public bool targeting => targeter != null && !targeter.IsCompleted();
 	private Rounds rm => Game.rounds;
 	private GameEvents e => Game.events;
-	private bool targeting => e.animating;
 
-	private Tile prevHoverTile;
-
-	Targeter targeter;
 	[SerializeField] new Camera camera;
 
+	Tile prevHoverTile;
+	Targeter targeter;
 	bool hoverIsValid;
+
 	HashSet<Tile> targets = new HashSet<Tile>();
 	HashSet<Tile> hovers = new HashSet<Tile>();
 	Dictionary<Tile, (Color color, int priority)> customs = new Dictionary<Tile, (Color, int)>();
@@ -32,11 +32,11 @@ public class Targeting : MonoBehaviour {
 	}
 
 
-	void Start() {
+	protected virtual void Start() {
 		if (camera == null) camera = Camera.main;
 	}
 
-	void Update() {
+	protected virtual void Update() {
 
 		if (targeter != null) {
 			if (!TryComplete() && !CustomInputModule.IsPointerOverUI()) {
@@ -87,7 +87,7 @@ public class Targeting : MonoBehaviour {
 		return false;
 	}
 
-	bool TryCancel() {
+	public bool TryCancel() {
 		if (targeter.TryCancel()) {
 			targeter.onCancel?.Invoke(targeter);
 			End();

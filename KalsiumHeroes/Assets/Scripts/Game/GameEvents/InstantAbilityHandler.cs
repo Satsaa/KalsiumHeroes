@@ -15,7 +15,7 @@ public class InstantAbilityHandler : EventHandler<GameEvents.Ability> {
 		this.doEvent = handler;
 	}
 
-	public override bool End() {
+	public override bool TryEnd() {
 		if (!ended) doEvent(creator);
 		ended = true;
 		return true;

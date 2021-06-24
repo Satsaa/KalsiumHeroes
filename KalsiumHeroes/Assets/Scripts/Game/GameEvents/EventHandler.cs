@@ -6,7 +6,7 @@ public abstract class EventHandler {
 	/// <summary> Whether or not the event has ended. </summary>
 	public abstract bool EventHasEnded();
 	/// <summary> Request ending of the event. Returns true if the event was ended. </summary>
-	public abstract bool End();
+	public abstract bool TryEnd();
 	/// <summary> Per frame update. </summary>
 	public abstract void Update();
 }

@@ -46,8 +46,8 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 		if (data.energyCost.value > unit.data.energy.value) return false;
 		if (data.abilityType == AbilityType.Spell && unit.data.silenced.value) return false;
 		if (data.abilityType == AbilityType.WeaponSkill && unit.data.disarmed.value) return false;
-		if (data.charges.value > 0) return true;
-		return false;
+		if (data.charges.value <= 0) return false;
+		return true;
 	}
 
 	/// <summary> Called when the ability is actually cast. </summary>

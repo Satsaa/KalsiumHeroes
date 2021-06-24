@@ -346,8 +346,6 @@ MonoBehaviour:
   translations:
     list: []
     keyCollision: 0
-  enumType:
-    _name: 
   onUpdate:
     m_PersistentCalls:
       m_Calls:

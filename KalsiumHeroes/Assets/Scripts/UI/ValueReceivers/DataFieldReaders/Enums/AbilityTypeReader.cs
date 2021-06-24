@@ -15,7 +15,7 @@ public class AbilityTypeReader : EnumReader<AbilityType> {
 		if (data is PassiveData) {
 			onUpdate.Invoke(passiveText ?? nameof(Passive));
 		} else {
-			base.OnReceive();
+			base.Handle();
 		}
 	}
 
