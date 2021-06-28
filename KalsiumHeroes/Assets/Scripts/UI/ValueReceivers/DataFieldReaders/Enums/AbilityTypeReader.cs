@@ -9,11 +9,9 @@ using Muc.Data;
 
 public class AbilityTypeReader : EnumReader<AbilityType> {
 
-	[SerializeField] TextSource passiveText;
-
 	protected override void Handle() {
 		if (data is PassiveData) {
-			onUpdate.Invoke(passiveText ?? nameof(Passive));
+			onUpdate.Invoke(Lang.GetText("ABILITY_TYPE_PASSIVE"));
 		} else {
 			base.Handle();
 		}

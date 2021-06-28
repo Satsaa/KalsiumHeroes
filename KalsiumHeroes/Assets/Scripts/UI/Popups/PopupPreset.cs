@@ -15,9 +15,9 @@ public class PopupPreset : ScriptableObject {
 	[SerializeField] internal Popup popupPrefab;
 	[SerializeField] internal PopupOption optionPrefab;
 
-	[SerializeField] TextSource baseTitle;
-	[SerializeField] TextSource baseMessage;
-	[SerializeField] TextSource baseOptionText;
+	[SerializeField] string defaultTitleMsgId;
+	[SerializeField] string defaultMessageMsgId;
+	[SerializeField] string defaultOptionMsgId;
 
 	public struct Option {
 		public string text;
@@ -39,23 +39,20 @@ public class PopupPreset : ScriptableObject {
 		msgBox.SetMessage(message);
 	}
 
-	protected virtual void DoCustom(Popup msgBox) {
-
-	}
-
 	protected virtual void DoOption(Popup msgBox, Option option) {
 		var opt = msgBox.AddOption(optionPrefab, option.action);
 		opt.SetText(option.text);
 		opt.flags = option.key;
 	}
 
-
-	public Popup Show(string message) => Show(null, message);
-	public Popup Show(string title, string message) {
-		return Show(title, message, new Option(baseOptionText, null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	protected virtual void DoCustom(Popup msgBox) {
+		// Override if needed
 	}
 
-	public Popup Show(string message, params Option[] options) => Show(null, message, options);
+	public Popup Show() => Show(Lang.GetText(defaultTitleMsgId), Lang.GetText(defaultMessageMsgId), new Option(Lang.GetText(defaultOptionMsgId), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show(string title) => Show(null, null, new Option(Lang.GetText(defaultOptionMsgId), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+
+	public Popup Show(string title, string message) => Show(null, message, new Option(Lang.GetText(defaultOptionMsgId), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
 	public Popup Show(string title, string message, params Option[] options) {
 		if (popupPrefab == null || optionPrefab == null) {
 			Debug.LogError($"{nameof(popupPrefab)} or {nameof(optionPrefab)} is not set. Alternatively a reference may be broken and you need to reassign them in editor. To do that double click this message and press the reassign button.", this);

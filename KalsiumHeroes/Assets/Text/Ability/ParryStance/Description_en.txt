@@ -1,1 +1,0 @@
-Increase Defense by 35. First melee attacker takes 30 Physical damage, but ends the stance. Stance ends after the next turn starts. ENDS TURN

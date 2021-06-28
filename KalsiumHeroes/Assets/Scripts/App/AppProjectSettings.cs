@@ -10,9 +10,6 @@ using UnityEditor;
 [FilePath("ProjectSettings/AppProjectSettings.asset", FilePathAttribute.Location.ProjectFolder)]
 public class AppProjectSettings : ScriptableSingleton<AppProjectSettings> {
 
-	[SerializeField]
-	public TextSource defaultTextSource = null;
-
 	void OnDisable() => Save();
 	public void Save() => Save(true);
 	public SerializedObject GetSerializedObject() => new SerializedObject(this);
@@ -42,7 +39,7 @@ namespace Editors {
 		static AppProjectSettings t => AppProjectSettings.instance;
 
 		private class Styles {
-			public static readonly GUIContent defaultTextSource = EditorGUIUtility.TrTextContent($"Default {nameof(TextSource)}", "Default value for TextSources (editor only).");
+
 		}
 
 		public AppProjectSettingsProvider(string path, SettingsScope scopes, IEnumerable<string> keywords = null) : base(path, scopes, keywords) { }

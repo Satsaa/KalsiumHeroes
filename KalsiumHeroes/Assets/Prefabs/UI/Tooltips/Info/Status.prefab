@@ -708,21 +708,8 @@ MonoBehaviour:
       m_Calls: []
   data: {fileID: 0}
   listenered: 0
-  translations:
-    list:
-    - key: 0
-      value: {fileID: 0}
-    - key: 1
-      value: {fileID: 0}
-    - key: 2
-      value: {fileID: 0}
-    - key: 3
-      value: {fileID: 0}
-    - key: 4
-      value: {fileID: 0}
-    keyCollision: 0
-  enumType:
-    _name: 
+  msgIds:
+    list: []
   onUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -1081,11 +1068,8 @@ MonoBehaviour:
       m_Calls: []
   data: {fileID: 0}
   listenered: 0
-  translations:
+  msgIds:
     list: []
-    keyCollision: 0
-  enumType:
-    _name: 
   onUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -1772,7 +1756,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 73.66, y: 0}
+  m_AnchoredPosition: {x: 167.66501, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3970123902020835214
@@ -1913,7 +1897,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 141.42, y: 0}
+  m_AnchoredPosition: {x: 172.66501, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1107667621794537806

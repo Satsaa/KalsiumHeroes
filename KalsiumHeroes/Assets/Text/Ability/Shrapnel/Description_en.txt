@@ -1,1 +1,0 @@
-Deals damage in an aoe after a round delay.

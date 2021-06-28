@@ -8,15 +8,6 @@ public class UnitData : MasterData {
 
 	public override Type createTypeConstraint => typeof(Unit);
 
-	[Tooltip("Display name of the Unit.")]
-	public TextSource displayName;
-
-	[Tooltip("Description of the Unit.")]
-	public TextSource description;
-
-	[Tooltip("Lore text of the Unit.")]
-	public TextSource lore;
-
 	[Tooltip("Static sprite.")]
 	[UnityEngine.Serialization.FormerlySerializedAs("staticPortrait")]
 	public Sprite sprite;

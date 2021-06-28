@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public abstract class GameMode : ScriptableObject {
 
-	public string title = "Untitled";
+	public string title = "Untitled"; // !"!
 	public string version = "0.0.0";
 
 	[SerializeField, Tooltip("Units that can be drafted in this GameMode.")]
@@ -22,8 +22,8 @@ public abstract class GameMode : ScriptableObject {
 	public string[] altDraft;
 	public Vector3Int[] altDraftPositions;
 
-	public bool ValidateDraft(IEnumerable<string> draft, out TextSource failReason) => ValidateDraft(draft.Select(v => App.library.GetById<UnitData>(v)), out failReason);
-	public abstract bool ValidateDraft(IEnumerable<UnitData> draftUnits, out TextSource failReason);
+	public bool ValidateDraft(IEnumerable<string> draft, out string failMessage) => ValidateDraft(draft.Select(v => App.library.GetById<UnitData>(v)), out failMessage);
+	public abstract bool ValidateDraft(IEnumerable<UnitData> draftUnits, out string failMessage);
 
 }
 

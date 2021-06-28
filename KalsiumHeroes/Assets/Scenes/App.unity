@@ -1079,25 +1079,34 @@ MonoBehaviour:
     list:
     - key: blue
       value: {fileID: -330549700562887290, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
+      isDuplicate: 0
     - key: red
       value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
+      isDuplicate: 0
     - key: ability_info
       value: {fileID: 2303619671523802732, guid: ecda326ea444e7944af34ba37bf37910, type: 3}
+      isDuplicate: 0
     - key: data_object_info
       value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
+      isDuplicate: 0
     - key: passive_info
       value: {fileID: 2303619671523802732, guid: a91bcf6cd09a36b4dba28079e11ff73e, type: 3}
+      isDuplicate: 0
     - key: status_info
       value: {fileID: 2303619671523802732, guid: c4ac699ba0d051046aa06cb5f403ce60, type: 3}
+      isDuplicate: 0
     - key: target_ability_info
       value: {fileID: 1115576529508270921, guid: 6667b7e31ef204f46a1097e32536ba0b, type: 3}
+      isDuplicate: 0
     - key: tile_target_ability_info
       value: {fileID: 4328556010460216923, guid: ddea446c69877564ca66924c52288c10, type: 3}
+      isDuplicate: 0
     - key: unit_modifier_info
       value: {fileID: 290634914456489787, guid: 5404c4ba65fd48e4494e40780c048175, type: 3}
+      isDuplicate: 0
     - key: unit_target_ability_info
       value: {fileID: 4328556010460216923, guid: 802b5594ad9a9304c860a3609994ea9b, type: 3}
-    keyCollision: 0
+      isDuplicate: 0
   tts: []
 --- !u!1 &1286376790
 GameObject:
@@ -1188,12 +1197,12 @@ GameObject:
   - component: {fileID: 1363905731}
   - component: {fileID: 1363905732}
   - component: {fileID: 1363905734}
-  - component: {fileID: 1363905739}
   - component: {fileID: 1363905733}
   - component: {fileID: 1363905736}
   - component: {fileID: 1363905735}
   - component: {fileID: 1363905737}
   - component: {fileID: 1363905738}
+  - component: {fileID: 1363905739}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -1216,8 +1225,6 @@ MonoBehaviour:
   _client: {fileID: 1363905732}
   _library: {fileID: 1363905731}
   _input: {fileID: 1363905734}
-  _commonText: {fileID: 1363905739}
-  _lang: 0
   _gameModes:
   - {fileID: 11400000, guid: 674cc85c201bc894781f3228627c8fa4, type: 2}
   initDisplay: {fileID: 1946788572}
@@ -1567,10 +1574,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1363905728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5375e5411d66e344aafc9e16be9d25ef, type: 3}
+  m_Script: {fileID: 11500000, guid: cf69086ae35133646a55e3fe2b79998a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valueDelim: {fileID: 0}
+  <translationsPath>k__BackingField: Lang
+  <language>k__BackingField: sv-FI
+  <languages>k__BackingField:
+  - en-US
+  - sv-FI
 --- !u!1 &1811873850
 GameObject:
   m_ObjectHideFlags: 0

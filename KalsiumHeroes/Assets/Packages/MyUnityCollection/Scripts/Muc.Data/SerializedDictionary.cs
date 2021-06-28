@@ -13,71 +13,69 @@ namespace Muc.Data {
 
 	[Serializable]
 	public class SerializedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver {
-		// Internal
-		[SerializeField]
-		List<SerializedDictionaryKeyValuePair<TKey, TValue>> list = new List<SerializedDictionaryKeyValuePair<TKey, TValue>>();
-		[SerializeField]
-		Dictionary<TKey, int> indexByKey = new Dictionary<TKey, int>();
-		[SerializeField, HideInInspector]
-		Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
 
-#pragma warning disable 0414
-		[SerializeField, HideInInspector]
-		bool keyCollision;
-#pragma warning restore 0414
+		[SerializeField]
+		List<SerializedDictionaryListPair<TKey, TValue>> list = new();
 
-		// Since lists can be serialized natively by unity no custom implementation is needed
+		Dictionary<TKey, int> indexes = new();
+		Dictionary<TKey, TValue> dict = new();
+
 		public void OnBeforeSerialize() { }
 
-		// Fill dictionary with list pairs and flag key-collisions .
 		public void OnAfterDeserialize() {
 			dict.Clear();
-			indexByKey.Clear();
-			keyCollision = false;
+			indexes.Clear();
 
 			for (int i = 0; i < list.Count; i++) {
-				var key = list[i].key;
-				if (key != null && !ContainsKey(key)) {
-					dict.Add(key, list[i].value);
-					indexByKey.Add(key, i);
+				var kv = list[i];
+				if (kv.key == null || ContainsKey(kv.key)) {
+					if (!kv.isDuplicate) {
+						var item = list[i];
+						item.isDuplicate = true;
+						list[i] = item;
+					}
 				} else {
-					keyCollision = true;
+					if (kv.isDuplicate) {
+						var item = list[i];
+						item.isDuplicate = false;
+						list[i] = item;
+					}
+					dict.Add(kv.key, kv.value);
+					indexes.Add(kv.key, i);
+				}
+			}
+		}
+
+		public TValue this[TKey key] {
+			get => dict[key];
+			set {
+				dict[key] = value;
+				if (indexes.TryGetValue(key, out var index)) {
+					list[index] = new(key, value, false);
+				} else {
+					list.Add(new(key, value, false));
+					indexes.Add(key, list.Count - 1);
 				}
 			}
 		}
 
 		// IDictionary
-		public TValue this[TKey key] {
-			get => dict[key];
-			set {
-				dict[key] = value;
-
-				if (indexByKey.ContainsKey(key)) {
-					var index = indexByKey[key];
-					list[index] = new SerializedDictionaryKeyValuePair<TKey, TValue>(key, value);
-				} else {
-					list.Add(new SerializedDictionaryKeyValuePair<TKey, TValue>(key, value));
-					indexByKey.Add(key, list.Count - 1);
-				}
-			}
-		}
-
 		public ICollection<TKey> Keys => dict.Keys;
 		public ICollection<TValue> Values => dict.Values;
 
 		public void Add(TKey key, TValue value) {
 			dict.Add(key, value);
-			list.Add(new SerializedDictionaryKeyValuePair<TKey, TValue>(key, value));
-			indexByKey.Add(key, list.Count - 1);
+			list.Add(new(key, value, false));
+			indexes.Add(key, list.Count - 1);
 		}
 
 		public bool ContainsKey(TKey key) => dict.ContainsKey(key);
 
 		public bool Remove(TKey key) {
 			if (dict.Remove(key)) {
-				var index = indexByKey[key];
+				var index = indexes[key];
 				list.RemoveAt(index);
-				indexByKey.Remove(key);
+				indexes.Remove(key);
 				return true;
 			} else {
 				return false;
@@ -90,20 +88,19 @@ namespace Muc.Data {
 		public int Count => dict.Count;
 		public bool IsReadOnly { get; set; }
 
-		public void Add(KeyValuePair<TKey, TValue> pair) {
-			Add(pair.Key, pair.Value);
+		public void Add(KeyValuePair<TKey, TValue> item) {
+			Add(item.Key, item.Value);
 		}
 
 		public void Clear() {
 			dict.Clear();
 			list.Clear();
-			indexByKey.Clear();
+			indexes.Clear();
 		}
 
-		public bool Contains(KeyValuePair<TKey, TValue> pair) {
-			TValue value;
-			if (dict.TryGetValue(pair.Key, out value)) {
-				return EqualityComparer<TValue>.Default.Equals(value, pair.Value);
+		public bool Contains(KeyValuePair<TKey, TValue> item) {
+			if (dict.TryGetValue(item.Key, out var value)) {
+				return EqualityComparer<TValue>.Default.Equals(value, item.Value);
 			} else {
 				return false;
 			}
@@ -123,12 +120,11 @@ namespace Muc.Data {
 			}
 		}
 
-		public bool Remove(KeyValuePair<TKey, TValue> pair) {
-			TValue value;
-			if (dict.TryGetValue(pair.Key, out value)) {
-				bool valueMatch = EqualityComparer<TValue>.Default.Equals(value, pair.Value);
+		public bool Remove(KeyValuePair<TKey, TValue> item) {
+			if (dict.TryGetValue(item.Key, out var value)) {
+				bool valueMatch = EqualityComparer<TValue>.Default.Equals(value, item.Value);
 				if (valueMatch) {
-					return Remove(pair.Key);
+					return Remove(item.Key);
 				}
 			}
 			return false;
@@ -163,14 +159,6 @@ namespace Muc.Data.Editor {
 			string fieldName = ObjectNames.NicifyVariableName(fieldInfo.Name);
 			var currentPos = new Rect(lineHeight, pos.y, pos.width, lineHeight);
 			EditorGUI.PropertyField(currentPos, list, new GUIContent(fieldName), true);
-
-			// Draw key collision warning.
-			var keyCollision = property.FindPropertyRelative("keyCollision").boolValue;
-			if (keyCollision) {
-				currentPos.y += EditorGUI.GetPropertyHeight(list, true) + spacing;
-				var entryPos = new Rect(lineHeight, currentPos.y, pos.width, lineHeight * 2f);
-				EditorGUI.HelpBox(entryPos, "Duplicate keys will not be serialized.", MessageType.Warning);
-			}
 		}
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
@@ -179,12 +167,6 @@ namespace Muc.Data.Editor {
 			// Height of KeyValue list.
 			var listProp = property.FindPropertyRelative("list");
 			totHeight += EditorGUI.GetPropertyHeight(listProp, true);
-
-			// Height of key collision warning.
-			bool keyCollision = property.FindPropertyRelative("keyCollision").boolValue;
-			if (keyCollision) {
-				totHeight += lineHeight * 2f + spacing;
-			}
 
 			return totHeight;
 		}
@@ -197,16 +179,19 @@ namespace Muc.Data.Editor {
 namespace Muc.Data {
 
 	using System;
+	using UnityEngine;
 
 	[Serializable]
-	internal struct SerializedDictionaryKeyValuePair<TKey, TValue> {
+	internal struct SerializedDictionaryListPair<TKey, TValue> {
 
 		public TKey key;
 		public TValue value;
+		public bool isDuplicate;
 
-		public SerializedDictionaryKeyValuePair(TKey key, TValue value) {
+		internal SerializedDictionaryListPair(TKey key, TValue value, bool isDuplicate) {
 			this.key = key;
 			this.value = value;
+			this.isDuplicate = isDuplicate;
 		}
 
 		public override string ToString() {
@@ -228,16 +213,17 @@ namespace Muc.Data {
 	using Object = UnityEngine.Object;
 	using static Muc.Editor.PropertyUtil;
 	using static Muc.Editor.EditorUtil;
+	using Muc.Editor;
 
 	[CanEditMultipleObjects]
-	[CustomPropertyDrawer(typeof(SerializedDictionaryKeyValuePair<,>), true)]
-	public class SerializedKeyValuePairDrawer : PropertyDrawer {
+	[CustomPropertyDrawer(typeof(SerializedDictionaryListPair<,>), true)]
+	public class SerializedDictionaryListPairDrawer : PropertyDrawer {
 
 		private static readonly GUIContent keyContent = new GUIContent("K", "Key");
 		private static readonly GUIContent valueContent = new GUIContent("V", "Value");
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-			var value = property.FindPropertyRelative(nameof(SerializedDictionaryKeyValuePair<string, string>.value));
+			var value = property.FindPropertyRelative(nameof(SerializedDictionaryListPair<string, string>.value));
 			return Mathf.Max(lineHeight, EditorGUI.GetPropertyHeight(value, label));
 		}
 
@@ -247,8 +233,9 @@ namespace Muc.Data {
 			propPos.xMin = 0;
 
 			using (PropertyScope(propPos, label, property, out label)) {
-				var key = property.FindPropertyRelative(nameof(SerializedDictionaryKeyValuePair<string, string>.key));
-				var value = property.FindPropertyRelative(nameof(SerializedDictionaryKeyValuePair<string, string>.value));
+				var key = property.FindPropertyRelative(nameof(SerializedDictionaryListPair<string, string>.key));
+				var value = property.FindPropertyRelative(nameof(SerializedDictionaryListPair<string, string>.value));
+				var isDuplicate = property.FindPropertyRelative(nameof(SerializedDictionaryListPair<string, string>.isDuplicate));
 
 				position.xMin -= 5 + spacing;
 
@@ -262,7 +249,13 @@ namespace Muc.Data {
 				keyRect.width -= 2;
 				valueRect.width += 2;
 
-				using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, keyContent);
+				if (isDuplicate.boolValue || isDuplicate.hasMultipleDifferentValues) {
+					using (EditorUtil.BackgroundColorScope(Color.red)) {
+						using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, keyContent);
+					}
+				} else {
+					using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, keyContent);
+				}
 				using (LabelWidthScope(14)) EditorGUI.PropertyField(valueRect, value, valueContent);
 			}
 		}

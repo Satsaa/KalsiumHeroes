@@ -12,19 +12,13 @@ public class CreateGame : MonoBehaviour {
 	[SerializeField] PopupPreset popupPreset;
 	[SerializeField] TMP_InputField codeInputPrefab;
 
-	[SerializeField] TextSource title;
-	[SerializeField] TextSource message;
-
-	[SerializeField] TextSource create;
-	[SerializeField] TextSource cancel;
-
 	public void DoCreateGame() {
 
 		var codeInputField = Instantiate(codeInputPrefab);
 
-		var msgBox = popupPreset.Show(title, message,
-			new PopupPreset.Option(create ?? "CREATE", () => OnCreate(codeInputField.text), PopupOption.Flags.Default),
-			new PopupPreset.Option(cancel ?? "CANCEL", null, PopupOption.Flags.Cancel)
+		var msgBox = popupPreset.Show(Lang.GetText("CREATE_GAME_POPUP_TITLE"), Lang.GetText("CREATE_GAME_POPUP_MESSAGE"),
+			new PopupPreset.Option(Lang.GetText("BUTTON_CREATE"), () => OnCreate(codeInputField.text), PopupOption.Flags.Default),
+			new PopupPreset.Option(Lang.GetText("BUTTON_CANCEL"), null, PopupOption.Flags.Cancel)
 		);
 
 		msgBox.AddCustomObject(codeInputField.gameObject);

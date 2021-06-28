@@ -13,19 +13,14 @@ public class MainMode : GameMode {
 	public int maxDraftCount = 10;
 	public int maxDraftCost = 50;
 
-	[SerializeField] TextSource maxCostExceeded;
-	[SerializeField] TextSource maxCountExceeded;
-	[SerializeField] TextSource minCountNotReached;
-	[SerializeField] TextSource unitMissing;
-
-	public override bool ValidateDraft(IEnumerable<UnitData> unitDatas, out TextSource reason) {
+	public override bool ValidateDraft(IEnumerable<UnitData> unitDatas, out string failMessage) {
 		var count = unitDatas.Count();
 		if (count < minDraftCount) {
-			reason = minCountNotReached;
+			failMessage = Lang.GetText("DRAFT_MIN_COUNT_NOT_REACHED");
 			return false;
 		}
 		if (count > maxDraftCount) {
-			reason = maxCountExceeded;
+			failMessage = Lang.GetText("DRAFT_MAX_COUNT_EXCEEDED");
 			return false;
 		}
 
@@ -35,11 +30,11 @@ public class MainMode : GameMode {
 		}
 
 		if (cost > maxDraftCost) {
-			reason = maxCostExceeded;
+			failMessage = Lang.GetText("DRAFT_MAX_COST_EXCEEDED");
 			return false;
 		}
 
-		reason = default;
+		failMessage = default;
 		return true;
 	}
 

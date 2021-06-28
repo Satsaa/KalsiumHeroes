@@ -9,7 +9,7 @@ using Muc.Data;
 
 public abstract class EnumReader<T> : DataFieldReader<T> where T : Enum {
 
-	[SerializeField] SerializedDictionary<T, TextSource> translations;
+	[SerializeField] SerializedDictionary<T, string> msgIds;
 
 	[SerializeField, Tooltip("Invoked when the attribute changes in any way or the reader is initialized. The name of the enum value is returned.")]
 	protected UnityEvent<string> onUpdate;
@@ -21,8 +21,8 @@ public abstract class EnumReader<T> : DataFieldReader<T> where T : Enum {
 
 	protected virtual void Handle() {
 		var current = selector.GetValue(data);
-		if (translations.TryGetValue(current, out var translation)) {
-			onUpdate.Invoke(translation);
+		if (msgIds.TryGetValue(current, out var msgId)) {
+			onUpdate.Invoke(Lang.GetText(msgId));
 		} else {
 			var name = current?.GetType().GetEnumName(current) ?? "None";
 			onUpdate.Invoke(name);

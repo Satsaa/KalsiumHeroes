@@ -629,29 +629,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2146377432291495053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f5c303454716848868eae5bf7d3cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  selector:
-    field:
-      <attributeName>k__BackingField: lore
-      <attributeType>k__BackingField:
-        _name: 
-    fallbackValue: {fileID: 0}
-    fallbackOther: {fileID: 0}
-    fallbackEnabled: 1
-    overrideValue:
-      value: {fileID: 0}
-      enabled: 0
-    overrideOther:
-      value: {fileID: 0}
-      enabled: 0
-    swap: 0
-  onValue:
+  msgIdSuffix: LORE
+  onUpdate:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2146377432291495055}
@@ -666,14 +652,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onOther:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  data: {fileID: 0}
-  listenered: 0
 --- !u!114 &4292106847030494639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3445,29 +3423,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8803938880017834621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f5c303454716848868eae5bf7d3cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  selector:
-    field:
-      <attributeName>k__BackingField: displayName
-      <attributeType>k__BackingField:
-        _name: 
-    fallbackValue: {fileID: 0}
-    fallbackOther: {fileID: 0}
-    fallbackEnabled: 1
-    overrideValue:
-      value: {fileID: 0}
-      enabled: 0
-    overrideOther:
-      value: {fileID: 0}
-      enabled: 0
-    swap: 0
-  onValue:
+  msgIdSuffix: DISPLAY_NAME
+  onUpdate:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8803938880017834619}
@@ -3482,14 +3446,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onOther:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  data: {fileID: 0}
-  listenered: 0
 --- !u!1 &8803938880187643518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3760,29 +3716,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8803938880530907048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d2eabe915226d448b0d9c16c5a03eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f5c303454716848868eae5bf7d3cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
   typeConstraint2:
     _name: 
-  selector:
-    field:
-      <attributeName>k__BackingField: displayName
-      <attributeType>k__BackingField:
-        _name: 
-    fallbackValue: {fileID: 0}
-    fallbackOther: {fileID: 0}
-    fallbackEnabled: 1
-    overrideValue:
-      value: {fileID: 0}
-      enabled: 0
-    overrideOther:
-      value: {fileID: 0}
-      enabled: 0
-    swap: 0
-  onValue:
+  msgIdSuffix: DISPLAY_NAME
+  onUpdate:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8803938880530907062}
@@ -3797,14 +3739,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onOther:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  data: {fileID: 0}
-  listenered: 0
 --- !u!1 &8803938880543575613
 GameObject:
   m_ObjectHideFlags: 0
@@ -4490,7 +4424,6 @@ MonoBehaviour:
   statics: []
   dynamics:
     list: []
-    keyCollision: 0
   target: {fileID: 0}
 --- !u!114 &4934960899213295671
 MonoBehaviour:

@@ -20,7 +20,6 @@ public class Drafter : UIBehaviour {
 
 	[FormerlySerializedAs("submitMessageBox")]
 	[SerializeField] PopupPreset submitPopup;
-	[SerializeField] TextSource submitSuccessMessage;
 
 	[SerializeField] List<UnitListItem> items;
 
@@ -63,16 +62,16 @@ public class Drafter : UIBehaviour {
 	}
 
 	public void Submit() {
-		if (Validate(out var failReason)) {
+		if (Validate(out var failMessage)) {
 			mode.draft = selection.Select(v => v.identifier).ToArray();
-			submitPopup.Show(submitSuccessMessage);
+			submitPopup.Show(Lang.GetText("DRAFTER_SUBMIT_SUCCESS"));
 		} else {
-			submitPopup.Show(failReason);
+			submitPopup.Show(failMessage);
 		}
 	}
 
-	public bool Validate(out TextSource failReason) {
-		if (mode.ValidateDraft(selection, out failReason)) {
+	public bool Validate(out string failMessage) {
+		if (mode.ValidateDraft(selection, out failMessage)) {
 			return true;
 		} else {
 			return false;

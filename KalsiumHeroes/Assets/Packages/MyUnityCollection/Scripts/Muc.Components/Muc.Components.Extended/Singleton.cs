@@ -25,7 +25,7 @@ namespace Muc.Components.Extended {
 				}
 		}
 
-		protected void Awake() {
+		protected virtual void Awake() {
 			if (_instance != null && _instance != this) {
 				Debug.LogWarning($"Multiple {typeof(T).Name} GameObjects!", this);
 				Debug.LogWarning($"Main instance of {typeof(T).Name}: {_instance}", _instance);
@@ -34,7 +34,7 @@ namespace Muc.Components.Extended {
 			}
 		}
 
-		protected void OnDestroy() {
+		protected virtual void OnDestroy() {
 			if (_instance == this) {
 				_instance = null;
 			}

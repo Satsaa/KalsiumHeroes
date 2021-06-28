@@ -111,40 +111,6 @@ public class NumericDataFieldName : DataFieldName {
 
 }
 
-[Serializable]
-public class TextDataFieldName : DataFieldName {
-
-	private static IEnumerable<(string, Type, Type)> cache;
-
-	public override IEnumerable<(string, Type, Type)> GetFieldNames() {
-		if (cache == null) {
-			var list = AppDomain.CurrentDomain.GetAssemblies()
-				.SelectMany(v => v.GetTypes())
-					.Where(v
-						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-						&& (v.IsSubclassOf(typeof(DataObjectData)))
-					).SelectMany(v => v.GetFields()
-						.Where(f => f.FieldType == typeof(string) || typeof(Attribute<string>).IsAssignableFrom(f.FieldType) || f.FieldType == typeof(TextSource) || typeof(Attribute<TextSource>).IsAssignableFrom(f.FieldType))
-						.Select(v => (v.Name, GetAttributeType(v.FieldType), v.FieldType))).Distinct().ToList();
-			list.Sort((a, b) => a.Name.CompareTo(b.Name));
-			cache = list;
-
-		}
-		return cache;
-		Type GetAttributeType(Type fieldType) {
-			var current = fieldType;
-			while (current != null) {
-				if (current.IsGenericType && current.GetGenericTypeDefinition() == typeof(Attribute<>)) {
-					return current.GenericTypeArguments[0];
-				}
-				current = current.BaseType;
-			}
-			return fieldType;
-		}
-	}
-
-}
-
 #if UNITY_EDITOR
 namespace Editors {
 
