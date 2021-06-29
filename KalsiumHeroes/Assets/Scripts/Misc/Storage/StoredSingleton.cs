@@ -14,16 +14,9 @@ public abstract class StoredSingleton : Singleton<StoredSingleton> {
 	[field: SerializeField, HideInInspector]
 	public string guid { get; private set; }
 
-	protected bool saveOnDestroy => true;
-
 	protected override void Awake() {
 		base.Awake();
 		Load();
-	}
-
-	protected override void OnDestroy() {
-		if (saveOnDestroy) Save();
-		base.OnDestroy();
 	}
 
 	/// <summary> Load the storage object and populate this object </summary>

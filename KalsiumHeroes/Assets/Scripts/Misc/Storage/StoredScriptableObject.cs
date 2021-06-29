@@ -13,14 +13,8 @@ public abstract class StoredScriptableObject : ScriptableObject {
 
 	public abstract string storageName { get; }
 
-	protected bool saveOnDestroy => true;
-
 	protected virtual void Awake() {
 		Load();
-	}
-
-	protected virtual void OnDestroy() {
-		if (saveOnDestroy) Save();
 	}
 
 	/// <summary> Load the storage object and populate this object </summary>

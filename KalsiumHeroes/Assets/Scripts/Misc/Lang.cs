@@ -88,6 +88,58 @@ public class Lang : Singleton<Lang> {
 		return stringId;
 	}
 
+	public static string GetIdText(string identifier, string stringId) {
+		var fullId = $"{identifier} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return res;
+		return fullId;
+	}
+	public static string GetIdText(string identifier, string stringId, object arg0) {
+		var fullId = $"{identifier} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
+		return fullId;
+	}
+	public static string GetIdText(string identifier, string stringId, object arg0, object arg1) {
+		var fullId = $"{identifier} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
+		return fullId;
+	}
+	public static string GetIdText(string identifier, string stringId, object arg0, object arg1, object arg2) {
+		var fullId = $"{identifier} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
+		return fullId;
+	}
+	public static string GetIdText(string identifier, string stringId, params object[] args) {
+		var fullId = $"{identifier} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
+		return fullId;
+	}
+
+	public static string GetIdText(IIDentifiable identifiable, string stringId) {
+		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return res;
+		return fullId;
+	}
+	public static string GetIdText(IIDentifiable identifiable, string stringId, object arg0) {
+		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
+		return fullId;
+	}
+	public static string GetIdText(IIDentifiable identifiable, string stringId, object arg0, object arg1) {
+		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
+		return fullId;
+	}
+	public static string GetIdText(IIDentifiable identifiable, string stringId, object arg0, object arg1, object arg2) {
+		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
+		return fullId;
+	}
+	public static string GetIdText(IIDentifiable identifiable, string stringId, params object[] args) {
+		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
+		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
+		return fullId;
+	}
+
 	[Serializable]
 	struct Pair {
 		[SerializeField] public string key;

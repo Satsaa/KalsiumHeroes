@@ -1204,7 +1204,6 @@ GameObject:
   - component: {fileID: 1363905737}
   - component: {fileID: 1363905738}
   - component: {fileID: 1363905739}
-  - component: {fileID: 1363905740}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -1584,29 +1583,6 @@ MonoBehaviour:
   <languages>k__BackingField:
   - en-US
   - sv-FI
---- !u!114 &1363905740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1363905728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48cbffd82cd83ca458a50e46c4153411, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  att1:
-    <rawValue>k__BackingField: 0
-  att2:
-    <rawValue>k__BackingField: 0
-  string1: yomama
-  soManyStrings:
-  - a
-  - b
-  - c
-  att1V: 0
-  att2V: 0
 --- !u!1 &1811873850
 GameObject:
   m_ObjectHideFlags: 0

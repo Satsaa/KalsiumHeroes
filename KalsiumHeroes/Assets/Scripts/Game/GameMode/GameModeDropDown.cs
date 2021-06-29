@@ -13,7 +13,7 @@ public class GameModeDropDown : TMP_Dropdown {
 		base.Start();
 		options.Clear();
 		foreach (var gameMode in App.gameModes) {
-			options.Add(new OptionData($"{gameMode.title} {gameMode.version}"));
+			options.Add(new OptionData($"{Lang.GetIdText(gameMode, "DISPLAY_NAME")} {gameMode.version}"));
 		}
 		value = 0;
 	}

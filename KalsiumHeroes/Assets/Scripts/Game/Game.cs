@@ -82,7 +82,7 @@ public class Game : Singleton<Game> {
 	public void Init(string code, Team team) {
 		if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException($"Code is empty.", nameof(code));
 		if (!Enum.IsDefined(typeof(Team), team)) throw new ArgumentException($"Invalid team: '{team}'", nameof(team));
-		if (!mode.teams.Contains(team)) throw new ArgumentException($"Team not supported by mode. Team: '{team}', Mode: '{mode.title}'", nameof(team));
+		if (!mode.teams.Contains(team)) throw new ArgumentException($"Team not supported by mode. Team: '{team}', Mode: '{Lang.GetIdText(mode, "DISPLAY_NAME")}'", nameof(team));
 		if (inited) throw new InvalidOperationException($"Duplicate call to {nameof(Init)}.");
 		inited = true;
 		this.code = code;
@@ -94,6 +94,7 @@ public class Game : Singleton<Game> {
 	public void StartGame() {
 		if (started) throw new InvalidOperationException($"Duplicate call to {nameof(StartGame)}.");
 		if (!inited) throw new InvalidOperationException($"{nameof(Init)} must be called before calling {nameof(StartGame)}");
+		mode.Save();
 		started = true;
 		_rounds.OnGameStart();
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameStart>(scope, v => v.OnGameStart());

@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 using System.Text.RegularExpressions;
 
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
-public abstract class DataObjectData : ScriptableObject {
+public abstract class DataObjectData : ScriptableObject, IIDentifiable {
 
 	/// <summary> Base type for createType. </summary>
 	public abstract Type createTypeConstraint { get; }
@@ -16,6 +16,7 @@ public abstract class DataObjectData : ScriptableObject {
 
 	[Tooltip("String identifier of this DataObject. (\"unit_oracle\")")]
 	public string identifier;
+	string IIDentifiable.GetIdentifier() => identifier;
 
 	private static Regex removeData = new(@"Data$");
 	private static Regex snakeCase = new(@"(?<![A-Z]|^)(?=[A-Z]+)|(?<=[A-Z])(?=[A-Z][a-z])");

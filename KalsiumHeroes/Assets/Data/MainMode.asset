@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f41566c2e8de7546942c5d92c3d4297, type: 3}
   m_Name: MainMode
   m_EditorClassIdentifier: 
-  title: Main
-  version: 0.0.0
+  identifier: mode_main
+  version: 0.0.1
+  teams: 0000000001000000
   draftableUnits:
   - {fileID: 11400000, guid: a5bd3810ecfa2044284e6969dd03082e, type: 2}
   - {fileID: 11400000, guid: da3777f504b11294285eca553aa4dd99, type: 2}
@@ -21,7 +22,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 996e8eb9c5a505a48b7f3f0d127f2a3d, type: 2}
   - {fileID: 11400000, guid: 46f09f0c9827b7543ac300f4e08d5133, type: 2}
   - {fileID: 11400000, guid: 62fdae0fbdf9b644990c323d49ce5892, type: 2}
-  teams: 0000000001000000
   draft:
   - unit_duelist
   - unit_golem
@@ -53,7 +53,3 @@ MonoBehaviour:
   minDraftCount: 1
   maxDraftCount: 10
   maxDraftCost: 50
-  maxCostExceeded: {fileID: 11400000, guid: 82e7bacb752e64e459a450d4f54b731f, type: 2}
-  maxCountExceeded: {fileID: 11400000, guid: e6d2ed20948ebf44ea53c56a03a8cc71, type: 2}
-  minCountNotReached: {fileID: 11400000, guid: 10049d9a24f2dfc459a5009048b970e8, type: 2}
-  unitMissing: {fileID: 11400000, guid: 68a9501adce561e4f970d3acac0f6f3b, type: 2}
