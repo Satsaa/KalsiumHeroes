@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public abstract class GameMode : ScriptableObject {
 
-	public string title = "Untitled"; // !"!
+	public string title = "Untitled";
 	public string version = "0.0.0";
 
 	[SerializeField, Tooltip("Units that can be drafted in this GameMode.")]
