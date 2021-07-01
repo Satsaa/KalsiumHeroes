@@ -220,6 +220,7 @@ namespace Muc.Data {
 	public class SerializedDictionaryListPairDrawer : PropertyDrawer {
 
 		private static readonly GUIContent keyContent = new GUIContent("K", "Key");
+		private static readonly GUIContent invalidKeyContent = new GUIContent("K", "Key (Invalid)");
 		private static readonly GUIContent valueContent = new GUIContent("V", "Value");
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
@@ -250,13 +251,13 @@ namespace Muc.Data {
 				valueRect.width += 2;
 
 				if (isDuplicate.boolValue || isDuplicate.hasMultipleDifferentValues) {
-					using (EditorUtil.BackgroundColorScope(Color.red)) {
-						using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, keyContent);
+					using (EditorUtil.BackgroundColorScope(v => Color.Lerp(v, Color.red, 0.75f))) {
+						using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, invalidKeyContent);
 					}
 				} else {
 					using (LabelWidthScope(10)) EditorGUI.PropertyField(keyRect, key, keyContent);
 				}
-				using (LabelWidthScope(14)) EditorGUI.PropertyField(valueRect, value, valueContent);
+				using (LabelWidthScope(10)) EditorGUI.PropertyField(valueRect, value, valueContent);
 			}
 		}
 

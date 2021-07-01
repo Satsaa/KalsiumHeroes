@@ -62,6 +62,25 @@ namespace Muc.Data {
 				Update();
 			}
 		}
+
+		public override bool Equals(object obj) {
+			switch (obj) {
+				case Type type:
+					return this.type == type;
+				case SerializedType st:
+					return this.type == st.type;
+				default:
+					return base.Equals(obj);
+			}
+		}
+
+		public override int GetHashCode() {
+			return this.type == null ? 0 : this.type.GetHashCode();
+		}
+
+		public override string ToString() {
+			return base.ToString();
+		}
 	}
 
 	[Serializable]

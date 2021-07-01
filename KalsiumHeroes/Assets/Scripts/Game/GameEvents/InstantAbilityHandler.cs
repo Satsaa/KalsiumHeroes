@@ -28,6 +28,6 @@ public class InstantAbilityHandler : EventHandler<GameEvents.Ability> {
 	public override void Update() {
 		if (ended) return;
 		ended = true;
-		doEvent(creator);
+		doEvent(creator); // 2
 	}
 }

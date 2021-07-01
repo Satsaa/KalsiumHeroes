@@ -30,7 +30,7 @@ public class GameEvents : MonoBehaviour {
 			try {
 				handler = first.GetHandler();
 				if (handler != null) {
-					handler.Update();
+					handler.Update(); // 1
 					using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(handler));
 				}
 			} catch (Exception) {

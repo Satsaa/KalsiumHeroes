@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPrefab: {fileID: 869369711007949010, guid: dbf09c2711ede0e4daf9fa7b0d62841c, type: 3}
   optionPrefab: {fileID: 5312338608016130494, guid: 188a19a334bd2d2428c3bfd9d294dbbe, type: 3}
-  baseTitle: {fileID: 0}
-  baseMessage: {fileID: 0}
-  baseOptionText: {fileID: 11400000, guid: 1992626040cba4e40949c1eacd121670, type: 2}
+  defaultTitleMsgId: 
+  defaultMessageMsgId: 
+  defaultOptionMsgId: 

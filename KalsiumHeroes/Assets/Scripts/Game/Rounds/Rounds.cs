@@ -71,15 +71,14 @@ public class Rounds : MonoBehaviour {
 	public void NextTurn() {
 		OnTurnEnds(unit);
 		index++;
-		while (true) {
-			if (unitOrNull == null || unitOrNull.removed) index++;
-			break;
+		while (unitOrNull != null && unitOrNull.removed) {
+			index++;
 		}
 		if (index >= units.Count) {
 			if (!TryEndGame()) {
 				round++;
 				Gather();
-				OnRoundStarts(unit);
+				OnRoundStarts(); // 4
 				OnTurnStarts(unit);
 			}
 			return;
@@ -91,7 +90,7 @@ public class Rounds : MonoBehaviour {
 		if (!TryEndGame()) {
 			round++;
 			Gather();
-			OnRoundStarts(unit);
+			OnRoundStarts();
 			OnTurnStarts(unit);
 		}
 	}
@@ -104,8 +103,8 @@ public class Rounds : MonoBehaviour {
 		return false;
 	}
 
-	private static void OnRoundStarts(Unit unit) {
-		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart());
+	private static void OnRoundStarts() {
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart()); // 5 7
 	}
 
 	private static void OnTurnEnds(Unit unit) {

@@ -91,4 +91,9 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 		var pts = container.GetComponent<ParticleSystem>();
 		if (pts) pts.Stop();
 	}
+
+	public override void OnRoundStart() {
+		base.OnRoundStart();
+		Debug.Log("ENERGYEXCESS STATUS ROUND: " + Game.rounds.round);
+	}
 }

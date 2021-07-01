@@ -5,6 +5,6 @@ using UnityEngine;
 public class EndTurnAbility : NoTargetAbility {
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
-		return new InstantAbilityHandler(msg, this, t => Game.rounds.NextTurn());
+		return new InstantAbilityHandler(msg, this, t => Game.rounds.NextTurn()); // 3
 	}
 }

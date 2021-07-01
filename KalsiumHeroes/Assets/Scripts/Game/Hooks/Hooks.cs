@@ -42,6 +42,32 @@ public abstract class Hooks {
 	/// <summary> Removes an OnEvents from the cache. </summary>
 	public abstract void Unhook(Object obj);
 
+
+	public class HooksList<T> : SafeList<T> {
+
+		public List<int> orders = new();
+
+		public void AddOrdered(Type hookerType, Type hookType, T item) {
+			var order = HookOrders.instance.GetOrder(hookerType, hookType);
+			for (int i = 0; i < orders.Count; i++) {
+				var current = orders[i];
+				if (current > order) {
+					orders.Insert(i, order);
+					Insert(i, item);
+					return;
+				}
+			}
+			orders.Add(order);
+			Add(item);
+		}
+
+		public void RemoveOrdered(T item) {
+			var index = IndexOf(item);
+			RemoveAt(index);
+			orders.RemoveAt(index);
+		}
+
+	}
 }
 
 /// <summary>
@@ -68,38 +94,39 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 			var list = val as SafeList<T>;
 			foreach (var v in list) {
 				current = scope;
-				action(v);
+				action(v); // 6
 			}
 		}
 	}
 
 	public override void Hook(Object obj) {
-		foreach (var type in obj.GetType().GetInterfaces()) {
-			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
-			if (!dict.TryGetValue(type, out object list)) {
-				dict[type] = list = Activator.CreateInstance(listType);
+		var hookerType = obj.GetType();
+		foreach (var iType in obj.GetType().GetInterfaces().Where(v => v.GetInterfaces().Contains(typeof(IHook)))) {
+			Type listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
+			if (!dict.TryGetValue(iType, out object list)) {
+				dict[iType] = list = Activator.CreateInstance(listType);
 			}
-			var add = listType.GetMethod("Add");
-			add.Invoke(list, new object[] { obj });
+			var add = listType.GetMethod(nameof(HooksList<int>.AddOrdered));
+			add.Invoke(list, new object[] { hookerType, iType, obj });
 #if DEBUG // Ensure no duplicates are created
 			var dynList = list as IEnumerable;
 			var total = 0;
 			foreach (var item in dynList) {
 				if (obj.Equals(item)) total++;
 			}
-			if (total > 1) Debug.Log($"Added {obj} to {type.Name}. ${total} duplicates exist!");
+			if (total > 1) Debug.Log($"Added {obj} to {iType.Name}. ${total} duplicates exist!");
 #endif
 		}
 	}
 
 	public override void Unhook(Object obj) {
-		foreach (var type in obj.GetType().GetInterfaces()) {
-			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
-			if (dict.TryGetValue(type, out var list)) {
-				var remove = listType.GetMethod("Remove");
+		foreach (var iType in obj.GetType().GetInterfaces().Where(v => v.GetInterfaces().Contains(typeof(IHook)))) {
+			Type listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
+			if (dict.TryGetValue(iType, out var list)) {
+				var remove = listType.GetMethod(nameof(HooksList<int>.RemoveOrdered));
 				remove.Invoke(list, new object[] { obj });
 			} else {
-				Debug.LogWarning($"Couldn't remove {obj} from {type.Name} because the list for that type was missing!");
+				Debug.LogWarning($"Couldn't remove {obj} from {iType.Name} because the list for that type was missing!");
 			}
 		}
 	}
@@ -113,28 +140,43 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 		public ObjectArrayContainer(Object[] objs) => this.objs = objs;
 	}
 
-	[SerializeField, HideInInspector] string[] keys;
-	[SerializeField, HideInInspector] ObjectArrayContainer[] vals;
+	[Serializable]
+	private class OrderContainer {
+		public List<int> orders;
+		public OrderContainer(List<int> orders) => this.orders = orders;
+	}
+
+	[SerializeField, HideInInspector] List<string> keys;
+	[SerializeField, HideInInspector] List<ObjectArrayContainer> vals;
+	[SerializeField, HideInInspector] List<OrderContainer> ordahs;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
-		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
-		vals = dict.Values.Select(v => (v as IEnumerable).Cast<Object>().ToArray()).Select(v => new ObjectArrayContainer(v)).ToArray();
+		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToList();
+		vals = dict.Values.Select(v => (v as IEnumerable).Cast<Object>().ToArray()).Select(v => new ObjectArrayContainer(v)).ToList();
+		ordahs = dict.Values.Select(v => new OrderContainer(v.GetType().GetField(nameof(HooksList<int>.orders)).GetValue(v) as List<int>)).ToList();
 	}
 
 	void ISerializationCallbackReceiver.OnAfterDeserialize() {
-		for (int i = 0; i < keys.Length; i++) {
+		for (int i = 0; i < keys.Count; i++) {
 			var type = Type.GetType(keys[i]);
 			var objs = vals[i].objs;
-			Type listType = typeof(SafeList<>).MakeGenericType(new[] { type });
+			var orders = ordahs[i].orders;
+			Type listType = typeof(HooksList<>).MakeGenericType(new[] { type });
 			var list = dict[type] = Activator.CreateInstance(listType);
-			var add = listType.GetMethod("Add");
-			foreach (var obj in objs) {
+			var add = listType.GetMethod(nameof(HooksList<int>.Add));
+
+			for (int j = 0; j < objs.Length; j++) {
+				var obj = objs[j];
 				add.Invoke(list, new object[] { obj });
 			}
+
+			listType.GetField(nameof(HooksList<int>.orders)).SetValue(list, orders);
 		}
 		keys = null;
 		vals = null;
+		ordahs = null;
 	}
 
 	#endregion
+
 }

@@ -70,4 +70,8 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 		if (pts) pts.Stop();
 	}
 
+	public override void OnRoundStart() {
+		base.OnRoundStart();
+		Debug.Log("ENERGYDEFICIT STATUS ROUND: " + Game.rounds.round); // 8
+	}
 }
