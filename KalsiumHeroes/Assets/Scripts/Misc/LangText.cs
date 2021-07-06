@@ -15,7 +15,8 @@ public class LangText : TMPro.TextMeshProUGUI {
 	[SerializeField] string _strId { get; set; }
 
 	protected override void Awake() {
-		UpdateText();
+		if (String.IsNullOrEmpty(strId)) strId = text;
+		else UpdateText();
 		base.Awake();
 	}
 

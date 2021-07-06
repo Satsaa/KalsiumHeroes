@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f41566c2e8de7546942c5d92c3d4297, type: 3}
   m_Name: MainMode
   m_EditorClassIdentifier: 
-  identifier: mode_main
+  identifier: Mode_Main
   version: 0.0.1
   teams: 0000000001000000
   draftableUnits:
