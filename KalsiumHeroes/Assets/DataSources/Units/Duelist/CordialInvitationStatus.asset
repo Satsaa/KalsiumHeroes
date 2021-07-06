@@ -15,26 +15,24 @@ MonoBehaviour:
   createType:
     _name: CordialInvitationStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: status_cordial_invitation
+  identifier: Status_CordialInvitation
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 0
-  dispellable:
-    _value: 0
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 0
+  dispellable:
+    <rawValue>k__BackingField: 0
   ticks:
-    _value: 0
-    _other: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   tickMode: 0
   breakRange:
-    _value: 4
+    <rawValue>k__BackingField: 4
   disgracefulBehaviour: {fileID: 11400000, guid: c88bd8570f9f47c4088667a325b84925, type: 2}
   piercingGlare: {fileID: 11400000, guid: 7e597633c6fb0a54b9af333c359c78e6, type: 2}
   opponent: {fileID: 0}

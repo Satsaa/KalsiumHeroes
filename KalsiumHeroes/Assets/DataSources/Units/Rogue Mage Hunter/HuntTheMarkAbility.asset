@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: HuntTheMarkAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_hunt_the_mark
+  identifier: Ability_HuntTheMark
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: c367b524af8d46f4d80687b9260ed928, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:

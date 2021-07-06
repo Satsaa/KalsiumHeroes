@@ -15,23 +15,23 @@ MonoBehaviour:
   createType:
     _name: EnergyDeficitStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: status_energy_deficit
+  identifier: Status_EnergyDeficit
   container: {fileID: 6574234657853972042, guid: f7101482130ebdd43b80ad7d03790535, type: 3}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 0
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 0
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 0
-    _other: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   tickMode: 0
-  defenseReduction: 5
-  resistanceReduction: 5
+  defenseChange:
+    <rawValue>k__BackingField: -5
+  resistanceChange:
+    <rawValue>k__BackingField: -5

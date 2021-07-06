@@ -33,7 +33,7 @@ Preset:
     value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: msgIdSuffix
+    propertyPath: strIdSuffix
     value: LORE
     objectReference: {fileID: 0}
   - target: {fileID: 0}

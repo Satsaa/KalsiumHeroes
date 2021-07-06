@@ -15,8 +15,6 @@ MonoBehaviour:
   createType:
     _name: ShrapnelAbilityModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: status_shrapnel
+  identifier: Status_Shrapnel
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 31186f39fe7e32640a565e68a150724a, type: 2}
-  description: {fileID: 11400000, guid: 4a7d6c6d0b61b6445921cd603082168c, type: 2}
   sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}

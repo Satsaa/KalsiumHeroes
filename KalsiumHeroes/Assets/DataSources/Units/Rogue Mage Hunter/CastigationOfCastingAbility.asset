@@ -15,30 +15,28 @@ MonoBehaviour:
   createType:
     _name: CastigationOfCastingAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_castigation_of_casting
+  identifier: Ability_CastigationOfCasting
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 5471186b2a2a6c941b2298d9ef335fa9, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:
-    _value: 5
+    <rawValue>k__BackingField: 5
   cooldown:
-    _value: 0
-    _other: 1
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 1
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 0
+    <rawValue>k__BackingField: 0
   range:
-    _value: 5
-    _enabled: 1
+    <rawValue>k__BackingField: 5
+    <rawEnabled>k__BackingField: 1
   rangeMode: 0
   requiresVision:
-    _value: 0
+    <rawValue>k__BackingField: 0
   targetType: 24
   markOfCastigationModifier: {fileID: 11400000, guid: 3bfd885416a30824a82f108ed8e6621f, type: 2}

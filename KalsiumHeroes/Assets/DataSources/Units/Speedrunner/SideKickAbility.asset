@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: SideKickAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_side_kick
+  identifier: Ability_SideKick
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: b79976a7c2384dd449dafbf66c4585da, type: 2}
-  description: {fileID: 11400000, guid: e664965360ed40f448281c2fea5884d9, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 1
   energyCost:

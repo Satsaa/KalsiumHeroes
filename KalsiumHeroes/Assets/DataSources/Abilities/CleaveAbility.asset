@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: DamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_cleave
+  identifier: Sbility_Cleave
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 3ff9c5bb8feb6244bbd8ba4972dfced9, type: 2}
-  description: {fileID: 11400000, guid: f99fc6af0e757474097fbc19d7ab82a1, type: 2}
   sprite: {fileID: 0}
   abilityType: 1
   energyCost:

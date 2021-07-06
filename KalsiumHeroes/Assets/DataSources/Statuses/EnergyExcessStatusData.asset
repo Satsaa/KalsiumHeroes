@@ -15,34 +15,32 @@ MonoBehaviour:
   createType:
     _name: EnergyExcessStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: status_energy_excess
+  identifier: Status_EnergyExcess
   container: {fileID: 4313533834659548896, guid: f66d80d7df9d789439b2bb24af25e0c2, type: 3}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 1
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 1
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 0
-    _other: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   tickMode: 0
   amps:
     weaponSkill:
-      _value: 0.05
+      <rawValue>k__BackingField: 0.05
     spell:
-      _value: 0.05
+      <rawValue>k__BackingField: 0.05
     skill:
-      _value: 0
+      <rawValue>k__BackingField: 0
     physical:
-      _value: 0
+      <rawValue>k__BackingField: 0
     magical:
-      _value: 0
+      <rawValue>k__BackingField: 0
     pure:
-      _value: 0
+      <rawValue>k__BackingField: 0

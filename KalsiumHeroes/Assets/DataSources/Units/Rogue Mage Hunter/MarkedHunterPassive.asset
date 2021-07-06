@@ -15,10 +15,7 @@ MonoBehaviour:
   createType:
     _name: MarkedHunterPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: passive_marked_hunter
+  identifier: Passive_MarkedHunter
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
-  passivesAreJustModifiers: 
   markOfPreyModifier: {fileID: 11400000, guid: 7c3f8f3037972f746a4cbbe5b0fc6eef, type: 2}

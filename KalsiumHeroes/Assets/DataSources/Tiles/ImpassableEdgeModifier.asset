@@ -15,7 +15,5 @@ MonoBehaviour:
   createType:
     _name: ImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: edgemodifier_impassable
+  identifier: EdgeModifier_Impassable
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}

@@ -14,21 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: status_earthquake_root
+  identifier: Status_EarthquakeRoot
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    _value: 1
-  positive:
-    _value: 0
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 1
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 0
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 1
-    _other: 0
-    _enabled: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 1
   tickMode: 1

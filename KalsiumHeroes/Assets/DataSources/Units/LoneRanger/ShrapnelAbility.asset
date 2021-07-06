@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: ShrapnelAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_shrapnel
+  identifier: Ability_Shrapnel
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 52a9a273e2ca53840952665d1bfd3937, type: 2}
-  description: {fileID: 11400000, guid: ebc281740126c86438cf568ec445259a, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   energyCost:

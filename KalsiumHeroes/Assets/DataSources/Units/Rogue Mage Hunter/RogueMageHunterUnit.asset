@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: unit_rogue_mage_hunter
+  identifier: Unit_RogueMageHunter
   container: {fileID: 4841974498028539211, guid: 0e0fe8f48e4cf9547a8eda1887a5e57b, type: 3}
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
@@ -28,46 +28,43 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08388c54931bf5b46985b9f89fbd4039, type: 2}
   - {fileID: 11400000, guid: b502cf770b53f3545ad6fa1b830ed615, type: 2}
   - {fileID: 11400000, guid: 8d5fea59e64b07143886a82170581d3d, type: 2}
-  displayName: {fileID: 11400000, guid: 92ebc4b18f281a94ab2776006418d2b4, type: 2}
-  description: {fileID: 0}
-  lore: {fileID: 0}
   sprite: {fileID: 21300000, guid: 6191e5c6f0e861b4484c47265ca0c2af, type: 3}
   preview: {fileID: 9008834760869199539, guid: bc6fde6b60bd2fc4aaaf0076fb1be96a, type: 3}
   portrait: {fileID: 9008834760869199539, guid: 3e0ac8cebb63bc742b63c3c3d0cbcb82, type: 3}
   actor: {fileID: 4267153226371733055, guid: f725440873d317b4f987ead995abc18c, type: 3}
   draftCost: 5
   speed:
-    _value: 12
+    <rawValue>k__BackingField: 12
   movement:
-    _value: 4
+    <rawValue>k__BackingField: 4
   health:
-    _value: 140
-    _other: 140
+    <rawValue>k__BackingField: 140
+    <rawOther>k__BackingField: 140
   energy:
-    _value: 5
-    _other: 17
+    <rawValue>k__BackingField: 5
+    <rawOther>k__BackingField: 17
   energyRegen:
-    _value: 9
+    <rawValue>k__BackingField: 9
   defense:
-    _value: 10
+    <rawValue>k__BackingField: 10
   resistance:
-    _value: 35
+    <rawValue>k__BackingField: 35
   amps:
     weaponSkill:
-      _value: 0
+      <rawValue>k__BackingField: 0
     spell:
-      _value: 0
+      <rawValue>k__BackingField: 0
     skill:
-      _value: 0
+      <rawValue>k__BackingField: 0
     physical:
-      _value: 0
+      <rawValue>k__BackingField: 0
     magical:
-      _value: 0
+      <rawValue>k__BackingField: 0
     pure:
-      _value: 0
+      <rawValue>k__BackingField: 0
   silenced:
-    _value: 0
+    <rawValue>k__BackingField: 0
   disarmed:
-    _value: 0
+    <rawValue>k__BackingField: 0
   rooted:
-    _value: 0
+    <rawValue>k__BackingField: 0

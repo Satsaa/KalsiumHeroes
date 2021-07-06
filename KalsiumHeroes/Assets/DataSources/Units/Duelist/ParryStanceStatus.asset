@@ -15,26 +15,24 @@ MonoBehaviour:
   createType:
     _name: ParryStanceStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: status_parry_stance
+  identifier: Status_ParryStance
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 1
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 1
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 1
-    _other: 0
-    _enabled: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 1
   tickMode: 0
   defenseIncrease:
-    _value: 35
+    <rawValue>k__BackingField: 35
   damage:
-    _value: 30
+    <rawValue>k__BackingField: 30
   damageType: 1

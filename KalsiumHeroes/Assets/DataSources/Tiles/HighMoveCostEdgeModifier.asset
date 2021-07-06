@@ -15,9 +15,7 @@ MonoBehaviour:
   createType:
     _name: MoveCostEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: edgemodifier_high_movecost
+  identifier: EdgeModifier_HighMovecost
   container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   additionalMoveCost:
-    _value: 3
+    <rawValue>k__BackingField: 3

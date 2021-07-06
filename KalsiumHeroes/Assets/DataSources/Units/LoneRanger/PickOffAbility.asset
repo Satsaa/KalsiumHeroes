@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: PickOffAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_pickoff
+  identifier: Ability_PickOff
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8d56457c96b5bc94295da0d086dc1065, type: 2}
-  description: {fileID: 11400000, guid: d83e28357f42b5c4988757f128344438, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   energyCost:

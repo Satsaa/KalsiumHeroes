@@ -14,20 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: tile_spark
+  identifier: Tile_Spark
   container: {fileID: 194248088727427243, guid: dd5d4bfd537eeb44085350fc3da9c842, type: 3}
   baseModifiers:
   - {fileID: 11400000, guid: 1cdae7c5b2231184db4f55867743794f, type: 2}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   passable:
-    _value: 1
+    <rawValue>k__BackingField: 1
   transparent:
-    _value: 1
+    <rawValue>k__BackingField: 1
   moveCost:
-    _value: 1
+    <rawValue>k__BackingField: 1
   appeal:
-    _value: 5
+    <rawValue>k__BackingField: 5
   edgeModifiers:
     right: []
     downRight: []

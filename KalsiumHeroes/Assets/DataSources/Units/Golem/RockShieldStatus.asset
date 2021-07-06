@@ -14,26 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: RockShieldStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: status_rock_shield
+  identifier: Status_RockShield
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 0
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 0
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 1
-    _other: 0
-    _enabled: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 1
   tickMode: 0
   shieldHP:
-    _value: 50
-  statusModifier: {fileID: 11400000, guid: a8f8aa5e738725c4f97e5b78a05717ac, type: 2}
+    <rawValue>k__BackingField: 50
+  modifier: {fileID: 0}
   explosionRadius:
-    _value: 1
+    <rawValue>k__BackingField: 1

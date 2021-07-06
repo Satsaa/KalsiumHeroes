@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: AddModifierAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_disarm
+  identifier: Ability_Disarm
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 987d63614e34920468dda954803c1a98, type: 2}
-  description: {fileID: 11400000, guid: 8c9c93ddc45d7a14e8436a5dcef42574, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   energyCost:

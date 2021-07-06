@@ -1078,34 +1078,34 @@ MonoBehaviour:
   defaultWindowPrefab: {fileID: 7719059669241410485, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
   tooltips:
     list:
-    - key: blue
+    - key: Blue
       value: {fileID: -330549700562887290, guid: e070b01db5e4b2e42b75c7ea363df4ec, type: 3}
       isDuplicate: 0
-    - key: red
+    - key: Red
       value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
       isDuplicate: 0
-    - key: ability_info
+    - key: Ability_Info
       value: {fileID: 2303619671523802732, guid: ecda326ea444e7944af34ba37bf37910, type: 3}
       isDuplicate: 0
-    - key: data_object_info
+    - key: DataObject_Info
       value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
       isDuplicate: 0
-    - key: passive_info
+    - key: Passive_Info
       value: {fileID: 2303619671523802732, guid: a91bcf6cd09a36b4dba28079e11ff73e, type: 3}
       isDuplicate: 0
-    - key: status_info
+    - key: Status_Info
       value: {fileID: 2303619671523802732, guid: c4ac699ba0d051046aa06cb5f403ce60, type: 3}
       isDuplicate: 0
-    - key: target_ability_info
+    - key: TargetAbility_Info
       value: {fileID: 1115576529508270921, guid: 6667b7e31ef204f46a1097e32536ba0b, type: 3}
       isDuplicate: 0
-    - key: tile_target_ability_info
+    - key: TileTarget_ability_Info
       value: {fileID: 4328556010460216923, guid: ddea446c69877564ca66924c52288c10, type: 3}
       isDuplicate: 0
-    - key: unit_modifier_info
+    - key: UnitModifier_Info
       value: {fileID: 290634914456489787, guid: 5404c4ba65fd48e4494e40780c048175, type: 3}
       isDuplicate: 0
-    - key: unit_target_ability_info
+    - key: UnitTargetAbility_Info
       value: {fileID: 4328556010460216923, guid: 802b5594ad9a9304c860a3609994ea9b, type: 3}
       isDuplicate: 0
   tts: []

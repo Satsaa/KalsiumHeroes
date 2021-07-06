@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: EndTurnAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_end_turn
+  identifier: Ability_EndTurn
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 65593b70ff61aa3459b277147344f414, type: 2}
-  description: {fileID: 11400000, guid: dc75a61fad608ae45a9abeec11e92e54, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 0
   energyCost:

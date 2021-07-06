@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: ChangeEnergyAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_take_energy
+  identifier: Ability_TakeEnergy
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:

@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_move
+  identifier: Ability_Move
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: e2bf154ab5ce5e742a3acd612d7a7a25, type: 2}
-  description: {fileID: 11400000, guid: 748f85fb7d9c68e4daf4ae12cd93c9d3, type: 2}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 0
   energyCost:

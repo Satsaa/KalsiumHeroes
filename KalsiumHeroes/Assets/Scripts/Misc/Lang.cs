@@ -39,7 +39,7 @@ public class Lang : Singleton<Lang> {
 			try {
 				var texts = JsonConvert.DeserializeObject<Dictionary<string, string>>(ta.text);
 				if (texts == null) {
-					failMessage = GetText("LOAD_LANGUAGE_MALFORMED_INPUT");
+					failMessage = GetText("Lang_FileCorrupted");
 					return false;
 				}
 				Lang.texts = texts;
@@ -59,85 +59,33 @@ public class Lang : Singleton<Lang> {
 				}
 				return true;
 			} catch (System.Exception) {
-				failMessage = GetText("LOAD_LANGUAGE_CANNOT_LOAD_RESOURCE");
+				failMessage = GetText("Lang_CannotLoadLanguage");
 			}
 		} catch (System.Exception) {
-			failMessage = GetText("LOAD_LANGUAGE_MALFORMED_INPUT");
+			failMessage = GetText("Lang_FileCorrupted");
 		}
 		return false;
 	}
 
-	public static string GetText(string stringId) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(stringId, out var res)) return res;
-		return stringId;
+	public static string GetText(string strId) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return res;
+		return strId;
 	}
-	public static string GetText(string stringId, object arg0) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(stringId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
-		return stringId;
+	public static string GetText(string strId, object arg0) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
+		return strId;
 	}
-	public static string GetText(string stringId, object arg0, object arg1) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(stringId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
-		return stringId;
+	public static string GetText(string strId, object arg0, object arg1) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
+		return strId;
 	}
-	public static string GetText(string stringId, object arg0, object arg1, object arg2) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(stringId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
-		return stringId;
+	public static string GetText(string strId, object arg0, object arg1, object arg2) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
+		return strId;
 	}
-	public static string GetText(string stringId, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(stringId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
-		return stringId;
-	}
-
-	public static string GetIdText(string identifier, string stringId) {
-		var fullId = $"{identifier} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return res;
-		return fullId;
-	}
-	public static string GetIdText(string identifier, string stringId, object arg0) {
-		var fullId = $"{identifier} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
-		return fullId;
-	}
-	public static string GetIdText(string identifier, string stringId, object arg0, object arg1) {
-		var fullId = $"{identifier} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
-		return fullId;
-	}
-	public static string GetIdText(string identifier, string stringId, object arg0, object arg1, object arg2) {
-		var fullId = $"{identifier} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
-		return fullId;
-	}
-	public static string GetIdText(string identifier, string stringId, params object[] args) {
-		var fullId = $"{identifier} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
-		return fullId;
-	}
-
-	public static string GetIdText(IIDentifiable identifiable, string stringId) {
-		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return res;
-		return fullId;
-	}
-	public static string GetIdText(IIDentifiable identifiable, string stringId, object arg0) {
-		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
-		return fullId;
-	}
-	public static string GetIdText(IIDentifiable identifiable, string stringId, object arg0, object arg1) {
-		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
-		return fullId;
-	}
-	public static string GetIdText(IIDentifiable identifiable, string stringId, object arg0, object arg1, object arg2) {
-		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
-		return fullId;
-	}
-	public static string GetIdText(IIDentifiable identifiable, string stringId, params object[] args) {
-		var fullId = $"{identifiable.GetIdentifier()} {stringId}";
-		if (Lang.texts != null && Lang.texts.TryGetValue(fullId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
-		return fullId;
+	public static string GetText(string strId, params object[] args) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
+		return strId;
 	}
 
 	[Serializable]

@@ -19,21 +19,22 @@ public abstract class DataObjectData : ScriptableObject, IIDentifiable {
 	string IIDentifiable.GetIdentifier() => identifier;
 
 	private static Regex removeData = new(@"Data$");
-	private static Regex snakeCase = new(@"(?<![A-Z]|^)(?=[A-Z]+)|(?<=[A-Z])(?=[A-Z][a-z])");
 	private string _tooltip;
 	public string tooltip {
 		get {
 			if (_tooltip != null) return _tooltip;
+			var identifierTooltip = $"{identifier}_Info";
+			if (Tooltips.instance.TooltipExists(identifierTooltip)) {
+				return _tooltip = identifierTooltip;
+			}
 			var current = this.GetType();
 			while (true) {
 				if (current == typeof(DataObjectData)) {
-					return _tooltip = "data_object";
+					return _tooltip = "DataObject_Info";
 				} else {
 					var converted = current.FullName;
 					converted = removeData.Replace(converted, "");
-					converted = snakeCase.Replace(converted, "_");
-					converted = converted.ToLowerInvariant();
-					converted += "_info";
+					converted += "_Info";
 					if (Tooltips.instance.TooltipExists(converted)) {
 						return _tooltip = converted;
 					}

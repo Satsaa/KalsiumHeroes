@@ -14,21 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: RootStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: status_root
+  identifier: Status_Root
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 93b1319758abf8c4eb1635cf686e0464, type: 2}
-  description: {fileID: 11400000, guid: 5413486dfcf31954c94d280424228d0e, type: 2}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 0
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 0
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 2
-    _other: 0
-    _enabled: 1
+    <rawValue>k__BackingField: 2
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 1
   tickMode: 0

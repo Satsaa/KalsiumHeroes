@@ -15,9 +15,10 @@ public class PopupPreset : ScriptableObject {
 	[SerializeField] internal Popup popupPrefab;
 	[SerializeField] internal PopupOption optionPrefab;
 
-	[SerializeField] string defaultTitleMsgId;
-	[SerializeField] string defaultMessageMsgId;
-	[SerializeField] string defaultOptionMsgId;
+	[SerializeField, Tooltip("The name of the popup in PascalCase. This string will be used to find default strings.")]
+	string popupName = "MyPopup";
+	string titleStrId => $"Popup_{popupName}_Title";
+	string msgStrId => $"Popup_{popupName}_Message";
 
 	public struct Option {
 		public string text;
@@ -49,10 +50,10 @@ public class PopupPreset : ScriptableObject {
 		// Override if needed
 	}
 
-	public Popup Show() => Show(Lang.GetText(defaultTitleMsgId), Lang.GetText(defaultMessageMsgId), new Option(Lang.GetText(defaultOptionMsgId), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
-	public Popup Show(string title) => Show(null, null, new Option(Lang.GetText(defaultOptionMsgId), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show() => Show(Lang.GetText(titleStrId), Lang.GetText(msgStrId), new Option(Lang.GetText("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show(string title) => Show(null, null, new Option(Lang.GetText("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
 
-	public Popup Show(string title, string message) => Show(null, message, new Option(Lang.GetText(defaultOptionMsgId), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show(string title, string message) => Show(null, message, new Option(Lang.GetText("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
 	public Popup Show(string title, string message, params Option[] options) {
 		if (popupPrefab == null || optionPrefab == null) {
 			Debug.LogError($"{nameof(popupPrefab)} or {nameof(optionPrefab)} is not set. Alternatively a reference may be broken and you need to reassign them in editor. To do that double click this message and press the reassign button.", this);

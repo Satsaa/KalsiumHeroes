@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: TargetWeakSpotAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_target_weak_spot
+  identifier: Ability_TargetWeakSpot
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 59936029b2d49184aad1e5b9213cdc88, type: 2}
-  description: {fileID: 11400000, guid: e8d09eac6f249aa4fbb481ad5ad69c43, type: 2}
   sprite: {fileID: 0}
   abilityType: 1
   energyCost:

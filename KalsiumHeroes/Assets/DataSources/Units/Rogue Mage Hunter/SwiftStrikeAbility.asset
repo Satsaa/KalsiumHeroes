@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: SwiftStrikeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_swift_strike
+  identifier: Ability_SwiftStrike
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: b47425188137ac84eac71260e77407b2, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 1
   energyCost:

@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: OpportuneFlightAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_opportune_flight
+  identifier: Ability_OpportuneFlight
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 2972100259d2dab4c97d4ebd17321a01, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 3
   energyCost:

@@ -15,9 +15,9 @@ MonoBehaviour:
   createType:
     _name: TileHighlighterModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: unitmodifier_overtile_highlighter
+  identifier: UnitModifier_TileHighlighter
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
+  ownTeamColor: {r: 0, g: 1, b: 0, a: 1}
+  otherTeamColor: {r: 1, g: 0, b: 0, a: 1}
+  hideDuringAnimation: 1

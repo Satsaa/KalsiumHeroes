@@ -15,7 +15,5 @@ MonoBehaviour:
   createType:
     _name: OutwardsImpassableEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: edgemodifier_outwards_impassable
+  identifier: EdgeModifier_OutwardsImpassable
   container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}
-  displayName: {fileID: 0}
-  description: {fileID: 0}

@@ -14,19 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: tile_edged
+  identifier: Tile_Edged
   container: {fileID: 194248088727427243, guid: a35e6944067e92d4b8c830fbcf35ab5b, type: 3}
   baseModifiers: []
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   passable:
-    _value: 1
+    <rawValue>k__BackingField: 1
   transparent:
-    _value: 1
+    <rawValue>k__BackingField: 1
   moveCost:
-    _value: 1
+    <rawValue>k__BackingField: 1
   appeal:
-    _value: 0
+    <rawValue>k__BackingField: 0
   edgeModifiers:
     right:
     - {fileID: 11400000, guid: 0aab5d6e6a94aa84887f36bd4c9a7533, type: 2}

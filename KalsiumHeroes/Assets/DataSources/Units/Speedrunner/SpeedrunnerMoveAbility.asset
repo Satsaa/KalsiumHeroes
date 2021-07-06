@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: MoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_speedrunner_move
+  identifier: Ability_SpeedrunnerMove
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: ffac7c57f38b64f45af1f07369dfacb1, type: 2}
-  description: {fileID: 11400000, guid: f334f53560641b34888c9b746921129e, type: 2}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 0
   energyCost:

@@ -14,25 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: SpeedGainStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: status_speed_gain
+  identifier: Status_SpeedGain
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 8a8b55918f6bc294bbaaba43483dd436, type: 2}
-  description: {fileID: 11400000, guid: 9dd4603659d24c8498e27d556d3d291d, type: 2}
   sprite: {fileID: 0}
   debuffType:
-    _value: 0
-  positive:
-    _value: 0
-  dispellable:
-    _value: 1
+    <rawValue>k__BackingField: 0
   hidden:
-    _value: 0
+    <rawValue>k__BackingField: 0
+  positive:
+    <rawValue>k__BackingField: 0
+  dispellable:
+    <rawValue>k__BackingField: 1
   ticks:
-    _value: 3
-    _other: 0
-    _enabled: 1
+    <rawValue>k__BackingField: 3
+    <rawOther>k__BackingField: 0
+    <rawEnabled>k__BackingField: 1
   tickMode: 0
   speedGain:
-    _value: 2
+    <rawValue>k__BackingField: 2
   movementGain:
-    _value: 2
+    <rawValue>k__BackingField: 2

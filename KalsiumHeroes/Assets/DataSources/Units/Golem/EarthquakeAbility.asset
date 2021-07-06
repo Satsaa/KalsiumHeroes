@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: EarthquakeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_earthquake
+  identifier: Ability_Earthquake
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 56101509bf78a8548813a79e8d8f9522, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:

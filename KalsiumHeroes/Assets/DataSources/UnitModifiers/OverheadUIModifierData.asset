@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: UnitUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: unitmodifier_test_ui
+  identifier: UnitModifier_TestUI
   container: {fileID: 1199709513546497089, guid: 5917dcf2b5a3899408677521a316c666, type: 3}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   trackingOffset: {x: 0, y: 2, z: 0.25}
   screenOffset: {x: 0, y: 0}

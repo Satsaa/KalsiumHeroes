@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: ShoveAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: ability_shove
+  identifier: Ability_Shove
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: dfd03cbccac0d4a4fa79825bb80c3225, type: 2}
-  description: {fileID: 11400000, guid: 9390fc83f3de8af40b2ca1552ad084f3, type: 2}
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 3
   energyCost:

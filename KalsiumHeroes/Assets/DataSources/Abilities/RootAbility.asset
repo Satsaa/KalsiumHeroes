@@ -15,31 +15,29 @@ MonoBehaviour:
   createType:
     _name: AddModifierAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_root
+  identifier: Ability_Root
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 4e6395aab1d83ae4eb53d37b00c3c169, type: 2}
-  description: {fileID: 11400000, guid: a1b223e37505ed94da3985a51169ba9b, type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   abilityType: 2
   energyCost:
-    _value: 0
+    <rawValue>k__BackingField: 0
   cooldown:
-    _value: 0
-    _other: 3
+    <rawValue>k__BackingField: 0
+    <rawOther>k__BackingField: 3
   charges:
-    _value: 1
-    _other: 1
+    <rawValue>k__BackingField: 1
+    <rawOther>k__BackingField: 1
   uses:
-    _value: 0
-    _enabled: 0
+    <rawValue>k__BackingField: 0
+    <rawEnabled>k__BackingField: 0
   allowMove:
-    _value: 0
+    <rawValue>k__BackingField: 0
   range:
-    _value: 4
-    _enabled: 1
+    <rawValue>k__BackingField: 4
+    <rawEnabled>k__BackingField: 1
   rangeMode: 0
   requiresVision:
-    _value: 0
+    <rawValue>k__BackingField: 0
   targetType: -1
   addedModifiers:
   - {fileID: 11400000, guid: 36b112e336978bb47afcb4e19e922e85, type: 2}

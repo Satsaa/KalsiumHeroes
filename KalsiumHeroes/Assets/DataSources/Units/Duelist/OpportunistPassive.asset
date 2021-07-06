@@ -15,16 +15,13 @@ MonoBehaviour:
   createType:
     _name: OpportunistPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: passive_opportunist
+  identifier: Passive_Opportunist
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
-  passivesAreJustModifiers: 
   damage:
-    _value: 30
+    <rawValue>k__BackingField: 30
   damageType: 1
   range:
-    _value: 1
+    <rawValue>k__BackingField: 1
   energyGain:
-    _value: 2
+    <rawValue>k__BackingField: 2

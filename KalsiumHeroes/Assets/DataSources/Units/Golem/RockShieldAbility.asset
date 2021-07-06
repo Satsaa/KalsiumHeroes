@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: RockShieldAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_rock_shield
+  identifier: Ability_RockShield
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 95e35d00ee6b69b448f0e4f2cdd24efa, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 2
   energyCost:

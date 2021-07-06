@@ -9,13 +9,13 @@ using UnityEngine.Events;
 public class LangTextSetter : ValueReceiver<DataObject, DataObjectData> {
 
 	[SerializeField, Tooltip("String added to the identifier of the received DataObjectData which is then translated.")]
-	string msgIdSuffix = "DISPLAY_NAME";
+	string strIdSuffix = "DISPLAY_NAME";
 
 	[SerializeField]
 	UnityEvent<string> onUpdate;
 
 	protected override void ReceiveValue(DataObjectData data) {
-		onUpdate.Invoke(Lang.GetText($"{data.identifier} {msgIdSuffix}"));
+		onUpdate.Invoke(Lang.GetText($"{data.identifier} {strIdSuffix}"));
 	}
 
 	protected override void ReceiveValue(DataObject obj) {

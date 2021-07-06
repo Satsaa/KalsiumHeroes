@@ -15,10 +15,8 @@ MonoBehaviour:
   createType:
     _name: ChangeSpeedAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  identifier: ability_change_speed
+  identifier: Ability_ChangeSpeed
   container: {fileID: 0}
-  displayName: {fileID: 11400000, guid: 93f631cff4b06e24985236ba39c049b7, type: 2}
-  description: {fileID: 0}
   sprite: {fileID: 0}
   abilityType: 0
   energyCost:

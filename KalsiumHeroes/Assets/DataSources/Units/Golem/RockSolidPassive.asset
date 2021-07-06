@@ -14,19 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createType:
     _name: RockSolidPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
-  identifier: passive_rock_solid
+  identifier: Passive_RockSolid
   container: {fileID: 0}
-  displayName: {fileID: 0}
-  description: {fileID: 0}
   sprite: {fileID: 0}
-  passivesAreJustModifiers: 
   filter: 8
   rings:
   - increase:
-      _value: 0
+      <rawValue>k__BackingField: 0
   - increase:
-      _value: 10
+      <rawValue>k__BackingField: 10
   - increase:
-      _value: 5
+      <rawValue>k__BackingField: 5
   - increase:
-      _value: 3
+      <rawValue>k__BackingField: 3

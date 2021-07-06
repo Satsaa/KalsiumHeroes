@@ -17,9 +17,9 @@ public class JoinGame : MonoBehaviour {
 
 		var codeInputField = Instantiate(codeInputPrefab);
 
-		var msgBox = popupPreset.Show(Lang.GetText("JOIN_GAME_POPUP_TITLE"), Lang.GetText("JOIN_GAME_POPUP_MESSAGE"),
-			new PopupPreset.Option(Lang.GetText("BUTTON_JOIN"), () => OnJoin(codeInputField.text), PopupOption.Flags.Default),
-			new PopupPreset.Option(Lang.GetText("BUTTON_CANCEL"), null, PopupOption.Flags.Cancel)
+		var msgBox = popupPreset.Show(Lang.GetText("Popup_JoinGame_Title"), Lang.GetText("Popup_JoinGame_Message"),
+			new PopupPreset.Option(Lang.GetText("Join"), () => OnJoin(codeInputField.text), PopupOption.Flags.Default),
+			new PopupPreset.Option(Lang.GetText("Cancel"), null, PopupOption.Flags.Cancel)
 		);
 
 		msgBox.AddCustomObject(codeInputField.gameObject);
