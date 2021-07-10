@@ -22,7 +22,7 @@ public abstract class EnumReader<T> : DataFieldReader<T> where T : Enum {
 	protected virtual void Handle() {
 		var current = selector.GetValue(data);
 		if (strIds.TryGetValue(current, out var strId)) {
-			onUpdate.Invoke(Lang.GetText(strId));
+			onUpdate.Invoke(Lang.GetStr(strId));
 		} else {
 			var name = current?.GetType().GetEnumName(current) ?? "None";
 			onUpdate.Invoke(name);

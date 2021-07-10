@@ -34,36 +34,47 @@ MonoBehaviour:
   draftCost: 5
   speed:
     <rawValue>k__BackingField: 12
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 0
   movement:
     <rawValue>k__BackingField: 5
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 0
   health:
     <rawValue>k__BackingField: 180
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 0
     <rawOther>k__BackingField: 180
+    <otherHasChanged>k__BackingField: 1
+    _startOther: 0
   energy:
     <rawValue>k__BackingField: 10
-    <rawOther>k__BackingField: 20
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 0
+    <rawOther>k__BackingField: 18
+    <otherHasChanged>k__BackingField: 1
+    _startOther: 0
   energyRegen:
     <rawValue>k__BackingField: 5
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 0
   defense:
     <rawValue>k__BackingField: 35
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 35
   resistance:
     <rawValue>k__BackingField: 10
-  amps:
-    weaponSkill:
-      <rawValue>k__BackingField: 0
-    spell:
-      <rawValue>k__BackingField: 0
-    skill:
-      <rawValue>k__BackingField: 0
-    physical:
-      <rawValue>k__BackingField: 0
-    magical:
-      <rawValue>k__BackingField: 0
-    pure:
-      <rawValue>k__BackingField: 0
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 10
   silenced:
     <rawValue>k__BackingField: 0
+    <valueHasChanged>k__BackingField: 0
+    _startValue: 0
   disarmed:
     <rawValue>k__BackingField: 0
+    <valueHasChanged>k__BackingField: 0
+    _startValue: 0
   rooted:
     <rawValue>k__BackingField: 0
+    <valueHasChanged>k__BackingField: 0
+    _startValue: 0

@@ -21,7 +21,7 @@ public class DataFieldSelector<T> {
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private Attribute<T> attributeCached;
+	private Attribute<T> ac;
 	private FieldInfo fieldCached;
 
 	public string GetFieldName() => field.attributeName;
@@ -30,39 +30,31 @@ public class DataFieldSelector<T> {
 	public object GetFieldValue(object source) {
 		UpdateCache(source);
 		if (fieldCached != null) return fieldCached.GetValue(source);
-		return attributeCached;
+		return ac;
 	}
 
 	public T GetValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
-		if (attributeCached != null) return TryOverrideValue(source, attributeCached.value);
-		return TryOverrideValue(source, fallbackValue);
+		return TryOverrideValue(source, ac != null && ac.HasValue() ? ac.GetValue() : fallbackValue);
 	}
 	public T GetRawValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
-		if (attributeCached != null) return TryOverrideValue(source, attributeCached.rawValue);
-		return TryOverrideValue(source, fallbackValue);
+		return TryOverrideValue(source, ac != null && ac.HasValue() ? ac.GetRawValue() : fallbackValue);
 	}
 
 	public T GetOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<T> att => att.other,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetOther() : fallbackOther);
 	}
 	public T GetRawOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<T> att => att.rawOther,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetRawOther() : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
@@ -71,11 +63,7 @@ public class DataFieldSelector<T> {
 			var value = fieldCached.GetValue(source);
 			if (value is ToggleValue<T> tv) return tv.enabled;
 		}
-		return attributeCached switch {
-			ToggleDualAttribute<T> att => att.enabled,
-			ToggleAttribute<T> att => att.enabled,
-			_ => fallbackEnabled,
-		};
+		return ac != null && ac.HasEnabled() ? ac.GetEnabled() : fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
@@ -83,11 +71,7 @@ public class DataFieldSelector<T> {
 			var value = fieldCached.GetValue(source);
 			if (value is ToggleValue<T> tv) return tv.enabled;
 		}
-		return attributeCached switch {
-			ToggleDualAttribute<T> att => att.rawEnabled,
-			ToggleAttribute<T> att => att.rawEnabled,
-			_ => fallbackEnabled,
-		};
+		return ac != null && ac.HasEnabled() ? ac.GetRawEnabled() : fallbackEnabled;
 	}
 
 	protected T TryOverrideValue(object source, T value) {
@@ -106,14 +90,14 @@ public class DataFieldSelector<T> {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			attributeCached = null;
+			ac = null;
 			fieldCached = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
 					if (value is Attribute<T> attribute) {
-						attributeCached = attribute;
+						ac = attribute;
 					} else {
 						fieldCached = fieldInfo;
 					}

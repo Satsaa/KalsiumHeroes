@@ -6,17 +6,52 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
-public abstract class AttributeBase {
+public abstract class Attribute : IIdentifiable {
 
-	public enum AttributeProperty {
-		Primary,
-		Secondary,
-		Enabled,
+	public Muc.Data.Event onChanged;
+
+	public virtual bool HasValue() => false;
+	public virtual bool HasOther() => false;
+	public virtual bool HasEnabled() => false;
+
+	public abstract int valueCount { get; }
+
+	public abstract IEnumerable<object> GetObjectValues();
+	public abstract object GetObjectValue(int valueIndex);
+
+	public virtual bool GetEnabled() => true;
+
+	public virtual bool GetRawEnabled() => throw new NotSupportedException();
+
+	public virtual object GetObjectValue() => throw new NotSupportedException();
+	public virtual object GetObjectOther() => throw new NotSupportedException();
+	public virtual object GetObjectEnabled() => throw new NotSupportedException();
+
+	public virtual object GetObjectRawValue() => throw new NotSupportedException();
+	public virtual object GetObjectRawOther() => throw new NotSupportedException();
+	public virtual object GetObjectRawEnabled() => throw new NotSupportedException();
+
+	public virtual bool HasAlteredValue() => throw new NotSupportedException();
+	public virtual bool HasAlteredOther() => throw new NotSupportedException();
+	public virtual bool HasAlteredEnabled() => throw new NotSupportedException();
+
+	public virtual string GetValueLabel() => "Value";
+	public virtual string GetOtherLabel() => "Other";
+	public virtual string GetEnabledLabel() => "Enabled";
+
+	public virtual string identifier => null;
+	public abstract string Format(bool isSource);
+	public virtual string TooltipText(Attribute source) {
+		if (String.IsNullOrEmpty(identifier)) return null;
+		return DefaultTooltip(source);
 	}
 
-	public abstract bool HasAlteredValue(AttributeProperty attributeProperty);
-	public abstract string GetEditorLabel(AttributeProperty attributeProperty);
-	public virtual bool DisplayAlteredInPlay(AttributeProperty attributeProperty) => false;
+	protected string DefaultTooltip(Attribute source, string overrideDisplayName = null) {
+		if (Lang.HasStr($"{identifier}_Tooltip")) {
+			return Lang.GetStr($"{identifier}_Tooltip", source.GetObjectValues().Append(source.GetEnabled()).ToArray());
+		}
+		return $"{overrideDisplayName ?? Lang.GetStr($"{identifier}_DisplayName")}{Lang.GetStr("LabelValueDeliminator", ": ")}{Format(source == this)}";
+	}
 
 }
 
@@ -30,11 +65,12 @@ namespace Editors {
 	using UnityEngine;
 	using UnityEditor;
 	using Object = UnityEngine.Object;
+	using Attribute = global::Attribute;
 	using static Muc.Editor.PropertyUtil;
 	using static Muc.Editor.EditorUtil;
 
-	[CustomPropertyDrawer(typeof(AttributeBase), true)]
-	public class AttributeBaseDrawer : PropertyDrawer {
+	[CustomPropertyDrawer(typeof(Attribute), true)]
+	public class AttributeDrawer : PropertyDrawer {
 
 		public float alteredWidth => expandAltered ? 0.5f : 0.8f;
 		public bool expandAltered = false;
@@ -59,7 +95,7 @@ namespace Editors {
 
 				using (IndentScope(v => 0)) {
 
-					var obj = GetValues<AttributeBase>(property).First();
+					var obj = GetValues<Attribute>(property).First();
 					var objType = obj.GetType();
 					var isRepaint = UnityEngine.Event.current.type == EventType.Repaint;
 					var prevExpandAltered = expandAltered;
@@ -67,10 +103,9 @@ namespace Editors {
 
 					// Enabled boolean
 					if (enabledProperty != null) {
-						var attributeProperty = AttributeBase.AttributeProperty.Enabled;
 						pos.xMin = pos.xMax + spacing;
 						pos.width = 15 + spacing;
-						if (Application.isPlaying && obj.DisplayAlteredInPlay(attributeProperty)) {
+						if (Application.isPlaying) {
 							using (DisabledScope()) {
 								var prop = objType.GetProperty("enabled");
 								var val = (bool)prop.GetValue(obj);
@@ -78,7 +113,7 @@ namespace Editors {
 							}
 						} else {
 							EditorGUI.PropertyField(pos, enabledProperty, GUIContent.none);
-							if (obj.HasAlteredValue(attributeProperty)) {
+							if (obj.HasAlteredEnabled()) {
 								using (DisabledScope()) {
 									pos.x = pos.xMax;
 									var prop = objType.GetProperty("enabled");
@@ -91,13 +126,12 @@ namespace Editors {
 
 					// Primary value
 					if (valueProperty != null) {
-						var attributeProperty = AttributeBase.AttributeProperty.Primary;
-						var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? obj.GetEditorLabel(attributeProperty));
+						var valueLabel = new GUIContent(labelAttribute?.primaryLabel ?? obj.GetValueLabel());
 						labelWidth = GUI.skin.label.CalcSize(valueLabel).x - spacing;
 						pos.xMin = pos.xMax + spacing;
 						pos.width = (position.xMax - pos.xMin) / 2 - spacing;
 						if (otherProperty == null) pos.xMax = position.xMax;
-						if (Application.isPlaying && obj.DisplayAlteredInPlay(attributeProperty)) {
+						if (Application.isPlaying) {
 							using (DisabledScope()) {
 								var prop = objType.GetProperty("value");
 								var val = prop.GetValue(obj);
@@ -109,10 +143,10 @@ namespace Editors {
 							}
 						} else {
 							var origMax = pos.xMax;
-							if (obj.HasAlteredValue(attributeProperty)) pos.width *= alteredWidth;
+							if (obj.HasAlteredValue()) pos.width *= alteredWidth;
 							EditorGUI.PropertyField(pos, valueProperty, valueLabel);
 
-							if (obj.HasAlteredValue(attributeProperty)) {
+							if (obj.HasAlteredValue()) {
 								using (DisabledScope()) {
 									pos.xMin = pos.xMax;
 									pos.xMax = origMax;
@@ -130,12 +164,11 @@ namespace Editors {
 
 					// Secondary value
 					if (otherProperty != null) {
-						var attributeProperty = AttributeBase.AttributeProperty.Secondary;
-						var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? obj.GetEditorLabel(attributeProperty));
+						var baseLabel = new GUIContent(labelAttribute?.secondaryLabel ?? obj.GetOtherLabel());
 						labelWidth = GUI.skin.label.CalcSize(baseLabel).x - spacing;
 						pos.xMin = pos.xMax + spacing;
 						pos.xMax = position.xMax;
-						if (Application.isPlaying && obj.DisplayAlteredInPlay(attributeProperty)) {
+						if (Application.isPlaying) {
 							using (DisabledScope()) {
 								var prop = objType.GetProperty("other");
 								var val = prop.GetValue(obj);
@@ -147,10 +180,10 @@ namespace Editors {
 							}
 						} else {
 							var origMax = pos.xMax;
-							if (obj.HasAlteredValue(attributeProperty)) pos.width *= alteredWidth;
+							if (obj.HasAlteredOther()) pos.width *= alteredWidth;
 							EditorGUI.PropertyField(pos, otherProperty, baseLabel);
 
-							if (obj.HasAlteredValue(attributeProperty)) {
+							if (obj.HasAlteredOther()) {
 								using (DisabledScope()) {
 									pos.xMin = pos.xMax;
 									pos.xMax = origMax;

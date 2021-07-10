@@ -9,7 +9,7 @@ public class SpeedGainAbilityData : NoTargetAbilityData {
 	public override Type createTypeConstraint => typeof(SpeedGainAbility);
 
 	[Tooltip("Radius of checked for other units")]
-	public Attribute<int> radius = new Attribute<int>(2);
+	public Attribute<int> radius = new(2);
 
 	[Tooltip("This is the actual speed gain modifier gained from using the spell")]
 	public ModifierData speedGainModifier;

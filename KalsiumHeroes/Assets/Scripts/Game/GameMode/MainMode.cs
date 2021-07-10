@@ -16,11 +16,11 @@ public class MainMode : GameMode {
 	public override bool ValidateDraft(IEnumerable<UnitData> unitDatas, out string failMessage) {
 		var count = unitDatas.Count();
 		if (count < minDraftCount) {
-			failMessage = Lang.GetText("Draft_MinCountNotReached");
+			failMessage = Lang.GetStr("Draft_MinCountNotReached");
 			return false;
 		}
 		if (count > maxDraftCount) {
-			failMessage = Lang.GetText("Draft_MaxCountExceeded");
+			failMessage = Lang.GetStr("Draft_MaxCountExceeded");
 			return false;
 		}
 
@@ -30,7 +30,7 @@ public class MainMode : GameMode {
 		}
 
 		if (cost > maxDraftCost) {
-			failMessage = Lang.GetText("Draft_MaxCostExceeded");
+			failMessage = Lang.GetStr("Draft_MaxCostExceeded");
 			return false;
 		}
 

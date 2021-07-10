@@ -23,7 +23,7 @@ public class NumericDataFieldSelector {
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private AttributeBase attributeCached;
+	private Attribute ac;
 	private FieldInfo fieldCached;
 
 	public string GetFieldName() => field.attributeName;
@@ -32,78 +32,48 @@ public class NumericDataFieldSelector {
 	public object GetFieldValue(object source) {
 		UpdateCache(source);
 		if (fieldCached != null) return fieldCached.GetValue(source);
-		return attributeCached;
+		return ac;
 	}
 
 	public float GetValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return AsFloat(fieldCached.GetValue(source));
-		return TryOverrideValue(source, attributeCached switch {
-			Attribute<float> att => att.value,
-			Attribute<int> att => att.value,
-			_ => fallbackValue,
-		});
+		return TryOverrideValue(source, ac != null && ac.HasValue() ? AsFloat(ac.GetObjectValue()) : fallbackValue);
 	}
 	public float GetRawValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return AsFloat(fieldCached.GetValue(source));
-		return TryOverrideValue(source, attributeCached switch {
-			Attribute<float> att => att.rawValue,
-			Attribute<int> att => att.rawValue,
-			_ => fallbackValue,
-		});
+		return TryOverrideValue(source, ac != null && ac.HasValue() ? AsFloat(ac.GetObjectRawValue()) : fallbackValue);
 	}
 
 	public float GetOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<float> att => att.other,
-			DualAttribute<int> att => att.other,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, ac != null && ac.HasOther() ? AsFloat(ac.GetObjectOther()) : fallbackOther);
 	}
 	public float GetRawOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<float> att => att.rawOther,
-			DualAttribute<int> att => att.rawOther,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, ac != null && ac.HasOther() ? AsFloat(ac.GetObjectRawOther()) : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
 		UpdateCache(source);
 		if (fieldCached != null) {
 			var value = fieldCached.GetValue(source);
-			if (value is ToggleValue<int> tv1) return tv1.enabled;
-			if (value is ToggleValue<float> tv2) return tv2.enabled;
+			if (value is ToggleValue<float> tv) return tv.enabled;
 		}
-		return attributeCached switch {
-			ToggleDualAttribute<float> att => att.enabled,
-			ToggleDualAttribute<int> att => att.enabled,
-			ToggleAttribute<float> att => att.enabled,
-			ToggleAttribute<int> att => att.enabled,
-			_ => fallbackEnabled,
-		};
+		return ac != null && ac.HasEnabled() ? ac.GetEnabled() : fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
 		if (fieldCached != null) {
 			var value = fieldCached.GetValue(source);
-			if (value is ToggleValue<int> tv1) return tv1.enabled;
-			if (value is ToggleValue<float> tv2) return tv2.enabled;
+			if (value is ToggleValue<float> tv) return tv.enabled;
 		}
-		return attributeCached switch {
-			ToggleDualAttribute<float> att => att.rawEnabled,
-			ToggleDualAttribute<int> att => att.rawEnabled,
-			ToggleAttribute<float> att => att.rawEnabled,
-			ToggleAttribute<int> att => att.rawEnabled,
-			_ => fallbackEnabled,
-		};
+		return ac != null && ac.HasEnabled() ? ac.GetRawEnabled() : fallbackEnabled;
 	}
 
 	protected float AsFloat(object value) {
@@ -130,14 +100,14 @@ public class NumericDataFieldSelector {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			attributeCached = null;
+			ac = null;
 			fieldCached = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
-					if (value is AttributeBase) {
-						this.attributeCached = value switch {
+					if (value is Attribute) {
+						this.ac = value switch {
 							Attribute<float> att => att,
 							Attribute<int> att => att,
 							_ => null,
@@ -153,17 +123,17 @@ public class NumericDataFieldSelector {
 
 #if DEBUG // Wow so defensive
 	[Obsolete("Pass the containing object instead.")]
-	public float GetValue(AttributeBase attribute) => throw new ArgumentException();
+	public float GetValue(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public float GetRawValue(AttributeBase attribute) => throw new ArgumentException();
+	public float GetRawValue(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public float GetOther(AttributeBase attribute) => throw new ArgumentException();
+	public float GetOther(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public float GetRawOther(AttributeBase attribute) => throw new ArgumentException();
+	public float GetRawOther(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public bool GetEnabled(AttributeBase attribute) => throw new ArgumentException();
+	public bool GetEnabled(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public bool GetRawEnabled(AttributeBase attribute) => throw new ArgumentException();
+	public bool GetRawEnabled(Attribute attribute) => throw new ArgumentException();
 #endif
 }
 

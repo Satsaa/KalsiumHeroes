@@ -8,10 +8,10 @@ using UnityEngine;
 /// <summary>
 /// Contains a list of data sources
 /// </summary>
-public abstract class GameMode : StoredScriptableObject, IIDentifiable {
+public abstract class GameMode : StoredScriptableObject, IIdentifiable {
 
 	public string identifier;
-	string IIDentifiable.GetIdentifier() => identifier;
+	string IIdentifiable.identifier => identifier;
 	public override string storageName => identifier;
 
 	public string version = "0.0.0";

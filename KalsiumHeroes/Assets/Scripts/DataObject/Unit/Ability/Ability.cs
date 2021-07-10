@@ -44,8 +44,8 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	public virtual bool IsReady() {
 		if (data.uses.enabled && data.uses.value <= 0) return false;
 		if (data.energyCost.value > unit.data.energy.value) return false;
-		if (data.abilityType == AbilityType.Spell && unit.data.silenced.value) return false;
-		if (data.abilityType == AbilityType.WeaponSkill && unit.data.disarmed.value) return false;
+		if (data.abilityType.value == AbilityType.Spell && unit.data.silenced.value) return false;
+		if (data.abilityType.value == AbilityType.WeaponSkill && unit.data.disarmed.value) return false;
 		if (data.charges.value <= 0) return false;
 		return true;
 	}
@@ -76,36 +76,6 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	/// <summary> Calculates damage for later use. Amplifications and modifiers are applied to the ref values. </summary>
 	public void CalculateDamage(ref float damage, ref DamageType damageType) {
 		var abilityType = this.data.abilityType;
-		switch (abilityType) {
-			default:
-			case AbilityType.Base:
-				Debug.LogWarning($"Unexpected {nameof(AbilityType)} {abilityType.ToString()}.");
-				break;
-			case AbilityType.Skill:
-				damage *= 1f + unit.data.amps.skill.value;
-				break;
-			case AbilityType.WeaponSkill:
-				damage *= 1f + unit.data.amps.weaponSkill.value;
-				break;
-			case AbilityType.Spell:
-				damage *= 1f + unit.data.amps.spell.value;
-				break;
-		}
-
-		switch (damageType) {
-			case DamageType.Physical:
-				damage *= 1f + unit.data.amps.physical.value;
-				break;
-			case DamageType.Magical:
-				damage *= 1f + unit.data.amps.magical.value;
-				break;
-			case DamageType.Pure:
-				damage *= 1f + unit.data.amps.pure.value;
-				break;
-			default:
-				Debug.LogWarning($"Unexpected {nameof(DamageType)} {damageType.ToString()}.");
-				break;
-		}
 		using (var scope = new Hooks.Scope()) {
 			var (_damage, _damageType) = (damage, damageType);
 			unit.hooks.ForEach<IOnCalculateDamage_Unit>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));

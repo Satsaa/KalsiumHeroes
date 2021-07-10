@@ -20,9 +20,9 @@ public class NumericAttributeSelector {
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private AttributeBase attributeCached;
+	private Attribute attributeCached;
 
-	public AttributeBase GetAttribute(object source) {
+	public Attribute GetAttribute(object source) {
 		UpdateCache(source);
 		return attributeCached;
 	}
@@ -115,17 +115,17 @@ public class NumericAttributeSelector {
 
 #if DEBUG // Wow so defensive
 	[Obsolete("Pass the containing object instead.")]
-	public float GetValue(AttributeBase attribute) => throw new ArgumentException();
+	public float GetValue(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public float GetRawValue(AttributeBase attribute) => throw new ArgumentException();
+	public float GetRawValue(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public float GetOther(AttributeBase attribute) => throw new ArgumentException();
+	public float GetOther(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public float GetRawOther(AttributeBase attribute) => throw new ArgumentException();
+	public float GetRawOther(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public bool GetEnabled(AttributeBase attribute) => throw new ArgumentException();
+	public bool GetEnabled(Attribute attribute) => throw new ArgumentException();
 	[Obsolete("Pass the containing object instead.")]
-	public bool GetRawEnabled(AttributeBase attribute) => throw new ArgumentException();
+	public bool GetRawEnabled(Attribute attribute) => throw new ArgumentException();
 #endif
 }
 

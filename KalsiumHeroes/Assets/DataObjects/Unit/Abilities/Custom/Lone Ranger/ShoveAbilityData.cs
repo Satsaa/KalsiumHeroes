@@ -12,5 +12,5 @@ public class ShoveAbilityData : UnitTargetAbilityData {
 	public ModifierData rootModifier;
 
 	[Tooltip("The maximum amount of tiles the target is shoved.")]
-	public Attribute<int> shoveDist = new Attribute<int>(4);
+	public Attribute<int> shoveDist = new(4);
 }

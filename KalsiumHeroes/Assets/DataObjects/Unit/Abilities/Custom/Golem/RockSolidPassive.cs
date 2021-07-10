@@ -45,7 +45,6 @@ public class RockSolidPassive : Passive, IOnChangePosition_Global, IOnDeath_Glob
 	public void OnSpawn() => UpdateAlterers();
 
 	protected void UpdateAlterers() {
-		//!!! No redundancy checks
 		defAlt.Update();
 		resAlt.Update();
 	}

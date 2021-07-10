@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 using System.Text.RegularExpressions;
 
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
-public abstract class DataObjectData : ScriptableObject, IIDentifiable {
+public abstract class DataObjectData : ScriptableObject, IIdentifiable {
 
 	/// <summary> Base type for createType. </summary>
 	public abstract Type createTypeConstraint { get; }
@@ -14,9 +14,9 @@ public abstract class DataObjectData : ScriptableObject, IIDentifiable {
 	[Tooltip("Create this Type of DataObject for this data.")]
 	public SerializedType<DataObject> createType;
 
-	[Tooltip("String identifier of this DataObject. (\"unit_oracle\")")]
+	[Tooltip("String identifier of this DataObject. (\"Unit_Oracle\")")]
 	public string identifier;
-	string IIDentifiable.GetIdentifier() => identifier;
+	string IIdentifiable.identifier => identifier;
 
 	private static Regex removeData = new(@"Data$");
 	private string _tooltip;
@@ -29,17 +29,21 @@ public abstract class DataObjectData : ScriptableObject, IIDentifiable {
 			}
 			var current = this.GetType();
 			while (true) {
-				if (current == typeof(DataObjectData)) {
-					return _tooltip = "DataObject_Info";
-				} else {
-					var converted = current.FullName;
-					converted = removeData.Replace(converted, "");
-					converted += "_Info";
-					if (Tooltips.instance.TooltipExists(converted)) {
-						return _tooltip = converted;
-					}
+				var converted = current.FullName;
+				converted = removeData.Replace(converted, "");
+				converted += "_Info";
+				if (Tooltips.instance.TooltipExists(converted) || current == typeof(DataObjectData)) {
+					return _tooltip = converted;
 				}
 				current = current.BaseType;
+			}
+		}
+	}
+
+	protected virtual void OnValidate() {
+		if (createType.type == null) {
+			if (!createTypeConstraint.IsAbstract) {
+				createType.type = createTypeConstraint;
 			}
 		}
 	}
@@ -145,7 +149,7 @@ namespace Editors {
 				EditorGUI.LabelField(position, label);
 				position.xMin += EditorGUIUtility.labelWidth + spacing;
 				// Dropdown
-				var hint = new GUIContent(label) { text = value.type == null ? "null" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
+				var hint = new GUIContent(label) { text = value.type == null ? "Unselected!" : $"{value.type} ({value.type.Assembly.GetName().Name})" }; // Inherit state from label
 				if (EditorGUI.DropdownButton(position, new GUIContent(hint), FocusType.Keyboard)) {
 					var types = GetCompatibleTypes(value.type, t.createTypeConstraint);
 					var menu = TypeSelectMenu(types.ToList(), values.Select(v => v.type), type => OnSelect(createType, type));

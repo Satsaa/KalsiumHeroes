@@ -21,7 +21,7 @@ public class AttributeFieldName {
 						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
 						&& (v.IsSubclassOf(typeof(Object)) || v.CustomAttributes.Any(v => v.AttributeType == typeof(SerializableAttribute)))
 					).SelectMany(v => v.GetFields()
-						.Where(f => typeof(AttributeBase).IsAssignableFrom(f.FieldType))
+						.Where(f => typeof(Attribute).IsAssignableFrom(f.FieldType))
 						.Select(v => v.Name)).Distinct().ToList();
 			list.Sort();
 			cache = list;

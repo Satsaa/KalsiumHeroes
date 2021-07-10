@@ -39,7 +39,7 @@ public class Lang : Singleton<Lang> {
 			try {
 				var texts = JsonConvert.DeserializeObject<Dictionary<string, string>>(ta.text);
 				if (texts == null) {
-					failMessage = GetText("Lang_FileCorrupted");
+					failMessage = GetStr("Lang_FileCorrupted");
 					return false;
 				}
 				Lang.texts = texts;
@@ -59,33 +59,91 @@ public class Lang : Singleton<Lang> {
 				}
 				return true;
 			} catch (System.Exception) {
-				failMessage = GetText("Lang_CannotLoadLanguage");
+				failMessage = GetStr("Lang_CannotLoadLanguage");
 			}
 		} catch (System.Exception) {
-			failMessage = GetText("Lang_FileCorrupted");
+			failMessage = GetStr("Lang_FileCorrupted");
 		}
 		return false;
 	}
 
-	public static string GetText(string strId) {
+	public static bool HasStr(string strId) {
+		return Lang.texts.ContainsKey(strId);
+	}
+
+	public static bool TryGetStr(string strId, out string str) {
+		return Lang.texts.TryGetValue(strId, out str);
+	}
+
+	public static bool TryGetStr(string strId, out string str, object arg0) {
+		if (Lang.texts.TryGetValue(strId, out str)) {
+			str = String.Format(str, arg0);
+			return true;
+		}
+		return false;
+	}
+	public static bool TryGetStr(string strId, out string str, object arg0, object arg1) {
+		if (Lang.texts.TryGetValue(strId, out str)) {
+			str = String.Format(str, arg0, arg1);
+			return true;
+		}
+		return false;
+	}
+	public static bool TryGetStr(string strId, out string str, object arg0, object arg1, object arg2) {
+		if (Lang.texts.TryGetValue(strId, out str)) {
+			str = String.Format(str, arg0, arg1, arg2);
+			return true;
+		}
+		return false;
+	}
+	public static bool TryGetStr(string strId, out string str, params object[] args) {
+		if (Lang.texts.TryGetValue(strId, out str)) {
+			str = String.Format(str, args);
+			return true;
+		}
+		return false;
+	}
+
+	public static string GetStr(string strId) {
 		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return res;
 		return strId;
 	}
-	public static string GetText(string strId, object arg0) {
+	public static string GetStr(string strId, object arg0) {
 		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
 		return strId;
 	}
-	public static string GetText(string strId, object arg0, object arg1) {
+	public static string GetStr(string strId, object arg0, object arg1) {
 		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
 		return strId;
 	}
-	public static string GetText(string strId, object arg0, object arg1, object arg2) {
+	public static string GetStr(string strId, object arg0, object arg1, object arg2) {
 		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
 		return strId;
 	}
-	public static string GetText(string strId, params object[] args) {
+	public static string GetStr(string strId, params object[] args) {
 		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
 		return strId;
+	}
+
+	public static string GetStr(string strId, string defaultStr) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return res;
+		return defaultStr;
+	}
+	public static string GetStr(string strId, string defaultStr, object arg0) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0);
+		return defaultStr;
+	}
+	public static string GetStr(string strId, string defaultStr, object arg0, object arg1) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1);
+		return defaultStr;
+	}
+	public static string GetStr(string strId, string defaultStr, object arg0, object arg1, object arg2) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, arg0, arg1, arg2);
+		return defaultStr;
+	}
+	public static string GetStr(string strId, string defaultStr, params object[] args) {
+		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
+		return defaultStr;
 	}
 
 	[Serializable]
@@ -104,13 +162,26 @@ public class Lang : Singleton<Lang> {
 
 		public string Format(string format, object arg, IFormatProvider formatProvider) {
 			// {0:?apple|apples}
-			if (format[0] == '?' && arg is IComparable argComp) {
-				for (int i = 0; i < format.Length; i++) {
-					var c = format[i];
-					if (c == '|') {
-						return argComp.CompareTo(1) == 1
-							? format.Substring(1, i - 1)
-							: format.Substring(i + 1, format.Length - i - 1);
+			if (format[0] == '?') {
+				// {bool:?yes|no}
+				if (arg is bool argBool) {
+					for (int i = 0; i < format.Length; i++) {
+						var c = format[i];
+						if (c == '|') {
+							return argBool
+								? format.Substring(i + 1, format.Length - i - 1)
+								: format.Substring(1, i - 1);
+						}
+					}
+					// {int:?apple|apples}
+				} else if (arg is IComparable argComp) {
+					for (int i = 0; i < format.Length; i++) {
+						var c = format[i];
+						if (c == '|') {
+							return argComp.CompareTo(1) == 1
+								? format.Substring(1, i - 1)
+								: format.Substring(i + 1, format.Length - i - 1);
+						}
 					}
 				}
 			}

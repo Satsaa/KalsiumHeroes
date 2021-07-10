@@ -153,7 +153,7 @@ MonoBehaviour:
     _name: 
   typeConstraint2:
     _name: 
-  msgIdSuffix: DISPLAY_NAME
+  strIdSuffix: DisplayName
   onUpdate:
     m_PersistentCalls:
       m_Calls:

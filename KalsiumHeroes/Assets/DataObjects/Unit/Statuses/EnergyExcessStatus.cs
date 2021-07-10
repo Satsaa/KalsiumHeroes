@@ -21,37 +21,6 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 			updateEvents: new[] { stacks.onValueChanged }
 		);
 
-		unit.data.amps.weaponSkill.ConfigureValueAlterer(add, this,
-			applier: (v, a) => v + a,
-			updater: () => data.amps.weaponSkill.value * stacks.value,
-			updateEvents: new[] { data.amps.weaponSkill.onValueChanged, stacks.onValueChanged }
-		);
-		unit.data.amps.spell.ConfigureValueAlterer(add, this,
-			applier: (v, a) => v + a,
-			updater: () => data.amps.spell.value * stacks.value,
-			updateEvents: new[] { data.amps.weaponSkill.onValueChanged, stacks.onValueChanged }
-		);
-		unit.data.amps.skill.ConfigureValueAlterer(add, this,
-			applier: (v, a) => v + a,
-			updater: () => data.amps.skill.value * stacks.value,
-			updateEvents: new[] { data.amps.weaponSkill.onValueChanged, stacks.onValueChanged }
-		);
-
-		unit.data.amps.pure.ConfigureValueAlterer(add, this,
-			applier: (v, a) => v + a,
-			updater: () => data.amps.pure.value * stacks.value,
-			updateEvents: new[] { data.amps.weaponSkill.onValueChanged, stacks.onValueChanged }
-		);
-		unit.data.amps.physical.ConfigureValueAlterer(add, this,
-			applier: (v, a) => v + a,
-			updater: () => data.amps.physical.value * stacks.value,
-			updateEvents: new[] { data.amps.weaponSkill.onValueChanged, stacks.onValueChanged }
-		);
-		unit.data.amps.magical.ConfigureValueAlterer(add, this,
-			applier: (v, a) => v + a,
-			updater: () => data.amps.magical.value * stacks.value,
-			updateEvents: new[] { data.amps.weaponSkill.onValueChanged, stacks.onValueChanged }
-		);
 	}
 
 
@@ -68,7 +37,15 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	}
 
 	void IOnCalculateDamage_Unit.OnCalculateDamage(Modifier source, ref float damage, ref DamageType type) {
-		if (source is Ability) didCalculateDamage = true;
+		if (source is Ability ab) {
+			if (data.abiTypeMults.TryGetValue(ab.data.abilityType.value, out var mult1)) {
+				damage *= mult1;
+			}
+			if (data.dmgTypeMults.TryGetValue(type, out var mult2)) {
+				damage *= mult2;
+			}
+			didCalculateDamage = true;
+		}
 	}
 
 	void IOnAbilityCastEnd_Unit.OnAbilityCastEnd(Ability ability) {

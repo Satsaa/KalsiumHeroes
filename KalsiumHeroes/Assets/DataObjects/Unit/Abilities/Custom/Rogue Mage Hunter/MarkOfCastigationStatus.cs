@@ -9,7 +9,7 @@ public class MarkOfCastigationStatus : Status, IOnAbilityCastEnd_Unit {
 	public override Type dataType => typeof(MarkOfCastigationStatusData);
 
 	public void OnAbilityCastEnd(Ability ability) {
-		if (ability.data.abilityType == AbilityType.Spell) {
+		if (ability.data.abilityType.value == AbilityType.Spell) {
 			Modifier.Create(ability.unit, data.silenceModifier);
 			Modifier.Create(ability.unit, data.markOfPreyModifier);
 			ability.unit.DealCalculatedDamage(this, data.damage.value, data.damageType);

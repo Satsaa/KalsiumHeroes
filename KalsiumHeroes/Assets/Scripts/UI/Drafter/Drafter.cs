@@ -64,7 +64,7 @@ public class Drafter : UIBehaviour {
 	public void Submit() {
 		if (Validate(out var failMessage)) {
 			mode.draft = selection.Select(v => v.identifier).ToArray();
-			submitPopup.Show(Lang.GetText("Popup_DraftSubmitSuccess_Title"));
+			submitPopup.Show(Lang.GetStr("Popup_DraftSubmitSuccess_Title"));
 		} else {
 			submitPopup.Show(failMessage);
 		}

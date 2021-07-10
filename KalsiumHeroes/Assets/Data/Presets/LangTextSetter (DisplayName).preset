@@ -6,7 +6,7 @@ Preset:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LangTextSetter (DISPLAY_NAME)
+  m_Name: LangTextSetter (DisplayName)
   m_TargetType:
     m_NativeTypeID: 114
     m_ManagedTypePPtr: {fileID: 11500000, guid: 72f5c303454716848868eae5bf7d3cc8, type: 3}
@@ -34,7 +34,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: strIdSuffix
-    value: DISPLAY_NAME
+    value: DisplayName
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: onUpdate.m_PersistentCalls.m_Calls.Array.size

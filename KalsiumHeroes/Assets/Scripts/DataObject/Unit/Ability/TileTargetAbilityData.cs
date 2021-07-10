@@ -12,6 +12,10 @@ public class TileTargetAbilityData : TargetAbilityData {
 	public TileTargetType targetType;
 
 	[Tooltip("Radius of the affected tiles around the target.")]
-	public Attribute<int> radius = new Attribute<int>(0);
+	public Radius radius;
 
+	public class Radius : Attribute<int> {
+		public override string identifier => "Attribute_TileTargetAbility_Radius";
+		public override string TooltipText(Attribute source) => value == 0 ? null : DefaultTooltip(source);
+	}
 }

@@ -1,4 +1,4 @@
 
-public interface IIDentifiable {
-	string GetIdentifier();
+public interface IIdentifiable {
+	string identifier { get; }
 }

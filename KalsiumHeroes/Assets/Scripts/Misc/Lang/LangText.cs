@@ -20,7 +20,7 @@ public class LangText : TMPro.TextMeshProUGUI {
 		base.Awake();
 	}
 
-	void UpdateText() {
-		text = Lang.GetText(strId);
+	protected virtual void UpdateText() {
+		text = Lang.GetStr(strId);
 	}
 }

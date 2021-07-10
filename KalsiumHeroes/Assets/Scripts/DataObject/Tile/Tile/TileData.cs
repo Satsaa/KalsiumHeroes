@@ -11,20 +11,58 @@ public class TileData : MasterData {
 	public override Type createTypeConstraint => typeof(Tile);
 
 	[Tooltip("Is this tile considered passable?")]
-	public Attribute<bool> passable = new Attribute<bool>(true);
+	public Passable passable;
 
 	[Tooltip("Can this Tile be seen through?")]
-	public Attribute<bool> transparent = new Attribute<bool>(true);
+	public Transparent transparent;
 
 	[Tooltip("Cost of movement to this Tile.")]
-	public Attribute<float> moveCost = new Attribute<float>(1);
+	public MoveCost moveCost;
 
 	[Tooltip("More appealing Tiles are preferred when pathfinding.")]
-	public Attribute<float> appeal = new Attribute<float>(0);
+	public Appeal appeal;
 
-	[Tooltip("EdgeModifiers added to the Edges around this Tile. Please leave at length 6.")]
+	[Tooltip("EdgeModifiers added to the Edges around this Tile.")]
 	public TileEdgeModifierCollection edgeModifiers;
 
+	[Serializable]
+	public class Passable : Attribute<bool> {
+		Passable() : base(true) { }
+		public override string identifier => "Attribute_Tile_Passable";
+		public override string TooltipText(Attribute source) {
+			if (value == false) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Transparent : Attribute<bool> {
+		Transparent() : base(true) { }
+		public override string identifier => "Attribute_Tile_Transparent";
+		public override string TooltipText(Attribute source) {
+			if (value == false) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class MoveCost : Attribute<float> {
+		MoveCost() : base(1) { }
+		public override string identifier => "Attribute_Tile_MoveCost";
+		public override string TooltipText(Attribute source) {
+			if (value != 1) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Appeal : Attribute<float> {
+		public override string identifier => "Attribute_Tile_Appeal";
+		public override string TooltipText(Attribute source) {
+			if (value != 0) return DefaultTooltip(source);
+			return null;
+		}
+	}
 }
 
 [Serializable]

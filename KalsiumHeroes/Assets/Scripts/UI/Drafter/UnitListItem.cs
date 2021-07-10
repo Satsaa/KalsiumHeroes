@@ -30,7 +30,7 @@ public class UnitListItem : UIBehaviour {
 		this.unitData = unitData;
 		this.unitEnabled = enabled;
 		sprite.sprite = unitData.sprite;
-		displayName.text = Lang.GetText($"{unitData.identifier}_DisplayName");
+		displayName.text = Lang.GetStr($"{unitData.identifier}_DisplayName");
 		toggle.isOn = unitEnabled;
 	}
 

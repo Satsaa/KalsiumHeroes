@@ -50,10 +50,10 @@ public class PopupPreset : ScriptableObject {
 		// Override if needed
 	}
 
-	public Popup Show() => Show(Lang.GetText(titleStrId), Lang.GetText(msgStrId), new Option(Lang.GetText("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
-	public Popup Show(string title) => Show(null, null, new Option(Lang.GetText("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show() => Show(Lang.GetStr(titleStrId), Lang.GetStr(msgStrId), new Option(Lang.GetStr("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show(string title) => Show(null, null, new Option(Lang.GetStr("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
 
-	public Popup Show(string title, string message) => Show(null, message, new Option(Lang.GetText("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
+	public Popup Show(string title, string message) => Show(null, message, new Option(Lang.GetStr("Ok"), null, PopupOption.Flags.Cancel | PopupOption.Flags.Default));
 	public Popup Show(string title, string message, params Option[] options) {
 		if (popupPrefab == null || optionPrefab == null) {
 			Debug.LogError($"{nameof(popupPrefab)} or {nameof(optionPrefab)} is not set. Alternatively a reference may be broken and you need to reassign them in editor. To do that double click this message and press the reassign button.", this);

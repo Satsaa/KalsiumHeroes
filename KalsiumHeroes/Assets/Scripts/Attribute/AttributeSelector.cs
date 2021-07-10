@@ -18,54 +18,40 @@ public class AttributeSelector<T> {
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private Attribute<T> attributeCached;
+	private Attribute<T> ac;
 
 	public Attribute<T> GetAttribute(object source) {
 		UpdateCache(source);
-		return attributeCached;
+		return ac;
 	}
 
 	public T GetValue(object source) {
 		UpdateCache(source);
-		if (attributeCached != null) return TryOverrideValue(source, attributeCached.value);
+		if (ac != null) return TryOverrideValue(source, ac.value);
 		return TryOverrideValue(source, fallbackValue);
 	}
 	public T GetRawValue(object source) {
 		UpdateCache(source);
-		if (attributeCached != null) return TryOverrideValue(source, attributeCached.rawValue);
+		if (ac != null) return TryOverrideValue(source, ac.rawValue);
 		return TryOverrideValue(source, fallbackValue);
 	}
 
 	public T GetOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<T> att => att.other,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetOther() : fallbackOther);
 	}
 	public T GetRawOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<T> att => att.rawOther,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetRawOther() : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
-			ToggleDualAttribute<T> att => att.enabled,
-			ToggleAttribute<T> att => att.enabled,
-			_ => fallbackEnabled,
-		};
+		return ac != null && ac.HasEnabled() ? ac.GetEnabled() : fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
-			ToggleDualAttribute<T> att => att.rawEnabled,
-			ToggleAttribute<T> att => att.rawEnabled,
-			_ => fallbackEnabled,
-		};
+		return ac != null && ac.HasEnabled() ? ac.GetRawEnabled() : fallbackEnabled;
 	}
 
 	protected T TryOverrideValue(object source, T value) {
@@ -84,13 +70,13 @@ public class AttributeSelector<T> {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			attributeCached = null;
+			ac = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
 					if (value is Attribute<T> attribute) {
-						attributeCached = attribute;
+						ac = attribute;
 					}
 				}
 			}

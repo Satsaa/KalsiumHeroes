@@ -11,7 +11,7 @@ public class AbilityTypeReader : EnumReader<AbilityType> {
 
 	protected override void Handle() {
 		if (data is PassiveData) {
-			onUpdate.Invoke(Lang.GetText("ABILITY_TYPE_PASSIVE"));
+			onUpdate.Invoke(Lang.GetStr("ABILITY_TYPE_PASSIVE"));
 		} else {
 			base.Handle();
 		}

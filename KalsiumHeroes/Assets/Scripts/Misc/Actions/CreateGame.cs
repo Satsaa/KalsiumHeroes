@@ -16,9 +16,9 @@ public class CreateGame : MonoBehaviour {
 
 		var codeInputField = Instantiate(codeInputPrefab);
 
-		var msgBox = popupPreset.Show(Lang.GetText("Popup_CreateGame_Title"), Lang.GetText("Popup_CreateGame_Message"),
-			new PopupPreset.Option(Lang.GetText("Create"), () => OnCreate(codeInputField.text), PopupOption.Flags.Default),
-			new PopupPreset.Option(Lang.GetText("Cancel"), null, PopupOption.Flags.Cancel)
+		var msgBox = popupPreset.Show(Lang.GetStr("Popup_CreateGame_Title"), Lang.GetStr("Popup_CreateGame_Message"),
+			new PopupPreset.Option(Lang.GetStr("Create"), () => OnCreate(codeInputField.text), PopupOption.Flags.Default),
+			new PopupPreset.Option(Lang.GetStr("Cancel"), null, PopupOption.Flags.Cancel)
 		);
 
 		msgBox.AddCustomObject(codeInputField.gameObject);

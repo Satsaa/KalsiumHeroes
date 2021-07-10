@@ -23,7 +23,7 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 
 	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ability) {
-			if (ability.data.abilityType == AbilityType.WeaponSkill && Game.grid.Distance(ability.unit.tile, this.unit.tile) <= 1) {
+			if (ability.data.abilityType.value == AbilityType.WeaponSkill && Game.grid.Distance(ability.unit.tile, this.unit.tile) <= 1) {
 				DealDamage(ability.unit, data.damage.value, data.damageType);
 				Remove();
 			}
