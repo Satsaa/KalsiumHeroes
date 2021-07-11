@@ -33,35 +33,35 @@ public abstract class AbilityData : UnitModifierData {
 	[Serializable]
 	public class AbilityType : Attribute<global::AbilityType> {
 		public override string identifier => "Attribute_Ability_AbilityType";
-		public override string TooltipText(Attribute source) => value == global::AbilityType.Base ? null : DefaultTooltip(source, Lang.GetStr("Targets"));
+		public override string TooltipText(IAttribute source) => value == global::AbilityType.Base ? null : DefaultTooltip(source, Lang.GetStr("Targets"));
 		public override string Format(bool isSource) => Lang.GetStr($"{identifier}_{value.ToString()}");
 	}
 
 	[Serializable]
 	public class EnergyCost : Attribute<int> {
 		public override string identifier => "Attribute_Ability_EnergyCost";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (value != 0) return DefaultTooltip(source);
 			return null;
 		}
 	}
 
 	[Serializable]
-	public class Cooldown : DualAttribute<int> {
+	public class Cooldown : MaxAttribute<int> {
 		Cooldown() : base(0, 1) { }
 		public override string identifier => "Attribute_Ability_Cooldown";
-		public override string TooltipText(Attribute source) {
-			if (other != 1) return DefaultTooltip(source);
+		public override string TooltipText(IAttribute source) {
+			if (max != 1) return DefaultTooltip(source);
 			return null;
 		}
 	}
 
 	[Serializable]
-	public class Charges : DualAttribute<int> {
+	public class Charges : MaxAttribute<int> {
 		Charges() : base(1, 1) { }
 		public override string identifier => "Attribute_Ability_Charges";
-		public override string TooltipText(Attribute source) {
-			if (other != 1) return DefaultTooltip(source);
+		public override string TooltipText(IAttribute source) {
+			if (max != 1) return DefaultTooltip(source);
 			return null;
 		}
 	}
@@ -70,7 +70,7 @@ public abstract class AbilityData : UnitModifierData {
 	public class Uses : ToggleAttribute<int> {
 		Uses() : base(false) { }
 		public override string identifier => "Attribute_Ability_Uses";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (enabled) return DefaultTooltip(source);
 			return null;
 		}
@@ -79,7 +79,7 @@ public abstract class AbilityData : UnitModifierData {
 	[Serializable]
 	public class AllowMove : Attribute<bool> {
 		public override string identifier => "Attribute_Ability_AllowMove";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (value == true) return DefaultTooltip(source);
 			return null;
 		}

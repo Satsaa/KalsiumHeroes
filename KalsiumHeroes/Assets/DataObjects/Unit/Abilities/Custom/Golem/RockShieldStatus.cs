@@ -19,7 +19,7 @@ public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 	public void OnTakeDamage(Modifier modifier, ref float damage, ref DamageType damageType) {
 		damage = CalculateDamage(damage, damageType);
 		if (damage < shield.value) {
-			shield.value = shield.value - Mathf.RoundToInt(damage);
+			shield.value.value = shield.value - Mathf.RoundToInt(damage);
 			Debug.Log("Shield took " + damage + " damage! Shield HP: " + shield.value);
 			damage = 0;
 		}

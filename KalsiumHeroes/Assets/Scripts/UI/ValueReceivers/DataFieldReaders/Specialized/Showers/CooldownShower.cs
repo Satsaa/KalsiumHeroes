@@ -57,17 +57,10 @@ public class CooldownShower : ValueReceiver<UnitModifier, UnitModifierData>, ICu
 				var att = chargesSelector.GetFieldValue(data);
 
 				if (att is Attribute<int> a) {
-					a.onValueChanged.ConfigureListener(add, () => {
-						var param = chargesSelector.GetValue(data);
-						Handle();
-					});
-				}
-
-				if (att is DualAttribute<int> da) {
-					da.onOtherChanged.ConfigureListener(add, () => {
-						var param = chargesSelector.GetOther(data);
-						Handle();
-					});
+					a.value.onChanged.ConfigureListener(add, () => Handle());
+					if (a.count > 1) {
+						a.values[1].onChanged.ConfigureListener(add, () => Handle());
+					}
 				}
 
 			}
@@ -79,17 +72,10 @@ public class CooldownShower : ValueReceiver<UnitModifier, UnitModifierData>, ICu
 				var att = cooldownSelector.GetFieldValue(data);
 
 				if (att is Attribute<int> a) {
-					a.onValueChanged.ConfigureListener(add, () => {
-						var param = cooldownSelector.GetValue(data);
-						Handle();
-					});
-				}
-
-				if (att is DualAttribute<int> da) {
-					da.onOtherChanged.ConfigureListener(add, () => {
-						var param = cooldownSelector.GetOther(data);
-						Handle();
-					});
+					a.value.onChanged.ConfigureListener(add, () => Handle());
+					if (a.count > 1) {
+						a.values[1].onChanged.ConfigureListener(add, () => Handle());
+					}
 				}
 
 			}

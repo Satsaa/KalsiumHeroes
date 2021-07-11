@@ -19,6 +19,7 @@ public class AttributeSelector<T> {
 	private object sourceCached;
 	private string fieldNameCached;
 	private Attribute<T> ac;
+	private IAttribute iac;
 
 	public Attribute<T> GetAttribute(object source) {
 		UpdateCache(source);
@@ -27,31 +28,29 @@ public class AttributeSelector<T> {
 
 	public T GetValue(object source) {
 		UpdateCache(source);
-		if (ac != null) return TryOverrideValue(source, ac.value);
-		return TryOverrideValue(source, fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.value : fallbackValue);
 	}
 	public T GetRawValue(object source) {
 		UpdateCache(source);
-		if (ac != null) return TryOverrideValue(source, ac.rawValue);
-		return TryOverrideValue(source, fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.value.raw : fallbackValue);
 	}
 
 	public T GetOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetOther() : fallbackOther);
+		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1] : fallbackOther);
 	}
 	public T GetRawOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetRawOther() : fallbackOther);
+		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1].raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
 		UpdateCache(source);
-		return ac != null && ac.HasEnabled() ? ac.GetEnabled() : fallbackEnabled;
+		return iac?.GetEnabled() ?? fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
-		return ac != null && ac.HasEnabled() ? ac.GetRawEnabled() : fallbackEnabled;
+		return iac?.GetEnabled()?.raw ?? fallbackEnabled;
 	}
 
 	protected T TryOverrideValue(object source, T value) {
@@ -70,13 +69,13 @@ public class AttributeSelector<T> {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			ac = null;
+			iac = ac = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
 					if (value is Attribute<T> attribute) {
-						ac = attribute;
+						iac = ac = attribute;
 					}
 				}
 			}

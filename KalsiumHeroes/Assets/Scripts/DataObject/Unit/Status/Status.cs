@@ -45,7 +45,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 	/// <param name="doExpire">Call OnExpire if the tick duration has expired?</param>
 	protected void Tick(bool doExpire = true) {
 		if (!data.ticks.enabled) return;
-		data.ticks.value++;
+		data.ticks.value.value++;
 		OnTick();
 		if (doExpire && HasExpired()) OnExpire();
 	}
@@ -58,7 +58,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 
 	/// <summary> Check if this status has expired. </summary>
 	public virtual bool HasExpired() {
-		return data.ticks.enabled && data.ticks.value >= data.ticks.other;
+		return data.ticks.enabled && data.ticks.value >= data.ticks.max;
 	}
 
 	/// <summary> Check if this status would have expired after the provided round count. </summary>

@@ -29,7 +29,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 
 		var cost = result.tiles[result.closest].cost;
 		var energyPayment = creator.GetPaidMovementCost(cost, movement);
-		creator.unit.data.energy.value -= Mathf.FloorToInt(energyPayment);
+		creator.unit.data.energy.value.value -= Mathf.FloorToInt(energyPayment);
 		creator.usedMovement += Mathf.Min(freeMovement, cost);
 
 		// Build list of items to move to

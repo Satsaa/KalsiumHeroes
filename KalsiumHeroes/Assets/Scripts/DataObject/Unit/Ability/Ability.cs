@@ -17,12 +17,12 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	public virtual void OnTurnStart() {
 		if (Game.rounds.round <= unit.spawnRound) return;
-		data.cooldown.value--;
+		data.cooldown.value.value--;
 		if (data.cooldown.value <= 0) {
-			data.charges.value++;
-			if (data.cooldown.other <= 0) data.charges.ResetValue();
-			else data.charges.LimitValue();
-			data.cooldown.ResetValue();
+			data.charges.value.value++;
+			if (data.cooldown.max <= 0) data.charges.Max();
+			else data.charges.Ceil();
+			data.cooldown.Max();
 		}
 	}
 
@@ -53,11 +53,11 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 	/// <summary> Called when the ability is actually cast. </summary>
 	public virtual void OnCast() {
 		isCasting = true;
-		if (data.uses.enabled) data.uses.value--;
-		if (data.charges.value == data.charges.other) data.cooldown.ResetValue();
-		if (data.cooldown.value <= 0 && data.cooldown.other <= 0) data.charges.ResetValue();
-		else data.charges.value--;
-		unit.data.energy.value -= data.energyCost.value;
+		if (data.uses.enabled) data.uses.value.value--;
+		if (data.charges.value == data.charges.max) data.cooldown.Max();
+		if (data.cooldown.value <= 0 && data.cooldown.max <= 0) data.charges.Max();
+		else data.charges.value.value--;
+		unit.data.energy.value.value -= data.energyCost.value;
 		unit.RefreshEnergy();
 
 		using (var scope = new Hooks.Scope()) {

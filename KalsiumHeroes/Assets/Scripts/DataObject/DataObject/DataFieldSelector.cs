@@ -22,6 +22,7 @@ public class DataFieldSelector<T> {
 	private object sourceCached;
 	private string fieldNameCached;
 	private Attribute<T> ac;
+	private IAttribute iac;
 	private FieldInfo fieldCached;
 
 	public string GetFieldName() => field.attributeName;
@@ -37,24 +38,24 @@ public class DataFieldSelector<T> {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
-		return TryOverrideValue(source, ac != null && ac.HasValue() ? ac.GetValue() : fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.value : fallbackValue);
 	}
 	public T GetRawValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
-		return TryOverrideValue(source, ac != null && ac.HasValue() ? ac.GetRawValue() : fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.value.raw : fallbackValue);
 	}
 
 	public T GetOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetOther() : fallbackOther);
+		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1] : fallbackOther);
 	}
 	public T GetRawOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.HasOther() ? ac.GetRawOther() : fallbackOther);
+		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1].raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
@@ -63,7 +64,7 @@ public class DataFieldSelector<T> {
 			var value = fieldCached.GetValue(source);
 			if (value is ToggleValue<T> tv) return tv.enabled;
 		}
-		return ac != null && ac.HasEnabled() ? ac.GetEnabled() : fallbackEnabled;
+		return iac?.GetEnabled() ?? fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
@@ -71,7 +72,7 @@ public class DataFieldSelector<T> {
 			var value = fieldCached.GetValue(source);
 			if (value is ToggleValue<T> tv) return tv.enabled;
 		}
-		return ac != null && ac.HasEnabled() ? ac.GetRawEnabled() : fallbackEnabled;
+		return iac?.GetEnabled()?.raw ?? fallbackEnabled;
 	}
 
 	protected T TryOverrideValue(object source, T value) {
@@ -90,14 +91,14 @@ public class DataFieldSelector<T> {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			ac = null;
+			iac = ac = null;
 			fieldCached = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
 					if (value is Attribute<T> attribute) {
-						ac = attribute;
+						iac = ac = attribute;
 					} else {
 						fieldCached = fieldInfo;
 					}

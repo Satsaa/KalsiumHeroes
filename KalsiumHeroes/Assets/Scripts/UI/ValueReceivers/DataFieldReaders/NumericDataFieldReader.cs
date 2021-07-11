@@ -64,69 +64,52 @@ public abstract class NumericDataFieldReader : ValueReceiver<DataObject, DataObj
 				listenered = add;
 				var att = selector.GetFieldValue(data);
 
-				switch (att) {
-					case Attribute<float> f:
-						f.onValueChanged.ConfigureListener(add, () => {
-							var param = selector.GetValue(data);
-							OnValue(param);
-							onValue.Invoke(param);
-						});
-						break;
-					case Attribute<int> i:
-						i.onValueChanged.ConfigureListener(add, () => {
-							var param = selector.GetValue(data);
-							OnValue(param);
-							onValue.Invoke(param);
-						});
-						break;
-				}
-
-				switch (att) {
-					case DualAttribute<float> f:
-						f.onOtherChanged.ConfigureListener(add, () => {
+				if (att is Attribute<int> ai) {
+					ai.value.onChanged.ConfigureListener(add, () => {
+						var param = selector.GetValue(data);
+						OnValue(param);
+						onValue.Invoke(param);
+					});
+					if (ai.count > 1) {
+						ai.values[1].onChanged.ConfigureListener(add, () => {
 							var param = selector.GetOther(data);
 							OnOther(param);
 							onOther.Invoke(param);
 						});
-						break;
-					case DualAttribute<int> i:
-						i.onOtherChanged.ConfigureListener(add, () => {
+					}
+
+					var ia = ai as IAttribute;
+					if (ia.GetEnabled() != null) {
+						ia.GetEnabled().onChanged.ConfigureListener(add, () => {
+							var param = selector.GetEnabled(data);
+							OnEnabled(param);
+							onEnabled.Invoke(param);
+						});
+					}
+				}
+
+				if (att is Attribute<float> af) {
+					af.value.onChanged.ConfigureListener(add, () => {
+						var param = selector.GetValue(data);
+						OnValue(param);
+						onValue.Invoke(param);
+					});
+					if (af.count > 1) {
+						af.values[1].onChanged.ConfigureListener(add, () => {
 							var param = selector.GetOther(data);
 							OnOther(param);
 							onOther.Invoke(param);
 						});
-						break;
-				}
+					}
 
-				switch (att) {
-					case ToggleAttribute<float> f:
-						f.onEnabledChanged.ConfigureListener(add, () => {
+					var ia = af as IAttribute;
+					if (ia.GetEnabled() != null) {
+						ia.GetEnabled().onChanged.ConfigureListener(add, () => {
 							var param = selector.GetEnabled(data);
 							OnEnabled(param);
 							onEnabled.Invoke(param);
 						});
-						break;
-					case ToggleDualAttribute<float> df:
-						df.onEnabledChanged.ConfigureListener(add, () => {
-							var param = selector.GetEnabled(data);
-							OnEnabled(param);
-							onEnabled.Invoke(param);
-						});
-						break;
-					case ToggleAttribute<int> i:
-						i.onEnabledChanged.ConfigureListener(add, () => {
-							var param = selector.GetEnabled(data);
-							OnEnabled(param);
-							onEnabled.Invoke(param);
-						});
-						break;
-					case ToggleDualAttribute<int> di:
-						di.onEnabledChanged.ConfigureListener(add, () => {
-							var param = selector.GetEnabled(data);
-							OnEnabled(param);
-							onEnabled.Invoke(param);
-						});
-						break;
+					}
 				}
 			}
 		}

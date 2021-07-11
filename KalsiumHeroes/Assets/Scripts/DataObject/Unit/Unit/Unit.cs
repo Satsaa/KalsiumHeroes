@@ -64,8 +64,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			tile.hooks.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
 			Game.hooks.ForEach<IOnHeal_Global>(scope, v => v.OnHeal(this, ref heal));
 		}
-		data.health.value += Mathf.Max(0, heal);
-		data.health.ClampValue();
+		data.health.value.value += Mathf.Max(0, heal);
+		data.health.Clamp();
 	}
 
 	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
@@ -93,20 +93,20 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		}
 		switch (type) {
 			case DamageType.Physical:
-				data.health.value -= (1 - data.defense.value / 100f) * damage;
-				data.health.ClampValue();
+				data.health.value.value -= (1 - data.defense.value / 100f) * damage;
+				data.health.Clamp();
 				break;
 			case DamageType.Magical:
-				data.health.value -= (1 - data.resistance.value / 100f) * damage;
-				data.health.ClampValue();
+				data.health.value.value -= (1 - data.resistance.value / 100f) * damage;
+				data.health.Clamp();
 				break;
 			case DamageType.Pure:
-				data.health.value -= damage;
-				data.health.ClampValue();
+				data.health.value.value -= damage;
+				data.health.Clamp();
 				break;
 			default:
-				data.health.value -= damage;
-				data.health.ClampValue();
+				data.health.value.value -= damage;
+				data.health.Clamp();
 				Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
 				break;
 		}
@@ -135,7 +135,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 				Game.hooks.ForEach<IOnEnergyDeficit_Global>(scope, v => v.OnEnergyDeficit(this, deficit));
 			}
 		}
-		var excess = data.energy.value - data.energy.other;
+		var excess = data.energy.value - data.energy.max;
 		if (excess > 0) {
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
@@ -143,7 +143,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 				Game.hooks.ForEach<IOnEnergyExcess_Global>(scope, v => v.OnEnergyExcess(this, excess));
 			}
 		}
-		data.energy.ClampValue();
+		data.energy.Clamp();
 	}
 
 	public void Dispell() {
@@ -191,7 +191,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	/// <summary> Gets the estimated speed of this unit after a number of rounds have passed. </summary>
 	public int GetEstimatedSpeed(int roundsAhead) {
-		var speed = data.speed.rawValue;
+		var speed = data.speed.value.raw;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
 			tile.hooks.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
@@ -203,7 +203,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	void IOnTurnStart_Unit.OnTurnStart() {
 		if (Game.rounds.round <= spawnRound) return;
 		Debug.Log($"Turn start: {gameObject.name}");
-		data.energy.value += data.energyRegen.value;
+		data.energy.Regen(false);
 		RefreshEnergy();
 	}
 

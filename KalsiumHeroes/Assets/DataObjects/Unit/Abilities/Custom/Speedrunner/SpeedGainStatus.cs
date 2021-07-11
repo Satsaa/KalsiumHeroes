@@ -18,15 +18,15 @@ public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.data.movement.ConfigureValueAlterer(add, this,
+		unit.data.movement.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: () => data.movementGain.value * unitsFound,
-			updateEvents: new[] { data.movementGain.onValueChanged }
+			updateEvents: new[] { data.movementGain.value.onChanged }
 		);
-		unit.data.speed.ConfigureValueAlterer(add, this,
+		unit.data.speed.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: () => data.speedGain.value * unitsFound,
-			updateEvents: new[] { data.speedGain.onValueChanged }
+			updateEvents: new[] { data.speedGain.value.onChanged }
 		);
 	}
 

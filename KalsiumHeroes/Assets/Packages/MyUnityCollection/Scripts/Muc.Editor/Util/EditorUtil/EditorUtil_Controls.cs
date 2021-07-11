@@ -182,6 +182,24 @@ namespace Muc.Editor {
 		#region Complex Fields
 
 		/// <summary> Property Field </summary>
+		public static void MultiPropertyField(Rect position, IEnumerable<SerializedProperty> properties) {
+			MultiPropertyField(position, properties.Select(v => new GUIContent(v.displayName, v.tooltip)), properties);
+		}
+		/// <summary> Property Field </summary>
+		public static void MultiPropertyField(IEnumerable<SerializedProperty> properties) {
+			MultiPropertyField(properties.Select(v => new GUIContent(v.displayName, v.tooltip)), properties);
+		}
+		/// <summary> Property Field </summary>
+		public static void MultiPropertyField(Rect position, GUIContent label, IEnumerable<SerializedProperty> properties) {
+			MultiPropertyField(position, label, properties.Select(v => new GUIContent(v.displayName, v.tooltip)), properties);
+		}
+		/// <summary> Property Field </summary>
+		public static void MultiPropertyField(GUIContent label, IEnumerable<SerializedProperty> properties) {
+			MultiPropertyField(label, properties.Select(v => new GUIContent(v.displayName, v.tooltip)), properties);
+		}
+
+
+		/// <summary> Property Field </summary>
 		public static void MultiPropertyField(Rect position, IEnumerable<GUIContent> contents, IEnumerable<SerializedProperty> properties) {
 			using (ManualIndentScope()) {
 				var indented = EditorGUI.IndentedRect(position);
@@ -234,8 +252,7 @@ namespace Muc.Editor {
 				propRect.width = propWidth;
 				var contentWidth = EditorStyles.label.CalcSize(content).x;
 				using (LabelWidthScope(contentWidth)) {
-					var fieldRect = CalculatedPrefix(propRect, content);
-					PropertyField(fieldRect, GUIContent.none, property);
+					PropertyField(propRect, content, property);
 				}
 				propRect.x += propWidth + spacing;
 			}

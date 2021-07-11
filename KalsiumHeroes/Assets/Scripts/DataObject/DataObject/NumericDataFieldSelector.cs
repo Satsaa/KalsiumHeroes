@@ -23,7 +23,7 @@ public class NumericDataFieldSelector {
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private Attribute ac;
+	private IAttribute iac;
 	private FieldInfo fieldCached;
 
 	public string GetFieldName() => field.attributeName;
@@ -32,31 +32,31 @@ public class NumericDataFieldSelector {
 	public object GetFieldValue(object source) {
 		UpdateCache(source);
 		if (fieldCached != null) return fieldCached.GetValue(source);
-		return ac;
+		return iac;
 	}
 
 	public float GetValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return AsFloat(fieldCached.GetValue(source));
-		return TryOverrideValue(source, ac != null && ac.HasValue() ? AsFloat(ac.GetObjectValue()) : fallbackValue);
+		return TryOverrideValue(source, iac != null ? (float)iac.GetValue(0).value : fallbackValue);
 	}
 	public float GetRawValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return AsFloat(fieldCached.GetValue(source));
-		return TryOverrideValue(source, ac != null && ac.HasValue() ? AsFloat(ac.GetObjectRawValue()) : fallbackValue);
+		return TryOverrideValue(source, iac != null ? (float)iac.GetValue(0).raw : fallbackValue);
 	}
 
 	public float GetOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.HasOther() ? AsFloat(ac.GetObjectOther()) : fallbackOther);
+		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).value : fallbackOther);
 	}
 	public float GetRawOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.HasOther() ? AsFloat(ac.GetObjectRawOther()) : fallbackOther);
+		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
@@ -65,7 +65,7 @@ public class NumericDataFieldSelector {
 			var value = fieldCached.GetValue(source);
 			if (value is ToggleValue<float> tv) return tv.enabled;
 		}
-		return ac != null && ac.HasEnabled() ? ac.GetEnabled() : fallbackEnabled;
+		return iac?.GetEnabled() ?? fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
@@ -73,7 +73,7 @@ public class NumericDataFieldSelector {
 			var value = fieldCached.GetValue(source);
 			if (value is ToggleValue<float> tv) return tv.enabled;
 		}
-		return ac != null && ac.HasEnabled() ? ac.GetRawEnabled() : fallbackEnabled;
+		return iac?.GetEnabled()?.raw ?? fallbackEnabled;
 	}
 
 	protected float AsFloat(object value) {
@@ -100,14 +100,14 @@ public class NumericDataFieldSelector {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			ac = null;
+			iac = null;
 			fieldCached = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
 					if (value is Attribute) {
-						this.ac = value switch {
+						this.iac = value switch {
 							Attribute<float> att => att,
 							Attribute<int> att => att,
 							_ => null,

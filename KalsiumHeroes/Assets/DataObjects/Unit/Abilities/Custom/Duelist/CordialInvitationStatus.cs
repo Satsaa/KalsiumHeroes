@@ -9,7 +9,7 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_U
 	public override Type dataType => typeof(CordialInvitationStatusData);
 
 	public void OnDeath() {
-		data.opponent.data.health.value = data.opponent.data.health.other;
+		data.opponent.data.health.value.value = data.opponent.data.health.max;
 		data.opponentStatus.Remove();
 		Remove();
 	}

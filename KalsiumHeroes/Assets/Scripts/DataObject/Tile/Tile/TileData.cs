@@ -29,7 +29,7 @@ public class TileData : MasterData {
 	public class Passable : Attribute<bool> {
 		Passable() : base(true) { }
 		public override string identifier => "Attribute_Tile_Passable";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (value == false) return DefaultTooltip(source);
 			return null;
 		}
@@ -39,7 +39,7 @@ public class TileData : MasterData {
 	public class Transparent : Attribute<bool> {
 		Transparent() : base(true) { }
 		public override string identifier => "Attribute_Tile_Transparent";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (value == false) return DefaultTooltip(source);
 			return null;
 		}
@@ -49,7 +49,7 @@ public class TileData : MasterData {
 	public class MoveCost : Attribute<float> {
 		MoveCost() : base(1) { }
 		public override string identifier => "Attribute_Tile_MoveCost";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (value != 1) return DefaultTooltip(source);
 			return null;
 		}
@@ -58,7 +58,7 @@ public class TileData : MasterData {
 	[Serializable]
 	public class Appeal : Attribute<float> {
 		public override string identifier => "Attribute_Tile_Appeal";
-		public override string TooltipText(Attribute source) {
+		public override string TooltipText(IAttribute source) {
 			if (value != 0) return DefaultTooltip(source);
 			return null;
 		}

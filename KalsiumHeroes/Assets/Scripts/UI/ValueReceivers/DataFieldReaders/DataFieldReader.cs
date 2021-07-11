@@ -70,38 +70,30 @@ public abstract class DataFieldReader<T> : ValueReceiver<DataObject, DataObjectD
 				listenered = add;
 				var att = selector.GetFieldValue(data);
 
-				if (att is Attribute<T> a) {
-					a.onValueChanged.ConfigureListener(add, () => {
+				if (att is Attribute<int> a) {
+					a.value.onChanged.ConfigureListener(add, () => {
 						var param = selector.GetValue(data);
 						OnValue(param);
 						onValue.Invoke(param);
 					});
-				}
+					if (a.count > 1) {
+						a.values[1].onChanged.ConfigureListener(add, () => {
+							var param = selector.GetOther(data);
+							OnOther(param);
+							onOther.Invoke(param);
+						});
+					}
 
-				if (att is DualAttribute<T> da) {
-					da.onOtherChanged.ConfigureListener(add, () => {
-						var param = selector.GetOther(data);
-						OnOther(param);
-						onOther.Invoke(param);
-					});
-				}
-
-				switch (att) {
-					case ToggleAttribute<T> ta:
-						ta.onEnabledChanged.ConfigureListener(add, () => {
+					var ia = a as IAttribute;
+					if (ia.GetEnabled() != null) {
+						ia.GetEnabled().onChanged.ConfigureListener(add, () => {
 							var param = selector.GetEnabled(data);
 							OnEnabled(param);
 							onEnabled.Invoke(param);
 						});
-						break;
-					case ToggleDualAttribute<T> tda:
-						tda.onEnabledChanged.ConfigureListener(add, () => {
-							var param = selector.GetEnabled(data);
-							OnEnabled(param);
-							onEnabled.Invoke(param);
-						});
-						break;
+					}
 				}
+
 			}
 		}
 	}

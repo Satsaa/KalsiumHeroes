@@ -20,66 +20,38 @@ public class NumericAttributeSelector {
 
 	private object sourceCached;
 	private string fieldNameCached;
-	private Attribute attributeCached;
+	private IAttribute iac;
 
-	public Attribute GetAttribute(object source) {
+	public IAttribute GetAttribute(object source) {
 		UpdateCache(source);
-		return attributeCached;
+		return iac;
 	}
 
 	public float GetValue(object source) {
 		UpdateCache(source);
-		return TryOverrideValue(source, attributeCached switch {
-			Attribute<float> att => att.value,
-			Attribute<int> att => att.value,
-			_ => fallbackValue,
-		});
+		return TryOverrideValue(source, iac != null ? (float)iac.GetValue(0).value : fallbackValue);
 	}
 	public float GetRawValue(object source) {
 		UpdateCache(source);
-		return TryOverrideValue(source, attributeCached switch {
-			Attribute<float> att => att.rawValue,
-			Attribute<int> att => att.rawValue,
-			_ => fallbackValue,
-		});
+		return TryOverrideValue(source, iac != null ? (float)iac.GetValue(0).raw : fallbackValue);
 	}
 
 	public float GetOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<float> att => att.other,
-			DualAttribute<int> att => att.other,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).value : fallbackOther);
 	}
 	public float GetRawOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, attributeCached switch {
-			DualAttribute<float> att => att.rawOther,
-			DualAttribute<int> att => att.rawOther,
-			_ => fallbackOther,
-		});
+		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
-			ToggleDualAttribute<float> att => att.enabled,
-			ToggleDualAttribute<int> att => att.enabled,
-			ToggleAttribute<float> att => att.enabled,
-			ToggleAttribute<int> att => att.enabled,
-			_ => fallbackEnabled,
-		};
+		return iac?.GetEnabled() ?? fallbackEnabled;
 	}
 	public bool GetRawEnabled(object source) {
 		UpdateCache(source);
-		return attributeCached switch {
-			ToggleDualAttribute<float> att => att.rawEnabled,
-			ToggleDualAttribute<int> att => att.rawEnabled,
-			ToggleAttribute<float> att => att.rawEnabled,
-			ToggleAttribute<int> att => att.rawEnabled,
-			_ => fallbackEnabled,
-		};
+		return iac?.GetEnabled()?.raw ?? fallbackEnabled;
 	}
 
 	protected float TryOverrideValue(object source, float value) {
@@ -98,12 +70,12 @@ public class NumericAttributeSelector {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			attributeCached = null;
+			iac = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
-					this.attributeCached = value switch {
+					this.iac = value switch {
 						Attribute<float> att => att,
 						Attribute<int> att => att,
 						_ => null,

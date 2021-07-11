@@ -11,11 +11,11 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 	protected Alterer<int> defenseAlterer;
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		var alt = unit.data.defense.ConfigureValueAlterer(add, this,
+		var alt = unit.data.defense.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: () => data.defenseIncrease.value,
 			updateEvents: new[] {
-				data.defenseIncrease.onValueChanged
+				data.defenseIncrease.value.onChanged
 			}
 		);
 	}

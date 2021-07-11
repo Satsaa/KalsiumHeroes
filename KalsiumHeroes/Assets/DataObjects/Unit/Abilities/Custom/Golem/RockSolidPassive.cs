@@ -14,15 +14,15 @@ public class RockSolidPassive : Passive, IOnChangePosition_Global, IOnDeath_Glob
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		defAlt = unit.data.defense.ConfigureValueAlterer(add, this,
+		defAlt = unit.data.defense.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: GetIncrease,
-			updateEvents: data.rings.Select(v => v.increase.onValueChanged)
+			updateEvents: data.rings.Select(v => v.increase.value.onChanged)
 		);
-		resAlt = unit.data.resistance.ConfigureValueAlterer(add, this,
+		resAlt = unit.data.resistance.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: GetIncrease,
-			updateEvents: data.rings.Select(v => v.increase.onValueChanged)
+			updateEvents: data.rings.Select(v => v.increase.value.onChanged)
 		);
 	}
 

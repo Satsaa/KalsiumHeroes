@@ -40,7 +40,7 @@ public class Rounds : MonoBehaviour {
 	[field: SerializeField] public int round { get; private set; } = -1;
 
 	void Sort() {
-		units.Sort((a, b) => b.data.speed.value.CompareTo(a.data.speed.value));
+		units.Sort((a, b) => b.data.speed.value.value.CompareTo(a.data.speed.value.value));
 	}
 
 	public List<Unit> GetEstimatedOrder(int roundsAhead) {

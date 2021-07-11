@@ -9,16 +9,16 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	public new EnergyExcessStatusData data => (EnergyExcessStatusData)_data;
 	public override Type dataType => typeof(EnergyExcessStatusData);
 
-	[HideInInspector, SerializeField] Attribute<int> stacks = new();
+	[HideInInspector, SerializeField] Attribute<int> stacks;
 	[HideInInspector, SerializeField] bool didCalculateDamage;
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		data.hidden.ConfigureValueAlterer(add, this,
+		data.hidden.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v || a > 0, // Will not override if already hidden
 			updater: () => stacks.value,
-			updateEvents: new[] { stacks.onValueChanged }
+			updateEvents: new[] { stacks.value.onChanged }
 		);
 
 	}
@@ -53,7 +53,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	}
 
 	private void Add(int excess) {
-		stacks.value += excess;
+		stacks.value.value += excess;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
@@ -61,7 +61,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 		if (pts) pts.Play();
 	}
 	private void Clear() {
-		stacks.value = 0;
+		stacks.value.value = 0;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();

@@ -20,8 +20,8 @@ public class StatusData : UnitModifierData {
 	[Tooltip("Is this status dispellable?")]
 	public Attribute<bool> dispellable;
 
-	[Tooltip("How long does this status effect last?"), AttributeLabels("Current", "Limit")]
-	public ToggleDualAttribute<int> ticks = new(false);
+	[Tooltip("How long does this status effect last?")]
+	public ToggleMaxAttribute<int> ticks = new(false);
 
 	[Tooltip("Defines the timing of ticks.")]
 	public TickMode tickMode;

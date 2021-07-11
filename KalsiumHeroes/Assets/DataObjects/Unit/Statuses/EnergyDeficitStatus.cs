@@ -9,7 +9,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	public new EnergyDeficitStatusData data => (EnergyDeficitStatusData)_data;
 	public override Type dataType => typeof(EnergyDeficitStatusData);
 
-	[SerializeField] Attribute<int> stacks = new();
+	[SerializeField] Attribute<int> stacks;
 	[SerializeField] int stacksDuringOwnTurn;
 
 	bool ownTurn => Game.rounds.unit == unit;
@@ -17,22 +17,22 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		data.hidden.ConfigureValueAlterer(add, this,
+		data.hidden.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v || a > 0, // Will not override if already hidden
 			updater: () => stacks.value,
-			updateEvents: new[] { stacks.onValueChanged }
+			updateEvents: new[] { stacks.value.onChanged }
 		);
 
-		unit.data.defense.ConfigureValueAlterer(add, this,
+		unit.data.defense.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: () => data.defenseChange.value * stacks.value,
-			updateEvents: new[] { data.defenseChange.onValueChanged, stacks.onValueChanged }
+			updateEvents: new[] { data.defenseChange.value.onChanged, stacks.value.onChanged }
 		);
 
-		unit.data.resistance.ConfigureValueAlterer(add, this,
+		unit.data.resistance.value.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: () => data.resistanceChange.value * stacks.value,
-			updateEvents: new[] { data.resistanceChange.onValueChanged, stacks.onValueChanged }
+			updateEvents: new[] { data.resistanceChange.value.onChanged, stacks.value.onChanged }
 		);
 
 	}
@@ -46,7 +46,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
 	public override void OnTurnEnd() {
 		if (stacksDuringOwnTurn > 0) {
-			stacks.value = stacksDuringOwnTurn;
+			stacks.value.value = stacksDuringOwnTurn;
 		} else {
 			Clear();
 		}
@@ -54,7 +54,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	}
 
 	private void Add(int excess) {
-		stacks.value += excess;
+		stacks.value.value += excess;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
@@ -62,7 +62,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 		if (pts) pts.Play();
 	}
 	private void Clear() {
-		stacks.value = 0;
+		stacks.value.value = 0;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();

@@ -1202,8 +1202,8 @@ GameObject:
   - component: {fileID: 1363905736}
   - component: {fileID: 1363905735}
   - component: {fileID: 1363905737}
-  - component: {fileID: 1363905738}
   - component: {fileID: 1363905739}
+  - component: {fileID: 1363905738}
   m_Layer: 0
   m_Name: App
   m_TagString: Untagged
@@ -1503,10 +1503,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
+  newAtt:
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
+  newTogAtt:
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 69
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 420
+      <isModified>k__BackingField: 0
+      _original: 0
+    _enabled:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   appeal:
     <rawValue>k__BackingField: 1.36
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 1.36
   health:
     <rawValue>k__BackingField: 3
+    <valueHasChanged>k__BackingField: 1
+    _startValue: 3
   defense: lol
   test:
     field:

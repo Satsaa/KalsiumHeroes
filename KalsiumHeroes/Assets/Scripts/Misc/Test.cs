@@ -9,6 +9,9 @@ public class Test : MonoBehaviour {
 
 	public DataObjectData data;
 
+	public MaxAttribute<float> newAtt;
+	public ToggleMaxAttribute<float> newTogAtt;
+
 	public Attribute<float> appeal;
 	public Attribute<int> health;
 	public string defense = "lol";
