@@ -32,37 +32,80 @@ MonoBehaviour:
   actor: {fileID: 6516154736034674579, guid: 77aa66bdd77010d428a6bcfae7bf3941, type: 3}
   draftCost: 5
   speed:
-    <rawValue>k__BackingField: 8
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 8
+      <isModified>k__BackingField: 0
+      _original: 0
   movement:
-    <rawValue>k__BackingField: 5
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 5
+      <isModified>k__BackingField: 0
+      _original: 0
   health:
-    <rawValue>k__BackingField: 70
-    <rawOther>k__BackingField: 70
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 700
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 700
+      <isModified>k__BackingField: 0
+      _original: 0
   energy:
-    <rawValue>k__BackingField: 10
-    <rawOther>k__BackingField: 20
-  energyRegen:
-    <rawValue>k__BackingField: 5
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 10
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 20
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 5
+      <isModified>k__BackingField: 0
+      _original: 0
   defense:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   resistance:
-    <rawValue>k__BackingField: 20
-  amps:
-    weaponSkill:
-      <rawValue>k__BackingField: 0
-    spell:
-      <rawValue>k__BackingField: 0
-    skill:
-      <rawValue>k__BackingField: 0
-    physical:
-      <rawValue>k__BackingField: 0
-    magical:
-      <rawValue>k__BackingField: 0
-    pure:
-      <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 20
+      <isModified>k__BackingField: 0
+      _original: 0
   silenced:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   disarmed:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   rooted:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0

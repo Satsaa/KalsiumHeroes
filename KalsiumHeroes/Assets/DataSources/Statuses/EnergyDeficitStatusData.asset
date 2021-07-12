@@ -19,19 +19,63 @@ MonoBehaviour:
   container: {fileID: 6574234657853972042, guid: f7101482130ebdd43b80ad7d03790535, type: 3}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   hidden:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   positive:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   dispellable:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   ticks:
-    <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 0
-    <rawEnabled>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   tickMode: 0
   defenseChange:
-    <rawValue>k__BackingField: -5
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: -5
+      <isModified>k__BackingField: 0
+      _original: 0
   resistanceChange:
-    <rawValue>k__BackingField: -5
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: -5
+      <isModified>k__BackingField: 0
+      _original: 0

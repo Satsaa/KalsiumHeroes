@@ -19,20 +19,64 @@ MonoBehaviour:
   container: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   hidden:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   positive:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   dispellable:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   ticks:
-    <rawValue>k__BackingField: 1
-    <rawOther>k__BackingField: 0
-    <rawEnabled>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   tickMode: 0
   defenseIncrease:
-    <rawValue>k__BackingField: 35
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 35
+      <isModified>k__BackingField: 0
+      _original: 0
   damage:
-    <rawValue>k__BackingField: 30
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 300
+      <isModified>k__BackingField: 0
+      _original: 0
   damageType: 1

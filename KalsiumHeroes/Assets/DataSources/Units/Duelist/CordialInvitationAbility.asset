@@ -18,25 +18,84 @@ MonoBehaviour:
   identifier: Ability_CordialInvitation
   container: {fileID: 0}
   sprite: {fileID: 0}
-  abilityType: 2
+  abilityType:
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
   energyCost:
-    <rawValue>k__BackingField: 12
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 12
+      <isModified>k__BackingField: 0
+      _original: 0
   cooldown:
-    <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   charges:
-    <rawValue>k__BackingField: 1
-    <rawOther>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   uses:
-    <rawValue>k__BackingField: 0
-    <rawEnabled>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   allowMove:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   range:
-    <rawValue>k__BackingField: 4
-    <rawEnabled>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 4
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   rangeMode: 0
   requiresVision:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   targetType: 24
   statusModifier: {fileID: 11400000, guid: 9df62c4917eb3444eb07b15caa30d531, type: 2}

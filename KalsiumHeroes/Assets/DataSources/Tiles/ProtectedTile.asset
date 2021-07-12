@@ -18,13 +18,33 @@ MonoBehaviour:
   container: {fileID: 194248088727427243, guid: e6034e3aa059288499a9830f8d20fd7e, type: 3}
   baseModifiers: []
   passable:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   transparent:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   moveCost:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   appeal:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   edgeModifiers:
     right:
     - {fileID: 11400000, guid: c6487ee01bd5c1d4db7a782fe11e34a1, type: 2}

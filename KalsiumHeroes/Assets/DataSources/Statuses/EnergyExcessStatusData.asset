@@ -19,28 +19,59 @@ MonoBehaviour:
   container: {fileID: 4313533834659548896, guid: f66d80d7df9d789439b2bb24af25e0c2, type: 3}
   sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   debuffType:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   hidden:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   positive:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   dispellable:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   ticks:
-    <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 0
-    <rawEnabled>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   tickMode: 0
-  amps:
-    weaponSkill:
-      <rawValue>k__BackingField: 0.05
-    spell:
-      <rawValue>k__BackingField: 0.05
-    skill:
-      <rawValue>k__BackingField: 0
-    physical:
-      <rawValue>k__BackingField: 0
-    magical:
-      <rawValue>k__BackingField: 0
-    pure:
-      <rawValue>k__BackingField: 0
+  dmgTypeMults:
+    list: []
+  abiTypeMults:
+    list:
+    - key: 1
+      value: 1.05
+      isDuplicate: 0
+    - key: 2
+      value: 1.05
+      isDuplicate: 0

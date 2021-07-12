@@ -19,20 +19,59 @@ MonoBehaviour:
   container: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   hidden:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   positive:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   dispellable:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   ticks:
-    <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 0
-    <rawEnabled>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   tickMode: 0
   breakRange:
-    <rawValue>k__BackingField: 4
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 4
+      <isModified>k__BackingField: 0
+      _original: 0
   disgracefulBehaviour: {fileID: 11400000, guid: c88bd8570f9f47c4088667a325b84925, type: 2}
   piercingGlare: {fileID: 11400000, guid: 7e597633c6fb0a54b9af333c359c78e6, type: 2}
   opponent: {fileID: 0}

@@ -20,10 +20,30 @@ MonoBehaviour:
   filter: 8
   rings:
   - increase:
-      <rawValue>k__BackingField: 0
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 0
+        <isModified>k__BackingField: 0
+        _original: 0
   - increase:
-      <rawValue>k__BackingField: 10
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 10
+        <isModified>k__BackingField: 0
+        _original: 0
   - increase:
-      <rawValue>k__BackingField: 5
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 5
+        <isModified>k__BackingField: 0
+        _original: 0
   - increase:
-      <rawValue>k__BackingField: 3
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 3
+        <isModified>k__BackingField: 0
+        _original: 0

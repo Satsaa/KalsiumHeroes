@@ -33,48 +33,80 @@ MonoBehaviour:
   actor: {fileID: 6516154736034674579, guid: e60dc84560d8ac44e93c6f0192f49556, type: 3}
   draftCost: 5
   speed:
-    <rawValue>k__BackingField: 12
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 12
+      <isModified>k__BackingField: 0
+      _original: 0
   movement:
-    <rawValue>k__BackingField: 5
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 5
+      <isModified>k__BackingField: 0
+      _original: 0
   health:
-    <rawValue>k__BackingField: 180
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 0
-    <rawOther>k__BackingField: 180
-    <otherHasChanged>k__BackingField: 1
-    _startOther: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1800
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1800
+      <isModified>k__BackingField: 0
+      _original: 0
   energy:
-    <rawValue>k__BackingField: 10
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 0
-    <rawOther>k__BackingField: 18
-    <otherHasChanged>k__BackingField: 1
-    _startOther: 0
-  energyRegen:
-    <rawValue>k__BackingField: 5
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 10
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 18
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 5
+      <isModified>k__BackingField: 0
+      _original: 0
   defense:
-    <rawValue>k__BackingField: 35
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 35
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 35
+      <isModified>k__BackingField: 0
+      _original: 0
   resistance:
-    <rawValue>k__BackingField: 10
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 10
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 10
+      <isModified>k__BackingField: 0
+      _original: 0
   silenced:
-    <rawValue>k__BackingField: 0
-    <valueHasChanged>k__BackingField: 0
-    _startValue: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   disarmed:
-    <rawValue>k__BackingField: 0
-    <valueHasChanged>k__BackingField: 0
-    _startValue: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   rooted:
-    <rawValue>k__BackingField: 0
-    <valueHasChanged>k__BackingField: 0
-    _startValue: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0

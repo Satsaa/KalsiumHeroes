@@ -18,4 +18,9 @@ MonoBehaviour:
   identifier: EdgeModifier_HighMovecost
   container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}
   additionalMoveCost:
-    <rawValue>k__BackingField: 3
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 3
+      <isModified>k__BackingField: 0
+      _original: 0

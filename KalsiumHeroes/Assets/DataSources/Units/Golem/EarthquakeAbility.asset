@@ -18,32 +18,96 @@ MonoBehaviour:
   identifier: Ability_Earthquake
   container: {fileID: 0}
   sprite: {fileID: 0}
-  abilityType: 2
+  abilityType:
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
   energyCost:
-    <rawValue>k__BackingField: 9
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 9
+      <isModified>k__BackingField: 0
+      _original: 0
   cooldown:
-    <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   charges:
-    <rawValue>k__BackingField: 1
-    <rawOther>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   uses:
-    <rawValue>k__BackingField: 0
-    <rawEnabled>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   allowMove:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   damageType: 1
   affected: 0
   rings:
   - damage:
-      <rawValue>k__BackingField: 80
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 800
+        <isModified>k__BackingField: 0
+        _original: 0
     modifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
   - damage:
-      <rawValue>k__BackingField: 40
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 400
+        <isModified>k__BackingField: 0
+        _original: 0
     modifier: {fileID: 11400000, guid: 6ed3db0c59db8784d9cecc5efaac1d1c, type: 2}
   - damage:
-      <rawValue>k__BackingField: 20
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 200
+        <isModified>k__BackingField: 0
+        _original: 0
     modifier: {fileID: 11400000, guid: d8f394ef87492154c8e68d25312f7bbb, type: 2}
   - damage:
-      <rawValue>k__BackingField: 10
+      _values:
+      - cache: 0
+        isCached: 0
+        <raw>k__BackingField: 100
+        <isModified>k__BackingField: 0
+        _original: 0
     modifier: {fileID: 11400000, guid: 3d67f7ff942e6e64cbc4ea43f0e5e835, type: 2}

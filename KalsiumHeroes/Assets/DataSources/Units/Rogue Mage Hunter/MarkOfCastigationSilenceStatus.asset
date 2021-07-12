@@ -18,15 +18,49 @@ MonoBehaviour:
   container: {fileID: 0}
   sprite: {fileID: 0}
   debuffType:
-    <rawValue>k__BackingField: 3
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 3
+      <isModified>k__BackingField: 0
+      _original: 0
   hidden:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   positive:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   dispellable:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   ticks:
-    <rawValue>k__BackingField: 2
-    <rawOther>k__BackingField: 0
-    <rawEnabled>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   tickMode: 1

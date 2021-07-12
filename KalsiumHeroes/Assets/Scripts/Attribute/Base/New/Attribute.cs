@@ -52,7 +52,7 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 		return _values;
 	}
 
-	protected void InitValues(bool enabled, params T[] values) => InitValues(enabled, values);
+	protected void InitValues(bool enabled, params T[] values) => InitValues(enabled, values as IReadOnlyList<T>);
 	protected void InitValues(bool enabled, IReadOnlyList<T> values) {
 		if (_values == null) {
 			_values = new ValueContainer[count];

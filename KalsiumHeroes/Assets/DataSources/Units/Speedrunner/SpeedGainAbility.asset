@@ -17,21 +17,70 @@ MonoBehaviour:
   identifier: Ability_SpeedGain
   container: {fileID: 0}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  abilityType: 2
+  abilityType:
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
   energyCost:
-    <rawValue>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   cooldown:
-    <rawValue>k__BackingField: 0
-    <rawOther>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   charges:
-    <rawValue>k__BackingField: 1
-    <rawOther>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   uses:
-    <rawValue>k__BackingField: 0
-    <rawEnabled>k__BackingField: 0
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+    <enabled>k__BackingField:
+      cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   allowMove:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   radius:
-    <rawValue>k__BackingField: 2
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
   speedGainModifier: {fileID: 11400000, guid: de7a0bea84f3d5d4e8e753f1a061c087, type: 2}
   teamType: 8

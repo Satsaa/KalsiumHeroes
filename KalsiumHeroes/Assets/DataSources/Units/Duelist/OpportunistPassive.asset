@@ -19,9 +19,24 @@ MonoBehaviour:
   container: {fileID: 0}
   sprite: {fileID: 0}
   damage:
-    <rawValue>k__BackingField: 30
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 300
+      <isModified>k__BackingField: 0
+      _original: 0
   damageType: 1
   range:
-    <rawValue>k__BackingField: 1
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 1
+      <isModified>k__BackingField: 0
+      _original: 0
   energyGain:
-    <rawValue>k__BackingField: 2
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 2
+      <isModified>k__BackingField: 0
+      _original: 0
