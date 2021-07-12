@@ -57,7 +57,7 @@ public class CooldownShower : ValueReceiver<UnitModifier, UnitModifierData>, ICu
 				var att = chargesSelector.GetFieldValue(data);
 
 				if (att is Attribute<int> a) {
-					a.value.onChanged.ConfigureListener(add, () => Handle());
+					a.current.onChanged.ConfigureListener(add, () => Handle());
 					if (a.count > 1) {
 						a.values[1].onChanged.ConfigureListener(add, () => Handle());
 					}
@@ -72,7 +72,7 @@ public class CooldownShower : ValueReceiver<UnitModifier, UnitModifierData>, ICu
 				var att = cooldownSelector.GetFieldValue(data);
 
 				if (att is Attribute<int> a) {
-					a.value.onChanged.ConfigureListener(add, () => Handle());
+					a.current.onChanged.ConfigureListener(add, () => Handle());
 					if (a.count > 1) {
 						a.values[1].onChanged.ConfigureListener(add, () => Handle());
 					}

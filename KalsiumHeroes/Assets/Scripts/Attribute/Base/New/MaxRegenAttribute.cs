@@ -8,13 +8,14 @@ using System.Collections;
 using System.Linq.Expressions;
 
 [Serializable]
+[AttributeLabels("V", "Max", "Regen")]
 public class MaxRegenAttribute<T> : MaxAttribute<T> where T : IComparable {
 
+	protected MaxRegenAttribute() { }
 	public MaxRegenAttribute(T value = default, T max = default, T regen = default) => InitValues(true, value, max, regen);
 
 	public override int count => 3;
 
-	public override ValueContainer current => values[0];
 	public override ValueContainer max => values[1];
 	public virtual ValueContainer regen => values[2];
 
@@ -40,6 +41,7 @@ public class MaxRegenAttribute<T> : MaxAttribute<T> where T : IComparable {
 [Serializable]
 public class ToggleMaxRegenAttribute<T> : MaxRegenAttribute<T>, IAttribute where T : IComparable {
 
+	protected ToggleMaxRegenAttribute() { }
 	public ToggleMaxRegenAttribute(T value = default, T max = default, T regen = default, bool enabled = true) => InitValues(enabled, value, max, regen);
 	public ToggleMaxRegenAttribute(bool enabled = true) => InitValues(enabled);
 

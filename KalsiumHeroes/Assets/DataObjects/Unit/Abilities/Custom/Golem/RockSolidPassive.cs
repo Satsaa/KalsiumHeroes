@@ -14,15 +14,15 @@ public class RockSolidPassive : Passive, IOnChangePosition_Global, IOnDeath_Glob
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		defAlt = unit.data.defense.value.ConfigureAlterer(add, this,
+		defAlt = unit.data.defense.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: GetIncrease,
-			updateEvents: data.rings.Select(v => v.increase.value.onChanged)
+			updateEvents: data.rings.Select(v => v.increase.current.onChanged)
 		);
-		resAlt = unit.data.resistance.value.ConfigureAlterer(add, this,
+		resAlt = unit.data.resistance.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: GetIncrease,
-			updateEvents: data.rings.Select(v => v.increase.value.onChanged)
+			updateEvents: data.rings.Select(v => v.increase.current.onChanged)
 		);
 	}
 
@@ -33,7 +33,7 @@ public class RockSolidPassive : Passive, IOnChangePosition_Global, IOnDeath_Glob
 			var ring = Game.grid.Ring(unit.tile, i);
 			foreach (var tile in ring) {
 				foreach (var unit in tile.units.Where(v => data.filter.TargetIsCompatible(unit, v))) {
-					increase += vals.increase.value;
+					increase += vals.increase.current;
 				}
 			}
 		}

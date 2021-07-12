@@ -12,7 +12,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 
 	/// <summary> When the Unit got dispelled. </summary>
 	public virtual void OnDispell() {
-		if (data.dispellable.value) Remove();
+		if (data.dispellable.current) Remove();
 	}
 
 	public virtual void OnTurnStart() {
@@ -45,7 +45,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 	/// <param name="doExpire">Call OnExpire if the tick duration has expired?</param>
 	protected void Tick(bool doExpire = true) {
 		if (!data.ticks.enabled) return;
-		data.ticks.value.value++;
+		data.ticks.current.value++;
 		OnTick();
 		if (doExpire && HasExpired()) OnExpire();
 	}
@@ -58,13 +58,13 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 
 	/// <summary> Check if this status has expired. </summary>
 	public virtual bool HasExpired() {
-		return data.ticks.enabled && data.ticks.value >= data.ticks.max;
+		return data.ticks.enabled && data.ticks.current >= data.ticks.max;
 	}
 
 	/// <summary> Check if this status would have expired after the provided round count. </summary>
 	public virtual bool WouldHaveExpired(int roundsAhead) {
 		if (Game.rounds.HasFinishedTurn(unit)) roundsAhead--;
-		return data.ticks.enabled && data.ticks.value - roundsAhead <= 0;
+		return data.ticks.enabled && data.ticks.current - roundsAhead <= 0;
 	}
 
 }

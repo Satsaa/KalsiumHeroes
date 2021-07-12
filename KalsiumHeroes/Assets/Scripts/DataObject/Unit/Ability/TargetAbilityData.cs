@@ -28,7 +28,7 @@ public abstract class TargetAbilityData : AbilityData {
 	public class RequiresVision : Attribute<bool> {
 		RequiresVision() : base(false) { }
 		public override string identifier => "Attribute_TargetAbility_RequiresVision";
-		public override string TooltipText(IAttribute source) => value ? null : DefaultTooltip(source);
+		public override string TooltipText(IAttribute source) => current ? null : DefaultTooltip(source);
 	}
 
 }

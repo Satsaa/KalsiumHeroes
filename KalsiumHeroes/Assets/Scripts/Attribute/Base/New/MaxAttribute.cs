@@ -6,14 +6,14 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Collections;
 
-[Serializable]
+[AttributeLabels("V", "Max")]
 public class MaxAttribute<T> : Attribute<T> where T : IComparable {
 
+	protected MaxAttribute() { }
 	public MaxAttribute(T value = default, T max = default) => InitValues(true, value, max);
 
 	public override int count => 2;
 
-	public virtual ValueContainer current => values[0];
 	public virtual ValueContainer max => values[1];
 
 	/// <summary> Value is set to max if it's larger. </summary>
@@ -34,7 +34,7 @@ public class MaxAttribute<T> : Attribute<T> where T : IComparable {
 
 	/// <summary> Value is set to max. </summary>
 	public void Max() {
-		value.value = max;
+		base.current.value = max;
 	}
 
 }
@@ -42,6 +42,7 @@ public class MaxAttribute<T> : Attribute<T> where T : IComparable {
 [Serializable]
 public class ToggleMaxAttribute<T> : MaxAttribute<T>, IAttribute where T : IComparable {
 
+	protected ToggleMaxAttribute() { }
 	public ToggleMaxAttribute(T value = default, T max = default, bool enabled = true) => InitValues(enabled, value, max);
 	public ToggleMaxAttribute(bool enabled = true) => InitValues(enabled);
 

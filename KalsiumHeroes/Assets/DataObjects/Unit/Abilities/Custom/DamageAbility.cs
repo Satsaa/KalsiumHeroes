@@ -15,7 +15,7 @@ public class DamageAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					DealDamage(unit, data.damage.value, data.damageType);
+					DealDamage(unit, data.damage.current, data.damageType);
 				}
 			}
 		});

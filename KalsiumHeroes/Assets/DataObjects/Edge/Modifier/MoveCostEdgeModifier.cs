@@ -11,10 +11,10 @@ public class MoveCostEdgeModifier : EdgeModifier, IOnGetMoveCost_Edge {
 	public override Type dataType => typeof(MoveCostEdgeModifierData);
 
 	public void OnGetMoveCost(Tile from, Tile to, ref float cost) {
-		cost += data.additionalMoveCost.value;
+		cost += data.additionalMoveCost.current;
 	}
 
 	public void OnGetMoveCost(Unit unit, Tile from, Tile to, ref float cost) {
-		cost += data.additionalMoveCost.value;
+		cost += data.additionalMoveCost.current;
 	}
 }

@@ -16,7 +16,7 @@ public abstract class TileTargetAbility : TargetAbility {
 	/// Used for highlighting and should be used when casting the ability (ensures equivalency).
 	/// </summary>
 	public virtual IEnumerable<Tile> GetAffectedArea(Tile tile) {
-		return Game.grid.Radius(tile, data.radius.value);
+		return Game.grid.Radius(tile, data.radius.current);
 	}
 
 	/// <summary> Returns a list of valid target Tiles. </summary>

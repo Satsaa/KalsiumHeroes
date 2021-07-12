@@ -17,9 +17,9 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	public virtual void OnTurnStart() {
 		if (Game.rounds.round <= unit.spawnRound) return;
-		data.cooldown.value.value--;
-		if (data.cooldown.value <= 0) {
-			data.charges.value.value++;
+		data.cooldown.current.value--;
+		if (data.cooldown.current <= 0) {
+			data.charges.current.value++;
 			if (data.cooldown.max <= 0) data.charges.Max();
 			else data.charges.Ceil();
 			data.cooldown.Max();
@@ -42,22 +42,22 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	/// <summary> Is the Ability castable at the moment? </summary>
 	public virtual bool IsReady() {
-		if (data.uses.enabled && data.uses.value <= 0) return false;
-		if (data.energyCost.value > unit.data.energy.value) return false;
-		if (data.abilityType.value == AbilityType.Spell && unit.data.silenced.value) return false;
-		if (data.abilityType.value == AbilityType.WeaponSkill && unit.data.disarmed.value) return false;
-		if (data.charges.value <= 0) return false;
+		if (data.uses.enabled && data.uses.current <= 0) return false;
+		if (data.energyCost.current > unit.data.energy.current) return false;
+		if (data.abilityType.current == AbilityType.Spell && unit.data.silenced.current) return false;
+		if (data.abilityType.current == AbilityType.WeaponSkill && unit.data.disarmed.current) return false;
+		if (data.charges.current <= 0) return false;
 		return true;
 	}
 
 	/// <summary> Called when the ability is actually cast. </summary>
 	public virtual void OnCast() {
 		isCasting = true;
-		if (data.uses.enabled) data.uses.value.value--;
-		if (data.charges.value == data.charges.max) data.cooldown.Max();
-		if (data.cooldown.value <= 0 && data.cooldown.max <= 0) data.charges.Max();
-		else data.charges.value.value--;
-		unit.data.energy.value.value -= data.energyCost.value;
+		if (data.uses.enabled) data.uses.current.value--;
+		if (data.charges.current == data.charges.max) data.cooldown.Max();
+		if (data.cooldown.current <= 0 && data.cooldown.max <= 0) data.charges.Max();
+		else data.charges.current.value--;
+		unit.data.energy.current.value -= data.energyCost.current;
 		unit.RefreshEnergy();
 
 		using (var scope = new Hooks.Scope()) {

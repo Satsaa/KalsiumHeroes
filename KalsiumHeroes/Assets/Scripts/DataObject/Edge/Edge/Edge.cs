@@ -51,7 +51,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		if (to is null) throw new ArgumentNullException(nameof(to));
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
-		var value = to.data.passable.value.value;
+		var value = to.data.passable.current.value;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(unit, from, to, ref value));
 			unit.hooks.ForEach<IOnGetCanPass_Unit>(scope, v => v.OnGetCanPass(from, this, to, ref value));
@@ -66,7 +66,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		if (to is null) throw new ArgumentNullException(nameof(to));
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
-		var value = to.data.passable.value.value;
+		var value = to.data.passable.current.value;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(from, to, ref value));
 			Game.hooks.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(from, this, to, ref value));
@@ -78,7 +78,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 	public float MoveCost(Unit unit, Tile from, Tile to) {
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
-		var value = to.data.moveCost.value.value;
+		var value = to.data.moveCost.current.value;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(unit, from, to, ref value));
 			unit.hooks.ForEach<IOnGetMoveCost_Unit>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
@@ -91,7 +91,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 	public float MoveCost(Tile from, Tile to) {
 		if (to != hex1 && to != hex2) throw new ArgumentException("To must be one of the Tiles connected to the Edge.", nameof(to));
 		if (from != hex1 && from != hex2) throw new ArgumentException("From must be one of the Tiles connected to the Edge.", nameof(from));
-		var value = to.data.moveCost.value.value;
+		var value = to.data.moveCost.current.value;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(from, to, ref value));
 			Game.hooks.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(from, this, to, ref value));

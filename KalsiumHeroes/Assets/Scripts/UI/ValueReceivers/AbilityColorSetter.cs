@@ -15,7 +15,7 @@ public class AbilityColorSetter : ValueReceiver<AbilityData, PassiveData, Abilit
 	[SerializeField] UnityEvent<Color> onUpdate;
 
 	protected override void ReceiveValue(AbilityData data) {
-		if (colors.TryGetValue(data.abilityType.value, out var color)) {
+		if (colors.TryGetValue(data.abilityType.current, out var color)) {
 			onUpdate.Invoke(color);
 		} else {
 			onUpdate.Invoke(Color.white);

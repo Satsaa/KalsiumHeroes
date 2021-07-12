@@ -14,13 +14,13 @@ public class AreaDamageAbility : TileTargetAbility {
 			var target = Game.grid.tiles[msg.targets.First()];
 			// Central damage
 			foreach (var unit in target.units) {
-				DealDamage(unit, data.centerDamage.value, data.damageType);
+				DealDamage(unit, data.centerDamage.current, data.damageType);
 			}
 			// Outer damage
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe.Where(v => v != target)) {
 				foreach (var unit in tile.units) {
-					DealDamage(unit, data.outerDamage.value, data.damageType);
+					DealDamage(unit, data.outerDamage.current, data.damageType);
 				}
 			}
 		});

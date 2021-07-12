@@ -15,7 +15,7 @@ public class HealAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					unit.Heal(data.heal.value);
+					unit.Heal(data.heal.current);
 				}
 			}
 		});

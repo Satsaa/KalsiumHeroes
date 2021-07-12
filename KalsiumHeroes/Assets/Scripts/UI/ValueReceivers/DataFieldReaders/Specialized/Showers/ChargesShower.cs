@@ -50,7 +50,7 @@ public class ChargesShower : ValueReceiver<UnitModifier, UnitModifierData>, ICus
 				var att = chargesSelector.GetFieldValue(data);
 
 				if (att is Attribute<int> a) {
-					a.value.onChanged.ConfigureListener(add, () => Handle());
+					a.current.onChanged.ConfigureListener(add, () => Handle());
 					if (a.count > 1) {
 						a.values[1].onChanged.ConfigureListener(add, () => Handle());
 					}

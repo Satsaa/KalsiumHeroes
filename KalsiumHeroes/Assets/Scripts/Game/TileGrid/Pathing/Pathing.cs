@@ -133,19 +133,19 @@ public static class Pathing {
 
 		var tiles = new Dictionary<Tile, FieldItem>() { { start, new FieldItem(0, 0, null) } };
 		var frontier = new ComparisonPriorityQueue<DoublePriorityNode>(Game.grid.tiles.Count, new DoubleComparer());
-		frontier.Enqueue(new DoublePriorityNode(start, 0), start.data.moveCost.value);
+		frontier.Enqueue(new DoublePriorityNode(start, 0), start.data.moveCost.current);
 
 		if (start != target) {
 			while (frontier.Count != 0) {
 				var tile = frontier.Dequeue().tile;
 				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + costCalculator(tile, edge, neighbor);
-					var appeal = tiles[tile].appeal + tile.data.appeal.value;
+					var appeal = tiles[tile].appeal + tile.data.appeal.current;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
 						tiles[neighbor] = new FieldItem(cost, appeal, tile);
 						if (cost < minCost || closest != target) {
 							float priority = cost;
-							frontier.Enqueue(new DoublePriorityNode(neighbor, -neighbor.data.appeal.value), priority);
+							frontier.Enqueue(new DoublePriorityNode(neighbor, -neighbor.data.appeal.current), priority);
 							var dist = Game.grid.Distance(neighbor, target);
 							if (dist < minDist) {
 								minDist = dist;
@@ -189,13 +189,13 @@ public static class Pathing {
 				var tile = frontier.Dequeue().tile;
 				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + 1;
-					var appeal = tiles[tile].appeal + tile.data.appeal.value;
+					var appeal = tiles[tile].appeal + tile.data.appeal.current;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
 						tiles[neighbor] = new FieldItem(cost, appeal, tile);
 						if (closest != target) {
 							var dist = Game.grid.Distance(neighbor, target);
 							var priority = dist + cost;
-							frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.data.appeal.value), priority);
+							frontier.Enqueue(new DoublePriorityNode(neighbor, neighbor.data.appeal.current), priority);
 							if (dist < minDist) {
 								minDist = dist;
 								closest = neighbor;
@@ -316,7 +316,7 @@ public static class Pathing {
 				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = tiles[tile].cost + costCalculator(tile, edge, neighbor);
 					if (cost > maxCost) continue;
-					var appeal = tiles[tile].appeal + tile.data.appeal.value;
+					var appeal = tiles[tile].appeal + tile.data.appeal.current;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
 						tiles[neighbor] = new FieldItem(cost, appeal, tile);
 						frontier[i + 1].Add(neighbor);
@@ -357,7 +357,7 @@ public static class Pathing {
 			foreach (var tile in frontier[i]) {
 				foreach (var (neighbor, edge) in tile.NeighborsWithEdges()) {
 					var cost = i + 1;
-					var appeal = tiles[tile].appeal + tile.data.appeal.value;
+					var appeal = tiles[tile].appeal + tile.data.appeal.current;
 					if (pather(tile, edge, neighbor) && (!tiles.TryGetValue(neighbor, out var other) || other.cost > cost || (other.cost == cost && other.appeal < appeal))) {
 						tiles[neighbor] = new FieldItem(cost, appeal, tile);
 						frontier[cost].Add(neighbor);

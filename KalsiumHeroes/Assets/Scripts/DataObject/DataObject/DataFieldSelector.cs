@@ -38,13 +38,13 @@ public class DataFieldSelector<T> {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
-		return TryOverrideValue(source, ac != null ? ac.value : fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.current : fallbackValue);
 	}
 	public T GetRawValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
-		return TryOverrideValue(source, ac != null ? ac.value.raw : fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.current.raw : fallbackValue);
 	}
 
 	public T GetOther(object source, bool ignoreSwap = false) {

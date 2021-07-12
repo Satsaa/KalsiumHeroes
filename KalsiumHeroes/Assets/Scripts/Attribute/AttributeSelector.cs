@@ -28,11 +28,11 @@ public class AttributeSelector<T> {
 
 	public T GetValue(object source) {
 		UpdateCache(source);
-		return TryOverrideValue(source, ac != null ? ac.value : fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.current : fallbackValue);
 	}
 	public T GetRawValue(object source) {
 		UpdateCache(source);
-		return TryOverrideValue(source, ac != null ? ac.value.raw : fallbackValue);
+		return TryOverrideValue(source, ac != null ? ac.current.raw : fallbackValue);
 	}
 
 	public T GetOther(object source) {

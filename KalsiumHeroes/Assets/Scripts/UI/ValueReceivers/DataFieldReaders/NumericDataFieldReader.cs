@@ -65,7 +65,7 @@ public abstract class NumericDataFieldReader : ValueReceiver<DataObject, DataObj
 				var att = selector.GetFieldValue(data);
 
 				if (att is Attribute<int> ai) {
-					ai.value.onChanged.ConfigureListener(add, () => {
+					ai.current.onChanged.ConfigureListener(add, () => {
 						var param = selector.GetValue(data);
 						OnValue(param);
 						onValue.Invoke(param);
@@ -89,7 +89,7 @@ public abstract class NumericDataFieldReader : ValueReceiver<DataObject, DataObj
 				}
 
 				if (att is Attribute<float> af) {
-					af.value.onChanged.ConfigureListener(add, () => {
+					af.current.onChanged.ConfigureListener(add, () => {
 						var param = selector.GetValue(data);
 						OnValue(param);
 						onValue.Invoke(param);

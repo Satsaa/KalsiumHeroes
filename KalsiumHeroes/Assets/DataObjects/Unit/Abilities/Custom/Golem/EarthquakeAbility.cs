@@ -20,12 +20,12 @@ public class EarthquakeAbility : NoTargetAbility {
 	void GetAffectedUnits() {
 		for (int i = 0; i < data.rings.Length; i++) {
 			var vals = data.rings[i];
-			if (vals.damage.value == 0 && vals.modifier == null) continue;
+			if (vals.damage.current == 0 && vals.modifier == null) continue;
 			var ring = Game.grid.Ring(unit.tile, i);
 			foreach (var tile in ring) {
 				foreach (var unit in tile.units.Where(v => data.affected.TargetIsCompatible(unit, v))) {
 					unitsFound.Add(unit);
-					unit.DealCalculatedDamage(this, vals.damage.value, data.damageType);
+					unit.DealCalculatedDamage(this, vals.damage.current, data.damageType);
 					Modifier.Create(unit, vals.modifier);
 				}
 			}

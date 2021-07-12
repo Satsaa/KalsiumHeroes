@@ -10,10 +10,10 @@ public class DefenseChangeStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.data.defense.value.ConfigureAlterer(add, this,
+		unit.data.defense.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.defenseReduction.value,
-			updateEvents: new[] { data.defenseReduction.value.onChanged }
+			updater: () => data.defenseReduction.current,
+			updateEvents: new[] { data.defenseReduction.current.onChanged }
 		);
 	}
 }

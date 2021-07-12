@@ -11,11 +11,11 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 	protected Alterer<int> defenseAlterer;
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		var alt = unit.data.defense.value.ConfigureAlterer(add, this,
+		var alt = unit.data.defense.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.defenseIncrease.value,
+			updater: () => data.defenseIncrease.current,
 			updateEvents: new[] {
-				data.defenseIncrease.value.onChanged
+				data.defenseIncrease.current.onChanged
 			}
 		);
 	}
@@ -23,8 +23,8 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 
 	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ability) {
-			if (ability.data.abilityType.value == AbilityType.WeaponSkill && Game.grid.Distance(ability.unit.tile, this.unit.tile) <= 1) {
-				DealDamage(ability.unit, data.damage.value, data.damageType);
+			if (ability.data.abilityType.current == AbilityType.WeaponSkill && Game.grid.Distance(ability.unit.tile, this.unit.tile) <= 1) {
+				DealDamage(ability.unit, data.damage.current, data.damageType);
 				Remove();
 			}
 		}

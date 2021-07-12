@@ -18,19 +18,19 @@ public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.data.movement.value.ConfigureAlterer(add, this,
+		unit.data.movement.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.movementGain.value * unitsFound,
-			updateEvents: new[] { data.movementGain.value.onChanged }
+			updater: () => data.movementGain.current * unitsFound,
+			updateEvents: new[] { data.movementGain.current.onChanged }
 		);
-		unit.data.speed.value.ConfigureAlterer(add, this,
+		unit.data.speed.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.speedGain.value * unitsFound,
-			updateEvents: new[] { data.speedGain.value.onChanged }
+			updater: () => data.speedGain.current * unitsFound,
+			updateEvents: new[] { data.speedGain.current.onChanged }
 		);
 	}
 
 	public virtual void OnGetEstimatedSpeed(int roundsAhead, ref int current) {
-		if (!WouldHaveExpired(roundsAhead)) current += data.speedGain.value * unitsFound;
+		if (!WouldHaveExpired(roundsAhead)) current += data.speedGain.current * unitsFound;
 	}
 }

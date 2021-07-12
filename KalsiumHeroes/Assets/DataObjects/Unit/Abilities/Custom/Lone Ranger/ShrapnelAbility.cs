@@ -18,7 +18,7 @@ public class ShrapnelAbility : TileTargetAbility {
 			modifier.creator = this;
 			modifier.aoe = base.GetAffectedArea(target).ToList();
 
-			modifier.calculatedDamage = data.damage.value;
+			modifier.calculatedDamage = data.damage.current;
 			modifier.damageType = data.damageType;
 
 			CalculateDamage(ref modifier.calculatedDamage, ref modifier.damageType);

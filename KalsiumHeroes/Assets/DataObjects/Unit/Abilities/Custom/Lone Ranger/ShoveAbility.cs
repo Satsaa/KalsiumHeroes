@@ -19,7 +19,7 @@ public class ShoveAbility : UnitTargetAbility {
 
 	void Shove(Unit target) {
 		var dir = unit.tile.GetDir(target.tile);
-		for (int i = 0; i < data.shoveDist.value; i++) {
+		for (int i = 0; i < data.shoveDist.current; i++) {
 			if (target.CanMoveInDir(dir, out Tile next)) {
 				ExecuteMoveOff(target, target.tile);
 				ExecuteMoveOver(target, target.tile, next);

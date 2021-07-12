@@ -32,15 +32,15 @@ public abstract class TargetAbility : Ability {
 		IEnumerable<Tile> res;
 		if (data.range.enabled) {
 			if (data.rangeMode == RangeMode.Distance) {
-				res = Game.grid.Radius(tile, data.range.value);
+				res = Game.grid.Radius(tile, data.range.current);
 			} else {
-				res = Pathing.GetDistanceField(tile, data.range.value, Pathers.For(data.rangeMode)).tiles.Keys;
+				res = Pathing.GetDistanceField(tile, data.range.current, Pathers.For(data.rangeMode)).tiles.Keys;
 			}
 		} else {
 			res = Game.grid.tiles.Values;
 		}
 
-		if (data.requiresVision.value) res = res.Where(h => Game.grid.HasSight(tile, h));
+		if (data.requiresVision.current) res = res.Where(h => Game.grid.HasSight(tile, h));
 
 		return res;
 	}

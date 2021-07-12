@@ -13,7 +13,7 @@ public class PickOffAbility : UnitTargetAbility {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
 			var aoe = GetAffectedArea(target);
-			var finalDamage = data.damage.value * GetMultiplier(target);
+			var finalDamage = data.damage.current * GetMultiplier(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
 					DealDamage(unit, finalDamage, data.damageType);

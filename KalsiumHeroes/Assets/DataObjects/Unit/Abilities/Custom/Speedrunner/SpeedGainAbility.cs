@@ -23,6 +23,6 @@ public class SpeedGainAbility : NoTargetAbility {
 	}
 
 	public override IEnumerable<Tile> GetAffectedArea() {
-		return Game.grid.Radius(unit.tile, data.radius.value);
+		return Game.grid.Radius(unit.tile, data.radius.current);
 	}
 }

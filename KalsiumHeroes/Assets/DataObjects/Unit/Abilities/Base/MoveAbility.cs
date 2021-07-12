@@ -16,15 +16,15 @@ public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 
 	public override bool IsReady() {
 		if (blocked) return false;
-		if (unit.data.rooted.value) return false;
-		var energyMovement = GetPaidMovement(unit.data.movement.value, unit.data.energy.value);
-		return (usedMovement - energyMovement) < unit.data.movement.value && base.IsReady();
+		if (unit.data.rooted.current) return false;
+		var energyMovement = GetPaidMovement(unit.data.movement.current, unit.data.energy.current);
+		return (usedMovement - energyMovement) < unit.data.movement.current && base.IsReady();
 	}
 
 	public override IEnumerable<Tile> GetTargets() {
-		var movement = unit.data.movement.value;
+		var movement = unit.data.movement.current;
 		var freeMovement = movement - usedMovement;
-		var energyMovement = GetPaidMovement(movement, unit.data.energy.value);
+		var energyMovement = GetPaidMovement(movement, unit.data.energy.current);
 		var maxCost = freeMovement + energyMovement;
 		var rangeMode = data.rangeMode;
 		var res = Pathing.GetCostField(unit.tile, maxCost: maxCost, pather: Pathers.For(rangeMode), costCalculator: CostCalculators.For(rangeMode)).tiles.Keys;
@@ -46,7 +46,7 @@ public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 	}
 
 	public void OnAbilityCastStart(Ability ability) {
-		if (!ability.data.allowMove.value) blocked = true;
+		if (!ability.data.allowMove.current) blocked = true;
 	}
 
 	public override void OnTurnStart() {
@@ -56,9 +56,9 @@ public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 	}
 
 	public override Targeter GetTargeter() {
-		var movement = unit.data.movement.value;
+		var movement = unit.data.movement.current;
 		var freeMovement = movement - usedMovement;
-		var energyMovement = GetPaidMovement(movement, unit.data.energy.value);
+		var energyMovement = GetPaidMovement(movement, unit.data.energy.current);
 		return new MoveAbilityTargeter(unit, this, freeMovement, energyMovement,
 			onComplete: t => PostDefaultAbilityEvent(t.selections.ToArray())
 		) { pather = Pathers.For(data.rangeMode), cc = CostCalculators.For(data.rangeMode) };

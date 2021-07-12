@@ -9,7 +9,7 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_U
 	public override Type dataType => typeof(CordialInvitationStatusData);
 
 	public void OnDeath() {
-		data.opponent.data.health.value.value = data.opponent.data.health.max;
+		data.opponent.data.health.current.value = data.opponent.data.health.max;
 		data.opponentStatus.Remove();
 		Remove();
 	}
@@ -24,7 +24,7 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_U
 
 	public void OnMoveOver(Modifier reason, Tile from, Edge edge, Tile to) {
 		var distance = Game.grid.Distance(this.unit.tile, data.opponent.tile);
-		if (distance >= data.breakRange.value) {
+		if (distance >= data.breakRange.current) {
 			Modifier.Create(master, data.disgracefulBehaviour);
 			data.opponentStatus.Remove();
 			this.Remove();

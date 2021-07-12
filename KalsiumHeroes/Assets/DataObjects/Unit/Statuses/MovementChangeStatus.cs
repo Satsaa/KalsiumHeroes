@@ -10,10 +10,10 @@ public class MovementChangeStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.data.movement.value.ConfigureAlterer(add, this,
+		unit.data.movement.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.movementChange.value,
-			updateEvents: new[] { data.movementChange.value.onChanged }
+			updater: () => data.movementChange.current,
+			updateEvents: new[] { data.movementChange.current.onChanged }
 		);
 	}
 }

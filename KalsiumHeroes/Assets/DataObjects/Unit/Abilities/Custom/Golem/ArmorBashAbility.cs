@@ -22,9 +22,9 @@ public class ArmorBashAbility : UnitTargetAbility {
 	}
 
 	float CalculateDamage(Unit target) {
-		float damage = unit.data.defense.value - target.data.defense.value;
+		float damage = unit.data.defense.current - target.data.defense.current;
 		damage = Mathf.Max(damage, 0);
-		Debug.Log("Damage: " + damage + " (Golem Defense " + unit.data.defense.value + " - Target Defense " + target.data.defense.value + ")");
+		Debug.Log("Damage: " + damage + " (Golem Defense " + unit.data.defense.current + " - Target Defense " + target.data.defense.current + ")");
 		return damage;
 	}
 }

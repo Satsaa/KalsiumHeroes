@@ -71,7 +71,7 @@ public abstract class DataFieldReader<T> : ValueReceiver<DataObject, DataObjectD
 				var att = selector.GetFieldValue(data);
 
 				if (att is Attribute<int> a) {
-					a.value.onChanged.ConfigureListener(add, () => {
+					a.current.onChanged.ConfigureListener(add, () => {
 						var param = selector.GetValue(data);
 						OnValue(param);
 						onValue.Invoke(param);

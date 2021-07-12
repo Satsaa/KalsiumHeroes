@@ -17,22 +17,22 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		data.hidden.value.ConfigureAlterer(add, this,
+		data.hidden.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v || a > 0, // Will not override if already hidden
-			updater: () => stacks.value,
-			updateEvents: new[] { stacks.value.onChanged }
+			updater: () => stacks.current,
+			updateEvents: new[] { stacks.current.onChanged }
 		);
 
-		unit.data.defense.value.ConfigureAlterer(add, this,
+		unit.data.defense.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.defenseChange.value * stacks.value,
-			updateEvents: new[] { data.defenseChange.value.onChanged, stacks.value.onChanged }
+			updater: () => data.defenseChange.current * stacks.current,
+			updateEvents: new[] { data.defenseChange.current.onChanged, stacks.current.onChanged }
 		);
 
-		unit.data.resistance.value.ConfigureAlterer(add, this,
+		unit.data.resistance.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.resistanceChange.value * stacks.value,
-			updateEvents: new[] { data.resistanceChange.value.onChanged, stacks.value.onChanged }
+			updater: () => data.resistanceChange.current * stacks.current,
+			updateEvents: new[] { data.resistanceChange.current.onChanged, stacks.current.onChanged }
 		);
 
 	}
@@ -46,7 +46,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
 	public override void OnTurnEnd() {
 		if (stacksDuringOwnTurn > 0) {
-			stacks.value.value = stacksDuringOwnTurn;
+			stacks.current.value = stacksDuringOwnTurn;
 		} else {
 			Clear();
 		}
@@ -54,7 +54,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	}
 
 	private void Add(int excess) {
-		stacks.value.value += excess;
+		stacks.current.value += excess;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
@@ -62,7 +62,7 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 		if (pts) pts.Play();
 	}
 	private void Clear() {
-		stacks.value.value = 0;
+		stacks.current.value = 0;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();

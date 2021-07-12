@@ -16,11 +16,9 @@ public abstract class AbilityData : UnitModifierData {
 	[Tooltip("The amount of energy required to cast this ability.")]
 	public EnergyCost energyCost;
 
-	[AttributeLabels("Current", "Max")]
 	[Tooltip("How many turns it takes for this ability to gain a charge.")]
 	public Cooldown cooldown;
 
-	[AttributeLabels("Current", "Max")]
 	[Tooltip("How many charges does the ability have.")]
 	public Charges charges;
 
@@ -33,15 +31,15 @@ public abstract class AbilityData : UnitModifierData {
 	[Serializable]
 	public class AbilityType : Attribute<global::AbilityType> {
 		public override string identifier => "Attribute_Ability_AbilityType";
-		public override string TooltipText(IAttribute source) => value == global::AbilityType.Base ? null : DefaultTooltip(source, Lang.GetStr("Targets"));
-		public override string Format(bool isSource) => Lang.GetStr($"{identifier}_{value.ToString()}");
+		public override string TooltipText(IAttribute source) => current == global::AbilityType.Base ? null : DefaultTooltip(source, Lang.GetStr("Targets"));
+		public override string Format(bool isSource) => Lang.GetStr($"{identifier}_{current.ToString()}");
 	}
 
 	[Serializable]
 	public class EnergyCost : Attribute<int> {
 		public override string identifier => "Attribute_Ability_EnergyCost";
 		public override string TooltipText(IAttribute source) {
-			if (value != 0) return DefaultTooltip(source);
+			if (current != 0) return DefaultTooltip(source);
 			return null;
 		}
 	}
@@ -80,7 +78,7 @@ public abstract class AbilityData : UnitModifierData {
 	public class AllowMove : Attribute<bool> {
 		public override string identifier => "Attribute_Ability_AllowMove";
 		public override string TooltipText(IAttribute source) {
-			if (value == true) return DefaultTooltip(source);
+			if (current == true) return DefaultTooltip(source);
 			return null;
 		}
 	}

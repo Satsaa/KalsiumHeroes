@@ -15,7 +15,7 @@ public class ChangeSpeedAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					unit.data.speed.value.value += data.speedChange.value;
+					unit.data.speed.current.value += data.speedChange.current;
 				}
 			}
 		});

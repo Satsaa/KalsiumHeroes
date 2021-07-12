@@ -13,9 +13,9 @@ public class OpportunistPassive : Passive, IOnMoveOver_Global {
 			if (unit != this.unit) {
 				var oldDistance = Game.grid.Distance(this.unit.tile, from);
 				var newDistance = Game.grid.Distance(this.unit.tile, to);
-				if (oldDistance <= data.range.value && newDistance > data.range.value && this.unit.team != unit.team) {
-					DealDamage(unit, data.damage.value, data.damageType);
-					this.unit.data.energy.value.value += data.energyGain.value;
+				if (oldDistance <= data.range.current && newDistance > data.range.current && this.unit.team != unit.team) {
+					DealDamage(unit, data.damage.current, data.damageType);
+					this.unit.data.energy.current.value += data.energyGain.current;
 					this.unit.RefreshEnergy();
 				}
 			}

@@ -64,7 +64,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			tile.hooks.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
 			Game.hooks.ForEach<IOnHeal_Global>(scope, v => v.OnHeal(this, ref heal));
 		}
-		data.health.value.value += Mathf.Max(0, heal);
+		data.health.current.value += Mathf.Max(0, heal);
 		data.health.Clamp();
 	}
 
@@ -93,25 +93,25 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		}
 		switch (type) {
 			case DamageType.Physical:
-				data.health.value.value -= (1 - data.defense.value / 100f) * damage;
+				data.health.current.value -= (1 - data.defense.current / 100f) * damage;
 				data.health.Clamp();
 				break;
 			case DamageType.Magical:
-				data.health.value.value -= (1 - data.resistance.value / 100f) * damage;
+				data.health.current.value -= (1 - data.resistance.current / 100f) * damage;
 				data.health.Clamp();
 				break;
 			case DamageType.Pure:
-				data.health.value.value -= damage;
+				data.health.current.value -= damage;
 				data.health.Clamp();
 				break;
 			default:
-				data.health.value.value -= damage;
+				data.health.current.value -= damage;
 				data.health.Clamp();
 				Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
 				break;
 		}
 
-		if (data.health.value <= 0) {
+		if (data.health.current <= 0) {
 			using (var scope = new Hooks.Scope()) {
 				Debug.Log("IOnDeath_Unit");
 				this.hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
@@ -127,7 +127,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	/// <summary> Applies any statuses caused by energy deficit or excess </summary>
 	public void RefreshEnergy() {
-		var deficit = 0 - data.energy.value;
+		var deficit = 0 - data.energy.current;
 		if (deficit > 0) {
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
@@ -135,7 +135,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 				Game.hooks.ForEach<IOnEnergyDeficit_Global>(scope, v => v.OnEnergyDeficit(this, deficit));
 			}
 		}
-		var excess = data.energy.value - data.energy.max;
+		var excess = data.energy.current - data.energy.max;
 		if (excess > 0) {
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
@@ -191,7 +191,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	/// <summary> Gets the estimated speed of this unit after a number of rounds have passed. </summary>
 	public int GetEstimatedSpeed(int roundsAhead) {
-		var speed = data.speed.value.raw;
+		var speed = data.speed.current.raw;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
 			tile.hooks.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));

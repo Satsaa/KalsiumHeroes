@@ -60,7 +60,7 @@ public class UnitData : MasterData {
 
 	[Serializable]
 	public abstract class Disabler : Attribute<bool> {
-		public override string TooltipText(IAttribute source) => source == this && value == true ? DefaultTooltip(source) : null;
+		public override string TooltipText(IAttribute source) => source == this && current == true ? DefaultTooltip(source) : null;
 	}
 
 	[Serializable] public class Silenced : Disabler { public override string identifier => "Attribute_Unit_Silenced"; }

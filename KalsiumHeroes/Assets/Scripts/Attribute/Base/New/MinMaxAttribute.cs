@@ -7,13 +7,14 @@ using Object = UnityEngine.Object;
 using System.Collections;
 
 [Serializable]
+[AttributeLabels("V", "Min", "Max")]
 public class MinMaxAttribute<T> : MaxAttribute<T> where T : IComparable {
 
+	protected MinMaxAttribute() { }
 	public MinMaxAttribute(T value = default, T min = default, T max = default) => InitValues(true, value, min, max);
 
 	public override int count => 3;
 
-	public override ValueContainer current => values[0];
 	public virtual ValueContainer min => values[1];
 	public override ValueContainer max => values[2];
 
@@ -24,13 +25,14 @@ public class MinMaxAttribute<T> : MaxAttribute<T> where T : IComparable {
 
 	/// <summary> Value is set to min. </summary>
 	public void Min() {
-		value.value = min;
+		current.value = min;
 	}
 }
 
 [Serializable]
 public class ToggleMinMaxAttribute<T> : MinMaxAttribute<T>, IAttribute where T : IComparable {
 
+	protected ToggleMinMaxAttribute() { }
 	public ToggleMinMaxAttribute(T value = default, T min = default, T max = default, bool enabled = true) => InitValues(enabled, value, min, max);
 	public ToggleMinMaxAttribute(bool enabled = true) => InitValues(enabled);
 

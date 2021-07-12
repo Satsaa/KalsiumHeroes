@@ -1,15 +1,14 @@
 ﻿
 using System;
+using System.Linq;
 using UnityEngine;
 
-[AttributeUsage(AttributeTargets.Field)]
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Class)]
 public class AttributeLabelsAttribute : PropertyAttribute {
 
-  public readonly string primaryLabel;
-  public readonly string secondaryLabel;
+	public readonly GUIContent[] labels;
 
-  public AttributeLabelsAttribute(string primaryLabel, string secondaryLabel) {
-    this.primaryLabel = primaryLabel;
-    this.secondaryLabel = secondaryLabel;
-  }
+	public AttributeLabelsAttribute(params string[] labels) {
+		this.labels = labels.Select(v => new GUIContent(v)).ToArray();
+	}
 }

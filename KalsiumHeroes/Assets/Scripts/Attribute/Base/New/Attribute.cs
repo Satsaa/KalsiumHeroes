@@ -7,6 +7,7 @@ using Object = UnityEngine.Object;
 using System.Collections;
 
 [Serializable]
+[AttributeLabels("V")]
 public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerializationCallbackReceiver {
 
 	[Serializable]
@@ -32,7 +33,7 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 		set => _values[index].value = value;
 	}
 
-	public ValueContainer value => values[0];
+	public virtual ValueContainer current => values[0];
 
 	#endregion
 
@@ -172,16 +173,54 @@ namespace Editors {
 				var props = new SerializedProperty[size];
 				for (int i = 0; i < size; i++) props[i] = values.GetArrayElementAtIndex(i).FindPropertyRelative(rawField);
 
+				if (props.Length == 1 && enabled == null) {
+					using (ForceIndentScope(position, out position)) {
+						PropertyField(position, label, props.First());
+					}
+					return;
+				}
+
 				var toggleWidth = 15 + spacing;
 
-				using (LabelWidthScope(v => enabled == null ? v : v - toggleWidth))
+				using (ForceIndentScope(position, out position)) {
 					position = Prefix(position, label);
+				}
 
 				if (enabled != null) {
 					var pos = position;
 					pos.width = toggleWidth;
 					PropertyField(pos, GUIContent.none, enabled.FindPropertyRelative(rawField));
 					position.xMin = pos.xMax;
+				}
+
+				var fieldInfo = GetFieldInfo(property);
+				if (fieldInfo != null) {
+
+					var fieldType = fieldInfo.FieldType;
+					var labelAttribute = fieldInfo?.GetCustomAttributes(typeof(AttributeLabelsAttribute), false).FirstOrDefault() as AttributeLabelsAttribute;
+					labelAttribute ??= fieldType.GetCustomAttributes(typeof(AttributeLabelsAttribute), true).FirstOrDefault() as AttributeLabelsAttribute;
+
+					if (labelAttribute != null) {
+						MultiPropertyField(position, Overlap(labelAttribute.labels, baseLabels), props);
+						return;
+
+						IEnumerable<T> Overlap<T>(IEnumerable<T> a, IEnumerable<T> b) {
+							var ae = a.GetEnumerator();
+							var be = b.GetEnumerator();
+							while (ae.MoveNext()) {
+								yield return ae.Current;
+								if (!be.MoveNext()) {
+									while (ae.MoveNext()) {
+										yield return ae.Current;
+									}
+									yield break;
+								}
+							}
+							while (be.MoveNext()) {
+								yield return be.Current;
+							}
+						}
+					}
 				}
 
 				MultiPropertyField(position, baseLabels, props);

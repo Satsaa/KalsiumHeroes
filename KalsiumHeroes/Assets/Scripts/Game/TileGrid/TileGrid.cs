@@ -356,7 +356,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="target">The sighted Tile</param>
 	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>
 	public bool HasSight(Hex hex, Hex target, Predicate<Tile> predicate = null) {
-		predicate = predicate ?? (h => h == null || h.data.transparent.value);
+		predicate = predicate ?? (h => h == null || h.data.transparent.current);
 		return SmartLine(hex, target, v => predicate(v)).All(predicate.Invoke);
 	}
 
@@ -377,7 +377,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Dictionary of Tile areas. Key: Tile, Value: Area id</returns>
 	public Dictionary<Tile, int> GetAreas(Predicate<Tile> passable = null) {
-		passable = passable ?? (h => h.data.passable.value);
+		passable = passable ?? (h => h.data.passable.current);
 		var results = new Dictionary<Tile, int>(tiles.Count);
 		var id = 0;
 
@@ -396,7 +396,7 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 	/// </summary>
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	public IEnumerable<Tile> Flood(Tile source, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => h.data.passable.value);
+		passable = passable ?? (h => h.data.passable.current);
 		var frontier = new Queue<Tile>();
 		yield return source;
 		frontier.Enqueue(source);
@@ -445,11 +445,11 @@ public class TileGridEditor : Editor {
 		if (!t.drawHexes) return;
 		foreach (var kv in t.tiles) {
 			var tile = kv.Value;
-			var fillColor = (tile == null || tile.data == null) ? Color.magenta : (tile.data.passable.value ? (
+			var fillColor = (tile == null || tile.data == null) ? Color.magenta : (tile.data.passable.current ? (
 				Color.Lerp(
-					Saturate(Whitener(Color.green, 0.75f), tile.data.appeal.value * -0.08f),
-					Saturate(Whitener(Color.red, 0.75f), tile.data.appeal.value * -0.08f),
-					tile.data.moveCost.value / 10f
+					Saturate(Whitener(Color.green, 0.75f), tile.data.appeal.current * -0.08f),
+					Saturate(Whitener(Color.red, 0.75f), tile.data.appeal.current * -0.08f),
+					tile.data.moveCost.current / 10f
 				)
 			) : Color.black);
 			if (tile) {

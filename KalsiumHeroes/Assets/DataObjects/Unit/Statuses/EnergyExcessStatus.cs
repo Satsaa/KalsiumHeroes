@@ -15,10 +15,10 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		data.hidden.value.ConfigureAlterer(add, this,
+		data.hidden.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v || a > 0, // Will not override if already hidden
-			updater: () => stacks.value,
-			updateEvents: new[] { stacks.value.onChanged }
+			updater: () => stacks.current,
+			updateEvents: new[] { stacks.current.onChanged }
 		);
 
 	}
@@ -38,7 +38,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 
 	void IOnCalculateDamage_Unit.OnCalculateDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ab) {
-			if (data.abiTypeMults.TryGetValue(ab.data.abilityType.value, out var mult1)) {
+			if (data.abiTypeMults.TryGetValue(ab.data.abilityType.current, out var mult1)) {
 				damage *= mult1;
 			}
 			if (data.dmgTypeMults.TryGetValue(type, out var mult2)) {
@@ -53,7 +53,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	}
 
 	private void Add(int excess) {
-		stacks.value.value += excess;
+		stacks.current.value += excess;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
@@ -61,7 +61,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 		if (pts) pts.Play();
 	}
 	private void Clear() {
-		stacks.value.value = 0;
+		stacks.current.value = 0;
 		if (!data.container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();

@@ -53,6 +53,12 @@ namespace Muc.Editor {
 			});
 		}
 
+		public static Deferred ForceIndentScope(Rect position, out Rect indented) {
+			indented = position;
+			indented.xMin += indent;
+			return LabelWidthScope(v => v - indent);
+		}
+
 
 
 		public static void Space(float space = spaceSize) {

@@ -6,7 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Collections;
 
-public abstract class Attribute : IAttribute {
+public abstract class Attribute {
 
 	public interface IValueContainer {
 		object cache { get; }
@@ -29,15 +29,6 @@ public abstract class Attribute : IAttribute {
 		IReadOnlyList<Alterer<T>> alterers { get; }
 		Muc.Data.Event onChanged { get; }
 	}
-
-	string IAttribute.identifier => throw new NotImplementedException();
-	int IAttribute.count => throw new NotImplementedException();
-	string IAttribute.Format(bool isSource) => throw new NotImplementedException();
-	EnabledContainer IAttribute.GetEnabled() => throw new NotImplementedException();
-	IValueContainer IAttribute.GetValue(int index) => throw new NotImplementedException();
-	IReadOnlyList<IValueContainer> IAttribute.GetValues() => throw new NotImplementedException();
-	EnabledContainer IAttribute.SetEnabled(EnabledContainer value) => throw new NotImplementedException();
-	string IAttribute.TooltipText(IAttribute source) => throw new NotImplementedException();
 
 	public class ValueContainer<T> : IValueContainer, IValueContainer<T> {
 
