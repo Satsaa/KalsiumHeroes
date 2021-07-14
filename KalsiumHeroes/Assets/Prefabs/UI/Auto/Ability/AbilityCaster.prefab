@@ -310,9 +310,10 @@ MonoBehaviour:
     list:
     - key: 0
       value: {r: 0, g: 0, b: 0, a: 1}
+      isDuplicate: 0
     - key: 1
       value: {r: 0, g: 0, b: 0, a: 0.5019608}
-    keyCollision: 0
+      isDuplicate: 0
   onUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -889,12 +890,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4549740254805862481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9475f0f7943741649bb751df2d0f0dde, type: 3}
+  m_Script: {fileID: 11500000, guid: e180ec93bbe7a8d4e81c4c6bdb8a5bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <hovered>k__BackingField: 0
-  <query>k__BackingField: modifier_list
-  additionalData: []
+  <allowClick>k__BackingField: 0
+  data: {fileID: 0}
+  dataObject: {fileID: 0}
 --- !u!1 &6831530961997666556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,9 +1102,10 @@ MonoBehaviour:
     list:
     - key: 0
       value: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+      isDuplicate: 0
     - key: 1
       value: {r: 1, g: 1, b: 1, a: 1}
-    keyCollision: 0
+      isDuplicate: 0
   onUpdate:
     m_PersistentCalls:
       m_Calls:

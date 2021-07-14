@@ -19,7 +19,7 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 
 	#region General
 
-	protected Attribute() { }
+	public Attribute() => CheckArray();
 	public Attribute(T value) => InitValues(true, value);
 
 	public virtual string identifier => null;
@@ -35,6 +35,18 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 
 	public virtual ValueContainer current => values[0];
 
+	Muc.Data.Event _onChanged;
+	public Muc.Data.Event onChanged {
+		get {
+			if (_onChanged != null) return _onChanged;
+			_onChanged = new();
+			var enabledContainer = (this as IAttribute).GetEnabled();
+			if (enabledContainer != null) enabledContainer.onAttributeChanged = _onChanged;
+			foreach (var value in values) value.onAttributeChanged = _onChanged;
+			return _onChanged;
+		}
+	}
+
 	#endregion
 
 
@@ -44,11 +56,9 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 		if (_values == null) {
 			_values = new ValueContainer[count];
 			for (int i = 0; i < _values.Length; i++) _values[i] = new();
-			Debug.LogWarning("Was null");
 		} else if (_values.Length != count) {
 			Array.Resize(ref _values, count);
 			for (int i = 0; i < _values.Length; i++) _values[i] ??= new();
-			Debug.LogWarning("Was wrong size");
 		}
 		return _values;
 	}
@@ -94,7 +104,10 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 			if (source.GetEnabled() != null) return Lang.GetStr($"{identifier}_Tooltip", source.GetValues().Select(v => v.value).ToArray());
 			return Lang.GetStr($"{identifier}_Tooltip", source.GetValues().Select(v => v.value).Append(source.GetEnabled()).ToArray());
 		}
-		return $"{overrideDisplayName ?? Lang.GetStr($"{identifier}_DisplayName")}{Lang.GetStr("LabelValueDeliminator", ": ")}{Format(source == this)}";
+		return $"{ Stylify("prefix", overrideDisplayName ?? Lang.GetStr($"{identifier}_DisplayName"))}{Lang.GetStr("LabelValueDeliminator", ": ")}{Stylify("value", Format(source == this))}";
+		string Stylify(string style, string str) {
+			return $"<style={style}>{str}</style>";
+		}
 	}
 
 	#endregion
@@ -125,7 +138,7 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 [Serializable]
 public class ToggleAttribute<T> : Attribute<T>, IAttribute {
 
-	protected ToggleAttribute() { }
+	public ToggleAttribute() : base() { }
 	public ToggleAttribute(T value, bool enabled = true) => InitValues(enabled, value);
 	public ToggleAttribute(bool enabled) => InitValues(enabled);
 

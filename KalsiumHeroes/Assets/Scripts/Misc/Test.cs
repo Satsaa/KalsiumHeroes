@@ -25,9 +25,9 @@ public class Test : MonoBehaviour {
 	void Start() { }
 
 	public void DoTest1() {
-		Debug.Log($"test.GetValue(data) => {test.GetValue(data)}");
-		Debug.Log($"test.GetOther(data) => {test.GetOther(data)}");
-		Debug.Log($"test.GetEnabled(data) => {test.GetEnabled(data)}");
+		var items = App.library.dict.Keys.ToList();
+		items.Sort();
+		defense = String.Join(";", items);
 	}
 
 	public void DoTest2() {

@@ -1084,29 +1084,8 @@ MonoBehaviour:
     - key: Red
       value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
       isDuplicate: 0
-    - key: Ability_Info
-      value: {fileID: 2303619671523802732, guid: ecda326ea444e7944af34ba37bf37910, type: 3}
-      isDuplicate: 0
     - key: DataObject_Info
       value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
-      isDuplicate: 0
-    - key: Passive_Info
-      value: {fileID: 2303619671523802732, guid: a91bcf6cd09a36b4dba28079e11ff73e, type: 3}
-      isDuplicate: 0
-    - key: Status_Info
-      value: {fileID: 2303619671523802732, guid: c4ac699ba0d051046aa06cb5f403ce60, type: 3}
-      isDuplicate: 0
-    - key: TargetAbility_Info
-      value: {fileID: 1115576529508270921, guid: 6667b7e31ef204f46a1097e32536ba0b, type: 3}
-      isDuplicate: 0
-    - key: TileTarget_ability_Info
-      value: {fileID: 4328556010460216923, guid: ddea446c69877564ca66924c52288c10, type: 3}
-      isDuplicate: 0
-    - key: UnitModifier_Info
-      value: {fileID: 290634914456489787, guid: 5404c4ba65fd48e4494e40780c048175, type: 3}
-      isDuplicate: 0
-    - key: UnitTargetAbility_Info
-      value: {fileID: 4328556010460216923, guid: 802b5594ad9a9304c860a3609994ea9b, type: 3}
       isDuplicate: 0
   tts: []
 --- !u!1 &1286376790
@@ -1503,18 +1482,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
-  newAtt:
-    _values:
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 1
-      <isModified>k__BackingField: 0
-      _original: 0
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 2
-      <isModified>k__BackingField: 0
-      _original: 0
   newTogAtt:
     _values:
     - cache: 0
@@ -1527,21 +1494,27 @@ MonoBehaviour:
       <raw>k__BackingField: 420
       <isModified>k__BackingField: 0
       _original: 0
-    _enabled:
+    <enabled>k__BackingField:
       cache: 0
       isCached: 0
       <raw>k__BackingField: 1
       <isModified>k__BackingField: 0
       _original: 0
   appeal:
-    <rawValue>k__BackingField: 1.36
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 1.36
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
   health:
-    <rawValue>k__BackingField: 3
-    <valueHasChanged>k__BackingField: 1
-    _startValue: 3
-  defense: lol
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 0
+      <isModified>k__BackingField: 0
+      _original: 0
+  defense: test
   test:
     field:
       <attributeName>k__BackingField: 
@@ -1613,7 +1586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <translationsPath>k__BackingField: Lang
-  <language>k__BackingField: sv-FI
+  <language>k__BackingField: en-US
   <languages>k__BackingField:
   - en-US
   - sv-FI

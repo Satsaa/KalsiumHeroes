@@ -145,6 +145,12 @@ public class Lang : Singleton<Lang> {
 		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return String.Format(LangFormatProvider.instance, res, args);
 		return defaultStr;
 	}
+#if UNITY_EDITOR
+	[UnityEditor.Callbacks.DidReloadScripts]
+	private static void OnScriptsRloaded() {
+		if (Lang.instance) Lang.LoadLanguage(Lang.instance.language, out var _);
+	}
+#endif
 
 	[Serializable]
 	struct Pair {

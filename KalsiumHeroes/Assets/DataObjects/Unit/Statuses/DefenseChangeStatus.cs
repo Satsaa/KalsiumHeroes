@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DefenseChangeStatus : Status {
 
-	public new DefenseChangeStatusData data => (DefenseChangeStatusData)data;
+	public new DefenseChangeStatusData data => (DefenseChangeStatusData)_data;
 	public override Type dataType => typeof(DefenseChangeStatusData);
 
 	protected override void OnConfigureNonpersistent(bool add) {

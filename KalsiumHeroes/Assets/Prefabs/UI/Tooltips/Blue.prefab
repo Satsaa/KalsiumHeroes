@@ -31,6 +31,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2922828157329641349}
   m_Father: {fileID: 0}
@@ -172,7 +173,7 @@ MonoBehaviour:
   destroyOnWindowize:
   - {fileID: 7802256927280855918}
   index: 0
-  id: 
+  query: 
   creator: {fileID: 0}
   windowized: 0
   tooltipAnimator: {fileID: 0}
@@ -206,6 +207,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1627508102906763617}
   m_RootOrder: 0
@@ -243,7 +245,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color="red"><link="tt_red">red</link> <color="blue"><link="tt_blue">blue</link>
+  m_text: <color=red><link="tt_Red">red</link> <color=blue><link=tt_Blue>blue</link>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -325,7 +327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <hovered>k__BackingField: 0
-  <id>k__BackingField: modifier_list
+  <query>k__BackingField: modifier_list
+  additionalData: []
   text: {fileID: 4682290598415118656}
 --- !u!114 &3921032056073550420
 MonoBehaviour:

@@ -279,6 +279,9 @@ public class Tooltips : UISingleton<Tooltips> {
 					throw new ArgumentException(MakeThrowString("The instance id does not result in a valid Object."), "query");
 				}
 				return obj;
+			case '@':
+				Debug.Log($"Text based tooltip (wip): {param}");
+				return null;
 			default:
 				switch (param) {
 					case "true":

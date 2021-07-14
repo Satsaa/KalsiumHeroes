@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 [AttributeLabels("V", "Max", "Regen")]
 public class MaxRegenAttribute<T> : MaxAttribute<T> where T : IComparable {
 
-	protected MaxRegenAttribute() { }
+	public MaxRegenAttribute() : base() { }
 	public MaxRegenAttribute(T value = default, T max = default, T regen = default) => InitValues(true, value, max, regen);
 
 	public override int count => 3;
@@ -23,7 +23,7 @@ public class MaxRegenAttribute<T> : MaxAttribute<T> where T : IComparable {
 	static Func<T, T, T> _add;
 	protected static Func<T, T, T> add {
 		get {
-			if (add != null) return _add;
+			if (_add != null) return _add;
 			var p1 = Expression.Parameter(typeof(T));
 			var p2 = Expression.Parameter(typeof(T));
 			return _add = Expression.Lambda<Func<T, T, T>>(Expression.Add(p1, p2), p1, p2).Compile();
@@ -41,7 +41,7 @@ public class MaxRegenAttribute<T> : MaxAttribute<T> where T : IComparable {
 [Serializable]
 public class ToggleMaxRegenAttribute<T> : MaxRegenAttribute<T>, IAttribute where T : IComparable {
 
-	protected ToggleMaxRegenAttribute() { }
+	public ToggleMaxRegenAttribute() : base() { }
 	public ToggleMaxRegenAttribute(T value = default, T max = default, T regen = default, bool enabled = true) => InitValues(enabled, value, max, regen);
 	public ToggleMaxRegenAttribute(bool enabled = true) => InitValues(enabled);
 

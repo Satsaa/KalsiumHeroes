@@ -31,8 +31,11 @@ public class LoadingSpinner : MonoBehaviour {
 		yield return blade6;
 	}
 
-	void Start() {
-		animator = GetComponent<Animator>();
+	protected virtual void OnValidate() {
+		if (!animator) animator = GetComponent<Animator>();
+	}
+
+	protected virtual void Start() {
 		_text = GetComponent<TMP_Text>();
 		foreach (var blade in GetBlades()) {
 			var color = blade.color;
@@ -41,7 +44,7 @@ public class LoadingSpinner : MonoBehaviour {
 		}
 	}
 
-	void Update() {
+	protected virtual void Update() {
 		foreach (var blade in GetBlades()) {
 			var color = blade.color;
 			color.a -= decay * Time.deltaTime;

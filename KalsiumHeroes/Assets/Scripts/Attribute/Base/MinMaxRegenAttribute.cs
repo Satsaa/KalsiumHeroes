@@ -10,7 +10,7 @@ using System.Collections;
 [AttributeLabels("V", "Min", "Max", "Regen")]
 public class MinMaxRegenAttribute<T> : MinMaxAttribute<T> where T : IComparable {
 
-	protected MinMaxRegenAttribute() { }
+	public MinMaxRegenAttribute() : base() { }
 	public MinMaxRegenAttribute(T value = default, T min = default, T max = default, T regen = default) => InitValues(true, value, min, max, regen);
 
 	public override int count => 4;
@@ -24,7 +24,7 @@ public class MinMaxRegenAttribute<T> : MinMaxAttribute<T> where T : IComparable 
 [Serializable]
 public class ToggleMinMaxRegenAttribute<T> : MinMaxRegenAttribute<T>, IAttribute where T : IComparable {
 
-	protected ToggleMinMaxRegenAttribute() { }
+	public ToggleMinMaxRegenAttribute() : base() { }
 	public ToggleMinMaxRegenAttribute(T value = default, T min = default, T max = default, T regen = default, bool enabled = true) => InitValues(enabled, value, min, max, regen);
 	public ToggleMinMaxRegenAttribute(bool enabled = true) => InitValues(enabled);
 

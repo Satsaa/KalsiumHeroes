@@ -23,12 +23,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 46f09f0c9827b7543ac300f4e08d5133, type: 2}
   - {fileID: 11400000, guid: 62fdae0fbdf9b644990c323d49ce5892, type: 2}
   draft:
-  - unit_duelist
-  - unit_golem
-  - unit_lone_ranger
-  - unit_rogue_mage_hunter
-  - unit_speedrunner
-  - unit_test
+  - Unit_Duelist
+  - Unit_Golem
+  - Unit_LoneRanger
+  - Unit_RogueMageHunter
+  - Unit_Speedrunner
+  - Unit_Test
   draftPositions:
   - {x: 0, y: 4, z: -4}
   - {x: 1, y: 3, z: -4}

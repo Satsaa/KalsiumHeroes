@@ -123,12 +123,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - BlockSize: 25
+    - BlockSize: 250
     - BlockValue: 250
     - Dividers: 0
     - FILTER: 1
     - HUEENABLE: 1
-    - MaxValue: 100
+    - MaxValue: 1000
     - RawTiling: 0.01
     - ReferenceDivicers: 10
     - SHOWFIRSTHALF: 1

@@ -108,4 +108,13 @@ public class Game : Singleton<Game> {
 		}
 	}
 
+#if UNITY_EDITOR
+	[UnityEditor.Callbacks.DidReloadScripts]
+	static void OnReloadScripts() {
+		// Rejoin old game
+		if (Game.game && Application.isPlaying && !String.IsNullOrEmpty(Game.game.code)) {
+			App.app.ShowSpinner("Rejoining game (script reload)", App.app.RejoinGame(Game.game.code, Game.game.team, 2000));
+		}
+	}
+#endif
 }

@@ -10,7 +10,7 @@ using System.Collections;
 [AttributeLabels("V", "Min", "Max")]
 public class MinMaxAttribute<T> : MaxAttribute<T> where T : IComparable {
 
-	protected MinMaxAttribute() { }
+	public MinMaxAttribute() : base() { }
 	public MinMaxAttribute(T value = default, T min = default, T max = default) => InitValues(true, value, min, max);
 
 	public override int count => 3;
@@ -32,7 +32,7 @@ public class MinMaxAttribute<T> : MaxAttribute<T> where T : IComparable {
 [Serializable]
 public class ToggleMinMaxAttribute<T> : MinMaxAttribute<T>, IAttribute where T : IComparable {
 
-	protected ToggleMinMaxAttribute() { }
+	public ToggleMinMaxAttribute() : base() { }
 	public ToggleMinMaxAttribute(T value = default, T min = default, T max = default, bool enabled = true) => InitValues(enabled, value, min, max);
 	public ToggleMinMaxAttribute(bool enabled = true) => InitValues(enabled);
 

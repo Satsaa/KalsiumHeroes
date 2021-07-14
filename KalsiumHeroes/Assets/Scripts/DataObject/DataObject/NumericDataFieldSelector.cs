@@ -39,24 +39,24 @@ public class NumericDataFieldSelector {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return AsFloat(fieldCached.GetValue(source));
-		return TryOverrideValue(source, iac != null ? (float)iac.GetValue(0).value : fallbackValue);
+		return TryOverrideValue(source, iac != null ? AsFloat(iac.GetValue(0).value) : fallbackValue);
 	}
 	public float GetRawValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawOther(source, true);
 		UpdateCache(source);
 		if (fieldCached != null) return AsFloat(fieldCached.GetValue(source));
-		return TryOverrideValue(source, iac != null ? (float)iac.GetValue(0).raw : fallbackValue);
+		return TryOverrideValue(source, iac != null ? AsFloat(iac.GetValue(0).raw) : fallbackValue);
 	}
 
 	public float GetOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).value : fallbackOther);
+		return TryOverrideOther(source, iac != null && iac.count >= 2 ? AsFloat(iac.GetValue(1).value) : fallbackOther);
 	}
 	public float GetRawOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).raw : fallbackOther);
+		return TryOverrideOther(source, iac != null && iac.count >= 2 ? AsFloat(iac.GetValue(1).raw) : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {

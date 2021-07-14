@@ -49,4 +49,14 @@ public partial class Client : MonoBehaviour {
 	async void OnApplicationQuit() {
 		await ws.Close();
 	}
+
+#if UNITY_EDITOR
+	[UnityEditor.Callbacks.DidReloadScripts]
+	static void OnReloadScripts() {
+		// Rejoin old game
+		if (Application.isPlaying) {
+			App.client.Connect();
+		}
+	}
+#endif
 }

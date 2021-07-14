@@ -9,7 +9,7 @@ using System.Collections;
 [AttributeLabels("V", "Max")]
 public class MaxAttribute<T> : Attribute<T> where T : IComparable {
 
-	protected MaxAttribute() { }
+	public MaxAttribute() : base() { }
 	public MaxAttribute(T value = default, T max = default) => InitValues(true, value, max);
 
 	public override int count => 2;
@@ -42,7 +42,7 @@ public class MaxAttribute<T> : Attribute<T> where T : IComparable {
 [Serializable]
 public class ToggleMaxAttribute<T> : MaxAttribute<T>, IAttribute where T : IComparable {
 
-	protected ToggleMaxAttribute() { }
+	public ToggleMaxAttribute() : base() { }
 	public ToggleMaxAttribute(T value = default, T max = default, bool enabled = true) => InitValues(enabled, value, max);
 	public ToggleMaxAttribute(bool enabled = true) => InitValues(enabled);
 

@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 using Muc.Extensions;
 using Muc.Components.Extended;
 
-public class InfoTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IPointerEnterHandler, IPointerExitHandler {
+public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IPointerEnterHandler, IPointerExitHandler {
 
 	[field: SerializeField, HideInInspector]
 	public bool hovered { get; protected set; }

@@ -40,6 +40,7 @@ public abstract class Attribute {
 		List<Alterer<T>> _alterers = new();
 		public IReadOnlyList<Alterer<T>> alterers => _alterers;
 		public Muc.Data.Event onChanged { get; private set; } = new();
+		protected internal Muc.Data.Event onAttributeChanged { protected get; set; }
 
 		[SerializeField] T cache;
 		[SerializeField] bool isCached;
@@ -84,7 +85,8 @@ public abstract class Attribute {
 					_original = raw;
 					isModified = true;
 				}
-				onChanged?.Invoke();
+				onChanged.Invoke();
+				onAttributeChanged?.Invoke();
 			}
 			return cache;
 		}

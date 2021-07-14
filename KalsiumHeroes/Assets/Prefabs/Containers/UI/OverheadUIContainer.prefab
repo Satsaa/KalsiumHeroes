@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: e5b7d5393e19bfd47999e50fd5e98e6a, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7490196}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -449,9 +449,10 @@ MonoBehaviour:
     list:
     - key: 0
       value: {r: 0, g: 1, b: 0.003575325, a: 1}
+      isDuplicate: 0
     - key: 1
       value: {r: 1, g: 0, b: 0, a: 1}
-    keyCollision: 0
+      isDuplicate: 0
 --- !u!114 &3489734548303403291
 MonoBehaviour:
   m_ObjectHideFlags: 0
