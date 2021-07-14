@@ -40,7 +40,7 @@ MonoBehaviour:
       _original: 0
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 1
+      <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
   charges:
