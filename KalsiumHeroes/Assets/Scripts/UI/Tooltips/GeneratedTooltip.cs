@@ -27,7 +27,10 @@ public class GeneratedTooltip : Tooltip, IValueReceiver {
 		text.text += $"<style=title>{title}</style>\n";
 		if (hasDesc) text.text += $"</line-height><style=normal>{desc}</style><line-height=115%>\n";
 
-		var props = data.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(v => typeof(Attribute).IsAssignableFrom(v.FieldType));
+		var props = data.GetType()
+			.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+			.Where(v => typeof(Attribute).IsAssignableFrom(v.FieldType))
+			.OrderBy(field => field.MetadataToken);
 		var pairs = props.Select(v => (data: v.GetValue(data) as IAttribute, source: v.GetValue(source) as IAttribute));
 		foreach (var pair in pairs) {
 			var tooltip = pair.data.TooltipText(pair.source);

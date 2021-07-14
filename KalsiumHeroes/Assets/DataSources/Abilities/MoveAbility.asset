@@ -70,8 +70,8 @@ MonoBehaviour:
       _original: 0
   allowMove:
     _values:
-    - cache: 0
-      isCached: 0
+    - cache: 1
+      isCached: 1
       <raw>k__BackingField: 1
       <isModified>k__BackingField: 0
       _original: 0
@@ -92,11 +92,17 @@ MonoBehaviour:
   requiresVision:
     _values:
     - cache: 0
-      isCached: 0
+      isCached: 1
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
-  targetType: 0
+  targetType:
+    _values:
+    - cache: 0
+      isCached: 0
+      <raw>k__BackingField: 12
+      <isModified>k__BackingField: 0
+      _original: 0
   radius:
     _values:
     - cache: 0

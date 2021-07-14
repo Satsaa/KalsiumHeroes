@@ -109,6 +109,10 @@ public interface IOnAnimationEventEnd : IGlobalHook { void OnAnimationEventEnd()
 public interface IOnTargeterStart : IGlobalHook { void OnTargeterStart(Targeter targeter); }
 public interface IOnTargeterEnd : IGlobalHook { void OnTargeterEnd(); }
 
+public interface IOnChangeDirection_Unit : IUnitHook { void OnChangeDirection(TileDir from, TileDir to); }
+public interface IOnChangeDirection_Tile : ITileHook { void OnChangeDirection(Unit unit, TileDir from, TileDir to); }
+public interface IOnChangeDirection_Global : IGlobalHook { void OnChangeDirection(Unit unit, TileDir from, TileDir to); }
+
 public interface IOnChangePosition_Unit : IUnitHook { void OnChangePosition(Tile? from, Tile to); }
 public interface IOnChangePosition_Tile : ITileHook { void OnChangePosition(Unit unit, Tile? from, Tile to); }
 public interface IOnChangePosition_Global : IGlobalHook { void OnChangePosition(Unit unit, Tile? from, Tile to); }

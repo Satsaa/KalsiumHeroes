@@ -14,6 +14,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	public override Type dataType => typeof(UnitData);
 
 	[field: SerializeField] public Tile tile { get; private set; }
+	[field: SerializeField] public TileDir tileDir { get; private set; }
 	[field: SerializeField] public int spawnRound { get; private set; }
 	public UnitActor actor;
 	public Canvas canvas;
@@ -28,16 +29,19 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz());
 			v.actor = actor ? actor : Instantiate(source.actor);
 			v.SetTile(nearTile, true);
+			v.SetDir(0, true);
 		});
 		res.gameObject.transform.SetParent(res.actor.transform, false);
 		return res;
 	}
 
-	public static Unit Create(UnitData source, Tile tile, Team team, UnitActor actor = null) {
+	public static Unit Create(UnitData source, Tile tile, TileDir tileDir, Team team, UnitActor actor = null) {
 		var res = Create<Unit>(source, v => {
 			v.team = team;
 			v.actor = actor ? actor : Instantiate(source.actor);
+			v.tileDir = tileDir; // Prevent hook being called on spawn
 			v.SetTile(tile, true);
+			v.SetDir(tileDir, true);
 		});
 		res.gameObject.transform.SetParent(res.actor.transform, false);
 		return res;
@@ -173,6 +177,10 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	public void SetTile(Tile tile, bool reposition) {
 		if (tile == null) throw new ArgumentNullException(nameof(tile));
+		if (tile == this.tile) {
+			if (reposition) actor.transform.position = this.tile.center;
+			return;
+		}
 		if (removed) {
 			this.tile = tile;
 			return;
@@ -186,6 +194,25 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			this.hooks.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
 			tile.hooks.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
 			Game.hooks.ForEach<IOnChangePosition_Global>(scope, v => v.OnChangePosition(this, orig, tile));
+		}
+	}
+
+	public void SetDir(TileDir tileDir, bool reorientate) {
+		if (tileDir == this.tileDir) {
+			if (reorientate) actor.transform.rotation = actor.transform.rotation * Quaternion.AngleAxis(tileDir.ToAngle(), Vector3.up);
+			return;
+		}
+		if (removed) {
+			this.tileDir = tileDir;
+			return;
+		}
+		var orig = this.tileDir;
+		this.tileDir = tileDir;
+		if (reorientate) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
+		using (var scope = new Hooks.Scope()) {
+			this.hooks.ForEach<IOnChangeDirection_Unit>(scope, v => v.OnChangeDirection(orig, tileDir));
+			tile.hooks.ForEach<IOnChangeDirection_Tile>(scope, v => v.OnChangeDirection(this, orig, tileDir));
+			Game.hooks.ForEach<IOnChangeDirection_Global>(scope, v => v.OnChangeDirection(this, orig, tileDir));
 		}
 	}
 

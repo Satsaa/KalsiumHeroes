@@ -69,10 +69,11 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 			var next = pathObjects[index + 1];
 			switch (next) {
 				case Tile tile:
-					ExecuteOver(unit, pathObjects[index - 1] as Tile, prev as Edge, pathObjects[index + 1] as Tile);
+					ExecuteOver(unit, pathObjects[index - 1] as Tile, prev as Edge, tile);
 					break;
 				case Edge edge:
 					if (index > 0) ExecuteOn(unit, prev as Tile);
+					ExecuteDirection(unit, prev as Tile, pathObjects[index + 2] as Tile);
 					ExecuteOff(unit, prev as Tile);
 					break;
 			}
@@ -109,6 +110,11 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 	}
 	protected void ExecuteOff(Unit unit, Tile tile) {
 		creator.ExecuteMoveOff(unit, tile);
+		if (unit.removed) animating = false;
+	}
+	protected void ExecuteDirection(Unit unit, Tile from, Tile to) {
+		var dir = from.GetDir(to);
+		unit.SetDir(dir, false);
 		if (unit.removed) animating = false;
 	}
 }

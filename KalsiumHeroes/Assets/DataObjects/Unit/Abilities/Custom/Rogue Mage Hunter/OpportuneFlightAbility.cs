@@ -27,6 +27,7 @@ public class OpportuneFlightAbility : TileTargetAbility {
 	void DoMove(Tile tile) {
 		var target = unit;
 		var dir = unit.tile.GetDir(tile);
+		unit.SetDir(dir, true);
 		for (int i = 0; i < data.moveDistance.current; i++) {
 			if (target.CanMoveInDir(dir, out Tile next)) {
 				ExecuteMoveOff(target, target.tile);
