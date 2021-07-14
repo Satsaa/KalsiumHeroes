@@ -192,5 +192,12 @@
 	"Attribute_Ability_AbilityType_Base": "Base",
 	"Attribute_Ability_AbilityType_WeaponSkill": "Weapon Skill",
 	"Attribute_Ability_AbilityType_Spell": "Spell",
-	"Attribute_Ability_AbilityType_Skill": "Skill"
+	"Attribute_Ability_AbilityType_Skill": "Skill",
+	"Attribute_TileTargetAbility_TargetType_None": "None",
+	"Attribute_TileTargetAbility_TargetType_Ally": "Allies",
+	"Attribute_TileTargetAbility_TargetType_Enemy": "Enemies",
+	"Attribute_TileTargetAbility_TargetType_Unit": "Units",
+	"Attribute_TileTargetAbility_TargetType_Ground": "Ground",
+	"Attribute_TileTargetAbility_TargetType_Wall": "Wall",
+	"Attribute_TileTargetAbility_TargetType_Any": "Any"
 }

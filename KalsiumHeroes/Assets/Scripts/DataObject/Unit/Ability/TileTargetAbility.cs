@@ -21,7 +21,23 @@ public abstract class TileTargetAbility : TargetAbility {
 
 	/// <summary> Returns a list of valid target Tiles. </summary>
 	public virtual IEnumerable<Tile> GetTargets() {
-		return GetDefaultRangeTiles();
+		var targets = GetDefaultRangeTiles();
+
+		var value = data.targetType.current.value;
+		if (!value.HasFlag(TileTargetType.Any)) {
+			if (value == TileTargetType.None) return Enumerable.Empty<Tile>();
+			var ally = value.HasFlag(TileTargetType.Ally);
+			var enemy = value.HasFlag(TileTargetType.Enemy);
+			var ground = value.HasFlag(TileTargetType.Ground);
+			var wall = value.HasFlag(TileTargetType.Wall);
+			return targets.Where(v
+				=> (ally && v.units.Any(u => u.team == unit.team))
+				|| (enemy && v.units.Any(u => u.team != unit.team))
+				|| (ground && v.data.passable.current)
+				|| (wall && !v.data.passable.current));
+		}
+
+		return targets;
 	}
 
 }

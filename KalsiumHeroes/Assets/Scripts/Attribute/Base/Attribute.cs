@@ -99,15 +99,15 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 		return DefaultTooltip(source);
 	}
 
-	protected string DefaultTooltip(IAttribute source, string overrideDisplayName = null) {
+	protected string DefaultTooltip(IAttribute source, string overridePrefix = null) {
 		if (Lang.HasStr($"{identifier}_Tooltip")) {
 			if (source.GetEnabled() != null) return Lang.GetStr($"{identifier}_Tooltip", source.GetValues().Select(v => v.value).ToArray());
 			return Lang.GetStr($"{identifier}_Tooltip", source.GetValues().Select(v => v.value).Append(source.GetEnabled()).ToArray());
 		}
-		return $"{ Stylify("prefix", overrideDisplayName ?? Lang.GetStr($"{identifier}_DisplayName"))}{Lang.GetStr("LabelValueDeliminator", ": ")}{Stylify("value", Format(source == this))}";
-		string Stylify(string style, string str) {
-			return $"<style={style}>{str}</style>";
-		}
+		var prefix = Stylify("prefix", $"{overridePrefix ?? Lang.GetStr($"{identifier}_DisplayName")}{Lang.GetStr("LabelValueDeliminator", ": ")}");
+		var value = Stylify("value", Format(source == this));
+		return $"{prefix}{value}";
+		string Stylify(string style, string str) => $"<style={style}>{str}</style>";
 	}
 
 	#endregion
