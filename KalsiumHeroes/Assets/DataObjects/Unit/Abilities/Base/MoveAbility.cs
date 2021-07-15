@@ -64,4 +64,7 @@ public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 		) { pather = Pathers.For(data.rangeMode), cc = CostCalculators.For(data.rangeMode) };
 	}
 
+	public override string CombatLog(GameEvents.Ability msg) {
+		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} moved from {unit.tile.hex} to {new HexGrid.Hex(msg.targets.Last())}.";
+	}
 }

@@ -19,4 +19,7 @@ public abstract class NoTargetAbility : Ability {
 		return new List<Tile>() { unit.tile };
 	}
 
+	public override string CombatLog(GameEvents.Ability msg) {
+		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} casted {Lang.GetStr($"{data.identifier}_DisplayName")}.";
+	}
 }

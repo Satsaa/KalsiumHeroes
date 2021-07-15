@@ -97,6 +97,10 @@ namespace HexGrid {
 			return unchecked(x.GetHashCode() * 17 + y.GetHashCode());
 		}
 
+		public override string ToString() {
+			return $"{{{x}, {y}, {z}}}";
+		}
+
 		#endregion
 	}
 }

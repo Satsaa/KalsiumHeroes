@@ -67,6 +67,9 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 		}
 	}
 
+	/// <summary> Add entry to combat log. </summary>
+	public abstract string CombatLog(GameEvents.Ability msg);
+
 	/// <summary> Calculates damage and deals it to the target. </summary>
 	protected override void DealDamage(Unit target, float damage, DamageType damageType) {
 		CalculateDamage(ref damage, ref damageType);

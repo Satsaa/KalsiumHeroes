@@ -570,7 +570,7 @@ namespace Muc.Components {
 			if (index < 0 || index > items.Count) throw new IndexOutOfRangeException();
 			item.group = this;
 			item.Init();
-			if (index <= firstVisible) { // Before first visible
+			if (index <= firstVisible && firstVisible != 0) { // Before first visible
 				for (int i = firstVisible; i <= lastVisible; i++) {
 					items[i].Offset(item.size);
 				}
@@ -582,7 +582,7 @@ namespace Muc.Components {
 				size += item.size;
 				OffsetPos(rectTransform, -item.size);
 				return;
-			} else if (index <= lastVisible) { // Within visible area
+			} else if (index <= lastVisible || firstVisible == 0) { // Within visible area
 				for (int i = index; i <= lastVisible; i++) {
 					items[i].Offset(item.size, true);
 				}
@@ -652,7 +652,7 @@ namespace Muc.Components {
 			};
 		}
 
-		protected bool IsVert() {
+		public bool IsVert() {
 			return direction switch {
 				Direction.Right => false,
 				Direction.Left => false,

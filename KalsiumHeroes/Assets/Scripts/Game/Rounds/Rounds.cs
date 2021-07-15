@@ -87,6 +87,7 @@ public class Rounds : MonoBehaviour {
 	}
 
 	public void OnGameStart() {
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Game start"));
 		if (!TryEndGame()) {
 			round++;
 			Gather();
@@ -97,6 +98,7 @@ public class Rounds : MonoBehaviour {
 
 	private bool TryEndGame() {
 		if (Game.dataObjects.Get<Unit>().Count() <= 1) {
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Game end"));
 			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameEnd>(scope, v => v.OnGameEnd());
 			return true;
 		}
@@ -104,6 +106,7 @@ public class Rounds : MonoBehaviour {
 	}
 
 	private static void OnRoundStarts() {
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Round {Game.rounds.round} begins"));
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnRoundStart>(scope, v => v.OnRoundStart()); // 5 7
 	}
 
@@ -116,6 +119,7 @@ public class Rounds : MonoBehaviour {
 	}
 
 	private static void OnTurnStarts(Unit unit) {
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Turn: {Lang.GetStr($"{unit.data.identifier}_DisplayName")} ({unit.team})"));
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
 			unit.tile.hooks.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(unit));

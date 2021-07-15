@@ -40,4 +40,8 @@ public abstract class UnitTargetAbility : TargetAbility {
 
 		return tiles.Select(v => v.units.First());
 	}
+
+	public override string CombatLog(GameEvents.Ability msg) {
+		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} casted {Lang.GetStr($"{data.identifier}_DisplayName")} on {Lang.GetStr($"{Game.grid.GetTile(msg.targets.First()).units.First().data.identifier}_DisplayName")}.";
+	}
 }

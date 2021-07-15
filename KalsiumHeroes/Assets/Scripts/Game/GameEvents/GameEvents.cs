@@ -78,12 +78,17 @@ public class GameEvents : MonoBehaviour {
 
 		public override EventHandler GetHandler() {
 			Debug.Log($"{this.GetType().Name}: Called");
-			var unit = Game.grid.tiles[casterTile].units[casterIndex];
-			var ability = unit.modifiers.Get<global::Ability>().ToList()[abilityIndex];
+			var caster = ResolveCaster();
+			var ability = ResolveAbility(caster);
+			var str = ability.CombatLog(this);
+			if (str != null) using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog(str));
 			EventHandler<Ability> abilityHandler = ability.CreateHandler(this);
 			ability.OnCast();
 			return abilityHandler;
 		}
+
+		public Unit ResolveCaster() => Game.grid.tiles[casterTile].units[casterIndex];
+		public global::Ability ResolveAbility(Unit caster) => caster.modifiers.Get<global::Ability>().ToList()[abilityIndex];
 	}
 
 	[Serializable]

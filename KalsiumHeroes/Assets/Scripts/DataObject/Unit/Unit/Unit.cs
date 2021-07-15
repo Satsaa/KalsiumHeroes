@@ -50,6 +50,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	protected override void OnCreate() {
 		base.OnCreate();
 		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit spawn: {Lang.GetStr($"{data.identifier}_DisplayName")} ({team})"));
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
 			tile.hooks.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
@@ -116,8 +117,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		}
 
 		if (data.health.current <= 0) {
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit death: {Lang.GetStr($"{data.identifier}_DisplayName")} ({team})"));
 			using (var scope = new Hooks.Scope()) {
-				Debug.Log("IOnDeath_Unit");
 				this.hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
 				tile.hooks.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
 				Game.hooks.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
@@ -229,13 +230,11 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	void IOnTurnStart_Unit.OnTurnStart() {
 		if (Game.rounds.round <= spawnRound) return;
-		Debug.Log($"Turn start: {gameObject.name}");
 		data.energy.Regen(false);
 		RefreshEnergy();
 	}
 
 	void IOnDeath_Unit.OnDeath() {
-		Debug.Log("OnDeath");
 		actor.Die();
 	}
 
