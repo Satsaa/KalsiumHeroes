@@ -277,6 +277,7 @@ public class Lang : Singleton<Lang> {
 		{0} -> "1"
 		{0:F2} -> "1.00"
 
+		// not implemented
 		// Custom string manipulations (This will prevent these characters being used as a separator)
 		{MyString}   -> my COOL string
 		{MyString:U} -> My COOL string
