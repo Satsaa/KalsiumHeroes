@@ -86,9 +86,9 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 			case 2:
 				return String.Format(Lang.GetStr("Format_Fraction", "{0}/{1}"), this[0], this[1]);
 			case 3:
-				return String.Format(Lang.GetStr("Format_TripleFraction", "{0}/{1}/{3}"), this[0], this[1], this[2]);
+				return String.Format(Lang.GetStr("Format_TripleFraction", "{0}/{1}/{2}"), this[0], this[1], this[2]);
 			case 4:
-				return String.Format(Lang.GetStr("Format_QuadrupleFraction", "{0}/{1}/{3}/{4}"), this[0], this[1], this[2], this[3]);
+				return String.Format(Lang.GetStr("Format_QuadrupleFraction", "{0}/{1}/{2}/{3}"), this[0], this[1], this[2], this[3]);
 			default:
 				return String.Join(Lang.GetStr("MultiValueDeliminator", "/"), values);
 		}
@@ -101,8 +101,8 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 
 	protected string DefaultTooltip(IAttribute source, string overridePrefix = null) {
 		if (Lang.HasStr($"{identifier}_Tooltip")) {
-			if (source.GetEnabled() != null) return Lang.GetStr($"{identifier}_Tooltip", source.GetValues().Select(v => v.value).ToArray());
-			return Lang.GetStr($"{identifier}_Tooltip", source.GetValues().Select(v => v.value).Append(source.GetEnabled()).ToArray());
+			if (source.GetEnabled() != null) return Lang.GetStr($"{identifier}_Tooltip", this);
+			return Lang.GetStr($"{identifier}_Tooltip", this);
 		}
 		var prefix = Stylify("prefix", $"{overridePrefix ?? Lang.GetStr($"{identifier}_DisplayName")}{Lang.GetStr("LabelValueDeliminator", ": ")}");
 		var value = Stylify("value", Format(source == this));

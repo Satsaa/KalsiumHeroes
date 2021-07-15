@@ -4,17 +4,20 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 public class Test : MonoBehaviour {
 
 	public DataObjectData data;
+	public Unit unit;
 
 	public MaxAttribute<float> newAtt;
 	public ToggleMaxAttribute<float> newTogAtt;
 
 	public Attribute<float> appeal;
 	public Attribute<int> health;
-	public string defense = "lol";
+	public string str = "lol";
 
 	public AttributeSelector<float> test;
 	public NumericAttributeSelector numTest;
@@ -25,15 +28,21 @@ public class Test : MonoBehaviour {
 	void Start() { }
 
 	public void DoTest1() {
-		var items = App.library.dict.Keys.ToList();
-		items.Sort();
-		defense = String.Join(";", items);
+		Debug.Log(Lang.Format(str, unit.data.energy, unit.source, unit.data));
 	}
 
 	public void DoTest2() {
-		Debug.Log($"numTest.GetValue(data) => {numTest.GetValue(data)}");
-		Debug.Log($"numTest.GetOther(data) => {numTest.GetOther(data)}");
-		Debug.Log($"numTest.GetEnabled(data) => {numTest.GetEnabled(data)}");
+		var sw = new Stopwatch();
+		sw.Start();
+
+		for (int i = 0; i < 1000000; i++) {
+			Lang.Format(str, unit.data.energy, unit.source, unit.data);
+		}
+
+
+		sw.Stop();
+
+		Debug.Log($"Elapsed={sw.Elapsed}");
 	}
 
 	public void DoTest3() {

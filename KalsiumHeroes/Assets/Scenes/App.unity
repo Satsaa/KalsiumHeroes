@@ -1087,6 +1087,9 @@ MonoBehaviour:
     - key: DataObject_Info
       value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
       isDuplicate: 0
+    - key: Text
+      value: {fileID: 6378948958126740081, guid: 254108dc104b00b4d938c6d74c8da37a, type: 3}
+      isDuplicate: 0
   tts: []
 --- !u!1 &1286376790
 GameObject:
@@ -1482,6 +1485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
+  unit: {fileID: 0}
   newTogAtt:
     _values:
     - cache: 0
@@ -1514,7 +1518,7 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
-  defense: test
+  str: lol
   test:
     field:
       <attributeName>k__BackingField: 

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6378948958126740081}
   - component: {fileID: 7287743693712838242}
   m_Layer: 5
-  m_Name: DataObject
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 86985814031637562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baeb5c3e83b123748a21cf7998aa6519, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a7ad7627f3571e4a8bf3cba5fb914cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   windowizable: 1
@@ -333,15 +333,7 @@ MonoBehaviour:
     <style=value>69/420</style><line-height=115%>
 
     </line-height><style=prefix>Value:</style>
-    <style=value>69/420</style><line-height=115%>
-
-    </line-height><style=prefix>Value:</style>
-    <style=value>69/420</style><line-height=115%>
-
-    </line-height><style=prefix>Value:</style>
-    <style=value>69/420</style>
-
-'
+    <style=value>69/420</style>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b630ac3becfbedf41a03fe72fef314d9, type: 2}
   m_sharedMaterial: {fileID: -9092312279354032205, guid: b630ac3becfbedf41a03fe72fef314d9, type: 2}

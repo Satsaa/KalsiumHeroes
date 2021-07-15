@@ -280,8 +280,7 @@ public class Tooltips : UISingleton<Tooltips> {
 				}
 				return obj;
 			case '@':
-				Debug.Log($"Text based tooltip (wip): {param}");
-				return null;
+				return Lang.GetStr(param.Substring(1));
 			default:
 				switch (param) {
 					case "true":
