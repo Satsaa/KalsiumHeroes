@@ -196,7 +196,7 @@
 	"Attribute_TargetAbility_RequiresVision_Tooltip": "{a.0?|<style=prefix>Requires vision</style>}",
 	"Attribute_Unit_Silenced_Tooltip": "{a.0?|<style=prefix>Silenced</style>}",
 	"Attribute_Unit_Disarmed_Tooltip": "{a.0?|<style=prefix>Disarmed</style>}",
-	"Attribute_Unit_Rooted_Tooltip": "{a.0?||<style=prefix>Rooted</style>}",
+	"Attribute_Unit_Rooted_Tooltip": "{a.0?|<style=prefix>Rooted</style>}",
 	"Attribute_Ability_AbilityType_Base": "Base",
 	"Attribute_Ability_AbilityType_WeaponSkill": "Weapon Skill",
 	"Attribute_Ability_AbilityType_Spell": "Spell",
