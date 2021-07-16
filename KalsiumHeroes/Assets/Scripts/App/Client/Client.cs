@@ -10,8 +10,8 @@ using Muc.Time;
 [DisallowMultipleComponent]
 public partial class Client : MonoBehaviour {
 
-	public static Dictionary<string, ClientEventTask> cets => _cets ??= new Dictionary<string, ClientEventTask>();
-	private static Dictionary<string, ClientEventTask> _cets;
+	public static Dictionary<string, SendEventTask> cets => _cets ??= new Dictionary<string, SendEventTask>();
+	private static Dictionary<string, SendEventTask> _cets;
 
 	void Update() {
 		Update_WS();
@@ -22,30 +22,51 @@ public partial class Client : MonoBehaviour {
 		}
 	}
 
+	public async Task<T> Post<T>(ClientEvent e) where T : Result {
+		return await Post(e) as T;
+	}
+
 	public Task<Result> Post(ClientEvent e) {
 		// Debug.Log(JsonUtility.ToJson(e));
-		var res = new TaskCompletionSource<Result>();
 		e.guid = Guid.NewGuid().ToString();
-		cets.Add(e.guid, new ClientEventTask(new Timeout(5), res));
 		var targetType = typeof(Command<>).MakeGenericType(e.GetType());
 		var command = Activator.CreateInstance(targetType, new object[] { e });
+
+		var res = new TaskCompletionSource<Result>();
+		cets.Add(e.guid, new SendEventTask(new Timeout(5), res));
 		ws.SendText(JsonUtility.ToJson(command));
 		return res.Task;
 	}
 
-	public void Post(GameEvent e) {
+	public int gameEventsAwaiting = 0;
+
+	public async void Post(GameEvent e) {
 		// Debug.Log(JsonUtility.ToJson(e));
-		e.gameEventNum = Game.game.gameEventNum++;
+		if (Game.events.maxReceivedNum + gameEventsAwaiting != Game.events.receivedNum) {
+			Debug.LogWarning("Didn't send event because we seem to be missing or awaiting pieces.");
+			return;
+		}
+		e.gameEventNum = Game.events.maxReceivedNum + gameEventsAwaiting + 1;
+		e.guid = Guid.NewGuid().ToString();
 		e.code = Game.game.code;
 		var targetType = typeof(Command<>).MakeGenericType(e.GetType());
 		var command = Activator.CreateInstance(targetType, new object[] { e });
-		ws.SendText(JsonUtility.ToJson(command));
+
+		gameEventsAwaiting++;
+		var res = new TaskCompletionSource<Result>();
+		cets.Add(e.guid, new SendEventTask(new Timeout(5), res));
+		try {
+			await ws.SendText(JsonUtility.ToJson(command));
+			await res.Task;
+		} finally {
+			gameEventsAwaiting--;
+		}
 	}
 
 	private void TryReceive(string json) {
 		Debug.Log(json);
 		var packet = JsonUtility.FromJson<Command>(json);
-		if (Event.types.TryGetValue(packet.data.type, out var genericParam)) {
+		if (Event.eventTypes.TryGetValue(packet.data.type, out var genericParam)) {
 
 			var targetType = typeof(Command<>).MakeGenericType(genericParam);
 			Event e = (JsonUtility.FromJson(json, targetType) as dynamic).data;
@@ -61,11 +82,14 @@ public partial class Client : MonoBehaviour {
 						}
 					}
 					break;
-				case ClientEvent clientEvent:
-					Debug.Log($"Received {nameof(ClientEvent)}");
-					break;
 				case GameEvent gameEvent:
-					Game.events.QueueEvent(gameEvent);
+					Game.events.AddEvent(gameEvent);
+					break;
+				case IHandlable handlable:
+					handlable.Handle();
+					break;
+				case ClientEvent clientEvent:
+					Debug.Log($"Received an unknown {nameof(ClientEvent)}: {clientEvent.type}");
 					break;
 				default:
 					Debug.LogWarning($"Unspecialized incoming {nameof(Event)}: {e.GetType().Name}", this);
@@ -75,12 +99,12 @@ public partial class Client : MonoBehaviour {
 	}
 
 
-	public class ClientEventTask {
+	public class SendEventTask {
 
 		public Timeout timeout;
 		public TaskCompletionSource<Result> tcs;
 
-		public ClientEventTask(Timeout timeout, TaskCompletionSource<Result> tcs) {
+		public SendEventTask(Timeout timeout, TaskCompletionSource<Result> tcs) {
 			this.timeout = timeout;
 			this.tcs = tcs;
 		}

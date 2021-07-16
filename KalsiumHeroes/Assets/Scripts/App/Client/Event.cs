@@ -10,7 +10,7 @@ using UnityEngine.Events;
 [Serializable]
 public class Event {
 
-	public static Dictionary<string, Type> types { get; } = Assembly.GetAssembly(typeof(Event)).GetTypes().Where(t => t.IsSubclassOf(typeof(Event))).ToDictionary(v => v.Name, v => v);
+	public static Dictionary<string, Type> eventTypes { get; } = Assembly.GetAssembly(typeof(Event)).GetTypes().Where(t => t.IsSubclassOf(typeof(Event))).ToDictionary(v => v.Name, v => v);
 
 	public string type;
 	public virtual string command => this.GetType().Name;
@@ -20,6 +20,7 @@ public class Event {
 
 [Serializable]
 public abstract class GameEvent : Event {
+	public string guid;
 	public int gameEventNum;
 	public string code;
 	public abstract EventHandler GetHandler();

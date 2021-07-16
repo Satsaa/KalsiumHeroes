@@ -8,26 +8,13 @@ import * as u from '../lib/util'
 import * as afs from '../lib/atomicFS'
 import deepClone from '../lib/deepClone'
 
-import { Team } from './commands'
-
-
-export type GameEvent = {
-  name: string
-  data: object
-}
-
-
-export interface GameData {
-  id: number
-  userId1: number
-  userId2: number
-  events: GameEvent[]
-}
+import { GameEvent, Team } from './commands'
 
 export default class Game {
   // public data: GameData
 
   public code: string
+  public events: GameEvent[] = []
   public players: {[team: number]: WebSocket} = Object.create(null);
   /** All connected players are viewers. */
   public viewers: WebSocket[] = [];

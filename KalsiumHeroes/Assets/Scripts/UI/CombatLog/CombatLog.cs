@@ -21,7 +21,6 @@ public class CombatLog : VirtualLayoutGroup, IOnCombatLog {
 	}
 
 	public virtual void OnCombatLog(string str) {
-		Debug.Log($"Adding: {str}");
 		var roundItem = AnimatedItem.CreateInstance<AnimatedItem>();
 		roundItem.prefab = logItem;
 		roundItem.calculateSize = true;

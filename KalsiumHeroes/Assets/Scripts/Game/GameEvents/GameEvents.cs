@@ -8,13 +8,26 @@ using System.Linq;
 [DisallowMultipleComponent]
 public class GameEvents : MonoBehaviour {
 
-	public List<GameEvent> stack = new List<GameEvent>(); //!!! Serialization works? was [SerializeReference] and List<object>
-	public GameEvent first => stack[0];
+	[SerializeReference]
+	public List<GameEvent> events = new List<GameEvent>();
+	public GameEvent next => executedNum >= receivedNum ? null : events[executedNum + 1];
+	public int maxQueued = 5;
+	public int executedNum = -1;
+	public int receivedNum = -1;
+	public int maxReceivedNum => events.Count - 1;
+
+	int fastForwardingUntil = -1;
+	public bool fastForwarding => executedNum < fastForwardingUntil;
 
 	public bool animating => handler != null;
 
 	[field: SerializeReference]
 	public EventHandler handler { get; private set; } = null;
+
+	void OnValidate() {
+		events?.Clear();
+		executedNum = receivedNum = -1;
+	}
 
 	void Update() {
 		if (handler != null) {
@@ -22,13 +35,20 @@ public class GameEvents : MonoBehaviour {
 				handler = null;
 				using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 			} else {
-				handler.Update();
+				if (fastForwarding) {
+					if (!handler.TryEnd()) {
+						handler.Update();
+					}
+				} else {
+					handler.Update();
+				}
 				return;
 			}
 		}
-		if (stack.Count > 0) {
+		if (next != null) {
 			try {
-				handler = first.GetHandler();
+				handler = next.GetHandler();
+				executedNum++;
 				if (handler != null) {
 					handler.Update(); // 1
 					using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventStart>(scope, v => v.OnAnimationEventStart(handler));
@@ -36,27 +56,38 @@ public class GameEvents : MonoBehaviour {
 			} catch (Exception) {
 				using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnAnimationEventEnd>(scope, v => v.OnAnimationEventEnd());
 				throw;
-			} finally {
-				stack.RemoveAt(0);
 			}
+		} else {
+			fastForwardingUntil = -1;
 		}
 	}
 
 
-	public void QueueEvent(GameEvent gameEvent) {
-		stack.Add(gameEvent);
+	public void AddEvent(GameEvent gameEvent) {
+		if (gameEvent.gameEventNum < 0 || gameEvent.gameEventNum > 100000) return;
+		var addItems = gameEvent.gameEventNum - events.Count + 1;
+		for (int i = 0; i < addItems; i++) events.Add(null);
+		if (events[gameEvent.gameEventNum] != null) Debug.LogWarning("Replacing a GameEvent which shouldn't happen");
+		events[gameEvent.gameEventNum] = gameEvent;
+		while (receivedNum + 1 < events.Count) {
+			if (events[receivedNum + 1] != null) receivedNum++;
+		}
+		if (receivedNum > executedNum + maxQueued) {
+			FastForward();
+		}
 	}
 
 	public bool TryEndEvent() {
 		if (handler == null || handler.EventHasEnded()) return false;
 		if (handler.TryEnd()) {
-			Update();
 			return true;
 		}
 		return false;
 	}
 
-
+	public void FastForward(int maxEvents = -1) {
+		fastForwardingUntil = maxEvents == -1 ? int.MaxValue : maxEvents;
+	}
 
 	// DO NOT CHANGE CLASS NAMES OF DEPLOYED GameEvents
 

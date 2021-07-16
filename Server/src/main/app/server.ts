@@ -69,6 +69,22 @@ export default class Server {
     console.log(`Hosting: ${addr.family} ${addr.address} ${addr.port}`)
   }
 
+  public codeGen(length = 4): string {
+    let code = ''
+    for (let i = 0; i < length; i++) {
+      let rng = Math.floor(Math.random() * 59)
+      if (rng <= 9) { code += String.fromCharCode(48 + rng) } else {
+        rng -= 9
+        if (rng <= 25) { code += String.fromCharCode(65 + rng) } else {
+          rng -= 25
+          code += String.fromCharCode(97 + rng)
+        }
+      }
+    }
+    if (this.games[code]) return this.codeGen(length + 1)
+    return code
+  }
+
   private onConnection(this: Server, ws: WebSocket, req: http.IncomingMessage): void {
     ws.on('message', this.onMessage.bind(this, ws))
   }
@@ -97,9 +113,18 @@ export default class Server {
         switch (cmd.command) {
           case 'GameCreate': {
             if (this.createGame(cmd.data.code)) {
-              return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Success, to: cmd.data.guid } })
+              return this.success(ws, cmd)
             } else {
               return this.alreadyUsed(ws, cmd)
+            }
+          }
+
+          case 'GenerateCode': {
+            const code = this.codeGen()
+            if (this.createGame(code)) {
+              return this.sendCmd(ws, { command: 'GenerateCodeResult', data: { type: 'GenerateCodeResult', result: ResultType.Success, to: cmd.data.guid, code } })
+            } else {
+              return this.sendCmd(ws, { command: 'GenerateCodeResult', data: { type: 'GenerateCodeResult', result: ResultType.Fail, to: cmd.data.guid, code } })
             }
           }
 
@@ -107,12 +132,23 @@ export default class Server {
             const game = this.games[cmd.data.code]
             if (!game) return this.gameNotFound(ws, cmd)
 
+            if (cmd.data.gameEventNum < game.events.length) {
+              for (let i = Math.max(0, cmd.data.gameEventNum); i < game.events.length; i++) {
+                this.sendCmd(ws, game.events[i])
+              }
+              return this.incorrectGameEventId(ws, cmd)
+            } else if (cmd.data.gameEventNum > game.events.length) {
+              return this.incorrectGameEventId(ws, cmd)
+            }
+
+            game.events.push(cmd)
+
             // Event is sent to all connected viewers which includes the players
             for (const viewer of game.viewers) {
               if (viewer.readyState !== WebSocket.OPEN) continue
               this.sendCmd(viewer, cmd)
             }
-            break
+            return this.success(ws, cmd)
           }
 
           case 'GameJoin': {
@@ -122,20 +158,47 @@ export default class Server {
             // Other live ws occupying team
             const teamWs = game.players[cmd.data.team]
             if (teamWs && teamWs !== ws && teamWs.readyState === WebSocket.OPEN) {
-              return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Team occupied' } })
+              return this.fail(ws, cmd, 'Team occupied')
             }
 
             game.players[cmd.data.team] = ws
             if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            this.sendEvents(ws, game)
 
             return this.success(ws, cmd)
-            break
           }
 
           case 'GameSpectate': {
             const game = this.games[cmd.data.code]
             if (!game) return this.gameNotFound(ws, cmd)
             if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            this.sendEvents(ws, game)
+            return this.success(ws, cmd)
+          }
+
+          case 'RequestEvents': {
+            const game = this.games[cmd.data.code]
+            if (!game) return this.gameNotFound(ws, cmd)
+            this.success(ws, cmd)
+            return this.sendEvents(ws, game)
+          }
+
+          case 'GameDelete': {
+            const game = this.games[cmd.data.code]
+            if (!game) return this.gameNotFound(ws, cmd)
+
+            for (const viewer of game.viewers) {
+              if (viewer.readyState !== WebSocket.OPEN) continue
+              this.sendCmd(viewer, {
+                command: 'GameDisconnect',
+                data: {
+                  type: 'GameDisconnect',
+                  code: game.code,
+                  message: 'GameDeleted',
+                },
+              })
+            }
+            delete this.games[cmd.data.code]
             return this.success(ws, cmd)
           }
 
@@ -145,9 +208,11 @@ export default class Server {
         }
       } catch (error) {
         this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: 'Message caused a server error' } })
+        throw error
       }
     } catch (error) {
       this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'Malformed message' } })
+      throw error
     }
   }
 
@@ -155,11 +220,28 @@ export default class Server {
   private success(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
     this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Success, to: cmd.data.guid } })
   }
+  private fail(ws: WebSocket, cmd: Command & {data: { guid: string }}, message: string) {
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message } })
+  }
   private alreadyUsed(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
     this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Code already used' } })
   }
-
+  private incorrectGameEventId(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Incorrect game event id. You might need to resync.' } })
+  }
   private gameNotFound(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
     this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Game not found' } })
+  }
+  private sendEvents(ws: WebSocket, game: Game) {
+    const cmd: commands.GameEventList = {
+      command: 'GameEventList',
+      data: {
+        type: 'GameEventList',
+        code: game.code,
+        types: game.events.map(v => v.data.type),
+        jsons: game.events.map(v => JSON.stringify(v.data)),
+      },
+    }
+    this.sendCmd(ws, cmd)
   }
 }

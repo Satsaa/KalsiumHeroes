@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Muc.Components.Extended;
+using System.Threading.Tasks;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [DefaultExecutionOrder(-600)]
@@ -31,12 +32,14 @@ public class Game : Singleton<Game> {
 
 	[field: SerializeField] public bool inited { get; private set; }
 	[field: SerializeField] public bool started { get; private set; }
-	[field: SerializeField] public int gameEventNum { get; internal set; }
 	[field: SerializeField] public List<Team> readied { get; private set; }
 
 	[field: SerializeField] public Team team { get; private set; }
 	[field: SerializeField] public string code { get; private set; }
 	[field: SerializeField] public GameMode mode { get; private set; }
+
+	[SerializeField] private LoadingSpinner spinner;
+	[SerializeField] private RectTransform spinnerParent;
 
 	protected void Reset() {
 		_events = GetComponent<GameEvents>();
@@ -106,6 +109,28 @@ public class Game : Singleton<Game> {
 			dataObjects.Remove(dataObject);
 			ObjectUtil.Destroy(dataObject);
 		}
+	}
+
+	/// <summary> Shows the loading spinner </summary>
+	public LoadingSpinner ShowSpinner(string message, Task task) {
+		var res = Instantiate(spinner, spinnerParent);
+		res.text = message;
+		res.SetTask(task);
+		return res;
+	}
+
+	/// <summary> Shows the loading spinner </summary>
+	public LoadingSpinner ShowSpinner(Task task) {
+		var res = Instantiate(spinner, spinnerParent);
+		res.SetTask(task);
+		return res;
+	}
+
+	/// <summary> Shows the loading spinner </summary>
+	public LoadingSpinner ShowSpinner(string message = null) {
+		var res = Instantiate(spinner, spinnerParent);
+		res.text = message;
+		return res;
 	}
 
 #if UNITY_EDITOR
