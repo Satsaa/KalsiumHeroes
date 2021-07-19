@@ -20,7 +20,9 @@ public interface IObjectDict {
 public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceiver, IObjectDict where TObj : Object {
 
 	Dictionary<Type, object> dict = new Dictionary<Type, object>();
-
+#if DEBUG
+	HashSet<object> duplicateCheckMap = new();
+#endif
 	/// <summary> Enumerates Objects of the root type. </summary>
 	public IEnumerable<TObj> Get() => Get<TObj>();
 	/// <summary> Enumerates Objects of type T. </summary>
@@ -36,6 +38,9 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 	/// <summary> Adds the Object to the cache. </summary>
 	public void Add<T>(T obj) where T : TObj {
 		var type = obj.GetType();
+#if DEBUG
+		if (!duplicateCheckMap.Add(obj)) Debug.LogWarning($"Trying to add {obj} to {type.Name} which already contains it!");
+#endif
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out var list)) {
@@ -43,20 +48,6 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 			}
 			var add = listType.GetMethod("Add");
 			add.Invoke(list, new object[] { obj });
-#if DEBUG // Ensure no duplicates are created
-			if (obj is Unit) {
-				dynamic dynList = list;
-				var total = 0;
-				foreach (var item in dynList) {
-					if (item == obj) {
-						total++;
-					}
-				}
-				if (total > 1) {
-					Debug.Log($"Added {obj} to {type.Name}. There is now {total} copies of it???");
-				}
-			}
-#endif
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
 		}
@@ -65,6 +56,9 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 	/// <summary> Removes the Object from the cache. </summary>
 	public void Remove(TObj obj) {
 		var type = obj.GetType();
+#if DEBUG
+		duplicateCheckMap.Remove(obj);
+#endif
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			if (dict.TryGetValue(type, out var list)) {
@@ -105,7 +99,7 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 		return -1;
 	}
 
-	/// <summary> Returns whether an Object of type T exists. </summary>
+	/// <summary> Returns whether a list of items of type T exists. </summary>
 	public bool Contains<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
@@ -133,34 +127,17 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 
 	#region Serialization
 
-	[Serializable]
-	private class ObjectArrayContainer {
-		public Object[] components;
-		public ObjectArrayContainer(Object[] components) => this.components = components;
-	}
-
-	[SerializeField] string[] keys;
-	[SerializeField] ObjectArrayContainer[] vals;
+	[SerializeField] TObj[] sr_values;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
-		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToArray();
-		vals = dict.Values.Select(v => (v as IEnumerable).Cast<Object>().ToArray()).Select(v => new ObjectArrayContainer(v)).ToArray();
+		sr_values = Get().ToArray();
 	}
 
 	void ISerializationCallbackReceiver.OnAfterDeserialize() {
-		for (int i = 0; i < keys.Length; i++) {
-			var type = Type.GetType(keys[i]);
-			if (type == null) continue;
-			var comps = vals[i].components;
-			Type listType = typeof(List<>).MakeGenericType(new[] { type });
-			var list = dict[type] = Activator.CreateInstance(listType);
-			var add = listType.GetMethod("Add");
-			foreach (var comp in comps) {
-				add.Invoke(list, new object[] { comp });
-			}
+		if (sr_values == null) return;
+		foreach (var value in sr_values) {
+			Add(value);
 		}
-		keys = null;
-		vals = null;
 	}
 
 	#endregion

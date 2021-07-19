@@ -208,11 +208,9 @@ export default class Server {
         }
       } catch (error) {
         this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: 'Message caused a server error' } })
-        throw error
       }
     } catch (error) {
       this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'Malformed message' } })
-      throw error
     }
   }
 

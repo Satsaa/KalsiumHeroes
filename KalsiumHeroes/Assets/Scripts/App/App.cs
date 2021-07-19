@@ -20,7 +20,7 @@ public class App : Singleton<App> {
 	public static Client client => instance._client;
 	public static Library library => instance._library;
 	public static SharedInput input => instance._input;
-	public static ReadOnlyCollection<GameMode> gameModes => instance._gameModes.AsReadOnly();
+	public static IReadOnlyList<GameMode> gameModes => instance._gameModes;
 
 	[SerializeField, HideInInspector] Client _client;
 	[SerializeField, HideInInspector] Library _library;
