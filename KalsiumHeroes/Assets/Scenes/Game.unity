@@ -38683,42 +38683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c59f5da403ebf47b000e775c54c738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test_att:
-    _values:
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 6
-      <isModified>k__BackingField: 0
-      _original: 0
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 9
-      <isModified>k__BackingField: 0
-      _original: 0
-  test_astr: asdasdsdaadd
-  test_atts:
-  - _values:
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 1
-      <isModified>k__BackingField: 0
-      _original: 0
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 2
-      <isModified>k__BackingField: 0
-      _original: 0
-  - _values:
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 3
-      <isModified>k__BackingField: 0
-      _original: 0
-    - cache: 0
-      isCached: 0
-      <raw>k__BackingField: 4
-      <isModified>k__BackingField: 0
-      _original: 0
   _events: {fileID: 880419335}
   _rounds: {fileID: 409031928}
   _targeting: {fileID: 1830488679}
