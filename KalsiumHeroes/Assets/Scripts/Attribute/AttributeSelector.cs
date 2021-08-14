@@ -65,7 +65,7 @@ public class AttributeSelector<T> {
 #if UNITY_EDITOR
 		if (!Application.isPlaying || (sourceCached != source || fieldNameCached != field.attributeName)) {
 #else
-		if (sourceCached != source || fieldNameCached != field.fieldName) {
+		if (sourceCached != source || fieldNameCached != field.attributeName) {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;

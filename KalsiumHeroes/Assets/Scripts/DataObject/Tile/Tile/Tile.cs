@@ -9,7 +9,7 @@ using Muc.Numerics;
 using Muc.Collections;
 
 [ExecuteAlways]
-public class Tile : Master<TileModifier, TileModifierData, ITileHook> {
+public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_Tile {
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
@@ -20,8 +20,10 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook> {
 	public bool hasUnits => units.Any();
 	public SafeList<Unit> units;
 
-	public List<GraveUnit> graveyard;
-	[field: SerializeField] public Highlighter highlighter;
+	[field: SerializeField] List<GraveUnit> _graveyard = new();
+	public IReadOnlyList<GraveUnit> graveyard => _graveyard;
+
+	[field: SerializeField] public Highlighter highlighter { get; private set; } = new();
 
 	[field: SerializeField] public Hex hex { get; private set; }
 
@@ -35,16 +37,10 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook> {
 	public static Tile Create(TileData source, Hex hex) {
 		if (Game.grid.tiles.ContainsKey(hex.pos)) throw new InvalidOperationException("There is already a Tile at the Hex.");
 		return Create<Tile>(source, v => {
-			v.gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(source.container.transform.position.y);
 			v.hex = hex;
-			v.gameObject.transform.parent = Game.game.transform;
-			v.gameObject.name = $"Tile ({hex.x}, {hex.y})";
 			Game.grid.tiles.Add(hex.pos, v);
-			v.highlighter = v.gameObject.GetComponentInChildren<Highlighter>();
-			if (!v.highlighter) Debug.LogError("No Highlighter in container.");
 			var pt = Layout.HexToPoint(hex);
 			v.center = new Vector3(pt.x, source.container.transform.position.y, pt.y);
-			v.transform.position = v.center.SetY(v.transform.position.y);
 			v.corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 		});
 	}
@@ -94,6 +90,25 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook> {
 		Game.grid.tiles.Remove(hex.pos);
 		ObjectUtil.Destroy(gameObject);
 		base.OnRemove();
+	}
+
+	protected override void OnShow() {
+		base.OnShow();
+		gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(source.container.transform.position.y);
+		gameObject.transform.parent = Game.game.transform;
+		gameObject.name = $"Tile ({hex.x}, {hex.y})";
+		highlighter.OnShow(gameObject);
+		transform.position = center.SetY(transform.position.y);
+	}
+
+	protected override void OnHide() {
+		highlighter.OnHide();
+		base.OnHide();
+	}
+
+	void IOnDeath_Tile.OnDeath(Unit unit) {
+		_graveyard.Add(new(unit));
+		units.Remove(unit);
 	}
 
 	public IEnumerable<(Tile tile, Edge edge)> NeighborsWithEdges() {

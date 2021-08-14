@@ -44,16 +44,18 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 				prev = tile;
 			}
 		}
-		var actor = creator.unit.actor;
-		var walkPositions = pathObjects.Select(v => v.transform.position).ToList();
-		for (int i = 0; i < walkPositions.Count; i++) {
-			if ((i + 1) % 2 == 0) {
-				var prev = walkPositions[i - 1];
-				var next = walkPositions[i + 1];
-				walkPositions[i] = Vector3.Lerp(prev, next, 0.5f);
+		if (creator.unit.actor) {
+			var actor = creator.unit.actor;
+			var walkPositions = pathObjects.Select(v => v is Tile t ? t.center : default).ToList();
+			for (int i = 0; i < walkPositions.Count; i++) {
+				if ((i + 1) % 2 == 0) {
+					var prev = walkPositions[i - 1];
+					var next = walkPositions[i + 1];
+					walkPositions[i] = Vector3.Lerp(prev, next, 0.5f);
+				}
 			}
+			actor.Walk(walkPositions);
 		}
-		actor.Walk(walkPositions);
 	}
 
 	public override void Update() {

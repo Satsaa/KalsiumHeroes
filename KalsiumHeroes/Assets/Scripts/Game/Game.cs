@@ -5,14 +5,12 @@ using System.Linq;
 using UnityEngine;
 using Muc.Components.Extended;
 using System.Threading.Tasks;
+using Muc.Editor;
+using Serialization;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [DefaultExecutionOrder(-600)]
-[RequireComponent(typeof(GameEvents))]
-[RequireComponent(typeof(Rounds))]
-[RequireComponent(typeof(Targeting))]
-[RequireComponent(typeof(TileGrid))]
-public class Game : Singleton<Game> {
+public class Game : Singleton<Game>, IGameSerializable {
 
 	public static Game game => instance;
 
@@ -23,10 +21,10 @@ public class Game : Singleton<Game> {
 	public static ObjectDict<DataObject> dataObjects => instance._dataObjects;
 	public static Hooks<IGlobalHook> hooks => instance._hooks;
 
-	[SerializeField, HideInInspector] GameEvents _events;
-	[SerializeField, HideInInspector] Rounds _rounds;
-	[SerializeField, HideInInspector] Targeting _targeting;
-	[SerializeField, HideInInspector] TileGrid _grid;
+	[SerializeField, ShowEditor] GameEvents _events;
+	[SerializeField, ShowEditor] Rounds _rounds;
+	[SerializeField, ShowEditor] Targeting _targeting;
+	[SerializeField, ShowEditor] TileGrid _grid;
 	[SerializeField] ObjectDict<DataObject> _dataObjects = new ObjectDict<DataObject>();
 	[SerializeField] Hooks<IGlobalHook> _hooks = new Hooks<IGlobalHook>();
 
@@ -42,15 +40,19 @@ public class Game : Singleton<Game> {
 	[SerializeField] private RectTransform spinnerParent;
 
 	protected void Reset() {
-		_events = GetComponent<GameEvents>();
-		_rounds = GetComponent<Rounds>();
-		_targeting = GetComponent<Targeting>();
-		_grid = GetComponent<TileGrid>();
+		_events = GameEvents.CreateInstance<GameEvents>();
+		_rounds = Rounds.CreateInstance<Rounds>();
+		_targeting = Targeting.CreateInstance<Targeting>();
+		_grid = TileGrid.CreateInstance<TileGrid>();
 	}
 
 	new protected void Awake() {
 		base.Awake();
 		Flush();
+		hooks.Hook(_events);
+		hooks.Hook(_rounds);
+		hooks.Hook(_targeting);
+		hooks.Hook(_grid);
 	}
 
 	protected void Start() {
@@ -141,5 +143,47 @@ public class Game : Singleton<Game> {
 			App.app.ShowSpinner("Rejoining game (script reload)", App.app.RejoinGame(Game.game.code, Game.game.team, 2000));
 		}
 	}
+
 #endif
 }
+
+#if UNITY_EDITOR
+namespace Editors {
+
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using UnityEngine;
+	using UnityEditor;
+	using Object = UnityEngine.Object;
+	using static Muc.Editor.PropertyUtil;
+	using static Muc.Editor.EditorUtil;
+
+	[CanEditMultipleObjects]
+	[CustomEditor(typeof(Game), true)]
+	public class GameEditor : Editor {
+
+		Game t => (Game)target;
+
+		// SerializedProperty property;
+
+		void OnEnable() {
+			// property = serializedObject.FindProperty(nameof(property));
+		}
+
+		public override void OnInspectorGUI() {
+			DrawDefaultInspector();
+			if (ButtonField(new("Show all"))) {
+				foreach (var dataObject in Game.dataObjects.Get()) {
+					dataObject.Show();
+				}
+			}
+			if (ButtonField(new("Hide all"))) {
+				foreach (var dataObject in Game.dataObjects.Get()) {
+					dataObject.Hide();
+				}
+			}
+		}
+	}
+}
+#endif

@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEventsAwaiting: 0
-  url: ws://52.59.252.105:1420
+  url: ws://13.48.48.87:1420
 --- !u!114 &1363905733
 MonoBehaviour:
   m_ObjectHideFlags: 0

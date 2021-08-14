@@ -2,12 +2,13 @@
 using System;
 using System.Linq;
 using Muc.Editor;
+using Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public abstract class DataObject : ScriptableObject {
+public abstract class DataObject : ScriptableObject, IGameSerializable {
 
 	[Tooltip("Source data instance."), SerializeField]
 	protected DataObjectData _source;
@@ -20,12 +21,28 @@ public abstract class DataObject : ScriptableObject {
 	/// <summary> Actual data type required for source and data. </summary>
 	public virtual Type dataType => typeof(DataObjectData);
 
-	[field: SerializeField, HideInInspector]
+	[field: SerializeField]
 	public bool removed { get; protected set; }
 
+	[field: SerializeField]
+	public bool shown { get; set; }
 
 	protected virtual void OnCreate() { }
 	protected virtual void OnRemove() { }
+
+	public void Show() {
+		if (removed || shown == (shown = true)) return;
+		OnShow();
+	}
+	public void Hide() {
+		if (shown == (shown = false)) return;
+		OnHide();
+	}
+
+	/// <summary> Create all GameObject related stuff here </summary>
+	protected virtual void OnShow() { }
+	/// <summary> Remove all GameObject related stuff here </summary>
+	protected virtual void OnHide() { }
 
 	/// <summary>
 	/// Modifier is created or the scripts are reloaded.

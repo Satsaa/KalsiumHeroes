@@ -54,7 +54,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 
 	private void Add(int excess) {
 		stacks.current.value += excess;
-		if (!data.container) return;
+		if (!container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Play();
 		var pts = container.GetComponent<ParticleSystem>();
@@ -62,7 +62,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	}
 	private void Clear() {
 		stacks.current.value = 0;
-		if (!data.container) return;
+		if (!container) return;
 		var vfx = container.GetComponent<VisualEffect>();
 		if (vfx) vfx.Stop();
 		var pts = container.GetComponent<ParticleSystem>();

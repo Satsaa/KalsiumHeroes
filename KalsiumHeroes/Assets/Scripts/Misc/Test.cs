@@ -6,6 +6,8 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
+using Serialization;
+using System.Reflection;
 
 public class Test : MonoBehaviour {
 
@@ -28,10 +30,18 @@ public class Test : MonoBehaviour {
 	void Start() { }
 
 	public void DoTest1() {
-		Debug.Log(Lang.Format(str, unit.data.energy, unit.source, unit.data));
+		var message = GameSerializer.Serialize(Game.game);
+		System.IO.File.WriteAllText("C:/Users/sampp/Desktop/output.json", message);
 	}
 
 	public void DoTest2() {
+		Debug.Log(String.Join(", ", typeof(Attribute).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
+		Debug.Log(String.Join(", ", typeof(UnitData.Health).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
+		Debug.Log(String.Join(", ", typeof(UnitModifierData).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
+		Debug.Log(String.Join(", ", typeof(UnitData).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
+	}
+
+	public void DoTest3() {
 		var sw = new Stopwatch();
 		sw.Start();
 
@@ -39,16 +49,9 @@ public class Test : MonoBehaviour {
 			Lang.Format(str, unit.data.energy, unit.source, unit.data);
 		}
 
-
 		sw.Stop();
 
 		Debug.Log($"Elapsed={sw.Elapsed}");
-	}
-
-	public void DoTest3() {
-		Debug.Log($"numericFieldTest.GetValue(data) => {numericFieldTest.GetValue(data)}");
-		Debug.Log($"numericFieldTest.GetOther(data) => {numericFieldTest.GetOther(data)}");
-		Debug.Log($"numericFieldTest.GetEnabled(data) => {numericFieldTest.GetEnabled(data)}");
 	}
 
 }
@@ -98,7 +101,7 @@ namespace Editors {
 
 				}
 			}
-
+			/* 
 			Space();
 
 			var rect = new Rect();
@@ -342,6 +345,7 @@ namespace Editors {
 					MultiPropertyField(rect, label, new GUIContent[] { new("X"), new("Y"), new("Width") }, new SerializedProperty[] { data, prop, data });
 				}
 			}
+			*/
 
 			serializedObject.ApplyModifiedProperties();
 		}

@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Serialization;
 using UnityEngine;
 
 /// <summary>
 /// Contains a list of data sources
 /// </summary>
-public abstract class GameMode : StoredScriptableObject, IIdentifiable {
+public abstract class GameMode : StoredScriptableObject, IGameSerializable, IIdentifiable {
 
 	public string identifier;
 	string IIdentifiable.identifier => identifier;

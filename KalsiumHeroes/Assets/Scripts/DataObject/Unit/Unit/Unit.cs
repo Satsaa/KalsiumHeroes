@@ -24,32 +24,27 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 
 	public static Unit Create(UnitData source, Vector3 position, Team team, UnitActor actor = null) {
-		var res = Create<Unit>(source, v => {
+		return Create<Unit>(source, v => {
 			v.team = team;
-			var nearTile = Game.grid.NearestTile(v.gameObject.transform.position.xz());
+			var nearTile = Game.grid.NearestTile(position.xz());
 			v.actor = actor ? actor : Instantiate(source.actor);
 			v.SetTile(nearTile, true);
 			v.SetDir(0, true);
 		});
-		res.gameObject.transform.SetParent(res.actor.transform, false);
-		return res;
 	}
 
 	public static Unit Create(UnitData source, Tile tile, TileDir tileDir, Team team, UnitActor actor = null) {
-		var res = Create<Unit>(source, v => {
+		return Create<Unit>(source, v => {
 			v.team = team;
 			v.actor = actor ? actor : Instantiate(source.actor);
 			v.tileDir = tileDir; // Prevent hook being called on spawn
 			v.SetTile(tile, true);
 			v.SetDir(tileDir, true);
 		});
-		res.gameObject.transform.SetParent(res.actor.transform, false);
-		return res;
 	}
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit spawn: {Lang.GetStr($"{data.identifier}_DisplayName")} ({team})"));
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
@@ -58,9 +53,14 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		}
 	}
 
-	protected override void OnRemove() {
-		Debug.Log("OnRemove");
-		base.OnRemove();
+	protected override void OnShow() {
+		base.OnShow();
+		gameObject.transform.SetParent(actor.transform, false);
+		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
+	}
+
+	protected override void OnHide() {
+		base.OnHide();
 	}
 
 	public void Heal(float heal) {
@@ -123,9 +123,6 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 				tile.hooks.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
 				Game.hooks.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
 			}
-			tile.units.Remove(this);
-			Destroy(gameObject);
-			tile.graveyard.Add(new GraveUnit(this));
 			Remove();
 		}
 	}

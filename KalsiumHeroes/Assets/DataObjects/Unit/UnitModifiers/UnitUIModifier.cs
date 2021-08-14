@@ -14,7 +14,7 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 	[SerializeField, HideInInspector] protected bool updatePosition = true;
 
 	public virtual void OnLateUpdate() {
-		if (updatePosition) {
+		if (updatePosition && shown && master.shown) {
 			var pos =
 				Camera.main.WorldToScreenPoint(master.transform.position + data.trackingOffset).xy() +
 				data.pixelOffset +
@@ -61,7 +61,8 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 		}
 	}
 
-	protected override void OnCreate() {
+	protected override void OnShow() {
+		base.OnShow();
 		rect = container.GetComponent<RectTransform>();
 		if (data.sendUnit) {
 			ValueReceiver.SendValue(container, unit);

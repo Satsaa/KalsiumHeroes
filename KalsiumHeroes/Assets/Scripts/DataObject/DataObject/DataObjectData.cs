@@ -4,9 +4,10 @@ using Muc.Data;
 using System;
 using UnityEngine.Serialization;
 using System.Text.RegularExpressions;
+using Serialization;
 
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
-public abstract class DataObjectData : ScriptableObject, IIdentifiable {
+public abstract class DataObjectData : ScriptableObject, IIdentifiable, IGameSerializable {
 
 	/// <summary> Base type for createType. </summary>
 	public abstract Type createTypeConstraint { get; }

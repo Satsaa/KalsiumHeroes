@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using Serialization;
 
-[DisallowMultipleComponent]
-public class Rounds : MonoBehaviour {
+public class Rounds : ScriptableObject, IGameSerializable {
 
 	public List<Unit> units = new List<Unit>();
 	[SerializeField] private int index;

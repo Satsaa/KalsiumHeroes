@@ -6,6 +6,17 @@ namespace Muc.Data {
 	using UnityEngine;
 	using System.Linq;
 
+	public class SerializedTypeComparer : IEqualityComparer<SerializedType> {
+		public bool Equals(SerializedType x, SerializedType y) {
+			if (x is null) return y is null;
+			return x.type == y.type;
+		}
+
+		public int GetHashCode(SerializedType obj) {
+			return obj?.type == null ? 0 : obj.type.GetHashCode();
+		}
+	}
+
 	[Serializable]
 	public class SerializedType : ISerializationCallbackReceiver {
 
@@ -63,23 +74,13 @@ namespace Muc.Data {
 			}
 		}
 
-		public override bool Equals(object obj) {
-			switch (obj) {
-				case Type type:
-					return this.type == type;
-				case SerializedType st:
-					return this.type == st.type;
-				default:
-					return base.Equals(obj);
-			}
+		public bool Equals(SerializedType x, SerializedType y) {
+			if (x is null) return y is null;
+			return x.type == y.type;
 		}
 
-		public override int GetHashCode() {
-			return this.type == null ? 0 : this.type.GetHashCode();
-		}
-
-		public override string ToString() {
-			return base.ToString();
+		public int GetHashCode(SerializedType obj) {
+			return obj?.type == null ? 0 : obj.type.GetHashCode();
 		}
 	}
 

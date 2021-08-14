@@ -24,6 +24,7 @@ namespace Muc.Extensions {
 				yield return type;
 			}
 		}
+
 	}
 
 }

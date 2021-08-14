@@ -131,6 +131,10 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 	EnabledContainer IAttribute.GetEnabled() => null;
 	EnabledContainer IAttribute.SetEnabled(EnabledContainer value) => null;
 
+	public override string ToString() {
+		return $"{{{String.Join(", ", _values.Select(v => $"{v}"))}}}";
+	}
+
 	#endregion
 
 }

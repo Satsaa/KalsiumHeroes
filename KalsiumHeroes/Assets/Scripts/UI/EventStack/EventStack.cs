@@ -29,8 +29,12 @@ public class EventStack : Muc.Components.VirtualLayoutGroup, IOnAnimationEventEn
 
 	[SerializeField] protected List<Tracker> trackers;
 
+#if UNITY_EDITOR
 	protected override void OnValidate() {
 		base.OnValidate();
+#else
+	protected virtual void OnValidate() {
+#endif
 #if UNITY_EDITOR // Prevent activation in prefabs
 		if (UnityEditor.SceneManagement.PrefabStageUtility.GetPrefabStage(gameObject) == null && !UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject))
 #endif

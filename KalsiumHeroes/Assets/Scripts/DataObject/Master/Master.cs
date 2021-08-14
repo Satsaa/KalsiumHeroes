@@ -19,7 +19,6 @@ public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifi
 	public override Hooks rawHooks => hooks;
 
 	protected override void OnCreate() {
-		gameObject.transform.SetParent(Game.game.transform);
 		hooks.Hook(this);
 	}
 
@@ -31,11 +30,6 @@ public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifi
 	}
 
 	public sealed override void AttachModifier(Modifier modifier) {
-		if (modifier.container) {
-			foreach (var contComp in modifier.container.GetComponentsInChildren<IContainerComponent>()) {
-				contComp.SetMaster(this);
-			}
-		}
 		modifiers.Add<TMod>((TMod)modifier);
 		hooks.Hook(modifier);
 	}
@@ -58,7 +52,7 @@ public abstract class Master : DataObject {
 	/// <summary> Created GameObject for this Master. <summary>
 	[field: SerializeField]
 	public GameObject gameObject { get; private set; }
-	public Transform transform => gameObject.transform;
+	public Transform transform => gameObject ? gameObject.transform : null;
 
 	public abstract Hooks rawHooks { get; }
 
@@ -71,15 +65,15 @@ public abstract class Master : DataObject {
 
 		OnConfigureNonpersistent(false);
 		OnRemove();
+		if (gameObject) {
+			ObjectUtil.Destroy(gameObject);
+			gameObject = null;
+		}
 	}
 
 	/// <summary> Creates a Master based on the given source. </summary>
 	protected static T Create<T>(MasterData source, Action<T> initializer = null) where T : Master {
-		var gameObject = source.container ? ObjectUtil.Instantiate(source.container) : new GameObject();
-		var cont = gameObject.AddComponent<DataObjectContainer>();
 		var master = (T)ScriptableObject.CreateInstance(source.createType);
-		cont.dataObject = master;
-		master.gameObject = gameObject;
 		master._source = source;
 		master._data = Instantiate(source);
 
@@ -90,12 +84,27 @@ public abstract class Master : DataObject {
 
 		master.OnConfigureNonpersistent(true);
 		master.OnCreate();
+		master.Show();
 
 		foreach (var baseModifier in source.baseModifiers.Where(v => v != null)) {
 			Modifier.Create(master, baseModifier);
 		}
 
 		return master;
+	}
+
+	protected override void OnShow() {
+		base.OnShow();
+		var gameObject = data.container ? ObjectUtil.Instantiate(data.container, Game.game.transform) : new GameObject();
+		this.gameObject = gameObject;
+	}
+
+	protected override void OnHide() {
+		if (gameObject) {
+			ObjectUtil.Destroy(gameObject);
+			gameObject = null;
+		}
+		base.OnHide();
 	}
 
 	public abstract void AttachModifier(Modifier modifier);
@@ -125,9 +134,6 @@ namespace Editors {
 		Master t => (Master)target;
 
 		List<bool> expands = new List<bool>();
-
-		void OnEnable() {
-		}
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();

@@ -16,25 +16,29 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 	public Hex hex2;
 	public Tile tile1 { get { Game.grid.tiles.TryGetValue(hex1.pos, out var res); return res; } }
 	public Tile tile2 { get { Game.grid.tiles.TryGetValue(hex2.pos, out var res); return res; } }
+	[field: SerializeField, HideInInspector]
+	public TileDir direction { get; private set; }
 
 	/// <summary> Creates an Edge based on the given source, Tile and direction. </summary>
 	public static Edge Create(EdgeData source, Tile tile, TileDir direction) {
 		return Create<Edge>(source, v => {
 			if (tile.GetEdge(direction)) throw new InvalidOperationException("Edge already created at that position.");
+			v.direction = direction;
 			var dir = (int)direction;
-			var nbr = tile.GetNeighbor(dir);
 			v.hex1 = tile;
 			v.hex2 = tile.hex.GetNeighbor(dir);
-			v.gameObject.transform.position = (tile.corners[dir] + tile.corners[new CircularInt(dir + 1, 6)]) / 2;
-			v.gameObject.transform.parent = Game.game.transform;
-			v.gameObject.name = $"Edge ({tile.hex.x}, {tile.hex.y})" + (nbr == null ? $" {(direction).ToString("g")}" : $" - ({nbr.hex.x}, {nbr.hex.y})");
 			tile.SetEdge(dir, v);
 		});
 	}
 
-	protected override void OnRemove() {
-		base.OnRemove();
-		ObjectUtil.Destroy(gameObject);
+	protected override void OnShow() {
+		base.OnShow();
+		var dir = (int)direction;
+		var tile1 = this.tile1;
+		var tile2 = this.tile2;
+		gameObject.transform.position = (tile1.corners[dir] + tile1.corners[new CircularInt(dir + 1, 6)]) / 2;
+		gameObject.transform.parent = Game.game.transform;
+		gameObject.name = $"Edge ({tile1.hex.x}, {tile1.hex.y})" + (tile2 == null ? $" {(direction).ToString("g")}" : $" - ({tile2.hex.x}, {tile2.hex.y})");
 	}
 
 	/// <summary> Removes EdgeModifiers with matching context Tile </summary>

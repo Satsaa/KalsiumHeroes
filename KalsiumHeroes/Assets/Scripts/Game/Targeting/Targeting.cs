@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-
+﻿
 using UnityEngine;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using Serialization;
 
-[DisallowMultipleComponent]
-public class Targeting : MonoBehaviour {
+public class Targeting : ScriptableObject, IGameSerializable, IOnUpdate {
 
 	public bool targeting => targeter != null && !targeter.IsCompleted();
 	private Rounds rm => Game.rounds;
 	private GameEvents e => Game.events;
 
-	[SerializeField] new Camera camera;
+	[SerializeField] Camera camera;
 
 	Tile prevHoverTile;
 	Targeter targeter;
@@ -32,11 +32,7 @@ public class Targeting : MonoBehaviour {
 	}
 
 
-	protected virtual void Start() {
-		if (camera == null) camera = Camera.main;
-	}
-
-	protected virtual void Update() {
+	void IOnUpdate.OnUpdate() {
 
 		if (targeter != null) {
 			if (!TryComplete() && !CustomInputModule.IsPointerOverUI()) {

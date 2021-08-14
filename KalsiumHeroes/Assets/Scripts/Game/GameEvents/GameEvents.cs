@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using Serialization;
 
-
-[DisallowMultipleComponent]
-public class GameEvents : MonoBehaviour {
+public class GameEvents : ScriptableObject, IGameSerializable, IOnUpdate {
 
 	[SerializeReference]
 	public List<GameEvent> events = new List<GameEvent>();
@@ -29,7 +28,7 @@ public class GameEvents : MonoBehaviour {
 		executedNum = receivedNum = -1;
 	}
 
-	void Update() {
+	void IOnUpdate.OnUpdate() {
 		if (handler != null) {
 			if (handler.EventHasEnded()) {
 				handler = null;

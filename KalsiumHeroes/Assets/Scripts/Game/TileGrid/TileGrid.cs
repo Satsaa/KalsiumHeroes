@@ -13,9 +13,9 @@ using System;
 using Priority_Queue;
 using UnityEngine.Serialization;
 using System.Reflection;
+using Serialization;
 
-[DisallowMultipleComponent]
-public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
+public class TileGrid : ScriptableObject, IGameSerializable, ISerializationCallbackReceiver {
 
 	[field: SerializeField]
 	public Vector2Int size { get; private set; }
@@ -52,11 +52,6 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 			}
 		}
 
-#if UNITY_EDITOR
-		foreach (Transform child in transform) {
-			SceneVisibilityManager.instance.DisablePicking(child.gameObject, false);
-		}
-#endif
 	}
 
 	protected void DestroyGrid() {
@@ -215,12 +210,12 @@ public class TileGrid : MonoBehaviour, ISerializationCallbackReceiver {
 		var hex = Game.grid.RaycastHex(ray);
 		var main = Game.grid.GetTile(hex);
 		var radius = Game.grid.Radius(hex, raycastRadius);
-		List<(Tile tile, Collider col)> candidates = radius.Select(v => (v, v.gameObject.GetComponent<Collider>())).ToList();
+		List<(Tile tile, Collider col)> candidates = radius.Select(v => (v, v.gameObject ? v.gameObject.GetComponent<Collider>() : null)).ToList();
 
 		var tile = main;
 		var minDist = float.PositiveInfinity;
 		foreach (var candidate in candidates) {
-			if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null ? -0.25f : main.gameObject.transform.position.y - 0.25f)) {
+			if (candidate.col && candidate.col.Raycast(ray, out var hit, minDist) && hit.point.y >= (main == null || !main.gameObject ? -0.25f : main.gameObject.transform.position.y - 0.25f)) {
 				minDist = hit.distance;
 				tile = candidate.tile;
 			}

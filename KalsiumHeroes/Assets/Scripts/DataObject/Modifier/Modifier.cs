@@ -31,20 +31,20 @@ public abstract class Modifier : DataObject {
 	public void Remove() {
 		if (removed) return;
 		removed = true;
+		Hide();
 
 		master.DetachModifier(this);
 		Game.dataObjects.Remove(this);
 		Game.hooks.Unhook(this);
 
-		if (!master.removed) {
-			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
-		}
+		if (!master.removed) using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
 
 		OnConfigureNonpersistent(false);
-		if (!master.removed) {
-			OnRemove();
+		if (!master.removed) OnRemove();
+		if (container) {
+			ObjectUtil.Destroy(container);
+			container = null;
 		}
-		if (container) ObjectUtil.Destroy(container);
 	}
 
 	/// <summary> Creates a Modifier based on the given source and attaches it to the master. </summary>
@@ -57,16 +57,6 @@ public abstract class Modifier : DataObject {
 		modifier._master = master;
 		modifier._source = source;
 		modifier._data = Instantiate(source);
-		if (source.container) {
-			Canvas canvas;
-			// Create containers containing RectTransforms on the Canvas of the Master.
-			if (source.container.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
-				modifier.container = ObjectUtil.Instantiate(source.container, canvas.transform);
-			} else {
-				modifier.container = ObjectUtil.Instantiate(source.container, master.gameObject.transform);
-			}
-			modifier.container.transform.rotation = source.container.transform.localRotation;
-		}
 
 		master.AttachModifier(modifier);
 		Game.dataObjects.Add(modifier);
@@ -76,10 +66,33 @@ public abstract class Modifier : DataObject {
 
 		modifier.OnConfigureNonpersistent(true);
 		modifier.OnCreate();
+		modifier.Show();
 
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierCreate>(scope, v => v.OnModifierCreate(modifier));
 
 		return modifier;
+	}
+
+	protected override void OnShow() {
+		base.OnShow();
+		if (source.container) {
+			Canvas canvas;
+			// Create containers containing RectTransforms on the Canvas of the Master.
+			if (source.container.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
+				container = ObjectUtil.Instantiate(source.container, canvas.transform);
+			} else {
+				container = ObjectUtil.Instantiate(source.container, master.gameObject.transform);
+			}
+			container.transform.localRotation = source.container.transform.localRotation;
+		}
+	}
+
+	protected override void OnHide() {
+		if (container) {
+			ObjectUtil.Destroy(container);
+			container = null;
+		}
+		base.OnHide();
 	}
 
 	protected virtual void DealDamage(Unit unit, float damage, DamageType type) {
