@@ -35,23 +35,15 @@ public class Test : MonoBehaviour {
 	}
 
 	public void DoTest2() {
+		var json = System.IO.File.ReadAllText("C:/Users/sampp/Desktop/output.json");
+		GameSerializer.Deserialize(json, Game.game);
+	}
+
+	public void DoTest3() {
 		Debug.Log(String.Join(", ", typeof(Attribute).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
 		Debug.Log(String.Join(", ", typeof(UnitData.Health).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
 		Debug.Log(String.Join(", ", typeof(UnitModifierData).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
 		Debug.Log(String.Join(", ", typeof(UnitData).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
-	}
-
-	public void DoTest3() {
-		var sw = new Stopwatch();
-		sw.Start();
-
-		for (int i = 0; i < 1000000; i++) {
-			Lang.Format(str, unit.data.energy, unit.source, unit.data);
-		}
-
-		sw.Stop();
-
-		Debug.Log($"Elapsed={sw.Elapsed}");
 	}
 
 }

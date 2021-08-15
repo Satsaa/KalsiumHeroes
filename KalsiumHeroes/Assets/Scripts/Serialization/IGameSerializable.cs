@@ -1,18 +1,7 @@
 
 namespace Serialization {
 
-	using System;
-	using System.Linq;
-	using System.Collections.Generic;
-	using UnityEngine;
-	using Object = UnityEngine.Object;
-	using Newtonsoft.Json;
-	using Newtonsoft.Json.Linq;
-	using Newtonsoft.Json.Serialization;
-	using System.Reflection;
-	using System.IO;
-	using Muc.Extensions;
-
+	/// <summary> Only designed to work with ScriptableObjects! </summary>
 	public interface IGameSerializable {
 
 	}

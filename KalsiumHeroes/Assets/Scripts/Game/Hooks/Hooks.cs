@@ -8,6 +8,7 @@ using System.Collections;
 using Object = UnityEngine.Object;
 using Muc;
 using Muc.Collections;
+using Muc.Extensions;
 
 public abstract class Hooks {
 
@@ -151,7 +152,7 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 	[SerializeField, HideInInspector] List<OrderContainer> ordahs;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
-		keys = dict.Keys.Select(v => v.AssemblyQualifiedName).ToList();
+		keys = dict.Keys.Select(v => v.GetShortQualifiedName()).ToList();
 		vals = dict.Values.Select(v => (v as IEnumerable).Cast<Object>().ToArray()).Select(v => new ObjectArrayContainer(v)).ToList();
 		ordahs = dict.Values.Select(v => new OrderContainer(v.GetType().GetField(nameof(HooksList<int>.orders)).GetValue(v) as List<int>)).ToList();
 	}

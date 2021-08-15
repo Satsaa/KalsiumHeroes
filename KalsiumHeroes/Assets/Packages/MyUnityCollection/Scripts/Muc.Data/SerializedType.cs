@@ -5,6 +5,7 @@ namespace Muc.Data {
 	using System.Collections.Generic;
 	using UnityEngine;
 	using System.Linq;
+	using Muc.Extensions;
 
 	public class SerializedTypeComparer : IEqualityComparer<SerializedType> {
 		public bool Equals(SerializedType x, SerializedType y) {
@@ -45,7 +46,7 @@ namespace Muc.Data {
 			}
 			set {
 				_type = value;
-				_name = _type?.AssemblyQualifiedName;
+				_name = _type?.GetShortQualifiedName();
 			}
 		}
 

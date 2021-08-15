@@ -25,6 +25,10 @@ namespace Muc.Extensions {
 			}
 		}
 
+		public static string GetShortQualifiedName(this Type type) {
+			return $"{type.FullName}, {type.Assembly.GetName().Name}";
+		}
+
 	}
 
 }
