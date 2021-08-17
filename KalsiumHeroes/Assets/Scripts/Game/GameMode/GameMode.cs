@@ -9,7 +9,8 @@ using UnityEngine;
 /// <summary>
 /// Contains a list of data sources
 /// </summary>
-public abstract class GameMode : StoredScriptableObject, IGameSerializable, IIdentifiable {
+[Tokenize]
+public abstract class GameMode : StoredScriptableObject, IIdentifiable {
 
 	public string identifier;
 	string IIdentifiable.identifier => identifier;

@@ -5,7 +5,8 @@ using System;
 using System.Linq;
 using Serialization;
 
-public class GameEvents : ScriptableObject, IGameSerializable, IOnUpdate {
+[Tokenize]
+public class GameEvents : ScriptableObject, IOnUpdate {
 
 	[SerializeReference]
 	public List<GameEvent> events = new List<GameEvent>();

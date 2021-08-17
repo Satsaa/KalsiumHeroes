@@ -161,6 +161,7 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 	}
 
 	void ISerializationCallbackReceiver.OnAfterDeserialize() {
+		dict.Clear();
 		foreach (var kv in sr_dict) {
 			var type = Type.GetType(kv.Key);
 			var objs = kv.Value.Select(v => v.obj).ToList();

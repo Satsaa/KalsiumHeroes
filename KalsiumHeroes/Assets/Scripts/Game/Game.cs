@@ -9,8 +9,9 @@ using Muc.Editor;
 using Serialization;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
+[Tokenize]
 [DefaultExecutionOrder(-600)]
-public class Game : Singleton<Game>, IGameSerializable {
+public class Game : Singleton<Game> {
 
 	public int test = 1;
 	public Vector2Int test2;

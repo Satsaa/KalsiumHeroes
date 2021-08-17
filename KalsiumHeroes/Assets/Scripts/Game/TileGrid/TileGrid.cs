@@ -7,16 +7,13 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Muc.Extensions;
-using Muc.Numerics;
 using HexGrid;
 using System;
-using Priority_Queue;
-using UnityEngine.Serialization;
-using System.Reflection;
 using Serialization;
 using Muc.Data;
 
-public class TileGrid : ScriptableObject, IGameSerializable {
+[Tokenize]
+public class TileGrid : ScriptableObject {
 
 	[field: SerializeField]
 	public Vector2Int size { get; private set; }

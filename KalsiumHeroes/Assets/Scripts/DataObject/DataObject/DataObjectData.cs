@@ -6,8 +6,9 @@ using UnityEngine.Serialization;
 using System.Text.RegularExpressions;
 using Serialization;
 
+[Tokenize]
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
-public abstract class DataObjectData : ScriptableObject, IIdentifiable, IGameSerializable {
+public abstract class DataObjectData : ScriptableObject, IIdentifiable {
 
 	/// <summary> Base type for createType. </summary>
 	public abstract Type createTypeConstraint { get; }

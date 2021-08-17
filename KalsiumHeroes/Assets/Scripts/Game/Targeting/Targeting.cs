@@ -5,7 +5,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Serialization;
 
-public class Targeting : ScriptableObject, IGameSerializable, IOnUpdate {
+[Tokenize]
+public class Targeting : ScriptableObject, IOnUpdate {
 
 	public bool targeting => targeter != null && !targeter.IsCompleted();
 	private Rounds rm => Game.rounds;

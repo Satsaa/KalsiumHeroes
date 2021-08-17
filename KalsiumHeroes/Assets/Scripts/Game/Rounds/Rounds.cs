@@ -6,7 +6,8 @@ using UnityEngine.Events;
 using System;
 using Serialization;
 
-public class Rounds : ScriptableObject, IGameSerializable {
+[Tokenize]
+public class Rounds : ScriptableObject {
 
 	public List<Unit> units = new List<Unit>();
 	[SerializeField] private int index;

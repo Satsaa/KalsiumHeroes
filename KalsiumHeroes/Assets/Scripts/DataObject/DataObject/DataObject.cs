@@ -7,8 +7,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
-
-public abstract class DataObject : ScriptableObject, IGameSerializable {
+[Tokenize]
+public abstract class DataObject : ScriptableObject {
 
 	[Tooltip("Source data instance."), SerializeField]
 	protected DataObjectData _source;

@@ -147,7 +147,7 @@ namespace Serialization {
 
 		static void DeserializeGame(string json, Game game) {
 			using (new Muc.Stopwatch("Deserialization took")) {
-				var objs = new Dictionary<uint, IGameSerializable>() { { 1, game } };
+				var objs = new Dictionary<uint, Object>() { { 1, game } };
 				var cbList = new HashSet<ISerializationCallbackReceiver>();
 				var stack = new Stack<uint>();
 				stack.Push(1);
@@ -169,12 +169,12 @@ namespace Serialization {
 					}
 				}
 
-				IGameSerializable GetObj(uint id) {
+				Object GetObj(uint id) {
 					if (objs.TryGetValue(id, out var obj)) return obj;
 					var type = Type.GetType((string)props[id]["$type"]);
-					if (!typeof(IGameSerializable).IsAssignableFrom(type)) throw new InvalidOperationException($"Type is not legal ({type.FullName})");
-					var res = objs[id] = (IGameSerializable)ScriptableObject.CreateInstance(type);
-					(res as Object).name = $"Instance ({id})";
+					if (type.GetCustomAttribute<TokenizeAttribute>() == null) throw new InvalidOperationException($"Type is not legal ({type.FullName})");
+					var res = objs[id] = ScriptableObject.CreateInstance(type);
+					res.name = id.ToString();
 					return res;
 				}
 
@@ -196,16 +196,16 @@ namespace Serialization {
 							var value = d.field.GetValue(obj);
 
 							// List
-							if (d.isList) {
+							if (d.asList) {
 								var list = (IList)(value ?? InstantiateType(d.field.FieldType));
 								var ja = (JArray)jo[d.field.Name];
 
 								if (list.Count != ja.Count) {
 									if (list is Array arr) list = Resize(arr, ja.Count);
-									else ResizeList(ref list, d.listItemType, ja.Count);
+									else ResizeList(ref list, d.itemType, ja.Count);
 								}
 
-								if (d.isIgs) {
+								if (d.isUnityObject) {
 									for (int i = 0; i < ja.Count; i++) {
 										var jt = ja[i];
 										if (jt.Type == JTokenType.Null) {
@@ -230,7 +230,7 @@ namespace Serialization {
 												&& jto["$type"] is JValue jv
 												&& jv.Value is string str
 												&& Type.GetType(str) is Type jtype
-												&& d.listItemType.IsAssignableFrom(jtype)
+												&& d.itemType.IsAssignableFrom(jtype)
 											) {
 												if (jval is JValue jvalval && jvalval.Value == null) list[i] = null;
 												else {
@@ -243,7 +243,7 @@ namespace Serialization {
 									} else {
 										for (int i = 0; i < ja.Count; i++) {
 											var jt = ja[i];
-											var val = detokenizer(d.listItemType, jt, list[i]);
+											var val = detokenizer(d.itemType, jt, list[i]);
 											QueueOnAfterDeserialize(list[i] = val, d);
 										}
 									}
@@ -278,7 +278,7 @@ namespace Serialization {
 							}
 
 							// Ref
-							if (d.isIgs) {
+							if (d.isUnityObject) {
 								var jref = (JValue)jo[d.field.Name];
 								if (jref.Type == JTokenType.Null) {
 									d.field.SetValue(obj, null);
@@ -315,7 +315,7 @@ namespace Serialization {
 		static void ResizeList(ref IList list, Type type, int newSize) {
 			if (list.Count < newSize) {
 				if (list.Count == 0) {
-					var value = typeof(IGameSerializable).IsAssignableFrom(type) ? null : InstantiateType(type, true);
+					var value = typeof(Object).IsAssignableFrom(type) ? null : InstantiateType(type, true);
 					list.Add(value);
 				}
 				while (list.Count < newSize) {
@@ -347,7 +347,7 @@ namespace Serialization {
 			using (new Muc.Stopwatch("Serialization took")) {
 				const int maxDepth = 7;
 				var depthReached = 0;
-				var stack = new Stack<(uint, IGameSerializable)>();
+				var stack = new Stack<(uint, Object)>();
 				uint topId = 1;
 				stack.Push((topId, game));
 				var tokens = new Dictionary<uint, JToken>() { { topId, null } };
@@ -360,7 +360,7 @@ namespace Serialization {
 				var res = JsonConvert.SerializeObject(tokens, Formatting.Indented);
 				return res;
 
-				void Serialize(uint id, IGameSerializable obj) {
+				void Serialize(uint id, Object obj) {
 					var depth = 0;
 					if (obj is ISerializationCallbackReceiver irc) irc.OnBeforeSerialize();
 					tokens[id] = DefaultTokenizer(obj);
@@ -383,9 +383,9 @@ namespace Serialization {
 							if (d.isCallbackReceiver && !Object.Equals(value, null)) ((ISerializationCallbackReceiver)value).OnBeforeSerialize();
 
 							// List
-							if (d.isList) {
+							if (d.asList) {
 								var arrayToken = new JArray();
-								if (d.isIgs) {
+								if (d.isUnityObject) {
 									if (value != null) {
 										foreach (var e in (IList)value) {
 											if (e is null) {
@@ -393,7 +393,7 @@ namespace Serialization {
 											} else if (toId.TryGetValue(e, out var otherId)) {
 												arrayToken.Add(otherId);
 											} else {
-												stack.Push((++topId, (IGameSerializable)e));
+												stack.Push((++topId, (Object)e));
 												toId[e] = topId;
 												tokens[topId] = null;
 												arrayToken.Add(topId);
@@ -434,13 +434,12 @@ namespace Serialization {
 							}
 
 							// Ref
-							if (d.isIgs) {
-								var igs = (IGameSerializable)value;
+							if (d.isUnityObject) {
 								if (toId.TryGetValue(value, out var otherId)) {
 									jo.Add(d.field.Name, otherId);
 									continue;
 								} else {
-									stack.Push((++topId, igs));
+									stack.Push((++topId, (Object)value));
 									toId[value] = topId;
 									tokens[topId] = null;
 									jo.Add(d.field.Name, topId);
@@ -478,7 +477,8 @@ namespace Serialization {
 			var fields = new List<FieldData>();
 
 			foreach (var field in GetAllFields(type)) {
-				if (ValidateField(field, out var data)) {
+				var data = ValidateField(field);
+				if (data != null) {
 					fields.Add(data);
 				}
 			}
@@ -491,70 +491,89 @@ namespace Serialization {
 			public FieldInfo field;
 			public Tokenizer tokenizer;
 			public Detokenizer detokenizer;
-			public Type listItemType;
-			public bool isIgs;
+			public Type itemType;
+			public bool hasTypeAttribute;
+			public bool hasFieldAttribute;
 			public bool isUnityObject;
 			public bool isCallbackReceiver;
 			public bool serializeReference;
-
-			public bool isList => listItemType != null;
+			public bool asList;
 		}
 
-		static Dictionary<FieldInfo, (bool r, FieldData d)> fieldDataCache = new();
+		static Dictionary<FieldInfo, FieldData> fieldDataCache = new();
 
-		static bool ValidateField(FieldInfo field, out FieldData d) {
+		static FieldData ValidateField(FieldInfo field) {
 			if (fieldDataCache.TryGetValue(field, out var cached)) {
-				d = cached.d;
-				return cached.r;
+				return cached;
 			}
-			d = new();
+			var d = new FieldData();
 			d.field = field;
 			if (field.IsPublic) {
 				if (System.Attribute.IsDefined(field, typeof(NonSerializedAttribute))) {
-					return (fieldDataCache[field] = (false, d)).r;
+					return fieldDataCache[field] = null;
 				}
 				d.serializeReference = System.Attribute.IsDefined(field, typeof(SerializeReference));
 			} else {
 				d.serializeReference = System.Attribute.IsDefined(field, typeof(SerializeReference));
 				if (!d.serializeReference && !System.Attribute.IsDefined(field, typeof(SerializeField))) {
-					return (fieldDataCache[field] = (false, d)).r;
+					return fieldDataCache[field] = null;
 				}
 			}
 
-			var gsa = field.GetCustomAttribute<GameSerializationAttribute>();
-			if (gsa != null) {
-				if (!gsa.IsTokenized(field.FieldType)) return (fieldDataCache[field] = (false, d)).r;
-				d.tokenizer = gsa.GetTokenizer(field.FieldType);
-				d.detokenizer = gsa.GetDetokenizer(field.FieldType);
-				if (d.tokenizer != null && d.detokenizer != null) return (fieldDataCache[field] = (true, d)).r;
-				if (field.FieldType == typeof(string) || field.FieldType.IsPrimitive || field.FieldType.IsEnum) {
-					d.tokenizer ??= value => new JValue(value);
-					d.detokenizer ??= (type, j, obj) => j.Value<object>();
-				}
-				return (fieldDataCache[field] = (true, d)).r;
-			}
+			var fieldAttribute = field.GetCustomAttribute<TokenizeAttribute>();
+			d.hasFieldAttribute = fieldAttribute != null;
 
 			var isArray = typeof(Array).IsAssignableFrom(field.FieldType);
 			var listType = field.FieldType.GetGenericTypeOf(typeof(List<>));
-			if (isArray || listType != null) {
-				d.listItemType = isArray ? field.FieldType.GetElementType() : listType;
-				d.isIgs = typeof(IGameSerializable).IsAssignableFrom(d.listItemType);
-				d.isUnityObject = typeof(Object).IsAssignableFrom(d.listItemType);
-				d.isCallbackReceiver = typeof(ISerializationCallbackReceiver).IsAssignableFrom(d.listItemType);
-				return (fieldDataCache[field] = (ValidateType(d.listItemType, d, d.serializeReference, out d.tokenizer, out d.detokenizer), d)).r;
+			if ((isArray || listType != null) && !(d.hasFieldAttribute && fieldAttribute.applyToList)) {
+				d.asList = true;
+				d.itemType = isArray ? field.FieldType.GetElementType() : listType;
+			} else {
+				d.itemType = field.FieldType;
 			}
 
-			d.isIgs = typeof(IGameSerializable).IsAssignableFrom(field.FieldType);
-			d.isUnityObject = typeof(Object).IsAssignableFrom(field.FieldType);
-			d.isCallbackReceiver = typeof(ISerializationCallbackReceiver).IsAssignableFrom(field.FieldType);
-			return (fieldDataCache[field] = (ValidateType(field.FieldType, d, d.serializeReference, out d.tokenizer, out d.detokenizer), d)).r;
+			d.isUnityObject = typeof(Object).IsAssignableFrom(d.itemType);
+			d.isCallbackReceiver = typeof(ISerializationCallbackReceiver).IsAssignableFrom(d.itemType);
+
+			if (d.hasFieldAttribute) {
+				if (!fieldAttribute.IsTokenized(d.itemType)) return fieldDataCache[field] = null;
+				d.tokenizer = fieldAttribute.GetTokenizer(d.itemType);
+				d.detokenizer = fieldAttribute.GetDetokenizer(d.itemType);
+				if (d.tokenizer != null || d.detokenizer != null) return fieldDataCache[field] = d;
+			}
+
+			if (d.asList) {
+				var rawTypeAttribute = field.FieldType.GetCustomAttribute<TokenizeAttribute>(true);
+				d.hasTypeAttribute = rawTypeAttribute != null;
+				if (rawTypeAttribute != null) {
+					if (!rawTypeAttribute.IsTokenized(d.itemType)) return fieldDataCache[field] = null;
+					d.tokenizer = rawTypeAttribute.GetTokenizer(d.itemType);
+					d.detokenizer = rawTypeAttribute.GetDetokenizer(d.itemType);
+					if (d.tokenizer != null || d.detokenizer != null) {
+						d.asList = false;
+						d.itemType = field.FieldType;
+						return fieldDataCache[field] = d;
+					}
+				}
+			}
+
+			var typeAttribute = d.itemType.GetCustomAttribute<TokenizeAttribute>(true);
+			d.hasTypeAttribute |= typeAttribute != null;
+			if (typeAttribute != null) {
+				if (!typeAttribute.IsTokenized(d.itemType)) return fieldDataCache[field] = null;
+				d.tokenizer = typeAttribute.GetTokenizer(d.itemType);
+				d.detokenizer = typeAttribute.GetDetokenizer(d.itemType);
+				if (d.tokenizer != null || d.detokenizer != null) return fieldDataCache[field] = d;
+			}
+
+			return fieldDataCache[field] = ValidateType(d.itemType, d, out d.tokenizer, out d.detokenizer) ? d : null;
 		}
 
-		static bool ValidateType(Type type, FieldData d, bool serializeReference, out Tokenizer tokenizer, out Detokenizer detokenizer) {
+		static bool ValidateType(Type type, FieldData d, out Tokenizer tokenizer, out Detokenizer detokenizer) {
 			tokenizer = null;
 			detokenizer = null;
 
-			var gsa = type.GetCustomAttribute<GameSerializationAttribute>(true);
+			var gsa = type.GetCustomAttribute<TokenizeAttribute>(true);
 			if (gsa != null) {
 				if (!gsa.IsTokenized(type)) return false;
 				tokenizer = gsa.GetTokenizer(type);
@@ -572,8 +591,8 @@ namespace Serialization {
 			} else {
 				if (gsa != null) return true;
 				if (type.IsClass || type.IsValueType) {
-					if (!d.isIgs) {
-						if (!serializeReference && type.IsAbstract) return false;
+					if (!d.hasTypeAttribute && !d.hasFieldAttribute) {
+						if (!d.serializeReference && type.IsAbstract) return false;
 						if (unityTypes.TryGetValue(type, out var converter)) {
 							tokenizer = converter.tokenizer;
 							detokenizer = converter.detokenizer;

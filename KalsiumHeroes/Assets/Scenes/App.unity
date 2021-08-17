@@ -1212,8 +1212,8 @@ MonoBehaviour:
   initDisplay: {fileID: 1946788572}
   defaultMenu: {fileID: 3297345020336114265, guid: 0b3ec27671243864780138946eb9a700, type: 3}
   gameScene:
-    sceneAsset: {fileID: 102900000, guid: ba85246c6fa20114081fdeee47ca75f3, type: 3}
-    _scenePath: Assets/Scenes/Game.unity
+    sceneAsset: {fileID: 0}
+    _scenePath: 
   spinner: {fileID: 8988048943664549819, guid: fede339ae35fd5a4785525c7fe31978f, type: 3}
   canvas: {fileID: 265615829}
 --- !u!4 &1363905730
