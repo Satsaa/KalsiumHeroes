@@ -19,7 +19,7 @@ public interface IObjectDict {
 [Serializable]
 public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceiver, IObjectDict where TObj : Object {
 
-	Dictionary<Type, object> dict = new Dictionary<Type, object>();
+	Dictionary<Type, IList> dict = new();
 #if DEBUG
 	HashSet<object> duplicateCheckMap = new();
 #endif
@@ -44,10 +44,9 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			if (!dict.TryGetValue(type, out var list)) {
-				dict[type] = list = Activator.CreateInstance(listType);
+				dict[type] = list = (IList)Activator.CreateInstance(listType);
 			}
-			var add = listType.GetMethod("Add");
-			add.Invoke(list, new object[] { obj });
+			list.Add(obj);
 			if (type == typeof(TObj)) break;
 			type = type.BaseType;
 		}
@@ -62,8 +61,7 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 		while (true) {
 			Type listType = typeof(List<>).MakeGenericType(new[] { type });
 			if (dict.TryGetValue(type, out var list)) {
-				var remove = listType.GetMethod("Remove");
-				remove.Invoke(list, new object[] { obj });
+				list.Remove(obj);
 			} else {
 				Debug.LogWarning($"Couldn't remove {obj} from {type.Name} because the list for that type was missing!");
 			}
@@ -85,8 +83,7 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 	public T FirstOrDefault<T>() where T : TObj {
 		var type = typeof(T);
 		if (dict.TryGetValue(type, out var val)) {
-			var res = ((List<T>)val).FirstOrDefault();
-			return (T)res;
+			return ((List<T>)val).FirstOrDefault();
 		}
 		return default;
 	}
@@ -107,6 +104,20 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 			return list.Count > 0;
 		}
 		return false;
+	}
+
+	public void Clear() {
+		foreach (var kv in dict) {
+			kv.Value.Clear();
+		}
+		dict.Clear();
+		duplicateCheckMap.Clear();
+	}
+
+	public void Clear<T>() where T : TObj {
+		if (dict.TryGetValue(typeof(T), out var list)) {
+			list.Clear();
+		}
 	}
 
 	#region IEnumerable
@@ -135,6 +146,7 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 
 	void ISerializationCallbackReceiver.OnAfterDeserialize() {
 		if (sr_values == null) return;
+		Clear();
 		foreach (var value in sr_values) {
 			Add(value);
 		}

@@ -18,6 +18,15 @@ namespace Muc.Extensions {
 			return false;
 		}
 
+		public static Type GetGenericTypeOf(this Type type, Type genericType, int genericArgumentPosition = 0) {
+			while (type != null && type != typeof(object)) {
+				var cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+				if (genericType == cur) return type.GenericTypeArguments[genericArgumentPosition];
+				type = type.BaseType;
+			}
+			return null;
+		}
+
 		public static IEnumerable<Type> BaseTypes(this Type type) {
 			while (type != null && type != typeof(object)) {
 				type = type.BaseType;

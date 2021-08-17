@@ -13,7 +13,7 @@ namespace Muc.Collections {
 	/// Like a normal List but enumeration doesn't throw if the collection is changed, and the enumerated objects don't change.
 	/// </summary>
 	[Serializable]
-	public class SafeList<T> : ICollection<T>, IEnumerable<T>, IList<T>, IReadOnlyCollection<T>, IReadOnlyList<T> {
+	public class SafeList<T> : ICollection<T>, IEnumerable<T>, IList<T>, IReadOnlyCollection<T>, IReadOnlyList<T>, IEnumerable, ICollection, IList {
 
 		public SafeList() => list = new List<T>();
 		public SafeList(IEnumerable<T> collection) => list = new List<T>(collection);
@@ -28,6 +28,11 @@ namespace Muc.Collections {
 		public int Count => list.Count;
 
 		bool ICollection<T>.IsReadOnly => ((ICollection<T>)list).IsReadOnly;
+		bool ICollection.IsSynchronized => ((ICollection)list).IsSynchronized;
+		object ICollection.SyncRoot => ((ICollection)list).SyncRoot;
+		bool IList.IsFixedSize => ((IList)list).IsFixedSize;
+		bool IList.IsReadOnly => ((IList)list).IsReadOnly;
+		object IList.this[int index] { get => list[index]; set { list[index] = (T)value; enumerationTarget = null; } }
 
 		private void UpdateIfRequired() {
 			if (enumerationTarget == null || enumerationTarget.Count != this.Count) {
@@ -68,6 +73,34 @@ namespace Muc.Collections {
 			return enumerationTarget.GetEnumerator();
 		}
 
+		void ICollection.CopyTo(Array array, int index) {
+			((ICollection)list).CopyTo(array, index);
+		}
+
+		int IList.Add(object value) {
+			Add((T)value);
+			return list.Count - 1;
+		}
+
+		bool IList.Contains(object value) {
+			if (value is null) return typeof(T).IsByRef ? Contains(default) : false;
+			if (value is T tv) return Contains(tv);
+			return false;
+		}
+
+		int IList.IndexOf(object value) {
+			return ((IList)list).IndexOf(value);
+		}
+
+		void IList.Insert(int index, object value) {
+			((IList)list).Insert(index, value);
+			enumerationTarget = null;
+		}
+
+		void IList.Remove(object value) {
+			((IList)list).Remove(value);
+			enumerationTarget = null;
+		}
 	}
 }
 

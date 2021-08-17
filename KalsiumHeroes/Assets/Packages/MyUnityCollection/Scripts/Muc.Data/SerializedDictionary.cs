@@ -14,6 +14,10 @@ namespace Muc.Data {
 	[Serializable]
 	public class SerializedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver {
 
+		public SerializedDictionary() { }
+		public SerializedDictionary(IDictionary<TKey, TValue> dictionary) { foreach (var kv in dictionary) { Add(kv.Key, kv.Value); } }
+		public SerializedDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection) { foreach (var kv in collection) { Add(kv.Key, kv.Value); } }
+
 		[SerializeField]
 		List<SerializedDictionaryListPair<TKey, TValue>> list = new();
 
@@ -246,6 +250,7 @@ namespace Muc.Data {
 
 				var valueRect = keyRect;
 				valueRect.x += keyRect.width;
+				valueRect.height = position.height;
 
 				keyRect.width -= 2;
 				valueRect.width += 2;

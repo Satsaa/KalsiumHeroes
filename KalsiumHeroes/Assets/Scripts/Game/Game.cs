@@ -12,6 +12,12 @@ using Serialization;
 [DefaultExecutionOrder(-600)]
 public class Game : Singleton<Game>, IGameSerializable {
 
+	public int test = 1;
+	public Vector2Int test2;
+	public UnitData unitTest1;
+	public UnitData unitTest2;
+	public List<UnitData> unitTestL;
+
 	public static Game game => instance;
 
 	public static GameEvents events => instance._events;

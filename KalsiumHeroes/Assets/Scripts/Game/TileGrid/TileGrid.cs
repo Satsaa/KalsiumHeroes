@@ -14,8 +14,9 @@ using Priority_Queue;
 using UnityEngine.Serialization;
 using System.Reflection;
 using Serialization;
+using Muc.Data;
 
-public class TileGrid : ScriptableObject, IGameSerializable, ISerializationCallbackReceiver {
+public class TileGrid : ScriptableObject, IGameSerializable {
 
 	[field: SerializeField]
 	public Vector2Int size { get; private set; }
@@ -25,7 +26,7 @@ public class TileGrid : ScriptableObject, IGameSerializable, ISerializationCallb
 	public TileData defaultTile;
 	public EdgeData defaultEdge;
 
-	public Dictionary<Vector3Int, Tile> tiles = new Dictionary<Vector3Int, Tile>();
+	public SerializedDictionary<Vector3Int, Tile> tiles = new();
 
 	public Tile GetTile(Hex hex) => GetTile(hex.pos);
 	public Tile GetTile(Vector3Int pos) {
@@ -409,23 +410,6 @@ public class TileGrid : ScriptableObject, IGameSerializable, ISerializationCallb
 		}
 	}
 
-
-	[SerializeField, HideInInspector] List<Vector3Int> keyList = new List<Vector3Int>();
-	[SerializeField, HideInInspector] List<Tile> valList = new List<Tile>();
-
-	void ISerializationCallbackReceiver.OnBeforeSerialize() {
-		keyList = tiles.Select(v => v.Key).ToList();
-		valList = tiles.Select(v => v.Value).ToList();
-	}
-
-	void ISerializationCallbackReceiver.OnAfterDeserialize() {
-		tiles = new Dictionary<Vector3Int, Tile>();
-		for (int i = 0; i < keyList.Count; i++) {
-			var key = keyList[i];
-			var val = valList[i];
-			tiles.Add(key, val);
-		}
-	}
 }
 
 
