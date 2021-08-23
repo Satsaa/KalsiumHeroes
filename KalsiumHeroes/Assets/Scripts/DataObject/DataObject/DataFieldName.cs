@@ -50,13 +50,20 @@ public class DataObjectFieldName<T> : DataFieldName {
 
 	public override IEnumerable<(string, Type, Type)> GetFieldNames() {
 		if (cache == null) {
+			var arType = typeof(Object).IsAssignableFrom(typeof(T)) ? typeof(AssetReference<>).MakeGenericType(typeof(T)) : null;
+			var crType = typeof(Component).IsAssignableFrom(typeof(T)) ? typeof(ComponentReference<>).MakeGenericType(typeof(T)) : null;
 			var list = AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(v => v.GetTypes())
 					.Where(v
 						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
 						&& (v.IsSubclassOf(typeof(DataObjectData)))
 					).SelectMany(v => v.GetFields()
-						.Where(f => (f.FieldType == typeof(T) || f.FieldType.IsSubclassOf(typeof(T))) || typeof(Attribute<T>).IsAssignableFrom(f.FieldType))
+						.Where(f =>
+							(f.FieldType == typeof(T) || f.FieldType.IsSubclassOf(typeof(T)))
+							|| typeof(Attribute<T>).IsAssignableFrom(f.FieldType)
+							|| (arType != null && arType.IsAssignableFrom(f.FieldType))
+							|| (crType != null && crType.IsAssignableFrom(f.FieldType))
+						)
 						.Select(v => (v.Name, GetAttributeType(v.FieldType), v.FieldType))).Distinct().ToList();
 			list.Sort((a, b) => a.Name.CompareTo(b.Name));
 			cache = list;
@@ -66,8 +73,16 @@ public class DataObjectFieldName<T> : DataFieldName {
 		Type GetAttributeType(Type fieldType) {
 			var current = fieldType;
 			while (current != null) {
-				if (current.IsGenericType && current.GetGenericTypeDefinition() == typeof(Attribute<>)) {
-					return current.GenericTypeArguments[0];
+				if (current.IsGenericType) {
+					if (current.GetGenericTypeDefinition() == typeof(Attribute<>)) {
+						return current.GenericTypeArguments[0];
+					}
+					if (current.GetGenericTypeDefinition() == typeof(AssetReference<>)) {
+						return current.GenericTypeArguments[0];
+					}
+					if (current.GetGenericTypeDefinition() == typeof(ComponentReference<>)) {
+						return current.GenericTypeArguments[0];
+					}
 				}
 				current = current.BaseType;
 			}

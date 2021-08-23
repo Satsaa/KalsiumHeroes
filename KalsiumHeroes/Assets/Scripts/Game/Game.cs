@@ -7,6 +7,8 @@ using Muc.Components.Extended;
 using System.Threading.Tasks;
 using Muc.Editor;
 using Serialization;
+using Object = UnityEngine.Object;
+using UnityEngine.AddressableAssets;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [Tokenize]
@@ -18,6 +20,11 @@ public class Game : Singleton<Game> {
 	public UnitData unitTest1;
 	public UnitData unitTest2;
 	public List<UnitData> unitTestL;
+
+	public AssetReferenceT<GameObject> arbase;
+	public AssetReference<UnitData> ar1;
+	public AssetReference<GameObject> ar2;
+	public ComponentReference<UnitActor> arC;
 
 	public static Game game => instance;
 
@@ -67,7 +74,7 @@ public class Game : Singleton<Game> {
 			for (int i = 0; i < mode.draft.Length; i++) {
 				var unitId = mode.draft[i];
 				var unitSrc = App.library.GetById<UnitData>(unitId);
-				var actor = Instantiate(unitSrc.actor);
+				var actor = Instantiate(unitSrc.actor.value);
 				var spawn = actor.gameObject.AddComponent<SpawnControl>();
 				spawn.source = unitSrc;
 				spawn.team = team;

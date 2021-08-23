@@ -40,10 +40,9 @@ public class Test : MonoBehaviour {
 	}
 
 	public void DoTest3() {
-		Debug.Log(String.Join(", ", typeof(Attribute).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
-		Debug.Log(String.Join(", ", typeof(UnitData.Health).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
-		Debug.Log(String.Join(", ", typeof(UnitModifierData).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
-		Debug.Log(String.Join(", ", typeof(UnitData).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Select(v => v.Name)));
+		Debug.Log(Game.instance.ar1.value);
+		Debug.Log(Game.instance.ar2.value);
+		Debug.Log(Game.instance.arC.value);
 	}
 
 }

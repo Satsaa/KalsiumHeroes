@@ -16,4 +16,10 @@ MonoBehaviour:
     _name: 
   identifier: Empty
   container: {fileID: 0}
+  container_new:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   sprite: {fileID: 0}

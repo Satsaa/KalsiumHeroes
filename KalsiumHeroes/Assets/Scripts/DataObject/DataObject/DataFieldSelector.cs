@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using Muc.Data;
 using System.Reflection;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class DataFieldSelector<T> {
@@ -21,9 +22,14 @@ public class DataFieldSelector<T> {
 
 	private object sourceCached;
 	private string fieldNameCached;
+	private FieldInfo fieldCached;
+
 	private Attribute<T> ac;
 	private IAttribute iac;
-	private FieldInfo fieldCached;
+
+	private object ar;
+	private PropertyInfo arValue;
+
 
 	public string GetFieldName() => field.attributeName;
 	public Type GetFieldType() => field.attributeType.type;
@@ -37,6 +43,7 @@ public class DataFieldSelector<T> {
 	public T GetValue(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetOther(source, true);
 		UpdateCache(source);
+		if (ar != null) return (T)arValue.GetValue(ar);
 		if (fieldCached != null) return (T)fieldCached.GetValue(source);
 		return TryOverrideValue(source, ac != null ? ac.current : fallbackValue);
 	}
@@ -91,7 +98,8 @@ public class DataFieldSelector<T> {
 #endif
 			sourceCached = source;
 			fieldNameCached = field.attributeName;
-			iac = ac = null;
+			ar = iac = ac = null;
+			arValue = null;
 			fieldCached = null;
 			if (!String.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
@@ -100,7 +108,15 @@ public class DataFieldSelector<T> {
 					if (value is Attribute<T> attribute) {
 						iac = ac = attribute;
 					} else {
-						fieldCached = fieldInfo;
+						var arType = typeof(Object).IsAssignableFrom(typeof(T)) ? typeof(AssetReference<>).MakeGenericType(typeof(T)) : null;
+						var crType = typeof(Component).IsAssignableFrom(typeof(T)) ? typeof(ComponentReference<>).MakeGenericType(typeof(T)) : null;
+						var type = value.GetType();
+						if ((arType != null && arType.IsAssignableFrom(type)) || (crType != null && crType.IsAssignableFrom(type))) {
+							ar = value;
+							arValue = type.GetProperty("value", BindingFlags.Instance | BindingFlags.Public);
+						} else {
+							fieldCached = fieldInfo;
+						}
 					}
 				}
 			}

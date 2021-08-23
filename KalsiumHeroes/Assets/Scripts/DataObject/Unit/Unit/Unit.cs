@@ -27,7 +27,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		return Create<Unit>(source, v => {
 			v.team = team;
 			var nearTile = Game.grid.NearestTile(position.xz());
-			v.actor = actor ? actor : Instantiate(source.actor);
+			v.actor = actor ? actor : Instantiate(source.actor.value);
 			v.SetTile(nearTile, true);
 			v.SetDir(0, true);
 		});
@@ -36,7 +36,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	public static Unit Create(UnitData source, Tile tile, TileDir tileDir, Team team, UnitActor actor = null) {
 		return Create<Unit>(source, v => {
 			v.team = team;
-			v.actor = actor ? actor : Instantiate(source.actor);
+			v.actor = actor ? actor : Instantiate(source.actor.value);
 			v.tileDir = tileDir; // Prevent hook being called on spawn
 			v.SetTile(tile, true);
 			v.SetDir(tileDir, true);

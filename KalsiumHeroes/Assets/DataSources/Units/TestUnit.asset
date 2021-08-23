@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Test
-  container: {fileID: 4841974498028539211, guid: 216427d80ecbfd04fb54c6000304f995, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 216427d80ecbfd04fb54c6000304f995
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -28,10 +33,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2752847404be97a46ba3c5ea86bb9783, type: 2}
   - {fileID: 11400000, guid: a82a72e75573d194987c2e1e7408fe45, type: 2}
   - {fileID: 11400000, guid: a58f77eff4ab92142abb6c63451e96e6, type: 2}
-  sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
-  preview: {fileID: 9008834760869199539, guid: fd5e77cc9735f544fa8ada661e77b147, type: 3}
-  portrait: {fileID: 9008834760869199539, guid: 6e8d6dc7b5aa78e4ea5794aac5975465, type: 3}
-  actor: {fileID: 4267153226371733055, guid: 3f444bc7de6003c4488cca5a6715d5d6, type: 3}
+  sprite:
+    assetReference:
+      m_AssetGUID: 12abd3161e787c8499ca62c0cc50ecb4
+      m_SubObjectName: HealthIcon
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 0
+  preview:
+    assetReference:
+      m_AssetGUID: fd5e77cc9735f544fa8ada661e77b147
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  portrait:
+    assetReference:
+      m_AssetGUID: 6e8d6dc7b5aa78e4ea5794aac5975465
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  actor:
+    assetReference:
+      m_AssetGUID: 3f444bc7de6003c4488cca5a6715d5d6
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   draftCost: 5
   speed:
     _values:

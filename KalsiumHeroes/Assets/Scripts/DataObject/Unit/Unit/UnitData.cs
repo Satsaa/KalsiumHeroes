@@ -9,17 +9,16 @@ public class UnitData : MasterData {
 	public override Type createTypeConstraint => typeof(Unit);
 
 	[Tooltip("Static sprite.")]
-	[UnityEngine.Serialization.FormerlySerializedAs("staticPortrait")]
-	public Sprite sprite;
+	public AssetReference<Sprite> sprite;
 
 	[Tooltip("The RenderObject used to render this unit in previews.")]
-	public RenderObject preview;
+	public ComponentReference<RenderObject> preview;
 
 	[Tooltip("The RenderObject used to render this unit in portraits.")]
-	public RenderObject portrait;
+	public ComponentReference<RenderObject> portrait;
 
 	[Tooltip("Actor prefab for this Unit. It is instantiated as a parent.")]
-	public UnitActor actor;
+	public ComponentReference<UnitActor> actor;
 
 	[Tooltip("The cost of drafting this Unit.")]
 	public int draftCost = 5;

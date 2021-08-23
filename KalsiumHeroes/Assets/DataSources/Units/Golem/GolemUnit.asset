@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Golem
-  container: {fileID: 4841974498028539211, guid: 8c2b3026cdf8e3045a8ba408088d7283, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 8c2b3026cdf8e3045a8ba408088d7283
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -27,10 +32,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c61e49be82dcb6940a09aa831b25b05c, type: 2}
   - {fileID: 11400000, guid: aecac7c16203c3f4d8a7cd81375fccd3, type: 2}
   - {fileID: 11400000, guid: 454f1b36de6759446b85bb0fcf97dc7c, type: 2}
-  sprite: {fileID: 21300000, guid: 9c63b51755ec8c845b857cc73a35d606, type: 3}
-  preview: {fileID: 9008834760869199539, guid: 2294f28bf3da4f74298b781fdbe2bfeb, type: 3}
-  portrait: {fileID: 9008834760869199539, guid: cb186015c34992245907509e65d3b7f0, type: 3}
-  actor: {fileID: 6516154736034674579, guid: 5672fa9fae2db4644868af94e805446e, type: 3}
+  sprite:
+    assetReference:
+      m_AssetGUID: 27e6751c7bcda4642ae24696bb7392c8
+      m_SubObjectName: DefenseIcon
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 0
+  preview:
+    assetReference:
+      m_AssetGUID: 2294f28bf3da4f74298b781fdbe2bfeb
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  portrait:
+    assetReference:
+      m_AssetGUID: cb186015c34992245907509e65d3b7f0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  actor:
+    assetReference:
+      m_AssetGUID: 5672fa9fae2db4644868af94e805446e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   draftCost: 5
   speed:
     _values:

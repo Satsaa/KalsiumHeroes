@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Tile_OneOpeningMovecost
-  container: {fileID: 194248088727427243, guid: 74e234fb7cf453e4999d5529d4554b2e, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 74e234fb7cf453e4999d5529d4554b2e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers: []
   passable:
     _values:

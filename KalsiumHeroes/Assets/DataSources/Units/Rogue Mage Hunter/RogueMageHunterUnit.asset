@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_RogueMageHunter
-  container: {fileID: 4841974498028539211, guid: 0e0fe8f48e4cf9547a8eda1887a5e57b, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 0e0fe8f48e4cf9547a8eda1887a5e57b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -28,10 +33,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08388c54931bf5b46985b9f89fbd4039, type: 2}
   - {fileID: 11400000, guid: b502cf770b53f3545ad6fa1b830ed615, type: 2}
   - {fileID: 11400000, guid: 8d5fea59e64b07143886a82170581d3d, type: 2}
-  sprite: {fileID: 21300000, guid: 6191e5c6f0e861b4484c47265ca0c2af, type: 3}
-  preview: {fileID: 9008834760869199539, guid: bc6fde6b60bd2fc4aaaf0076fb1be96a, type: 3}
-  portrait: {fileID: 9008834760869199539, guid: 3e0ac8cebb63bc742b63c3c3d0cbcb82, type: 3}
-  actor: {fileID: 4267153226371733055, guid: f725440873d317b4f987ead995abc18c, type: 3}
+  sprite:
+    assetReference:
+      m_AssetGUID: 6191e5c6f0e861b4484c47265ca0c2af
+      m_SubObjectName: ResistanceIcon
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 0
+  preview:
+    assetReference:
+      m_AssetGUID: bc6fde6b60bd2fc4aaaf0076fb1be96a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  portrait:
+    assetReference:
+      m_AssetGUID: 3e0ac8cebb63bc742b63c3c3d0cbcb82
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  actor:
+    assetReference:
+      m_AssetGUID: f725440873d317b4f987ead995abc18c
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   draftCost: 5
   speed:
     _values:

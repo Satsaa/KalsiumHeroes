@@ -10,7 +10,7 @@ public abstract class MasterData : DataObjectData {
 	public override Type createTypeConstraint => typeof(Master);
 
 	[Tooltip("Instantiated GameObject when the Master is shown")]
-	public GameObject container;
+	public GameObjectReference container;
 
 	[Tooltip("Automatically created modifiers for the Master")]
 	public List<ModifierData> baseModifiers;

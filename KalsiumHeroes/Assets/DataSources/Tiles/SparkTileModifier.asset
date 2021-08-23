@@ -16,4 +16,9 @@ MonoBehaviour:
     _name: PlayEffectTileModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   identifier: TileModifier_Spark
-  container: {fileID: 3688105352514756551, guid: d6b45685cf74c9b45baa17bdb000f7c0, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: d6b45685cf74c9b45baa17bdb000f7c0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Speedrunner
-  container: {fileID: 4841974498028539211, guid: 86dd65c005812ad4984f9705331cc996, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 86dd65c005812ad4984f9705331cc996
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -25,10 +30,30 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
   - {fileID: 11400000, guid: 0ed4d05bee91c9f46872c56ac4e61e21, type: 2}
   - {fileID: 11400000, guid: feed0ee3b2bf56c429d8e82b283cabfd, type: 2}
-  sprite: {fileID: 21300000, guid: bb63b8522e5482e4d8d5d92020095132, type: 3}
-  preview: {fileID: 9008834760869199539, guid: 1677e10ff3fa9fc4babc8098314542b1, type: 3}
-  portrait: {fileID: 9008834760869199539, guid: 576ec1f85c0726749959b3011b041f8b, type: 3}
-  actor: {fileID: 6516154736034674579, guid: 86ea77df8d56133459544483fb445852, type: 3}
+  sprite:
+    assetReference:
+      m_AssetGUID: 11a233c908d74eb4188fe7f7a79e457b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  preview:
+    assetReference:
+      m_AssetGUID: 1677e10ff3fa9fc4babc8098314542b1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  portrait:
+    assetReference:
+      m_AssetGUID: 576ec1f85c0726749959b3011b041f8b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  actor:
+    assetReference:
+      m_AssetGUID: 86ea77df8d56133459544483fb445852
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   draftCost: 5
   speed:
     _values:

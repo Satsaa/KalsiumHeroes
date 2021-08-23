@@ -6,6 +6,7 @@ using static Serialization.GameSerializer;
 
 namespace Serialization {
 
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Struct | AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Interface | AttributeTargets.Enum)]
 	public class TokenizeAttribute : System.Attribute {
 
 		protected internal bool applyToList;

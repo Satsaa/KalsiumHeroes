@@ -16,8 +16,18 @@ MonoBehaviour:
     _name: EnergyDeficitStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   identifier: Status_EnergyDeficit
-  container: {fileID: 6574234657853972042, guid: f7101482130ebdd43b80ad7d03790535, type: 3}
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  container:
+    assetReference:
+      m_AssetGUID: f7101482130ebdd43b80ad7d03790535
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   debuffType:
     _values:
     - cache: 0

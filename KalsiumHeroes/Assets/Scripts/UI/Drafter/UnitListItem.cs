@@ -29,7 +29,7 @@ public class UnitListItem : UIBehaviour {
 		this.drafter = drafter;
 		this.unitData = unitData;
 		this.unitEnabled = enabled;
-		sprite.sprite = unitData.sprite;
+		sprite.sprite = unitData.sprite.value;
 		displayName.text = Lang.GetStr($"{unitData.identifier}_DisplayName");
 		toggle.isOn = unitEnabled;
 	}

@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Tile_Protected
-  container: {fileID: 194248088727427243, guid: e6034e3aa059288499a9830f8d20fd7e, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: e6034e3aa059288499a9830f8d20fd7e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers: []
   passable:
     _values:

@@ -15,7 +15,12 @@ MonoBehaviour:
   createType:
     _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Duelist
-  container: {fileID: 4841974498028539211, guid: 0e8247b3555cca74eb3d413bf26810c1, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 0e8247b3555cca74eb3d413bf26810c1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -27,10 +32,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7343f19d26c84ec49b95477e3333f2f7, type: 2}
   - {fileID: 11400000, guid: b3ce0bc98f8755f4995c192806e69b92, type: 2}
   - {fileID: 11400000, guid: abd8e55a2c59664468a267a08c909c1b, type: 2}
-  sprite: {fileID: 21300000, guid: a84e0b4f0827fd7419d3bc8e54203ab0, type: 3}
-  preview: {fileID: 9008834760869199539, guid: a72bc8764d90b5d418332d406296f89f, type: 3}
-  portrait: {fileID: 9008834760869199539, guid: 5d707e2014d4b0244ac392173545af57, type: 3}
-  actor: {fileID: 6516154736034674579, guid: e60dc84560d8ac44e93c6f0192f49556, type: 3}
+  sprite:
+    assetReference:
+      m_AssetGUID: a84e0b4f0827fd7419d3bc8e54203ab0
+      m_SubObjectName: Duelist
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 0
+  preview:
+    assetReference:
+      m_AssetGUID: a72bc8764d90b5d418332d406296f89f
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  portrait:
+    assetReference:
+      m_AssetGUID: 5d707e2014d4b0244ac392173545af57
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  actor:
+    assetReference:
+      m_AssetGUID: e60dc84560d8ac44e93c6f0192f49556
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   draftCost: 5
   speed:
     _values:

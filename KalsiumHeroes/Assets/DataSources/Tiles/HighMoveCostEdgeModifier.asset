@@ -16,7 +16,12 @@ MonoBehaviour:
     _name: MoveCostEdgeModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   identifier: EdgeModifier_HighMovecost
-  container: {fileID: 779920189505952397, guid: 35eccfe42d2760e429f03eba6dfcacfa, type: 3}
+  container:
+    assetReference:
+      m_AssetGUID: 35eccfe42d2760e429f03eba6dfcacfa
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   additionalMoveCost:
     _values:
     - cache: 0

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c24a9ef7b2e45bd498deba92fe8010c6
+  m_SerializeEntries:
+  - m_GUID: 7986f5e2eac60c246a49f1abdf6ec30f
+    m_Address: Assets/Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9b22f8a4a90de7145a59474ba7e583d0
+    m_Address: Assets/Graphics
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c63b51755ec8c845b857cc73a35d606
+    m_Address: Packages/com.unity.render-pipelines.core/Editor/LookDev/Icons/d_RenderDoc@2x.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 104bd6a9438a13f43b2f7e84c7484a12, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ab50e07a666b1ab4f9d2dcb8f879c5c7, type: 2}
+    - {fileID: 11400000, guid: 564ef4d3f6d20e94a86dc8c903a5cd3f, type: 2}

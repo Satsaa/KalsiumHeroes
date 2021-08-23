@@ -16,8 +16,18 @@ MonoBehaviour:
     _name: EnergyExcessStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
       PublicKeyToken=null
   identifier: Status_EnergyExcess
-  container: {fileID: 4313533834659548896, guid: f66d80d7df9d789439b2bb24af25e0c2, type: 3}
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  container:
+    assetReference:
+      m_AssetGUID: f66d80d7df9d789439b2bb24af25e0c2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   debuffType:
     _values:
     - cache: 0

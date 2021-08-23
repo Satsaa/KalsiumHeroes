@@ -9,6 +9,6 @@ public class UnitModifierData : ModifierData {
 	public override Type createTypeConstraint => typeof(UnitModifier);
 
 	[Tooltip("Displayed image")]
-	public Sprite sprite;
+	public AssetReference<Sprite> sprite;
 
 }
