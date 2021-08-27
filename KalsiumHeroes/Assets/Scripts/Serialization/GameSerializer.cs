@@ -169,17 +169,19 @@ namespace Serialization {
 					}
 				}
 
-				Object GetObj(uint id) {
+				Object GetObj(uint id, Object remainingValue) {
 					if (objs.TryGetValue(id, out var obj)) return obj;
 					var type = Type.GetType((string)props[id]["$type"]);
-					if (type.GetCustomAttribute<TokenizeAttribute>() == null) throw new InvalidOperationException($"Type is not legal ({type.FullName})");
-					var res = objs[id] = ScriptableObject.CreateInstance(type);
+					var refTok = type.GetCustomAttribute<RefTokenAttribute>();
+					if (refTok == null) throw new InvalidOperationException($"Type is not legal ({type.FullName})");
+					if (remainingValue != null && refTok.KeepRef(remainingValue)) return objs[id] = remainingValue;
+					var res = objs[id] = refTok.CreateObject(props[id]) ?? ScriptableObject.CreateInstance(type);
 					res.name = id.ToString();
 					return res;
 				}
 
 				void Deserialize(uint id, JObject jo) {
-					var obj = GetObj(id);
+					var obj = GetObj(id, null);
 					if (DefaultDetokenizer(obj.GetType(), jo, obj) is ISerializationCallbackReceiver isg) {
 						cbList.Add(isg);
 					}
@@ -213,7 +215,7 @@ namespace Serialization {
 										} else {
 											var id = (uint)jt;
 											if (!objs.TryGetValue(id, out var objValue)) {
-												objValue = GetObj(id);
+												objValue = GetObj(id, list[i] as Object);
 												stack.Push(id);
 											}
 											QueueOnAfterDeserialize(list[i] = objValue, d);
@@ -285,7 +287,7 @@ namespace Serialization {
 								} else {
 									var id = (uint)jref;
 									if (!objs.TryGetValue(id, out var objValue)) {
-										objValue = GetObj(id);
+										objValue = GetObj(id, value as Object);
 										stack.Push(id);
 									}
 									d.field.SetValue(obj, objValue);
@@ -466,6 +468,20 @@ namespace Serialization {
 			}
 		}
 
+		private class FieldData {
+
+			public FieldInfo field;
+			public Tokenizer tokenizer;
+			public Detokenizer detokenizer;
+			public Type itemType;
+			public bool hasTypeAttribute;
+			public bool hasFieldAttribute;
+			public bool isUnityObject;
+			public bool isCallbackReceiver;
+			public bool serializeReference;
+			public bool asList;
+		}
+
 		static Dictionary<Type, List<FieldData>> fieldDataListCache = new();
 
 		static IEnumerable<FieldData> GetFields(Type type) {
@@ -484,20 +500,6 @@ namespace Serialization {
 			}
 
 			return fieldDataListCache[type] = fields;
-		}
-
-		private class FieldData {
-
-			public FieldInfo field;
-			public Tokenizer tokenizer;
-			public Detokenizer detokenizer;
-			public Type itemType;
-			public bool hasTypeAttribute;
-			public bool hasFieldAttribute;
-			public bool isUnityObject;
-			public bool isCallbackReceiver;
-			public bool serializeReference;
-			public bool asList;
 		}
 
 		static Dictionary<FieldInfo, FieldData> fieldDataCache = new();
@@ -534,6 +536,19 @@ namespace Serialization {
 
 			d.isUnityObject = typeof(Object).IsAssignableFrom(d.itemType);
 			d.isCallbackReceiver = typeof(ISerializationCallbackReceiver).IsAssignableFrom(d.itemType);
+
+			if (d.isUnityObject) {
+				var refAttribute = d.itemType.GetCustomAttribute<RefTokenAttribute>();
+				if (refAttribute != null) {
+					if (!refAttribute.IsTokenized(d.itemType)) return fieldDataCache[field] = null;
+					d.tokenizer = refAttribute.GetTokenizer(d.itemType);
+					d.detokenizer = refAttribute.GetDetokenizer(d.itemType);
+					d.hasTypeAttribute = true;
+					return fieldDataCache[field] = d;
+				}
+				Debug.LogWarning($"Attempting to serialize UnityObject without {nameof(RefTokenAttribute)}");
+				return fieldDataCache[field] = null;
+			}
 
 			if (d.hasFieldAttribute) {
 				if (!fieldAttribute.IsTokenized(d.itemType)) return fieldDataCache[field] = null;
@@ -576,8 +591,8 @@ namespace Serialization {
 			var gsa = type.GetCustomAttribute<TokenizeAttribute>(true);
 			if (gsa != null) {
 				if (!gsa.IsTokenized(type)) return false;
-				tokenizer = gsa.GetTokenizer(type);
-				detokenizer = gsa.GetDetokenizer(type);
+				tokenizer = gsa.GetTokenizer(d.itemType);
+				detokenizer = gsa.GetDetokenizer(d.itemType);
 				if (tokenizer != null && detokenizer != null) return true;
 			}
 

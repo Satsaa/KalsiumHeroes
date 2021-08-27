@@ -12,7 +12,7 @@ using System;
 using Serialization;
 using Muc.Data;
 
-[Tokenize]
+[KeepRefToken]
 public class TileGrid : ScriptableObject {
 
 	[field: SerializeField]

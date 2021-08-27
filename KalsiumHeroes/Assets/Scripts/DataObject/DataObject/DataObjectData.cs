@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 using System.Text.RegularExpressions;
 using Serialization;
 
-[Tokenize]
+[RefToken]
 [CreateAssetMenu(fileName = nameof(DataObjectData), menuName = "DataSources/" + nameof(DataObjectData))]
 public abstract class DataObjectData : ScriptableObject, IIdentifiable {
 
@@ -19,6 +19,8 @@ public abstract class DataObjectData : ScriptableObject, IIdentifiable {
 	[Tooltip("String identifier of this DataObject. (\"Unit_Oracle\")")]
 	public string identifier;
 	string IIdentifiable.identifier => identifier;
+
+	public bool isSource { get; internal set; }
 
 	private static Regex removeData = new(@"Data$");
 	private string _tooltip;
@@ -43,6 +45,9 @@ public abstract class DataObjectData : ScriptableObject, IIdentifiable {
 	}
 
 	protected virtual void OnValidate() {
+#if UNITY_EDITOR
+		isSource = UnityEditor.AssetDatabase.Contains(this);
+#endif
 		if (createType.type == null) {
 			if (!createTypeConstraint.IsAbstract) {
 				createType.type = createTypeConstraint;

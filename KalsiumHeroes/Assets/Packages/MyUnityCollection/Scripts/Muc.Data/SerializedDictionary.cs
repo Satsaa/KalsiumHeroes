@@ -12,7 +12,7 @@ namespace Muc.Data {
 	using UnityEngine;
 
 	[Serializable]
-	public class SerializedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver {
+	public class SerializedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>, ISerializationCallbackReceiver {
 
 		public SerializedDictionary() { }
 		public SerializedDictionary(IDictionary<TKey, TValue> dictionary) { foreach (var kv in dictionary) { Add(kv.Key, kv.Value); } }
@@ -137,6 +137,11 @@ namespace Muc.Data {
 		// IEnumerable
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => dict.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => dict.GetEnumerator();
+
+		// IReadOnlyDictionary
+		IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => ((IReadOnlyDictionary<TKey, TValue>)dict).Keys;
+		IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => ((IReadOnlyDictionary<TKey, TValue>)dict).Values;
+
 	}
 }
 

@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 using UnityEngine.AddressableAssets;
 
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
-[Tokenize]
+[KeepRefToken]
 [DefaultExecutionOrder(-600)]
 public class Game : Singleton<Game> {
 

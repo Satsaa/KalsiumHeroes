@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Serialization;
 
-[Tokenize]
+[KeepRefToken]
 public class Targeting : ScriptableObject, IOnUpdate {
 
 	public bool targeting => targeter != null && !targeter.IsCompleted();

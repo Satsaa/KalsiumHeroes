@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using System;
 using Serialization;
 
-[Tokenize]
+[KeepRefToken]
 public class Rounds : ScriptableObject {
 
 	public List<Unit> units = new List<Unit>();

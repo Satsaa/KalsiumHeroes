@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Serialization;
 
-[Tokenize]
+[KeepRefToken]
 public class GameEvents : ScriptableObject, IOnUpdate {
 
 	[SerializeReference]

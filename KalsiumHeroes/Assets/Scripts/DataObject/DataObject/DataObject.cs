@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
-[Tokenize]
+[RefToken]
 public abstract class DataObject : ScriptableObject {
 
 	[Tooltip("Source data instance."), SerializeField]

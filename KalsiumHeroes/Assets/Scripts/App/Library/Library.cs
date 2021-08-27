@@ -11,9 +11,20 @@ using Muc.Data;
 public class Library : MonoBehaviour {
 
 	[SerializeField] List<DataObjectData> sources;
-	public SerializedDictionary<string, DataObjectData> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
+	public IReadOnlyDictionary<string, DataObjectData> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
 	private SerializedDictionary<string, DataObjectData> _dict;
 
+	protected void Awake() {
+		foreach (var d in dict.Values) d.isSource = true;
+	}
+
+#if UNITY_EDITOR
+	[UnityEditor.Callbacks.DidReloadScripts]
+	private static void OnScriptsReloaded() {
+		foreach (var d in Object.FindObjectsOfType<DataObjectData>()) d.isSource = false;
+		foreach (var d in App.library.dict.Values) d.isSource = true;
+	}
+#endif
 
 	private SerializedDictionary<string, DataObjectData> BuildDict() {
 		var res = new SerializedDictionary<string, DataObjectData>();
@@ -26,6 +37,7 @@ public class Library : MonoBehaviour {
 		return res;
 	}
 
+	public bool TryGetById(string id, out DataObjectData result) => TryGetById<DataObjectData>(id, out result);
 	public bool TryGetById<T>(string id, out T result) where T : DataObjectData {
 		if (dict.TryGetValue(id, out var res) && res is T _result) {
 			result = _result;
@@ -35,10 +47,16 @@ public class Library : MonoBehaviour {
 		return false;
 	}
 
+	public DataObjectData GetById(string id) => GetById<DataObjectData>(id);
 	public T GetById<T>(string id) where T : DataObjectData {
 		return (T)dict[id];
 	}
 
+	public IEnumerable<DataObjectData> GetByType(Type type) {
+		foreach (var v in dict.Values) {
+			if (type.IsAssignableFrom(v.GetType())) yield return v;
+		}
+	}
 	public IEnumerable<T> GetByType<T>() where T : DataObjectData {
 		foreach (var v in dict.Values) {
 			if (v is T r) yield return r;
