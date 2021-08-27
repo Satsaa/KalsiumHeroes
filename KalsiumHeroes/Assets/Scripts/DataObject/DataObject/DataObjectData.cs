@@ -20,7 +20,14 @@ public abstract class DataObjectData : ScriptableObject, IIdentifiable {
 	public string identifier;
 	string IIdentifiable.identifier => identifier;
 
-	public bool isSource { get; internal set; }
+	bool _isSource;
+	public bool isSource {
+		get {
+			App.library.UpdateSources();
+			return _isSource;
+		}
+		internal set => _isSource = value;
+	}
 
 	private static Regex removeData = new(@"Data$");
 	private string _tooltip;

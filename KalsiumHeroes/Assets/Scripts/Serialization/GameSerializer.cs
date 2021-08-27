@@ -546,7 +546,7 @@ namespace Serialization {
 					d.hasTypeAttribute = true;
 					return fieldDataCache[field] = d;
 				}
-				Debug.LogWarning($"Attempting to serialize UnityObject without {nameof(RefTokenAttribute)}");
+				Debug.LogWarning($"Attempting to serialize UnityObject without {nameof(RefTokenAttribute)}. {d.field.DeclaringType.Name}.{d.field.Name}");
 				return fieldDataCache[field] = null;
 			}
 

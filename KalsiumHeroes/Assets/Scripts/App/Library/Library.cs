@@ -13,9 +13,20 @@ public class Library : MonoBehaviour {
 	[SerializeField] List<DataObjectData> sources;
 	public IReadOnlyDictionary<string, DataObjectData> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
 	private SerializedDictionary<string, DataObjectData> _dict;
+	bool sourcesAreSet;
 
 	protected void Awake() {
+		ForceUpdateSources();
+	}
+
+	public void UpdateSources() {
+		if (sourcesAreSet) return;
 		foreach (var d in dict.Values) d.isSource = true;
+		sourcesAreSet = true;
+	}
+	public void ForceUpdateSources() {
+		foreach (var d in dict.Values) d.isSource = true;
+		sourcesAreSet = true;
 	}
 
 #if UNITY_EDITOR
