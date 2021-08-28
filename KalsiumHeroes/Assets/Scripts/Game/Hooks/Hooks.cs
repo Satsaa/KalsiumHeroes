@@ -147,15 +147,15 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 	}
 
 
-	[SerializeField] SerializedDictionary<string, List<SrContainer>> sr_dict;
+	[SerializeField] SerializedDictionary<string, SrContainer[]> sr_dict;
 
 	void ISerializationCallbackReceiver.OnBeforeSerialize() {
 		sr_dict = new(dict.Select(kv => {
-			var orders = kv.Value.GetType().GetField(nameof(HooksList<int>.orders)).GetValue(kv.Value) as List<int>;
+			var orders = (kv.Value.GetType().GetField(nameof(HooksList<int>.orders)).GetValue(kv.Value) as List<int>);
 			var i = 0;
-			return new KeyValuePair<string, List<SrContainer>>(
+			return new KeyValuePair<string, SrContainer[]>(
 				kv.Key.GetShortQualifiedName(),
-				kv.Value.Cast<Object>().Select(v => new SrContainer(v as Object, orders[i++])).ToList()
+				kv.Value.Cast<Object>().Select(v => new SrContainer(v as Object, orders[i++])).ToArray()
 			);
 		}));
 	}

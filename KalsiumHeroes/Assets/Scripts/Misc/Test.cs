@@ -40,9 +40,8 @@ public class Test : MonoBehaviour {
 	}
 
 	public void DoTest3() {
-		Debug.Log(Game.instance.ar1.value);
-		Debug.Log(Game.instance.ar2.value);
-		Debug.Log(Game.instance.arC.value);
+		DoTest2();
+		DoTest1();
 	}
 
 }

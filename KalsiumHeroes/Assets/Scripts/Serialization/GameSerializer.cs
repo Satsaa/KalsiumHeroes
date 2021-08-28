@@ -238,8 +238,6 @@ namespace Serialization {
 												else {
 													QueueOnAfterDeserialize(list[i] = detokenizer(jtype, jval, list[i]), d);
 												}
-											} else {
-												list[i] = null;
 											}
 										}
 									} else {
@@ -315,18 +313,11 @@ namespace Serialization {
 		}
 
 		static void ResizeList(ref IList list, Type type, int newSize) {
-			if (list.Count < newSize) {
-				if (list.Count == 0) {
-					var value = typeof(Object).IsAssignableFrom(type) ? null : InstantiateType(type, true);
-					list.Add(value);
-				}
-				while (list.Count < newSize) {
-					list.Add(list[0]);
-				}
-			} else if (list.Count > newSize) {
-				do {
-					list.RemoveAt(list.Count - 1);
-				} while (list.Count > newSize);
+			while (list.Count < newSize) {
+				list.Add(type.IsValueType ? Activator.CreateInstance(type) : null);
+			}
+			while (list.Count > newSize) {
+				list.RemoveAt(list.Count - 1);
 			}
 		}
 
@@ -404,8 +395,6 @@ namespace Serialization {
 										}
 									}
 								} else {
-									if (d.isUnityObject) continue;
-
 									if (d.serializeReference) {
 										foreach (var v in (IList)value) {
 											if (v is null) {

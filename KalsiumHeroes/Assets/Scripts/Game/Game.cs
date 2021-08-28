@@ -21,6 +21,15 @@ public class Game : Singleton<Game> {
 	public UnitData unitTest2;
 	public List<UnitData> unitTestL;
 
+	public List<int> intTest;
+
+	public List<Name> objIntTest;
+
+	[Serializable]
+	public class Name {
+		[SerializeField] int order;
+	}
+
 	public AssetReferenceT<GameObject> arbase;
 	public AssetReference<UnitData> ar1;
 	public AssetReference<GameObject> ar2;
