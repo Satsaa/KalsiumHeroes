@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36117d68ded5ec544abcfcbbea1c30f4, type: 3}
-  m_Name: TileHighlighterModifierData
+  m_Name: TileHighlighterModifier
   m_EditorClassIdentifier: 
   createType:
     _name: TileHighlighterModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,

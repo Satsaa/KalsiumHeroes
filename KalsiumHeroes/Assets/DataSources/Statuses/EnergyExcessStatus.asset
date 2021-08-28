@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 018fcea1c74aa7d448e94b68f9e7cb64, type: 3}
-  m_Name: EnergyExcessStatusData
+  m_Name: EnergyExcessStatus
   m_EditorClassIdentifier: 
   createType:
     _name: EnergyExcessStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
