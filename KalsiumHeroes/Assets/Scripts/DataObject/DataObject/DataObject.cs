@@ -24,7 +24,7 @@ public abstract class DataObject : ScriptableObject {
 	[field: SerializeField]
 	public bool removed { get; protected set; }
 
-	[field: SerializeField]
+	[field: SerializeField, DoNotTokenize]
 	public bool shown { get; set; }
 
 	protected virtual void OnCreate() { }

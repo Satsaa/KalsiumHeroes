@@ -44,7 +44,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 				prev = tile;
 			}
 		}
-		if (creator.unit.actor) {
+		if (creator.unit.shown) {
 			var actor = creator.unit.actor;
 			var walkPositions = pathObjects.Select(v => v is Tile t ? t.center : default).ToList();
 			for (int i = 0; i < walkPositions.Count; i++) {
@@ -61,7 +61,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 	public override void Update() {
 		var unit = creator.unit;
 		var actor = unit.actor;
-		if (index + 1 <= actor.moveT) {
+		if (!actor || index + 1 <= actor.moveT) {
 			index++;
 			if (index >= pathObjects.Count - 1) {
 				TryEnd();
@@ -91,8 +91,10 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 		animating = false;
 		while (index < pathObjects.Count - 1) {
 			Update();
-			var actor = creator.unit.actor;
-			actor.EndAnimations();
+			if (creator.unit.shown) {
+				var actor = creator.unit.actor;
+				actor.EndAnimations();
+			}
 		}
 		ExecuteOn(creator.unit, pathObjects.Last() as Tile);
 		creator.unit.SetTile(pathObjects.Last() as Tile, false);

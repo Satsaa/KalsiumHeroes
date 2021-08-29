@@ -23,20 +23,18 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	public bool isCurrent => Game.rounds.unit == this;
 
 
-	public static Unit Create(UnitData source, Vector3 position, Team team, UnitActor actor = null) {
+	public static Unit Create(UnitData source, Vector3 position, Team team) {
 		return Create<Unit>(source, v => {
 			v.team = team;
 			var nearTile = Game.grid.NearestTile(position.xz());
-			v.actor = actor ? actor : Instantiate(source.actor.value);
 			v.SetTile(nearTile, true);
 			v.SetDir(0, true);
 		});
 	}
 
-	public static Unit Create(UnitData source, Tile tile, TileDir tileDir, Team team, UnitActor actor = null) {
+	public static Unit Create(UnitData source, Tile tile, TileDir tileDir, Team team) {
 		return Create<Unit>(source, v => {
 			v.team = team;
-			v.actor = actor ? actor : Instantiate(source.actor.value);
 			v.tileDir = tileDir; // Prevent hook being called on spawn
 			v.SetTile(tile, true);
 			v.SetDir(tileDir, true);
@@ -55,12 +53,17 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	protected override void OnShow() {
 		base.OnShow();
+		actor = Instantiate(source.actor.value);
+		actor.transform.position = tile.center;
+		actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 		gameObject.transform.SetParent(actor.transform, false);
 		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
 	}
 
 	protected override void OnHide() {
 		base.OnHide();
+		Destroy(actor.gameObject);
+		actor = null;
 	}
 
 	public void Heal(float heal) {
@@ -176,7 +179,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	public void SetTile(Tile tile, bool reposition) {
 		if (tile == null) throw new ArgumentNullException(nameof(tile));
 		if (tile == this.tile) {
-			if (reposition) actor.transform.position = this.tile.center;
+			if (reposition && actor) actor.transform.position = this.tile.center;
 			return;
 		}
 		if (removed) {
@@ -187,7 +190,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		if (orig != null) orig.units.Remove(this);
 		tile.units.Add(this);
 		this.tile = tile;
-		if (reposition) actor.transform.position = this.tile.center;
+		if (reposition && shown) actor.transform.position = this.tile.center;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
 			tile.hooks.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
@@ -197,7 +200,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	public void SetDir(TileDir tileDir, bool reorientate) {
 		if (tileDir == this.tileDir) {
-			if (reorientate) actor.transform.rotation = actor.transform.rotation * Quaternion.AngleAxis(tileDir.ToAngle(), Vector3.up);
+			if (reorientate && shown) actor.transform.rotation = actor.transform.rotation * Quaternion.AngleAxis(tileDir.ToAngle(), Vector3.up);
 			return;
 		}
 		if (removed) {
@@ -206,7 +209,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		}
 		var orig = this.tileDir;
 		this.tileDir = tileDir;
-		if (reorientate) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
+		if (reorientate && shown) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnChangeDirection_Unit>(scope, v => v.OnChangeDirection(orig, tileDir));
 			tile.hooks.ForEach<IOnChangeDirection_Tile>(scope, v => v.OnChangeDirection(this, orig, tileDir));
@@ -232,7 +235,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	}
 
 	void IOnDeath_Unit.OnDeath() {
-		actor.Die();
+		if (shown) actor.Die();
 	}
 
 	void IOnSpawn_Unit.OnSpawn() {

@@ -95,10 +95,8 @@ public abstract class Master : DataObject {
 
 	protected override void OnShow() {
 		base.OnShow();
-		if (shown) {
-			var gameObject = data.container.value ? ObjectUtil.Instantiate(data.container.value, Game.game.transform) : new GameObject();
-			this.gameObject = gameObject;
-		}
+		var gameObject = data.container.value ? ObjectUtil.Instantiate(data.container.value, Game.game.transform) : new GameObject();
+		this.gameObject = gameObject;
 	}
 
 	protected override void OnHide() {
