@@ -18,7 +18,7 @@ namespace Muc.Editor {
 
 		void OnDisable() => Save();
 		public void Save() => Save(true);
-		internal SerializedObject GetSerializedObject() => new SerializedObject(this);
+		internal SerializedObject GetSerializedObject() => new(this);
 
 	}
 }

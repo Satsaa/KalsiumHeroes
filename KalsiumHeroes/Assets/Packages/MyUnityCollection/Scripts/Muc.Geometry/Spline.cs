@@ -22,7 +22,7 @@ namespace Muc.Geometry {
 		public IEnumerable<Vector3> RenderSpline(int tesselation) {
 
 			var first = 2 * controls[0] - controls[1];
-			var last = 2 * controls.Last() - controls[controls.Count - 2];
+			var last = 2 * controls.Last() - controls[^2];
 
 			for (float t = 0; t <= controls.Count - 1; t += 1f / tesselation) {
 				var p = Eval(t);
@@ -36,7 +36,7 @@ namespace Muc.Geometry {
 			if (t >= controls.Count - 1) return controls.Last();
 
 			var first = 2 * controls[0] - controls[1];
-			var last = 2 * controls.Last() - controls[controls.Count - 2];
+			var last = 2 * controls.Last() - controls[^2];
 
 			var i = Mathf.FloorToInt(t);
 

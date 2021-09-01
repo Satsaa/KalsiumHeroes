@@ -87,7 +87,7 @@ namespace Editors {
 		private DataObjectData t => (DataObjectData)target;
 
 		static String[] excludes = { "m_Script" };
-		static List<bool> expands = new List<bool>() { true };
+		static List<bool> expands = new() { true };
 		ReorderableList list;
 		Type listType;
 
@@ -191,7 +191,7 @@ namespace Editors {
 		private static List<Type> createTypes;
 
 		private static IEnumerable<Type> GetCompatibleTypes(Type dataType, Type createType) {
-			DataObjectDataDrawer.createTypes ??= AppDomain.CurrentDomain.GetAssemblies()
+			createTypes ??= AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(v => v.GetTypes())
 				.Where(v =>
 					(v.IsClass && !v.IsAbstract) &&
@@ -200,9 +200,6 @@ namespace Editors {
 			return createTypes.Where(v => v == createType || createType.IsAssignableFrom(v));
 		}
 
-
-		protected internal static void DrawPropsExcluding(SerializedObject obj, params string[] propertyToExclude) {
-		}
 	}
 }
 #endif

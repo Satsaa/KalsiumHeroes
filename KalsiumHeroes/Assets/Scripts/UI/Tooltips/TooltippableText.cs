@@ -32,7 +32,7 @@ public class TooltippableText : TooltipProvider {
 			var linkInfo = text.textInfo.linkInfo[linkIndex];
 			var src = linkInfo.GetLinkID();
 			if (src.StartsWith("tt_")) {
-				var id = src.Substring(3);
+				var id = src[3..];
 				var rect = Rect.MinMaxRect(float.PositiveInfinity, float.PositiveInfinity, float.NegativeInfinity, float.NegativeInfinity);
 				for (int i = linkInfo.linkTextfirstCharacterIndex; i <= linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength; i++) {
 					var charInfo = text.textInfo.characterInfo[i];

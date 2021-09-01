@@ -48,7 +48,7 @@ public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 	float CalculateDamage(float damage, DamageType damageType) {
 		if (damageType == DamageType.Physical) {
 			var oldValue = damage;
-			damage *= (1 - unit.data.defense.current / 100f);
+			damage *= 1 - unit.data.defense.current / 100f;
 		}
 		if (damageType == DamageType.Magical) {
 			damage *= 1 - unit.data.resistance.current / 100;

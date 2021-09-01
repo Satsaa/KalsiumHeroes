@@ -34,7 +34,7 @@ public class Lang : Singleton<Lang> {
 		}
 	}
 
-	static Regex ends = new Regex(@"^\/|\/$");
+	static Regex ends = new(@"^\/|\/$");
 	public static bool LoadLanguage(string language, out string failMessage) {
 		try {
 			var ta = Resources.Load<TextAsset>($"{Lang.instance.translationsPath}/{language}");

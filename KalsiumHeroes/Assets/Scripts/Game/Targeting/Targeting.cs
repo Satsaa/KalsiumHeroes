@@ -18,9 +18,9 @@ public class Targeting : ScriptableObject, IOnUpdate {
 	Targeter targeter;
 	bool hoverIsValid;
 
-	HashSet<Tile> targets = new HashSet<Tile>();
-	HashSet<Tile> hovers = new HashSet<Tile>();
-	Dictionary<Tile, (Color color, int priority)> customs = new Dictionary<Tile, (Color, int)>();
+	HashSet<Tile> targets = new();
+	HashSet<Tile> hovers = new();
+	Dictionary<Tile, (Color color, int priority)> customs = new();
 
 	public bool TryStartTargeter(Targeter targeter) {
 		if (this.targeter != null) return false;

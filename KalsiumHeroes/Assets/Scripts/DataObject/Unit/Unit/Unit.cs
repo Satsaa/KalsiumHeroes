@@ -16,7 +16,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	[field: SerializeField] public Tile tile { get; private set; }
 	[field: SerializeField] public TileDir tileDir { get; private set; }
 	[field: SerializeField] public int spawnRound { get; private set; }
-	public UnitActor actor;
+	new public UnitActor actor => (UnitActor)_actor;
 	public Canvas canvas;
 	public Team team;
 
@@ -53,17 +53,14 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	protected override void OnShow() {
 		base.OnShow();
-		actor = Instantiate(source.actor.value);
 		actor.transform.position = tile.center;
 		actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
-		gameObject.transform.SetParent(actor.transform, false);
+		transform.SetParent(actor.transform, false);
 		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
 	}
 
 	protected override void OnHide() {
 		base.OnHide();
-		Destroy(actor.gameObject);
-		actor = null;
 	}
 
 	public void Heal(float heal) {

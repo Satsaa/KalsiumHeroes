@@ -89,7 +89,7 @@ public class ComponentReference<T> where T : Component {
 	/// <summary>
 	/// Load the referenced asset asynchronously.
 	/// </summary>
-	public async virtual Task<T> LoadAsync() {
+	public virtual async Task<T> LoadAsync() {
 		if (!this) {
 			isCached = true;
 			return cached = default;
@@ -157,8 +157,9 @@ namespace Editors {
 						Debug.Log("Changed");
 					}
 				}
-				var style = new GUIStyle();
-				style.alignment = TextAnchor.MiddleLeft;
+				var style = new GUIStyle {
+					alignment = TextAnchor.MiddleLeft
+				};
 
 				var labelRect = LabelRect(position);
 				actualLabel.text = ObjectNames.NicifyVariableName(actualLabel.text);

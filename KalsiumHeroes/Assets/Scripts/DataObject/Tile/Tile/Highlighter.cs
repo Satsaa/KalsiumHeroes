@@ -9,10 +9,10 @@ using UnityEngine.Serialization;
 [Serializable]
 public class Highlighter {
 
-	public static readonly Color targetColor = new Color(0.25f, 0.75f, 0.25f);
-	public static readonly Color selectionColor = new Color(0.1f, 0.7f, 1f);
-	public static readonly Color hoverColor = new Color(0.25f, 0.25f, 1f);
-	public static readonly Color invalidColor = new Color(0.80f, 0.25f, 0.25f);
+	public static readonly Color targetColor = new(0.25f, 0.75f, 0.25f);
+	public static readonly Color selectionColor = new(0.1f, 0.7f, 1f);
+	public static readonly Color hoverColor = new(0.25f, 0.25f, 1f);
+	public static readonly Color invalidColor = new(0.80f, 0.25f, 0.25f);
 
 	public const int currentUnitPriority = 100;
 

@@ -36,9 +36,9 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		var dir = (int)direction;
 		var tile1 = this.tile1;
 		var tile2 = this.tile2;
-		gameObject.transform.position = (tile1.corners[dir] + tile1.corners[new CircularInt(dir + 1, 6)]) / 2;
-		gameObject.transform.parent = Game.game.transform;
-		gameObject.name = $"Edge ({tile1.hex.x}, {tile1.hex.y})" + (tile2 == null ? $" {(direction).ToString("g")}" : $" - ({tile2.hex.x}, {tile2.hex.y})");
+		actor.transform.position = (tile1.corners[dir] + tile1.corners[new CircularInt(dir + 1, 6)]) / 2;
+		actor.transform.parent = Game.game.transform;
+		actor.name = $"Edge ({tile1.hex.x}, {tile1.hex.y})" + (tile2 == null ? $" {direction:g}" : $" - ({tile2.hex.x}, {tile2.hex.y})");
 	}
 
 	/// <summary> Removes EdgeModifiers with matching context Tile </summary>

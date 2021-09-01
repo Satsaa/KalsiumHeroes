@@ -21,25 +21,18 @@ public class AbilityTargeter : Targeter {
 	}
 
 	public override HashSet<Tile> GetTargets() {
-		switch (ability) {
-			case TileTargetAbility ability:
-				return new HashSet<Tile>(ability.GetTargets());
-			case UnitTargetAbility ability:
-				return new HashSet<Tile>(ability.GetTargets().Select(v => v.tile));
-			default:
-				throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}");
-		}
+		return ability switch {
+			TileTargetAbility ability => new HashSet<Tile>(ability.GetTargets()),
+			UnitTargetAbility ability => new HashSet<Tile>(ability.GetTargets().Select(v => v.tile)),
+			_ => throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}"),
+		};
 	}
 
 	public override HashSet<Tile> GetHover(Tile tile) {
-		switch (ability) {
-			case TileTargetAbility ability:
-				return new HashSet<Tile>(ability.GetAffectedArea(tile));
-			case UnitTargetAbility ability:
-				if (tile.hasUnits) return new HashSet<Tile>(ability.GetAffectedArea(tile.units.First()));
-				else return new HashSet<Tile>();
-			default:
-				throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}");
-		}
+		return ability switch {
+			TileTargetAbility ability => new HashSet<Tile>(ability.GetAffectedArea(tile)),
+			UnitTargetAbility ability => tile.hasUnits ? new HashSet<Tile>(ability.GetAffectedArea(tile.units.First())) : new HashSet<Tile>(),
+			_ => throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}"),
+		};
 	}
 }

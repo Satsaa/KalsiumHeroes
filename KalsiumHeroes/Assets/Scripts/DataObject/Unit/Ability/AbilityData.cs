@@ -32,7 +32,7 @@ public abstract class AbilityData : UnitModifierData {
 	public class AbilityType : Attribute<global::AbilityType> {
 		public override string identifier => "Attribute_Ability_AbilityType";
 		public override string TooltipText(IAttribute source) => current == global::AbilityType.Base ? null : $"<style=prefix>{Format(source == this)}</style>";
-		public override string Format(bool isSource) => Lang.GetStr($"{identifier}_{current.value.ToString()}");
+		public override string Format(bool isSource) => Lang.GetStr($"{identifier}_{current.value}");
 	}
 
 	[Serializable]

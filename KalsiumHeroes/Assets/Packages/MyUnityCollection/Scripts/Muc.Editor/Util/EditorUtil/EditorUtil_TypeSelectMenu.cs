@@ -47,8 +47,8 @@ namespace Muc.Editor {
 
 			public string ns;
 			public TypeMenuNode source;
-			public List<Type> types = new List<Type>();
-			public List<TypeMenuNode> branches = new List<TypeMenuNode>();
+			public List<Type> types = new();
+			public List<TypeMenuNode> branches = new();
 
 			bool sorted = false;
 
@@ -183,7 +183,7 @@ namespace Muc.Editor {
 					}
 					foreach (var type in node.types) {
 						if (count++ >= maxSingleMenuCount) return menu;
-						var content = new GUIContent($"{type.ToString()} ({type.Assembly.GetName().Name})");
+						var content = new GUIContent($"{type} ({type.Assembly.GetName().Name})");
 						menu.AddItem(content, selected != null && selected.Any(t => t == type), () => onSelect(type));
 					}
 					return menu;
@@ -196,7 +196,7 @@ namespace Muc.Editor {
 					menu.AddItem(new GUIContent("None"), selected.Contains(null), () => onSelect(null));
 				}
 				foreach (var type in types) {
-					UnityEngine.GUIContent content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
+					var content = new GUIContent($"{type.ToString().Replace('.', '/')} ({type.Assembly.GetName().Name})");
 					menu.AddItem(content, selected != null && selected.Any(t => t == type), () => onSelect(type));
 				}
 				return menu;

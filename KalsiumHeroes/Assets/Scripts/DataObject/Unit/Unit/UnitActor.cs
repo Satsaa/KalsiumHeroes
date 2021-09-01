@@ -8,8 +8,8 @@ using Muc.Extensions;
 using System.Linq;
 using static Muc.Editor.GizmosUtil;
 
-[RequireComponent(typeof(Animator))]
-public partial class UnitActor : MonoBehaviour {
+
+public partial class UnitActor : Actor<Unit> {
 
 	public enum AnimationType {
 		None,
@@ -20,18 +20,12 @@ public partial class UnitActor : MonoBehaviour {
 	}
 
 	[HideInInspector] public AnimationType animationType;
-	[HideInInspector] public Animator animator;
 	public bool animating => animationType != 0;
 
 	void OnDrawGizmos() {
 		if (!Application.isPlaying) return;
-		using (ColorScope(Color.blue)) Gizmos.DrawRay(new Ray(GetPos(), transform.forward));
+		using (ColorScope(Color.blue)) Gizmos.DrawRay(new(GetPos(), transform.forward));
 		OnDrawGizmosMove();
-	}
-
-	protected void Awake() {
-		if (!transform.parent) transform.parent = Game.game.transform;
-		animator = GetComponent<Animator>();
 	}
 
 	protected void Update() {
@@ -49,7 +43,7 @@ public partial class UnitActor : MonoBehaviour {
 	}
 
 
-	public void EndAnimations() {
+	public override void EndAnimations() {
 		switch (animationType) {
 			case AnimationType.None:
 			case AnimationType.Die:
@@ -66,9 +60,9 @@ public partial class UnitActor : MonoBehaviour {
 		animationType = AnimationType.None;
 	}
 
-	public Vector2 Get2DPos() => transform.localPosition.xz();
-	public Vector3 GetPos() => transform.localPosition;
-	public void Set2DPos(Vector2 localPosition) => transform.localPosition = localPosition.x0y().SetY(transform.localPosition.y);
-	public void SetPos(Vector3 localPosition) => transform.localPosition = localPosition;
+	Vector2 Get2DPos() => transform.localPosition.xz();
+	Vector3 GetPos() => transform.localPosition;
+	void Set2DPos(Vector2 localPosition) => transform.localPosition = localPosition.x0y().SetY(transform.localPosition.y);
+	void SetPos(Vector3 localPosition) => transform.localPosition = localPosition;
 
 }

@@ -10,7 +10,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 
 	[SerializeField, HideInInspector] bool animating;
 	[SerializeField, HideInInspector] int index;
-	[SerializeField, HideInInspector] List<Master> pathObjects = new List<Master>();
+	[SerializeField, HideInInspector] List<Master> pathObjects = new();
 
 	public MoveAbilityHandler(GameEvents.Ability msg, MoveAbility creator) : base(msg) {
 		this.creator = creator;

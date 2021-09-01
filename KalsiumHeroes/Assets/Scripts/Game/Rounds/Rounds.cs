@@ -9,7 +9,7 @@ using Serialization;
 [KeepRefToken]
 public class Rounds : ScriptableObject {
 
-	public List<Unit> units = new List<Unit>();
+	public List<Unit> units = new();
 	[SerializeField] private int index;
 
 	private Unit unitOrNull => index >= units.Count ? null : units[index];

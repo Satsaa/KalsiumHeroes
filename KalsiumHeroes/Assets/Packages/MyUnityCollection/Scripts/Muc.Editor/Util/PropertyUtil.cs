@@ -97,7 +97,7 @@ namespace Muc.Editor {
 			public PropertyPathComponent(int elementIndex) : this() => this.elementIndex = elementIndex;
 		}
 
-		static readonly Regex arrayElementRegex = new Regex(@"\GArray\.data\[(\d+)\]", RegexOptions.Compiled);
+		static readonly Regex arrayElementRegex = new(@"\GArray\.data\[(\d+)\]", RegexOptions.Compiled);
 
 		// Parse the next path component from a SerializedProperty.propertyPath.  For simple field/property access,
 		// this is just tokenizing on '.' and returning each field/property name.  Array/list access is via
@@ -125,16 +125,16 @@ namespace Muc.Editor {
 			var arrayElementMatch = arrayElementRegex.Match(propertyPath, cursor);
 			if (arrayElementMatch.Success) {
 				cursor += arrayElementMatch.Length + 1; // Skip past next '.'
-				component = new PropertyPathComponent(int.Parse(arrayElementMatch.Groups[1].Value));
+				component = new(int.Parse(arrayElementMatch.Groups[1].Value));
 				return true;
 			}
 
 			int dot = propertyPath.IndexOf('.', cursor);
 			if (dot == -1) {
-				component = new PropertyPathComponent(propertyPath.Substring(cursor));
+				component = new(propertyPath[cursor..]);
 				cursor = propertyPath.Length;
 			} else {
-				component = new PropertyPathComponent(propertyPath.Substring(cursor, dot - cursor));
+				component = new(propertyPath[cursor..dot]);
 				cursor = dot + 1; // Skip past next '.'
 			}
 

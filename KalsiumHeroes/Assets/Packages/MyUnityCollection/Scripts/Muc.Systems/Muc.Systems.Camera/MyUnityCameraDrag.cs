@@ -26,7 +26,7 @@ namespace Muc.Systems.Camera {
 		Vector3 mousePosition;
 		Vector3 rayOrigin;
 		Vector3 prev;
-		Plane plane => new Plane(planeNormal, planePoint);
+		Plane plane => new(planeNormal, planePoint);
 
 		void Awake() {
 			mucam = gameObject.GetComponent<MyUnityCamera>();

@@ -15,7 +15,7 @@ namespace Muc.Geometry {
 		public float magnitude => length;
 		public float length => dif.magnitude;
 		public float lengthsq => dif.sqrMagnitude;
-		public Line reversed => new Line(end, start);
+		public Line reversed => new(end, start);
 
 		public Line(Vector3 start, Vector3 end) {
 			this.start = start;
@@ -44,16 +44,12 @@ namespace Muc.Geometry {
 			Side side = PointSide(projectedPoint);
 
 			// The projected point is on the line segment
-			switch (side) {
-				case Side.Inside:
-					return projectedPoint;
-				case Side.Start:
-					return start;
-				case Side.End:
-					return end;
-				default:
-					throw new Exception("No valid point was found on the line. This should never happen on valid Lines");
-			}
+			return side switch {
+				Side.Inside => projectedPoint,
+				Side.Start => start,
+				Side.End => end,
+				_ => throw new Exception("No valid point was found on the line. This should never happen on valid Lines"),
+			};
 		}
 
 		public enum Side { Inside, Start, End, }

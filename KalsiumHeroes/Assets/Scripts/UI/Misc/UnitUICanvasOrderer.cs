@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UnitUICanvasOrderer : MonoBehaviour {
 
-	static List<UnitUICanvasOrderer> orderers = new List<UnitUICanvasOrderer>();
+	static List<UnitUICanvasOrderer> orderers = new();
 
 	[SerializeField] Canvas canvas;
 	private float distance;

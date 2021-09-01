@@ -12,7 +12,7 @@ public class AppProjectSettings : ScriptableSingleton<AppProjectSettings> {
 
 	void OnDisable() => Save();
 	public void Save() => Save(true);
-	public SerializedObject GetSerializedObject() => new SerializedObject(this);
+	public SerializedObject GetSerializedObject() => new(this);
 
 }
 

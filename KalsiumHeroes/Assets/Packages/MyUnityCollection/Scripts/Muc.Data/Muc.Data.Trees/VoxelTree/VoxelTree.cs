@@ -73,7 +73,7 @@ namespace Muc.Data.Trees {
 		}
 
 		private IndexOutOfRangeException OobError(string x = "x", string y = "y", string z = "z")
-			=> new IndexOutOfRangeException($"One or more of the index arguments {x}, {y} or {z} was outside the bounds of the {nameof(VoxelTree<T>)}");
+			=> new($"One or more of the index arguments {x}, {y} or {z} was outside the bounds of the {nameof(VoxelTree<T>)}");
 
 	}
 }

@@ -76,22 +76,16 @@ public class Attribute<T> : Attribute, IAttribute, IIdentifiable, ISerialization
 	}
 
 	public virtual string Format(bool isSource) {
-		switch (count) {
-			case 0:
-				return Lang.GetStr(((IAttribute)this).GetEnabled()?.value ?? true ? "True" : "False");
-			case 1:
-				return this[0] is bool boolVal
-					? Lang.GetStr(boolVal ? "True" : "False", boolVal.ToString())
-					: this[0].ToString();
-			case 2:
-				return String.Format(Lang.GetStr("Format_Fraction", "{0}/{1}"), this[0], this[1]);
-			case 3:
-				return String.Format(Lang.GetStr("Format_TripleFraction", "{0}/{1}/{2}"), this[0], this[1], this[2]);
-			case 4:
-				return String.Format(Lang.GetStr("Format_QuadrupleFraction", "{0}/{1}/{2}/{3}"), this[0], this[1], this[2], this[3]);
-			default:
-				return String.Join(Lang.GetStr("MultiValueDeliminator", "/"), values);
-		}
+		return count switch {
+			0 => Lang.GetStr(((IAttribute)this).GetEnabled()?.value ?? true ? "True" : "False"),
+			1 => this[0] is bool boolVal
+				? Lang.GetStr(boolVal ? "True" : "False", boolVal.ToString())
+				: this[0].ToString(),
+			2 => string.Format(Lang.GetStr("Format_Fraction", "{0}/{1}"), this[0], this[1]),
+			3 => string.Format(Lang.GetStr("Format_TripleFraction", "{0}/{1}/{2}"), this[0], this[1], this[2]),
+			4 => string.Format(Lang.GetStr("Format_QuadrupleFraction", "{0}/{1}/{2}/{3}"), this[0], this[1], this[2], this[3]),
+			_ => string.Join(Lang.GetStr("MultiValueDeliminator", "/"), values),
+		};
 	}
 
 	public virtual string TooltipText(IAttribute source) {

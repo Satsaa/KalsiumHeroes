@@ -77,8 +77,8 @@ namespace Muc.Editor {
 
 				var nameStyle = GUI.skin.FindStyle("MiniToolbarButton");
 
-				GUIContent normalText = new GUIContent("normal");
-				GUIContent activeText = new GUIContent("active");
+				var normalText = new GUIContent("normal");
+				var activeText = new GUIContent("active");
 
 				float x = PADDING_X;
 				float y = PADDING_Y;

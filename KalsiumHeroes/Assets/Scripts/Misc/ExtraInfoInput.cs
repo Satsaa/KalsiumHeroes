@@ -14,8 +14,8 @@ using UnityEngine.InputSystem.Controls;
 public class ExtraInfoInput : ButtonInput {
 
 	[SerializeField] float animDuration = 1;
-	[SerializeField] AnimationCurve alphaMultCurve = new AnimationCurve(new Keyframe(0, 0, 2, 2), new Keyframe(1, 1));
-	[SerializeField] AnimationCurve scaleCurve = new AnimationCurve(new Keyframe(0, 0, 2, 2), new Keyframe(1, 1));
+	[SerializeField] AnimationCurve alphaMultCurve = new(new Keyframe(0, 0, 2, 2), new Keyframe(1, 1));
+	[SerializeField] AnimationCurve scaleCurve = new(new Keyframe(0, 0, 2, 2), new Keyframe(1, 1));
 
 	[SerializeField, HideInInspector] Graphic graphic;
 	[SerializeField, HideInInspector] float baseAlpha;

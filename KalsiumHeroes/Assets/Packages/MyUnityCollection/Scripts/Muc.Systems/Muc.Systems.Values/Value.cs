@@ -34,7 +34,7 @@ namespace Muc.Systems.Values {
 		protected virtual T value { get => _value; set => _value = value; }
 		[SerializeField] protected T _value;
 
-		protected virtual List<object> defaultModifiers => new List<object>();
+		protected virtual List<object> defaultModifiers => new();
 		[SerializeReference]
 		protected List<object> modifiers;
 
@@ -196,11 +196,11 @@ namespace Muc.Systems.Values {
 
 		#region OnCompleteActions
 
-		private readonly OnCompleteActions ocAct = new OnCompleteActions();
+		private readonly OnCompleteActions ocAct = new();
 		private class OnCompleteActions {
 			internal bool required;
 			internal bool ignore;
-			internal List<Action> onComplete = new List<Action>();
+			internal List<Action> onComplete = new();
 		}
 
 		protected bool HadOnCompleteActions() => ocAct.required != (ocAct.required = false);
@@ -226,7 +226,7 @@ namespace Muc.Systems.Values {
 
 		#region PostHandlerActions
 
-		private readonly PostHandlerActions phAct = new PostHandlerActions();
+		private readonly PostHandlerActions phAct = new();
 		private class PostHandlerActions {
 			internal bool required;
 			internal bool skip;
@@ -281,7 +281,7 @@ namespace Muc.Systems.Values.Editor {
 		bool isArithmetic;
 
 		List<object> modifiersValue => (List<object>)target.GetType().GetField(nameof(modifiers), BindingFlags.NonPublic | BindingFlags.Instance).GetValue(target);
-		readonly Regex matcher = new Regex("(?<=<).+(?=>)", RegexOptions.Compiled);
+		readonly Regex matcher = new("(?<=<).+(?=>)", RegexOptions.Compiled);
 
 		MethodInfo addModifierMethod;
 		SerializedProperty _valueSettings;

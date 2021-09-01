@@ -17,17 +17,17 @@ namespace Muc.Systems.Values {
 		/// <para> `Key`: Generic type </para>
 		/// <para> `Value`: Modifier types for the generic type </para>
 		/// </summary>
-		readonly Dictionary<Type, List<Type>> typeDict = new Dictionary<Type, List<Type>>();
+		readonly Dictionary<Type, List<Type>> typeDict = new();
 
 		[System.Serializable]
 		public class OrderData {
 			public string generic;
-			public List<string> modifiers = new List<string>();
+			public List<string> modifiers = new();
 
 			public OrderData(string generic) => this.generic = generic;
 		}
 
-		public List<OrderData> orders = new List<OrderData>();
+		public List<OrderData> orders = new();
 
 		[field: SerializeField]
 		public string orderGuid { get; protected internal set; } = Guid.NewGuid().ToString("N");
@@ -231,7 +231,7 @@ namespace Muc.Systems.Values.Editor {
 	[CustomEditor(typeof(ValueSettings))]
 	public class ValueSettingsEditor : Editor {
 
-		private readonly Dictionary<ValueSettings.OrderData, CacheData> cache = new Dictionary<ValueSettings.OrderData, CacheData>();
+		private readonly Dictionary<ValueSettings.OrderData, CacheData> cache = new();
 
 		private bool showOrders = true;
 

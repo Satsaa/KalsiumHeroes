@@ -15,5 +15,10 @@ MonoBehaviour:
   createType:
     _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Edge_Default
-  container: {fileID: 0}
   baseModifiers: []
+  actor:
+    assetReference:
+      m_AssetGUID: 829a54307468e944b9336cb80e2137be
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

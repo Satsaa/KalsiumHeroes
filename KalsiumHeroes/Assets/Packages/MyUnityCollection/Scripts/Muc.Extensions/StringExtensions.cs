@@ -12,7 +12,7 @@ namespace Muc.Extensions {
 		/// <summary> Capitalize the first character. </summary>
 		public static string Capitalize(this string str) {
 			if (String.IsNullOrEmpty(str)) return str;
-			return str[0].ToString().ToUpper() + str.Substring(1);
+			return str[0].ToString().ToUpper() + str[1..];
 		}
 	}
 

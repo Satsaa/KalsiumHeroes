@@ -12,7 +12,7 @@ namespace HexGrid {
 		public static bool operator ==(Hex a, Hex b) => a.Equals(b);
 		public static bool operator !=(Hex a, Hex b) => !a.Equals(b);
 
-		public static implicit operator FractHex(Hex v) => new FractHex(v);
+		public static implicit operator FractHex(Hex v) => new(v);
 
 		public Hex(Vector2Int pos) : this(pos.x, pos.y, -pos.y - pos.x) { }
 		public Hex(Vector3Int pos) : this(pos.x, pos.y, pos.z) { }
@@ -27,15 +27,15 @@ namespace HexGrid {
 		[field: SerializeField] public int x { get; private set; }
 		[field: SerializeField] public int y { get; private set; }
 		[field: SerializeField] public int z { get; private set; }
-		public Vector3Int pos => new Vector3Int(x, y, z);
+		public Vector3Int pos => new(x, y, z);
 
-		public Hex up => new Hex(x, y + 1, z - 1);
-		public Hex down => new Hex(x, y - 1, z + 1);
+		public Hex up => new(x, y + 1, z - 1);
+		public Hex down => new(x, y - 1, z + 1);
 
-		public Hex upRight => new Hex(x - 1, y + 1, z);
-		public Hex downRight => new Hex(x - 1, y, z + 1);
-		public Hex upLeft => new Hex(x + 1, y, z - 1);
-		public Hex downLeft => new Hex(x + 1, y - 1, z);
+		public Hex upRight => new(x - 1, y + 1, z);
+		public Hex downRight => new(x - 1, y, z + 1);
+		public Hex upLeft => new(x + 1, y, z - 1);
+		public Hex downLeft => new(x + 1, y - 1, z);
 
 		public Hex GetNeighbor(int index) {
 			return Add(this, neighborOffsets[index]);
@@ -45,12 +45,12 @@ namespace HexGrid {
 
 		/// <summary> Neighbor offsets from downLeft to upLeft </summary>
 		public static Hex[] neighborOffsets = new Hex[] {
-			new Hex(1, 0, -1),
-			new Hex(1, -1, 0),
-			new Hex(0, -1, 1),
-			new Hex(-1, 0, 1),
-			new Hex(-1, 1, 0),
-			new Hex(0, 1, -1)
+			new(1, 0, -1),
+			new(1, -1, 0),
+			new(0, -1, 1),
+			new(-1, 0, 1),
+			new(-1, 1, 0),
+			new(0, 1, -1)
 		};
 
 
@@ -64,8 +64,8 @@ namespace HexGrid {
 
 		public static IEnumerable<(Hex, FractHex)> Line(Hex a, Hex b) {
 			int dist = Distance(a, b);
-			FractHex aNudge = new FractHex(a.x + 1e-06f, a.y + 1e-06f, a.z + -2e-06f);
-			FractHex bNudge = new FractHex(b.x + 1e-06f, b.y + 1e-06f, b.z + -2e-06f);
+			var aNudge = new FractHex(a.x + 1e-06f, a.y + 1e-06f, a.z + -2e-06f);
+			var bNudge = new FractHex(b.x + 1e-06f, b.y + 1e-06f, b.z + -2e-06f);
 			for (int i = 0; i < dist; i++) {
 				var res = Hex.Lerp(aNudge, bNudge, 1f / dist * i);
 				yield return (res.Round(), res);

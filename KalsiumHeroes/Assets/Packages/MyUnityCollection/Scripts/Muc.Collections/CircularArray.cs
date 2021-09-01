@@ -85,7 +85,7 @@ namespace Muc.Collections {
 
 		}
 		object ICloneable.Clone() => Clone();
-		public CircularArray<T> Clone() => new CircularArray<T>(this);
+		public CircularArray<T> Clone() => new(this);
 
 		public bool Contains(T item) => data.Contains(item);
 

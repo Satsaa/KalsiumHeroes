@@ -11,12 +11,12 @@ using UnityEngine.EventSystems;
 
 public class SpawnControl : DraggableObject {
 
-	protected static List<SpawnControl> positioners = new List<SpawnControl>();
+	protected static List<SpawnControl> positioners = new();
 
 	new public Camera camera;
 	public UnitData source;
 	public Team team;
-	public Vector3 dragOffset = new Vector3(0, 0.2f, 0);
+	public Vector3 dragOffset = new(0, 0.2f, 0);
 
 	public Tile tile;
 	public Tile startTile;

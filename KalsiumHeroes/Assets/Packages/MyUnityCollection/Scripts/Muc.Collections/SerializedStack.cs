@@ -30,7 +30,7 @@ namespace Muc.Collections {
 		public int Count => list.Count;
 
 
-		public Enumerator GetEnumerator() => new Enumerator(this);
+		public Enumerator GetEnumerator() => new(this);
 		IEnumerator<T> IEnumerable<T>.GetEnumerator() => new Enumerator(this);
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => new Enumerator(this);
 
@@ -106,7 +106,7 @@ namespace Muc.Collections {
 				this.stack = stack;
 				version = this.stack.version;
 				index = -2;
-				current = default(T);
+				current = default;
 			}
 
 			public void Dispose() {
@@ -130,7 +130,7 @@ namespace Muc.Collections {
 				if (res)
 					current = stack.list[index];
 				else
-					current = default(T);
+					current = default;
 				return res;
 			}
 
@@ -146,7 +146,7 @@ namespace Muc.Collections {
 			void System.Collections.IEnumerator.Reset() {
 				if (version != stack.version) throw new InvalidOperationException("Collection was modified after the enumerator was instantiated.");
 				index = -2;
-				current = default(T);
+				current = default;
 			}
 		}
 	}

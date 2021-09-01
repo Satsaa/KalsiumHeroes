@@ -8,14 +8,17 @@ using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifier where TModData : ModifierData where THook : IHook {
+public abstract class Master<TMod, TModData, THook> : Master
+	where TMod : Modifier
+	where TModData : ModifierData
+	where THook : IHook {
 
 	public static Type modifierType => typeof(TMod);
 	public static Type hookType => typeof(THook);
 	public static Type modifierDataType => typeof(TModData);
 
-	public ObjectDict<TMod> modifiers = new ObjectDict<TMod>();
-	public Hooks<THook> hooks = new Hooks<THook>();
+	public ObjectDict<TMod> modifiers = new();
+	public Hooks<THook> hooks = new();
 	public override Hooks rawHooks => hooks;
 
 	protected override void OnCreate() {
@@ -46,13 +49,15 @@ public abstract class Master<TMod, TModData, THook> : Master where TMod : Modifi
 
 public abstract class Master : DataObject {
 
-	public new MasterData data => (MasterData)_data;
+	new public MasterData data => (MasterData)_data;
 	public override Type dataType => typeof(MasterData);
 
-	/// <summary> Created GameObject for this Master. <summary>
 	[field: SerializeField]
-	public GameObject gameObject { get; private set; }
-	public Transform transform => gameObject ? gameObject.transform : null;
+	protected Actor _actor;
+	public Actor actor => _actor;
+
+	public GameObject gameObject => actor ? actor.gameObject : null;
+	public Transform transform => actor ? actor.transform : null;
 
 	public abstract Hooks rawHooks { get; }
 
@@ -65,10 +70,21 @@ public abstract class Master : DataObject {
 
 		OnConfigureNonpersistent(false);
 		OnRemove();
-		if (gameObject) {
-			ObjectUtil.Destroy(gameObject);
-			gameObject = null;
-		}
+	}
+
+	protected override void OnShow() {
+		base.OnShow();
+		if (data.actor.value) _actor = Instantiate(data.actor.value);
+	}
+
+	protected override void OnHide() {
+		if (actor) Destroy(gameObject);
+		_actor = null;
+		base.OnHide();
+	}
+
+	public virtual void OnDetach() {
+		_actor = null;
 	}
 
 	/// <summary> Creates a Master based on the given source. </summary>
@@ -91,20 +107,6 @@ public abstract class Master : DataObject {
 		}
 
 		return master;
-	}
-
-	protected override void OnShow() {
-		base.OnShow();
-		var gameObject = data.container.value ? ObjectUtil.Instantiate(data.container.value, Game.game.transform) : new GameObject();
-		this.gameObject = gameObject;
-	}
-
-	protected override void OnHide() {
-		if (gameObject) {
-			ObjectUtil.Destroy(gameObject);
-			gameObject = null;
-		}
-		base.OnHide();
 	}
 
 	public abstract void AttachModifier(Modifier modifier);
@@ -133,7 +135,7 @@ namespace Editors {
 
 		Master t => (Master)target;
 
-		List<bool> expands = new List<bool>();
+		List<bool> expands = new();
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();

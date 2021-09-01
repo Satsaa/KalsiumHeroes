@@ -30,22 +30,19 @@ namespace Muc.Collections {
 		#region Ctors
 
 		public OrderedList(IComparer<T> comparer) {
-			if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+			this.comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
 			this.items = new List<T>();
-			this.comparer = comparer;
 		}
 
 		public OrderedList(int capacity, IComparer<T> comparer) {
-			if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+			this.comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
 			this.items = new List<T>(capacity);
-			this.comparer = comparer;
 		}
 
 		public OrderedList(IEnumerable<T> items, IComparer<T> comparer) {
 			if (items == null) throw new ArgumentNullException(nameof(items));
-			if (comparer == null) throw new ArgumentNullException(nameof(comparer));
+			this.comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
 			this.items = items.ToList();
-			this.comparer = comparer;
 		}
 
 		#endregion
@@ -105,8 +102,8 @@ namespace Muc.Collections {
 
 		public int Count => items.Count;
 
-		public OrderedList<T> Sort(int index, int count, IComparer<T> comparer) => new OrderedList<T>(items.GetRange(index, count), comparer);
-		public OrderedList<T> Sort(IComparer<T> comparer) => new OrderedList<T>(items, comparer);
+		public OrderedList<T> Sort(int index, int count, IComparer<T> comparer) => new(items.GetRange(index, count), comparer);
+		public OrderedList<T> Sort(IComparer<T> comparer) => new(items, comparer);
 
 		public ReadOnlyCollection<T> AsReadOnly() => items.AsReadOnly();
 		public int BinarySearch(T item) => items.BinarySearch(item);

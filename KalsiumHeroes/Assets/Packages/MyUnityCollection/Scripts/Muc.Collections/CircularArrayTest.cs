@@ -12,7 +12,7 @@ namespace Muc.Collections {
 	using Muc.Numerics;
 
 	public class CircularArrayTest : MonoBehaviour {
-		public CircularArray<int> circularArray = new CircularArray<int>(5) { 1, 2, 3, 4, 5 };
+		public CircularArray<int> circularArray = new(5) { 1, 2, 3, 4, 5 };
 
 		public void Reset() {
 			circularArray = new CircularArray<int>(5) { 1, 2, 3, 4, 5 };

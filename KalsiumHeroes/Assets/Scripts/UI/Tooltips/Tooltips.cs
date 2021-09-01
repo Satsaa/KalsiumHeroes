@@ -14,14 +14,14 @@ using Muc.Data;
 [DefaultExecutionOrder(-1)]
 public class Tooltips : UISingleton<Tooltips> {
 
-	[SerializeField] Timeout hideDelay = new Timeout(0.5f, true);
-	[SerializeField] Timeout showDelay = new Timeout(0.5f, true);
-	[SerializeField] Timeout quickSwitchDelay = new Timeout(0.1f, true);
+	[SerializeField] Timeout hideDelay = new(0.5f, true);
+	[SerializeField] Timeout showDelay = new(0.5f, true);
+	[SerializeField] Timeout quickSwitchDelay = new(0.1f, true);
 	[SerializeField] public Window defaultWindowPrefab;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
 
 	[SerializeField, HideInInspector] List<Tooltip> tts;
-	FrameTimeout hideFrameDelay = new FrameTimeout(2, true);
+	FrameTimeout hideFrameDelay = new(2, true);
 	string lastPing;
 	int lastPingFrame = -1;
 
@@ -193,9 +193,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		tt.creator = creator;
 		tts.Add(tt);
 		var rt = (RectTransform)tt.transform;
-		if (initializer != null) {
-			initializer(tt);
-		}
+		initializer?.Invoke(tt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
 		UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
@@ -271,7 +269,7 @@ public class Tooltips : UISingleton<Tooltips> {
 	private static object ParseParamValue(string param) {
 		switch (param[0]) {
 			case '#':
-				if (!int.TryParse(param.Substring(1), out var instanceId)) {
+				if (!int.TryParse(param[1..], out var instanceId)) {
 					throw new ArgumentException(MakeThrowString("The instance id is not a valid integer."), "query");
 				}
 				var obj = ObjectUtil.FindObjectFromInstanceID(instanceId);
@@ -280,7 +278,7 @@ public class Tooltips : UISingleton<Tooltips> {
 				}
 				return obj;
 			case '@':
-				return Lang.GetStr(param.Substring(1));
+				return Lang.GetStr(param[1..]);
 			default:
 				switch (param) {
 					case "true":

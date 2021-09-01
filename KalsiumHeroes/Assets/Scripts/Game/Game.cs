@@ -48,8 +48,8 @@ public class Game : Singleton<Game> {
 	[SerializeField, ShowEditor] Rounds _rounds;
 	[SerializeField, ShowEditor] Targeting _targeting;
 	[SerializeField, ShowEditor] TileGrid _grid;
-	[SerializeField] ObjectDict<DataObject> _dataObjects = new ObjectDict<DataObject>();
-	[SerializeField] Hooks<IGlobalHook> _hooks = new Hooks<IGlobalHook>();
+	[SerializeField] ObjectDict<DataObject> _dataObjects = new();
+	[SerializeField] Hooks<IGlobalHook> _hooks = new();
 
 	[field: SerializeField] public bool inited { get; private set; }
 	[field: SerializeField] public bool started { get; private set; }

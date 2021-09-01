@@ -114,8 +114,9 @@ namespace Editors {
 				using (ForceIndentScope(position, out var indented)) {
 					PropertyField(indented, label, assetReference);
 				}
-				var style = new GUIStyle();
-				style.alignment = TextAnchor.MiddleLeft;
+				var style = new GUIStyle {
+					alignment = TextAnchor.MiddleLeft
+				};
 
 				var labelRect = LabelRect(position);
 				actualLabel.text = ObjectNames.NicifyVariableName(actualLabel.text);

@@ -17,9 +17,6 @@ public class UnitData : MasterData {
 	[Tooltip("The RenderObject used to render this unit in portraits.")]
 	public ComponentReference<RenderObject> portrait;
 
-	[Tooltip("Actor prefab for this Unit. It is instantiated as a parent.")]
-	public ComponentReference<UnitActor> actor;
-
 	[Tooltip("The cost of drafting this Unit.")]
 	public int draftCost = 5;
 

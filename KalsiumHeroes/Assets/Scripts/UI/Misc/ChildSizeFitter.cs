@@ -18,7 +18,7 @@ public class ChildSizeFitter : UIBehaviour, ILayoutElement, ILayoutGroup {
 		}
 
 	}
-	[System.NonSerialized] private List<RectTransform> _rectChildren = new List<RectTransform>();
+	[System.NonSerialized] private List<RectTransform> _rectChildren = new();
 	protected List<RectTransform> rectChildren => _rectChildren;
 
 

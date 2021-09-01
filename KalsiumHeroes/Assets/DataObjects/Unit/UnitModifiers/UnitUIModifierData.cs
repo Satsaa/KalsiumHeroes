@@ -25,9 +25,9 @@ public class UnitUIModifierData : UnitModifierData {
 	public bool clampToScreen;
 
 	[Tooltip("Clamp area. (0,0),(1,1) = whole screen, (0.5,0.5),(1,1) = quarter of the screen.")]
-	public Vector2 clampMin = new Vector2(0, 0);
+	public Vector2 clampMin = new(0, 0);
 	[Tooltip("Clamp area. (0,0),(1,1) = whole screen, (0.5,0.5),(1,1) = quarter of the screen.")]
-	public Vector2 clampMax = new Vector2(1, 1);
+	public Vector2 clampMax = new(1, 1);
 
 	[Space(5)]
 	[Tooltip("Scale the container based on distance to the camera.")]

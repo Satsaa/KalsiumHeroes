@@ -13,8 +13,8 @@ using Muc.Time;
 public class TooltipAnimator : MonoBehaviour {
 
 	[SerializeField] float duration = 0.25f;
-	[SerializeField] AnimationCurve scaleCurve = new AnimationCurve(new Keyframe(0, 0.75f, 0, 0.6f), new Keyframe(1, 1));
-	[SerializeField] AnimationCurve alphaCurve = new AnimationCurve(new Keyframe(0, 0.00f, 0, 2.0f), new Keyframe(1, 1));
+	[SerializeField] AnimationCurve scaleCurve = new(new Keyframe(0, 0.75f, 0, 0.6f), new Keyframe(1, 1));
+	[SerializeField] AnimationCurve alphaCurve = new(new Keyframe(0, 0.00f, 0, 2.0f), new Keyframe(1, 1));
 
 	[HideInInspector, SerializeField] float t = 0f;
 	[HideInInspector, SerializeField] int sign = 0;

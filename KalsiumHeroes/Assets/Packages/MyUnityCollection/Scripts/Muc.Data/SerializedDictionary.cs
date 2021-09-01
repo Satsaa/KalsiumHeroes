@@ -204,7 +204,7 @@ namespace Muc.Data {
 		}
 
 		public override string ToString() {
-			return $"[{key.ToString()},{value.ToString()}]";
+			return $"[{key},{value}]";
 		}
 
 	}
@@ -228,9 +228,9 @@ namespace Muc.Data {
 	[CustomPropertyDrawer(typeof(SerializedDictionaryListPair<,>), true)]
 	public class SerializedDictionaryListPairDrawer : PropertyDrawer {
 
-		private static readonly GUIContent keyContent = new GUIContent("K", "Key");
-		private static readonly GUIContent invalidKeyContent = new GUIContent("K", "Key (Invalid)");
-		private static readonly GUIContent valueContent = new GUIContent("V", "Value");
+		private static readonly GUIContent keyContent = new("K", "Key");
+		private static readonly GUIContent invalidKeyContent = new("K", "Key (Invalid)");
+		private static readonly GUIContent valueContent = new("V", "Value");
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			var value = property.FindPropertyRelative(nameof(SerializedDictionaryListPair<string, string>.value));

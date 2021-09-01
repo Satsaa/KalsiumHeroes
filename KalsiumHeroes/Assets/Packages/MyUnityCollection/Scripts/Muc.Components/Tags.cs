@@ -17,7 +17,7 @@ namespace Muc.Components {
 
 		#region Global Static Container
 
-		private static Dictionary<string, HashSet<Tags>> tagged = new Dictionary<string, HashSet<Tags>>();
+		private static Dictionary<string, HashSet<Tags>> tagged = new();
 
 		private static ICollection<string> GetTags() => tagged.Keys;
 
@@ -72,7 +72,7 @@ namespace Muc.Components {
 		#region Component
 		#region - Functionality
 
-		private HashSet<string> tags = new HashSet<string>();
+		private HashSet<string> tags = new();
 		[SerializeField] string[] serializableTags;
 
 		public int Count => tags.Count;
@@ -179,7 +179,7 @@ namespace Muc.Components.Editor {
 
 		private Tags t => target as Tags;
 
-		private List<string> tagDisplay = new List<string>();
+		private List<string> tagDisplay = new();
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();

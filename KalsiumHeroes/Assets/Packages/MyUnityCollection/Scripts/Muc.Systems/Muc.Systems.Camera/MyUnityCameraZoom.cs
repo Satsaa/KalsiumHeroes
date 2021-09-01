@@ -22,7 +22,7 @@ namespace Muc.Systems.Camera {
 		public float minStep = 0.1f;
 
 		[Tooltip("Minimum and maximum or distance.")]
-		public Vector2 range = new Vector2(1.2f, 25f);
+		public Vector2 range = new(1.2f, 25f);
 
 		[Tooltip("Normalize the input to a length of 1?")]
 		public bool normalize = false;

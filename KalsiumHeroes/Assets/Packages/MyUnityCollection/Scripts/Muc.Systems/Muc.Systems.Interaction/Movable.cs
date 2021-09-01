@@ -58,7 +58,7 @@ namespace Muc.Systems.Interaction {
 		private CollisionTracker cc;
 		private TransformHistory transHistory;
 
-		private List<Collider> associates = new List<Collider>();
+		private List<Collider> associates = new();
 
 		private float targetDistance;
 		private float returnTime;
@@ -77,8 +77,8 @@ namespace Muc.Systems.Interaction {
 
 		void FixedUpdate() {
 			if (associates.Count > 0) {
-				Collider[] cols = rb.GetComponentsInChildren<Collider>();
-				Bounds bounds = new Bounds(transform.position, Vector3.zero);
+				var cols = rb.GetComponentsInChildren<Collider>();
+				var bounds = new Bounds(transform.position, Vector3.zero);
 				foreach (Collider nextCollider in cols) bounds.Encapsulate(nextCollider.bounds);
 
 				var overlaps = Physics.OverlapBox(bounds.center, bounds.extents);
@@ -105,7 +105,7 @@ namespace Muc.Systems.Interaction {
 			}
 			rb.useGravity = false;
 			var maxDif = interaction.dif.SetLen(interaction.source.maxDistance);
-			Line line = new Line(
+			var line = new Line(
 				Vector3.Lerp(interaction.sourcePos, interaction.sourcePos + maxDif, distanceMin),
 				Vector3.Lerp(interaction.sourcePos, interaction.sourcePos + maxDif, distanceMax)
 			);

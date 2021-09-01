@@ -15,13 +15,13 @@ MonoBehaviour:
   createType:
     _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Tile_Ground
-  container:
+  baseModifiers: []
+  actor:
     assetReference:
       m_AssetGUID: 741552137c685484a85dcdd7b8204340
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  baseModifiers: []
   passable:
     _values:
     - cache: 0

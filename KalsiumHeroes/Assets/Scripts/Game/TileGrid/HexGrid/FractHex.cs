@@ -21,7 +21,7 @@ namespace HexGrid {
 		[field: SerializeField] public float x { get; private set; }
 		[field: SerializeField] public float y { get; private set; }
 		[field: SerializeField] public float z { get; private set; }
-		public Vector3 pos => new Vector3(x, y, z);
+		public Vector3 pos => new(x, y, z);
 
 		public Hex Round() {
 			int xi = Mathf.RoundToInt(x);

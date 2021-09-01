@@ -12,9 +12,9 @@ public class InstantTargeter : Targeter {
 
 	public sealed override bool IsCompleted() => true;
 
-	public sealed override HashSet<Tile> GetTargets() => new HashSet<Tile>();
-	public sealed override Dictionary<Tile, Color> GetCustom() => new Dictionary<Tile, Color>();
-	public sealed override HashSet<Tile> GetHover(Tile tile) => new HashSet<Tile>();
+	public sealed override HashSet<Tile> GetTargets() => new();
+	public sealed override Dictionary<Tile, Color> GetCustom() => new();
+	public sealed override HashSet<Tile> GetHover(Tile tile) => new();
 	public sealed override bool TrySelect(Tile tile) => false;
 	public sealed override bool TryCancel() => true;
 }

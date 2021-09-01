@@ -83,7 +83,7 @@ namespace Muc.Collections {
 		}
 
 		bool IList.Contains(object value) {
-			if (value is null) return typeof(T).IsByRef ? Contains(default) : false;
+			if (value is null) return typeof(T).IsByRef && Contains(default);
 			if (value is T tv) return Contains(tv);
 			return false;
 		}

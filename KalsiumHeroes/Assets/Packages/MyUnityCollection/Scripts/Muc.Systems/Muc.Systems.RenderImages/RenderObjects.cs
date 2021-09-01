@@ -26,7 +26,7 @@ namespace Muc.Systems.RenderImages {
 		[SerializeField, HideInInspector] int dir; // 0 - 3
 		[SerializeField, HideInInspector] int dirI; // Steps taken in a direction
 
-		Dictionary<RenderObject, RenderObject> shareds = new Dictionary<RenderObject, RenderObject>();
+		Dictionary<RenderObject, RenderObject> shareds = new();
 
 		public RenderObject GetObject(RenderObject prefab, bool shared) {
 			var res = default(RenderObject);

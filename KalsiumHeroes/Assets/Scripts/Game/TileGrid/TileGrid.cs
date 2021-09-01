@@ -317,7 +317,7 @@ public class TileGrid : ScriptableObject {
 	/// <param name="end">End Hex</param>
 	/// <param name="predicate">Determines whether a Tile is not avoided.</param>
 	public IEnumerable<Tile> SmartLine(Hex start, Hex end, Predicate<Tile> predicate = null) {
-		predicate = predicate ?? (h => true);
+		predicate ??= (h => true);
 		int dist = Hex.Distance(start, end);
 		var nudge = new Vector3(+1e-06f, +1e-06f, -2e-06f);
 		var altNudge = new Vector3(-1e-06f, -1e-06f, +2e-06f);
@@ -349,7 +349,7 @@ public class TileGrid : ScriptableObject {
 	/// <param name="target">The sighted Tile</param>
 	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>
 	public bool HasSight(Hex hex, Hex target, Predicate<Tile> predicate = null) {
-		predicate = predicate ?? (h => h == null || h.data.transparent.current);
+		predicate ??= (h => h == null || h.data.transparent.current);
 		return SmartLine(hex, target, v => predicate(v)).All(predicate.Invoke);
 	}
 
@@ -370,7 +370,7 @@ public class TileGrid : ScriptableObject {
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Dictionary of Tile areas. Key: Tile, Value: Area id</returns>
 	public Dictionary<Tile, int> GetAreas(Predicate<Tile> passable = null) {
-		passable = passable ?? (h => h.data.passable.current);
+		passable ??= (h => h.data.passable.current);
 		var results = new Dictionary<Tile, int>(tiles.Count);
 		var id = 0;
 
@@ -389,7 +389,7 @@ public class TileGrid : ScriptableObject {
 	/// </summary>
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	public IEnumerable<Tile> Flood(Tile source, Predicate<Tile> passable = null) {
-		passable = passable ?? (h => h.data.passable.current);
+		passable ??= (h => h.data.passable.current);
 		var frontier = new Queue<Tile>();
 		yield return source;
 		frontier.Enqueue(source);

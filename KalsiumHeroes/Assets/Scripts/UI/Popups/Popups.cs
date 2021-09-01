@@ -11,7 +11,7 @@ public class Popups : UISingleton<Popups> {
 	[field: SerializeField, Tooltip("Used as the default popup.")]
 	public PopupPreset defaultPopup { get; private set; }
 
-	[HideInInspector] public List<Popup> popups = new List<Popup>();
+	[HideInInspector] public List<Popup> popups = new();
 
 	/// <summary> Shows the default messagebox </summary>
 	public static Popup ShowPopup(string title, string message) {

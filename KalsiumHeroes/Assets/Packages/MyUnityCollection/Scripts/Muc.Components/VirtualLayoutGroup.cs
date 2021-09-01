@@ -113,7 +113,7 @@ namespace Muc.Components {
 			}
 
 			[SerializeField] protected float animationTargetPosition;
-			[SerializeField] protected List<Animation> animations = new List<Animation>();
+			[SerializeField] protected List<Animation> animations = new();
 			[SerializeField] protected bool hidden;
 
 			public override void Show() {

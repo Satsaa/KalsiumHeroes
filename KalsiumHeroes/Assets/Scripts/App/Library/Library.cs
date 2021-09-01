@@ -32,7 +32,7 @@ public class Library : MonoBehaviour {
 #if UNITY_EDITOR
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnScriptsReloaded() {
-		foreach (var d in Object.FindObjectsOfType<DataObjectData>()) d.isSource = false;
+		foreach (var d in FindObjectsOfType<DataObjectData>()) d.isSource = false;
 		foreach (var d in App.library.dict.Values) d.isSource = true;
 	}
 #endif

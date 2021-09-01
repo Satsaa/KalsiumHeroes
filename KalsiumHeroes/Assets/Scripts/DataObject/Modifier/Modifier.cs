@@ -81,7 +81,7 @@ public abstract class Modifier : DataObject {
 			if (source.container.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
 				container = ObjectUtil.Instantiate(source.container, canvas.transform);
 			} else {
-				container = ObjectUtil.Instantiate(source.container, master.gameObject.transform);
+				container = ObjectUtil.Instantiate(source.container, master.transform);
 			}
 			container.transform.localRotation = source.container.transform.localRotation;
 		}

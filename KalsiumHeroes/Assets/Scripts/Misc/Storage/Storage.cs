@@ -48,15 +48,13 @@ public static class Storage {
 public class CollectionClearingContractResolver : DefaultContractResolver {
 
 	static void ClearGenericCollectionCallback<T>(object o, StreamingContext c) {
-		var collection = o as ICollection<T>;
-		if (collection == null || collection is Array || collection.IsReadOnly)
+		if (o is not ICollection<T> collection || collection is Array || collection.IsReadOnly)
 			return;
 		collection.Clear();
 	}
 
 	static SerializationCallback ClearListCallback = (o, c) => {
-		var collection = o as IList;
-		if (collection == null || collection is Array || collection.IsReadOnly)
+		if (o is not IList collection || collection is Array || collection.IsReadOnly)
 			return;
 		collection.Clear();
 	};

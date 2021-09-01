@@ -100,20 +100,22 @@ namespace Muc.Systems.RenderImages {
 			if (isActiveAndEnabled) OnEnable();
 		}
 
-		protected virtual internal RenderTexture CreateTexture(Vector2Int resolution) {
+		protected internal virtual RenderTexture CreateTexture(Vector2Int resolution) {
 			if (!Application.isPlaying) return null;
 
-			var descriptor = new RenderTextureDescriptor(resolution.x, resolution.y, format, (int)debthBits);
-			descriptor.useMipMap = enableMipMaps;
-			descriptor.autoGenerateMips = autoGenerateMips && enableMipMaps;
-			descriptor.msaaSamples = (int)antialiasing;
-			descriptor.useDynamicScale = dynamicScaling;
+			var descriptor = new RenderTextureDescriptor(resolution.x, resolution.y, format, (int)debthBits) {
+				useMipMap = enableMipMaps,
+				autoGenerateMips = autoGenerateMips && enableMipMaps,
+				msaaSamples = (int)antialiasing,
+				useDynamicScale = dynamicScaling
+			};
 
-			var res = new RenderTexture(descriptor);
-			res.name = $"{nameof(RenderImage)} ({resolution.x}x{resolution.y})";
+			var res = new RenderTexture(descriptor) {
+				name = $"{nameof(RenderImage)} ({resolution.x}x{resolution.y})",
+				filterMode = filterMode,
+				anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0
+			};
 
-			res.filterMode = filterMode;
-			res.anisoLevel = debthBits == DebthBits.None ? anisoLevel : 0;
 			return res;
 		}
 

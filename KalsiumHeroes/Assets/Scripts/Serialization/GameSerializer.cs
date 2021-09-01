@@ -497,8 +497,9 @@ namespace Serialization {
 			if (fieldDataCache.TryGetValue(field, out var cached)) {
 				return cached;
 			}
-			var d = new FieldData();
-			d.field = field;
+			var d = new FieldData {
+				field = field
+			};
 			if (field.IsPublic) {
 				if (System.Attribute.IsDefined(field, typeof(NonSerializedAttribute))) {
 					return fieldDataCache[field] = null;

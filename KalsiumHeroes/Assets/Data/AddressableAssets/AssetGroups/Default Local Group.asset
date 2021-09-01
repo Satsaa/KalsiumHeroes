@@ -25,10 +25,6 @@ MonoBehaviour:
     m_Address: Assets/Graphics
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 9c63b51755ec8c845b857cc73a35d606
-    m_Address: Packages/com.unity.render-pipelines.core/Editor/LookDev/Icons/d_RenderDoc@2x.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 104bd6a9438a13f43b2f7e84c7484a12, type: 2}
   m_SchemaSet:

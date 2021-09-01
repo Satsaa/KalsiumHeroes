@@ -121,7 +121,7 @@ public class Menus : Singleton<Menus> {
 		while (TryCollapse(menus.Count - 1) || TryReplace(menus.Count - 1)) { }
 
 		if (menus.Count >= 2) {
-			var before = menus[menus.Count - 2];
+			var before = menus[^2];
 			if (!before.alwaysVisible) {
 				before.OnHide(); // No destroy...
 			}

@@ -12,10 +12,10 @@ namespace Muc.Numerics {
 		[field: SerializeField] public double value { get; private set; }
 		[field: SerializeField] public double threshold { get; private set; }
 
-		public static CircularDouble operator +(CircularDouble a, double b) => new CircularDouble(a.value + b, a.threshold);
-		public static CircularDouble operator ++(CircularDouble a) => new CircularDouble(a.value + 1d, a.threshold);
-		public static CircularDouble operator -(CircularDouble a, double b) => new CircularDouble(a.value - b, a.threshold);
-		public static CircularDouble operator --(CircularDouble a) => new CircularDouble(a.value - 1d, a.threshold);
+		public static CircularDouble operator +(CircularDouble a, double b) => new(a.value + b, a.threshold);
+		public static CircularDouble operator ++(CircularDouble a) => new(a.value + 1d, a.threshold);
+		public static CircularDouble operator -(CircularDouble a, double b) => new(a.value - b, a.threshold);
+		public static CircularDouble operator --(CircularDouble a) => new(a.value - 1d, a.threshold);
 
 
 		// public static implicit operator sbyte(CircularDouble a) => a.value;
@@ -48,7 +48,7 @@ namespace Muc.Numerics {
 		/// <summary> Creates a double which loops from threshold to zero. The value never reaches the threshold. </summary>
 		public CircularDouble(double value, double threshold) {
 
-			if (threshold <= 0d) throw new System.ArgumentOutOfRangeException($"{threshold} is less than one", nameof(threshold));
+			if (threshold <= 0d) throw new ArgumentOutOfRangeException($"{threshold} is less than one", nameof(threshold));
 
 			if (value >= threshold) value = value == threshold ? 0d : value % threshold;
 			else if (value < 0d) value = threshold + value % threshold;

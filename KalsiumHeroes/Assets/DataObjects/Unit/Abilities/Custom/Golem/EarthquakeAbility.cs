@@ -1,3 +1,4 @@
+
 using System;
 using System.Linq;
 using System.Collections;
@@ -9,7 +10,7 @@ public class EarthquakeAbility : NoTargetAbility {
 	public new EarthquakeAbilityData data => (EarthquakeAbilityData)_data;
 	public override Type dataType => typeof(EarthquakeAbilityData);
 
-	private static List<Unit> unitsFound = new List<Unit>();
+	private static List<Unit> unitsFound = new();
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {

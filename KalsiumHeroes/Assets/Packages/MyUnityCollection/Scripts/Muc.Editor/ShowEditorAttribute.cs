@@ -41,8 +41,8 @@ namespace Muc.Editor {
 			if (property.isExpanded) {
 				var data = property.objectReferenceValue as ScriptableObject;
 				if (data == null) return EditorGUIUtility.singleLineHeight;
-				SerializedObject serializedObject = new SerializedObject(data);
-				SerializedProperty prop = serializedObject.GetIterator();
+				var serializedObject = new SerializedObject(data);
+				var prop = serializedObject.GetIterator();
 				if (prop.NextVisible(true)) {
 					do {
 						if (prop.name == "m_Script") continue;
@@ -84,10 +84,10 @@ namespace Muc.Editor {
 
 						using (new EditorGUI.IndentLevelScope()) {
 
-							SerializedObject serializedObject = new SerializedObject(GetValues<Object>(property).ToArray());
+							var serializedObject = new SerializedObject(GetValues<Object>(property).ToArray());
 
 							// Iterate over all the values and draw them
-							SerializedProperty prop = serializedObject.GetIterator();
+							var prop = serializedObject.GetIterator();
 							float y = position.y + EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 							if (prop.NextVisible(true)) {
 								do {
@@ -109,8 +109,8 @@ namespace Muc.Editor {
 
 		static bool AreAnySubPropertiesVisible(SerializedProperty property) {
 			var data = (ScriptableObject)property.objectReferenceValue;
-			SerializedObject serializedObject = new SerializedObject(data);
-			SerializedProperty prop = serializedObject.GetIterator();
+			var serializedObject = new SerializedObject(data);
+			var prop = serializedObject.GetIterator();
 			while (prop.NextVisible(true)) {
 				if (prop.name == "m_Script") continue;
 				return true; //if theres any visible property other than m_script

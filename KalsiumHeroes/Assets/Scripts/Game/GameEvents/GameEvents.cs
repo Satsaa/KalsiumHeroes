@@ -9,7 +9,7 @@ using Serialization;
 public class GameEvents : ScriptableObject, IOnUpdate {
 
 	[SerializeReference]
-	public List<GameEvent> events = new List<GameEvent>();
+	public List<GameEvent> events = new();
 	public GameEvent next => executedNum >= receivedNum ? null : events[executedNum + 1];
 	public int maxQueued = 5;
 	public int executedNum = -1;

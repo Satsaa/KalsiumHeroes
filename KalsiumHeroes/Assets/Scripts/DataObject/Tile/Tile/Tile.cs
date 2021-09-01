@@ -40,7 +40,7 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_
 			v.hex = hex;
 			Game.grid.tiles.Add(hex.pos, v);
 			var pt = Layout.HexToPoint(hex);
-			v.center = new Vector3(pt.x, source.container.transform.position.y, pt.y);
+			v.center = new Vector3(pt.x, source.actor.transform.position.y, pt.y);
 			v.corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 		});
 	}
@@ -94,7 +94,7 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_
 
 	protected override void OnShow() {
 		base.OnShow();
-		gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(source.container.transform.position.y);
+		gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(data.actor.transform.position.y);
 		gameObject.transform.parent = Game.game.transform;
 		gameObject.name = $"Tile ({hex.x}, {hex.y})";
 		highlighter.OnShow(gameObject);

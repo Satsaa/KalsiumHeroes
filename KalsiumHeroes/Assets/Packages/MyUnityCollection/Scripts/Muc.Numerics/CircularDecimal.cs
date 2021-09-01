@@ -12,10 +12,10 @@ namespace Muc.Numerics {
 		[field: SerializeField] public decimal value { get; private set; }
 		[field: SerializeField] public decimal threshold { get; private set; }
 
-		public static CircularDecimal operator +(CircularDecimal a, decimal b) => new CircularDecimal(a.value + b, a.threshold);
-		public static CircularDecimal operator ++(CircularDecimal a) => new CircularDecimal(a.value + 1m, a.threshold);
-		public static CircularDecimal operator -(CircularDecimal a, decimal b) => new CircularDecimal(a.value - b, a.threshold);
-		public static CircularDecimal operator --(CircularDecimal a) => new CircularDecimal(a.value - 1m, a.threshold);
+		public static CircularDecimal operator +(CircularDecimal a, decimal b) => new(a.value + b, a.threshold);
+		public static CircularDecimal operator ++(CircularDecimal a) => new(a.value + 1m, a.threshold);
+		public static CircularDecimal operator -(CircularDecimal a, decimal b) => new(a.value - b, a.threshold);
+		public static CircularDecimal operator --(CircularDecimal a) => new(a.value - 1m, a.threshold);
 
 
 		// public static implicit operator sbyte(CircularDecimal a) => a.value;

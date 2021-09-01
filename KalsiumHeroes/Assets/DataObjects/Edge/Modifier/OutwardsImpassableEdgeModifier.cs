@@ -8,10 +8,10 @@ using UnityEngine;
 public class OutwardsImpassableEdgeModifier : EdgeModifier, IOnGetCanPass_Edge {
 
 	public void OnGetCanPass(Unit unit, Tile from, Tile to, ref bool current) {
-		current = context == from ? false : current;
+		current = context != from && current;
 	}
 
 	public void OnGetCanPass(Tile from, Tile to, ref bool current) {
-		current = context == from ? false : current;
+		current = context != from && current;
 	}
 }

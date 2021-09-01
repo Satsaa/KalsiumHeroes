@@ -22,7 +22,7 @@ namespace Muc.Components {
 		IEnumerator IEnumerable.GetEnumerator() => history.GetEnumerator();
 		public IEnumerator<TransformData> GetEnumerator() => history.GetEnumerator();
 
-		private readonly CircularArray<TransformData> history = new CircularArray<TransformData>(2);
+		private readonly CircularArray<TransformData> history = new(2);
 
 		void LateUpdate() {
 			history.Add(new TransformData(transform));

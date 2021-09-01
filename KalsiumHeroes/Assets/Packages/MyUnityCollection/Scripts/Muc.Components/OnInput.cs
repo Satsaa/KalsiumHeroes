@@ -18,7 +18,7 @@ namespace Muc.Components {
 
 		public InputEvent[] inputEvents;
 
-		private HashSet<InputEvent> fixedEvents = new HashSet<InputEvent>();
+		private HashSet<InputEvent> fixedEvents = new();
 
 		[System.Serializable]
 		public class InputEvent {
