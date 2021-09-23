@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class PickOffAbility : UnitTargetAbility {
 
-	public new PickOffAbilityData data => (PickOffAbilityData)_data;
+	new public PickOffAbilityData data => (PickOffAbilityData)_data;
 	public override Type dataType => typeof(PickOffAbilityData);
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
+			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
 			var aoe = GetAffectedArea(target);
 			var finalDamage = data.damage.current * GetMultiplier(target);
 			foreach (var tile in aoe) {

@@ -75,12 +75,6 @@ namespace Editors {
 
 		TooltippableText t => (TooltippableText)target;
 
-		// SerializedProperty property;
-
-		void OnEnable() {
-			// property = serializedObject.FindProperty(nameof(property));
-		}
-
 		public override void OnInspectorGUI() {
 			serializedObject.Update();
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 
-	public new ParryStanceStatusData data => (ParryStanceStatusData)_data;
+	new public ParryStanceStatusData data => (ParryStanceStatusData)_data;
 	public override Type dataType => typeof(ParryStanceStatusData);
 
 	protected Alterer<int> defenseAlterer;

@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class ArmorBashAbility : UnitTargetAbility {
 
-	public new ArmorBashAbilityData data => (ArmorBashAbilityData)_data;
+	new public ArmorBashAbilityData data => (ArmorBashAbilityData)_data;
 	public override Type dataType => typeof(ArmorBashAbilityData);
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
+			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {

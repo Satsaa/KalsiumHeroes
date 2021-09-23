@@ -6,7 +6,7 @@ using System.Linq;
 
 public class CordialInvitationAbility : UnitTargetAbility {
 
-	public new CordialInvitationAbilityData data => (CordialInvitationAbilityData)_data;
+	new public CordialInvitationAbilityData data => (CordialInvitationAbilityData)_data;
 	public override Type dataType => typeof(CordialInvitationAbilityData);
 
 	public override IEnumerable<Unit> GetTargets() {
@@ -15,7 +15,7 @@ public class CordialInvitationAbility : UnitTargetAbility {
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
+			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {

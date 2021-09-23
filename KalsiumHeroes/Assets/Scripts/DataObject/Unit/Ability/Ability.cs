@@ -7,11 +7,11 @@ using UnityEngine;
 
 public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEventEnd {
 
-	public new AbilityData source => (AbilityData)_source;
-	public new AbilityData data => (AbilityData)_data;
+	new public AbilityData source => (AbilityData)_source;
+	new public AbilityData data => (AbilityData)_data;
 	public override Type dataType => typeof(AbilityData);
 
-	[HideInInspector, SerializeField] public bool isCasting;
+	[HideInInspector] public bool isCasting;
 
 	public abstract EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg);
 

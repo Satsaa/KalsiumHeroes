@@ -27,8 +27,6 @@ public class Test : MonoBehaviour {
 	public DataFieldSelector<float> floatFieldTest;
 	public NumericDataFieldSelector numericFieldTest;
 
-	void Start() { }
-
 	public void DoTest1() {
 		var message = GameSerializer.Serialize(Game.game);
 		System.IO.File.WriteAllText("C:/Users/sampp/Desktop/output.json", message);

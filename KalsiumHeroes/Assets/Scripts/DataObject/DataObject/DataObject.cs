@@ -4,8 +4,6 @@ using System.Linq;
 using Muc.Editor;
 using Serialization;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 
 [RefToken]
 public abstract class DataObject : ScriptableObject {
@@ -49,6 +47,7 @@ public abstract class DataObject : ScriptableObject {
 	/// Also when the Modifier is removed but with add = false.
 	/// Conditionally add or remove non-persistent things here.
 	/// </summary>
+	/// <param name="add"></param>
 	protected virtual void OnConfigureNonpersistent(bool add) { }
 
 #if UNITY_EDITOR

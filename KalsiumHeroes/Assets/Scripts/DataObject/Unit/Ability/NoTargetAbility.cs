@@ -7,8 +7,8 @@ using UnityEngine;
 
 public abstract class NoTargetAbility : Ability {
 
-	public new NoTargetAbilityData source => (NoTargetAbilityData)_source;
-	public new NoTargetAbilityData data => (NoTargetAbilityData)_data;
+	new public NoTargetAbilityData source => (NoTargetAbilityData)_source;
+	new public NoTargetAbilityData data => (NoTargetAbilityData)_data;
 	public override Type dataType => typeof(NoTargetAbilityData);
 
 	/// <summary>

@@ -78,7 +78,7 @@ public abstract class AbilityData : UnitModifierData {
 	public class AllowMove : Attribute<bool> {
 		public override string identifier => "Attribute_Ability_AllowMove";
 		public override string TooltipText(IAttribute source) {
-			if (current == true) return DefaultTooltip(source);
+			if (current) return DefaultTooltip(source);
 			return null;
 		}
 	}

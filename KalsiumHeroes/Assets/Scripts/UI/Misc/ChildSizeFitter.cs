@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Muc.Extensions;
 using UnityEngine;
@@ -10,24 +11,18 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ContentSizeFitter))]
 public class ChildSizeFitter : UIBehaviour, ILayoutElement, ILayoutGroup {
 
-	[System.NonSerialized] private RectTransform _rectTransform;
-	protected RectTransform rectTransform {
-		get {
-			if (_rectTransform == null) _rectTransform = GetComponent<RectTransform>();
-			return _rectTransform;
-		}
-
-	}
-	[System.NonSerialized] private List<RectTransform> _rectChildren = new();
+	[NonSerialized] RectTransform _rectTransform;
+	protected RectTransform rectTransform => _rectTransform == null ? _rectTransform = GetComponent<RectTransform>() : _rectTransform;
+	[NonSerialized] List<RectTransform> _rectChildren = new();
 	protected List<RectTransform> rectChildren => _rectChildren;
 
 
-	[SerializeField] public float minWidth { get; protected set; }
-	[SerializeField] public float preferredWidth { get; protected set; }
-	[SerializeField] public float flexibleWidth { get; protected set; }
-	[SerializeField] public float minHeight { get; protected set; }
-	[SerializeField] public float preferredHeight { get; protected set; }
-	[SerializeField] public float flexibleHeight { get; protected set; }
+	[field: SerializeField] public float minWidth { get; protected set; }
+	[field: SerializeField] public float preferredWidth { get; protected set; }
+	[field: SerializeField] public float flexibleWidth { get; protected set; }
+	[field: SerializeField] public float minHeight { get; protected set; }
+	[field: SerializeField] public float preferredHeight { get; protected set; }
+	[field: SerializeField] public float flexibleHeight { get; protected set; }
 
 	int ILayoutElement.layoutPriority => 0;
 

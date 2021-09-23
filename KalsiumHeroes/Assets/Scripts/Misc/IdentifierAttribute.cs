@@ -55,9 +55,7 @@ namespace Editors {
 					sorted.Sort((a, b) => a.identifier.CompareTo(b.identifier));
 					foreach (var data in sorted) {
 						if (a.objectType == null || a.objectType.IsAssignableFrom(data.GetType())) {
-							menu.AddItem(new GUIContent(data.identifier), data.identifier == v, () => {
-								SetValue(property, data.identifier);
-							});
+							menu.AddItem(new GUIContent(data.identifier), data.identifier == v, () => SetValue(property, data.identifier));
 						}
 					}
 					menu.ShowAsContext();

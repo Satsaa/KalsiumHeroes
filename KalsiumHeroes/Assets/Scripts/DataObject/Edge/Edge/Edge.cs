@@ -9,7 +9,7 @@ using Muc.Numerics;
 
 public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 
-	public new EdgeData data => (EdgeData)_data;
+	new public EdgeData data => (EdgeData)_data;
 	public override Type dataType => typeof(EdgeData);
 
 	public Hex hex1;

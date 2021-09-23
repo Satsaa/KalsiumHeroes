@@ -108,7 +108,7 @@ public class Game : Singleton<Game> {
 
 	/// <summary> Initializes the game </summary>
 	public void Init(string code, Team team) {
-		if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException($"Code is empty.", nameof(code));
+		if (string.IsNullOrWhiteSpace(code)) throw new ArgumentException("Code is empty.", nameof(code));
 		if (!Enum.IsDefined(typeof(Team), team)) throw new ArgumentException($"Invalid team: '{team}'", nameof(team));
 		if (!mode.teams.Contains(team)) throw new ArgumentException($"Team not supported by mode. Team: '{team}', Mode: '{Lang.GetStr($"{mode.identifier}_DisplayName")}'", nameof(team));
 		if (inited) throw new InvalidOperationException($"Duplicate call to {nameof(Init)}.");
@@ -187,12 +187,6 @@ namespace Editors {
 	public class GameEditor : Editor {
 
 		Game t => (Game)target;
-
-		// SerializedProperty property;
-
-		void OnEnable() {
-			// property = serializedObject.FindProperty(nameof(property));
-		}
 
 		public override void OnInspectorGUI() {
 			DrawDefaultInspector();

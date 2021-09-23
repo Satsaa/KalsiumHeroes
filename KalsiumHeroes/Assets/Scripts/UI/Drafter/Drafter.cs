@@ -49,7 +49,7 @@ public class Drafter : UIBehaviour {
 
 	public void AddToDraft(UnitData unitData) {
 		if (selection.Contains(unitData)) {
-			Debug.LogWarning($"Already selected");
+			Debug.LogWarning("Already selected");
 		} else {
 			selection.Add(unitData);
 		}
@@ -57,7 +57,7 @@ public class Drafter : UIBehaviour {
 
 	public void RemoveFromDraft(UnitData unitData) {
 		if (!selection.Remove(unitData)) {
-			Debug.LogWarning($"Already removed");
+			Debug.LogWarning("Already removed");
 		}
 	}
 
@@ -71,10 +71,6 @@ public class Drafter : UIBehaviour {
 	}
 
 	public bool Validate(out string failMessage) {
-		if (mode.ValidateDraft(selection, out failMessage)) {
-			return true;
-		} else {
-			return false;
-		}
+		return mode.ValidateDraft(selection, out failMessage);
 	}
 }

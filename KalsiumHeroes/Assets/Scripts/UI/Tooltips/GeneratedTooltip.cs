@@ -34,10 +34,10 @@ public class GeneratedTooltip : Tooltip, IValueReceiver {
 		var pairs = props.Select(v => (data: v.GetValue(data) as IAttribute, source: v.GetValue(source) as IAttribute));
 		foreach (var pair in pairs) {
 			var tooltip = pair.data.TooltipText(pair.source);
-			if (!String.IsNullOrEmpty(tooltip)) text.text += $"{tooltip}\n";
+			if (!string.IsNullOrEmpty(tooltip)) text.text += $"{tooltip}\n";
 		}
 
-		text.text += $"</line-height>";
+		text.text += "</line-height>";
 
 		if (hasLore) text.text += $"<style=quote>{lore}</style>\n";
 

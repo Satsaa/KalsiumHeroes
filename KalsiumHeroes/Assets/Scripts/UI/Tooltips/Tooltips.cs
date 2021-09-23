@@ -14,10 +14,10 @@ using Muc.Data;
 [DefaultExecutionOrder(-1)]
 public class Tooltips : UISingleton<Tooltips> {
 
+	[field: SerializeField] public Window defaultWindowPrefab { get; protected set; }
 	[SerializeField] Timeout hideDelay = new(0.5f, true);
 	[SerializeField] Timeout showDelay = new(0.5f, true);
 	[SerializeField] Timeout quickSwitchDelay = new(0.1f, true);
-	[SerializeField] public Window defaultWindowPrefab;
 	[SerializeField] SerializedDictionary<string, Tooltip> tooltips;
 
 	[SerializeField, HideInInspector] List<Tooltip> tts;
@@ -35,7 +35,7 @@ public class Tooltips : UISingleton<Tooltips> {
 			showDelay.Reset(true);
 			quickSwitchDelay.Reset(true);
 		}
-		if (tts.Any()) {
+		if (tts.Count > 0) {
 			GetHovered(out var hovered);
 			if (IsTopHovered()) {
 				hideFrameDelay.Reset(true);
@@ -85,7 +85,7 @@ public class Tooltips : UISingleton<Tooltips> {
 
 	//TODO: Only works for top tooltip
 	public void InvokeOnCreatorClicked(Rect innerRect) {
-		if (!tts.Any()) return;
+		if (tts.Count == 0) return;
 		var top = tts.Last();
 		if (top) top.OnCreatorClicked(innerRect);
 	}
@@ -101,8 +101,8 @@ public class Tooltips : UISingleton<Tooltips> {
 		if (Game.game && Game.targeting.targeting) return false;
 		lastPing = query;
 		lastPingFrame = Time.frameCount;
-		if (!tts.Any() || tts.Last().creator != creator || tts.Last().query != query) {
-			if (tts.Any() && !IsTopHovered()) return false;
+		if (tts.Count == 0 || tts.Last().creator != creator || tts.Last().query != query) {
+			if (tts.Count > 0 && !IsTopHovered()) return false;
 			hideFrameDelay.Reset(true);
 			hideDelay.Reset(true);
 			return true;
@@ -147,7 +147,7 @@ public class Tooltips : UISingleton<Tooltips> {
 		Parse(query, out var id, out var values);
 
 		var isTop = GetHovered(out var hovered) ? hovered.index == tts.Count - 1 : tts.Count - 1 == -1;
-		if (!isTop && (!tts.Any() || tts.Last().creator != creator || tts.Last().query != query)) {
+		if (!isTop && (tts.Count == 0 || tts.Last().creator != creator || tts.Last().query != query)) {
 			// Quick switching
 			quickSwitchDelay.paused = false;
 			if (quickSwitchDelay.expired) {
@@ -213,7 +213,7 @@ public class Tooltips : UISingleton<Tooltips> {
 	}
 
 	public bool Hide(string query, RectTransform creator) {
-		if (tts.Any() && tts.Last().creator == creator && tts.Last().query == query) {
+		if (tts.Count > 0 && tts.Last().creator == creator && tts.Last().query == query) {
 			Pop();
 			return true;
 		}
@@ -221,31 +221,27 @@ public class Tooltips : UISingleton<Tooltips> {
 	}
 
 	private bool IsTopHovered() {
-		if (tts.Any()) {
-			if (CustomInputModule.IsPointerOverUI()) {
-				var hovered = CustomInputModule.GetHoveredGameObject();
-				var parent = hovered.transform;
-				var top = tts.Last();
-				while (parent != null) {
-					if (parent == top.transform) {
-						return true;
-					}
-					parent = parent.parent;
+		if (tts.Count > 0 && CustomInputModule.IsPointerOverUI()) {
+			var hovered = CustomInputModule.GetHoveredGameObject();
+			var parent = hovered.transform;
+			var top = tts.Last();
+			while (parent != null) {
+				if (parent == top.transform) {
+					return true;
 				}
+				parent = parent.parent;
 			}
 		}
 		return false;
 	}
 
 	private bool GetHovered(out Tooltip tooltip) {
-		if (tts.Any()) {
-			if (CustomInputModule.IsPointerOverUI()) {
-				var hovered = CustomInputModule.GetHoveredGameObject();
-				var parent = hovered.transform;
-				tooltip = parent.GetComponentInParent<Tooltip>();
-				if (tooltip) {
-					return true;
-				}
+		if (tts.Count > 0 && CustomInputModule.IsPointerOverUI()) {
+			var hovered = CustomInputModule.GetHoveredGameObject();
+			var parent = hovered.transform;
+			tooltip = parent.GetComponentInParent<Tooltip>();
+			if (tooltip) {
+				return true;
 			}
 		}
 		tooltip = default;
@@ -311,24 +307,22 @@ public class Tooltips : UISingleton<Tooltips> {
 			if (dashing) {
 				dashing = false;
 				token += current;
+			} else if (current == '\\') {
+				dashing = true;
+				continue;
 			} else {
-				if (current == '\\') {
-					dashing = true;
+				if (current == ':') {
+					tokens.Add(token);
+					token = "";
 					continue;
-				} else {
-					if (current == ':') {
-						tokens.Add(token);
-						token = "";
-						continue;
-					}
-					token += current;
 				}
+				token += current;
 			}
 		}
 
 		tokens.Add(token);
 
-		tooltipId = tokens.First();
+		tooltipId = tokens[0];
 		parameters = tokens.Skip(1).ToArray();
 
 	}

@@ -69,7 +69,7 @@ public partial class Client : MonoBehaviour {
 		if (Event.eventTypes.TryGetValue(packet.data.type, out var genericParam)) {
 
 			var targetType = typeof(Command<>).MakeGenericType(genericParam);
-			Event e = (JsonUtility.FromJson(json, targetType) as dynamic).data;
+			Event e = ((dynamic)JsonUtility.FromJson(json, targetType)).data;
 			switch (e) {
 				case Result result:
 					Debug.Log($"Received {nameof(Result)}: {json}");

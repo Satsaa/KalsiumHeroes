@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 
-	public new UnitUIModifierData data => (UnitUIModifierData)_data;
+	new public UnitUIModifierData data => (UnitUIModifierData)_data;
 	public override Type dataType => typeof(UnitUIModifierData);
 
 	[SerializeField, HideInInspector] RectTransform rect;
@@ -24,7 +24,7 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 
 			if (data.clampToScreen) {
 
-				var clampRect = (rect.parent as RectTransform).rect;
+				var clampRect = ((RectTransform)rect.parent).rect;
 				clampRect = new Rect(
 					clampRect.x + data.clampMin.x * clampRect.width,
 					clampRect.y + data.clampMin.y * clampRect.height,

@@ -9,7 +9,7 @@ using HexGrid;
 
 public abstract class EdgeModifier : Modifier {
 
-	public new EdgeModifierData data => (EdgeModifierData)_data;
+	new public EdgeModifierData data => (EdgeModifierData)_data;
 	public override Type dataType => typeof(EdgeModifierData);
 	public Edge edge => (Edge)master;
 
@@ -32,7 +32,7 @@ public abstract class EdgeModifier : Modifier {
 		}
 	}
 
-	protected new void OnRemove() {
+	protected override void OnRemove() {
 		using (var scope = new Hooks.Scope()) {
 			edge.hooks.ForEach<IOnEdgeModifierRemove_Edge>(scope, v => v.OnEdgeModifierRemove(this));
 			Game.hooks.ForEach<IOnEdgeModifierRemove_Global>(scope, v => v.OnEdgeModifierRemove(this));

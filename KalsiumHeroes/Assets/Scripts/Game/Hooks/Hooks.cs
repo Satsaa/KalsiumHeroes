@@ -33,9 +33,10 @@ public abstract class Hooks {
 	public static bool executing => current != null;
 
 	/// <summary> This event is Invoked ONCE after the execution of IHooks in the current scope ends. </summary>
+	/// <exception cref="InvalidOperationException">asd</exception>
 	public static event Action onFinishEvent {
-		remove { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish -= value; }
-		add { if (current == null || !current.active) throw new InvalidOperationException("No active scope."); else current.onFinish += value; }
+		remove { if (current?.active == true) current.onFinish -= value; else throw new InvalidOperationException("No active scope."); }
+		add { if (current?.active == true) current.onFinish += value; else throw new InvalidOperationException("No active scope."); }
 	}
 
 

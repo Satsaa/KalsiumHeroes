@@ -21,7 +21,7 @@ public class ConfirmTileAbilityTargeter : AbilityTargeter {
 			confirmed = true;
 			return true;
 		} else {
-			if (selections.Any()) selections.RemoveAt(selections.Count - 1);
+			if (selections.Count > 0) selections.RemoveAt(selections.Count - 1);
 			return base.TrySelect(tile);
 		}
 	}

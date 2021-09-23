@@ -57,12 +57,12 @@ public class DataFieldSelector<T> {
 	public T GetOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1] : fallbackOther);
+		return TryOverrideOther(source, ac?.count >= 2 ? ac.values[1] : fallbackOther);
 	}
 	public T GetRawOther(object source, bool ignoreSwap = false) {
 		if (swap && !ignoreSwap) return GetRawValue(source, true);
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1].raw : fallbackOther);
+		return TryOverrideOther(source, ac?.count >= 2 ? ac.values[1].raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {
@@ -101,7 +101,7 @@ public class DataFieldSelector<T> {
 			ar = iac = ac = null;
 			arValue = null;
 			fieldCached = null;
-			if (!String.IsNullOrEmpty(field.attributeName)) {
+			if (!string.IsNullOrEmpty(field.attributeName)) {
 				var fieldInfo = source.GetType().GetField(field.attributeName);
 				if (fieldInfo != null) {
 					var value = fieldInfo.GetValue(source);
@@ -111,7 +111,7 @@ public class DataFieldSelector<T> {
 						var arType = typeof(Object).IsAssignableFrom(typeof(T)) ? typeof(AssetReference<>).MakeGenericType(typeof(T)) : null;
 						var crType = typeof(Component).IsAssignableFrom(typeof(T)) ? typeof(ComponentReference<>).MakeGenericType(typeof(T)) : null;
 						var type = value.GetType();
-						if ((arType != null && arType.IsAssignableFrom(type)) || (crType != null && crType.IsAssignableFrom(type))) {
+						if (arType?.IsAssignableFrom(type) == true || crType?.IsAssignableFrom(type) == true) {
 							ar = value;
 							arValue = type.GetProperty("value", BindingFlags.Instance | BindingFlags.Public);
 						} else {

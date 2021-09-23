@@ -8,9 +8,7 @@ using Serialization;
 [KeepRefToken]
 public class Targeting : ScriptableObject, IOnUpdate {
 
-	public bool targeting => targeter != null && !targeter.IsCompleted();
-	private Rounds rm => Game.rounds;
-	private GameEvents e => Game.events;
+	public bool targeting => targeter?.IsCompleted() == false;
 
 	[SerializeField] Camera camera;
 

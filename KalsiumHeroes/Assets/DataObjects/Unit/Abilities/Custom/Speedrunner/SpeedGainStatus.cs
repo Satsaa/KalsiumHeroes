@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
-	public new SpeedGainStatusData data => (SpeedGainStatusData)_data;
+	new public SpeedGainStatusData data => (SpeedGainStatusData)_data;
 	public override Type dataType => typeof(SpeedGainStatusData);
 
 	protected int unitsFound = -1;

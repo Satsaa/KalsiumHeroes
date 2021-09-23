@@ -50,7 +50,7 @@ public class AssetReference<T> where T : Object {
 	/// <summary>
 	/// Load the referenced asset asynchronously.
 	/// </summary>
-	public async virtual Task<T> LoadAsync() {
+	public virtual async Task<T> LoadAsync() {
 		if (!this) {
 			isCached = true;
 			return cached = default;

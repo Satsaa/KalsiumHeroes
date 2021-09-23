@@ -31,7 +31,7 @@ public class AbilityTargeter : Targeter {
 	public override HashSet<Tile> GetHover(Tile tile) {
 		return ability switch {
 			TileTargetAbility ability => new HashSet<Tile>(ability.GetAffectedArea(tile)),
-			UnitTargetAbility ability => tile.hasUnits ? new HashSet<Tile>(ability.GetAffectedArea(tile.units.First())) : new HashSet<Tile>(),
+			UnitTargetAbility ability => tile.hasUnits ? new HashSet<Tile>(ability.GetAffectedArea(tile.units[0])) : new HashSet<Tile>(),
 			_ => throw new InvalidOperationException($"Unknown TargetAbility type: {ability.GetType().Name}"),
 		};
 	}

@@ -12,7 +12,6 @@ using System.Linq;
 using Debug = UnityEngine.Debug;
 using Muc.Extensions;
 
-[RequireComponent(typeof(TileGrid))]
 public class GridTester : MonoBehaviour {
 
 	[field: SerializeField]
@@ -22,6 +21,9 @@ public class GridTester : MonoBehaviour {
 	public Tile hover;
 	[HideInInspector] public Hex mainHex;
 	[HideInInspector] public Hex hoverHex;
+
+	public bool paint;
+	public TileData paintTile;
 
 	public Draw draw;
 	public enum Draw {
@@ -34,12 +36,6 @@ public class GridTester : MonoBehaviour {
 		CheapestPath, ShortestPath, FirstPath,
 	}
 
-	public bool paint;
-	public TileData paintTile;
-
-	void OnValidate() {
-		grid = GetComponent<TileGrid>();
-	}
 }
 
 
@@ -77,7 +73,7 @@ public class GridTesterEditor : Editor {
 		DrawHex(t.hoverHex, ChangeAlpha(Color.yellow, 0.25f));
 
 
-		if ((t.draw == GridTester.Draw.Line || t.draw == GridTester.Draw.SmartLine)) {
+		if (t.draw is GridTester.Draw.Line or GridTester.Draw.SmartLine) {
 			foreach (var tile in t.draw == GridTester.Draw.Line ? grid.Line(t.mainHex, t.hoverHex) : grid.SmartLine(t.mainHex, t.hoverHex)) {
 				DrawTile(tile, lightBlue);
 			}
@@ -100,7 +96,7 @@ public class GridTesterEditor : Editor {
 		}
 		if (t.draw == GridTester.Draw.Spiral) {
 			var i = 0;
-			var total = 3 * Mathf.Pow((distance + 1), 2) - 3 * (distance + 1) + 1;
+			var total = 3 * Mathf.Pow(distance + 1, 2) - 3 * (distance + 1) + 1;
 			foreach (var tile in grid.Spiral(t.mainHex, distance)) {
 				var color = Color.Lerp(Color.green, Color.red, i++ / total);
 				DrawTile(tile, color);
@@ -204,7 +200,7 @@ public class GridTesterEditor : Editor {
 
 	private void DrawHex(Hex hex, Color color) {
 		var wsCorners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToList();
-		wsCorners.Add(wsCorners.First());
+		wsCorners.Add(wsCorners[0]);
 		var array = wsCorners.ToArray();
 		using (ColorScope(color)) {
 			Handles.DrawAAConvexPolygon(array);

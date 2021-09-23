@@ -38,11 +38,11 @@ public class NumericAttributeSelector {
 
 	public float GetOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).value : fallbackOther);
+		return TryOverrideOther(source, iac?.count >= 2 ? (float)iac.GetValue(1).value : fallbackOther);
 	}
 	public float GetRawOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, iac != null && iac.count >= 2 ? (float)iac.GetValue(1).raw : fallbackOther);
+		return TryOverrideOther(source, iac?.count >= 2 ? (float)iac.GetValue(1).raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {

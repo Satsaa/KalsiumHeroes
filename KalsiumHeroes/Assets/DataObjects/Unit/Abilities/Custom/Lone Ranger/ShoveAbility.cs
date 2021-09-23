@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class ShoveAbility : UnitTargetAbility {
 
-	public new ShoveAbilityData data => (ShoveAbilityData)_data;
+	new public ShoveAbilityData data => (ShoveAbilityData)_data;
 	public override Type dataType => typeof(ShoveAbilityData);
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()].units[msg.targetIndexes.First()];
+			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
 			UnitModifier.Create(target, data.rootModifier);
 			Shove(target);
 		});

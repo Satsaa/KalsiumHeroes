@@ -88,7 +88,7 @@ public class Rounds : ScriptableObject {
 	}
 
 	public void OnGameStart() {
-		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Game start"));
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog("Game start"));
 		if (!TryEndGame()) {
 			round++;
 			Gather();
@@ -99,7 +99,7 @@ public class Rounds : ScriptableObject {
 
 	private bool TryEndGame() {
 		if (Game.dataObjects.Get<Unit>().Count() <= 1) {
-			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Game end"));
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog("Game end"));
 			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameEnd>(scope, v => v.OnGameEnd());
 			return true;
 		}

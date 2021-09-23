@@ -56,13 +56,13 @@ public class DataObjectFieldName<T> : DataFieldName {
 				.SelectMany(v => v.GetTypes())
 					.Where(v
 						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-						&& (v.IsSubclassOf(typeof(DataObjectData)))
+						&& v.IsSubclassOf(typeof(DataObjectData))
 					).SelectMany(v => v.GetFields()
 						.Where(f =>
-							(f.FieldType == typeof(T) || f.FieldType.IsSubclassOf(typeof(T)))
+							f.FieldType == typeof(T) || f.FieldType.IsSubclassOf(typeof(T))
 							|| typeof(Attribute<T>).IsAssignableFrom(f.FieldType)
-							|| (arType != null && arType.IsAssignableFrom(f.FieldType))
-							|| (crType != null && crType.IsAssignableFrom(f.FieldType))
+							|| arType?.IsAssignableFrom(f.FieldType) == true
+							|| crType?.IsAssignableFrom(f.FieldType) == true
 						)
 						.Select(v => (v.Name, GetAttributeType(v.FieldType), v.FieldType))).Distinct().ToList();
 			list.Sort((a, b) => a.Name.CompareTo(b.Name));
@@ -185,12 +185,13 @@ namespace Editors {
 
 		static string GetTypeName(Type type) {
 			if (type.IsArray) return GetTypeName(type.GetElementType()) + "[]";
-			if (type.IsGenericType)
+			if (type.IsGenericType) {
 				return string.Format(
 					"{0}<{1}>",
 					type.Name.Substring(0, type.Name.LastIndexOf("`", StringComparison.InvariantCulture)),
 					string.Join(", ", type.GetGenericArguments().Select(GetTypeName))
 				);
+			}
 
 			return type.Name;
 		}

@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 public static class Storage {
 
-	public readonly static JsonSerializer serializer = new() {
+	public static readonly JsonSerializer serializer = new() {
 		ContractResolver = new CollectionClearingContractResolver()
 	};
 

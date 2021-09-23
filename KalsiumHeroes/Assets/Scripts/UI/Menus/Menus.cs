@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 public class Menus : Singleton<Menus> {
 
-	public new static Transform transform => instance.gameObject.transform;
+	new public static Transform transform => instance.gameObject.transform;
 
 	public List<Menu> menus;
 	public List<Menu> cached;
@@ -32,7 +32,7 @@ public class Menus : Singleton<Menus> {
 
 
 	public void TryClose() {
-		if (menus.Any() && menus.Last().allowCloseKey) {
+		if (menus.Count > 0 && menus[^0].allowCloseKey) {
 			Pop();
 		}
 	}
@@ -42,7 +42,7 @@ public class Menus : Singleton<Menus> {
 		if (mi != -1) {
 			Hide(mi);
 		} else {
-			throw new ArgumentException($"Menu not found.", nameof(target));
+			throw new ArgumentException("Menu not found.", nameof(target));
 		}
 	}
 
@@ -172,12 +172,6 @@ namespace Editors {
 	public class MenusEditor : Editor {
 
 		Menus t => (Menus)target;
-
-		// SerializedProperty property;
-
-		void OnEnable() {
-			// property = serializedObject.FindProperty(nameof(property));
-		}
 
 		public override void OnInspectorGUI() {
 			serializedObject.Update();

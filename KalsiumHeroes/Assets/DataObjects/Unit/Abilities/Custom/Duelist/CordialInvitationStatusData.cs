@@ -12,10 +12,7 @@ public class CordialInvitationStatusData : StatusData {
 	public ModifierData disgracefulBehaviour;
 	public ModifierData piercingGlare;
 
-	[SerializeField, HideInInspector]
-	public Unit opponent;
-	[SerializeField, HideInInspector]
-	public CordialInvitationStatus opponentStatus;
-	[SerializeField, HideInInspector]
-	public CordialInvitationAbility duelCaster;
+	[HideInInspector] public Unit opponent;
+	[HideInInspector] public CordialInvitationStatus opponentStatus;
+	[HideInInspector] public CordialInvitationAbility duelCaster;
 }

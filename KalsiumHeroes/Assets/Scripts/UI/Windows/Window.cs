@@ -28,9 +28,9 @@ public class Window : ExtendedUIBehaviour {
 	[Flags]
 	public enum Edge {
 		Left = 1,
-		Right = 2,
-		Bottom = 4,
-		Top = 8,
+		Right = 1 << 1,
+		Bottom = 1 << 2,
+		Top = 1 << 3,
 	}
 
 	new protected void Awake() {

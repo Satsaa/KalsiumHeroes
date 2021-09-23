@@ -87,7 +87,9 @@ public static class Pathing {
 				if (tiles.TryGetValue(current, out var item)) {
 					current = item.source;
 					capacity++;
-				} else break;
+				} else {
+					break;
+				}
 			}
 			var res = new Tile[capacity];
 			current = to;
@@ -281,7 +283,9 @@ public static class Pathing {
 				if (tiles.TryGetValue(current, out var item)) {
 					current = item.source;
 					capacity++;
-				} else break;
+				} else {
+					break;
+				}
 			}
 			var res = new Tile[capacity];
 			current = to;

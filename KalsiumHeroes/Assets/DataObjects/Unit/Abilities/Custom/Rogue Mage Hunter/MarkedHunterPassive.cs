@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class MarkedHunterPassive : Passive, IOnDealDamage_Unit {
 
-	public new MarkedHunterPassiveData data => (MarkedHunterPassiveData)_data;
+	new public MarkedHunterPassiveData data => (MarkedHunterPassiveData)_data;
 	public override Type dataType => typeof(MarkedHunterPassiveData);
 
-	public void OnDealDamage(UnitModifier source, Unit targetUnit, float damage, DamageType damageType) {
-		if (!(source is HuntTheMarkAbility)) {
-			if (targetUnit.data.health.current > 0 && !targetUnit.modifiers.Get<MarkOfPreyStatus>().Any())
-				Modifier.Create(targetUnit, data.markOfPreyModifier);
+	public void OnDealDamage(UnitModifier source, Unit target, float damage, DamageType damageType) {
+		if (source is not HuntTheMarkAbility && target.data.health.current > 0 && !target.modifiers.Get<MarkOfPreyStatus>().Any()) {
+			Create(target, data.markOfPreyModifier);
 		}
 	}
 }

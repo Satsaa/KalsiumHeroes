@@ -194,8 +194,9 @@ namespace Editors {
 			createTypes ??= AppDomain.CurrentDomain.GetAssemblies()
 				.SelectMany(v => v.GetTypes())
 				.Where(v =>
-					(v.IsClass && !v.IsAbstract) &&
-					(v == typeof(DataObject) || typeof(DataObject).IsAssignableFrom(v))
+					v.IsClass
+					&& !v.IsAbstract
+					&& (v == typeof(DataObject) || typeof(DataObject).IsAssignableFrom(v))
 				).ToList();
 			return createTypes.Where(v => v == createType || createType.IsAssignableFrom(v));
 		}

@@ -15,7 +15,7 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 
 	protected override void ReceiveValue(UnitData data) {
 		UpdateStatic(data);
-		if (dynamics.Any()) {
+		if (dynamics.Count > 0) {
 			Debug.LogWarning("You are mixing static and dynamic objects.", this);
 		}
 	}
@@ -24,7 +24,7 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 		this.target = target;
 		UpdateDynamic(target);
 		Hook(target);
-		if (statics.Any()) {
+		if (statics.Count > 0) {
 			Debug.LogWarning("You are mixing static and dynamic objects.", this);
 		}
 	}

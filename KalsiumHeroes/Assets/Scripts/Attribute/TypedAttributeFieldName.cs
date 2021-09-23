@@ -37,7 +37,7 @@ public class TypedAttributeFieldName {
 				}
 				fieldType = fieldType.BaseType;
 			}
-			throw new ArgumentException("fieldType must extend Attribute<>", "fieldType");
+			throw new ArgumentException($"'{nameof(fieldType)}' must extend Attribute<>", nameof(fieldType));
 		}
 	}
 

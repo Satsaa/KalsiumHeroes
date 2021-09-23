@@ -186,7 +186,7 @@ namespace Editors {
 
 				if (props.Length == 1 && enabled == null) {
 					using (ForceIndentScope(position, out position)) {
-						PropertyField(position, label, props.First());
+						PropertyField(position, label, props[0]);
 					}
 					return;
 				}

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class OpportuneFlightAbility : TileTargetAbility {
 
-	public new OpportuneFlightAbilityData data => (OpportuneFlightAbilityData)_data;
+	new public OpportuneFlightAbilityData data => (OpportuneFlightAbilityData)_data;
 	public override Type dataType => typeof(OpportuneFlightAbilityData);
 
 	public override IEnumerable<Tile> GetTargets() {
@@ -16,7 +16,7 @@ public class OpportuneFlightAbility : TileTargetAbility {
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets[0]];
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				DoMove(tile);

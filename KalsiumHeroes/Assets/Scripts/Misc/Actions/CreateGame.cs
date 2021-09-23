@@ -23,7 +23,7 @@ public class CreateGame : MonoBehaviour {
 
 		msgBox.AddCustomObject(codeInputField.gameObject);
 
-		codeInputField.onValueChanged.AddListener((v) => { OnValueChanged(v, msgBox.options[0]); });
+		codeInputField.onValueChanged.AddListener((v) => OnValueChanged(v, msgBox.options[0]));
 		OnValueChanged("", msgBox.options[0]);
 	}
 
@@ -38,13 +38,13 @@ public class CreateGame : MonoBehaviour {
 		try {
 			var res = await task;
 			if (res.errored) {
-				Popups.ShowPopup("Error", $"Game creation caused a server error.");
+				Popups.ShowPopup("Error", "Game creation caused a server error.");
 			}
 			if (res.failed) {
 				Popups.ShowPopup("Fail", $"Game creation failed: {res.message}");
 			}
 		} catch (System.Exception) {
-			Popups.ShowPopup("Error", $"Game creation caused an error.");
+			Popups.ShowPopup("Error", "Game creation caused an error.");
 			throw;
 		}
 	}

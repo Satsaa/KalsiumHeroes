@@ -73,8 +73,8 @@ public class HookOrders : Singleton<HookOrders> {
 				.Where(v
 					=> v.IsInterface
 					&& v.GetInterfaces().Any(v => v == typeof(IHook))
-					&& v.GetMethods().Any()
-					&& (hookerType == null || hookerType.GetInterfaces().Contains(v))
+					&& v.GetMethods().Length > 0
+					&& hookerType?.GetInterfaces().Contains(v) != false
 				);
 		}
 	}

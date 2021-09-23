@@ -155,7 +155,7 @@ namespace Serialization {
 				var data = JObject.Parse(json);
 				var props = data.Properties().ToDictionary(v => uint.Parse(v.Name), v => v.Value as JObject);
 
-				while (stack.Any()) {
+				while (stack.Count > 0) {
 					var id = stack.Pop();
 					var jo = props[id];
 					Deserialize(id, jo);
@@ -175,7 +175,9 @@ namespace Serialization {
 					var refTok = type.GetCustomAttribute<RefTokenAttribute>();
 					if (refTok == null) throw new InvalidOperationException($"Type is not legal ({type.FullName})");
 					if (remainingValue != null && refTok.KeepRef(remainingValue)) return objs[id] = remainingValue;
+#pragma warning disable UNT0007
 					var res = objs[id] = refTok.CreateObject(props[id]) ?? ScriptableObject.CreateInstance(type);
+#pragma warning restore UNT0007
 					res.name = id.ToString();
 					return res;
 				}
@@ -234,8 +236,9 @@ namespace Serialization {
 												&& Type.GetType(str) is Type jtype
 												&& d.itemType.IsAssignableFrom(jtype)
 											) {
-												if (jval is JValue jvalval && jvalval.Value == null) list[i] = null;
-												else {
+												if (jval is JValue jvalval && jvalval.Value == null) {
+													list[i] = null;
+												} else {
 													QueueOnAfterDeserialize(list[i] = detokenizer(jtype, jval, list[i]), d);
 												}
 											}
@@ -264,8 +267,9 @@ namespace Serialization {
 									&& Type.GetType(str) is Type jtype
 									&& d.field.FieldType.IsAssignableFrom(jtype)
 								) {
-									if (jval is JValue jvalval && jvalval.Value == null) d.field.SetValue(obj, null);
-									else {
+									if (jval is JValue jvalval && jvalval.Value == null) {
+										d.field.SetValue(obj, null);
+									} else {
 										var value1 = detokenizer(jtype, jval, value);
 										d.field.SetValue(obj, value1);
 										QueueOnAfterDeserialize(value1, d);
@@ -345,7 +349,7 @@ namespace Serialization {
 				stack.Push((topId, game));
 				var tokens = new Dictionary<uint, JToken>() { { topId, null } };
 				var toId = new Dictionary<object, uint>() { { game, topId } };
-				while (stack.Any()) {
+				while (stack.Count > 0) {
 					var pair = stack.Pop();
 					Serialize(pair.Item1, pair.Item2);
 				}

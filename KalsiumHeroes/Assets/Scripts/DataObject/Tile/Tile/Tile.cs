@@ -13,11 +13,11 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_
 
 	public static implicit operator Hex(Tile v) => v.hex;
 
-	public new TileData source => (TileData)_source;
-	public new TileData data => (TileData)_data;
+	new public TileData source => (TileData)_source;
+	new public TileData data => (TileData)_data;
 	public override Type dataType => typeof(TileData);
 
-	public bool hasUnits => units.Any();
+	public bool hasUnits => units.Count > 0;
 	public SafeList<Unit> units;
 
 	[field: SerializeField] List<GraveUnit> _graveyard = new();

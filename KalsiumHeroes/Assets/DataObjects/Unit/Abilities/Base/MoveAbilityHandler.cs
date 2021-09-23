@@ -15,7 +15,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 	public MoveAbilityHandler(GameEvents.Ability msg, MoveAbility creator) : base(msg) {
 		this.creator = creator;
 		var start = Game.grid.tiles[msg.casterTile];
-		var end = Game.grid.tiles[msg.targets.First()];
+		var end = Game.grid.tiles[msg.targets[0]];
 		Debug.Log("Handling move ability event!");
 		var rangeMode = creator.data.rangeMode;
 		Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
@@ -46,7 +46,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 		}
 		if (creator.unit.shown) {
 			var actor = creator.unit.actor;
-			var walkPositions = pathObjects.Select(v => v is Tile t ? t.center : default).ToList();
+			var walkPositions = pathObjects.ConvertAll(v => v is Tile t ? t.center : default);
 			for (int i = 0; i < walkPositions.Count; i++) {
 				if ((i + 1) % 2 == 0) {
 					var prev = walkPositions[i - 1];

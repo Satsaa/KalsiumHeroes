@@ -57,8 +57,8 @@ public class PopupPreset : ScriptableObject {
 	public Popup Show(string title, string message, params Option[] options) {
 		if (popupPrefab == null || optionPrefab == null) {
 			Debug.LogError($"{nameof(popupPrefab)} or {nameof(optionPrefab)} is not set. Alternatively a reference may be broken and you need to reassign them in editor. To do that double click this message and press the reassign button.", this);
-			if (popupPrefab == null) throw new ArgumentNullException($"Argument cannot be null.", nameof(popupPrefab));
-			if (optionPrefab == null) throw new ArgumentNullException($"Argument cannot be null.", nameof(optionPrefab));
+			if (popupPrefab == null) throw new ArgumentNullException("Argument cannot be null.", nameof(popupPrefab));
+			if (optionPrefab == null) throw new ArgumentNullException("Argument cannot be null.", nameof(optionPrefab));
 		}
 		var msgBox = Instantiate(popupPrefab);
 		msgBox.gameObject.transform.SetParent(Popups.rectTransform);

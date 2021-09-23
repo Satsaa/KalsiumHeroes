@@ -7,8 +7,8 @@ using UnityEngine;
 
 public abstract class UnitModifier : Modifier {
 
-	public new UnitModifierData source => (UnitModifierData)_source;
-	public new UnitModifierData data => (UnitModifierData)_data;
+	new public UnitModifierData source => (UnitModifierData)_source;
+	new public UnitModifierData data => (UnitModifierData)_data;
 	public override Type dataType => typeof(UnitModifierData);
 	public Unit unit => (Unit)master;
 

@@ -24,7 +24,7 @@ public class JoinGame : MonoBehaviour {
 
 		msgBox.AddCustomObject(codeInputField.gameObject);
 
-		codeInputField.onValueChanged.AddListener((v) => { OnValueChanged(v, msgBox.options[0]); });
+		codeInputField.onValueChanged.AddListener((v) => OnValueChanged(v, msgBox.options[0]));
 		OnValueChanged("", msgBox.options[0]);
 	}
 
@@ -38,13 +38,13 @@ public class JoinGame : MonoBehaviour {
 		try {
 			var res = await task;
 			if (res.errored) {
-				Popups.ShowPopup("Error", $"Joining game caused a server error.");
+				Popups.ShowPopup("Error", "Joining game caused a server error.");
 			}
 			if (res.failed) {
 				Popups.ShowPopup("Fail", $"Joining game failed: {res.message}");
 			}
 		} catch (System.Exception) {
-			Popups.ShowPopup("Error", $"Joining game caused an error.");
+			Popups.ShowPopup("Error", "Joining game caused an error.");
 			throw;
 		}
 	}

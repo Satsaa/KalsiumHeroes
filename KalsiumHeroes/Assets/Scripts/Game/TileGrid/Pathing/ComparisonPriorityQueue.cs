@@ -76,7 +76,7 @@ namespace Priority_Queue {
 		public bool Contains(T node) {
 #if DEBUG
 			if (node == null) {
-				throw new ArgumentNullException("node");
+				throw new ArgumentNullException(nameof(node));
 			}
 			if (node.Queue != null && !Equals(node.Queue)) {
 				throw new InvalidOperationException("node.Contains was called on a node from another queue.  Please call originalQueue.ResetNode() first");
@@ -86,7 +86,7 @@ namespace Priority_Queue {
 			}
 #endif
 
-			return (_nodes[node.QueueIndex] == node);
+			return _nodes[node.QueueIndex] == node;
 		}
 
 		/// <summary>
@@ -102,7 +102,7 @@ namespace Priority_Queue {
 		public void Enqueue(T node, float priority) {
 #if DEBUG
 			if (node == null) {
-				throw new ArgumentNullException("node");
+				throw new ArgumentNullException(nameof(node));
 			}
 			if (_numNodes >= _nodes.Length - 1) {
 				throw new InvalidOperationException("Queue is full - node cannot be added: " + node);
@@ -390,7 +390,7 @@ namespace Priority_Queue {
 		public void UpdatePriority(T node, float priority) {
 #if DEBUG
 			if (node == null) {
-				throw new ArgumentNullException("node");
+				throw new ArgumentNullException(nameof(node));
 			}
 			if (node.Queue != null && !Equals(node.Queue)) {
 				throw new InvalidOperationException("node.UpdatePriority was called on a node from another queue");
@@ -430,7 +430,7 @@ namespace Priority_Queue {
 		public void Remove(T node) {
 #if DEBUG
 			if (node == null) {
-				throw new ArgumentNullException("node");
+				throw new ArgumentNullException(nameof(node));
 			}
 			if (node.Queue != null && !Equals(node.Queue)) {
 				throw new InvalidOperationException("node.Remove was called on a node from another queue");
@@ -469,7 +469,7 @@ namespace Priority_Queue {
 		public void ResetNode(T node) {
 #if DEBUG
 			if (node == null) {
-				throw new ArgumentNullException("node");
+				throw new ArgumentNullException(nameof(node));
 			}
 			if (node.Queue != null && !Equals(node.Queue)) {
 				throw new InvalidOperationException("node.ResetNode was called on a node from another queue");

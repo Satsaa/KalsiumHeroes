@@ -57,7 +57,7 @@ namespace Muc.Numerics {
 			this.threshold = threshold;
 		}
 
-		public new string ToString() => value.ToString();
+		new public string ToString() => value.ToString();
 	}
 
 }

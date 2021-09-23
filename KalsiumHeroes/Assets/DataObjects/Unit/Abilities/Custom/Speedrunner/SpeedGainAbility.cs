@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpeedGainAbility : NoTargetAbility {
 
-	public new SpeedGainAbilityData data => (SpeedGainAbilityData)_data;
+	new public SpeedGainAbilityData data => (SpeedGainAbilityData)_data;
 	public override Type dataType => typeof(SpeedGainAbilityData);
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {

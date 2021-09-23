@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MovementChangeStatus : Status {
 
-	public new MovementChangeStatusData data => (MovementChangeStatusData)_data;
+	new public MovementChangeStatusData data => (MovementChangeStatusData)_data;
 	public override Type dataType => typeof(MovementChangeStatusData);
 
 	protected override void OnConfigureNonpersistent(bool add) {

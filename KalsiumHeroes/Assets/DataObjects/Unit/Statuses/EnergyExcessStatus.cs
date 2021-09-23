@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnCalculateDamage_Unit {
 
-	public new EnergyExcessStatusData data => (EnergyExcessStatusData)_data;
+	new public EnergyExcessStatusData data => (EnergyExcessStatusData)_data;
 	public override Type dataType => typeof(EnergyExcessStatusData);
 
 	[HideInInspector, SerializeField] Attribute<int> stacks = new();
@@ -69,7 +69,4 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 		if (pts) pts.Stop();
 	}
 
-	public override void OnRoundStart() {
-		base.OnRoundStart();
-	}
 }

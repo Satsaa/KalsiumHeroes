@@ -40,7 +40,7 @@ public class Highlighter {
 	public void OnShow(GameObject gameObject) {
 		renderer = gameObject.GetComponentInChildren<HighlighterComponent>().GetComponent<Renderer>();
 
-		renderer.enabled = colors.Any();
+		renderer.enabled = colors.Count > 0;
 		if (renderer.enabled) renderer.material.SetColor("_Color", colors.Last().color);
 	}
 

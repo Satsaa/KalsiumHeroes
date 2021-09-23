@@ -33,7 +33,7 @@ public abstract class Master<TMod, TModData, THook> : Master
 	}
 
 	public sealed override void AttachModifier(Modifier modifier) {
-		modifiers.Add<TMod>((TMod)modifier);
+		modifiers.Add((TMod)modifier);
 		hooks.Hook(modifier);
 	}
 

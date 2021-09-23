@@ -11,18 +11,14 @@ public partial class Client : MonoBehaviour {
 	public WebSocket ws;
 	public string url = "ws://localhost:8080";
 
-	// Start is called before the first frame update
-	void Start() {
+	private void Start() {
 		Connect();
 	}
 
-	async void Connect() {
+	private async void Connect() {
 		ws = new WebSocket(url);
 
-		ws.OnOpen += () => {
-			Debug.Log("Connection open!");
-		};
-
+		ws.OnOpen += () => Debug.Log("Connection open!");
 		ws.OnError += (e) => Debug.Log($"Error! {e}");
 		ws.OnClose += (e) => Debug.Log("Connection closed!");
 
@@ -36,7 +32,7 @@ public partial class Client : MonoBehaviour {
 		await ws.Connect();
 	}
 
-	void Update_WS() {
+	private void Update_WS() {
 #if !UNITY_WEBGL || UNITY_EDITOR
 		if (ws == null) {
 			Connect();
@@ -46,13 +42,13 @@ public partial class Client : MonoBehaviour {
 #endif
 	}
 
-	async void OnApplicationQuit() {
+	private async void OnApplicationQuit() {
 		await ws.Close();
 	}
 
 #if UNITY_EDITOR
 	[UnityEditor.Callbacks.DidReloadScripts]
-	static void OnReloadScripts() {
+	private static void OnReloadScripts() {
 		// Rejoin old game
 		if (Application.isPlaying) {
 			App.client.Connect();

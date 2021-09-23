@@ -49,14 +49,16 @@ public class App : Singleton<App> {
 	}
 
 	public async Task<Result> CreateGame(string code) {
-		return await App.client.Post(new GameCreate() { code = code });
+		return string.IsNullOrWhiteSpace(code)
+			? throw new System.ArgumentException($"'{nameof(code)}' cannot be null or whitespace.", nameof(code))
+			: await client.Post(new GameCreate() { code = code });
 	}
 
 	public async Task<Result> JoinGame(string code) {
-		var join = await App.client.Post(new GameJoin() { code = code, team = Team.Team1 });
+		var join = await client.Post(new GameJoin() { code = code, team = Team.Team1 });
 		switch (join.result) {
 			case ResultType.Fail:
-				var join2 = await App.client.Post(new GameJoin() { code = code, team = Team.Team2 });
+				var join2 = await client.Post(new GameJoin() { code = code, team = Team.Team2 });
 				if (!join2.succeeded) return join2;
 				return await JoinGame(code, Team.Team2);
 			case ResultType.Success:
@@ -67,7 +69,7 @@ public class App : Singleton<App> {
 	}
 
 	public async Task<Result> JoinGame(string code, Team team) {
-		var join = await App.client.Post(new GameJoin() { code = code, team = team });
+		var join = await client.Post(new GameJoin() { code = code, team = team });
 		if (join.succeeded) {
 			var res = new TaskCompletionSource<bool>();
 			var gameScene = SceneManager.GetSceneByPath(this.gameScene);
@@ -95,8 +97,7 @@ public class App : Singleton<App> {
 
 	public async Task<Result> RejoinGame(string code, Team team, int delay = 0) {
 		await Task.Delay(delay);
-		var join = await App.client.Post(new GameJoin() { code = code, team = team });
-		return join;
+		return await client.Post(new GameJoin() { code = code, team = team });
 	}
 
 

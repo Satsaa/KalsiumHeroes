@@ -7,8 +7,8 @@ using UnityEngine;
 
 public abstract class TargetAbility : Ability {
 
-	public new TargetAbilityData source => (TargetAbilityData)_source;
-	public new TargetAbilityData data => (TargetAbilityData)_data;
+	new public TargetAbilityData source => (TargetAbilityData)_source;
+	new public TargetAbilityData data => (TargetAbilityData)_data;
 	public override Type dataType => typeof(TargetAbilityData);
 
 	/// <summary> Returns a targeter with onComplete and onCancel callbacks. </summary>

@@ -15,16 +15,16 @@ using UnityEngine.UI;
 /// </summary>
 public class CustomInputModule : StandaloneInputModule {
 
-	public static bool IsPointerOverUI(int pointerId = PointerInputModule.kMouseLeftId) {
+	public static bool IsPointerOverUI(int pointerId = kMouseLeftId) {
 		var self = EventSystem.current.currentInputModule as CustomInputModule;
 		if (self == null) throw new InvalidOperationException($"{nameof(IsPointerOverUI)} requires an InputModule of type {nameof(CustomInputModule)} to be in use.");
 		var lastPointer = self.GetLastPointerEventData(pointerId);
 		if (lastPointer != null)
-			return lastPointer.pointerEnter != null && lastPointer.pointerEnter.GetComponent<RectTransform>() != null;
+			return lastPointer.pointerEnter != null && lastPointer.pointerEnter.TryGetComponent<RectTransform>(out _);
 		return false;
 	}
 
-	public static GameObject GetHoveredGameObject(int pointerId = PointerInputModule.kMouseLeftId) {
+	public static GameObject GetHoveredGameObject(int pointerId = kMouseLeftId) {
 		var self = EventSystem.current.currentInputModule as CustomInputModule;
 		if (self == null) throw new InvalidOperationException($"{nameof(GetHoveredGameObject)} requires an InputModule of type {nameof(CustomInputModule)} to be in use.");
 		var lastPointer = self.GetLastPointerEventData(pointerId);
@@ -34,7 +34,7 @@ public class CustomInputModule : StandaloneInputModule {
 		return null;
 	}
 
-	public static void RaycastAll(List<RaycastResult> raycastResults, int pointerId = PointerInputModule.kMouseLeftId) {
+	public static void RaycastAll(List<RaycastResult> raycastResults, int pointerId = kMouseLeftId) {
 		var self = EventSystem.current.currentInputModule as CustomInputModule;
 		if (self == null) throw new InvalidOperationException($"{nameof(RaycastAll)} requires an InputModule of type {nameof(CustomInputModule)} to be in use.");
 		var lastPointer = self.GetLastPointerEventData(pointerId);

@@ -24,7 +24,7 @@ public class Lang : Singleton<Lang> {
 	public List<string> languages { get; private set; } = new List<string>() { "en-US" };
 
 
-	static Dictionary<string, string> texts;
+	private static Dictionary<string, string> texts;
 
 
 	protected override void Awake() {
@@ -47,64 +47,64 @@ public class Lang : Singleton<Lang> {
 					return false;
 				}
 				Lang.texts = texts;
-				Lang.instance.language = language;
+				instance.language = language;
 				failMessage = null;
 				try {
 					CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture(language);
-				} catch (System.Exception) {
+				} catch (Exception) {
 					Debug.LogWarning($"Could not set specific culture of {language}");
 					try {
 						CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture(new Regex(@"-.*").Replace(language, ""));
-					} catch (System.Exception) {
+					} catch (Exception) {
 						Debug.LogWarning($"Could not set specific culture of {new Regex(@"-.*").Replace(language, "")}. It is set to the invariant culture.");
 						CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 					}
 					throw;
 				}
 				return true;
-			} catch (System.Exception) {
+			} catch (Exception) {
 				failMessage = GetStr("Lang_CannotLoadLanguage");
 			}
-		} catch (System.Exception) {
+		} catch (Exception) {
 			failMessage = GetStr("Lang_FileCorrupted");
 		}
 		return false;
 	}
 
 	public static bool HasStr(string strId) {
-		return Lang.texts.ContainsKey(strId);
+		return texts.ContainsKey(strId);
 	}
 
 	public static bool TryGetStr(string strId, out string str) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, null, null);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStr(string strId, out string str, IAttribute a, DataObjectData s, DataObjectData d) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, s, d);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStr(string strId, out string str, DataObjectData s, DataObjectData d) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, d);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStr(string strId, out string str, DataObjectData s) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, null);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStr(string strId, out string str, IAttribute a) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, null, null);
 			return true;
 		}
@@ -112,35 +112,35 @@ public class Lang : Singleton<Lang> {
 	}
 
 	public static bool TryGetStrArgs(string strId, out string str, params object[] args) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, null, null, args);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStrArgs(string strId, out string str, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, s, d, args);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStrArgs(string strId, out string str, DataObjectData s, DataObjectData d, params object[] args) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, d, args);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStrArgs(string strId, out string str, DataObjectData s, params object[] args) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, null, args);
 			return true;
 		}
 		return false;
 	}
 	public static bool TryGetStrArgs(string strId, out string str, IAttribute a, params object[] args) {
-		if (Lang.texts.TryGetValue(strId, out str)) {
+		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, null, null, args);
 			return true;
 		}
@@ -149,91 +149,91 @@ public class Lang : Singleton<Lang> {
 
 
 	public static string GetStr(string strId) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(in res, null, null, null);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(in res, null, null, null);
 		return strId;
 	}
 	public static string GetStr(string strId, string defaultStr) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(in res, null, null, null);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(in res, null, null, null);
 		return defaultStr;
 	}
 	public static string GetStr(string strId, string defaultStr, IAttribute a, DataObjectData s, DataObjectData d) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
 		return defaultStr;
 	}
 	public static string GetStr(string strId, string defaultStr, DataObjectData s, DataObjectData d) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
 		return defaultStr;
 	}
 	public static string GetStr(string strId, string defaultStr, DataObjectData s) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
 		return defaultStr;
 	}
 	public static string GetStr(string strId, string defaultStr, IAttribute a) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, null, null);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null);
 		return defaultStr;
 	}
 	public static string GetStr(string strId, IAttribute a, DataObjectData s, DataObjectData d) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
 		return strId;
 	}
 	public static string GetStr(string strId, DataObjectData s, DataObjectData d) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
 		return strId;
 	}
 	public static string GetStr(string strId, DataObjectData s) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
 		return strId;
 	}
 	public static string GetStr(string strId, IAttribute a) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, null, null);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null);
 		return strId;
 	}
 
 	public static string GetStrArgs(string strId, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, null, null, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, null, null, args);
 		return strId;
 	}
 	public static string GetStrArgs(string strId, string defaultStr, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, null, null, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, null, null, args);
 		return defaultStr;
 	}
 	public static string GetStrArgs(string strId, string defaultStr, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
 		return defaultStr;
 	}
 	public static string GetStrArgs(string strId, string defaultStr, DataObjectData s, DataObjectData d, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
 		return defaultStr;
 	}
 	public static string GetStrArgs(string strId, string defaultStr, DataObjectData s, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
 		return defaultStr;
 	}
 	public static string GetStrArgs(string strId, string defaultStr, IAttribute a, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, null, null, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null, args);
 		return defaultStr;
 	}
 	public static string GetStrArgs(string strId, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
 		return strId;
 	}
 	public static string GetStrArgs(string strId, DataObjectData s, DataObjectData d, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
 		return strId;
 	}
 	public static string GetStrArgs(string strId, DataObjectData s, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
 		return strId;
 	}
 	public static string GetStrArgs(string strId, IAttribute a, params object[] args) {
-		if (Lang.texts != null && Lang.texts.TryGetValue(strId, out var res)) return Format(res, a, null, null, args);
+		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null, args);
 		return strId;
 	}
 
 #if UNITY_EDITOR
 	[UnityEditor.Callbacks.DidReloadScripts]
-	private static void OnScriptsRloaded() {
-		if (Lang.instance) Lang.LoadLanguage(Lang.instance.language, out var _);
+	private static void OnScriptsReloaded() {
+		if (instance) LoadLanguage(instance.language, out var _);
 	}
 #endif
 
@@ -578,8 +578,10 @@ public class Lang : Singleton<Lang> {
 		}
 	}
 
-
-	[System.Serializable]
-	public class SyntaxException : System.Exception { public SyntaxException(string message) : base(message) { } }
+	public class SyntaxException : Exception {
+		public SyntaxException(string message) : base(message) { }
+		public SyntaxException() : base() { }
+		public SyntaxException(string message, Exception innerException) : base(message, innerException) { }
+	}
 
 }

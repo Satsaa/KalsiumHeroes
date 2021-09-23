@@ -37,11 +37,11 @@ public class AttributeSelector<T> {
 
 	public T GetOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1] : fallbackOther);
+		return TryOverrideOther(source, ac?.count >= 2 ? ac.values[1] : fallbackOther);
 	}
 	public T GetRawOther(object source) {
 		UpdateCache(source);
-		return TryOverrideOther(source, ac != null && ac.count >= 2 ? ac.values[1].raw : fallbackOther);
+		return TryOverrideOther(source, ac?.count >= 2 ? ac.values[1].raw : fallbackOther);
 	}
 
 	public bool GetEnabled(object source) {

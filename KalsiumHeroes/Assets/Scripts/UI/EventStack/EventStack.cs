@@ -86,7 +86,7 @@ public class EventStack : Muc.Components.VirtualLayoutGroup, IOnAnimationEventEn
 	}
 
 	protected void CreateRound() {
-		var round = trackers.Any() ? trackers.Last().round + 1 : 0;
+		var round = trackers.Count > 0 ? trackers.Last().round + 1 : 0;
 
 		var roundItem = AnimatedItem.CreateInstance<AnimatedItem>();
 		roundItem.prefab = roundPrefab;
@@ -146,7 +146,7 @@ public class EventStack : Muc.Components.VirtualLayoutGroup, IOnAnimationEventEn
 				base.RemoveAt(tracker.index + removeAt);
 				oldUnits.RemoveAt(removeAt);
 			}
-			if (removed.Any()) {
+			if (removed.Count > 0) {
 				for (int j = i + 1; j < trackers.Count; j++) {
 					var other = trackers[j].index -= removed.Count;
 				}

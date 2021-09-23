@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MarkOfCastigationStatus : Status, IOnAbilityCastEnd_Unit {
 
-	public new MarkOfCastigationStatusData data => (MarkOfCastigationStatusData)_data;
+	new public MarkOfCastigationStatusData data => (MarkOfCastigationStatusData)_data;
 	public override Type dataType => typeof(MarkOfCastigationStatusData);
 
 	public void OnAbilityCastEnd(Ability ability) {

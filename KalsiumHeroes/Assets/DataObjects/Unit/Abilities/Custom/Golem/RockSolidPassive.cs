@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RockSolidPassive : Passive, IOnChangePosition_Global, IOnDeath_Global, IOnSpawn_Unit {
 
-	public new RockSolidPassiveData data => (RockSolidPassiveData)_data;
+	new public RockSolidPassiveData data => (RockSolidPassiveData)_data;
 	public override Type dataType => typeof(RockSolidPassiveData);
 
 	protected Alterer<int, int> defAlt;

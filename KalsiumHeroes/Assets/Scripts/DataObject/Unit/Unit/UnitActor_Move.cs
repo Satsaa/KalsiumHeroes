@@ -13,9 +13,9 @@ public partial class UnitActor {
 	public float walkSpeed = 1f;
 	public float runSpeed = 1.75f;
 
-	[HideInInspector, SerializeField] public bool isMoving = false;
-	[HideInInspector, SerializeField] public float moveT = 0;
-	[HideInInspector, SerializeField] public Spline spline;
+	[HideInInspector] public bool isMoving = false;
+	[HideInInspector] public float moveT = 0;
+	[HideInInspector] public Spline spline;
 
 
 	public void Walk(IEnumerable<Vector3> positions) {

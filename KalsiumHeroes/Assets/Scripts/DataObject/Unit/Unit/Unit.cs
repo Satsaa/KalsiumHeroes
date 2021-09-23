@@ -9,8 +9,8 @@ using Muc.Extensions;
 [DefaultExecutionOrder(-500)]
 public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
-	public new UnitData source => (UnitData)_source;
-	public new UnitData data => (UnitData)_data;
+	new public UnitData source => (UnitData)_source;
+	new public UnitData data => (UnitData)_data;
 	public override Type dataType => typeof(UnitData);
 
 	[field: SerializeField] public Tile tile { get; private set; }
@@ -53,14 +53,9 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	protected override void OnShow() {
 		base.OnShow();
-		actor.transform.position = tile.center;
-		actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
+		actor.transform.SetPositionAndRotation(tile.center, Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z));
 		transform.SetParent(actor.transform, false);
 		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
-	}
-
-	protected override void OnHide() {
-		base.OnHide();
 	}
 
 	public void Heal(float heal) {
@@ -197,7 +192,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	public void SetDir(TileDir tileDir, bool reorientate) {
 		if (tileDir == this.tileDir) {
-			if (reorientate && shown) actor.transform.rotation = actor.transform.rotation * Quaternion.AngleAxis(tileDir.ToAngle(), Vector3.up);
+			if (reorientate && shown) actor.transform.rotation *= Quaternion.AngleAxis(tileDir.ToAngle(), Vector3.up);
 			return;
 		}
 		if (removed) {

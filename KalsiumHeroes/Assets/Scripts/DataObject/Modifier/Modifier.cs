@@ -11,8 +11,8 @@ using Object = UnityEngine.Object;
 /// </summary>
 public abstract class Modifier : DataObject {
 
-	public new ModifierData source => (ModifierData)_source;
-	public new ModifierData data => (ModifierData)_data;
+	new public ModifierData source => (ModifierData)_source;
+	new public ModifierData data => (ModifierData)_data;
 	public override Type dataType => typeof(ModifierData);
 
 	[Tooltip("Master component for this Modifier."), SerializeField]
@@ -24,8 +24,8 @@ public abstract class Modifier : DataObject {
 	[field: SerializeField]
 	public GameObject container { get; private set; }
 
-	/// <summary> A virtual Modifier is wrapped by a Virtualizer which acts as a layer. </summary>
-	[HideInInspector, SerializeField] public bool virtualized;
+	/// <summary> A virtual Modifier is wrapped by a Virtualizer which acts as a layer (WIP). </summary>
+	[HideInInspector] public bool virtualized;
 
 	/// <summary> Removes this Modifier from the Master and the game. </summary>
 	public void Remove() {

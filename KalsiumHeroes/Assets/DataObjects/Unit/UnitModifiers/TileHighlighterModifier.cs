@@ -8,13 +8,8 @@ using UnityEngine;
 
 public class TileHighlighterModifier : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit, IOnChangePosition_Unit, IOnAnimationEventStart, IOnAnimationEventEnd {
 
-	public new TileHighlighterModifierData data => (TileHighlighterModifierData)_data;
+	new public TileHighlighterModifierData data => (TileHighlighterModifierData)_data;
 	public override Type dataType => typeof(TileHighlighterModifierData);
-
-	protected override void OnCreate() {
-		base.OnCreate();
-
-	}
 
 	void IOnChangePosition_Unit.OnChangePosition(Tile from, Tile to) {
 		if (unit.isCurrent) {

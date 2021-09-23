@@ -18,7 +18,7 @@ public class TooltipProvider : ExtendedUIBehaviour, IPointerEnterHandler, IPoint
 	public string query { get; protected set; } = "modifier_list";
 
 	[SerializeField, Tooltip("List of values to send with to the Tooltip.")]
-	public List<Object> additionalData;
+	List<Object> additionalData;
 
 	protected Camera canvasCam;
 

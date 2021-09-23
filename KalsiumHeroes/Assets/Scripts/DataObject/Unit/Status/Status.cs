@@ -6,8 +6,8 @@ using UnityEngine;
 
 public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit, IOnRoundStart, IOnDispell_Unit {
 
-	public new StatusData source => (StatusData)_source;
-	public new StatusData data => (StatusData)_data;
+	new public StatusData source => (StatusData)_source;
+	new public StatusData data => (StatusData)_data;
 	public override Type dataType => typeof(StatusData);
 
 	/// <summary> When the Unit got dispelled. </summary>

@@ -18,10 +18,10 @@ public abstract class GameMode : StoredScriptableObject, IIdentifiable {
 
 	public string version = "0.0.0";
 
-	[SerializeField, Tooltip("Teams available in this GameMode.")]
+	[Tooltip("Teams available in this GameMode.")]
 	public List<Team> teams = new() { Team.Team1, Team.Team2 };
 
-	[SerializeField, Tooltip("Units that can be drafted in this GameMode.")]
+	[Tooltip("Units that can be drafted in this GameMode.")]
 	public List<UnitData> draftableUnits;
 
 	[JsonProperty] public string[] draft;

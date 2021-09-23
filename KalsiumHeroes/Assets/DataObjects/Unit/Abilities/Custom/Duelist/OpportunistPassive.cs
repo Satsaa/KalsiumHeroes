@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OpportunistPassive : Passive, IOnMoveOver_Global {
 
-	public new OpportunistPassiveData data => (OpportunistPassiveData)_data;
+	new public OpportunistPassiveData data => (OpportunistPassiveData)_data;
 	public override Type dataType => typeof(OpportunistPassiveData);
 
 	public void OnMoveOver(Modifier reason, Unit unit, Tile from, Edge edge, Tile to) {

@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
-	public new EnergyDeficitStatusData data => (EnergyDeficitStatusData)_data;
+	new public EnergyDeficitStatusData data => (EnergyDeficitStatusData)_data;
 	public override Type dataType => typeof(EnergyDeficitStatusData);
 
 	[SerializeField] Attribute<int> stacks = new();
@@ -68,7 +68,4 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 		if (pts) pts.Stop();
 	}
 
-	public override void OnRoundStart() {
-		base.OnRoundStart();
-	}
 }

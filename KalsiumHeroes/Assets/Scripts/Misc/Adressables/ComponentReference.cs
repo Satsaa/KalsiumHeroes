@@ -70,21 +70,21 @@ public class ComponentReference<T> where T : Component {
 	protected bool isCached;
 
 	public Transform transform => value.transform;
-	public TC GetComponent<TC>() => value.GetComponent<TC>();
-	public TC[] GetComponents<TC>() => value.GetComponents<TC>();
-	public void GetComponents<TC>(List<TC> results) => value.GetComponents<TC>(results);
-	public TC GetComponentInChildren<TC>() => value.GetComponentInChildren<TC>();
-	public TC GetComponentInChildren<TC>(bool includeInactive) => value.GetComponentInChildren<TC>(includeInactive);
-	public TC[] GetComponentsInChildren<TC>() => value.GetComponentsInChildren<TC>();
-	public TC[] GetComponentsInChildren<TC>(bool includeInactive) => value.GetComponentsInChildren<TC>(includeInactive);
-	public void GetComponentsInChildren<TC>(List<TC> results) => value.GetComponentsInChildren<TC>(results);
-	public void GetComponentsInChildren<TC>(bool includeInactive, List<TC> results) => value.GetComponentsInChildren<TC>(includeInactive, results);
-	public TC GetComponentInParent<TC>() => value.GetComponentInParent<TC>();
-	public TC GetComponentInParent<TC>(bool includeInactive) => value.GetComponentInParent<TC>(includeInactive);
-	public TC[] GetComponentsInParent<TC>() => value.GetComponentsInParent<TC>();
-	public TC[] GetComponentsInParent<TC>(bool includeInactive) => value.GetComponentsInParent<TC>(includeInactive);
-	public void GetComponentsInParent<TC>(bool includeInactive, List<TC> results) => value.GetComponentsInParent<TC>(includeInactive, results);
-	public bool TryGetComponent<TC>(out TC component) => value.TryGetComponent<TC>(out component);
+	public TC GetComponent<TC>() where TC : Component => value.GetComponent<TC>();
+	public TC[] GetComponents<TC>() where TC : Component => value.GetComponents<TC>();
+	public void GetComponents<TC>(List<TC> results) where TC : Component => value.GetComponents(results);
+	public TC GetComponentInChildren<TC>() where TC : Component => value.GetComponentInChildren<TC>();
+	public TC GetComponentInChildren<TC>(bool includeInactive) where TC : Component => value.GetComponentInChildren<TC>(includeInactive);
+	public TC[] GetComponentsInChildren<TC>() where TC : Component => value.GetComponentsInChildren<TC>();
+	public TC[] GetComponentsInChildren<TC>(bool includeInactive) where TC : Component => value.GetComponentsInChildren<TC>(includeInactive);
+	public void GetComponentsInChildren<TC>(List<TC> results) where TC : Component => value.GetComponentsInChildren(results);
+	public void GetComponentsInChildren<TC>(bool includeInactive, List<TC> results) where TC : Component => value.GetComponentsInChildren(includeInactive, results);
+	public TC GetComponentInParent<TC>() where TC : Component => value.GetComponentInParent<TC>();
+	public TC GetComponentInParent<TC>(bool includeInactive) where TC : Component => value.GetComponentInParent<TC>(includeInactive);
+	public TC[] GetComponentsInParent<TC>() where TC : Component => value.GetComponentsInParent<TC>();
+	public TC[] GetComponentsInParent<TC>(bool includeInactive) where TC : Component => value.GetComponentsInParent<TC>(includeInactive);
+	public void GetComponentsInParent<TC>(bool includeInactive, List<TC> results) where TC : Component => value.GetComponentsInParent(includeInactive, results);
+	public bool TryGetComponent<TC>(out TC component) where TC : Component => value.TryGetComponent(out component);
 
 	/// <summary>
 	/// Load the referenced asset asynchronously.
@@ -97,7 +97,7 @@ public class ComponentReference<T> where T : Component {
 		if (!operationHandle.IsValid())
 			await assetReference.LoadAssetAsync<GameObject>().Task;
 		isCached = true;
-		return cached = Object.Equals(operationHandle.Result, null) ? default : (operationHandle.Result as GameObject)?.GetComponent<T>();
+		return cached = Object.Equals(operationHandle.Result, null) ? default : ((GameObject)operationHandle.Result).GetComponent<T>();
 	}
 
 	/// <summary>
@@ -113,7 +113,7 @@ public class ComponentReference<T> where T : Component {
 			op.WaitForCompletion();
 		}
 		isCached = true;
-		return cached = Object.Equals(operationHandle.Result, null) ? default : (operationHandle.Result as GameObject)?.GetComponent<T>();
+		return cached = Object.Equals(operationHandle.Result, null) ? default : ((GameObject)operationHandle.Result).GetComponent<T>();
 	}
 
 	/// <summary>

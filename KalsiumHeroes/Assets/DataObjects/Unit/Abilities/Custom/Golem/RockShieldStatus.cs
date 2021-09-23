@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 
-	public new RockShieldStatusData data => (RockShieldStatusData)_data;
+	new public RockShieldStatusData data => (RockShieldStatusData)_data;
 	public override Type dataType => typeof(RockShieldStatusData);
 
 	Attribute<int> shield;

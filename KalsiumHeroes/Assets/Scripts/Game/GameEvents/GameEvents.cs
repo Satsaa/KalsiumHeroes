@@ -78,11 +78,8 @@ public class GameEvents : ScriptableObject, IOnUpdate {
 	}
 
 	public bool TryEndEvent() {
-		if (handler == null || handler.EventHasEnded()) return false;
-		if (handler.TryEnd()) {
-			return true;
-		}
-		return false;
+		if (handler?.EventHasEnded() != false) return false;
+		return handler.TryEnd();
 	}
 
 	public void FastForward(int maxEvents = -1) {

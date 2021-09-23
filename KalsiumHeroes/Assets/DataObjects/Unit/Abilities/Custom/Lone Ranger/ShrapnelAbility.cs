@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class ShrapnelAbility : TileTargetAbility {
 
-	public new ShrapnelAbilityData data => (ShrapnelAbilityData)_data;
+	new public ShrapnelAbilityData data => (ShrapnelAbilityData)_data;
 	public override Type dataType => typeof(ShrapnelAbilityData);
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var target = Game.grid.tiles[msg.targets.First()];
+			var target = Game.grid.tiles[msg.targets[0]];
 			var modifier = (ShrapnelAbilityModifier)UnitModifier.Create(master, data.shrapnelModifierData);
 
 			modifier.target = target;

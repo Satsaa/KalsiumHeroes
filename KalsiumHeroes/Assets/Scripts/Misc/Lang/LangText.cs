@@ -12,10 +12,10 @@ public class LangText : TMPro.TextMeshProUGUI {
 		set { _strId = value; UpdateText(); }
 	}
 
-	[SerializeField] string _strId { get; set; }
+	[SerializeField] string _strId;
 
 	protected override void Awake() {
-		if (String.IsNullOrEmpty(strId)) strId = text;
+		if (string.IsNullOrEmpty(strId)) strId = text;
 		else UpdateText();
 		base.Awake();
 	}

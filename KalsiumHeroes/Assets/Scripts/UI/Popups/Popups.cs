@@ -20,7 +20,7 @@ public class Popups : UISingleton<Popups> {
 	}
 
 	public void TryClose() {
-		if (popups.Any()) {
+		if (popups.Count > 0) {
 			var popup = popups.Last();
 			var option = popup.options.FirstOrDefault(v => v.button.interactable && v.button.isActiveAndEnabled && v.isActiveAndEnabled && v.flags.HasFlag(PopupOption.Flags.Cancel));
 			if (option) option.Invoke();

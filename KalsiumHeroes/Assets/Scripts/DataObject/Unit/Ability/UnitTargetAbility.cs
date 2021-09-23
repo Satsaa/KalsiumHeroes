@@ -7,12 +7,12 @@ using UnityEngine;
 
 public abstract class UnitTargetAbility : TargetAbility {
 
-	public new UnitTargetAbilityData source => (UnitTargetAbilityData)_source;
-	public new UnitTargetAbilityData data => (UnitTargetAbilityData)_data;
+	new public UnitTargetAbilityData source => (UnitTargetAbilityData)_source;
+	new public UnitTargetAbilityData data => (UnitTargetAbilityData)_data;
 	public override Type dataType => typeof(UnitTargetAbilityData);
 
 	/// <summary>
-	/// Returns a list of affected Tiles if the Ability is cast on tile.
+	/// Returns a list of affected Tiles if the Ability is cast on the Tile of unit.
 	/// Used for highlighting and should be used when casting the ability (ensures equivalency).
 	/// </summary>
 	public virtual IEnumerable<Tile> GetAffectedArea(Unit unit) {
@@ -31,17 +31,17 @@ public abstract class UnitTargetAbility : TargetAbility {
 		tiles = tiles.Where(h => {
 			if (!h.hasUnits) return false;
 			// TODO: Unit based targeting
-			var tileUnit = h.units.First();
+			var tileUnit = h.units[0];
 			if (self && tileUnit == unit) return true;
 			if (ally && tileUnit.team == unit.team && tileUnit != this.unit) return true;
 			if (enemy && tileUnit.team != unit.team) return true;
 			return false;
 		});
 
-		return tiles.Select(v => v.units.First());
+		return tiles.Select(v => v.units[0]);
 	}
 
 	public override string CombatLog(GameEvents.Ability msg) {
-		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} casted {Lang.GetStr($"{data.identifier}_DisplayName")} on {Lang.GetStr($"{Game.grid.GetTile(msg.targets.First()).units.First().data.identifier}_DisplayName")}.";
+		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} casted {Lang.GetStr($"{data.identifier}_DisplayName")} on {Lang.GetStr($"{Game.grid.GetTile(msg.targets[0]).units[0].data.identifier}_DisplayName")}.";
 	}
 }

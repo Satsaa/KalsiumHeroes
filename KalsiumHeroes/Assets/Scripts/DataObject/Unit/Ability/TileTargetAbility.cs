@@ -7,8 +7,8 @@ using UnityEngine;
 
 public abstract class TileTargetAbility : TargetAbility {
 
-	public new TileTargetAbilityData source => (TileTargetAbilityData)_source;
-	public new TileTargetAbilityData data => (TileTargetAbilityData)_data;
+	new public TileTargetAbilityData source => (TileTargetAbilityData)_source;
+	new public TileTargetAbilityData data => (TileTargetAbilityData)_data;
 	public override Type dataType => typeof(TileTargetAbilityData);
 
 	/// <summary>

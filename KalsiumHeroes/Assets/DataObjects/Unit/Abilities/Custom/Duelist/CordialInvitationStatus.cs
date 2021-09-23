@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_Unit, IOnDeath_Unit {
 
-	public new CordialInvitationStatusData data => (CordialInvitationStatusData)_data;
+	new public CordialInvitationStatusData data => (CordialInvitationStatusData)_data;
 	public override Type dataType => typeof(CordialInvitationStatusData);
 
 	public void OnDeath() {

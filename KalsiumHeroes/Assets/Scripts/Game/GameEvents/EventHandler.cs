@@ -16,7 +16,7 @@ public abstract class EventHandler<T> : EventHandler where T : Event {
 
 	public T data;
 
-	public EventHandler(T data) {
+	protected EventHandler(T data) {
 		this.data = data;
 	}
 }

@@ -30,7 +30,7 @@ public class TileData : MasterData {
 		Passable() : base(true) { }
 		public override string identifier => "Attribute_Tile_Passable";
 		public override string TooltipText(IAttribute source) {
-			if (current == false) return DefaultTooltip(source);
+			if (!current) return DefaultTooltip(source);
 			return null;
 		}
 	}
@@ -40,7 +40,7 @@ public class TileData : MasterData {
 		Transparent() : base(true) { }
 		public override string identifier => "Attribute_Tile_Transparent";
 		public override string TooltipText(IAttribute source) {
-			if (current == false) return DefaultTooltip(source);
+			if (!current) return DefaultTooltip(source);
 			return null;
 		}
 	}
@@ -68,17 +68,15 @@ public class TileData : MasterData {
 [Serializable]
 public class TileEdgeModifierCollection {
 
-	public EdgeModifierData[] this[int index] {
-		get => index switch {
-			0 => this.right,
-			1 => this.downRight,
-			2 => this.downLeft,
-			3 => this.left,
-			4 => this.upLeft,
-			5 => this.upRigth,
-			_ => throw new ArgumentOutOfRangeException(nameof(index)),
-		};
-	}
+	public EdgeModifierData[] this[int index] => index switch {
+		0 => right,
+		1 => downRight,
+		2 => downLeft,
+		3 => left,
+		4 => upLeft,
+		5 => upRigth,
+		_ => throw new ArgumentOutOfRangeException(nameof(index)),
+	};
 
 	[Tooltip("EdgeModifiers added to the " + nameof(TileDir.Right) + " Edge.")]
 	public EdgeModifierData[] right;
