@@ -104,7 +104,7 @@ public abstract class Modifier : DataObject {
 		using (var scope = new Hooks.Scope()) {
 			edge.hooks.ForEach<IOnMoveOver_Edge>(scope, v => v.OnMoveOver(this, unit, from, to));
 			unit.hooks.ForEach<IOnMoveOver_Unit>(scope, v => v.OnMoveOver(this, from, edge, to));
-			Game.hooks.ForEach<IOnMoveOver_Global>(scope, v => v.OnMoveOver(this, unit, from, edge, to));
+			Game.hooks.ForEach<IOnMoveOver_Game>(scope, v => v.OnMoveOver(this, unit, from, edge, to));
 		}
 	}
 
@@ -113,7 +113,7 @@ public abstract class Modifier : DataObject {
 		using (var scope = new Hooks.Scope()) {
 			edge.hooks.ForEach<IOnMoveOver_Edge>(scope, v => v.OnMoveOver(this, unit, from, to));
 			unit.hooks.ForEach<IOnMoveOver_Unit>(scope, v => v.OnMoveOver(this, from, edge, to));
-			Game.hooks.ForEach<IOnMoveOver_Global>(scope, v => v.OnMoveOver(this, unit, from, edge, to));
+			Game.hooks.ForEach<IOnMoveOver_Game>(scope, v => v.OnMoveOver(this, unit, from, edge, to));
 		}
 	}
 
@@ -121,14 +121,14 @@ public abstract class Modifier : DataObject {
 		using (var scope = new Hooks.Scope()) {
 			tile.hooks.ForEach<IOnMoveOn_Tile>(scope, v => v.OnMoveOn(this, unit));
 			unit.hooks.ForEach<IOnMoveOn_Unit>(scope, v => v.OnMoveOn(this, tile));
-			Game.hooks.ForEach<IOnMoveOn_Global>(scope, v => v.OnMoveOn(this, unit, tile));
+			Game.hooks.ForEach<IOnMoveOn_Game>(scope, v => v.OnMoveOn(this, unit, tile));
 		}
 	}
 	public void ExecuteMoveOff(Unit unit, Tile tile) {
 		using (var scope = new Hooks.Scope()) {
 			tile.hooks.ForEach<IOnMoveOff_Tile>(scope, v => v.OnMoveOff(this, unit));
 			unit.hooks.ForEach<IOnMoveOff_Unit>(scope, v => v.OnMoveOff(this, tile));
-			Game.hooks.ForEach<IOnMoveOff_Global>(scope, v => v.OnMoveOff(this, unit, tile));
+			Game.hooks.ForEach<IOnMoveOff_Game>(scope, v => v.OnMoveOff(this, unit, tile));
 		}
 	}
 }

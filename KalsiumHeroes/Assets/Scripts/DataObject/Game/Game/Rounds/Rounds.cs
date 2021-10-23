@@ -115,7 +115,7 @@ public class Rounds : ScriptableObject {
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnTurnEnd_Unit>(scope, v => v.OnTurnEnd());
 			unit.tile.hooks.ForEach<IOnTurnEnd_Tile>(scope, v => v.OnTurnEnd(unit));
-			Game.hooks.ForEach<IOnTurnEnd_Global>(scope, v => v.OnTurnEnd(unit));
+			Game.hooks.ForEach<IOnTurnEnd_Game>(scope, v => v.OnTurnEnd(unit));
 		}
 	}
 
@@ -124,7 +124,7 @@ public class Rounds : ScriptableObject {
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
 			unit.tile.hooks.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(unit));
-			Game.hooks.ForEach<IOnTurnStart_Global>(scope, v => v.OnTurnStart(unit));
+			Game.hooks.ForEach<IOnTurnStart_Game>(scope, v => v.OnTurnStart(unit));
 		}
 	}
 }

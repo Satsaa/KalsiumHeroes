@@ -43,8 +43,14 @@ public abstract class Hooks {
 	/// <summary> Adds an OnEvents to the cache. </summary>
 	public abstract void Hook(Object obj);
 
+	/// <summary> Adds an OnEvents to the cache, if not already present. </summary>
+	public abstract void TryHook(Object obj);
+
 	/// <summary> Removes an OnEvents from the cache. </summary>
 	public abstract void Unhook(Object obj);
+
+	/// <summary> Removes an OnEvents from the cache, if present. </summary>
+	public abstract void TryUnhook(Object obj);
 
 
 	public class HooksList<T> : SafeList<T> {
@@ -65,10 +71,12 @@ public abstract class Hooks {
 			Add(item);
 		}
 
-		public void RemoveOrdered(T item) {
+		public bool RemoveOrdered(T item) {
 			var index = IndexOf(item);
+			if (index == -1) return false;
 			RemoveAt(index);
 			orders.RemoveAt(index);
+			return true;
 		}
 
 	}
@@ -122,9 +130,35 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 		}
 	}
 
+	public override void TryHook(Object obj) {
+		var hookerType = obj.GetType();
+		foreach (var iType in obj.GetType().GetInterfaces().Where(v => v.GetInterfaces().Contains(typeof(IHook)))) {
+			var listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
+			if (!dict.TryGetValue(iType, out var list)) {
+				dict[iType] = list = (IList)Activator.CreateInstance(listType);
+			}
+			if (!list.Cast<object>().Any(v => obj.Equals(v))) {
+				var add = listType.GetMethod(nameof(HooksList<int>.AddOrdered));
+				add.Invoke(list, new object[] { hookerType, iType, obj });
+			}
+		}
+	}
+
 	public override void Unhook(Object obj) {
 		foreach (var iType in obj.GetType().GetInterfaces().Where(v => v.GetInterfaces().Contains(typeof(IHook)))) {
-			Type listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
+			var listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
+			if (dict.TryGetValue(iType, out var list)) {
+				var remove = listType.GetMethod(nameof(HooksList<int>.RemoveOrdered));
+				remove.Invoke(list, new object[] { obj });
+			} else {
+				Debug.LogWarning($"Couldn't remove {obj} from {iType.Name} because the list for that type was missing!");
+			}
+		}
+	}
+
+	public override void TryUnhook(Object obj) {
+		foreach (var iType in obj.GetType().GetInterfaces().Where(v => v.GetInterfaces().Contains(typeof(IHook)))) {
+			var listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
 			if (dict.TryGetValue(iType, out var list)) {
 				var remove = listType.GetMethod(nameof(HooksList<int>.RemoveOrdered));
 				remove.Invoke(list, new object[] { obj });

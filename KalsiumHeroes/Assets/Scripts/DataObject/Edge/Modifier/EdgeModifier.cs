@@ -28,14 +28,14 @@ public abstract class EdgeModifier : Modifier {
 		base.OnCreate();
 		using (var scope = new Hooks.Scope()) {
 			edge.hooks.ForEach<IOnEdgeModifierCreate_Edge>(scope, v => v.OnEdgeModifierCreate(this));
-			Game.hooks.ForEach<IOnEdgeModifierCreate_Global>(scope, v => v.OnEdgeModifierCreate(this));
+			Game.hooks.ForEach<IOnEdgeModifierCreate_Game>(scope, v => v.OnEdgeModifierCreate(this));
 		}
 	}
 
 	protected override void OnRemove() {
 		using (var scope = new Hooks.Scope()) {
 			edge.hooks.ForEach<IOnEdgeModifierRemove_Edge>(scope, v => v.OnEdgeModifierRemove(this));
-			Game.hooks.ForEach<IOnEdgeModifierRemove_Global>(scope, v => v.OnEdgeModifierRemove(this));
+			Game.hooks.ForEach<IOnEdgeModifierRemove_Game>(scope, v => v.OnEdgeModifierRemove(this));
 		}
 		base.OnRemove();
 	}

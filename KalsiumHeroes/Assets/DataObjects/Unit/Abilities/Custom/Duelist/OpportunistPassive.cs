@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpportunistPassive : Passive, IOnMoveOver_Global {
+public class OpportunistPassive : Passive, IOnMoveOver_Game {
 
 	new public OpportunistPassiveData data => (OpportunistPassiveData)_data;
 	public override Type dataType => typeof(OpportunistPassiveData);

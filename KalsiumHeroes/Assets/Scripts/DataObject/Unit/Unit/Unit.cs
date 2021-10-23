@@ -47,7 +47,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
 			tile.hooks.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
-			Game.hooks.ForEach<IOnSpawn_Global>(scope, v => v.OnSpawn(this));
+			Game.hooks.ForEach<IOnSpawn_Game>(scope, v => v.OnSpawn(this));
 		}
 	}
 
@@ -62,7 +62,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnHeal_Unit>(scope, v => v.OnHeal(ref heal));
 			tile.hooks.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
-			Game.hooks.ForEach<IOnHeal_Global>(scope, v => v.OnHeal(this, ref heal));
+			Game.hooks.ForEach<IOnHeal_Game>(scope, v => v.OnHeal(this, ref heal));
 		}
 		data.health.current.value += Mathf.Max(0, heal);
 		data.health.Clamp();
@@ -74,22 +74,22 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			switch (source) {
 				case UnitModifier um:
 					um.unit.hooks.ForEach<IOnDealDamage_Unit>(scope, v => v.OnDealDamage(um, this, damage, type));
-					Game.hooks.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(um, this, damage, type));
+					Game.hooks.ForEach<IOnDealDamage_Game>(scope, v => v.OnDealDamage(um, this, damage, type));
 					break;
 				case TileModifier tm:
 					tm.tile.hooks.ForEach<IOnDealDamage_Tile>(scope, v => v.OnDealDamage(tm, this, damage, type));
-					Game.hooks.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(tm, this, damage, type));
+					Game.hooks.ForEach<IOnDealDamage_Game>(scope, v => v.OnDealDamage(tm, this, damage, type));
 					break;
 				case EdgeModifier em:
 					em.edge.hooks.ForEach<IOnDealDamage_Edge>(scope, v => v.OnDealDamage(em, this, damage, type));
-					Game.hooks.ForEach<IOnDealDamage_Global>(scope, v => v.OnDealDamage(source, this, damage, type));
+					Game.hooks.ForEach<IOnDealDamage_Game>(scope, v => v.OnDealDamage(source, this, damage, type));
 					break;
 			}
 		}
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
 			tile.hooks.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
-			Game.hooks.ForEach<IOnTakeDamage_Global>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
+			Game.hooks.ForEach<IOnTakeDamage_Game>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
 		}
 		switch (type) {
 			case DamageType.Physical:
@@ -116,7 +116,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
 				tile.hooks.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
-				Game.hooks.ForEach<IOnDeath_Global>(scope, v => v.OnDeath(this));
+				Game.hooks.ForEach<IOnDeath_Game>(scope, v => v.OnDeath(this));
 			}
 			Remove();
 		}
@@ -129,7 +129,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
 				tile.hooks.ForEach<IOnEnergyDeficit_Tile>(scope, v => v.OnEnergyDeficit(this, deficit));
-				Game.hooks.ForEach<IOnEnergyDeficit_Global>(scope, v => v.OnEnergyDeficit(this, deficit));
+				Game.hooks.ForEach<IOnEnergyDeficit_Game>(scope, v => v.OnEnergyDeficit(this, deficit));
 			}
 		}
 		var excess = data.energy.current - data.energy.max;
@@ -137,7 +137,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
 				tile.hooks.ForEach<IOnEnergyExcess_Tile>(scope, v => v.OnEnergyExcess(this, excess));
-				Game.hooks.ForEach<IOnEnergyExcess_Global>(scope, v => v.OnEnergyExcess(this, excess));
+				Game.hooks.ForEach<IOnEnergyExcess_Game>(scope, v => v.OnEnergyExcess(this, excess));
 			}
 		}
 		data.energy.Clamp();
@@ -147,7 +147,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnDispell_Unit>(scope, v => v.OnDispell());
 			tile.hooks.ForEach<IOnDispell_Tile>(scope, v => v.OnDispell(this));
-			Game.hooks.ForEach<IOnDispell_Global>(scope, v => v.OnDispell(this));
+			Game.hooks.ForEach<IOnDispell_Game>(scope, v => v.OnDispell(this));
 		}
 	}
 
@@ -186,7 +186,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
 			tile.hooks.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
-			Game.hooks.ForEach<IOnChangePosition_Global>(scope, v => v.OnChangePosition(this, orig, tile));
+			Game.hooks.ForEach<IOnChangePosition_Game>(scope, v => v.OnChangePosition(this, orig, tile));
 		}
 	}
 
@@ -205,7 +205,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnChangeDirection_Unit>(scope, v => v.OnChangeDirection(orig, tileDir));
 			tile.hooks.ForEach<IOnChangeDirection_Tile>(scope, v => v.OnChangeDirection(this, orig, tileDir));
-			Game.hooks.ForEach<IOnChangeDirection_Global>(scope, v => v.OnChangeDirection(this, orig, tileDir));
+			Game.hooks.ForEach<IOnChangeDirection_Game>(scope, v => v.OnChangeDirection(this, orig, tileDir));
 		}
 	}
 
@@ -215,7 +215,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
 			tile.hooks.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
-			Game.hooks.ForEach<IOnGetEstimatedSpeed_Global>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
+			Game.hooks.ForEach<IOnGetEstimatedSpeed_Game>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
 		}
 		return speed;
 	}

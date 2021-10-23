@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RockSolidPassive : Passive, IOnChangePosition_Global, IOnDeath_Global, IOnSpawn_Unit {
+public class RockSolidPassive : Passive, IOnChangePosition_Game, IOnDeath_Game, IOnSpawn_Unit {
 
 	new public RockSolidPassiveData data => (RockSolidPassiveData)_data;
 	public override Type dataType => typeof(RockSolidPassiveData);

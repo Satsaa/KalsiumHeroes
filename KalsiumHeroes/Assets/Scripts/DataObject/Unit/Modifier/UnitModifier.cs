@@ -17,7 +17,7 @@ public abstract class UnitModifier : Modifier {
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnUnitModifierCreate_Unit>(scope, v => v.OnUnitModifierCreate(this));
 			unit.tile.hooks.ForEach<IOnUnitModifierCreate_Tile>(scope, v => v.OnUnitModifierCreate(this));
-			Game.hooks.ForEach<IOnUnitModifierCreate_Global>(scope, v => v.OnUnitModifierCreate(this));
+			Game.hooks.ForEach<IOnUnitModifierCreate_Game>(scope, v => v.OnUnitModifierCreate(this));
 		}
 	}
 
@@ -25,7 +25,7 @@ public abstract class UnitModifier : Modifier {
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnUnitModifierRemove_Unit>(scope, v => v.OnUnitModifierRemove(this));
 			unit.tile.hooks.ForEach<IOnUnitModifierRemove_Tile>(scope, v => v.OnUnitModifierRemove(this));
-			Game.hooks.ForEach<IOnUnitModifierRemove_Global>(scope, v => v.OnUnitModifierRemove(this));
+			Game.hooks.ForEach<IOnUnitModifierRemove_Game>(scope, v => v.OnUnitModifierRemove(this));
 		}
 		base.OnRemove();
 	}

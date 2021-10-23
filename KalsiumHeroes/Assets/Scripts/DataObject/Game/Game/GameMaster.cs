@@ -13,43 +13,17 @@ using UnityEngine.AddressableAssets;
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [KeepRefToken]
 [DefaultExecutionOrder(-600)]
-public class Game : Singleton<Game> {
+public class GameMaster : Master<UnitModifier, UnitModifierData, IGameHook> {
 
-	public int test = 1;
-	public Vector2Int test2;
-	public UnitData unitTest1;
-	public UnitData unitTest2;
-	public List<UnitData> unitTestL;
+	/// <summary> Currently active Game instance </summary>
+	public static GameMaster game { get; private set; }
+	public bool active => game == this;
 
-	public List<int> intTest;
-
-	public List<Name> objIntTest;
-
-	[Serializable]
-	public class Name {
-		[SerializeField] int order;
-	}
-
-	public AssetReferenceT<GameObject> arbase;
-	public AssetReference<UnitData> ar1;
-	public AssetReference<GameObject> ar2;
-	public ComponentReference<UnitActor> arC;
-
-	public static Game game => instance;
-
-	public static GameEvents events => instance._events;
-	public static Rounds rounds => instance._rounds;
-	public static Targeting targeting => instance._targeting;
-	public static TileGrid grid => instance._grid;
-	public static ObjectDict<DataObject> dataObjects => instance._dataObjects;
-	public static Hooks<IGlobalHook> hooks => instance._hooks;
-
-	[SerializeField, ShowEditor] GameEvents _events;
-	[SerializeField, ShowEditor] Rounds _rounds;
-	[SerializeField, ShowEditor] Targeting _targeting;
-	[SerializeField, ShowEditor] TileGrid _grid;
-	[SerializeField] ObjectDict<DataObject> _dataObjects = new();
-	[SerializeField] Hooks<IGlobalHook> _hooks = new();
+	[field: SerializeField, ShowEditor] public GameEvents events { get; private set; }
+	[field: SerializeField, ShowEditor] public Rounds rounds { get; private set; }
+	[field: SerializeField, ShowEditor] public Targeting targeting { get; private set; }
+	[field: SerializeField, ShowEditor] public TileGrid grid { get; private set; }
+	[field: SerializeField] public ObjectDict<DataObject> dataObjects { get; private set; } = new();
 
 	[field: SerializeField] public bool inited { get; private set; }
 	[field: SerializeField] public bool started { get; private set; }
@@ -63,19 +37,31 @@ public class Game : Singleton<Game> {
 	[SerializeField] private RectTransform spinnerParent;
 
 	protected void Reset() {
-		_events = GameEvents.CreateInstance<GameEvents>();
-		_rounds = Rounds.CreateInstance<Rounds>();
-		_targeting = Targeting.CreateInstance<Targeting>();
-		_grid = TileGrid.CreateInstance<TileGrid>();
+		events = CreateInstance<GameEvents>();
+		rounds = CreateInstance<Rounds>();
+		targeting = CreateInstance<Targeting>();
+		grid = CreateInstance<TileGrid>();
 	}
 
-	new protected void Awake() {
-		base.Awake();
-		Flush();
-		hooks.Hook(_events);
-		hooks.Hook(_rounds);
-		hooks.Hook(_targeting);
-		hooks.Hook(_grid);
+	protected override void OnCreate() {
+		base.OnCreate();
+		// sd
+	}
+
+	public void Activate() {
+		hooks.TryHook(events);
+		hooks.TryHook(rounds);
+		hooks.TryHook(targeting);
+		hooks.TryHook(grid);
+		hooks.TryHook(this);
+	}
+
+	public void Deactivate() {
+		hooks.Unhook(events);
+		hooks.Unhook(rounds);
+		hooks.Unhook(targeting);
+		hooks.Unhook(grid);
+		hooks.Unhook(this);
 	}
 
 	protected void Start() {
@@ -88,10 +74,10 @@ public class Game : Singleton<Game> {
 				spawn.source = unitSrc;
 				spawn.team = team;
 				if (team == Game.game.team) {
-					Tile tile = i >= mode.draftPositions.Length ? null : Game.grid.GetTile(mode.draftPositions[i]);
+					var tile = i >= mode.draftPositions.Length ? null : Game.grid.GetTile(mode.draftPositions[i]);
 					if (tile) spawn.SetTile(tile);
 				} else {
-					Tile tile = i >= mode.altDraftPositions.Length ? null : Game.grid.GetTile(mode.altDraftPositions[i]);
+					var tile = i >= mode.altDraftPositions.Length ? null : Game.grid.GetTile(mode.altDraftPositions[i]);
 					if (tile) spawn.SetTile(tile);
 				}
 			}
@@ -99,11 +85,11 @@ public class Game : Singleton<Game> {
 	}
 
 	void Update() {
-		using (var scope = new Hooks.Scope()) _hooks.ForEach<IOnUpdate>(scope, v => v.OnUpdate());
+		using (var scope = new Hooks.Scope()) hooks.ForEach<IOnUpdate>(scope, v => v.OnUpdate());
 	}
 
 	void LateUpdate() {
-		using (var scope = new Hooks.Scope()) _hooks.ForEach<IOnLateUpdate>(scope, v => v.OnLateUpdate());
+		using (var scope = new Hooks.Scope()) hooks.ForEach<IOnLateUpdate>(scope, v => v.OnLateUpdate());
 	}
 
 	/// <summary> Initializes the game </summary>
@@ -124,7 +110,7 @@ public class Game : Singleton<Game> {
 		if (!inited) throw new InvalidOperationException($"{nameof(Init)} must be called before calling {nameof(StartGame)}");
 		mode.Save();
 		started = true;
-		_rounds.OnGameStart();
+		rounds.OnGameStart();
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameStart>(scope, v => v.OnGameStart());
 	}
 
@@ -183,10 +169,10 @@ namespace Editors {
 	using static Muc.Editor.EditorUtil;
 
 	[CanEditMultipleObjects]
-	[CustomEditor(typeof(Game), true)]
-	public class GameEditor : Editor {
+	[CustomEditor(typeof(GameMaster), true)]
+	public class GameMasterEditor : Editor {
 
-		Game t => (Game)target;
+		GameMaster t => (GameMaster)target;
 
 		public override void OnInspectorGUI() {
 			DrawDefaultInspector();

@@ -59,7 +59,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(unit, from, to, ref value));
 			unit.hooks.ForEach<IOnGetCanPass_Unit>(scope, v => v.OnGetCanPass(from, this, to, ref value));
-			Game.hooks.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(unit, from, this, to, ref value));
+			Game.hooks.ForEach<IOnGetCanPass_Game>(scope, v => v.OnGetCanPass(unit, from, this, to, ref value));
 		}
 		return value;
 	}
@@ -73,7 +73,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		var value = to.data.passable.current.value;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetCanPass_Edge>(scope, v => v.OnGetCanPass(from, to, ref value));
-			Game.hooks.ForEach<IOnGetCanPass_Global>(scope, v => v.OnGetCanPass(from, this, to, ref value));
+			Game.hooks.ForEach<IOnGetCanPass_Game>(scope, v => v.OnGetCanPass(from, this, to, ref value));
 		}
 		return value;
 	}
@@ -86,7 +86,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(unit, from, to, ref value));
 			unit.hooks.ForEach<IOnGetMoveCost_Unit>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
-			Game.hooks.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(unit, from, this, to, ref value));
+			Game.hooks.ForEach<IOnGetMoveCost_Game>(scope, v => v.OnGetMoveCost(unit, from, this, to, ref value));
 		}
 		return Mathf.Max(0, value);
 	}
@@ -98,7 +98,7 @@ public class Edge : Master<EdgeModifier, EdgeModifierData, IEdgeHook> {
 		var value = to.data.moveCost.current.value;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetMoveCost_Edge>(scope, v => v.OnGetMoveCost(from, to, ref value));
-			Game.hooks.ForEach<IOnGetMoveCost_Global>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
+			Game.hooks.ForEach<IOnGetMoveCost_Game>(scope, v => v.OnGetMoveCost(from, this, to, ref value));
 		}
 		return Mathf.Max(0, value);
 	}

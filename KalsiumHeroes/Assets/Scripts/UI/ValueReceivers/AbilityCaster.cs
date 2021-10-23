@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class AbilityCaster : ValueHooker<Ability>, IOnAbilityCastStart_Global, IOnAbilityCastEnd_Global, IOnAnimationEventStart, IOnAnimationEventEnd {
+public class AbilityCaster : ValueHooker<Ability>, IOnAbilityCastStart_Game, IOnAbilityCastEnd_Game, IOnAnimationEventStart, IOnAnimationEventEnd {
 
 	public void Cast() {
 		if (target && target.unit.isCurrent) {

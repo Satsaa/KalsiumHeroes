@@ -34,7 +34,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 				using (var scope = new Hooks.Scope()) {
 					unit.hooks.ForEach<IOnAbilityCastEnd_Unit>(scope, v => v.OnAbilityCastEnd(this));
 					unit.tile.hooks.ForEach<IOnAbilityCastEnd_Tile>(scope, v => v.OnAbilityCastEnd(this));
-					Game.hooks.ForEach<IOnAbilityCastEnd_Global>(scope, v => v.OnAbilityCastEnd(this));
+					Game.hooks.ForEach<IOnAbilityCastEnd_Game>(scope, v => v.OnAbilityCastEnd(this));
 				}
 			};
 		}
@@ -63,7 +63,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnAbilityCastStart_Unit>(scope, v => v.OnAbilityCastStart(this));
 			unit.tile.hooks.ForEach<IOnAbilityCastStart_Tile>(scope, v => v.OnAbilityCastStart(this));
-			Game.hooks.ForEach<IOnAbilityCastStart_Global>(scope, v => v.OnAbilityCastStart(this));
+			Game.hooks.ForEach<IOnAbilityCastStart_Game>(scope, v => v.OnAbilityCastStart(this));
 		}
 	}
 
@@ -83,7 +83,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 			var (_damage, _damageType) = (damage, damageType);
 			unit.hooks.ForEach<IOnCalculateDamage_Unit>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
 			unit.tile.hooks.ForEach<IOnCalculateDamage_Tile>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
-			Game.hooks.ForEach<IOnCalculateDamage_Global>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
+			Game.hooks.ForEach<IOnCalculateDamage_Game>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));
 			(damage, damageType) = (_damage, _damageType);
 		}
 	}

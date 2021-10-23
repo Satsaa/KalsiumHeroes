@@ -188,7 +188,7 @@ namespace Editors {
 			if (type.IsGenericType) {
 				return string.Format(
 					"{0}<{1}>",
-					type.Name.Substring(0, type.Name.LastIndexOf("`", StringComparison.InvariantCulture)),
+					type.Name[..type.Name.LastIndexOf("`", StringComparison.InvariantCulture)],
 					string.Join(", ", type.GetGenericArguments().Select(GetTypeName))
 				);
 			}
