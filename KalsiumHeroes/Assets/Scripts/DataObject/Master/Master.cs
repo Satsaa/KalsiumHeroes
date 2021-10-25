@@ -8,16 +8,14 @@ using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public abstract class Master<TMod, TModData, THook> : Master
-	where TMod : Modifier
-	where TModData : ModifierData
+public abstract class Master<TModifier, THook> : Master
+	where TModifier : Modifier
 	where THook : IHook {
 
-	public static Type modifierType => typeof(TMod);
+	public static Type modifierType => typeof(TModifier);
 	public static Type hookType => typeof(THook);
-	public static Type modifierDataType => typeof(TModData);
 
-	public ObjectDict<TMod> modifiers = new();
+	public ObjectDict<TModifier> modifiers = new();
 	public Hooks<THook> hooks = new();
 	public override Hooks rawHooks => hooks;
 
@@ -33,12 +31,12 @@ public abstract class Master<TMod, TModData, THook> : Master
 	}
 
 	public sealed override void AttachModifier(Modifier modifier) {
-		modifiers.Add((TMod)modifier);
+		modifiers.Add((TModifier)modifier);
 		hooks.Hook(modifier);
 	}
 
 	public sealed override void DetachModifier(Modifier modifier) {
-		modifiers.Remove((TMod)modifier);
+		modifiers.Remove((TModifier)modifier);
 		hooks.Unhook(modifier);
 	}
 
@@ -49,11 +47,15 @@ public abstract class Master<TMod, TModData, THook> : Master
 
 public abstract class Master : DataObject {
 
-	new public MasterData data => (MasterData)_data;
-	public override Type dataType => typeof(MasterData);
+	[Tooltip("Automatically created modifiers for the Master")]
+	public List<Modifier> baseModifiers;
+
+	[Tooltip("Instantiated GameObject when the Master is shown. Actors are more defined containers.")]
+	public ComponentReference<Actor> baseActor;
+
 
 	[field: SerializeField]
-	protected Actor _actor;
+	protected Actor _actor { get; private set; }
 	public Actor actor => _actor;
 
 	public GameObject gameObject => actor ? actor.gameObject : null;
@@ -74,7 +76,7 @@ public abstract class Master : DataObject {
 
 	protected override void OnShow() {
 		base.OnShow();
-		if (data.actor.value) _actor = Instantiate(data.actor.value);
+		if (baseActor.value) _actor = Instantiate(baseActor.value);
 	}
 
 	protected override void OnHide() {
@@ -88,10 +90,9 @@ public abstract class Master : DataObject {
 	}
 
 	/// <summary> Creates a Master based on the given source. </summary>
-	protected static T Create<T>(MasterData source, Action<T> initializer = null) where T : Master {
-		var master = (T)ScriptableObject.CreateInstance(source.createType);
-		master._source = source;
-		master._data = Instantiate(source);
+	protected static T Create<T>(T source, Action<T> initializer = null) where T : Master {
+		var master = Instantiate(source);
+		master.source = source;
 
 		Game.dataObjects.Add(master);
 		Game.hooks.Hook(master);

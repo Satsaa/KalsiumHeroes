@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ChangeEnergyAbility : UnitTargetAbility {
 
-	new public ChangeEnergyAbilityData data => (ChangeEnergyAbilityData)_data;
-	public override Type dataType => typeof(ChangeEnergyAbilityData);
+	public Attribute<int> energyChange;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
@@ -15,7 +15,7 @@ public class ChangeEnergyAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					unit.data.energy.current.value += data.energyChange.current;
+					unit.energy.current.value += energyChange.current;
 					unit.RefreshEnergy();
 				}
 			}

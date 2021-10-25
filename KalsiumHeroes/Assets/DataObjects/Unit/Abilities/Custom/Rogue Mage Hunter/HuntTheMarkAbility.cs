@@ -6,8 +6,12 @@ using UnityEngine;
 
 public class HuntTheMarkAbility : UnitTargetAbility {
 
-	new public HuntTheMarkAbilityData data => (HuntTheMarkAbilityData)_data;
-	public override Type dataType => typeof(HuntTheMarkAbilityData);
+	public Attribute<float> normalDamage;
+
+	public Attribute<float> silenceDamage;
+
+	public DamageType damageType;
+
 
 	public override IEnumerable<Unit> GetTargets() {
 		return base.GetTargets().Where(v => v.modifiers.Contains<MarkOfPreyStatus>() && TargetHasFreeTiles(v));
@@ -23,8 +27,8 @@ public class HuntTheMarkAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					if (unit.data.silenced.current) unit.DealCalculatedDamage(this, data.silenceDamage.current, data.damageType);
-					else unit.DealCalculatedDamage(this, data.normalDamage.current, data.damageType);
+					if (unit.silenced.current) unit.DealCalculatedDamage(this, silenceDamage.current, damageType);
+					else unit.DealCalculatedDamage(this, normalDamage.current, damageType);
 					if (unit.modifiers.Get<MarkOfPreyStatus>().Any()) unit.modifiers.Get<MarkOfPreyStatus>().First().Remove();
 					unit.SetTile(FindClosestTile(unit), true);
 				}

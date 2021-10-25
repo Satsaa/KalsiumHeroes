@@ -21,7 +21,7 @@ public class DataFieldName {
 				.SelectMany(v => v.GetTypes())
 					.Where(v
 						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-						&& (v.IsSubclassOf(typeof(DataObjectData)))
+						&& v.IsSubclassOf(typeof(DataObject))
 					).SelectMany(v => v.GetFields()
 						.Select(v => (v.Name, GetAttributeType(v.FieldType), v.FieldType))).Distinct().ToList();
 			list.Sort((a, b) => a.Name.CompareTo(b.Name));
@@ -56,7 +56,7 @@ public class DataObjectFieldName<T> : DataFieldName {
 				.SelectMany(v => v.GetTypes())
 					.Where(v
 						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-						&& v.IsSubclassOf(typeof(DataObjectData))
+						&& v.IsSubclassOf(typeof(DataObject))
 					).SelectMany(v => v.GetFields()
 						.Where(f =>
 							f.FieldType == typeof(T) || f.FieldType.IsSubclassOf(typeof(T))
@@ -103,7 +103,7 @@ public class NumericDataFieldName : DataFieldName {
 				.SelectMany(v => v.GetTypes())
 					.Where(v
 						=> (v.IsClass || (v.IsValueType && !v.IsPrimitive))
-						&& (v.IsSubclassOf(typeof(DataObjectData)))
+						&& v.IsSubclassOf(typeof(DataObject))
 					).SelectMany(v => v.GetFields()
 						.Where(f => f.FieldType == typeof(float) || typeof(Attribute<float>).IsAssignableFrom(f.FieldType) || f.FieldType == typeof(int) || typeof(Attribute<int>).IsAssignableFrom(f.FieldType))
 						.Select(v => (v.Name, GetAttributeType(v.FieldType), v.FieldType))).Distinct().ToList();

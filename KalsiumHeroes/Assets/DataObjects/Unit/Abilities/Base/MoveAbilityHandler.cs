@@ -17,19 +17,19 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 		var start = Game.grid.tiles[msg.casterTile];
 		var end = Game.grid.tiles[msg.targets[0]];
 		Debug.Log("Handling move ability event!");
-		var rangeMode = creator.data.rangeMode;
+		var rangeMode = creator.rangeMode;
 		Pathing.CheapestPath(start, end, out var result, Pathers.For(rangeMode), CostCalculators.For(rangeMode));
 		animating = true;
 		index = -1;
 		pathObjects.Clear();
 
-		var movement = creator.unit.data.movement.current;
+		var movement = creator.unit.movement.current;
 		var freeMovement = movement - creator.usedMovement;
-		var energyMovement = creator.GetPaidMovement(movement, creator.unit.data.energy.current);
+		var energyMovement = creator.GetPaidMovement(movement, creator.unit.energy.current);
 
 		var cost = result.tiles[result.closest].cost;
 		var energyPayment = creator.GetPaidMovementCost(cost, movement);
-		creator.unit.data.energy.current.value -= Mathf.FloorToInt(energyPayment);
+		creator.unit.energy.current.value -= Mathf.FloorToInt(energyPayment);
 		creator.usedMovement += Mathf.Min(freeMovement, cost);
 
 		// Build list of items to move to

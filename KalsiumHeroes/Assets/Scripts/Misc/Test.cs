@@ -11,7 +11,7 @@ using System.Reflection;
 
 public class Test : MonoBehaviour {
 
-	public DataObjectData data;
+	public DataObject source;
 	public Unit unit;
 
 	public MaxAttribute<float> newAtt;

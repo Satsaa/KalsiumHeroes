@@ -20,8 +20,8 @@ public class TileGrid : ScriptableObject {
 
 	public bool drawHexes;
 
-	public TileData defaultTile;
-	public EdgeData defaultEdge;
+	public Tile defaultTile;
+	public Edge defaultEdge;
 
 	public SerializedDictionary<Vector3Int, Tile> tiles = new();
 
@@ -64,11 +64,11 @@ public class TileGrid : ScriptableObject {
 		Resources.UnloadUnusedAssets();
 	}
 
-	public Tile CreateTile(Hex hex, TileData source) {
+	public Tile CreateTile(Hex hex, Tile source) {
 		return Tile.Create(source, hex);
 	}
 
-	public Tile ReplaceTile(Hex hex, TileData source) {
+	public Tile ReplaceTile(Hex hex, Tile source) {
 		Muc.Collections.SafeList<Unit> units = default;
 		if (tiles.TryGetValue(hex.pos, out var tile)) {
 			units = tile.units;
@@ -349,7 +349,7 @@ public class TileGrid : ScriptableObject {
 	/// <param name="target">The sighted Tile</param>
 	/// <param name="predicate">Predicate which determines if a Tile is see-through.</param>
 	public bool HasSight(Hex hex, Hex target, Predicate<Tile> predicate = null) {
-		predicate ??= (h => h == null || h.data.transparent.current);
+		predicate ??= (h => h == null || h.transparent.current);
 		return SmartLine(hex, target, v => predicate(v)).All(predicate.Invoke);
 	}
 
@@ -370,7 +370,7 @@ public class TileGrid : ScriptableObject {
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	/// <returns>Dictionary of Tile areas. Key: Tile, Value: Area id</returns>
 	public Dictionary<Tile, int> GetAreas(Predicate<Tile> passable = null) {
-		passable ??= (h => h.data.passable.current);
+		passable ??= (h => h.passable.current);
 		var results = new Dictionary<Tile, int>(tiles.Count);
 		var id = 0;
 
@@ -389,7 +389,7 @@ public class TileGrid : ScriptableObject {
 	/// </summary>
 	/// <param name="passable">Predicate which determines if a Tile is passable and thus included in the search.</param>
 	public IEnumerable<Tile> Flood(Tile source, Predicate<Tile> passable = null) {
-		passable ??= (h => h.data.passable.current);
+		passable ??= (h => h.passable.current);
 		var frontier = new Queue<Tile>();
 		yield return source;
 		frontier.Enqueue(source);
@@ -421,13 +421,14 @@ public class TileGridEditor : Editor {
 		if (!t.drawHexes) return;
 		foreach (var kv in t.tiles) {
 			var tile = kv.Value;
-			var fillColor = (tile == null || tile.data == null) ? Color.magenta : (tile.data.passable.current ? (
-				Color.Lerp(
-					Saturate(Whitener(Color.green, 0.75f), tile.data.appeal.current * -0.08f),
-					Saturate(Whitener(Color.red, 0.75f), tile.data.appeal.current * -0.08f),
-					tile.data.moveCost.current / 10f
-				)
-			) : Color.black);
+			var fillColor = tile == null
+				? Color.magenta
+				: (tile.passable.current
+					? Color.Lerp(
+						Saturate(Whitener(Color.green, 0.75f), tile.appeal.current * -0.08f),
+						Saturate(Whitener(Color.red, 0.75f), tile.appeal.current * -0.08f),
+						tile.moveCost.current / 10f)
+					: Color.black);
 			if (tile) {
 				using (ColorScope(fillColor)) {
 					Handles.DrawAAConvexPolygon(tile.corners);

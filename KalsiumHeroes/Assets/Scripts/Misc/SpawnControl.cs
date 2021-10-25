@@ -14,7 +14,7 @@ public class SpawnControl : DraggableObject {
 	protected static List<SpawnControl> positioners = new();
 
 	new public Camera camera;
-	public UnitData source;
+	public Unit source;
 	public Team team;
 	public Vector3 dragOffset = new(0, 0.2f, 0);
 

@@ -13,7 +13,7 @@ public class MainMode : GameMode {
 	public int maxDraftCount = 10;
 	public int maxDraftCost = 50;
 
-	public override bool ValidateDraft(IEnumerable<UnitData> unitDatas, out string failMessage) {
+	public override bool ValidateDraft(IEnumerable<Unit> unitDatas, out string failMessage) {
 		var count = unitDatas.Count();
 		if (count < minDraftCount) {
 			failMessage = Lang.GetStr("Draft_MinCountNotReached");

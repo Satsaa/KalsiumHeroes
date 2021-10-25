@@ -13,11 +13,11 @@ public class DataObjectToken : RefTokenAttribute {
 
 	public override Object CreateObject(JToken jToken) {
 		if (jToken is JObject jObject) {
-			var identifier = (string)jObject[nameof(DataObjectData.identifier)];
-			var isSource = (bool)jObject[nameof(DataObjectData.isSource)];
+			var identifier = (string)jObject[nameof(DataObject.identifier)];
+			var isSource = (bool)jObject[nameof(DataObject.isSource)]; // !!! Yeah this aint gonna work (isSource is a getter)
 			var source = App.library.GetById(identifier);
 			if (isSource) return source;
-			else return Object.Instantiate(source);
+			return ScriptableObject.CreateInstance(source.GetType());
 		}
 		return base.CreateObject(jToken);
 	}

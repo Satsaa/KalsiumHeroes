@@ -6,19 +6,18 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using UnityEngine.Events;
 
-public class ChargesShower : ValueReceiver<UnitModifier, UnitModifierData>, ICustomOnConfigureNonPersistent {
+public class ChargesShower : ValueReceiver<UnitModifier>, ICustomOnConfigureNonPersistent {
 
 	[SerializeField] protected DataFieldSelector<int> chargesSelector;
 
 	[SerializeField] UnityEvent<bool> onUpdate;
 
-	[SerializeField, HideInInspector] protected UnitModifierData data;
+	[SerializeField, HideInInspector] protected UnitModifier data;
 	[SerializeField, HideInInspector] bool listenered;
 
 	protected virtual void Awake() => OnConfigureNonpersistent(true);
 	protected virtual void OnDestroy() => OnConfigureNonpersistent(false);
-	protected sealed override void ReceiveValue(UnitModifierData data) => Setup(data);
-	protected sealed override void ReceiveValue(UnitModifier target) => Setup(target.data);
+	protected sealed override void ReceiveValue(UnitModifier target) => Setup(target);
 
 
 	protected virtual void Handle() {
@@ -32,7 +31,7 @@ public class ChargesShower : ValueReceiver<UnitModifier, UnitModifierData>, ICus
 		onUpdate.Invoke(true);
 	}
 
-	private void Setup(UnitModifierData data) {
+	private void Setup(UnitModifier data) {
 		TryConfigureListeners(false);
 		this.data = data;
 		TryConfigureListeners(true);

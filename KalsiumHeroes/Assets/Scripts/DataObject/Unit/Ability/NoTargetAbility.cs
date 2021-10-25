@@ -7,10 +7,6 @@ using UnityEngine;
 
 public abstract class NoTargetAbility : Ability {
 
-	new public NoTargetAbilityData source => (NoTargetAbilityData)_source;
-	new public NoTargetAbilityData data => (NoTargetAbilityData)_data;
-	public override Type dataType => typeof(NoTargetAbilityData);
-
 	/// <summary>
 	/// Returns a list of affected Tiles if the Ability is cast.
 	/// Used for highlighting and should be used when casting the ability (ensures equivalency).
@@ -20,6 +16,6 @@ public abstract class NoTargetAbility : Ability {
 	}
 
 	public override string CombatLog(GameEvents.Ability msg) {
-		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} casted {Lang.GetStr($"{data.identifier}_DisplayName")}.";
+		return $"{Lang.GetStr($"{unit.identifier}_DisplayName")} casted {Lang.GetStr($"{identifier}_DisplayName")}.";
 	}
 }

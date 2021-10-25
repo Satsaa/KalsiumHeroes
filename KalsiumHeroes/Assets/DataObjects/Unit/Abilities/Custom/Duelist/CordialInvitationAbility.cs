@@ -6,8 +6,8 @@ using System.Linq;
 
 public class CordialInvitationAbility : UnitTargetAbility {
 
-	new public CordialInvitationAbilityData data => (CordialInvitationAbilityData)_data;
-	public override Type dataType => typeof(CordialInvitationAbilityData);
+	public CordialInvitationStatus status;
+
 
 	public override IEnumerable<Unit> GetTargets() {
 		return base.GetTargets().Where(v => !v.modifiers.Get<CordialInvitationStatus>().Any());
@@ -19,13 +19,13 @@ public class CordialInvitationAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					var givenStatus = Modifier.Create<CordialInvitationStatus>(unit, data.statusModifier);
-					var gainedStatus = Modifier.Create<CordialInvitationStatus>(this.unit, data.statusModifier);
-					givenStatus.data.opponentStatus = gainedStatus;
-					givenStatus.data.opponent = this.unit;
-					gainedStatus.data.opponentStatus = givenStatus;
-					gainedStatus.data.opponent = unit;
-					gainedStatus.data.duelCaster = this;
+					var givenStatus = Create(unit, status);
+					var gainedStatus = Create(this.unit, status);
+					givenStatus.opponentStatus = gainedStatus;
+					givenStatus.opponent = this.unit;
+					gainedStatus.opponentStatus = givenStatus;
+					gainedStatus.opponent = unit;
+					gainedStatus.duelCaster = this;
 				}
 			}
 		});

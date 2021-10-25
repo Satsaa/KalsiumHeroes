@@ -13,7 +13,7 @@ using UnityEngine.AddressableAssets;
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [KeepRefToken]
 [DefaultExecutionOrder(-600)]
-public class GameMaster : Master<UnitModifier, UnitModifierData, IGameHook> {
+public class GameMaster : Master<UnitModifier, IGameHook> {
 
 	/// <summary> Currently active Game instance </summary>
 	public static GameMaster game { get; private set; }
@@ -36,40 +36,32 @@ public class GameMaster : Master<UnitModifier, UnitModifierData, IGameHook> {
 	[SerializeField] private LoadingSpinner spinner;
 	[SerializeField] private RectTransform spinnerParent;
 
-	protected void Reset() {
-		events = CreateInstance<GameEvents>();
-		rounds = CreateInstance<Rounds>();
-		targeting = CreateInstance<Targeting>();
-		grid = CreateInstance<TileGrid>();
-	}
-
 	protected override void OnCreate() {
 		base.OnCreate();
-		// sd
+		hooks.Hook(events = CreateInstance<GameEvents>());
+		hooks.Hook(rounds = CreateInstance<Rounds>());
+		hooks.Hook(targeting = CreateInstance<Targeting>());
+		hooks.Hook(grid = CreateInstance<TileGrid>());
+		hooks.Hook(this);
 	}
 
 	public void Activate() {
-		hooks.TryHook(events);
-		hooks.TryHook(rounds);
-		hooks.TryHook(targeting);
-		hooks.TryHook(grid);
-		hooks.TryHook(this);
+		if (active) return;
+		if (game) game.Deactivate();
+		game = this;
 	}
 
 	public void Deactivate() {
-		hooks.Unhook(events);
-		hooks.Unhook(rounds);
-		hooks.Unhook(targeting);
-		hooks.Unhook(grid);
-		hooks.Unhook(this);
+		if (!active) return;
+		game = null;
 	}
 
 	protected void Start() {
 		foreach (var team in mode.teams) {
 			for (int i = 0; i < mode.draft.Length; i++) {
 				var unitId = mode.draft[i];
-				var unitSrc = App.library.GetById<UnitData>(unitId);
-				var actor = Instantiate(unitSrc.actor.value);
+				var unitSrc = App.library.GetById<Unit>(unitId);
+				var actor = Instantiate(unitSrc.baseActor.value);
 				var spawn = actor.gameObject.AddComponent<SpawnControl>();
 				spawn.source = unitSrc;
 				spawn.team = team;

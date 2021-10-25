@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 using Muc.Data;
 using UnityEngine.Events;
 
-public abstract class DataFieldReader<T> : ValueReceiver<DataObject, DataObjectData>, ICustomOnConfigureNonPersistent {
+public abstract class DataFieldReader<T> : ValueReceiver<DataObject>, ICustomOnConfigureNonPersistent {
 
 	[SerializeField] protected DataFieldSelector<T> selector;
 
@@ -15,7 +15,7 @@ public abstract class DataFieldReader<T> : ValueReceiver<DataObject, DataObjectD
 	[SerializeField] UnityEvent<T> onOther;
 	[SerializeField] UnityEvent<bool> onEnabled;
 
-	[SerializeField, HideInInspector] protected DataObjectData data;
+	[SerializeField, HideInInspector] protected DataObject data;
 	[SerializeField, HideInInspector] bool listenered;
 
 	protected virtual void Awake() {
@@ -31,16 +31,12 @@ public abstract class DataFieldReader<T> : ValueReceiver<DataObject, DataObjectD
 	protected abstract void OnOther(T value);
 	protected abstract void OnEnabled(bool enabled);
 
-	protected sealed override void ReceiveValue(DataObjectData data) {
-		Setup(data);
-	}
-
 	protected sealed override void ReceiveValue(DataObject target) {
-		Setup(target.data);
+		Setup(target);
 	}
 
 
-	private void Setup(DataObjectData data) {
+	private void Setup(DataObject data) {
 		TryConfigureListeners(false);
 		this.data = data;
 		OnReceive();

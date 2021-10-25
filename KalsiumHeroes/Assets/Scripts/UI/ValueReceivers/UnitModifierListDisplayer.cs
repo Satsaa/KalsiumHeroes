@@ -6,19 +6,12 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Muc.Data;
 
-public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitModifierCreate_Unit, IOnUnitModifierRemove_Unit {
+public class UnitModifierListDisplayer : ValueHooker<Unit>, IOnUnitModifierCreate_Unit, IOnUnitModifierRemove_Unit {
 
 	[SerializeField] GameObject prefab;
 	[SerializeField] List<SerializedType<UnitModifier>> acceptedTypes;
 	[SerializeField, HideInInspector] List<GameObject> statics;
 	[SerializeField, HideInInspector] SerializedDictionary<UnitModifier, GameObject> dynamics;
-
-	protected override void ReceiveValue(UnitData data) {
-		UpdateStatic(data);
-		if (dynamics.Count > 0) {
-			Debug.LogWarning("You are mixing static and dynamic objects.", this);
-		}
-	}
 
 	protected override void ReceiveValue(Unit target) {
 		this.target = target;
@@ -33,8 +26,8 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 	[SerializeField, HideInInspector]
 	protected Unit target;
 
-	protected IEnumerable<UnitModifierData> FilterModifierDatas(IEnumerable<UnitModifierData> from) {
-		var seen = new HashSet<UnitModifierData>();
+	protected IEnumerable<UnitModifier> FilterModifierDatas(IEnumerable<UnitModifier> from) {
+		var seen = new HashSet<UnitModifier>();
 		foreach (var acceptedType in acceptedTypes) {
 			foreach (var modifier in from.Where(v => acceptedType.type.IsAssignableFrom(v.GetType()))) {
 				if (seen.Add(modifier)) {
@@ -56,8 +49,8 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 	}
 
 
-	protected void UpdateStatic(UnitData data) {
-		var mods = FilterModifierDatas(data.baseModifiers.Cast<UnitModifierData>()).ToList();
+	protected void UpdateStatic(Unit data) {
+		var mods = FilterModifierDatas(data.baseModifiers.Cast<UnitModifier>()).ToList();
 		var old = statics.ToList();
 		statics.Clear();
 
@@ -65,11 +58,11 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 		for (; i < mods.Count; i++) {
 			if (i < old.Count) {
 				statics.Add(old[i]);
-				ValueReceiver.SendValue(old[i], mods[i]);
+				SendValue(old[i], mods[i]);
 			} else {
 				var go = Instantiate(prefab, transform);
 				statics.Add(go);
-				ValueReceiver.SendValue(go, mods[i]);
+				SendValue(go, mods[i]);
 			}
 		}
 		for (; i < old.Count; i++) {
@@ -87,7 +80,7 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 		for (; i < mods.Count; i++) {
 			if (i < old.Count) {
 				dynamics.Add(mods[i], old[i].Value);
-				ValueReceiver.SendValue(old[i].Value, mods[i]);
+				SendValue(old[i].Value, mods[i]);
 			} else {
 				CreateItem(mods[i]);
 			}
@@ -100,7 +93,7 @@ public class UnitModifierListDisplayer : ValueHooker<UnitData, Unit>, IOnUnitMod
 	protected void CreateItem(UnitModifier modifier) {
 		var go = Instantiate(prefab, transform);
 		dynamics.Add(modifier, go);
-		ValueReceiver.SendValue(go, modifier);
+		SendValue(go, modifier);
 	}
 
 	protected void RemoveItem(UnitModifier modifier) {

@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class RockShieldAbility : NoTargetAbility {
 
-	new public RockShieldAbilityData data => (RockShieldAbilityData)_data;
-	public override Type dataType => typeof(RockShieldAbilityData);
+	public UnitModifier modifier;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
-		return new InstantAbilityHandler(msg, this, (ability) => Create(unit, data.rockShieldModifier));
+		return new InstantAbilityHandler(msg, this, (ability) => Create(unit, modifier));
 	}
 }

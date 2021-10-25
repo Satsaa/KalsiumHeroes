@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ChangeSpeedAbility : UnitTargetAbility {
 
-	new public ChangeSpeedAbilityData data => (ChangeSpeedAbilityData)_data;
-	public override Type dataType => typeof(ChangeSpeedAbilityData);
+	public Attribute<int> speedChange;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
@@ -15,7 +15,7 @@ public class ChangeSpeedAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					unit.data.speed.current.value += data.speedChange.current;
+					unit.speed.current.value += speedChange.current;
 				}
 			}
 		});

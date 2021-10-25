@@ -8,8 +8,15 @@ using UnityEngine;
 
 public class TileHighlighterModifier : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit, IOnChangePosition_Unit, IOnAnimationEventStart, IOnAnimationEventEnd {
 
-	new public TileHighlighterModifierData data => (TileHighlighterModifierData)_data;
-	public override Type dataType => typeof(TileHighlighterModifierData);
+	[Tooltip("The color of the tile highlighted under this unit if its on the player's team.")]
+	public Color ownTeamColor = Color.green;
+
+	[Tooltip("The color of the tile highlighted under this unit if its not on the player's team.")]
+	public Color otherTeamColor = Color.red;
+
+	[Tooltip("Hide the highlight during animations like moving and such.")]
+	public bool hideDuringAnimation = true;
+
 
 	void IOnChangePosition_Unit.OnChangePosition(Tile from, Tile to) {
 		if (unit.isCurrent) {
@@ -27,8 +34,8 @@ public class TileHighlighterModifier : UnitModifier, IOnTurnStart_Unit, IOnTurnE
 	}
 
 	void Highlight(Tile tile) {
-		if (tile && (!data.hideDuringAnimation || !Game.events.animating)) {
-			var color = unit.team == Game.instance.team ? data.ownTeamColor : data.otherTeamColor;
+		if (tile && (!hideDuringAnimation || !Game.events.animating)) {
+			var color = unit.team == Game.instance.team ? ownTeamColor : otherTeamColor;
 			tile.highlighter.Highlight(color, Highlighter.currentUnitPriority);
 		}
 	}
@@ -40,13 +47,13 @@ public class TileHighlighterModifier : UnitModifier, IOnTurnStart_Unit, IOnTurnE
 	}
 
 	void IOnAnimationEventStart.OnAnimationEventStart(EventHandler handler) {
-		if (data.hideDuringAnimation && unit.isCurrent) {
+		if (hideDuringAnimation && unit.isCurrent) {
 			Unhighlight(unit.tile);
 		}
 	}
 
 	void IOnAnimationEventEnd.OnAnimationEventEnd() {
-		if (data.hideDuringAnimation && unit.isCurrent) {
+		if (hideDuringAnimation && unit.isCurrent) {
 			Highlight(unit.tile);
 		}
 	}

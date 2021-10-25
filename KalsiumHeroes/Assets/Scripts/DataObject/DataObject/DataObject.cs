@@ -1,23 +1,43 @@
 
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Muc.Editor;
 using Serialization;
 using UnityEngine;
 
 [RefToken]
-public abstract class DataObject : ScriptableObject {
+public abstract class DataObject : ScriptableObject, IIdentifiable {
 
-	[Tooltip("Source data instance."), SerializeField]
-	protected DataObjectData _source;
-	public DataObjectData source => _source;
+	[Tooltip("String identifier of this DataObject. (\"Unit_Oracle\")")]
+	public string identifier;
+	string IIdentifiable.identifier => identifier;
 
-	[Tooltip("Own data instance of source."), SerializeField, ShowEditor]
-	protected DataObjectData _data;
-	public DataObjectData data => _data;
+	private static Regex removeData = new(@"Data$");
+	private string _tooltip;
+	public string tooltip {
+		get {
+			if (_tooltip != null) return _tooltip;
+			var identifierTooltip = $"{identifier}_Info";
+			if (Tooltips.instance.TooltipExists(identifierTooltip)) {
+				return _tooltip = identifierTooltip;
+			}
+			var current = this.GetType();
+			while (true) {
+				var converted = current.FullName;
+				converted = removeData.Replace(converted, "");
+				converted += "_Info";
+				if (Tooltips.instance.TooltipExists(converted) || current == typeof(DataObject)) {
+					return _tooltip = converted;
+				}
+				current = current.BaseType;
+			}
+		}
+	}
 
-	/// <summary> Actual data type required for source and data. </summary>
-	public virtual Type dataType => typeof(DataObjectData);
+	[field: Tooltip("Source instance."), SerializeField]
+	public DataObject source { get; protected set; }
+	public bool isSource => source == this;
 
 	[field: SerializeField]
 	public bool removed { get; protected set; }

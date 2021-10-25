@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class DamageAbility : UnitTargetAbility {
 
-	new public DamageAbilityData data => (DamageAbilityData)_data;
-	public override Type dataType => typeof(DamageAbilityData);
+	public Attribute<float> damage;
+	public DamageType damageType;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
@@ -15,7 +16,7 @@ public class DamageAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					DealDamage(unit, data.damage.current, data.damageType);
+					DealDamage(unit, damage.current, damageType);
 				}
 			}
 		});

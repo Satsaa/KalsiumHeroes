@@ -22,15 +22,15 @@ public abstract class GameMode : StoredScriptableObject, IIdentifiable {
 	public List<Team> teams = new() { Team.Team1, Team.Team2 };
 
 	[Tooltip("Units that can be drafted in this GameMode.")]
-	public List<UnitData> draftableUnits;
+	public List<Unit> draftableUnits;
 
 	[JsonProperty] public string[] draft;
 	[JsonProperty] public Vector3Int[] draftPositions;
 	[JsonProperty] public string[] altDraft;
 	[JsonProperty] public Vector3Int[] altDraftPositions;
 
-	public bool ValidateDraft(IEnumerable<string> draft, out string failMessage) => ValidateDraft(draft.Select(v => App.library.GetById<UnitData>(v)), out failMessage);
-	public abstract bool ValidateDraft(IEnumerable<UnitData> draftUnits, out string failMessage);
+	public bool ValidateDraft(IEnumerable<string> draft, out string failMessage) => ValidateDraft(draft.Select(v => App.library.GetById<Unit>(v)), out failMessage);
+	public abstract bool ValidateDraft(IEnumerable<Unit> draftUnits, out string failMessage);
 
 
 }

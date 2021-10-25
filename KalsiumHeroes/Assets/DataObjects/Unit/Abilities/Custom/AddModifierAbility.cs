@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class AddModifierAbility : UnitTargetAbility {
 
-	new public AddModifierAbilityData data => (AddModifierAbilityData)_data;
-	public override Type dataType => typeof(AddModifierAbilityData);
+	[Tooltip("Added modifiers. (Hint: Try adding a dot status effect!)")]
+	public UnitModifier[] modifiers;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
@@ -15,8 +16,8 @@ public class AddModifierAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					foreach (var modifierData in data.addedModifiers) {
-						UnitModifier.Create(unit, modifierData);
+					foreach (var modifierData in modifiers) {
+						Create(unit, modifierData);
 					}
 				}
 			}

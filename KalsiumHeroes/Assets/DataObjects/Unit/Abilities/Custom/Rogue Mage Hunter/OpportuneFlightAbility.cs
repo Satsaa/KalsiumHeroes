@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class OpportuneFlightAbility : TileTargetAbility {
 
-	new public OpportuneFlightAbilityData data => (OpportuneFlightAbilityData)_data;
-	public override Type dataType => typeof(OpportuneFlightAbilityData);
+	public Attribute<int> moveDistance;
+
 
 	public override IEnumerable<Tile> GetTargets() {
 		UnitPather pather = UnitPathers.Unphased;
@@ -28,7 +28,7 @@ public class OpportuneFlightAbility : TileTargetAbility {
 		var target = unit;
 		var dir = unit.tile.GetDir(tile);
 		unit.SetDir(dir, true);
-		for (int i = 0; i < data.moveDistance.current; i++) {
+		for (int i = 0; i < moveDistance.current; i++) {
 			if (target.CanMoveInDir(dir, out Tile next)) {
 				ExecuteMoveOff(target, target.tile);
 				ExecuteMoveOver(target, target.tile, next);

@@ -41,7 +41,7 @@ public class Rounds : ScriptableObject {
 	[field: SerializeField] public int round { get; private set; } = -1;
 
 	void Sort() {
-		units.Sort((a, b) => b.data.speed.current.value.CompareTo(a.data.speed.current.value));
+		units.Sort((a, b) => b.speed.current.value.CompareTo(a.speed.current.value));
 	}
 
 	public List<Unit> GetEstimatedOrder(int roundsAhead) {
@@ -120,7 +120,7 @@ public class Rounds : ScriptableObject {
 	}
 
 	private static void OnTurnStarts(Unit unit) {
-		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Turn: {Lang.GetStr($"{unit.data.identifier}_DisplayName")} ({unit.team})"));
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Turn: {Lang.GetStr($"{unit.identifier}_DisplayName")} ({unit.team})"));
 		using (var scope = new Hooks.Scope()) {
 			unit.hooks.ForEach<IOnTurnStart_Unit>(scope, v => v.OnTurnStart());
 			unit.tile.hooks.ForEach<IOnTurnStart_Tile>(scope, v => v.OnTurnStart(unit));

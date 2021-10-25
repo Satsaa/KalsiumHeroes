@@ -6,8 +6,12 @@ using UnityEngine.VFX;
 
 public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
-	new public EnergyDeficitStatusData data => (EnergyDeficitStatusData)_data;
-	public override Type dataType => typeof(EnergyDeficitStatusData);
+	[Tooltip("Amount of defense change per stack.")]
+	public Attribute<int> defenseChange = new(-5);
+
+	[Tooltip("Amount of resistance change per stack.")]
+	public Attribute<int> resistanceChange = new(-5);
+
 
 	[SerializeField] Attribute<int> stacks = new();
 	[SerializeField] int stacksDuringOwnTurn;
@@ -15,22 +19,22 @@ public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		data.hidden.current.ConfigureAlterer(add, this,
+		hidden.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v || a > 0, // Will not override if already hidden
 			updater: () => stacks.current,
 			updateEvents: new[] { stacks.current.onChanged }
 		);
 
-		unit.data.defense.current.ConfigureAlterer(add, this,
+		unit.defense.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.defenseChange.current * stacks.current,
-			updateEvents: new[] { data.defenseChange.current.onChanged, stacks.current.onChanged }
+			updater: () => defenseChange.current * stacks.current,
+			updateEvents: new[] { defenseChange.current.onChanged, stacks.current.onChanged }
 		);
 
-		unit.data.resistance.current.ConfigureAlterer(add, this,
+		unit.resistance.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.resistanceChange.current * stacks.current,
-			updateEvents: new[] { data.resistanceChange.current.onChanged, stacks.current.onChanged }
+			updater: () => resistanceChange.current * stacks.current,
+			updateEvents: new[] { resistanceChange.current.onChanged, stacks.current.onChanged }
 		);
 
 	}

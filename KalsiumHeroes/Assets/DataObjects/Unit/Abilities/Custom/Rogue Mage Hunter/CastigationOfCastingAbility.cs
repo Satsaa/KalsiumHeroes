@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class CastigationOfCastingAbility : UnitTargetAbility {
 
-	new public CastigationOfCastingAbilityData data => (CastigationOfCastingAbilityData)_data;
-	public override Type dataType => typeof(CastigationOfCastingAbilityData);
+	public MarkOfCastigationStatus modifier;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
@@ -15,7 +15,7 @@ public class CastigationOfCastingAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					Modifier.Create(unit, data.markOfCastigationModifier);
+					Create(unit, modifier);
 				}
 			}
 		});

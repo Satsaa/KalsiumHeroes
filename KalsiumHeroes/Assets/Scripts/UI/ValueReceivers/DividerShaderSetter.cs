@@ -8,7 +8,7 @@ using Muc.Extensions;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Graphic))]
-public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnAnimationEventEnd {
+public class DividerShaderSetter : ValueHooker<Unit>, IOnAnimationEventEnd {
 
 	[SerializeField] NumericAttributeSelector attribute;
 
@@ -50,13 +50,9 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnAnimationEven
 		}
 	}
 
-	protected override void ReceiveValue(UnitData data) {
-		UpdateValue(data);
-	}
-
 	protected override void ReceiveValue(Unit target) {
 		this.target = target;
-		UpdateValue(target.data);
+		UpdateValue(target);
 		Hook(target);
 	}
 
@@ -64,7 +60,7 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnAnimationEven
 	[SerializeField, HideInInspector]
 	protected Unit target;
 
-	protected void UpdateValue(UnitData data) {
+	protected void UpdateValue(Unit data) {
 
 		if (data && (setMaxValue || setWidthScale)) {
 
@@ -82,6 +78,6 @@ public class DividerShaderSetter : ValueHooker<UnitData, Unit>, IOnAnimationEven
 
 	}
 
-	public void OnAnimationEventEnd() => UpdateValue(target.data);
+	public void OnAnimationEventEnd() => UpdateValue(target);
 
 }

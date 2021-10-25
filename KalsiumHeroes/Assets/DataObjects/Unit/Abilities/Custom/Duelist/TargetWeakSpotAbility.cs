@@ -6,18 +6,22 @@ using UnityEngine;
 
 public class TargetWeakSpotAbility : UnitTargetAbility {
 
-	new public TargetWeakSpotAbilityData data => (TargetWeakSpotAbilityData)_data;
-	public override Type dataType => typeof(TargetWeakSpotAbilityData);
+	public Attribute<float> damage;
+	public DamageType damageType;
+
+	public Attribute<float> defenseReduction;
+
+	public Modifier defenseReductionModifier;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
-			var damage = data.damage.current;
 			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
-			var aoe = GetAffectedArea(target);
+			var aoe = base.GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					DealDamage(unit, data.damage.current, data.damageType);
-					Modifier.Create(master, data.defenseReductionModifier);
+					base.DealDamage(unit, this.damage.current, damageType);
+					Modifier.Create(master, defenseReductionModifier);
 				}
 			}
 		});

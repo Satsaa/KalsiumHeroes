@@ -158,7 +158,7 @@ public class GameEvents : ScriptableObject, IOnUpdate {
 
 			foreach (var spawn in spawns) {
 				var tile = Game.grid.tiles[spawn.position];
-				var unitData = App.library.GetById<UnitData>(spawn.unit);
+				var unitData = App.library.GetById<Unit>(spawn.unit);
 				var unit = Unit.Create(unitData, Game.grid.tiles[spawn.position], 0, team);
 				unit.actor.gameObject.SetActive(team == Game.game.team);
 			}

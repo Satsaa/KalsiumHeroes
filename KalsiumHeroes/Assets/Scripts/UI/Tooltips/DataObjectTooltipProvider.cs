@@ -18,9 +18,6 @@ public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IP
 	public bool allowClick { get; protected set; }
 
 	[SerializeField, HideInInspector]
-	DataObjectData data;
-
-	[SerializeField, HideInInspector]
 	DataObject dataObject;
 
 	protected Camera canvasCam;
@@ -35,11 +32,9 @@ public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IP
 	}
 
 	bool IValueReceiver.TryHandleValue(object value) {
-		if (value.Equals(this.data) || value.Equals(this.dataObject)) return true;
+		if (value.Equals(this.dataObject)) return true;
 		if (HasValue()) Tooltips.instance.Hide(GetTooltip(), rectTransform);
-		this.data = null;
 		this.dataObject = null;
-		if (value is DataObjectData data) return this.data = data;
 		if (value is DataObject dataObject) return this.dataObject = dataObject;
 		return false;
 	}
@@ -61,23 +56,16 @@ public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IP
 	}
 
 	private void InitializeTooltip(Tooltip tooltip) {
-		ValueReceiver.SendValue(tooltip.gameObject, GetValue());
+		ValueReceiver.SendValue(tooltip.gameObject, dataObject);
 	}
 
 	private string GetTooltip() {
-		if (data) return data.tooltip;
-		if (dataObject) return dataObject.data.tooltip;
+		if (dataObject) return dataObject.tooltip;
 		return default;
 	}
 
 	private bool HasValue() {
-		return GetValue();
-	}
-
-	private Object GetValue() {
-		return data
-			? data
-			: dataObject;
+		return dataObject;
 	}
 
 }

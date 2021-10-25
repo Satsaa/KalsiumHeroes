@@ -11,8 +11,8 @@ public class PathConfirmAbilityTargeter : AbilityTargeter {
 	protected Pathing.FieldResult field;
 
 	public PathConfirmAbilityTargeter(Unit unit, TargetAbility ability, float maxCost, Action<Targeter> onComplete, Action<Targeter> onCancel = null) : base(unit, ability, onComplete, onCancel) {
-		pather ??= Pathers.For(ability.data.rangeMode);
-		cc ??= CostCalculators.For(ability.data.rangeMode);
+		pather ??= Pathers.For(ability.rangeMode);
+		cc ??= CostCalculators.For(ability.rangeMode);
 		field = Pathing.GetCostField(unit.tile, maxCost: maxCost, pather: pather, costCalculator: cc);
 	}
 

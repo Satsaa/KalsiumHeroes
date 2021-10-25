@@ -11,9 +11,9 @@ using Object = UnityEngine.Object;
 /// </summary>
 public abstract class Modifier : DataObject {
 
-	new public ModifierData source => (ModifierData)_source;
-	new public ModifierData data => (ModifierData)_data;
-	public override Type dataType => typeof(ModifierData);
+	[Tooltip("If defined, when creating this Modifier, instantiate this GameObject as a child and add the Modifier to it instead.")]
+	public GameObjectReference baseContainer;
+
 
 	[Tooltip("Master component for this Modifier."), SerializeField]
 	Master _master;
@@ -48,15 +48,10 @@ public abstract class Modifier : DataObject {
 	}
 
 	/// <summary> Creates a Modifier based on the given source and attaches it to the master. </summary>
-	public static Modifier Create(Master master, ModifierData source, Action<Modifier> initializer = null) {
-		return Create<Modifier>(master, source, initializer);
-	}
-	/// <summary> Creates a Modifier based on the given source and attaches it to the master. </summary>
-	public static T Create<T>(Master master, ModifierData source, Action<T> initializer = null) where T : Modifier {
-		var modifier = (T)CreateInstance(source.createType);
+	public static T Create<T>(Master master, T source, Action<T> initializer = null) where T : Modifier {
+		var modifier = Instantiate(source);
 		modifier._master = master;
-		modifier._source = source;
-		modifier._data = Instantiate(source);
+		modifier.source = source;
 
 		master.AttachModifier(modifier);
 		Game.dataObjects.Add(modifier);
@@ -75,15 +70,15 @@ public abstract class Modifier : DataObject {
 
 	protected override void OnShow() {
 		base.OnShow();
-		if (source.container) {
+		if (baseContainer) {
 			Canvas canvas;
 			// Create containers containing RectTransforms on the Canvas of the Master.
-			if (source.container.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
-				container = ObjectUtil.Instantiate(source.container, canvas.transform);
+			if (baseContainer.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
+				container = ObjectUtil.Instantiate(baseContainer, canvas.transform);
 			} else {
-				container = ObjectUtil.Instantiate(source.container, master.transform);
+				container = ObjectUtil.Instantiate(baseContainer, master.transform);
 			}
-			container.transform.localRotation = source.container.transform.localRotation;
+			container.transform.localRotation = baseContainer.transform.localRotation;
 		}
 	}
 

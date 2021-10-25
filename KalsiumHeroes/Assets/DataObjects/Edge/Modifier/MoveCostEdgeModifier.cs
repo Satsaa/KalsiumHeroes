@@ -7,14 +7,15 @@ using UnityEngine;
 
 public class MoveCostEdgeModifier : EdgeModifier, IOnGetMoveCost_Edge {
 
-	new public MoveCostEdgeModifierData data => (MoveCostEdgeModifierData)_data;
-	public override Type dataType => typeof(MoveCostEdgeModifierData);
+	[Tooltip("Aditional move cost.")]
+	public Attribute<float> moveCostChange = new(1);
+
 
 	public void OnGetMoveCost(Tile from, Tile to, ref float cost) {
-		cost += data.additionalMoveCost.current;
+		cost += moveCostChange.current;
 	}
 
 	public void OnGetMoveCost(Unit unit, Tile from, Tile to, ref float cost) {
-		cost += data.additionalMoveCost.current;
+		cost += moveCostChange.current;
 	}
 }

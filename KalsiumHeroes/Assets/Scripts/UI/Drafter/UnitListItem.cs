@@ -17,7 +17,7 @@ public class UnitListItem : UIBehaviour {
 	[SerializeField] Toggle toggle;
 
 	[SerializeField, HideInInspector] Drafter drafter;
-	[SerializeField, HideInInspector] UnitData unitData;
+	[SerializeField, HideInInspector] Unit unit;
 	[SerializeField, HideInInspector] bool unitEnabled;
 
 	new protected void Awake() {
@@ -25,22 +25,22 @@ public class UnitListItem : UIBehaviour {
 		if (!toggle) Debug.Assert(toggle = GetComponentInChildren<Toggle>(), this);
 	}
 
-	public void Init(Drafter drafter, UnitData unitData, bool enabled) {
+	public void Init(Drafter drafter, Unit unit, bool enabled) {
 		this.drafter = drafter;
-		this.unitData = unitData;
+		this.unit = unit;
 		this.unitEnabled = enabled;
-		sprite.sprite = unitData.sprite.value;
-		displayName.text = Lang.GetStr($"{unitData.identifier}_DisplayName");
+		sprite.sprite = unit.sprite.value;
+		displayName.text = Lang.GetStr($"{unit.identifier}_DisplayName");
 		toggle.isOn = unitEnabled;
 	}
 
 	public void SetUnitDrafted(bool enabled) {
 		if (unitEnabled == enabled) return;
-		if (unitData) {
+		if (unit) {
 			if (unitEnabled) {
-				drafter.RemoveFromDraft(unitData);
+				drafter.RemoveFromDraft(unit);
 			} else {
-				drafter.AddToDraft(unitData);
+				drafter.AddToDraft(unit);
 			}
 		}
 		unitEnabled = enabled;

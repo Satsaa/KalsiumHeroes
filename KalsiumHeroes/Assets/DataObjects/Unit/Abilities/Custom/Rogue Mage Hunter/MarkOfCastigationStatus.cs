@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class MarkOfCastigationStatus : Status, IOnAbilityCastEnd_Unit {
 
-	new public MarkOfCastigationStatusData data => (MarkOfCastigationStatusData)_data;
-	public override Type dataType => typeof(MarkOfCastigationStatusData);
+	public Attribute<float> damage;
+	public DamageType damageType;
+	public UnitModifier silence;
+	public MarkOfPreyStatus markOfPrey;
 
 	public void OnAbilityCastEnd(Ability ability) {
-		if (ability.data.abilityType.current == AbilityType.Spell) {
-			Modifier.Create(ability.unit, data.silenceModifier);
-			Modifier.Create(ability.unit, data.markOfPreyModifier);
-			ability.unit.DealCalculatedDamage(this, data.damage.current, data.damageType);
+		if (ability.abilityType.current == AbilityType.Spell) {
+			Create(ability.unit, silence);
+			Create(ability.unit, markOfPrey);
+			ability.unit.DealCalculatedDamage(this, damage.current, damageType);
 			Remove();
 		}
 	}

@@ -6,7 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using UnityEngine.Events;
 
-public class LangTextSetter : ValueReceiver<DataObject, DataObjectData> {
+public class LangTextSetter : ValueReceiver<DataObject> {
 
 	[SerializeField, Tooltip("String added to the identifier of the received DataObjectData which is then translated.")]
 	string strIdSuffix = "DisplayName";
@@ -14,12 +14,8 @@ public class LangTextSetter : ValueReceiver<DataObject, DataObjectData> {
 	[SerializeField]
 	UnityEvent<string> onUpdate;
 
-	protected override void ReceiveValue(DataObjectData data) {
-		onUpdate.Invoke(Lang.GetStr($"{data.identifier}_{strIdSuffix}"));
-	}
-
 	protected override void ReceiveValue(DataObject obj) {
-		ReceiveValue(obj.data);
+		onUpdate.Invoke(Lang.GetStr($"{obj.identifier}_{strIdSuffix}"));
 	}
 
 }

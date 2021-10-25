@@ -5,13 +5,66 @@ using System.Linq;
 using UnityEngine;
 using Muc.Editor;
 using Muc.Extensions;
+using Muc.Systems.RenderImages;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
+public class Unit : Master<UnitModifier, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
-	new public UnitData source => (UnitData)_source;
-	new public UnitData data => (UnitData)_data;
-	public override Type dataType => typeof(UnitData);
+	[Tooltip("Static sprite.")]
+	public AssetReference<Sprite> sprite;
+
+	[Tooltip("The RenderObject used to render this unit in previews.")]
+	public ComponentReference<RenderObject> preview;
+
+	[Tooltip("The RenderObject used to render this unit in portraits.")]
+	public ComponentReference<RenderObject> portrait;
+
+	[Tooltip("The cost of drafting this Unit.")]
+	public int draftCost = 5;
+
+	[Tooltip("Speed determines when the unit gets to be played. The higher the speed, the higher the priority within any turn.")]
+	public Speed speed;
+
+	[Tooltip("Determines how many tiles any unit can move per turn.")]
+	public Movement movement;
+
+	[Tooltip("The health of the unit.")]
+	public Health health;
+
+	[Tooltip("Casting and extra movement costs energy.")]
+	public Energy energy;
+
+	[Tooltip("The amount of resistance to physical damage the unit posesses.")]
+	public Defense defense;
+
+	[Tooltip("The amount of resistance to magical damage the unit posesses.")]
+	public Resistance resistance;
+
+	[Tooltip("Silenced units cannot cast spells.")]
+	public Silenced silenced;
+
+	[Tooltip("Disarmed units cannot cast weapon skills.")]
+	public Disarmed disarmed;
+
+	[Tooltip("Rooted units cannot move.")]
+	public Rooted rooted;
+
+	[Serializable] public class Speed : Attribute<int> { Speed() : base(1) { } public override string identifier => "Attribute_Unit_Speed"; }
+	[Serializable] public class Movement : Attribute<int> { Movement() : base(1) { } public override string identifier => "Attribute_Unit_Movement"; }
+	[Serializable] public class Health : MaxAttribute<float> { Health() : base(1000, 1000) { } public override string identifier => "Attribute_Unit_Health"; }
+	[Serializable] public class Energy : MaxRegenAttribute<int> { Energy() : base(10, 20, 5) { } public override string identifier => "Attribute_Unit_Energy"; }
+	[Serializable] public class Defense : Attribute<int> { public override string identifier => "Attribute_Unit_Defense"; }
+	[Serializable] public class Resistance : Attribute<int> { public override string identifier => "Attribute_Unit_Resistance"; }
+
+	[Serializable]
+	public abstract class Disabler : Attribute<bool> {
+		public override string TooltipText(IAttribute source) => source == this && current ? DefaultTooltip(source) : null;
+	}
+
+	[Serializable] public class Silenced : Disabler { public override string identifier => "Attribute_Unit_Silenced"; }
+	[Serializable] public class Disarmed : Disabler { public override string identifier => "Attribute_Unit_Disarmed"; }
+	[Serializable] public class Rooted : Disabler { public override string identifier => "Attribute_Unit_Rooted"; }
+
 
 	[field: SerializeField] public Tile tile { get; private set; }
 	[field: SerializeField] public TileDir tileDir { get; private set; }
@@ -23,8 +76,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 	public bool isCurrent => Game.rounds.unit == this;
 
 
-	public static Unit Create(UnitData source, Vector3 position, Team team) {
-		return Create<Unit>(source, v => {
+	public static T Create<T>(T source, Vector3 position, Team team) where T : Unit {
+		return Create(source, v => {
 			v.team = team;
 			var nearTile = Game.grid.NearestTile(position.xz());
 			v.SetTile(nearTile, true);
@@ -32,8 +85,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		});
 	}
 
-	public static Unit Create(UnitData source, Tile tile, TileDir tileDir, Team team) {
-		return Create<Unit>(source, v => {
+	public static T Create<T>(T source, Tile tile, TileDir tileDir, Team team) where T : Unit {
+		return Create(source, v => {
 			v.team = team;
 			v.tileDir = tileDir; // Prevent hook being called on spawn
 			v.SetTile(tile, true);
@@ -43,7 +96,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit spawn: {Lang.GetStr($"{data.identifier}_DisplayName")} ({team})"));
+		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit spawn: {Lang.GetStr($"{identifier}_DisplayName")} ({team})"));
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
 			tile.hooks.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
@@ -64,8 +117,8 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 			tile.hooks.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
 			Game.hooks.ForEach<IOnHeal_Game>(scope, v => v.OnHeal(this, ref heal));
 		}
-		data.health.current.value += Mathf.Max(0, heal);
-		data.health.Clamp();
+		health.current.value += Mathf.Max(0, heal);
+		health.Clamp();
 	}
 
 	/// <summary> Deals damage that is calculated prior to calling this method by e.g. Ability.CalculateDamage(). </summary>
@@ -93,26 +146,26 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 		}
 		switch (type) {
 			case DamageType.Physical:
-				data.health.current.value -= (1 - data.defense.current / 100f) * damage;
-				data.health.Clamp();
+				health.current.value -= (1 - defense.current / 100f) * damage;
+				health.Clamp();
 				break;
 			case DamageType.Magical:
-				data.health.current.value -= (1 - data.resistance.current / 100f) * damage;
-				data.health.Clamp();
+				health.current.value -= (1 - resistance.current / 100f) * damage;
+				health.Clamp();
 				break;
 			case DamageType.Pure:
-				data.health.current.value -= damage;
-				data.health.Clamp();
+				health.current.value -= damage;
+				health.Clamp();
 				break;
 			default:
-				data.health.current.value -= damage;
-				data.health.Clamp();
+				health.current.value -= damage;
+				health.Clamp();
 				Debug.LogWarning($"Damage type was either unknown or None. Damage was applied as {DamageType.Pure}");
 				break;
 		}
 
-		if (data.health.current <= 0) {
-			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit death: {Lang.GetStr($"{data.identifier}_DisplayName")} ({team})"));
+		if (health.current <= 0) {
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit death: {Lang.GetStr($"{identifier}_DisplayName")} ({team})"));
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
 				tile.hooks.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
@@ -124,7 +177,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	/// <summary> Applies any statuses caused by energy deficit or excess </summary>
 	public void RefreshEnergy() {
-		var deficit = 0 - data.energy.current;
+		var deficit = 0 - energy.current;
 		if (deficit > 0) {
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
@@ -132,7 +185,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 				Game.hooks.ForEach<IOnEnergyDeficit_Game>(scope, v => v.OnEnergyDeficit(this, deficit));
 			}
 		}
-		var excess = data.energy.current - data.energy.max;
+		var excess = energy.current - energy.max;
 		if (excess > 0) {
 			using (var scope = new Hooks.Scope()) {
 				this.hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
@@ -140,7 +193,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 				Game.hooks.ForEach<IOnEnergyExcess_Game>(scope, v => v.OnEnergyExcess(this, excess));
 			}
 		}
-		data.energy.Clamp();
+		energy.Clamp();
 	}
 
 	public void Dispell() {
@@ -153,7 +206,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	/// <summary> Gets the pather used by the first MoveAbility of this Unit. </summary>
 	public UnitPather GetPather() {
-		return UnitPathers.For(modifiers.First<MoveAbility>().data.rangeMode);
+		return UnitPathers.For(modifiers.First<MoveAbility>().rangeMode);
 	}
 
 	public bool CanMoveInDir(TileDir dir, out Tile dirTile) {
@@ -211,7 +264,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	/// <summary> Gets the estimated speed of this unit after a number of rounds have passed. </summary>
 	public int GetEstimatedSpeed(int roundsAhead) {
-		var speed = data.speed.current.raw;
+		var speed = this.speed.current.raw;
 		using (var scope = new Hooks.Scope()) {
 			this.hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
 			tile.hooks.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
@@ -222,7 +275,7 @@ public class Unit : Master<UnitModifier, UnitModifierData, IUnitHook>, IOnTurnSt
 
 	void IOnTurnStart_Unit.OnTurnStart() {
 		if (Game.rounds.round <= spawnRound) return;
-		data.energy.Regen(false);
+		energy.Regen(false);
 		RefreshEnergy();
 	}
 

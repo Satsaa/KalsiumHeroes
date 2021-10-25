@@ -13,7 +13,7 @@ public class IdentifierAttribute : PropertyAttribute {
 	public Type objectType { get; }
 
 	public IdentifierAttribute(Type objectType = null) {
-		if (objectType != null && !typeof(DataObjectData).IsAssignableFrom(objectType)) throw new ArgumentException($"Type must be assignable to the type {nameof(DataObjectData)}", nameof(objectType));
+		if (objectType != null && !typeof(DataObject).IsAssignableFrom(objectType)) throw new ArgumentException($"Type must be assignable to the type {nameof(DataObject)}", nameof(objectType));
 		this.objectType = objectType;
 	}
 }

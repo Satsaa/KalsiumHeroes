@@ -10,35 +10,12 @@ using Muc.Data;
 [DisallowMultipleComponent]
 public class Library : MonoBehaviour {
 
-	[SerializeField] List<DataObjectData> sources;
-	public IReadOnlyDictionary<string, DataObjectData> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
-	private SerializedDictionary<string, DataObjectData> _dict;
-	bool sourcesAreSet;
+	[SerializeField] List<DataObject> sources;
+	public IReadOnlyDictionary<string, DataObject> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
+	private SerializedDictionary<string, DataObject> _dict;
 
-	protected void Awake() {
-		ForceUpdateSources();
-	}
-
-	public void UpdateSources() {
-		if (sourcesAreSet) return;
-		foreach (var d in dict.Values) d.isSource = true;
-		sourcesAreSet = true;
-	}
-	public void ForceUpdateSources() {
-		foreach (var d in dict.Values) d.isSource = true;
-		sourcesAreSet = true;
-	}
-
-#if UNITY_EDITOR
-	[UnityEditor.Callbacks.DidReloadScripts]
-	private static void OnScriptsReloaded() {
-		foreach (var d in FindObjectsOfType<DataObjectData>()) d.isSource = false;
-		foreach (var d in App.library.dict.Values) d.isSource = true;
-	}
-#endif
-
-	private SerializedDictionary<string, DataObjectData> BuildDict() {
-		var res = new SerializedDictionary<string, DataObjectData>();
+	private SerializedDictionary<string, DataObject> BuildDict() {
+		var res = new SerializedDictionary<string, DataObject>();
 		sources.RemoveAll(v => v == null);
 		foreach (var source in sources) {
 			Debug.Assert(source.identifier != "", source);
@@ -48,8 +25,8 @@ public class Library : MonoBehaviour {
 		return res;
 	}
 
-	public bool TryGetById(string id, out DataObjectData result) => TryGetById<DataObjectData>(id, out result);
-	public bool TryGetById<T>(string id, out T result) where T : DataObjectData {
+	public bool TryGetById(string id, out DataObject result) => TryGetById<DataObject>(id, out result);
+	public bool TryGetById<T>(string id, out T result) where T : DataObject {
 		if (dict.TryGetValue(id, out var res) && res is T _result) {
 			result = _result;
 			return true;
@@ -58,23 +35,23 @@ public class Library : MonoBehaviour {
 		return false;
 	}
 
-	public DataObjectData GetById(string id) => GetById<DataObjectData>(id);
-	public T GetById<T>(string id) where T : DataObjectData {
+	public DataObject GetById(string id) => GetById<DataObject>(id);
+	public T GetById<T>(string id) where T : DataObject {
 		return (T)dict[id];
 	}
 
-	public IEnumerable<DataObjectData> GetByType(Type type) {
+	public IEnumerable<DataObject> GetByType(Type type) {
 		foreach (var v in dict.Values) {
 			if (type.IsAssignableFrom(v.GetType())) yield return v;
 		}
 	}
-	public IEnumerable<T> GetByType<T>() where T : DataObjectData {
+	public IEnumerable<T> GetByType<T>() where T : DataObject {
 		foreach (var v in dict.Values) {
 			if (v is T r) yield return r;
 		}
 	}
 
-	public void SetSources(List<DataObjectData> sources) {
+	public void SetSources(List<DataObject> sources) {
 		this.sources = sources;
 	}
 
@@ -104,11 +81,11 @@ namespace Editors {
 			DrawDefaultInspector();
 
 			if (GUILayout.Button("Add All Sources In Project")) {
-				var datas = new List<DataObjectData>();
-				var guids = AssetDatabase.FindAssets($"t:{nameof(DataObjectData)}");
+				var datas = new List<DataObject>();
+				var guids = AssetDatabase.FindAssets($"t:{nameof(DataObject)}");
 				foreach (var guid in guids) {
 					var path = AssetDatabase.GUIDToAssetPath(guid);
-					var data = AssetDatabase.LoadAssetAtPath<DataObjectData>(path);
+					var data = AssetDatabase.LoadAssetAtPath<DataObject>(path);
 					datas.Add(data);
 				}
 				t.SetSources(datas);

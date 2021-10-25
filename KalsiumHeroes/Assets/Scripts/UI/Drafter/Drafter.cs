@@ -16,7 +16,7 @@ public class Drafter : UIBehaviour {
 	[SerializeField] Transform itemParent;
 
 	[SerializeField] GameMode mode;
-	[SerializeField] List<UnitData> selection;
+	[SerializeField] List<Unit> selection;
 
 	[FormerlySerializedAs("submitMessageBox")]
 	[SerializeField] PopupPreset submitPopup;
@@ -39,24 +39,24 @@ public class Drafter : UIBehaviour {
 			Destroy(item.gameObject);
 		}
 		items.Clear();
-		foreach (var unitData in App.library.GetByType<UnitData>()) {
+		foreach (var unit in App.library.GetByType<Unit>()) {
 			var item = Instantiate(itemPrefab, itemParent);
 
-			item.Init(this, unitData, selection.Contains(unitData));
+			item.Init(this, unit, selection.Contains(unit));
 			items.Add(item);
 		}
 	}
 
-	public void AddToDraft(UnitData unitData) {
-		if (selection.Contains(unitData)) {
+	public void AddToDraft(Unit unit) {
+		if (selection.Contains(unit)) {
 			Debug.LogWarning("Already selected");
 		} else {
-			selection.Add(unitData);
+			selection.Add(unit);
 		}
 	}
 
-	public void RemoveFromDraft(UnitData unitData) {
-		if (!selection.Remove(unitData)) {
+	public void RemoveFromDraft(Unit unit) {
+		if (!selection.Remove(unit)) {
 			Debug.LogWarning("Already removed");
 		}
 	}

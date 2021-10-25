@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ArmorBashAbility : UnitTargetAbility {
 
-	new public ArmorBashAbilityData data => (ArmorBashAbilityData)_data;
-	public override Type dataType => typeof(ArmorBashAbilityData);
+	public DamageType damageType;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
@@ -15,16 +15,16 @@ public class ArmorBashAbility : UnitTargetAbility {
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					DealDamage(unit, CalculateDamage(unit), data.damageType);
+					DealDamage(unit, CalculateDamage(unit), damageType);
 				}
 			}
 		});
 	}
 
 	float CalculateDamage(Unit target) {
-		float damage = unit.data.defense.current - target.data.defense.current;
+		var damage = unit.defense.current - target.defense.current;
 		damage = Mathf.Max(damage, 0);
-		Debug.Log("Damage: " + damage + " (Golem Defense " + unit.data.defense.current + " - Target Defense " + target.data.defense.current + ")");
+		Debug.Log("Damage: " + damage + " (Golem Defense " + unit.defense.current + " - Target Defense " + target.defense.current + ")");
 		return damage;
 	}
 }

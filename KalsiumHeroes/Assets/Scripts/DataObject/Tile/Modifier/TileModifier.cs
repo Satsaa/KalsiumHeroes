@@ -7,9 +7,6 @@ using UnityEngine;
 
 public abstract class TileModifier : Modifier {
 
-	new public TileModifierData source => (TileModifierData)_source;
-	new public TileModifierData data => (TileModifierData)_data;
-	public override Type dataType => typeof(TileModifierData);
 	public Tile tile => (Tile)master;
 
 

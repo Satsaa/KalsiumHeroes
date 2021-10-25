@@ -5,28 +5,34 @@ using UnityEngine;
 
 public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_Unit, IOnDeath_Unit {
 
-	new public CordialInvitationStatusData data => (CordialInvitationStatusData)_data;
-	public override Type dataType => typeof(CordialInvitationStatusData);
+	public Attribute<int> breakRange;
+	public Modifier disgracefulBehaviour;
+	public Modifier piercingGlare;
+
+	[HideInInspector] public Unit opponent;
+	[HideInInspector] public CordialInvitationStatus opponentStatus;
+	[HideInInspector] public CordialInvitationAbility duelCaster;
+
 
 	public void OnDeath() {
-		data.opponent.data.health.current.value = data.opponent.data.health.max;
-		data.opponentStatus.Remove();
+		opponent.health.current.value = opponent.health.max;
+		opponentStatus.Remove();
 		Remove();
 	}
 
 	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ability) {
-			if (ability.unit != this.unit && ability.unit != data.opponent) {
-				Modifier.Create(master, data.piercingGlare);
+			if (ability.unit != this.unit && ability.unit != opponent) {
+				Modifier.Create(master, piercingGlare);
 			}
 		}
 	}
 
 	public void OnMoveOver(Modifier reason, Tile from, Edge edge, Tile to) {
-		var distance = Game.grid.Distance(this.unit.tile, data.opponent.tile);
-		if (distance >= data.breakRange.current) {
-			Modifier.Create(master, data.disgracefulBehaviour);
-			data.opponentStatus.Remove();
+		var distance = Game.grid.Distance(this.unit.tile, opponent.tile);
+		if (distance >= breakRange.current) {
+			Modifier.Create(master, disgracefulBehaviour);
+			opponentStatus.Remove();
 			this.Remove();
 		}
 	}

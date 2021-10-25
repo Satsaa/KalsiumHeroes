@@ -6,20 +6,24 @@ using UnityEngine;
 
 public class ShoveAbility : UnitTargetAbility {
 
-	new public ShoveAbilityData data => (ShoveAbilityData)_data;
-	public override Type dataType => typeof(ShoveAbilityData);
+	[Tooltip("This is the Modifier given to the targeted Unit")]
+	public UnitModifier modifier;
+
+	[Tooltip("The maximum amount of tiles the target is shoved")]
+	public Attribute<int> shoveDist = new(4);
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
-			UnitModifier.Create(target, data.rootModifier);
+			Create(target, modifier);
 			Shove(target);
 		});
 	}
 
 	void Shove(Unit target) {
 		var dir = unit.tile.GetDir(target.tile);
-		for (int i = 0; i < data.shoveDist.current; i++) {
+		for (int i = 0; i < shoveDist.current; i++) {
 			if (target.CanMoveInDir(dir, out Tile next)) {
 				ExecuteMoveOff(target, target.tile);
 				ExecuteMoveOver(target, target.tile, next);

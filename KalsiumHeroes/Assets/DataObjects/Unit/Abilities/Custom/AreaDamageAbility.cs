@@ -6,21 +6,23 @@ using UnityEngine;
 
 public class AreaDamageAbility : TileTargetAbility {
 
-	new public AreaDamageAbilityData data => (AreaDamageAbilityData)_data;
-	public override Type dataType => typeof(AreaDamageAbilityData);
+	public Attribute<float> centerDamage;
+	public Attribute<float> outerDamage;
+	public DamageType damageType;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets[0]];
 			// Central damage
 			foreach (var unit in target.units) {
-				DealDamage(unit, data.centerDamage.current, data.damageType);
+				DealDamage(unit, centerDamage.current, damageType);
 			}
 			// Outer damage
 			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe.Where(v => v != target)) {
 				foreach (var unit in tile.units) {
-					DealDamage(unit, data.outerDamage.current, data.damageType);
+					DealDamage(unit, outerDamage.current, damageType);
 				}
 			}
 		});

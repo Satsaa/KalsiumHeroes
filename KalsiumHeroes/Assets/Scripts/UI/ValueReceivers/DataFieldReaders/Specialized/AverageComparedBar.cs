@@ -34,7 +34,7 @@ public class AverageComparedBar : NumericDataFieldReader {
 		var value = selector.GetValue(data);
 		var enabled = selector.GetEnabled(data);
 
-		var average = App.library.GetByType<UnitData>().Average(v => selector.GetValue(v));
+		var average = App.library.GetByType<Unit>().Average(v => selector.GetValue(v));
 
 		var _0 = value;
 		var _1 = maxValue;

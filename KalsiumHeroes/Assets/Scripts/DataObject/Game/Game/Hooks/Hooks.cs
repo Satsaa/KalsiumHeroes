@@ -49,9 +49,6 @@ public abstract class Hooks {
 	/// <summary> Removes an OnEvents from the cache. </summary>
 	public abstract void Unhook(Object obj);
 
-	/// <summary> Removes an OnEvents from the cache, if present. </summary>
-	public abstract void TryUnhook(Object obj);
-
 
 	public class HooksList<T> : SafeList<T> {
 
@@ -85,6 +82,7 @@ public abstract class Hooks {
 /// <summary>
 /// Stores IHooks in collections based on their types.
 /// </summary>
+/// <typeparam name="TBase">Required base type for IHooks</typeparam>
 [Serializable]
 public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : IHook {
 
@@ -155,19 +153,6 @@ public class Hooks<TBase> : Hooks, ISerializationCallbackReceiver where TBase : 
 			}
 		}
 	}
-
-	public override void TryUnhook(Object obj) {
-		foreach (var iType in obj.GetType().GetInterfaces().Where(v => v.GetInterfaces().Contains(typeof(IHook)))) {
-			var listType = typeof(HooksList<>).MakeGenericType(new[] { iType });
-			if (dict.TryGetValue(iType, out var list)) {
-				var remove = listType.GetMethod(nameof(HooksList<int>.RemoveOrdered));
-				remove.Invoke(list, new object[] { obj });
-			} else {
-				Debug.LogWarning($"Couldn't remove {obj} from {iType.Name} because the list for that type was missing!");
-			}
-		}
-	}
-
 
 	#region Serialization
 

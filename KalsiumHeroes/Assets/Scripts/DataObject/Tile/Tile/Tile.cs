@@ -9,13 +9,91 @@ using Muc.Numerics;
 using Muc.Collections;
 
 [ExecuteAlways]
-public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_Tile {
+public class Tile : Master<TileModifier, ITileHook>, IOnDeath_Tile {
+
+	[Tooltip("Is this tile considered passable?")]
+	public Passable passable;
+
+	[Tooltip("Can this Tile be seen through?")]
+	public Transparent transparent;
+
+	[Tooltip("Cost of movement to this Tile.")]
+	public MoveCost moveCost;
+
+	[Tooltip("More appealing Tiles are preferred when pathfinding.")]
+	public Appeal appeal;
+
+	[Tooltip("EdgeModifiers added to the Edges around this Tile.")]
+	public TileEdgeModifierCollection baseEdgeModifiers;
+
+	[Serializable]
+	public class Passable : Attribute<bool> {
+		Passable() : base(true) { }
+		public override string identifier => "Attribute_Tile_Passable";
+		public override string TooltipText(IAttribute source) {
+			if (!current) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Transparent : Attribute<bool> {
+		Transparent() : base(true) { }
+		public override string identifier => "Attribute_Tile_Transparent";
+		public override string TooltipText(IAttribute source) {
+			if (!current) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class MoveCost : Attribute<float> {
+		MoveCost() : base(1) { }
+		public override string identifier => "Attribute_Tile_MoveCost";
+		public override string TooltipText(IAttribute source) {
+			if (current != 1) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Appeal : Attribute<float> {
+		public override string identifier => "Attribute_Tile_Appeal";
+		public override string TooltipText(IAttribute source) {
+			if (current != 0) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class TileEdgeModifierCollection {
+
+		public EdgeModifier[] this[int index] => index switch {
+			0 => right,
+			1 => downRight,
+			2 => downLeft,
+			3 => left,
+			4 => upLeft,
+			5 => upRigth,
+			_ => throw new ArgumentOutOfRangeException(nameof(index)),
+		};
+
+		[Tooltip("EdgeModifiers added to the " + nameof(TileDir.Right) + " Edge.")]
+		public EdgeModifier[] right;
+		[Tooltip("EdgeModifiers added to the " + nameof(TileDir.DownRight) + " Edge.")]
+		public EdgeModifier[] downRight;
+		[Tooltip("EdgeModifiers added to the " + nameof(TileDir.DownLeft) + " Edge.")]
+		public EdgeModifier[] downLeft;
+		[Tooltip("EdgeModifiers added to the " + nameof(TileDir.Left) + " Edge.")]
+		public EdgeModifier[] left;
+		[Tooltip("EdgeModifiers added to the " + nameof(TileDir.UpLeft) + " Edge.")]
+		public EdgeModifier[] upLeft;
+		[Tooltip("EdgeModifiers added to the " + nameof(TileDir.UpRight) + " Edge.")]
+		public EdgeModifier[] upRigth;
+	}
+
 
 	public static implicit operator Hex(Tile v) => v.hex;
-
-	new public TileData source => (TileData)_source;
-	new public TileData data => (TileData)_data;
-	public override Type dataType => typeof(TileData);
 
 	public bool hasUnits => units.Count > 0;
 	public SafeList<Unit> units;
@@ -34,9 +112,9 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_
 	[field: SerializeField] public Edge[] edges { get; private set; } = new Edge[6];
 
 	/// <summary> Creates a Tile based on the given source and hex. </summary>
-	public static Tile Create(TileData source, Hex hex) {
+	public static T Create<T>(T source, Hex hex) where T : Tile {
 		if (Game.grid.tiles.ContainsKey(hex.pos)) throw new InvalidOperationException("There is already a Tile at the Hex.");
-		return Create<Tile>(source, v => {
+		return Create(source, v => {
 			v.hex = hex;
 			Game.grid.tiles.Add(hex.pos, v);
 			var pt = Layout.HexToPoint(hex);
@@ -67,7 +145,7 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_
 		for (int i = 0; i < neighbors.Length; i++) {
 			var edge = edges[i];
 			Debug.Assert(edge); // Should be set for all direction
-			foreach (var edgeSource in this.data.edgeModifiers[i]) {
+			foreach (var edgeSource in baseEdgeModifiers[i]) {
 				EdgeModifier.Create(edge, edgeSource, this);
 			}
 		}
@@ -94,7 +172,7 @@ public class Tile : Master<TileModifier, TileModifierData, ITileHook>, IOnDeath_
 
 	protected override void OnShow() {
 		base.OnShow();
-		gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(data.actor.transform.position.y);
+		gameObject.transform.position = Layout.HexToPoint(hex).xxy().SetY(actor.transform.position.y);
 		gameObject.transform.parent = Game.game.transform;
 		gameObject.name = $"Tile ({hex.x}, {hex.y})";
 		highlighter.OnShow(gameObject);

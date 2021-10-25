@@ -23,7 +23,7 @@ public class GridTester : MonoBehaviour {
 	[HideInInspector] public Hex hoverHex;
 
 	public bool paint;
-	public TileData paintTile;
+	public Tile paintTile;
 
 	public Draw draw;
 	public enum Draw {

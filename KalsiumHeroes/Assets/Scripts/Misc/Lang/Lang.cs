@@ -82,21 +82,21 @@ public class Lang : Singleton<Lang> {
 		}
 		return false;
 	}
-	public static bool TryGetStr(string strId, out string str, IAttribute a, DataObjectData s, DataObjectData d) {
+	public static bool TryGetStr(string strId, out string str, IAttribute a, DataObject s, DataObject d) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, s, d);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStr(string strId, out string str, DataObjectData s, DataObjectData d) {
+	public static bool TryGetStr(string strId, out string str, DataObject s, DataObject d) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, d);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStr(string strId, out string str, DataObjectData s) {
+	public static bool TryGetStr(string strId, out string str, DataObject s) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, null);
 			return true;
@@ -118,21 +118,21 @@ public class Lang : Singleton<Lang> {
 		}
 		return false;
 	}
-	public static bool TryGetStrArgs(string strId, out string str, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) {
+	public static bool TryGetStrArgs(string strId, out string str, IAttribute a, DataObject s, DataObject d, params object[] args) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, s, d, args);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStrArgs(string strId, out string str, DataObjectData s, DataObjectData d, params object[] args) {
+	public static bool TryGetStrArgs(string strId, out string str, DataObject s, DataObject d, params object[] args) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, d, args);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStrArgs(string strId, out string str, DataObjectData s, params object[] args) {
+	public static bool TryGetStrArgs(string strId, out string str, DataObject s, params object[] args) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, null, args);
 			return true;
@@ -156,15 +156,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(in res, null, null, null);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, string defaultStr, IAttribute a, DataObjectData s, DataObjectData d) {
+	public static string GetStr(string strId, string defaultStr, IAttribute a, DataObject s, DataObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, string defaultStr, DataObjectData s, DataObjectData d) {
+	public static string GetStr(string strId, string defaultStr, DataObject s, DataObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, string defaultStr, DataObjectData s) {
+	public static string GetStr(string strId, string defaultStr, DataObject s) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
 		return defaultStr;
 	}
@@ -172,15 +172,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, IAttribute a, DataObjectData s, DataObjectData d) {
+	public static string GetStr(string strId, IAttribute a, DataObject s, DataObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
 		return strId;
 	}
-	public static string GetStr(string strId, DataObjectData s, DataObjectData d) {
+	public static string GetStr(string strId, DataObject s, DataObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
 		return strId;
 	}
-	public static string GetStr(string strId, DataObjectData s) {
+	public static string GetStr(string strId, DataObject s) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
 		return strId;
 	}
@@ -197,15 +197,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, null, null, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, string defaultStr, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) {
+	public static string GetStrArgs(string strId, string defaultStr, IAttribute a, DataObject s, DataObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, string defaultStr, DataObjectData s, DataObjectData d, params object[] args) {
+	public static string GetStrArgs(string strId, string defaultStr, DataObject s, DataObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, string defaultStr, DataObjectData s, params object[] args) {
+	public static string GetStrArgs(string strId, string defaultStr, DataObject s, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
 		return defaultStr;
 	}
@@ -213,15 +213,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) {
+	public static string GetStrArgs(string strId, IAttribute a, DataObject s, DataObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
 		return strId;
 	}
-	public static string GetStrArgs(string strId, DataObjectData s, DataObjectData d, params object[] args) {
+	public static string GetStrArgs(string strId, DataObject s, DataObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
 		return strId;
 	}
-	public static string GetStrArgs(string strId, DataObjectData s, params object[] args) {
+	public static string GetStrArgs(string strId, DataObject s, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
 		return strId;
 	}
@@ -287,8 +287,8 @@ public class Lang : Singleton<Lang> {
 	*/
 
 	const char esc = '/';
-	public static string Format(in string str, IAttribute a, DataObjectData s, DataObjectData d, params object[] args) => Format(in str, a, s, d, 0, args);
-	private static string Format(in string str, IAttribute a, DataObjectData s, DataObjectData d, int depth, params object[] args) {
+	public static string Format(in string str, IAttribute a, DataObject s, DataObject d, params object[] args) => Format(in str, a, s, d, 0, args);
+	private static string Format(in string str, IAttribute a, DataObject s, DataObject d, int depth, params object[] args) {
 		var acc = new StringBuilder(str.Length);
 		for (int i = 0; i < str.Length; i++) {
 			var c = str[i];
@@ -398,7 +398,7 @@ public class Lang : Singleton<Lang> {
 									throw new SyntaxException($"Invalid main selector {splitted[0]}");
 							}
 
-							object DoDataObject(DataObjectData o) {
+							object DoDataObject(DataObject o) {
 								var fieldSub = splitted[1];
 								var field = o.GetType().GetField(fieldSub, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 								if (field == null) throw new MissingFieldException($"Field {fieldSub} not found.");
@@ -440,7 +440,7 @@ public class Lang : Singleton<Lang> {
 								default:
 									throw new SyntaxException($"Invalid main selector {splitted[0]}");
 							}
-							object DoDataObject(DataObjectData o) {
+							object DoDataObject(DataObject o) {
 								var fieldSub = splitted[1];
 								var field = o.GetType().GetField(fieldSub, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 								if (field == null) throw new MissingFieldException($"Field {fieldSub} not found.");

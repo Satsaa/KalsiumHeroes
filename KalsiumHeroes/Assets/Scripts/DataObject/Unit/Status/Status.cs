@@ -6,17 +6,32 @@ using UnityEngine;
 
 public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit, IOnRoundStart, IOnDispell_Unit {
 
-	new public StatusData source => (StatusData)_source;
-	new public StatusData data => (StatusData)_data;
-	public override Type dataType => typeof(StatusData);
+	[Tooltip("Debuff type. This status effect may, for example, be nullified if the target has resistance to the type.")]
+	public Attribute<DebuffType> debuffType;
+
+	[Tooltip("Is this status displayed in the UI?")]
+	public Attribute<bool> hidden;
+
+	[Tooltip("Is this status considered positive?")]
+	public Attribute<bool> positive;
+
+	[Tooltip("Is this status dispellable?")]
+	public Attribute<bool> dispellable;
+
+	[Tooltip("How long does this status effect last?")]
+	public ToggleMaxAttribute<int> ticks = new(false);
+
+	[Tooltip("Defines the timing of ticks.")]
+	public TickMode tickMode;
+
 
 	/// <summary> When the Unit got dispelled. </summary>
 	public virtual void OnDispell() {
-		if (data.dispellable.current) Remove();
+		if (dispellable.current) Remove();
 	}
 
 	public virtual void OnTurnStart() {
-		switch (data.tickMode) {
+		switch (tickMode) {
 			case TickMode.TurnStart:
 				Tick();
 				break;
@@ -27,7 +42,7 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 	}
 
 	public virtual void OnTurnEnd() {
-		switch (data.tickMode) {
+		switch (tickMode) {
 			case TickMode.TurnEnd:
 				Tick();
 				break;
@@ -38,14 +53,14 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 	}
 
 	public virtual void OnRoundStart() {
-		if (data.tickMode == TickMode.RoundStart) Tick();
+		if (tickMode == TickMode.RoundStart) Tick();
 	}
 
 	/// <summary> Ticks the tick duration. </summary>
 	/// <param name="doExpire">Call OnExpire if the tick duration has expired?</param>
 	protected void Tick(bool doExpire = true) {
-		if (!data.ticks.enabled) return;
-		data.ticks.current.value++;
+		if (!ticks.enabled) return;
+		ticks.current.value++;
 		OnTick();
 		if (doExpire && HasExpired()) OnExpire();
 	}
@@ -58,13 +73,13 @@ public abstract class Status : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit,
 
 	/// <summary> Check if this status has expired. </summary>
 	public virtual bool HasExpired() {
-		return data.ticks.enabled && data.ticks.current >= data.ticks.max;
+		return ticks.enabled && ticks.current >= ticks.max;
 	}
 
 	/// <summary> Check if this status would have expired after the provided round count. </summary>
 	public virtual bool WouldHaveExpired(int roundsAhead) {
 		if (Game.rounds.HasFinishedTurn(unit)) roundsAhead--;
-		return data.ticks.enabled && data.ticks.current - roundsAhead <= 0;
+		return ticks.enabled && ticks.current - roundsAhead <= 0;
 	}
 
 }

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Muc.Data;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnCalculateDamage_Unit {
 
-	new public EnergyExcessStatusData data => (EnergyExcessStatusData)_data;
-	public override Type dataType => typeof(EnergyExcessStatusData);
+	[Tooltip("Linearly stacking outgoing damage multiplications by DamageType.")]
+	public SerializedDictionary<DamageType, float> dmgTypeMults;
+
+	[Tooltip("Linearly stacking outgoing damage multiplications by AbilityType.")]
+	public SerializedDictionary<AbilityType, float> abiTypeMults;
+
 
 	[HideInInspector, SerializeField] Attribute<int> stacks = new();
 	[HideInInspector, SerializeField] bool didCalculateDamage;
@@ -15,7 +20,7 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
 
-		data.hidden.current.ConfigureAlterer(add, this,
+		hidden.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v || a > 0, // Will not override if already hidden
 			updater: () => stacks.current,
 			updateEvents: new[] { stacks.current.onChanged }
@@ -38,10 +43,10 @@ public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastSt
 
 	void IOnCalculateDamage_Unit.OnCalculateDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ab) {
-			if (data.abiTypeMults.TryGetValue(ab.data.abilityType.current, out var mult1)) {
+			if (abiTypeMults.TryGetValue(ab.abilityType.current, out var mult1)) {
 				damage *= mult1;
 			}
-			if (data.dmgTypeMults.TryGetValue(type, out var mult2)) {
+			if (dmgTypeMults.TryGetValue(type, out var mult2)) {
 				damage *= mult2;
 			}
 			didCalculateDamage = true;

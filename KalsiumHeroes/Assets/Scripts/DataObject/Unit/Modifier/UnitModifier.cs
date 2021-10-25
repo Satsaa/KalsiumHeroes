@@ -7,9 +7,10 @@ using UnityEngine;
 
 public abstract class UnitModifier : Modifier {
 
-	new public UnitModifierData source => (UnitModifierData)_source;
-	new public UnitModifierData data => (UnitModifierData)_data;
-	public override Type dataType => typeof(UnitModifierData);
+	[Tooltip("Displayed image")]
+	public AssetReference<Sprite> sprite;
+
+
 	public Unit unit => (Unit)master;
 
 	protected override void OnCreate() {

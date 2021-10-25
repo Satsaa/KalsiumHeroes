@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class ParryStanceAbility : NoTargetAbility, IOnAbilityCastEnd_Unit {
 
-	new public ParryStanceAbilityData data => (ParryStanceAbilityData)_data;
-	public override Type dataType => typeof(ParryStanceAbilityData);
+	[Tooltip("The UnitModifier given when casted")]
+	public UnitModifier modifier;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
-		return new InstantAbilityHandler(msg, this, (ability) => Create(master, data.statusModifier));
+		return new InstantAbilityHandler(msg, this, (ability) => Create(unit, modifier));
 	}
 
 	public void OnAbilityCastEnd(Ability ability) {

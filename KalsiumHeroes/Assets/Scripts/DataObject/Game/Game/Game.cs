@@ -62,8 +62,8 @@ public class Game : Singleton<Game> {
 		foreach (var team in mode.teams) {
 			for (int i = 0; i < mode.draft.Length; i++) {
 				var unitId = mode.draft[i];
-				var unitSrc = App.library.GetById<UnitData>(unitId);
-				var actor = Instantiate(unitSrc.actor.value);
+				var unitSrc = App.library.GetById<Unit>(unitId);
+				var actor = Instantiate(unitSrc.baseActor.value);
 				var spawn = actor.gameObject.AddComponent<SpawnControl>();
 				spawn.source = unitSrc;
 				spawn.team = team;

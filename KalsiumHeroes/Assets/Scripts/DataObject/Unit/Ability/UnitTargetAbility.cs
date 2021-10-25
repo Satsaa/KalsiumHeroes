@@ -7,9 +7,9 @@ using UnityEngine;
 
 public abstract class UnitTargetAbility : TargetAbility {
 
-	new public UnitTargetAbilityData source => (UnitTargetAbilityData)_source;
-	new public UnitTargetAbilityData data => (UnitTargetAbilityData)_data;
-	public override Type dataType => typeof(UnitTargetAbilityData);
+	[Tooltip("Types of valid targets.")]
+	public UnitTargetType targetType;
+
 
 	/// <summary>
 	/// Returns a list of affected Tiles if the Ability is cast on the Tile of unit.
@@ -23,9 +23,9 @@ public abstract class UnitTargetAbility : TargetAbility {
 	/// <summary> Returns a list of valid target Units. </summary>
 	public virtual IEnumerable<Unit> GetTargets() {
 
-		bool self = (data.targetType & UnitTargetType.Self) != 0;
-		bool ally = (data.targetType & UnitTargetType.Ally) != 0;
-		bool enemy = (data.targetType & UnitTargetType.Enemy) != 0;
+		bool self = (targetType & UnitTargetType.Self) != 0;
+		bool ally = (targetType & UnitTargetType.Ally) != 0;
+		bool enemy = (targetType & UnitTargetType.Enemy) != 0;
 
 		var tiles = GetDefaultRangeTiles();
 		tiles = tiles.Where(h => {
@@ -42,6 +42,6 @@ public abstract class UnitTargetAbility : TargetAbility {
 	}
 
 	public override string CombatLog(GameEvents.Ability msg) {
-		return $"{Lang.GetStr($"{unit.data.identifier}_DisplayName")} casted {Lang.GetStr($"{data.identifier}_DisplayName")} on {Lang.GetStr($"{Game.grid.GetTile(msg.targets[0]).units[0].data.identifier}_DisplayName")}.";
+		return $"{Lang.GetStr($"{unit.identifier}_DisplayName")} casted {Lang.GetStr($"{identifier}_DisplayName")} on {Lang.GetStr($"{Game.grid.GetTile(msg.targets[0]).units[0].identifier}_DisplayName")}.";
 	}
 }

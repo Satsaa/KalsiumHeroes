@@ -10,7 +10,7 @@ using Muc.Data;
 public class AbilityTypeReader : EnumReader<AbilityType> {
 
 	protected override void Handle() {
-		if (data is PassiveData) {
+		if (data is Passive) {
 			onUpdate.Invoke(Lang.GetStr("ABILITY_TYPE_PASSIVE"));
 		} else {
 			base.Handle();

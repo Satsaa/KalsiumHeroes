@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
-	new public SpeedGainStatusData data => (SpeedGainStatusData)_data;
-	public override Type dataType => typeof(SpeedGainStatusData);
+	public Attribute<int> speedGain;
+
+	public Attribute<int> movementGain;
+
 
 	protected int unitsFound = -1;
 
@@ -18,19 +20,19 @@ public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		unit.data.movement.current.ConfigureAlterer(add, this,
+		unit.movement.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.movementGain.current * unitsFound,
-			updateEvents: new[] { data.movementGain.current.onChanged }
+			updater: () => movementGain.current * unitsFound,
+			updateEvents: new[] { movementGain.current.onChanged }
 		);
-		unit.data.speed.current.ConfigureAlterer(add, this,
+		unit.speed.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
-			updater: () => data.speedGain.current * unitsFound,
-			updateEvents: new[] { data.speedGain.current.onChanged }
+			updater: () => speedGain.current * unitsFound,
+			updateEvents: new[] { speedGain.current.onChanged }
 		);
 	}
 
 	public virtual void OnGetEstimatedSpeed(int roundsAhead, ref int current) {
-		if (!WouldHaveExpired(roundsAhead)) current += data.speedGain.current * unitsFound;
+		if (!WouldHaveExpired(roundsAhead)) current += speedGain.current * unitsFound;
 	}
 }

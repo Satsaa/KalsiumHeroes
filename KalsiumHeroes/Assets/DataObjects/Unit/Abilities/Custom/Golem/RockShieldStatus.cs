@@ -5,18 +5,22 @@ using UnityEngine;
 
 public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 
-	new public RockShieldStatusData data => (RockShieldStatusData)_data;
-	public override Type dataType => typeof(RockShieldStatusData);
+	public Attribute<int> shieldHealth;
+
+	public UnitModifier modifier;
+
+	public Attribute<int> explosionRadius;
+
 
 	Attribute<int> shield;
 
 	protected override void OnCreate() {
 		base.OnCreate();
-		shield = data.shieldHP;
+		shield = shieldHealth;
 		Debug.Log("Shield created! Shield HP: " + shield.current);
 	}
 
-	public void OnTakeDamage(Modifier modifier, ref float damage, ref DamageType damageType) {
+	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType damageType) {
 		damage = CalculateDamage(damage, damageType);
 		if (damage < shield.current) {
 			shield.current.value = shield.current - Mathf.RoundToInt(damage);
@@ -36,10 +40,10 @@ public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 	public override void OnExpire() {
 		Debug.Log("Shield exploded on expiration!");
 		var h = unit.tile;
-		var radius = Game.grid.Ring(h, data.explosionRadius.current);
+		var radius = Game.grid.Ring(h, explosionRadius.current);
 		foreach (var tile in radius) {
 			foreach (var unit in tile.units) {
-				Modifier.Create(unit, data.modifier);
+				Create(unit, modifier);
 			}
 		}
 		base.OnExpire();
@@ -48,10 +52,10 @@ public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 	float CalculateDamage(float damage, DamageType damageType) {
 		if (damageType == DamageType.Physical) {
 			var oldValue = damage;
-			damage *= 1 - unit.data.defense.current / 100f;
+			damage *= 1 - unit.defense.current / 100f;
 		}
 		if (damageType == DamageType.Magical) {
-			damage *= 1 - unit.data.resistance.current / 100;
+			damage *= 1 - unit.resistance.current / 100;
 		}
 		return damage;
 	}

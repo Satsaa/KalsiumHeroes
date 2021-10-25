@@ -6,8 +6,15 @@ using UnityEngine;
 
 public class SpeedGainAbility : NoTargetAbility {
 
-	new public SpeedGainAbilityData data => (SpeedGainAbilityData)_data;
-	public override Type dataType => typeof(SpeedGainAbilityData);
+	[Tooltip("Radius of checked for other units")]
+	public Attribute<int> radius = new(2);
+
+	[Tooltip("This is the actual speed gain modifier gained from using the spell")]
+	public SpeedGainStatus speedGainStatus;
+
+	[Tooltip("Gain speed from units matching any of these unit target types.")]
+	public UnitTargetType teamType;
+
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (Ability) => {
@@ -15,14 +22,14 @@ public class SpeedGainAbility : NoTargetAbility {
 			var aoe = GetAffectedArea();
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					if (data.teamType.TargetIsCompatible(this.unit, unit)) unitsFound++;
+					if (teamType.TargetIsCompatible(this.unit, unit)) unitsFound++;
 				}
 			}
-			SpeedGainStatus.Create(master, data.speedGainModifier, v => ((SpeedGainStatus)v).Init(unitsFound));
+			Create(master, speedGainStatus, v => v.Init(unitsFound));
 		});
 	}
 
 	public override IEnumerable<Tile> GetAffectedArea() {
-		return Game.grid.Radius(unit.tile, data.radius.current);
+		return Game.grid.Radius(unit.tile, radius.current);
 	}
 }

@@ -7,9 +7,79 @@ using UnityEngine;
 
 public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEventEnd {
 
-	new public AbilityData source => (AbilityData)_source;
-	new public AbilityData data => (AbilityData)_data;
-	public override Type dataType => typeof(AbilityData);
+	[Tooltip("Type of the ability.")]
+	public AbilityTypeAttr abilityType;
+
+	[Tooltip("The amount of energy required to cast this ability.")]
+	public EnergyCost energyCost;
+
+	[Tooltip("How many turns it takes for this ability to gain a charge.")]
+	public Cooldown cooldown;
+
+	[Tooltip("How many charges does the ability have.")]
+	public Charges charges;
+
+	[Tooltip("How many times can the ability be cast in total.")]
+	public Uses uses;
+
+	[Tooltip("Can the unit move after this spell is cast?")]
+	public AllowMove allowMove;
+
+	[Serializable]
+	public class AbilityTypeAttr : Attribute<AbilityType> {
+		public override string identifier => "Attribute_Ability_AbilityType";
+		public override string TooltipText(IAttribute source) => current == AbilityType.Base ? null : $"<style=prefix>{Format(source == this)}</style>";
+		public override string Format(bool isSource) => Lang.GetStr($"{identifier}_{current.value}");
+	}
+
+	[Serializable]
+	public class EnergyCost : Attribute<int> {
+		public override string identifier => "Attribute_Ability_EnergyCost";
+		public override string TooltipText(IAttribute source) {
+			if (current != 0) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Cooldown : MaxAttribute<int> {
+		Cooldown() : base(0, 1) { }
+		public override string identifier => "Attribute_Ability_Cooldown";
+		public override string TooltipText(IAttribute source) {
+			if (max != 1) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Charges : MaxAttribute<int> {
+		Charges() : base(1, 1) { }
+		public override string identifier => "Attribute_Ability_Charges";
+		public override string TooltipText(IAttribute source) {
+			if (max != 1) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class Uses : ToggleAttribute<int> {
+		Uses() : base(false) { }
+		public override string identifier => "Attribute_Ability_Uses";
+		public override string TooltipText(IAttribute source) {
+			if (enabled) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
+	[Serializable]
+	public class AllowMove : Attribute<bool> {
+		public override string identifier => "Attribute_Ability_AllowMove";
+		public override string TooltipText(IAttribute source) {
+			if (current) return DefaultTooltip(source);
+			return null;
+		}
+	}
+
 
 	[HideInInspector] public bool isCasting;
 
@@ -17,12 +87,12 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	public virtual void OnTurnStart() {
 		if (Game.rounds.round <= unit.spawnRound) return;
-		data.cooldown.current.value--;
-		if (data.cooldown.current <= 0) {
-			data.charges.current.value++;
-			if (data.cooldown.max <= 0) data.charges.Max();
-			else data.charges.Ceil();
-			data.cooldown.Max();
+		cooldown.current.value--;
+		if (cooldown.current <= 0) {
+			charges.current.value++;
+			if (cooldown.max <= 0) charges.Max();
+			else charges.Ceil();
+			cooldown.Max();
 		}
 	}
 
@@ -42,22 +112,22 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	/// <summary> Is the Ability castable at the moment? </summary>
 	public virtual bool IsReady() {
-		if (data.uses.enabled && data.uses.current <= 0) return false;
-		if (data.energyCost.current > unit.data.energy.current) return false;
-		if (data.abilityType.current == AbilityType.Spell && unit.data.silenced.current) return false;
-		if (data.abilityType.current == AbilityType.WeaponSkill && unit.data.disarmed.current) return false;
-		if (data.charges.current <= 0) return false;
+		if (uses.enabled && uses.current <= 0) return false;
+		if (energyCost.current > unit.energy.current) return false;
+		if (abilityType.current == AbilityType.Spell && unit.silenced.current) return false;
+		if (abilityType.current == AbilityType.WeaponSkill && unit.disarmed.current) return false;
+		if (charges.current <= 0) return false;
 		return true;
 	}
 
 	/// <summary> Called when the ability is actually cast. </summary>
 	public virtual void OnCast() {
 		isCasting = true;
-		if (data.uses.enabled) data.uses.current.value--;
-		if (data.charges.current == data.charges.max) data.cooldown.Max();
-		if (data.cooldown.current <= 0 && data.cooldown.max <= 0) data.charges.Max();
-		else data.charges.current.value--;
-		unit.data.energy.current.value -= data.energyCost.current;
+		if (uses.enabled) uses.current.value--;
+		if (charges.current == charges.max) cooldown.Max();
+		if (cooldown.current <= 0 && cooldown.max <= 0) charges.Max();
+		else charges.current.value--;
+		unit.energy.current.value -= energyCost.current;
 		unit.RefreshEnergy();
 
 		using (var scope = new Hooks.Scope()) {
@@ -78,7 +148,7 @@ public abstract class Ability : UnitModifier, IOnTurnStart_Unit, IOnAnimationEve
 
 	/// <summary> Calculates damage for later use. Amplifications and modifiers are applied to the ref values. </summary>
 	public void CalculateDamage(ref float damage, ref DamageType damageType) {
-		var abilityType = this.data.abilityType;
+		var abilityType = this.abilityType;
 		using (var scope = new Hooks.Scope()) {
 			var (_damage, _damageType) = (damage, damageType);
 			unit.hooks.ForEach<IOnCalculateDamage_Unit>(scope, v => v.OnCalculateDamage(this, ref _damage, ref _damageType));

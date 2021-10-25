@@ -6,33 +6,43 @@ using UnityEngine;
 
 public class RockSolidPassive : Passive, IOnChangePosition_Game, IOnDeath_Game, IOnSpawn_Unit {
 
-	new public RockSolidPassiveData data => (RockSolidPassiveData)_data;
-	public override Type dataType => typeof(RockSolidPassiveData);
+	[Tooltip("Matching units give resistances.")]
+	public UnitTargetType filter;
+
+	[Tooltip("Rings around the caster and their values")]
+	public Ring[] rings;
+
+	[Serializable]
+	public class Ring {
+		[Tooltip("Added Defense and Resistance from units in this ring.")]
+		public Attribute<int> increase;
+	}
+
 
 	protected Alterer<int, int> defAlt;
 	protected Alterer<int, int> resAlt;
 
 	protected override void OnConfigureNonpersistent(bool add) {
 		base.OnConfigureNonpersistent(add);
-		defAlt = unit.data.defense.current.ConfigureAlterer(add, this,
+		defAlt = unit.defense.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: GetIncrease,
-			updateEvents: data.rings.Select(v => v.increase.current.onChanged)
+			updateEvents: rings.Select(v => v.increase.current.onChanged)
 		);
-		resAlt = unit.data.resistance.current.ConfigureAlterer(add, this,
+		resAlt = unit.resistance.current.ConfigureAlterer(add, this,
 			applier: (v, a) => v + a,
 			updater: GetIncrease,
-			updateEvents: data.rings.Select(v => v.increase.current.onChanged)
+			updateEvents: rings.Select(v => v.increase.current.onChanged)
 		);
 	}
 
 	private int GetIncrease() {
 		var increase = 0;
-		for (int i = 0; i < data.rings.Length; i++) {
-			var vals = data.rings[i];
+		for (int i = 0; i < rings.Length; i++) {
+			var vals = rings[i];
 			var ring = Game.grid.Ring(unit.tile, i);
 			foreach (var tile in ring) {
-				foreach (var unit in tile.units.Where(v => data.filter.TargetIsCompatible(unit, v))) {
+				foreach (var unit in tile.units.Where(v => filter.TargetIsCompatible(unit, v))) {
 					increase += vals.increase.current;
 				}
 			}
