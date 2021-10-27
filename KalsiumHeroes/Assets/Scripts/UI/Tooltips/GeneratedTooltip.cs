@@ -32,8 +32,8 @@ public class GeneratedTooltip : Tooltip, IValueReceiver {
 			.Where(v => typeof(Attribute).IsAssignableFrom(v.FieldType))
 			.OrderBy(field => field.MetadataToken);
 		var pairs = props.Select(v => (data: v.GetValue(obj) as IAttribute, source: v.GetValue(obj.source) as IAttribute));
-		foreach (var pair in pairs) {
-			var tooltip = pair.data.TooltipText(pair.source);
+		foreach (var (data, source) in pairs) {
+			var tooltip = data.TooltipText(source);
 			if (!string.IsNullOrEmpty(tooltip)) text.text += $"{tooltip}\n";
 		}
 

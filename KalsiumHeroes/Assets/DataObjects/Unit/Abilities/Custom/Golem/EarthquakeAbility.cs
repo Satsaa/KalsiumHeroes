@@ -18,7 +18,7 @@ public class EarthquakeAbility : NoTargetAbility {
 	public class RingValues {
 		public DamageType damageType;
 		public Attribute<float> damage;
-		public Modifier modifier;
+		public UnitModifier modifier;
 	}
 
 

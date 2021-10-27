@@ -1,9 +1,14 @@
 
 using UnityEngine;
 
-public abstract class Actor : Hooker {
+public abstract class Actor<TMaster> : Hooker where TMaster : Master {
 
-	public Animator animator;
+	[field: SerializeField, HideInInspector]
+	public TMaster master { get; private set; }
+	public bool attached => master;
+
+	[field: SerializeField]
+	public Animator animator { get; private set; }
 
 	protected override void Awake() {
 		base.Awake();
@@ -16,23 +21,17 @@ public abstract class Actor : Hooker {
 		if (master) Detach();
 	}
 
-	[field: SerializeField, HideInInspector]
-	public Master master { get; private set; }
-	public bool attached => master;
 
-	public virtual void Attach(Master master) {
+	public virtual void Attach(TMaster master) {
 		this.master = master;
 		master.rawHooks.Hook(this);
+		master.OnActorAttach();
 	}
 	public virtual void Detach() {
-		master.OnDetach();
+		master.OnActorDetach();
 		master.rawHooks.Unhook(this);
 		master = null;
 	}
 
 	public abstract void EndAnimations();
-}
-
-public abstract class Actor<T> : Actor where T : Master {
-	new public T master => (T)base.master;
 }

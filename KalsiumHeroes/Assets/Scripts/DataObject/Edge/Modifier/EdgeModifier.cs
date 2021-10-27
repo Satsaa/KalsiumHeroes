@@ -7,17 +7,18 @@ using UnityEngine;
 using Muc.Editor;
 using HexGrid;
 
-public abstract class EdgeModifier : Modifier {
-
-	public Edge edge => (Edge)master;
+public abstract class EdgeModifier : Edge.BaseModifier {
 
 	/// <summary> Which hex to use as context. Either hex1 or hex2 of the Edge. </summary>
 	[field: SerializeField] public Hex context { get; protected set; }
 
+
+	public Edge edge => master;
+
 	/// <summary> Creates an EdgeModifier based on the given source and attaches it to the master. </summary>
 	public static EdgeModifier Create(Edge edge, EdgeModifier source, Hex context) {
 		return Create(edge, source, v => {
-			Debug.Assert(context == v.edge.hex1 || context == v.edge.hex2, "Context was set to a Hex not connected to this Edge.");
+			Debug.Assert(context == v.master.hex1 || context == v.master.hex2, "Context was set to a Hex not connected to this Edge.");
 			v.context = context;
 		});
 	}

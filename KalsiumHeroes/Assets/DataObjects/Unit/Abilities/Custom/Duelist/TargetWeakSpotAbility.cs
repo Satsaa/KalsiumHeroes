@@ -11,17 +11,17 @@ public class TargetWeakSpotAbility : UnitTargetAbility {
 
 	public Attribute<float> defenseReduction;
 
-	public Modifier defenseReductionModifier;
+	public UnitModifier defenseReductionModifier;
 
 
 	public override EventHandler<GameEvents.Ability> CreateHandler(GameEvents.Ability msg) {
 		return new InstantAbilityHandler(msg, this, (ability) => {
 			var target = Game.grid.tiles[msg.targets[0]].units[msg.targetIndexes[0]];
-			var aoe = base.GetAffectedArea(target);
+			var aoe = GetAffectedArea(target);
 			foreach (var tile in aoe) {
 				foreach (var unit in tile.units) {
-					base.DealDamage(unit, this.damage.current, damageType);
-					Modifier.Create(master, defenseReductionModifier);
+					DealDamage(unit, damage.current, damageType);
+					Create(master, defenseReductionModifier);
 				}
 			}
 		});

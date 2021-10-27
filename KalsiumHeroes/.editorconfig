@@ -50,6 +50,8 @@ dotnet_diagnostic.RCS1213.severity = none  # Remove unused method declaration (u
 dotnet_diagnostic.RCS1161.severity = none  # Enum should declare explicit values
 dotnet_diagnostic.IDE0023.severity = none  # Use block body for operators
 dotnet_diagnostic.RCS1135.severity = none  # Declare enum member with zero value (when enum has FlagsAttribute)
+dotnet_diagnostic.RCS1006.severity = none  # Merge 'if' with nested 'if'.
+dotnet_diagnostic.RCS1093.severity = none  # Remove file with no code.
 
 
 #dotnet_diagnostic.RCS1049.severity = silent  # Simplify boolean comparison

@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4a55e509f2c3444a1f911b7ff830c4, type: 3}
   m_Name: AreaDamageAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: AreaDamageAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Ability_AreaDamage
-  container:
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  baseContainer:
     assetReference:
       m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  <master>k__BackingField: {fileID: 0}
+  <container>k__BackingField: {fileID: 0}
+  virtualized: 0
   sprite:
     assetReference:
       m_AssetGUID: 
@@ -86,6 +89,7 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  isCasting: 0
   range:
     _values:
     - cache: 0

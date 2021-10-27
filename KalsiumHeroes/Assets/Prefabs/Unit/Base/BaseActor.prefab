@@ -654,8 +654,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e94fafa10f004c87836566b21a811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
   <master>k__BackingField: {fileID: 0}
+  <animator>k__BackingField: {fileID: 0}
   animationType: 0
   walkSpeed: 5
   runSpeed: 10

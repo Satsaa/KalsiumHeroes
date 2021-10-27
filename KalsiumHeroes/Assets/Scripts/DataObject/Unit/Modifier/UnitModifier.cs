@@ -5,13 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class UnitModifier : Modifier {
+public abstract class UnitModifier : Unit.BaseModifier {
 
 	[Tooltip("Displayed image")]
 	public AssetReference<Sprite> sprite;
 
+	public Unit unit => master;
 
-	public Unit unit => (Unit)master;
+	/// <summary> Calculates damage and deals it to the target. </summary>
+	protected virtual void DealDamage(Unit target, float damage, DamageType damageType) {
+		target.DealCalculatedDamage(this, damage, damageType);
+	}
 
 	protected override void OnCreate() {
 		base.OnCreate();

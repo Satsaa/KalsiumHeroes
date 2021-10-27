@@ -72,7 +72,7 @@ public class UnitModifierListDisplayer : ValueHooker<Unit>, IOnUnitModifierCreat
 
 
 	protected void UpdateDynamic(Unit unit) {
-		var mods = FilterModifiers(unit.modifiers.Get()).ToList();
+		var mods = FilterModifiers(unit.modifiers.Get<UnitModifier>()).ToList();
 		var old = dynamics.ToList();
 		dynamics.Clear();
 

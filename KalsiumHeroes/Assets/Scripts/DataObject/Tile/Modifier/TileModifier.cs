@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class TileModifier : Modifier {
+public abstract class TileModifier : Tile.BaseModifier {
 
-	public Tile tile => (Tile)master;
-
+	public Tile tile => master;
 
 	protected override void OnCreate() {
 		base.OnCreate();

@@ -37,7 +37,7 @@ public abstract class DataObject : ScriptableObject, IIdentifiable {
 
 	[field: Tooltip("Source instance."), SerializeField]
 	public DataObject source { get; protected set; }
-	public bool isSource => source == this;
+	public bool isSource => source == null;
 
 	[field: SerializeField]
 	public bool removed { get; protected set; }
@@ -82,3 +82,89 @@ public abstract class DataObject : ScriptableObject, IIdentifiable {
 #endif
 
 }
+
+#if UNITY_EDITOR
+namespace Editors {
+
+	using System;
+	using System.Linq;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using UnityEngine;
+	using UnityEditor;
+	using static Muc.Editor.PropertyUtil;
+	using static Muc.Editor.EditorUtil;
+	using UnityEditorInternal;
+	using Muc.Data;
+
+	[CanEditMultipleObjects]
+	[CustomEditor(typeof(DataObject), true)]
+	public class DataObjectEditor : Editor {
+
+		DataObject t => (DataObject)target;
+
+		static string[] excludes = { script };
+		static List<bool> expands = new() { true };
+		ReorderableList list;
+		Type listType;
+
+		public override void OnInspectorGUI() {
+			serializedObject.Update();
+
+			Type decType = null;
+			int expandI = 0;
+
+			var property = serializedObject.GetIterator();
+			var expanded = true;
+			while (property.NextVisible(expanded)) {
+				expanded = false;
+				if (excludes.Contains(property.name)) continue;
+				var fi = GetFieldInfo(property);
+				var prev = decType;
+				if (decType != (decType = fi.DeclaringType)) {
+					if (expandI != 0) {
+						EditorGUI.indentLevel--;
+					}
+					expands[expandI] = EditorGUILayout.Foldout(expands[expandI], ObjectNames.NicifyVariableName(decType.Name), true, EditorStyles.foldoutHeader);
+					EditorGUI.indentLevel++;
+					expandI++;
+					if (expands.Count <= expandI) {
+						expands.Add(true);
+					}
+				}
+				if (expands[expandI - 1]) {
+					EditorGUILayout.PropertyField(property, true);
+				}
+			}
+			if (expandI != 0) {
+				EditorGUI.indentLevel--;
+			}
+
+			serializedObject.ApplyModifiedProperties();
+		}
+
+		private static void OnSelect(SerializedProperty property, Type type) {
+			var values = GetValues<SerializedType>(property);
+			Undo.RecordObjects(property.serializedObject.targetObjects, $"Set {property.name}");
+			foreach (var value in values) value.type = type;
+			foreach (var target in property.serializedObject.targetObjects) EditorUtility.SetDirty(target);
+			property.serializedObject.ApplyModifiedPropertiesWithoutUndo();
+		}
+
+
+		private static List<Type> createTypes;
+
+		private static IEnumerable<Type> GetCompatibleTypes(Type dataType, Type createType) {
+			createTypes ??= AppDomain.CurrentDomain.GetAssemblies()
+				.SelectMany(v => v.GetTypes())
+				.Where(v =>
+					v.IsClass
+					&& !v.IsAbstract
+					&& (v == typeof(DataObject) || typeof(DataObject).IsAssignableFrom(v))
+				).ToList();
+			return createTypes.Where(v => v == createType || createType.IsAssignableFrom(v));
+		}
+
+	}
+}
+#endif

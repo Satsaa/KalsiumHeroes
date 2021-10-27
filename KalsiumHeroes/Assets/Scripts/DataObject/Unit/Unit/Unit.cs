@@ -8,7 +8,7 @@ using Muc.Extensions;
 using Muc.Systems.RenderImages;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<UnitModifier, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
+public class Unit : Master<Unit, UnitActor, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
 	[Tooltip("Static sprite.")]
 	public AssetReference<Sprite> sprite;
@@ -69,7 +69,6 @@ public class Unit : Master<UnitModifier, IUnitHook>, IOnTurnStart_Unit, IOnDeath
 	[field: SerializeField] public Tile tile { get; private set; }
 	[field: SerializeField] public TileDir tileDir { get; private set; }
 	[field: SerializeField] public int spawnRound { get; private set; }
-	new public UnitActor actor => (UnitActor)_actor;
 	public Canvas canvas;
 	public Team team;
 

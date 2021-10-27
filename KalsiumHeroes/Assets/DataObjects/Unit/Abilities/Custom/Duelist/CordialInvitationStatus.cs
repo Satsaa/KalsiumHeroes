@@ -6,8 +6,8 @@ using UnityEngine;
 public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_Unit, IOnDeath_Unit {
 
 	public Attribute<int> breakRange;
-	public Modifier disgracefulBehaviour;
-	public Modifier piercingGlare;
+	public UnitModifier disgracefulBehaviour;
+	public UnitModifier piercingGlare;
 
 	[HideInInspector] public Unit opponent;
 	[HideInInspector] public CordialInvitationStatus opponentStatus;
@@ -23,7 +23,7 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_U
 	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ability) {
 			if (ability.unit != this.unit && ability.unit != opponent) {
-				Modifier.Create(master, piercingGlare);
+				Create(master, piercingGlare);
 			}
 		}
 	}
@@ -31,9 +31,9 @@ public class CordialInvitationStatus : Status, IOnMoveOver_Unit, IOnTakeDamage_U
 	public void OnMoveOver(Modifier reason, Tile from, Edge edge, Tile to) {
 		var distance = Game.grid.Distance(this.unit.tile, opponent.tile);
 		if (distance >= breakRange.current) {
-			Modifier.Create(master, disgracefulBehaviour);
+			Create(master, disgracefulBehaviour);
 			opponentStatus.Remove();
-			this.Remove();
+			Remove();
 		}
 	}
 }
