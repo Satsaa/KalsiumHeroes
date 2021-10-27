@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09020156c3c1f8b489dc197cd103c899, type: 3}
+  m_Script: {fileID: 11500000, guid: f2278f4740118084ca5acc0217dd3ab8, type: 3}
   m_Name: OpportunistPassive
   m_EditorClassIdentifier: 
   createType:

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231390f842166ba4d8a5e6e5ec42e40f, type: 3}
+  m_Script: {fileID: 11500000, guid: ec4a55e509f2c3444a1f911b7ff830c4, type: 3}
   m_Name: AreaDamageAbility
   m_EditorClassIdentifier: 
   createType:

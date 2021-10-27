@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c31a4845eb13346a50bb3ab11ad64c, type: 3}
+  m_Script: {fileID: 11500000, guid: ae48d45c55eaf0143ba97cbd0a21f06c, type: 3}
   m_Name: DefaultEdge
   m_EditorClassIdentifier: 
   createType:

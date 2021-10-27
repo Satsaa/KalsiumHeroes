@@ -12,4 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9e614e7257cbf43b3dd9e05a6eaace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultTextSource: {fileID: 0}

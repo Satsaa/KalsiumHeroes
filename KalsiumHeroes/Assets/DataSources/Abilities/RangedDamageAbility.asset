@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2152e2ce9ab8b82429122fc3ba60cc76, type: 3}
+  m_Script: {fileID: 11500000, guid: 40d534e0ed1fc9c46ba122e2a8e244ab, type: 3}
   m_Name: RangedDamageAbility
   m_EditorClassIdentifier: 
   createType:

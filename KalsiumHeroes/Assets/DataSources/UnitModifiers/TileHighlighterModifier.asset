@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36117d68ded5ec544abcfcbbea1c30f4, type: 3}
+  m_Script: {fileID: 11500000, guid: e0b5d8bc1d2a11449867180150c1b9ab, type: 3}
   m_Name: TileHighlighterModifier
   m_EditorClassIdentifier: 
   createType:

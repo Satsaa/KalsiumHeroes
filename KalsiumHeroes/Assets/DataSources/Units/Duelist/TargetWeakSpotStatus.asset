@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd36efa997747f340b4975270c1c9f17, type: 3}
+  m_Script: {fileID: 11500000, guid: edd6b45caeae26e4da399aaca7f66dba, type: 3}
   m_Name: TargetWeakSpotStatus
   m_EditorClassIdentifier: 
   createType:

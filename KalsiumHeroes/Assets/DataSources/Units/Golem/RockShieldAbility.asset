@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc32411a3df8d143b63ff095a492ad3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e9fedb7a2613d44092175afc72b69e5, type: 3}
   m_Name: RockShieldAbility
   m_EditorClassIdentifier: 
   createType:

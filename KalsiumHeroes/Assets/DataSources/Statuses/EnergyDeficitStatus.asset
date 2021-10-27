@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90450df768d12a84dbcd80afefc2edf3, type: 3}
+  m_Script: {fileID: 11500000, guid: 08f3c7537794d9a4ebe7785a0a2809d2, type: 3}
   m_Name: EnergyDeficitStatus
   m_EditorClassIdentifier: 
   createType:

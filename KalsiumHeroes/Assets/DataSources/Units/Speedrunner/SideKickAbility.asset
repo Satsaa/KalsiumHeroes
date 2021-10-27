@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6243cad3f117eb04a8fc7108f4b470a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 87764f91b6e2eb84093eb7b40c66b15a, type: 3}
   m_Name: SideKickAbility
   m_EditorClassIdentifier: 
   createType:

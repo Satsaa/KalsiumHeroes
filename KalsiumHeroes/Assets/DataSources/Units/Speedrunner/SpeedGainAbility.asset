@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 482779cf84a57554fae8b818064d3b33, type: 3}
+  m_Script: {fileID: 11500000, guid: 24a5bec9b10cba74cb7b74d0bc57fea7, type: 3}
   m_Name: SpeedGainAbility
   m_EditorClassIdentifier: 
   createType:

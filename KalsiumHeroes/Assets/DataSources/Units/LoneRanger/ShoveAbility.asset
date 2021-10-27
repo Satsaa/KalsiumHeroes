@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e61deeb55bec58499399bdde0259120, type: 3}
+  m_Script: {fileID: 11500000, guid: 335194df9ba6e854599f9144a0fc3a27, type: 3}
   m_Name: ShoveAbility
   m_EditorClassIdentifier: 
   createType:

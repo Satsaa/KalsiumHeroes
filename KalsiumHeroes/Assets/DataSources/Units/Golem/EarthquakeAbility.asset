@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6facac02922bc48a9638f3cf901550, type: 3}
+  m_Script: {fileID: 11500000, guid: 590af23e99e75b941bf8b3768fc6fe7e, type: 3}
   m_Name: EarthquakeAbility
   m_EditorClassIdentifier: 
   createType:

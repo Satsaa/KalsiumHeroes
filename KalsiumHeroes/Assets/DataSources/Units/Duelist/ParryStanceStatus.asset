@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e51c0386db3c554db23428b2e043c85, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bae862d68c83064bb2bc5f647fe9aae, type: 3}
   m_Name: ParryStanceStatus
   m_EditorClassIdentifier: 
   createType:

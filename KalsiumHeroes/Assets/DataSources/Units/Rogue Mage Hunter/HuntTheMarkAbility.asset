@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdda26183062e0f4f96bf281553faeeb, type: 3}
+  m_Script: {fileID: 11500000, guid: d0c8286a119c72c4ba66ab25ed8320c7, type: 3}
   m_Name: HuntTheMarkAbility
   m_EditorClassIdentifier: 
   createType:

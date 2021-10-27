@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64bb5ec9baa2c7543811ff1b7e7d97c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7413648097c84e54596d11636f5f9c3b, type: 3}
   m_Name: CordialInvitationAbility
   m_EditorClassIdentifier: 
   createType:

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3752a1edb04215b44aa4e63c26366cfc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c3e5bab25ee9634bb999026d7b0d4c9, type: 3}
   m_Name: ChangeSpeedAbility
   m_EditorClassIdentifier: 
   createType:

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3193d481463841444bc02168ae666526, type: 3}
+  m_Script: {fileID: 11500000, guid: 24c2bb941cf47224681d272416157ffa, type: 3}
   m_Name: ParryStanceAbility
   m_EditorClassIdentifier: 
   createType:

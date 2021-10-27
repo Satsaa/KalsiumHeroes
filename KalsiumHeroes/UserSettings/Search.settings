@@ -7,6 +7,9 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
+	"last_search.969B5199" = "sil"
+	"OpenInspectorPreview.969B5199" = "0"
+	"currentGroup.969B5199" = "all"
 }
 providers = {
 	expression = {
@@ -54,10 +57,19 @@ providers = {
 		priority = 100
 		defaultAction = null
 	}
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
 }
 recentSearches = [
+	"sile"
 ]
 searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
 showSavedSearchPanel = false
+expandedQueries = [
+]
+ignoredProperties = "id;name;classname"

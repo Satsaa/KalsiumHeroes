@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29f8dae7f573f9146b361c56038f0e3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 264846751f6a2f64e9e0d6be900d2978, type: 3}
   m_Name: EarthquakeSlow3
   m_EditorClassIdentifier: 
   createType:

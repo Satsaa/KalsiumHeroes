@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e2e27e650a4c543a8bbc986f135aed, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c5eb3504b7ba4443bac0fe95fcc0fe5, type: 3}
   m_Name: CastigationOfCastingAbility
   m_EditorClassIdentifier: 
   createType:

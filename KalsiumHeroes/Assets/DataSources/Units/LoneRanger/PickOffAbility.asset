@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7b7b9add516b534b862b8cefd976a1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 443dfc7a5dcd61e488ef89606d8246d4, type: 3}
   m_Name: PickOffAbility
   m_EditorClassIdentifier: 
   createType:

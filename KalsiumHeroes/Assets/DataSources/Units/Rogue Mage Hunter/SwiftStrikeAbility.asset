@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c8de1c73de6bd4cad784fce6835302, type: 3}
+  m_Script: {fileID: 11500000, guid: b96ba31909c362144a19cf16b6f2ac26, type: 3}
   m_Name: SwiftStrikeAbility
   m_EditorClassIdentifier: 
   createType:
