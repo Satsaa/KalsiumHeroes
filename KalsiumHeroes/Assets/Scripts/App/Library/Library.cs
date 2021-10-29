@@ -10,12 +10,12 @@ using Muc.Data;
 [DisallowMultipleComponent]
 public class Library : MonoBehaviour {
 
-	[SerializeField] List<DataObject> sources;
-	public IReadOnlyDictionary<string, DataObject> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
-	private SerializedDictionary<string, DataObject> _dict;
+	[SerializeField] List<KalsiumObject> sources;
+	public IReadOnlyDictionary<string, KalsiumObject> dict => _dict == null ? _dict ??= BuildDict() : _dict.Count == sources.Count ? _dict : _dict ??= BuildDict();
+	private SerializedDictionary<string, KalsiumObject> _dict;
 
-	private SerializedDictionary<string, DataObject> BuildDict() {
-		var res = new SerializedDictionary<string, DataObject>();
+	private SerializedDictionary<string, KalsiumObject> BuildDict() {
+		var res = new SerializedDictionary<string, KalsiumObject>();
 		sources.RemoveAll(v => v == null);
 		foreach (var source in sources) {
 			Debug.Assert(source.identifier != "", source);
@@ -25,8 +25,8 @@ public class Library : MonoBehaviour {
 		return res;
 	}
 
-	public bool TryGetById(string id, out DataObject result) => TryGetById<DataObject>(id, out result);
-	public bool TryGetById<T>(string id, out T result) where T : DataObject {
+	public bool TryGetById(string id, out KalsiumObject result) => TryGetById<KalsiumObject>(id, out result);
+	public bool TryGetById<T>(string id, out T result) where T : KalsiumObject {
 		if (dict.TryGetValue(id, out var res) && res is T _result) {
 			result = _result;
 			return true;
@@ -35,23 +35,23 @@ public class Library : MonoBehaviour {
 		return false;
 	}
 
-	public DataObject GetById(string id) => GetById<DataObject>(id);
-	public T GetById<T>(string id) where T : DataObject {
+	public KalsiumObject GetById(string id) => GetById<KalsiumObject>(id);
+	public T GetById<T>(string id) where T : KalsiumObject {
 		return (T)dict[id];
 	}
 
-	public IEnumerable<DataObject> GetByType(Type type) {
+	public IEnumerable<KalsiumObject> GetByType(Type type) {
 		foreach (var v in dict.Values) {
 			if (type.IsAssignableFrom(v.GetType())) yield return v;
 		}
 	}
-	public IEnumerable<T> GetByType<T>() where T : DataObject {
+	public IEnumerable<T> GetByType<T>() where T : KalsiumObject {
 		foreach (var v in dict.Values) {
 			if (v is T r) yield return r;
 		}
 	}
 
-	public void SetSources(List<DataObject> sources) {
+	public void SetSources(List<KalsiumObject> sources) {
 		this.sources = sources;
 	}
 
@@ -81,11 +81,11 @@ namespace Editors {
 			DrawDefaultInspector();
 
 			if (GUILayout.Button("Add All Sources In Project")) {
-				var datas = new List<DataObject>();
-				var guids = AssetDatabase.FindAssets($"t:{nameof(DataObject)}");
+				var datas = new List<KalsiumObject>();
+				var guids = AssetDatabase.FindAssets($"t:{nameof(KalsiumObject)}");
 				foreach (var guid in guids) {
 					var path = AssetDatabase.GUIDToAssetPath(guid);
-					var data = AssetDatabase.LoadAssetAtPath<DataObject>(path);
+					var data = AssetDatabase.LoadAssetAtPath<KalsiumObject>(path);
 					datas.Add(data);
 				}
 				t.SetSources(datas);

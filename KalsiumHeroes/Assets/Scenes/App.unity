@@ -1085,7 +1085,7 @@ MonoBehaviour:
     - key: Red
       value: {fileID: 8983366307983817180, guid: 218cabecf4582fa45b212b33b0b0aa17, type: 3}
       isDuplicate: 0
-    - key: DataObject_Info
+    - key: KalsiumObject_Info
       value: {fileID: 6378948958126740081, guid: 6b90029d88e7fda4295d9a8dd743af0e, type: 3}
       isDuplicate: 0
     - key: Text

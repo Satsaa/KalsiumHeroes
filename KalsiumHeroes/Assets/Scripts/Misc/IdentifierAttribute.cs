@@ -6,14 +6,14 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 /// <summary>
-/// Shows a dropdown to select an identifier of a DataObject.
+/// Shows a dropdown to select an identifier of a KalsiumObject.
 /// </summary>
 public class IdentifierAttribute : PropertyAttribute {
 
 	public Type objectType { get; }
 
 	public IdentifierAttribute(Type objectType = null) {
-		if (objectType != null && !typeof(DataObject).IsAssignableFrom(objectType)) throw new ArgumentException($"Type must be assignable to the type {nameof(DataObject)}", nameof(objectType));
+		if (objectType != null && !typeof(KalsiumObject).IsAssignableFrom(objectType)) throw new ArgumentException($"Type must be assignable to the type {nameof(KalsiumObject)}", nameof(objectType));
 		this.objectType = objectType;
 	}
 }

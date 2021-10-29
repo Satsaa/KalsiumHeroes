@@ -7,9 +7,9 @@ using Serialization;
 using UnityEngine;
 
 [RefToken]
-public abstract class DataObject : ScriptableObject, IIdentifiable {
+public abstract class KalsiumObject : ScriptableObject, IIdentifiable {
 
-	[Tooltip("String identifier of this DataObject. (\"Unit_Oracle\")")]
+	[Tooltip("String identifier of this KalsiumObject. (\"Unit_Oracle\")")]
 	public string identifier;
 	string IIdentifiable.identifier => identifier;
 
@@ -27,7 +27,7 @@ public abstract class DataObject : ScriptableObject, IIdentifiable {
 				var converted = current.FullName;
 				converted = removeData.Replace(converted, "");
 				converted += "_Info";
-				if (Tooltips.instance.TooltipExists(converted) || current == typeof(DataObject)) {
+				if (Tooltips.instance.TooltipExists(converted) || current == typeof(KalsiumObject)) {
 					return _tooltip = converted;
 				}
 				current = current.BaseType;
@@ -36,7 +36,7 @@ public abstract class DataObject : ScriptableObject, IIdentifiable {
 	}
 
 	[field: Tooltip("Source instance."), SerializeField]
-	public DataObject source { get; protected set; }
+	public KalsiumObject source { get; protected set; }
 	public bool isSource => source == null;
 
 	[field: SerializeField]
@@ -74,7 +74,7 @@ public abstract class DataObject : ScriptableObject, IIdentifiable {
 	[UnityEditor.Callbacks.DidReloadScripts]
 	private static void OnReloadScripts() {
 		if (Application.isPlaying && Game.game) {
-			foreach (var dobj in Game.dataObjects.Get<DataObject>().Where(v => v)) {
+			foreach (var dobj in Game.dataObjects.Get<KalsiumObject>().Where(v => v)) {
 				dobj.OnConfigureNonpersistent(true);
 			}
 		}
@@ -98,10 +98,10 @@ namespace Editors {
 	using Muc.Data;
 
 	[CanEditMultipleObjects]
-	[CustomEditor(typeof(DataObject), true)]
-	public class DataObjectEditor : Editor {
+	[CustomEditor(typeof(KalsiumObject), true)]
+	public class KalsiumObjectEditor : Editor {
 
-		DataObject t => (DataObject)target;
+		KalsiumObject t => (KalsiumObject)target;
 
 		static string[] excludes = { script };
 		static List<bool> expands = new() { true };
@@ -160,7 +160,7 @@ namespace Editors {
 				.Where(v =>
 					v.IsClass
 					&& !v.IsAbstract
-					&& (v == typeof(DataObject) || typeof(DataObject).IsAssignableFrom(v))
+					&& (v == typeof(KalsiumObject) || typeof(KalsiumObject).IsAssignableFrom(v))
 				).ToList();
 			return createTypes.Where(v => v == createType || createType.IsAssignableFrom(v));
 		}

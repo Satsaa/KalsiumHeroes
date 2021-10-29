@@ -82,21 +82,21 @@ public class Lang : Singleton<Lang> {
 		}
 		return false;
 	}
-	public static bool TryGetStr(string strId, out string str, IAttribute a, DataObject s, DataObject d) {
+	public static bool TryGetStr(string strId, out string str, IAttribute a, KalsiumObject s, KalsiumObject d) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, s, d);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStr(string strId, out string str, DataObject s, DataObject d) {
+	public static bool TryGetStr(string strId, out string str, KalsiumObject s, KalsiumObject d) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, d);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStr(string strId, out string str, DataObject s) {
+	public static bool TryGetStr(string strId, out string str, KalsiumObject s) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, null);
 			return true;
@@ -118,21 +118,21 @@ public class Lang : Singleton<Lang> {
 		}
 		return false;
 	}
-	public static bool TryGetStrArgs(string strId, out string str, IAttribute a, DataObject s, DataObject d, params object[] args) {
+	public static bool TryGetStrArgs(string strId, out string str, IAttribute a, KalsiumObject s, KalsiumObject d, params object[] args) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, a, s, d, args);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStrArgs(string strId, out string str, DataObject s, DataObject d, params object[] args) {
+	public static bool TryGetStrArgs(string strId, out string str, KalsiumObject s, KalsiumObject d, params object[] args) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, d, args);
 			return true;
 		}
 		return false;
 	}
-	public static bool TryGetStrArgs(string strId, out string str, DataObject s, params object[] args) {
+	public static bool TryGetStrArgs(string strId, out string str, KalsiumObject s, params object[] args) {
 		if (texts.TryGetValue(strId, out str)) {
 			str = Format(str, null, s, null, args);
 			return true;
@@ -156,15 +156,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(in res, null, null, null);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, string defaultStr, IAttribute a, DataObject s, DataObject d) {
+	public static string GetStr(string strId, string defaultStr, IAttribute a, KalsiumObject s, KalsiumObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, string defaultStr, DataObject s, DataObject d) {
+	public static string GetStr(string strId, string defaultStr, KalsiumObject s, KalsiumObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, string defaultStr, DataObject s) {
+	public static string GetStr(string strId, string defaultStr, KalsiumObject s) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
 		return defaultStr;
 	}
@@ -172,15 +172,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null);
 		return defaultStr;
 	}
-	public static string GetStr(string strId, IAttribute a, DataObject s, DataObject d) {
+	public static string GetStr(string strId, IAttribute a, KalsiumObject s, KalsiumObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d);
 		return strId;
 	}
-	public static string GetStr(string strId, DataObject s, DataObject d) {
+	public static string GetStr(string strId, KalsiumObject s, KalsiumObject d) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d);
 		return strId;
 	}
-	public static string GetStr(string strId, DataObject s) {
+	public static string GetStr(string strId, KalsiumObject s) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s);
 		return strId;
 	}
@@ -197,15 +197,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, null, null, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, string defaultStr, IAttribute a, DataObject s, DataObject d, params object[] args) {
+	public static string GetStrArgs(string strId, string defaultStr, IAttribute a, KalsiumObject s, KalsiumObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, string defaultStr, DataObject s, DataObject d, params object[] args) {
+	public static string GetStrArgs(string strId, string defaultStr, KalsiumObject s, KalsiumObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, string defaultStr, DataObject s, params object[] args) {
+	public static string GetStrArgs(string strId, string defaultStr, KalsiumObject s, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
 		return defaultStr;
 	}
@@ -213,15 +213,15 @@ public class Lang : Singleton<Lang> {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, null, null, args);
 		return defaultStr;
 	}
-	public static string GetStrArgs(string strId, IAttribute a, DataObject s, DataObject d, params object[] args) {
+	public static string GetStrArgs(string strId, IAttribute a, KalsiumObject s, KalsiumObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, a, s, d, args);
 		return strId;
 	}
-	public static string GetStrArgs(string strId, DataObject s, DataObject d, params object[] args) {
+	public static string GetStrArgs(string strId, KalsiumObject s, KalsiumObject d, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, d, args);
 		return strId;
 	}
-	public static string GetStrArgs(string strId, DataObject s, params object[] args) {
+	public static string GetStrArgs(string strId, KalsiumObject s, params object[] args) {
 		if (texts != null && texts.TryGetValue(strId, out var res)) return Format(res, null, s, s, args);
 		return strId;
 	}
@@ -245,11 +245,11 @@ public class Lang : Singleton<Lang> {
 
 	/*
 	We implement a custom formatting function for template strings fitting the needs of our project.
-	Primary goals are to allow getting values from DataObjects and Attributes.
+	Primary goals are to allow getting values from KalsiumObjects and Attributes.
 	Syntax:
 
-		{s.cooldown} -> "0/3" // s = source DataObject
-		{d.cooldown} -> "2/3" // d = current DataObject
+		{s.cooldown} -> "0/3" // s = source KalsiumObject
+		{d.cooldown} -> "2/3" // d = current KalsiumObject
 		{d.cooldown.0} -> "2" // First value of cooldown
 		{d.cooldown.1} -> "3" // Second value of cooldown
 		{d.cooldown.1:F2} -> "3.00" // Second value with formatting option
@@ -287,8 +287,8 @@ public class Lang : Singleton<Lang> {
 	*/
 
 	const char esc = '/';
-	public static string Format(in string str, IAttribute a, DataObject s, DataObject d, params object[] args) => Format(in str, a, s, d, 0, args);
-	private static string Format(in string str, IAttribute a, DataObject s, DataObject d, int depth, params object[] args) {
+	public static string Format(in string str, IAttribute a, KalsiumObject s, KalsiumObject d, params object[] args) => Format(in str, a, s, d, 0, args);
+	private static string Format(in string str, IAttribute a, KalsiumObject s, KalsiumObject d, int depth, params object[] args) {
 		var acc = new StringBuilder(str.Length);
 		for (int i = 0; i < str.Length; i++) {
 			var c = str[i];
@@ -390,15 +390,15 @@ public class Lang : Singleton<Lang> {
 									return val;
 								case "s":
 									if (s == null) throw new SyntaxException("Source is not supplied.");
-									return DoDataObject(s);
+									return DoKalsiumObject(s);
 								case "d":
 									if (d == null) throw new SyntaxException("Data is not supplied.");
-									return DoDataObject(d);
+									return DoKalsiumObject(d);
 								default:
 									throw new SyntaxException($"Invalid main selector {splitted[0]}");
 							}
 
-							object DoDataObject(DataObject o) {
+							object DoKalsiumObject(KalsiumObject o) {
 								var fieldSub = splitted[1];
 								var field = o.GetType().GetField(fieldSub, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 								if (field == null) throw new MissingFieldException($"Field {fieldSub} not found.");
@@ -433,14 +433,14 @@ public class Lang : Singleton<Lang> {
 									throw new SyntaxException("Too many sub selectors for attribute.");
 								case "s":
 									if (s == null) throw new SyntaxException("Source is not supplied.");
-									return DoDataObject(s);
+									return DoKalsiumObject(s);
 								case "d":
 									if (d == null) throw new SyntaxException("Data is not supplied.");
-									return DoDataObject(d);
+									return DoKalsiumObject(d);
 								default:
 									throw new SyntaxException($"Invalid main selector {splitted[0]}");
 							}
-							object DoDataObject(DataObject o) {
+							object DoKalsiumObject(KalsiumObject o) {
 								var fieldSub = splitted[1];
 								var field = o.GetType().GetField(fieldSub, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 								if (field == null) throw new MissingFieldException($"Field {fieldSub} not found.");

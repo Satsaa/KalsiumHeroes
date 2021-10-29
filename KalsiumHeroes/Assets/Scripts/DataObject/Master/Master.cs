@@ -109,7 +109,7 @@ public abstract partial class Master<TSelf, TActor, THook> : Master
 
 }
 
-public abstract class Master : DataObject {
+public abstract class Master : KalsiumObject {
 
 	public abstract Hooks rawHooks { get; }
 

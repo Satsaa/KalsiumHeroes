@@ -287,8 +287,8 @@ public class Tooltips : UISingleton<Tooltips> {
 						} else if (param.All(c => c >= '0' && c <= '9')) {
 							return int.Parse(param, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 						} else {
-							var dataObject = App.library.GetById<DataObject>(param);
-							if (dataObject == null) throw new ArgumentException(MakeThrowString($"The identifier specified {nameof(DataObject)} was not found."), "query");
+							var dataObject = App.library.GetById<KalsiumObject>(param);
+							if (dataObject == null) throw new ArgumentException(MakeThrowString($"The identifier specified {nameof(KalsiumObject)} was not found."), "query");
 							return dataObject;
 						}
 				}

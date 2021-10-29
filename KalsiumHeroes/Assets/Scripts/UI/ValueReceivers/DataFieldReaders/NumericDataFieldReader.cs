@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class NumericDataFieldReader : ValueReceiver<DataObject>, ICustomOnConfigureNonPersistent {
+public abstract class NumericDataFieldReader : ValueReceiver<KalsiumObject>, ICustomOnConfigureNonPersistent {
 
 	[SerializeField] protected NumericDataFieldSelector selector;
 
@@ -9,7 +9,7 @@ public abstract class NumericDataFieldReader : ValueReceiver<DataObject>, ICusto
 	[SerializeField] UnityEvent<float> onOther;
 	[SerializeField] UnityEvent<bool> onEnabled;
 
-	[SerializeField, HideInInspector] protected DataObject data;
+	[SerializeField, HideInInspector] protected KalsiumObject data;
 	[SerializeField, HideInInspector] bool listenered;
 
 	protected virtual void Awake() {
@@ -25,12 +25,12 @@ public abstract class NumericDataFieldReader : ValueReceiver<DataObject>, ICusto
 	protected abstract void OnOther(float value);
 	protected abstract void OnEnabled(bool enabled);
 
-	protected sealed override void ReceiveValue(DataObject target) {
+	protected sealed override void ReceiveValue(KalsiumObject target) {
 		Setup(target);
 	}
 
 
-	private void Setup(DataObject data) {
+	private void Setup(KalsiumObject data) {
 		TryConfigureListeners(false);
 		this.data = data;
 		OnReceive();

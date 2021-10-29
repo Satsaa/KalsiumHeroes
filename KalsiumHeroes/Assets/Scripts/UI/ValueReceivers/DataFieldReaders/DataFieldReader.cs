@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 using Muc.Data;
 using UnityEngine.Events;
 
-public abstract class DataFieldReader<T> : ValueReceiver<DataObject>, ICustomOnConfigureNonPersistent {
+public abstract class DataFieldReader<T> : ValueReceiver<KalsiumObject>, ICustomOnConfigureNonPersistent {
 
 	[SerializeField] protected DataFieldSelector<T> selector;
 
@@ -15,7 +15,7 @@ public abstract class DataFieldReader<T> : ValueReceiver<DataObject>, ICustomOnC
 	[SerializeField] UnityEvent<T> onOther;
 	[SerializeField] UnityEvent<bool> onEnabled;
 
-	[SerializeField, HideInInspector] protected DataObject data;
+	[SerializeField, HideInInspector] protected KalsiumObject data;
 	[SerializeField, HideInInspector] bool listenered;
 
 	protected virtual void Awake() {
@@ -31,12 +31,12 @@ public abstract class DataFieldReader<T> : ValueReceiver<DataObject>, ICustomOnC
 	protected abstract void OnOther(T value);
 	protected abstract void OnEnabled(bool enabled);
 
-	protected sealed override void ReceiveValue(DataObject target) {
+	protected sealed override void ReceiveValue(KalsiumObject target) {
 		Setup(target);
 	}
 
 
-	private void Setup(DataObject data) {
+	private void Setup(KalsiumObject data) {
 		TryConfigureListeners(false);
 		this.data = data;
 		OnReceive();

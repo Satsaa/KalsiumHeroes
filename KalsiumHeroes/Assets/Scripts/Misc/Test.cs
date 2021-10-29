@@ -11,7 +11,7 @@ using System.Reflection;
 
 public class Test : MonoBehaviour {
 
-	public DataObject source;
+	public KalsiumObject source;
 	public Unit unit;
 
 	public MaxAttribute<float> newAtt;
@@ -289,12 +289,12 @@ namespace Editors {
 				}
 			}
 
-			PropertyField<DataObjectData>(label, data);
+			PropertyField<KalsiumObjectData>(label, data);
 			using (IndentScope(1)) {
-				PropertyField<DataObjectData>(label, data);
+				PropertyField<KalsiumObjectData>(label, data);
 				using (IndentScope(1)) {
 					rect = EditorGUILayout.GetControlRect();
-					PropertyField<DataObjectData>(rect, label, data);
+					PropertyField<KalsiumObjectData>(rect, label, data);
 				}
 			}
 

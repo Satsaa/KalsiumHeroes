@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6378948958126740081}
   - component: {fileID: 7287743693712838242}
   m_Layer: 5
-  m_Name: DataObject
+  m_Name: KalsiumObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

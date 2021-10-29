@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 [Serializable]
 public class DataFieldSelector<T> {
 
-	[field: SerializeField] private DataObjectFieldName<T> field;
+	[field: SerializeField] private KalsiumObjectFieldName<T> field;
 
 	[field: SerializeField] private T fallbackValue;
 	[field: SerializeField] private T fallbackOther;

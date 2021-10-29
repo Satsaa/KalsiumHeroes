@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 using Muc.Extensions;
 using Muc.Components.Extended;
 
-public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IPointerEnterHandler, IPointerExitHandler {
+public class KalsiumObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IPointerEnterHandler, IPointerExitHandler {
 
 	[field: SerializeField, HideInInspector]
 	public bool hovered { get; protected set; }
@@ -18,7 +18,7 @@ public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IP
 	public bool allowClick { get; protected set; }
 
 	[SerializeField, HideInInspector]
-	DataObject dataObject;
+	KalsiumObject dataObject;
 
 	protected Camera canvasCam;
 
@@ -35,7 +35,7 @@ public class DataObjectTooltipProvider : ExtendedUIBehaviour, IValueReceiver, IP
 		if (value.Equals(this.dataObject)) return true;
 		if (HasValue()) Tooltips.instance.Hide(GetTooltip(), rectTransform);
 		this.dataObject = null;
-		if (value is DataObject dataObject) return this.dataObject = dataObject;
+		if (value is KalsiumObject dataObject) return this.dataObject = dataObject;
 		return false;
 	}
 

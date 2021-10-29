@@ -21,14 +21,14 @@ public class Game : Singleton<Game> {
 	public static Rounds rounds => instance._rounds;
 	public static Targeting targeting => instance._targeting;
 	public static TileGrid grid => instance._grid;
-	public static ObjectDict<DataObject> dataObjects => instance._dataObjects;
+	public static ObjectDict<KalsiumObject> dataObjects => instance._dataObjects;
 	public static Hooks<IGameHook> hooks => instance._hooks;
 
 	[SerializeField, ShowEditor] GameEvents _events;
 	[SerializeField, ShowEditor] Rounds _rounds;
 	[SerializeField, ShowEditor] Targeting _targeting;
 	[SerializeField, ShowEditor] TileGrid _grid;
-	[SerializeField] ObjectDict<DataObject> _dataObjects = new();
+	[SerializeField] ObjectDict<KalsiumObject> _dataObjects = new();
 	[SerializeField] Hooks<IGameHook> _hooks = new();
 
 	[field: SerializeField] public bool inited { get; private set; }
@@ -108,7 +108,7 @@ public class Game : Singleton<Game> {
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameStart>(scope, v => v.OnGameStart());
 	}
 
-	/// <summary> Removes removed DataObjects from the cache and destroys them </summary>
+	/// <summary> Removes removed KalsiumObjects from the cache and destroys them </summary>
 	private void Flush() {
 		foreach (var dataObject in dataObjects.Get<Master>().Where(v => v.removed).ToList()) {
 			dataObjects.Remove(dataObject);

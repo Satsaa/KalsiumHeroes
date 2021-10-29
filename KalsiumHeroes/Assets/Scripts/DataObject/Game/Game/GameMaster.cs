@@ -23,7 +23,7 @@ public class GameMaster : Master<GameMaster, Actor, IGameHook> {
 	[field: SerializeField, ShowEditor] public Rounds rounds { get; private set; }
 	[field: SerializeField, ShowEditor] public Targeting targeting { get; private set; }
 	[field: SerializeField, ShowEditor] public TileGrid grid { get; private set; }
-	[field: SerializeField] public ObjectDict<DataObject> dataObjects { get; private set; } = new();
+	[field: SerializeField] public ObjectDict<KalsiumObject> dataObjects { get; private set; } = new();
 
 	[field: SerializeField] public bool inited { get; private set; }
 	[field: SerializeField] public bool started { get; private set; }
@@ -106,7 +106,7 @@ public class GameMaster : Master<GameMaster, Actor, IGameHook> {
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameStart>(scope, v => v.OnGameStart());
 	}
 
-	/// <summary> Removes removed DataObjects from the cache and destroys them </summary>
+	/// <summary> Removes removed KalsiumObjects from the cache and destroys them </summary>
 	private void Flush() {
 		foreach (var dataObject in dataObjects.Get<Master>().Where(v => v.removed).ToList()) {
 			dataObjects.Remove(dataObject);

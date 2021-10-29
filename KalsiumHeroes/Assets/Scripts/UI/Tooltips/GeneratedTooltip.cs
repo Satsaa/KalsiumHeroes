@@ -18,7 +18,7 @@ public class GeneratedTooltip : Tooltip, IValueReceiver {
 
 	protected List<Attribute> listened; // todo
 
-	public void Generate(DataObject obj) {
+	public void Generate(KalsiumObject obj) {
 		var title = Lang.GetStr($"{obj.identifier}_DisplayName");
 		var hasDesc = Lang.TryGetStr($"{obj.identifier}_Description", out var desc);
 		var hasLore = Lang.TryGetStr($"{obj.identifier}_Lore", out var lore);
@@ -44,7 +44,7 @@ public class GeneratedTooltip : Tooltip, IValueReceiver {
 	}
 
 	bool IValueReceiver.TryHandleValue(object value) {
-		if (value is DataObject obj) {
+		if (value is KalsiumObject obj) {
 			Generate(obj);
 			return true;
 		}

@@ -127,6 +127,6 @@ public abstract partial class Master<TSelf, TActor, THook> where TSelf : Master<
 
 }
 
-public abstract class Modifier : DataObject {
+public abstract class Modifier : KalsiumObject {
 
 }
