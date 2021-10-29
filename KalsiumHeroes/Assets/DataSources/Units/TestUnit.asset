@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a765a0785610844928df81ebb445b1, type: 3}
   m_Name: TestUnit
   m_EditorClassIdentifier: 
-  createType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Test
-  container:
-    assetReference:
-      m_AssetGUID: 216427d80ecbfd04fb54c6000304f995
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -33,6 +28,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2752847404be97a46ba3c5ea86bb9783, type: 2}
   - {fileID: 11400000, guid: a82a72e75573d194987c2e1e7408fe45, type: 2}
   - {fileID: 11400000, guid: a58f77eff4ab92142abb6c63451e96e6, type: 2}
+  baseActor:
+    assetReference:
+      m_AssetGUID: 469588af71fdb4b479a6c1702e7ca221
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   sprite:
     assetReference:
       m_AssetGUID: 12abd3161e787c8499ca62c0cc50ecb4
@@ -49,12 +56,6 @@ MonoBehaviour:
   portrait:
     assetReference:
       m_AssetGUID: 6e8d6dc7b5aa78e4ea5794aac5975465
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  actor:
-    assetReference:
-      m_AssetGUID: 3f444bc7de6003c4488cca5a6715d5d6
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -137,3 +138,8 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  <tile>k__BackingField: {fileID: 0}
+  <tileDir>k__BackingField: 0
+  <spawnRound>k__BackingField: 0
+  canvas: {fileID: 0}
+  team: 0

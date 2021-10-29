@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a765a0785610844928df81ebb445b1, type: 3}
   m_Name: GolemUnit
   m_EditorClassIdentifier: 
-  createType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Golem
-  container:
-    assetReference:
-      m_AssetGUID: 8c2b3026cdf8e3045a8ba408088d7283
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -32,6 +27,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c61e49be82dcb6940a09aa831b25b05c, type: 2}
   - {fileID: 11400000, guid: aecac7c16203c3f4d8a7cd81375fccd3, type: 2}
   - {fileID: 11400000, guid: 454f1b36de6759446b85bb0fcf97dc7c, type: 2}
+  baseActor:
+    assetReference:
+      m_AssetGUID: 5672fa9fae2db4644868af94e805446e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   sprite:
     assetReference:
       m_AssetGUID: 27e6751c7bcda4642ae24696bb7392c8
@@ -48,12 +55,6 @@ MonoBehaviour:
   portrait:
     assetReference:
       m_AssetGUID: cb186015c34992245907509e65d3b7f0
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  actor:
-    assetReference:
-      m_AssetGUID: 5672fa9fae2db4644868af94e805446e
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -136,3 +137,8 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  <tile>k__BackingField: {fileID: 0}
+  <tileDir>k__BackingField: 0
+  <spawnRound>k__BackingField: 0
+  canvas: {fileID: 0}
+  team: 0

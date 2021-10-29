@@ -12,16 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c863e506635e44580ae68f5c534149, type: 3}
   m_Name: TrapTile
   m_EditorClassIdentifier: 
-  createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Tile_Trap
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers: []
-  actor:
+  baseActor:
     assetReference:
-      m_AssetGUID: a74a4a59cdf9c284e87fd031d12e3c20
+      m_AssetGUID: 01926f20e9f7a3343ab45ae6cf4952f5
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   passable:
     _values:
     - cache: 0
@@ -50,16 +57,37 @@ MonoBehaviour:
       <raw>k__BackingField: -5
       <isModified>k__BackingField: 0
       _original: 0
-  edgeModifiers:
-    right:
-    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
-    downRight:
-    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
-    downLeft:
-    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
-    left:
-    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
-    upLeft:
-    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
-    upRigth:
-    - {fileID: 11400000, guid: 30122b19183485f4a97972dd7b87a87e, type: 2}
+  baseEdgeModifiers:
+    right: []
+    downRight: []
+    downLeft: []
+    left: []
+    upLeft: []
+    upRigth: []
+  units:
+    list: []
+  _graveyard: []
+  <highlighter>k__BackingField:
+    asd: 0
+    colors: []
+    renderer: {fileID: 0}
+  <hex>k__BackingField:
+    <x>k__BackingField: 0
+    <y>k__BackingField: 0
+    <z>k__BackingField: 0
+  <center>k__BackingField: {x: 0, y: 0, z: 0}
+  <corners>k__BackingField: []
+  <neighbors>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <edges>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -1,10 +1,19 @@
 
 using UnityEngine;
 
-public abstract class Actor<TMaster> : Hooker where TMaster : Master {
+public abstract class Actor<TMaster> : Actor where TMaster : Master {
+
+	new public TMaster master => (TMaster)base.master;
+
+	public virtual void Attach(TMaster master) => base.Attach(master);
+	public sealed override void Attach(Master master) => base.Attach((TMaster)master);
+
+}
+
+public class Actor : Hooker {
 
 	[field: SerializeField, HideInInspector]
-	public TMaster master { get; private set; }
+	public Master master { get; private set; }
 	public bool attached => master;
 
 	[field: SerializeField]
@@ -22,7 +31,7 @@ public abstract class Actor<TMaster> : Hooker where TMaster : Master {
 	}
 
 
-	public virtual void Attach(TMaster master) {
+	public virtual void Attach(Master master) {
 		this.master = master;
 		master.rawHooks.Hook(this);
 		master.OnActorAttach();
@@ -33,5 +42,9 @@ public abstract class Actor<TMaster> : Hooker where TMaster : Master {
 		master = null;
 	}
 
-	public abstract void EndAnimations();
+
+	public virtual void EndAnimations() {
+		if (animator) animator.SetTrigger("Idle");
+	}
+
 }

@@ -12,11 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a5bec9b10cba74cb7b74d0bc57fea7, type: 3}
   m_Name: SpeedGainAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: SpeedGainAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Ability_SpeedGain
-  container: {fileID: 0}
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <master>k__BackingField: {fileID: 0}
+  <container>k__BackingField: {fileID: 0}
+  virtualized: 0
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   abilityType:
     _values:
     - cache: 0
@@ -75,6 +89,7 @@ MonoBehaviour:
       <raw>k__BackingField: 1
       <isModified>k__BackingField: 0
       _original: 0
+  isCasting: 0
   radius:
     _values:
     - cache: 0
@@ -82,5 +97,5 @@ MonoBehaviour:
       <raw>k__BackingField: 2
       <isModified>k__BackingField: 0
       _original: 0
-  speedGainModifier: {fileID: 11400000, guid: de7a0bea84f3d5d4e8e753f1a061c087, type: 2}
+  speedGainStatus: {fileID: 11400000, guid: de7a0bea84f3d5d4e8e753f1a061c087, type: 2}
   teamType: 8

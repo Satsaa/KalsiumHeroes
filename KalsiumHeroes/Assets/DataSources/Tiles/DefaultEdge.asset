@@ -12,13 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae48d45c55eaf0143ba97cbd0a21f06c, type: 3}
   m_Name: DefaultEdge
   m_EditorClassIdentifier: 
-  createType:
-    _name: Edge, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Edge_Default
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers: []
-  actor:
+  baseActor:
     assetReference:
-      m_AssetGUID: 829a54307468e944b9336cb80e2137be
+      m_AssetGUID: 31ce213b47fd8914fa452cb3f0ac7a63
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
+  hex1:
+    <x>k__BackingField: 0
+    <y>k__BackingField: 0
+    <z>k__BackingField: 0
+  hex2:
+    <x>k__BackingField: 0
+    <y>k__BackingField: 0
+    <z>k__BackingField: 0
+  <direction>k__BackingField: 0

@@ -9,7 +9,7 @@ using Muc.Numerics;
 using Muc.Collections;
 
 [ExecuteAlways]
-public class Tile : Master<Tile, Actor<Tile>, ITileHook>, IOnDeath_Tile {
+public class Tile : Master<Tile, Actor, ITileHook>, IOnDeath_Tile {
 
 	[Tooltip("Is this tile considered passable?")]
 	public Passable passable;
@@ -118,7 +118,7 @@ public class Tile : Master<Tile, Actor<Tile>, ITileHook>, IOnDeath_Tile {
 			v.hex = hex;
 			Game.grid.tiles.Add(hex.pos, v);
 			var pt = Layout.HexToPoint(hex);
-			v.center = new Vector3(pt.x, source.actor.transform.position.y, pt.y);
+			v.center = new Vector3(pt.x, source.baseActor.transform.position.y, pt.y);
 			v.corners = Layout.Corners(hex).Select(v => new Vector3(v.x, 0, v.y)).ToArray();
 		});
 	}

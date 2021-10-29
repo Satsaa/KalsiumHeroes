@@ -7,7 +7,7 @@ using UnityEngine;
 using Muc.Editor;
 using HexGrid;
 
-public abstract class EdgeModifier : Edge.BaseModifier {
+public abstract class EdgeModifier : Edge.RootModifier {
 
 	/// <summary> Which hex to use as context. Either hex1 or hex2 of the Edge. </summary>
 	[field: SerializeField] public Hex context { get; protected set; }

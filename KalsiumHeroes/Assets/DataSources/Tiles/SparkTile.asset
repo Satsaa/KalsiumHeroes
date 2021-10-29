@@ -12,17 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c863e506635e44580ae68f5c534149, type: 3}
   m_Name: SparkTile
   m_EditorClassIdentifier: 
-  createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Tile_Spark
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers:
   - {fileID: 11400000, guid: 1cdae7c5b2231184db4f55867743794f, type: 2}
-  actor:
+  baseActor:
     assetReference:
-      m_AssetGUID: dd5d4bfd537eeb44085350fc3da9c842
+      m_AssetGUID: 9ee61ad8dde94ea4793df4f60ef11f28
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   passable:
     _values:
     - cache: 0
@@ -51,10 +58,37 @@ MonoBehaviour:
       <raw>k__BackingField: 5
       <isModified>k__BackingField: 0
       _original: 0
-  edgeModifiers:
+  baseEdgeModifiers:
     right: []
     downRight: []
     downLeft: []
     left: []
     upLeft: []
     upRigth: []
+  units:
+    list: []
+  _graveyard: []
+  <highlighter>k__BackingField:
+    asd: 0
+    colors: []
+    renderer: {fileID: 0}
+  <hex>k__BackingField:
+    <x>k__BackingField: 0
+    <y>k__BackingField: 0
+    <z>k__BackingField: 0
+  <center>k__BackingField: {x: 0, y: 0, z: 0}
+  <corners>k__BackingField: []
+  <neighbors>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <edges>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

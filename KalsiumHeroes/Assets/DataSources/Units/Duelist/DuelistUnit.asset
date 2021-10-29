@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a765a0785610844928df81ebb445b1, type: 3}
   m_Name: DuelistUnit
   m_EditorClassIdentifier: 
-  createType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_Duelist
-  container:
-    assetReference:
-      m_AssetGUID: 0e8247b3555cca74eb3d413bf26810c1
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -32,6 +27,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7343f19d26c84ec49b95477e3333f2f7, type: 2}
   - {fileID: 11400000, guid: b3ce0bc98f8755f4995c192806e69b92, type: 2}
   - {fileID: 11400000, guid: abd8e55a2c59664468a267a08c909c1b, type: 2}
+  baseActor:
+    assetReference:
+      m_AssetGUID: e60dc84560d8ac44e93c6f0192f49556
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   sprite:
     assetReference:
       m_AssetGUID: a84e0b4f0827fd7419d3bc8e54203ab0
@@ -48,12 +55,6 @@ MonoBehaviour:
   portrait:
     assetReference:
       m_AssetGUID: 5d707e2014d4b0244ac392173545af57
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  actor:
-    assetReference:
-      m_AssetGUID: e60dc84560d8ac44e93c6f0192f49556
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -136,3 +137,8 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  <tile>k__BackingField: {fileID: 0}
+  <tileDir>k__BackingField: 0
+  <spawnRound>k__BackingField: 0
+  canvas: {fileID: 0}
+  team: 0

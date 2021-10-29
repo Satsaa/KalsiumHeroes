@@ -7,9 +7,9 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.969B5199" = "sil"
+	"last_search.969B5199" = "tileActor"
 	"OpenInspectorPreview.969B5199" = "0"
-	"currentGroup.969B5199" = "all"
+	"currentGroup.969B5199" = "asset"
 }
 providers = {
 	expression = {
@@ -64,6 +64,8 @@ providers = {
 	}
 }
 recentSearches = [
+	"Actor"
+	"sil"
 	"sile"
 ]
 searchItemFavorites = [

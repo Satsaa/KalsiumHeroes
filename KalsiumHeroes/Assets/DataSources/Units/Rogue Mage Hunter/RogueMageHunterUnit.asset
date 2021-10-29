@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a765a0785610844928df81ebb445b1, type: 3}
   m_Name: RogueMageHunterUnit
   m_EditorClassIdentifier: 
-  createType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_RogueMageHunter
-  container:
-    assetReference:
-      m_AssetGUID: 0e0fe8f48e4cf9547a8eda1887a5e57b
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -33,6 +28,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08388c54931bf5b46985b9f89fbd4039, type: 2}
   - {fileID: 11400000, guid: b502cf770b53f3545ad6fa1b830ed615, type: 2}
   - {fileID: 11400000, guid: 8d5fea59e64b07143886a82170581d3d, type: 2}
+  baseActor:
+    assetReference:
+      m_AssetGUID: f725440873d317b4f987ead995abc18c
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   sprite:
     assetReference:
       m_AssetGUID: 6191e5c6f0e861b4484c47265ca0c2af
@@ -49,12 +56,6 @@ MonoBehaviour:
   portrait:
     assetReference:
       m_AssetGUID: 3e0ac8cebb63bc742b63c3c3d0cbcb82
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  actor:
-    assetReference:
-      m_AssetGUID: f725440873d317b4f987ead995abc18c
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -137,3 +138,8 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  <tile>k__BackingField: {fileID: 0}
+  <tileDir>k__BackingField: 0
+  <spawnRound>k__BackingField: 0
+  canvas: {fileID: 0}
+  team: 0

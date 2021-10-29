@@ -91,8 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
-  typeConstraint2:
-    _name: 
   hooker: {fileID: 0}
   attribute:
     field:
@@ -180,7 +178,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 18
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bed950e70dc53b04da352a843132c508, type: 2}
   m_sharedMaterial: {fileID: -5174762091416310632, guid: bed950e70dc53b04da352a843132c508, type: 2}
@@ -263,8 +261,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
-  typeConstraint2:
-    _name: 
   selector:
     field:
       <attributeName>k__BackingField: energy
@@ -290,7 +286,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   data: {fileID: 0}
-  listenered: 0
+  listenered: 1
   enabledFormat: '{0}'
   disabledFormat: '-'
   onUpdate:
@@ -348,7 +344,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 725.448, y: 280.48856}
   m_SizeDelta: {x: 116, y: 29}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1901610641956579511
@@ -412,7 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 4daaef8595b8a214f912ff373e6ee4e1, type: 2}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -467,8 +463,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
-  typeConstraint2:
-    _name: 
   selector:
     field:
       <attributeName>k__BackingField: health
@@ -494,7 +488,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   data: {fileID: 0}
-  listenered: 0
+  listenered: 1
 --- !u!1 &4371330282576497774
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +556,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1000
+  m_text: 1800
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bed950e70dc53b04da352a843132c508, type: 2}
   m_sharedMaterial: {fileID: -5174762091416310632, guid: bed950e70dc53b04da352a843132c508, type: 2}
@@ -645,8 +639,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
-  typeConstraint2:
-    _name: 
   selector:
     field:
       <attributeName>k__BackingField: health
@@ -672,7 +664,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   data: {fileID: 0}
-  listenered: 0
+  listenered: 1
   enabledFormat: '{0}'
   disabledFormat: "\u221E"
   onUpdate:
@@ -790,6 +782,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5762229632496979693, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
+      propertyPath: m_text
+      value: Duelist
+      objectReference: {fileID: 0}
+    - target: {fileID: 5762229632496979693, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
       propertyPath: m_fontSize
       value: 11.45
       objectReference: {fileID: 0}
@@ -830,6 +826,10 @@ PrefabInstance:
     - target: {fileID: 3305428449357285034, guid: bc3b8ecdd9db8294ebac5dd578afe8b3, type: 3}
       propertyPath: m_Name
       value: Energy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044681793864563673, guid: bc3b8ecdd9db8294ebac5dd578afe8b3, type: 3}
+      propertyPath: listenered
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6003747555489981957, guid: bc3b8ecdd9db8294ebac5dd578afe8b3, type: 3}
       propertyPath: m_Pivot.x
@@ -943,11 +943,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6280452609819117208, guid: 97b32d8be008ec9478d6ce0a7ec2e93b, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6280452609819117208, guid: 97b32d8be008ec9478d6ce0a7ec2e93b, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6280452609819117208, guid: 97b32d8be008ec9478d6ce0a7ec2e93b, type: 3}
       propertyPath: m_RaycastTarget

@@ -7,7 +7,7 @@ using HexGrid;
 using Muc.Extensions;
 using Muc.Numerics;
 
-public class Edge : Master<Edge, Actor<Edge>, IEdgeHook> {
+public class Edge : Master<Edge, Actor, IEdgeHook> {
 
 	public Hex hex1;
 	public Hex hex2;

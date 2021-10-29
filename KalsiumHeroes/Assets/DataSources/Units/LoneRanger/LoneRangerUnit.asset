@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a765a0785610844928df81ebb445b1, type: 3}
   m_Name: LoneRangerUnit
   m_EditorClassIdentifier: 
-  createType:
-    _name: Unit, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Unit_LoneRanger
-  container:
-    assetReference:
-      m_AssetGUID: 2c6a0ce3066aa0548a9772b25193fcfa
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers:
   - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -31,6 +26,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0573a3e5a1b7e2444aaa08757477463c, type: 2}
   - {fileID: 11400000, guid: 1c02de160193e194d9bacaa24b7522b4, type: 2}
   - {fileID: 11400000, guid: 0efa7d0572be3d14d848f789fafd38da, type: 2}
+  baseActor:
+    assetReference:
+      m_AssetGUID: 77aa66bdd77010d428a6bcfae7bf3941
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   sprite:
     assetReference:
       m_AssetGUID: bb63b8522e5482e4d8d5d92020095132
@@ -47,12 +54,6 @@ MonoBehaviour:
   portrait:
     assetReference:
       m_AssetGUID: 83e41df96c36f6443a8fa29625e4b94c
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  actor:
-    assetReference:
-      m_AssetGUID: 77aa66bdd77010d428a6bcfae7bf3941
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -135,3 +136,8 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  <tile>k__BackingField: {fileID: 0}
+  <tileDir>k__BackingField: 0
+  <spawnRound>k__BackingField: 0
+  canvas: {fileID: 0}
+  team: 0

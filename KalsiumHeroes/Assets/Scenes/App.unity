@@ -272,6 +272,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 100
   m_TargetDisplay: 0
@@ -524,6 +525,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 8
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 10000
   m_TargetDisplay: 0
@@ -1056,6 +1058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08d10d928d00784d9ffb86a2ed5f095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <defaultWindowPrefab>k__BackingField: {fileID: 0}
   hideDelay:
     start: 0
     _delay: 0.5
@@ -1074,7 +1077,6 @@ MonoBehaviour:
     <used>k__BackingField: 0
     _paused: 1
     pauseTime: 0
-  defaultWindowPrefab: {fileID: 7719059669241410485, guid: ef3564e21eb5fb04683ea1ce7aadb584, type: 3}
   tooltips:
     list:
     - key: Blue
@@ -1257,7 +1259,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 540bd646e20c3fe41969f0494e37f1d5, type: 2}
   - {fileID: 11400000, guid: 5b004436724fec94bae69c540f6c826e, type: 2}
   - {fileID: 11400000, guid: 2752847404be97a46ba3c5ea86bb9783, type: 2}
-  - {fileID: 11400000, guid: 7a06a3cb142a18f44a5f654786004aa8, type: 2}
   - {fileID: 11400000, guid: f1e727a9800d3194abdeb3d3f2f04fa5, type: 2}
   - {fileID: 11400000, guid: ab4a9a7802701b84e96639bd50e36188, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
@@ -1484,7 +1485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bba6b1b45592884eaa2c3bec41efadb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 98707a7c5d3653246a097697e63748fa, type: 2}
+  source: {fileID: 0}
   unit: {fileID: 0}
   newTogAtt:
     _values:

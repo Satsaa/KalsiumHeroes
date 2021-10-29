@@ -13,7 +13,7 @@ using UnityEngine.AddressableAssets;
 /// <summary> Game handler. Literally the thing that makes the game work. </summary>
 [KeepRefToken]
 [DefaultExecutionOrder(-600)]
-public class GameMaster : Master<GameMaster, Actor<GameMaster>, IGameHook> {
+public class GameMaster : Master<GameMaster, Actor, IGameHook> {
 
 	/// <summary> Currently active Game instance </summary>
 	public static GameMaster game { get; private set; }

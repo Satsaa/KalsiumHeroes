@@ -12,16 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c863e506635e44580ae68f5c534149, type: 3}
   m_Name: GroundTile
   m_EditorClassIdentifier: 
-  createType:
-    _name: Tile, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Tile_Ground
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
   baseModifiers: []
-  actor:
+  baseActor:
     assetReference:
-      m_AssetGUID: 741552137c685484a85dcdd7b8204340
+      m_AssetGUID: f48706a411698e64381628f3ab34672b
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
+  <actor>k__BackingField: {fileID: 0}
   passable:
     _values:
     - cache: 0
@@ -50,10 +57,37 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
-  edgeModifiers:
+  baseEdgeModifiers:
     right: []
     downRight: []
     downLeft: []
     left: []
     upLeft: []
     upRigth: []
+  units:
+    list: []
+  _graveyard: []
+  <highlighter>k__BackingField:
+    asd: 0
+    colors: []
+    renderer: {fileID: 0}
+  <hex>k__BackingField:
+    <x>k__BackingField: 0
+    <y>k__BackingField: 0
+    <z>k__BackingField: 0
+  <center>k__BackingField: {x: 0, y: 0, z: 0}
+  <corners>k__BackingField: []
+  <neighbors>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  <edges>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

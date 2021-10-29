@@ -9,8 +9,6 @@ using UnityEngine;
 [Serializable]
 public class GameObjectReference : AssetReference<GameObject> {
 
-	public GameObjectReference() : base() { }
-
 	public static implicit operator GameObject(GameObjectReference v) => v.value;
 	public static implicit operator bool(GameObjectReference v) => !string.IsNullOrEmpty(v.assetReference.AssetGUID);
 

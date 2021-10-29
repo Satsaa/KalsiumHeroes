@@ -40,6 +40,7 @@ public class DividerShaderSetter : ValueHooker<Unit>, IOnAnimationEventEnd {
 
 			graphic.material.SetFloat("WidthScale", currentWidth / referenceWidth * referenceWidthScale);
 		}
+		UpdateValue(target);
 	}
 
 	// Called when dimensions of a RectTransform change
@@ -61,6 +62,8 @@ public class DividerShaderSetter : ValueHooker<Unit>, IOnAnimationEventEnd {
 	protected Unit target;
 
 	protected void UpdateValue(Unit data) {
+
+		if (!awoken) return;
 
 		if (data && (setMaxValue || setWidthScale)) {
 

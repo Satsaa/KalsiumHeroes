@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 990003764926390392}
   - component: {fileID: 459173937667590104}
   m_Layer: 0
-  m_Name: BaseActor
+  m_Name: BaseUnitActor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

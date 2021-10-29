@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ba896e4c9f22844ab78f0cb5f9121e, type: 3}
   m_Name: OverheadUIModifier
   m_EditorClassIdentifier: 
-  createType:
-    _name: UnitUIModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: UnitModifier_OverheadUI
-  container:
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  baseContainer:
     assetReference:
       m_AssetGUID: 5917dcf2b5a3899408677521a316c666
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  <master>k__BackingField: {fileID: 0}
+  <container>k__BackingField: {fileID: 0}
+  virtualized: 0
   sprite:
     assetReference:
       m_AssetGUID: 
@@ -59,3 +63,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rect: {fileID: 0}
+  updatePosition: 1
