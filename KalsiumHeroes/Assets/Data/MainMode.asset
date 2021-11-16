@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   identifier: Mode_Main
   version: 0.0.1
-  teams: 0000000001000000
+  teams:
+  - {fileID: 11400000, guid: 6c391f20280845440a524a515985bdc9, type: 2}
+  - {fileID: 11400000, guid: d1a266c2c1fa9c94399e720945e0c31c, type: 2}
   draftableUnits:
   - {fileID: 11400000, guid: a5bd3810ecfa2044284e6969dd03082e, type: 2}
   - {fileID: 11400000, guid: da3777f504b11294285eca553aa4dd99, type: 2}

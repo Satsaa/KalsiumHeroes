@@ -561,7 +561,7 @@ MonoBehaviour:
   m_ShowMaskGraphic: 0
 --- !u!95 &3297345019257132202
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -574,6 +574,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -1559,10 +1560,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
   codeInputPrefab: {fileID: 7592392062591246403, guid: 1c4ed4b21d89cdf45a4adc7f315d31bb, type: 3}
-  title: {fileID: 0}
-  message: {fileID: 0}
-  create: {fileID: 0}
-  cancel: {fileID: 0}
 --- !u!1 &3297345019861147497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,7 +1734,7 @@ MonoBehaviour:
   m_ShowMaskGraphic: 0
 --- !u!95 &3297345020109406432
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1750,6 +1747,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -2196,7 +2194,7 @@ CanvasGroup:
   m_IgnoreParentGroups: 0
 --- !u!95 &3297345020336114267
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2209,6 +2207,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -2424,10 +2423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
   codeInputPrefab: {fileID: 7592392062591246403, guid: 1c4ed4b21d89cdf45a4adc7f315d31bb, type: 3}
-  title: {fileID: 0}
-  message: {fileID: 0}
-  join: {fileID: 0}
-  cancel: {fileID: 0}
+  team: {fileID: 11400000, guid: 6c391f20280845440a524a515985bdc9, type: 2}
 --- !u!114 &3297345020419914865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,7 +2916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2157200882273859063
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3079,9 +3075,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -703, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8131437112451208037
 CanvasRenderer:

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class UnitModifier : Unit.RootModifier {
+public abstract class UnitModifier : Unit.ActorModifier {
 
 	[Tooltip("Displayed image")]
 	public AssetReference<Sprite> sprite;

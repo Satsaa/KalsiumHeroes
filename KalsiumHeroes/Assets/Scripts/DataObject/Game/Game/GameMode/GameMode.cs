@@ -19,7 +19,7 @@ public abstract class GameMode : StoredScriptableObject, IIdentifiable {
 	public string version = "0.0.0";
 
 	[Tooltip("Teams available in this GameMode.")]
-	public List<Team> teams = new() { Team.Team1, Team.Team2 };
+	public List<Team> teams;
 
 	[Tooltip("Units that can be drafted in this GameMode.")]
 	public List<Unit> draftableUnits;

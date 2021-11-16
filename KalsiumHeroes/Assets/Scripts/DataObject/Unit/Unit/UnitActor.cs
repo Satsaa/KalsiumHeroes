@@ -9,7 +9,7 @@ using System.Linq;
 using static Muc.Editor.GizmosUtil;
 
 
-public partial class UnitActor : Actor<Unit> {
+public partial class UnitActor : Actor {
 
 	public enum AnimationType {
 		None,

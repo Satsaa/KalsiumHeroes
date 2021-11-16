@@ -3,24 +3,17 @@ using System;
 using UnityEngine;
 
 
-public abstract partial class Master<TSelf, TActor, THook> where TSelf : Master<TSelf, TActor, THook>
-	where TActor : Actor
+public abstract partial class Master<TSelf, THook> : Master
+	where TSelf : Master<TSelf, THook>
 	where THook : IHook {
+
 	/// <summary>
 	/// Base class for all Modifiers of Masters.
 	/// </summary>
 	public abstract class RootModifier : Modifier {
 
-		[Tooltip("If defined, when creating this Modifier, instantiate this GameObject as a child and add the Modifier to it instead.")]
-		public GameObjectReference baseContainer;
-
-
 		[field: Tooltip("Master component for this Modifier."), SerializeField]
 		public TSelf master { get; private set; }
-
-		/// <summary> Optional GameObject created for this Modifier </summary>
-		[field: SerializeField]
-		public GameObject container { get; private set; }
 
 		/// <summary> A virtual Modifier is wrapped by a Virtualizer which acts as a layer (WIP). </summary>
 		[HideInInspector] public bool virtualized;
@@ -35,14 +28,10 @@ public abstract partial class Master<TSelf, TActor, THook> where TSelf : Master<
 			Game.dataObjects.Remove(this);
 			Game.hooks.Unhook(this);
 
-			if (!master.removed) using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
+			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnModifierRemove>(scope, v => v.OnModifierRemove(this));
 
 			OnConfigureNonpersistent(false);
-			if (!master.removed) OnRemove();
-			if (container) {
-				ObjectUtil.Destroy(container);
-				container = null;
-			}
+			OnRemove();
 		}
 
 		/// <summary> Creates a Modifier based on the given source and attaches it to the master. </summary>
@@ -70,24 +59,12 @@ public abstract partial class Master<TSelf, TActor, THook> where TSelf : Master<
 		}
 
 		protected override void OnShow() {
+			//
 			base.OnShow();
-			if (baseContainer.value) {
-				Canvas canvas;
-				// Create containers containing RectTransforms on the Canvas of the Master.
-				if (baseContainer.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
-					container = ObjectUtil.Instantiate(baseContainer, canvas.transform);
-				} else {
-					container = ObjectUtil.Instantiate(baseContainer, master.transform);
-				}
-				container.transform.localRotation = baseContainer.transform.localRotation;
-			}
 		}
 
 		protected override void OnHide() {
-			if (container) {
-				ObjectUtil.Destroy(container);
-				container = null;
-			}
+			//
 			base.OnHide();
 		}
 

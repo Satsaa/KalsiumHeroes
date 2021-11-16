@@ -8,7 +8,7 @@ using Muc.Extensions;
 using Muc.Systems.RenderImages;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<Unit, UnitActor, IUnitHook>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
+public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
 	[Tooltip("Static sprite.")]
 	public AssetReference<Sprite> sprite;
@@ -56,11 +56,7 @@ public class Unit : Master<Unit, UnitActor, IUnitHook>, IOnTurnStart_Unit, IOnDe
 	[Serializable] public class Defense : Attribute<int> { public override string identifier => "Attribute_Unit_Defense"; }
 	[Serializable] public class Resistance : Attribute<int> { public override string identifier => "Attribute_Unit_Resistance"; }
 
-	[Serializable]
-	public abstract class Disabler : Attribute<bool> {
-		public override string TooltipText(IAttribute source) => source == this && current ? DefaultTooltip(source) : null;
-	}
-
+	public abstract class Disabler : Attribute<bool> { public override string TooltipText(IAttribute source) => source == this && current ? DefaultTooltip(source) : null; }
 	[Serializable] public class Silenced : Disabler { public override string identifier => "Attribute_Unit_Silenced"; }
 	[Serializable] public class Disarmed : Disabler { public override string identifier => "Attribute_Unit_Disarmed"; }
 	[Serializable] public class Rooted : Disabler { public override string identifier => "Attribute_Unit_Rooted"; }

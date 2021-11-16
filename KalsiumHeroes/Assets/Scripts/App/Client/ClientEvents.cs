@@ -22,7 +22,7 @@ public static class ClientEvents {
 	[Serializable]
 	public class GameJoin : ClientEvent {
 		public string code;
-		public Team team;
+		public string team;
 	}
 
 	[Serializable]

@@ -3,6 +3,9 @@
 
 public interface IHook { }
 
+/// <summary> Dummy IHook type when none are supported </summary>
+public interface INoneHook : IHook { }
+
 public interface IUnitHook : IHook { }
 public interface ITileHook : IHook { }
 public interface IEdgeHook : IHook { }

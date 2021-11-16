@@ -9,7 +9,7 @@ using Muc.Numerics;
 using Muc.Collections;
 
 [ExecuteAlways]
-public class Tile : Master<Tile, Actor, ITileHook>, IOnDeath_Tile {
+public class Tile : Master<Tile, ITileHook, Actor>, IOnDeath_Tile {
 
 	[Tooltip("Is this tile considered passable?")]
 	public Passable passable;

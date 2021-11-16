@@ -54,22 +54,16 @@ public class App : Singleton<App> {
 			: await client.Post(new GameCreate() { code = code });
 	}
 
-	public async Task<Result> JoinGame(string code) {
-		var join = await client.Post(new GameJoin() { code = code, team = Team.Team1 });
-		switch (join.result) {
-			case ResultType.Fail:
-				var join2 = await client.Post(new GameJoin() { code = code, team = Team.Team2 });
-				if (!join2.succeeded) return join2;
-				return await JoinGame(code, Team.Team2);
-			case ResultType.Success:
-				return await JoinGame(code, Team.Team1);
-			default:
-				return join;
+	public async Task<bool> JoinGame(string code, IEnumerable<Team> teams) {
+		foreach (var team in teams) {
+			var join = await client.Post(new GameJoin() { code = code, team = null }); // Team1
+			if (!join.succeeded) return true;
 		}
+		return false;
 	}
 
 	public async Task<Result> JoinGame(string code, Team team) {
-		var join = await client.Post(new GameJoin() { code = code, team = team });
+		var join = await client.Post(new GameJoin() { code = code, team = team.identifier });
 		if (join.succeeded) {
 			var res = new TaskCompletionSource<bool>();
 			var gameScene = SceneManager.GetSceneByPath(this.gameScene);
@@ -97,7 +91,7 @@ public class App : Singleton<App> {
 
 	public async Task<Result> RejoinGame(string code, Team team, int delay = 0) {
 		await Task.Delay(delay);
-		return await client.Post(new GameJoin() { code = code, team = team });
+		return await client.Post(new GameJoin() { code = code, team = team.identifier });
 	}
 
 

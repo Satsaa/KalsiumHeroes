@@ -62,7 +62,7 @@ export interface GameJoin {
     guid: string
     type: 'GameJoin'
     code: string
-    team: number
+    team: string
   }
 }
 
@@ -119,9 +119,4 @@ export enum ResultType {
   Success,
   Fail,
   Error,
-}
-
-export enum Team {
-  Team1,
-  Team2,
 }
