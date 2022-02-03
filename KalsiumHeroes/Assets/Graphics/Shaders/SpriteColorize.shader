@@ -40,7 +40,7 @@ Shader "UI/Colorize"
 			Lighting Off
 			ZWrite Off
 			ZTest [unity_GUIZTestMode]
-			Blend One OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend SrcAlpha OneMinusSrcAlpha
 			ColorMask [_ColorMask]
 
 			Stencil{
@@ -683,7 +683,7 @@ Shader "UI/Colorize"
 			Lighting Off
 			ZWrite Off
 			ZTest [unity_GUIZTestMode]
-			Blend One OneMinusSrcAlpha, One OneMinusSrcAlpha
+			Blend SrcAlpha OneMinusSrcAlpha
 			ColorMask [_ColorMask]
 
 			Stencil{

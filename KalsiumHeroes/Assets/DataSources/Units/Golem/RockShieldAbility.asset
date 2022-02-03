@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9fedb7a2613d44092175afc72b69e5, type: 3}
   m_Name: RockShieldAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: RockShieldAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Ability_RockShield
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   abilityType:
     _values:
     - cache: 0
@@ -76,4 +89,5 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
-  rockShieldModifier: {fileID: 11400000, guid: 97c4fc5897354a34799ece19b7f5e15d, type: 2}
+  isCasting: 0
+  modifier: {fileID: 11400000, guid: 97c4fc5897354a34799ece19b7f5e15d, type: 2}

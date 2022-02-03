@@ -10,7 +10,7 @@ using Serialization;
 using Object = UnityEngine.Object;
 using UnityEngine.AddressableAssets;
 
-/// <summary> Game handler. Literally the thing that makes the game work. </summary>
+/// <summary> The game. </summary>
 [KeepRefToken]
 [DefaultExecutionOrder(-600)]
 public class GameMaster : Master<GameMaster, IGameHook> {

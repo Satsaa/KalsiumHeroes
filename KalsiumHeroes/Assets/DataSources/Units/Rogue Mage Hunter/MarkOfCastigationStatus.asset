@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c61e119e2262bc4da8b7bf37d221b68, type: 3}
   m_Name: MarkOfCastigationStatus
   m_EditorClassIdentifier: 
-  createType:
-    _name: MarkOfCastigationStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Status_MarkOfCastigation
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   debuffType:
     _values:
     - cache: 0
@@ -73,5 +86,5 @@ MonoBehaviour:
       <isModified>k__BackingField: 0
       _original: 0
   damageType: 2
-  silenceModifier: {fileID: 11400000, guid: dc2a1f5f29eddca4585a2ac1fd0461c5, type: 2}
-  markOfPreyModifier: {fileID: 11400000, guid: 7c3f8f3037972f746a4cbbe5b0fc6eef, type: 2}
+  silence: {fileID: 11400000, guid: dc2a1f5f29eddca4585a2ac1fd0461c5, type: 2}
+  markOfPrey: {fileID: 11400000, guid: 7c3f8f3037972f746a4cbbe5b0fc6eef, type: 2}

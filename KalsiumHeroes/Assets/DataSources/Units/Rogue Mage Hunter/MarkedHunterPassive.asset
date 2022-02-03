@@ -12,10 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7743602da80a5334f9476eb50cab4c87, type: 3}
   m_Name: MarkedHunterPassive
   m_EditorClassIdentifier: 
-  createType:
-    _name: MarkedHunterPassive, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Passive_MarkedHunter
-  container: {fileID: 0}
-  sprite: {fileID: 0}
-  markOfPreyModifier: {fileID: 11400000, guid: 7c3f8f3037972f746a4cbbe5b0fc6eef, type: 2}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  markOfPrey: {fileID: 11400000, guid: 7c3f8f3037972f746a4cbbe5b0fc6eef, type: 2}

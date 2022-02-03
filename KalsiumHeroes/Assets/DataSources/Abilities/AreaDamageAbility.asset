@@ -16,15 +16,15 @@ MonoBehaviour:
   <source>k__BackingField: {fileID: 0}
   <removed>k__BackingField: 0
   <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
   baseContainer:
     assetReference:
       m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  <master>k__BackingField: {fileID: 0}
   <container>k__BackingField: {fileID: 0}
-  virtualized: 0
   sprite:
     assetReference:
       m_AssetGUID: 
@@ -122,21 +122,21 @@ MonoBehaviour:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 1
+      <raw>k__BackingField: 2
       <isModified>k__BackingField: 0
       _original: 0
   centerDamage:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 0
+      <raw>k__BackingField: 250
       <isModified>k__BackingField: 0
       _original: 0
   outerDamage:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 0
+      <raw>k__BackingField: 100
       <isModified>k__BackingField: 0
       _original: 0
   damageType: 2

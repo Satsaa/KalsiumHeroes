@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5eb3504b7ba4443bac0fe95fcc0fe5, type: 3}
   m_Name: CastigationOfCastingAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: CastigationOfCastingAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Ability_CastigationOfCasting
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   abilityType:
     _values:
     - cache: 0
@@ -76,6 +89,7 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  isCasting: 0
   range:
     _values:
     - cache: 0
@@ -98,4 +112,4 @@ MonoBehaviour:
       <isModified>k__BackingField: 0
       _original: 0
   targetType: 24
-  markOfCastigationModifier: {fileID: 11400000, guid: 3bfd885416a30824a82f108ed8e6621f, type: 2}
+  modifier: {fileID: 11400000, guid: 3bfd885416a30824a82f108ed8e6621f, type: 2}
