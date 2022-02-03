@@ -1,6 +1,6 @@
 # KalsiumHeroes
 *Sakun heroes klooni.*  
-Technical clone of Heroes of Might and Magic combat. 
+Turn and grid based 1v1 online battler.
  
 Discontinued effort on making a "proper" game.   
  
