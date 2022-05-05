@@ -9,11 +9,11 @@ public class TextQueue : MonoBehaviour {
 
 	[Serializable]
 	public class QueueItem {
-		public readonly string text;
-		public readonly float minLinger;
-		public readonly float maxLinger;
-		public readonly TextQueueText textPrefab;
-		public readonly bool cacheable;
+		public string text;
+		public float minLinger;
+		public float maxLinger;
+		public TextQueueText textPrefab;
+		public bool cacheable;
 		public TextQueueText instance;
 
 		public QueueItem(string text, float minLinger, float maxLinger, TextQueueText textPrefab, bool cacheable) {
