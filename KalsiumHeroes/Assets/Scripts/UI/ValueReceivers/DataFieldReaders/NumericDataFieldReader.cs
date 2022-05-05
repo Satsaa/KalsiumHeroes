@@ -12,7 +12,13 @@ public abstract class NumericDataFieldReader : ValueReceiver<KalsiumObject>, ICu
 	[SerializeField, HideInInspector] protected KalsiumObject data;
 	[SerializeField, HideInInspector] bool listenered;
 
+	protected virtual void OnValidate() {
+		if (listenered) Debug.LogWarning($"{nameof(listenered)} was enabled during validate!");
+		listenered = false;
+	}
+
 	protected virtual void Awake() {
+		listenered = false;
 		OnConfigureNonpersistent(true);
 	}
 

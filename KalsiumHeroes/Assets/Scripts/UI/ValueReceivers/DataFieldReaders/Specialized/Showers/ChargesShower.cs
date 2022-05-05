@@ -14,8 +14,17 @@ public class ChargesShower : ValueReceiver<UnitModifier>, ICustomOnConfigureNonP
 
 	[SerializeField, HideInInspector] protected UnitModifier data;
 	[SerializeField, HideInInspector] bool listenered;
+	
+	protected virtual void OnValidate() {
+		if (listenered) Debug.LogWarning($"{nameof(listenered)} was enabled during validate!");
+		listenered = false;
+	}
+	
+	protected virtual void Awake() {
+		listenered = false;
+		OnConfigureNonpersistent(true);
+	}
 
-	protected virtual void Awake() => OnConfigureNonpersistent(true);
 	protected virtual void OnDestroy() => OnConfigureNonpersistent(false);
 	protected sealed override void ReceiveValue(UnitModifier target) => Setup(target);
 

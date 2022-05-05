@@ -17,7 +17,7 @@ public abstract class ValueReceiver : MonoBehaviour, IValueReceiver {
 		if (!onlyChildren) {
 			var receivers = UnityEngine.Pool.ListPool<IValueReceiver>.Get();
 			try {
-				gameObject.GetComponents<IValueReceiver>(receivers);
+				gameObject.GetComponents(receivers);
 				foreach (var receiver in receivers) {
 					receiver.TryHandleValue(value);
 				}
