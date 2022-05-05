@@ -111,6 +111,7 @@ Material:
     - _Dist: 10
     - _DitherStrength: 0
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _FogPower: 0.6
     - _GlossMapScale: 0
@@ -129,6 +130,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _Surface: 0
     - _UVSec: 0
     - _WorkflowMode: 1
@@ -140,7 +142,7 @@ Material:
     - Vector2_e6f3626f1e2944f4a169a9c18a58a81e: {r: 0.92, g: 1.17, b: 0, a: 0}
     - Vector3_6261a30c523340aab5b10851c3d202db: {r: 0.25, g: 0.36, b: 0.25, a: 0}
     - _BaseColor: {r: 0.18431368, g: 0.2078431, b: 0.19607839, a: 1}
-    - _Color: {r: 0.18431365, g: 0.20784307, b: 0.19607836, a: 1}
+    - _Color: {r: 0.18431368, g: 0.2078431, b: 0.19607839, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Fog: {r: 0.18307228, g: 0.20754719, b: 0.19775723, a: 0}
     - _NoiseMoveSpeed: {r: 0.2, g: 0.4, b: 0.2, a: 0}

@@ -7,6 +7,7 @@ using Object = UnityEngine.Object;
 using Muc.Components.Extended;
 using Muc.Data;
 
+[DefaultExecutionOrder(-1000)]
 public class HookOrders : Singleton<HookOrders> {
 
 	[SerializeField, Tooltip("The item with nulls will dictate default order.\n\nAn item with only the first type will define the default order for objects of that type.\n\nAn item with both will define the order only for that type of hooks of that type of object.")]

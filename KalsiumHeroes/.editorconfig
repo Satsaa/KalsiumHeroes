@@ -53,6 +53,9 @@ dotnet_diagnostic.RCS1135.severity = none  # Declare enum member with zero value
 dotnet_diagnostic.RCS1006.severity = none  # Merge 'if' with nested 'if'.
 dotnet_diagnostic.RCS1093.severity = none  # Remove file with no code.
 
+dotnet_diagnostic.CS8019.severity = none # Remove unnecessary usings
+dotnet_diagnostic.IDE0042.severity = none # Variable declaration can be deconstructed
+
 
 #dotnet_diagnostic.RCS1049.severity = silent  # Simplify boolean comparison
 #dotnet_diagnostic.IDE0100.severity = silent  # Remove redundant equality

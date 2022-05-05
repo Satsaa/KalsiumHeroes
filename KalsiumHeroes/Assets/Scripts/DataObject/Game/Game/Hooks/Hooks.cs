@@ -55,6 +55,9 @@ public abstract class Hooks {
 		public List<int> orders = new();
 
 		public void AddOrdered(Type hookerType, Type hookType, T item) {
+			Debug.Assert(hookerType != null, "hookerType != null");
+			Debug.Assert(hookType != null, "hookType != null");
+			Debug.Assert(item != null, "item != null");
 			var order = HookOrders.instance.GetOrder(hookerType, hookType);
 			for (int i = 0; i < orders.Count; i++) {
 				var current = orders[i];

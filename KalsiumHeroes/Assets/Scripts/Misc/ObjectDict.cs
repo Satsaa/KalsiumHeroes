@@ -111,7 +111,9 @@ public class ObjectDict<TObj> : IEnumerable<TObj>, ISerializationCallbackReceive
 			kv.Value.Clear();
 		}
 		dict.Clear();
+#if DEBUG
 		duplicateCheckMap.Clear();
+#endif
 	}
 
 	public void Clear<T>() where T : TObj {

@@ -17,17 +17,17 @@ MonoBehaviour:
   <removed>k__BackingField: 0
   <shown>k__BackingField: 0
   baseModifiers: []
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
   baseActor:
     assetReference:
       m_AssetGUID: 31ce213b47fd8914fa452cb3f0ac7a63
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  modifiers:
-    sr_values: []
-  hooks:
-    sr_dict:
-      list: []
   <actor>k__BackingField: {fileID: 0}
   hex1:
     <x>k__BackingField: 0
