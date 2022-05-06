@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using Muc.Data;
+using Muc.Components.Extended;
 
-public class TextQueue : MonoBehaviour {
+public class TextQueue : ExtendedUIBehaviour {
 
 	[Serializable]
 	public class QueueItem {
@@ -25,11 +26,23 @@ public class TextQueue : MonoBehaviour {
 		}
 	}
 
+	public enum OffsetMode {
+		[Tooltip("Offset multiplied by TextQueueText's rect is applied to local position")]
+		TextRect,
+		[Tooltip("Offset multiplied by TextQueue's rect is applied to local position")]
+		QueueRect,
+		[Tooltip("Offset is applied as is to local position")]
+		Constant,
+	}
+
 	[Tooltip("Prefab for default text instances")]
 	public TextQueueText defaultTextPrefab;
 
 	[Tooltip("Amount of movement")]
 	public Vector3 offset = Vector3.down;
+
+	[Tooltip("When enabled, offset is multiplied by rect size")]
+	public OffsetMode offsetMode;
 
 	public AnimationCurve moveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 	public AnimationCurve fadeInCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -68,6 +81,20 @@ public class TextQueue : MonoBehaviour {
 			var t = Mathf.Max(0, (Time.time - fadeInTime) / fadeDuration);
 			if (t < 1) {
 				var p = offset - moveCurve.Evaluate(t) * offset;
+				switch (offsetMode) {
+					case OffsetMode.Constant:
+						break;
+					case OffsetMode.QueueRect: {
+							var rect = rectTransform.rect;
+							p = new(p.x * rect.width, p.y * rect.height, p.z);
+							break;
+						}
+					case OffsetMode.TextRect: {
+							var rect = upcoming.instance.rectTransform.rect;
+							p = new(p.x * rect.width, p.y * rect.height, p.z);
+							break;
+						}
+				}
 				var a = fadeInCurve.Evaluate(t);
 				upcoming.instance.OnFadeIn(t, p, a);
 			} else if (current == null) {
@@ -92,6 +119,20 @@ public class TextQueue : MonoBehaviour {
 				var t = Mathf.Max(0, (Time.time - fadeOutTime) / fadeDuration);
 				if (t < 1) {
 					var p = moveCurve.Evaluate(t) * -offset;
+					switch (offsetMode) {
+						case OffsetMode.Constant:
+							break;
+						case OffsetMode.QueueRect: {
+								var rect = rectTransform.rect;
+								p = new(p.x * rect.width, p.y * rect.height, p.z);
+								break;
+							}
+						case OffsetMode.TextRect: {
+								var rect = current.instance.rectTransform.rect;
+								p = new(p.x * rect.width, p.y * rect.height, p.z);
+								break;
+							}
+					}
 					var a = fadeOutCurve.Evaluate(1 - t);
 					current.instance.OnFadeOut(t, p, a);
 				} else {

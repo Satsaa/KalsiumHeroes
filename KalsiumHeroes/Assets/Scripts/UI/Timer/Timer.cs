@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour {
 	[Tooltip("Digits in order from smallest to largest")]
 	public List<TextQueue> digits;
 
-	[SerializeField]
+	[SerializeField, HideInInspector]
 	public int[] time;
 
 	private void Start() {
