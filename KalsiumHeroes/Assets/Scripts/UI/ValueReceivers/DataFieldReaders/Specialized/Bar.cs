@@ -17,8 +17,6 @@ public class Bar : NumericDataFieldReader {
 
 	protected virtual void Handle() {
 
-		Debug.Log("Handling");
-
 		var value = selector.GetValue(data);
 		var maxValue = selector.GetOther(data);
 
