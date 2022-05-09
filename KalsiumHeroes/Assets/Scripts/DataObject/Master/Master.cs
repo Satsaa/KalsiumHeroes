@@ -74,11 +74,9 @@ public abstract class Master<TSelf, THook, TActor> : Master<TSelf, THook>
 			if (baseContainer.value) {
 				Canvas canvas;
 				// Create containers containing RectTransforms on the Canvas of the Master.
-				if (baseContainer.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())) {
-					container = ObjectUtil.Instantiate(baseContainer, canvas.transform);
-				} else {
-					container = ObjectUtil.Instantiate(baseContainer, master.transform);
-				}
+				container = baseContainer.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())
+					? ObjectUtil.Instantiate(baseContainer, canvas.transform)
+					: ObjectUtil.Instantiate(baseContainer, master.transform);
 				container.transform.localRotation = baseContainer.transform.localRotation;
 			}
 		}

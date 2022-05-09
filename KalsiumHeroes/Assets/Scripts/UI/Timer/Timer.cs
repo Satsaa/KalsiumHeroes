@@ -41,26 +41,20 @@ public class Timer : MonoBehaviour {
 
 		for (int i = 0; i < digits.Count; i++) {
 			int digit = 0;
-			switch (i) {
-				case 0: //s0
-					digit = secs % 10;
-					break;
-				case 1: //s1
-					digit = secs / 10;
-					break;
-				case 2: //m0
-					digit = mins % 10;
-					break;
-				case 3: //m1
-					digit = mins / 10;
-					break;
-				case 4: //h0
-					digit = hours % 10;
-					break;
-				default: //h1+n
-					digit = hours / (Mathf.FloorToInt(Mathf.Pow(10, i - 4)) * 10);
-					break;
-			}
+			digit = i switch {
+				//s0
+				0 => secs % 10,
+				//s1
+				1 => secs / 10,
+				//m0
+				2 => mins % 10,
+				//m1
+				3 => mins / 10,
+				//h0
+				4 => hours % 10,
+				//h1+n
+				_ => hours / (Mathf.FloorToInt(Mathf.Pow(10, i - 4)) * 10),
+			};
 			paramTime[i] = digit;
 		}
 		return paramTime;
