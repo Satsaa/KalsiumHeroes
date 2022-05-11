@@ -274,7 +274,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _updateMode: 1
-  renderRoot: {fileID: 6079027935062521162}
+  _camera: {fileID: 0}
+  <autoDisable>k__BackingField: 1
+  <poolSize>k__BackingField: 0
+  <shared>k__BackingField: 0
+  _renderScale: 1
+  _antialiasing: 1
+  _format: 0
+  _debthBits: 24
+  _enableMipMaps: 0
+  _autoGenerateMips: 0
+  _dynamicScaling: 0
+  _filterMode: 0
+  _anisoLevel: 0
+  prefab: {fileID: 0}
   rt: {fileID: 0}
   <renderImages>k__BackingField: []
 --- !u!1 &6837731725045101425

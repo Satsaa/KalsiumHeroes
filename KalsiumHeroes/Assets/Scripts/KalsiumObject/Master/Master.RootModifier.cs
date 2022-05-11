@@ -3,9 +3,10 @@ using System;
 using UnityEngine;
 
 
-public abstract partial class Master<TSelf, THook> : Master
-	where TSelf : Master<TSelf, THook>
-	where THook : IHook {
+public abstract partial class Master<TSelf, THook, TModifier> : Master
+	where TSelf : Master<TSelf, THook, TModifier>
+	where THook : IHook
+	where TModifier : Master<TSelf, THook, TModifier>.RootModifier {
 
 	/// <summary>
 	/// Base class for all Modifiers of Masters.
@@ -24,7 +25,7 @@ public abstract partial class Master<TSelf, THook> : Master
 			removed = true;
 			Hide();
 
-			master.DetachModifier(this);
+			master.DetachModifier(this as TModifier);
 			Game.dataObjects.Remove(this);
 			Game.hooks.Unhook(this);
 
@@ -43,7 +44,7 @@ public abstract partial class Master<TSelf, THook> : Master
 			modifier.master = master;
 			modifier.source = source;
 
-			master.AttachModifier(modifier);
+			master.AttachModifier(modifier as TModifier);
 			Game.dataObjects.Add(modifier);
 			Game.hooks.Hook(modifier);
 

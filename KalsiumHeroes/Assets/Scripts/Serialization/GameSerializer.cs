@@ -31,8 +31,8 @@ namespace Serialization {
 			public Tokenizer tokenizer;
 			public Detokenizer detokenizer;
 
-			public Converter(Tokenizer serializer, Detokenizer detokenizer) {
-				this.tokenizer = serializer;
+			public Converter(Tokenizer tokenizer, Detokenizer detokenizer) {
+				this.tokenizer = tokenizer;
 				this.detokenizer = detokenizer;
 			}
 		}

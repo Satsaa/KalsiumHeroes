@@ -6,9 +6,6 @@ using Newtonsoft.Json;
 using Serialization;
 using UnityEngine;
 
-/// <summary>
-/// Contains a list of data sources
-/// </summary>
 [KeepRefToken]
 public abstract class GameMode : StoredScriptableObject, IIdentifiable {
 

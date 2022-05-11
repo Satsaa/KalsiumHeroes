@@ -654,8 +654,10 @@ MonoBehaviour:
   steps: 1
   dir: 0
   dirI: 0
-  shareds_keys: []
-  shareds_values: []
+  shareds:
+    list: []
+  pool:
+    list: []
 --- !u!1 &908611261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1215,7 @@ MonoBehaviour:
   _library: {fileID: 1363905731}
   _input: {fileID: 1363905734}
   _gameModes:
-  - {fileID: 11400000, guid: 674cc85c201bc894781f3228627c8fa4, type: 2}
+  - {fileID: 0}
   initDisplay: {fileID: 1946788572}
   defaultMenu: {fileID: 3297345020336114265, guid: 0b3ec27671243864780138946eb9a700, type: 3}
   gameScene:
@@ -1268,6 +1270,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2d89865c0774b9e4391071c0977b54c5, type: 2}
   - {fileID: 11400000, guid: 36b112e336978bb47afcb4e19e922e85, type: 2}
   - {fileID: 11400000, guid: 42bbbeec17171a047aa8e93a3ff9ef36, type: 2}
+  - {fileID: 11400000, guid: 6c391f20280845440a524a515985bdc9, type: 2}
+  - {fileID: 11400000, guid: d1a266c2c1fa9c94399e720945e0c31c, type: 2}
   - {fileID: 11400000, guid: a24e8a1f84044b644a3615f8d785c5ec, type: 2}
   - {fileID: 11400000, guid: afdfebc0b061e254abec0eae37d71bf2, type: 2}
   - {fileID: 11400000, guid: eb94b117d59810947a3da9de86dcd9c5, type: 2}

@@ -55,6 +55,7 @@ dotnet_diagnostic.RCS1093.severity = none  # Remove file with no code.
 
 dotnet_diagnostic.CS8019.severity = none # Remove unnecessary usings
 dotnet_diagnostic.IDE0042.severity = none # Variable declaration can be deconstructed
+dotnet_diagnostic.IDE0029.severity = none # Null check can be simplified (Unity compatibility)
 
 
 #dotnet_diagnostic.RCS1049.severity = silent  # Simplify boolean comparison

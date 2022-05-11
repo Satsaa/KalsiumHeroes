@@ -12,11 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bead1fbce359f0047bb539f3ee03a9fc, type: 3}
   m_Name: RockShieldStatus
   m_EditorClassIdentifier: 
-  createType:
-    _name: RockShieldStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Status_RockShield
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   debuffType:
     _values:
     - cache: 0
@@ -64,14 +78,14 @@ MonoBehaviour:
       <isModified>k__BackingField: 0
       _original: 0
   tickMode: 0
-  shieldHP:
+  shieldHealth:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 500
+      <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
-  modifier: {fileID: 0}
+  modifier: {fileID: 11400000, guid: a8f8aa5e738725c4f97e5b78a05717ac, type: 2}
   explosionRadius:
     _values:
     - cache: 0

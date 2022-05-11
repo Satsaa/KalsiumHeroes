@@ -10,11 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bb17cc82c25c004798f83706b7ddf20, type: 3}
-  m_Name: ShrapnelStatus
+  m_Name: ShrapnelModifier
   m_EditorClassIdentifier: 
-  createType:
-    _name: ShrapnelAbilityModifier, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  identifier: Status_Shrapnel
-  container: {fileID: 0}
-  sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  identifier: Modifier_Shrapnel
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  aoe: []
+  target: {fileID: 0}
+  creator: {fileID: 0}
+  calculatedDamage: 0
+  damageType: 0

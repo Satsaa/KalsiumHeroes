@@ -7,14 +7,16 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
-public abstract class Master<TSelf> : Master<TSelf, INoneHook>
-	where TSelf : Master<TSelf, INoneHook> { }
+public abstract class Master<TSelf, TModifier> : Master<TSelf, INoneHook, TModifier>
+	where TSelf : Master<TSelf, INoneHook, TModifier>
+	where TModifier : Master<TSelf, INoneHook, TModifier>.RootModifier { }
 
 /// <summary> Variant Master with an Actor </summary>
-public abstract class Master<TSelf, THook, TActor> : Master<TSelf, THook>
-	where TSelf : Master<TSelf, THook, TActor>
+public abstract class Master<TSelf, THook, TActor, TModifier> : Master<TSelf, THook, TModifier>
+	where TSelf : Master<TSelf, THook, TActor, TModifier>
 	where THook : IHook
-	where TActor : Actor {
+	where TActor : Actor
+	where TModifier : Master<TSelf, THook, TActor, TModifier>.RootModifier {
 
 	[Tooltip("Instantiated GameObject when the Master is shown. Actors are more defined containers.")]
 	public ComponentReference<TActor> baseActor;
@@ -85,19 +87,22 @@ public abstract class Master<TSelf, THook, TActor> : Master<TSelf, THook>
 
 }
 
-public abstract partial class Master<TSelf, THook> : Master
-	where TSelf : Master<TSelf, THook>
-	where THook : IHook {
+public abstract partial class Master<TSelf, THook, TModifier> : Master
+	where TSelf : Master<TSelf, THook, TModifier>
+	where THook : IHook
+	where TModifier : Master<TSelf, THook, TModifier>.RootModifier {
 
 	[Tooltip("Automatically created modifiers for the Master")]
-	public List<RootModifier> baseModifiers;
+	public List<TModifier> baseModifiers;
 
 
 	public static Type hookType => typeof(THook);
+	public static Type modifierType => typeof(TModifier);
 
-	public ObjectDict<RootModifier> modifiers = new();
+	public ObjectDict<TModifier> modifiers = new();
 	public Hooks<THook> hooks = new();
 	public override Hooks rawHooks => hooks;
+	public override IObjectDict rawModifiers => modifiers;
 
 
 	protected override void OnCreate() {
@@ -138,12 +143,12 @@ public abstract partial class Master<TSelf, THook> : Master
 	internal override void OnActorAttach() { }
 	internal override void OnActorDetach() { }
 
-	protected void AttachModifier(RootModifier modifier) {
+	protected void AttachModifier(TModifier modifier) {
 		modifiers.Add(modifier);
 		hooks.Hook(modifier);
 	}
 
-	protected void DetachModifier(RootModifier modifier) {
+	protected void DetachModifier(TModifier modifier) {
 		modifiers.Remove(modifier);
 		hooks.Unhook(modifier);
 	}
@@ -172,6 +177,7 @@ public abstract partial class Master<TSelf, THook> : Master
 public abstract class Master : KalsiumObject {
 
 	public abstract Hooks rawHooks { get; }
+	public abstract IObjectDict rawModifiers { get; }
 
 	internal abstract void OnActorAttach();
 	internal abstract void OnActorDetach();

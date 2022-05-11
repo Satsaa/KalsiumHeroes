@@ -9,7 +9,7 @@ using Muc.Numerics;
 using Muc.Collections;
 
 [ExecuteAlways]
-public class Tile : Master<Tile, ITileHook, Actor>, IOnDeath_Tile {
+public class Tile : Master<Tile, ITileHook, Actor, TileModifier>, IOnDeath_Tile {
 
 	[Tooltip("Is this tile considered passable?")]
 	public Passable passable;
@@ -136,7 +136,7 @@ public class Tile : Master<Tile, ITileHook, Actor>, IOnDeath_Tile {
 			var nbr = neighbors[i];
 			if (nbr) {
 				var opposite = new CircularInt(i - 3, 6);
-				this.SetEdge(i, nbr.GetEdge(opposite), false);
+				SetEdge(i, nbr.GetEdge(opposite), false);
 			} else {
 				Edge.Create(Game.grid.defaultEdge, this, (TileDir)i);
 			}

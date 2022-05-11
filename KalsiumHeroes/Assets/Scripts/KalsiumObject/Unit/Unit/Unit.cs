@@ -8,7 +8,7 @@ using Muc.Extensions;
 using Muc.Systems.RenderImages;
 
 [DefaultExecutionOrder(-500)]
-public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
+public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
 	[Tooltip("Static sprite.")]
 	public AssetReference<Sprite> sprite;
@@ -93,7 +93,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		base.OnCreate();
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit spawn: {Lang.GetStr($"{identifier}_DisplayName")} ({team})"));
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
+			hooks.ForEach<IOnSpawn_Unit>(scope, v => v.OnSpawn());
 			tile.hooks.ForEach<IOnSpawn_Tile>(scope, v => v.OnSpawn(this));
 			Game.hooks.ForEach<IOnSpawn_Game>(scope, v => v.OnSpawn(this));
 		}
@@ -108,7 +108,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 
 	public void Heal(float heal) {
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnHeal_Unit>(scope, v => v.OnHeal(ref heal));
+			hooks.ForEach<IOnHeal_Unit>(scope, v => v.OnHeal(ref heal));
 			tile.hooks.ForEach<IOnHeal_Tile>(scope, v => v.OnHeal(this, ref heal));
 			Game.hooks.ForEach<IOnHeal_Game>(scope, v => v.OnHeal(this, ref heal));
 		}
@@ -132,10 +132,12 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 					em.edge.hooks.ForEach<IOnDealDamage_Edge>(scope, v => v.OnDealDamage(em, this, damage, type));
 					Game.hooks.ForEach<IOnDealDamage_Game>(scope, v => v.OnDealDamage(source, this, damage, type));
 					break;
+				default:
+					break;
 			}
 		}
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
+			hooks.ForEach<IOnTakeDamage_Unit>(scope, v => v.OnTakeDamage(source, ref damage, ref type));
 			tile.hooks.ForEach<IOnTakeDamage_Tile>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
 			Game.hooks.ForEach<IOnTakeDamage_Game>(scope, v => v.OnTakeDamage(this, source, ref damage, ref type));
 		}
@@ -162,7 +164,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		if (health.current <= 0) {
 			using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnCombatLog>(scope, v => v.OnCombatLog($"Unit death: {Lang.GetStr($"{identifier}_DisplayName")} ({team})"));
 			using (var scope = new Hooks.Scope()) {
-				this.hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
+				hooks.ForEach<IOnDeath_Unit>(scope, v => v.OnDeath());
 				tile.hooks.ForEach<IOnDeath_Tile>(scope, v => v.OnDeath(this));
 				Game.hooks.ForEach<IOnDeath_Game>(scope, v => v.OnDeath(this));
 			}
@@ -175,7 +177,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		var deficit = 0 - energy.current;
 		if (deficit > 0) {
 			using (var scope = new Hooks.Scope()) {
-				this.hooks.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
+				hooks.ForEach<IOnEnergyDeficit_Unit>(scope, v => v.OnEnergyDeficit(deficit));
 				tile.hooks.ForEach<IOnEnergyDeficit_Tile>(scope, v => v.OnEnergyDeficit(this, deficit));
 				Game.hooks.ForEach<IOnEnergyDeficit_Game>(scope, v => v.OnEnergyDeficit(this, deficit));
 			}
@@ -183,7 +185,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		var excess = energy.current - energy.max;
 		if (excess > 0) {
 			using (var scope = new Hooks.Scope()) {
-				this.hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
+				hooks.ForEach<IOnEnergyExcess_Unit>(scope, v => v.OnEnergyExcess(excess));
 				tile.hooks.ForEach<IOnEnergyExcess_Tile>(scope, v => v.OnEnergyExcess(this, excess));
 				Game.hooks.ForEach<IOnEnergyExcess_Game>(scope, v => v.OnEnergyExcess(this, excess));
 			}
@@ -193,7 +195,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 
 	public void Dispell() {
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnDispell_Unit>(scope, v => v.OnDispell());
+			hooks.ForEach<IOnDispell_Unit>(scope, v => v.OnDispell());
 			tile.hooks.ForEach<IOnDispell_Tile>(scope, v => v.OnDispell(this));
 			Game.hooks.ForEach<IOnDispell_Game>(scope, v => v.OnDispell(this));
 		}
@@ -209,7 +211,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		return CanMoveInDir(dir, pather, out dirTile);
 	}
 	public bool CanMoveInDir(TileDir dir, UnitPather pather, out Tile dirTile) {
-		var from = this.tile;
+		var from = tile;
 		var to = dirTile = from.GetNeighbor(dir);
 		if (to == null) return false;
 		var edge = from.GetEdge(dir);
@@ -232,7 +234,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		this.tile = tile;
 		if (reposition && shown) actor.transform.position = this.tile.center;
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
+			hooks.ForEach<IOnChangePosition_Unit>(scope, v => v.OnChangePosition(orig, tile));
 			tile.hooks.ForEach<IOnChangePosition_Tile>(scope, v => v.OnChangePosition(this, orig, tile));
 			Game.hooks.ForEach<IOnChangePosition_Game>(scope, v => v.OnChangePosition(this, orig, tile));
 		}
@@ -251,7 +253,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 		this.tileDir = tileDir;
 		if (reorientate && shown) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnChangeDirection_Unit>(scope, v => v.OnChangeDirection(orig, tileDir));
+			hooks.ForEach<IOnChangeDirection_Unit>(scope, v => v.OnChangeDirection(orig, tileDir));
 			tile.hooks.ForEach<IOnChangeDirection_Tile>(scope, v => v.OnChangeDirection(this, orig, tileDir));
 			Game.hooks.ForEach<IOnChangeDirection_Game>(scope, v => v.OnChangeDirection(this, orig, tileDir));
 		}
@@ -261,7 +263,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor>, IOnTurnStart_Unit, IOnDe
 	public int GetEstimatedSpeed(int roundsAhead) {
 		var speed = this.speed.current.raw;
 		using (var scope = new Hooks.Scope()) {
-			this.hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
+			hooks.ForEach<IOnGetEstimatedSpeed_Unit>(scope, v => v.OnGetEstimatedSpeed(roundsAhead, ref speed));
 			tile.hooks.ForEach<IOnGetEstimatedSpeed_Tile>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
 			Game.hooks.ForEach<IOnGetEstimatedSpeed_Game>(scope, v => v.OnGetEstimatedSpeed(this, roundsAhead, ref speed));
 		}

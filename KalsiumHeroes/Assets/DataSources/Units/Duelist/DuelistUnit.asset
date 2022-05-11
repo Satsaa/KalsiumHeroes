@@ -17,27 +17,27 @@ MonoBehaviour:
   <removed>k__BackingField: 0
   <shown>k__BackingField: 0
   baseModifiers:
-  - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: 77731da5b4c221b46a7eac8126978643, type: 2}
   - {fileID: 11400000, guid: 2d89865c0774b9e4391071c0977b54c5, type: 2}
   - {fileID: 11400000, guid: 5037bd93ac216b145815f3c86cc1799f, type: 2}
+  - {fileID: 11400000, guid: 962e9e04158b6dd4684d72e5c9c9fea0, type: 2}
   - {fileID: 11400000, guid: d287935d8879ea2408e6cdabe35919d8, type: 2}
   - {fileID: 11400000, guid: ca00f01e5f06cab41a9a218bacf8d476, type: 2}
   - {fileID: 11400000, guid: 8c2989e900e352047af570f2512be146, type: 2}
-  - {fileID: 11400000, guid: 7343f19d26c84ec49b95477e3333f2f7, type: 2}
   - {fileID: 11400000, guid: b3ce0bc98f8755f4995c192806e69b92, type: 2}
   - {fileID: 11400000, guid: abd8e55a2c59664468a267a08c909c1b, type: 2}
+  - {fileID: 11400000, guid: 7343f19d26c84ec49b95477e3333f2f7, type: 2}
+  modifiers:
+    sr_values: []
+  hooks:
+    sr_dict:
+      list: []
   baseActor:
     assetReference:
       m_AssetGUID: e60dc84560d8ac44e93c6f0192f49556
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  modifiers:
-    sr_values: []
-  hooks:
-    sr_dict:
-      list: []
   <actor>k__BackingField: {fileID: 0}
   sprite:
     assetReference:
@@ -141,4 +141,4 @@ MonoBehaviour:
   <tileDir>k__BackingField: 0
   <spawnRound>k__BackingField: 0
   canvas: {fileID: 0}
-  team: 0
+  team: {fileID: 0}
