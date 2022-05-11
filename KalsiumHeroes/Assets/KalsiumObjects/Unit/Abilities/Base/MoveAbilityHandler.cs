@@ -96,6 +96,7 @@ public class MoveAbilityHandler : EventHandler<GameEvents.Ability> {
 				actor.EndAnimations();
 			}
 		}
+		creator.unit.SetDir(creator.unit.tileDir, true);
 		ExecuteOn(creator.unit, pathObjects.Last() as Tile);
 		creator.unit.SetTile(pathObjects.Last() as Tile, false);
 		return true;

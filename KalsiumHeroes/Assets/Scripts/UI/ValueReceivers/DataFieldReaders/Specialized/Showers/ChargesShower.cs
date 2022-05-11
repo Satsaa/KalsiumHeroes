@@ -14,12 +14,14 @@ public class ChargesShower : ValueReceiver<UnitModifier>, ICustomOnConfigureNonP
 
 	[SerializeField, HideInInspector] protected UnitModifier data;
 	[SerializeField, HideInInspector] bool listenered;
-	
+
 	protected virtual void OnValidate() {
-		if (listenered) Debug.LogWarning($"{nameof(listenered)} was enabled during validate!");
-		listenered = false;
+		if (!Application.isPlaying) {
+			if (listenered) Debug.LogWarning($"{nameof(listenered)} was enabled during validate!");
+			listenered = false;
+		}
 	}
-	
+
 	protected virtual void Awake() {
 		listenered = false;
 		OnConfigureNonpersistent(true);

@@ -73,7 +73,7 @@ public abstract class Master<TSelf, THook, TActor, TModifier> : Master<TSelf, TH
 
 		protected override void OnShow() {
 			base.OnShow();
-			if (baseContainer.value) {
+			if (baseContainer.value && !master.removed) {
 				Canvas canvas;
 				// Create containers containing RectTransforms on the Canvas of the Master.
 				container = baseContainer.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())

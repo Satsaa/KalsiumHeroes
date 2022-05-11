@@ -242,7 +242,7 @@ public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnSta
 
 	public void SetDir(TileDir tileDir, bool reorientate) {
 		if (tileDir == this.tileDir) {
-			if (reorientate && shown) actor.transform.rotation *= Quaternion.AngleAxis(tileDir.ToAngle(), Vector3.up);
+			if (reorientate && shown) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 			return;
 		}
 		if (removed) {
@@ -251,7 +251,6 @@ public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnSta
 		}
 		var orig = this.tileDir;
 		this.tileDir = tileDir;
-		if (reorientate && shown) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 		using (var scope = new Hooks.Scope()) {
 			hooks.ForEach<IOnChangeDirection_Unit>(scope, v => v.OnChangeDirection(orig, tileDir));
 			tile.hooks.ForEach<IOnChangeDirection_Tile>(scope, v => v.OnChangeDirection(this, orig, tileDir));

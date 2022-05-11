@@ -22,7 +22,7 @@ public partial class UnitActor {
 		animator.SetTrigger("Walk");
 		moveT = 0;
 		spline = new Spline(positions);
-		animationType = AnimationType.Walk;
+		animationType = AnimationType.Move;
 		isMoving = true;
 		SetPos(positions.First());
 	}

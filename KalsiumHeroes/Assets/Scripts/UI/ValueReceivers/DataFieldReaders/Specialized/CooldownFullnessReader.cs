@@ -19,8 +19,10 @@ public class CooldownFullnessReader : ValueReceiver<UnitModifier>, ICustomOnConf
 	[SerializeField, HideInInspector] bool listenered;
 
 	protected virtual void OnValidate() {
-		if (listenered) Debug.LogWarning($"{nameof(listenered)} was enabled during validate!");
-		listenered = false;
+		if (!Application.isPlaying) {
+			if (listenered) Debug.LogWarning($"{nameof(listenered)} was enabled during validate!");
+			listenered = false;
+		}
 	}
 
 	protected virtual void Awake() {

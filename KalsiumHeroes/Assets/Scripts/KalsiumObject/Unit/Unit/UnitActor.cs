@@ -13,7 +13,7 @@ public partial class UnitActor : Actor {
 
 	public enum AnimationType {
 		None,
-		Walk,
+		Move,
 		Run,
 		Stagger,
 		Die,
@@ -35,7 +35,7 @@ public partial class UnitActor : Actor {
 				break;
 			case AnimationType.Stagger:
 				break;
-			case AnimationType.Walk:
+			case AnimationType.Move:
 			case AnimationType.Run:
 				DoMovement();
 				break;
@@ -50,11 +50,14 @@ public partial class UnitActor : Actor {
 			case AnimationType.Stagger:
 				break;
 			case AnimationType.Run:
-			case AnimationType.Walk:
+			case AnimationType.Move:
 				SetPos(spline.controls.Last());
 				moveT = spline.controls.Count - 1;
 				isMoving = false;
+				animator.ResetTrigger("Walk");
 				animator.SetTrigger("Idle");
+				break;
+			default:
 				break;
 		}
 		animationType = AnimationType.None;
