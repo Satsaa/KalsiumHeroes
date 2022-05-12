@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(MarkOfCastigationStatus), menuName = "KalsiumHeroes/Status/" + nameof(MarkOfCastigationStatus))]
 public class MarkOfCastigationStatus : Status, IOnAbilityCastEnd_Unit {
 
 	public Attribute<float> damage;

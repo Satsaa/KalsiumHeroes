@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ChangeSpeedAbility), menuName = "KalsiumHeroes/Ability/" + nameof(ChangeSpeedAbility))]
 public class ChangeSpeedAbility : UnitTargetAbility {
 
 	public Attribute<int> speedChange;

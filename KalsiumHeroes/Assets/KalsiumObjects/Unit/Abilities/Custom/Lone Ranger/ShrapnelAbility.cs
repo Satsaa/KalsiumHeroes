@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ShrapnelAbility), menuName = "KalsiumHeroes/Ability/" + nameof(ShrapnelAbility))]
 public class ShrapnelAbility : TileTargetAbility {
 
 	public Attribute<float> damage;

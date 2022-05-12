@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(SpeedGainAbility), menuName = "KalsiumHeroes/Ability/" + nameof(SpeedGainAbility))]
 public class SpeedGainAbility : NoTargetAbility {
 
 	[Tooltip("Radius of checked for other units")]

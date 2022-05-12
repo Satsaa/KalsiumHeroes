@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(HuntTheMarkAbility), menuName = "KalsiumHeroes/Ability/" + nameof(HuntTheMarkAbility))]
 public class HuntTheMarkAbility : UnitTargetAbility {
 
 	public Attribute<float> normalDamage;

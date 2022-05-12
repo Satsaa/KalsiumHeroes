@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(MarkedHunterPassive), menuName = "KalsiumHeroes/Passive/" + nameof(MarkedHunterPassive))]
 public class MarkedHunterPassive : Passive, IOnDealDamage_Unit {
 
 	public MarkOfPreyStatus markOfPrey;

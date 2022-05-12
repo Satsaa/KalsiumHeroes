@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(RockShieldAbility), menuName = "KalsiumHeroes/Ability/" + nameof(RockShieldAbility))]
 public class RockShieldAbility : NoTargetAbility {
 
 	public UnitModifier modifier;

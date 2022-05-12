@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ParryStanceStatus), menuName = "KalsiumHeroes/Status/" + nameof(ParryStanceStatus))]
 public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 
 	public Attribute<int> defenseChange;
@@ -25,7 +26,7 @@ public class ParryStanceStatus : Status, IOnTakeDamage_Unit, IOnTurnStart_Unit {
 
 	public void OnTakeDamage(Modifier source, ref float damage, ref DamageType type) {
 		if (source is Ability ability) {
-			if (ability.abilityType.current == AbilityType.WeaponSkill && Game.grid.Distance(ability.unit.tile, this.unit.tile) <= 1) {
+			if (ability.abilityType.current == AbilityType.WeaponSkill && Game.grid.Distance(ability.unit.tile, unit.tile) <= 1) {
 				DealDamage(ability.unit, this.damage.current, damageType);
 				Remove();
 			}

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ParryStanceAbility), menuName = "KalsiumHeroes/Ability/" + nameof(ParryStanceAbility))]
 public class ParryStanceAbility : NoTargetAbility, IOnAbilityCastEnd_Unit {
 
 	[Tooltip("The UnitModifier given when casted")]

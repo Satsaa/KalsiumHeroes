@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(SideKickAbility), menuName = "KalsiumHeroes/Ability/" + nameof(SideKickAbility))]
 public class SideKickAbility : UnitTargetAbility {
 
 	public Attribute<float> movementDamageMultiplier;

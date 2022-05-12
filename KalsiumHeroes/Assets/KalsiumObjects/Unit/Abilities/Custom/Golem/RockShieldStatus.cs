@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(RockShieldStatus), menuName = "KalsiumHeroes/Status/" + nameof(RockShieldStatus))]
 public class RockShieldStatus : Status, IOnTakeDamage_Unit {
 
 	public Attribute<int> shieldHealth;

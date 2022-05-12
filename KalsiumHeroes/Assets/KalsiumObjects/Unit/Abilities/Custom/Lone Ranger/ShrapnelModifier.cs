@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ShrapnelModifier), menuName = "KalsiumHeroes/UnitModifier/" + nameof(ShrapnelModifier))]
 public class ShrapnelModifier : UnitModifier, IOnTurnStart_Unit, IOnDeath_Unit {
 
 	[HideInInspector] public List<Tile> aoe;

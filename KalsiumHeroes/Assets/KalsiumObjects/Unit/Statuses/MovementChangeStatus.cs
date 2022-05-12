@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(MovementChangeStatus), menuName = "KalsiumHeroes/Status/" + nameof(MovementChangeStatus))]
 public class MovementChangeStatus : Status {
 
 	public Attribute<int> movementChange;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(AreaDamageAbility), menuName = "KalsiumHeroes/Ability/" + nameof(AreaDamageAbility))]
 public class AreaDamageAbility : TileTargetAbility {
 
 	public Attribute<float> centerDamage;

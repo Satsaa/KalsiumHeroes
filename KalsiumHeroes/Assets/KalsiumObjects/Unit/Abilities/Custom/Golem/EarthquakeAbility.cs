@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(EarthquakeAbility), menuName = "KalsiumHeroes/Ability/" + nameof(EarthquakeAbility))]
 public class EarthquakeAbility : NoTargetAbility {
 
 

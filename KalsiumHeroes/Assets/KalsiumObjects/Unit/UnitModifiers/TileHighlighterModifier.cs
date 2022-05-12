@@ -6,6 +6,7 @@ using Muc.Extensions;
 using UnityEngine.UI;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(TileHighlighterModifier), menuName = "KalsiumHeroes/UnitModifier/" + nameof(TileHighlighterModifier))]
 public class TileHighlighterModifier : UnitModifier, IOnTurnStart_Unit, IOnTurnEnd_Unit, IOnChangePosition_Unit, IOnAnimationEventStart, IOnAnimationEventEnd {
 
 	[Tooltip("The color of the tile highlighted under this unit if its on the player's team.")]

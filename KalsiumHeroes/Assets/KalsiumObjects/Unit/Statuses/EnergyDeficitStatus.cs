@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
+[CreateAssetMenu(fileName = nameof(EnergyDeficitStatus), menuName = "KalsiumHeroes/Status/" + nameof(EnergyDeficitStatus))]
 public class EnergyDeficitStatus : Status, IOnEnergyDeficit_Unit {
 
 	[Tooltip("Amount of defense change per stack.")]

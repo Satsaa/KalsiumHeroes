@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(SwiftStrikeAbility), menuName = "KalsiumHeroes/Ability/" + nameof(SwiftStrikeAbility))]
 public class SwiftStrikeAbility : UnitTargetAbility {
 
 	public Attribute<float> damage;

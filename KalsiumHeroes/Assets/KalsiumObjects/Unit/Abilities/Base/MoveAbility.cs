@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(MoveAbility), menuName = "KalsiumHeroes/Ability/" + nameof(MoveAbility))]
 public class MoveAbility : TileTargetAbility, IOnAbilityCastStart_Unit {
 
 	[HideInInspector] public float usedMovement;

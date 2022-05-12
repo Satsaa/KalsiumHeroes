@@ -5,6 +5,7 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(MoveCostEdgeModifier), menuName = "KalsiumHeroes/EdgeModifier/" + nameof(MoveCostEdgeModifier))]
 public class MoveCostEdgeModifier : EdgeModifier, IOnGetMoveCost_Edge {
 
 	[Tooltip("Aditional move cost.")]

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(OpportuneFlightAbility), menuName = "KalsiumHeroes/Ability/" + nameof(OpportuneFlightAbility))]
 public class OpportuneFlightAbility : TileTargetAbility {
 
 	public Attribute<int> moveDistance;

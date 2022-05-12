@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(RootStatus), menuName = "KalsiumHeroes/Status/" + nameof(RootStatus))]
 public class RootStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {

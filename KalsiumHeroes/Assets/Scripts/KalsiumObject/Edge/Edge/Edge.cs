@@ -7,6 +7,7 @@ using HexGrid;
 using Muc.Extensions;
 using Muc.Numerics;
 
+[CreateAssetMenu(fileName = nameof(Edge), menuName = "KalsiumHeroes/Master/" + nameof(Edge))]
 public class Edge : Master<Edge, IEdgeHook, Actor, EdgeModifier> {
 
 	public Hex hex1;

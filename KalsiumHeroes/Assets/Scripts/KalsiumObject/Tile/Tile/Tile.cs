@@ -8,7 +8,7 @@ using Muc.Extensions;
 using Muc.Numerics;
 using Muc.Collections;
 
-[ExecuteAlways]
+[CreateAssetMenu(fileName = nameof(Tile), menuName = "KalsiumHeroes/Master/" + nameof(Tile))]
 public class Tile : Master<Tile, ITileHook, Actor, TileModifier>, IOnDeath_Tile {
 
 	[Tooltip("Is this tile considered passable?")]

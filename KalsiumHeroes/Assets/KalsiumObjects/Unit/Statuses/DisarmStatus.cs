@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(DisarmStatus), menuName = "KalsiumHeroes/Status/" + nameof(DisarmStatus))]
 public class DisarmStatus : Status {
 
 	protected override void OnConfigureNonpersistent(bool add) {

@@ -8,6 +8,7 @@ using Muc.Extensions;
 using Muc.Systems.RenderImages;
 
 [DefaultExecutionOrder(-500)]
+[CreateAssetMenu(fileName = nameof(Unit), menuName = "KalsiumHeroes/Master/" + nameof(Unit))]
 public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnStart_Unit, IOnDeath_Unit, IOnSpawn_Unit {
 
 	[Tooltip("Static sprite.")]

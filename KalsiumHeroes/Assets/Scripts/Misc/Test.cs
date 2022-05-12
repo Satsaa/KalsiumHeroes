@@ -12,9 +12,6 @@ using Muc.Editor;
 
 public class Test : MonoBehaviour {
 
-	[ShowEditor]
-	public TestItem testItem;
-
 	public KalsiumObject source;
 	public Unit unit;
 

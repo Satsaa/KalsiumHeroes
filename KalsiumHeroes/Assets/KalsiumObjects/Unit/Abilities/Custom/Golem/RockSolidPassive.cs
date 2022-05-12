@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(RockSolidPassive), menuName = "KalsiumHeroes/Passive/" + nameof(RockSolidPassive))]
 public class RockSolidPassive : Passive, IOnChangePosition_Game, IOnDeath_Game, IOnSpawn_Unit {
 
 	[Tooltip("Matching units give resistances.")]

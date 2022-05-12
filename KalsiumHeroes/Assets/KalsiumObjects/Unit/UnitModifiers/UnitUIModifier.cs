@@ -5,6 +5,7 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(UnitUIModifier), menuName = "KalsiumHeroes/UnitModifier/" + nameof(UnitUIModifier))]
 public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 
 	[Tooltip("World space offset of the tracked object.")]

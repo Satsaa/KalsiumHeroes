@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(DamageAbility), menuName = "KalsiumHeroes/Ability/" + nameof(DamageAbility))]
 public class DamageAbility : UnitTargetAbility {
 
 	public Attribute<float> damage;

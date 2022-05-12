@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(SpeedGainStatus), menuName = "KalsiumHeroes/Status/" + nameof(SpeedGainStatus))]
 public class SpeedGainStatus : Status, IOnGetEstimatedSpeed_Unit {
 
 	public Attribute<int> speedGain;

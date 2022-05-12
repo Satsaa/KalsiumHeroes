@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+[CreateAssetMenu(fileName = nameof(CordialInvitationAbility), menuName = "KalsiumHeroes/Ability/" + nameof(CordialInvitationAbility))]
 public class CordialInvitationAbility : UnitTargetAbility {
 
 	public CordialInvitationStatus status;
@@ -32,7 +33,7 @@ public class CordialInvitationAbility : UnitTargetAbility {
 	}
 
 	public override bool IsReady() {
-		if (this.unit.modifiers.Get<CordialInvitationStatus>().Any()) return false;
+		if (unit.modifiers.Get<CordialInvitationStatus>().Any()) return false;
 		return base.IsReady();
 	}
 }

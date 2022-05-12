@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ShoveAbility), menuName = "KalsiumHeroes/Ability/" + nameof(ShoveAbility))]
 public class ShoveAbility : UnitTargetAbility {
 
 	[Tooltip("This is the Modifier given to the targeted Unit")]

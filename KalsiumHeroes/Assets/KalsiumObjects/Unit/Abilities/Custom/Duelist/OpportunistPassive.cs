@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(OpportunistPassive), menuName = "KalsiumHeroes/Passive/" + nameof(OpportunistPassive))]
 public class OpportunistPassive : Passive, IOnMoveOver_Game {
 
 	public Attribute<float> damage;

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(ArmorBashAbility), menuName = "KalsiumHeroes/Ability/" + nameof(ArmorBashAbility))]
 public class ArmorBashAbility : UnitTargetAbility {
 
 	public DamageType damageType;

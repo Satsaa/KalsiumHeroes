@@ -5,6 +5,7 @@ using Muc.Data;
 using UnityEngine;
 using UnityEngine.VFX;
 
+[CreateAssetMenu(fileName = nameof(EnergyExcessStatus), menuName = "KalsiumHeroes/Status/" + nameof(EnergyExcessStatus))]
 public class EnergyExcessStatus : Status, IOnEnergyExcess_Unit, IOnAbilityCastStart_Unit, IOnAbilityCastEnd_Unit, IOnCalculateDamage_Unit {
 
 	[Tooltip("Linearly stacking outgoing damage multiplications by DamageType.")]

@@ -5,6 +5,7 @@ using System.Linq;
 using Muc.Extensions;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(OutwardsImpassableEdgeModifier), menuName = "KalsiumHeroes/EdgeModifier/" + nameof(OutwardsImpassableEdgeModifier))]
 public class OutwardsImpassableEdgeModifier : EdgeModifier, IOnGetCanPass_Edge {
 
 	public void OnGetCanPass(Unit unit, Tile from, Tile to, ref bool current) {

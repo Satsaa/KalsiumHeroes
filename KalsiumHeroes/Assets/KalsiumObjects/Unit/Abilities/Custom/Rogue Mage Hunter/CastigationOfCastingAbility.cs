@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = nameof(CastigationOfCastingAbility), menuName = "KalsiumHeroes/Ability/" + nameof(CastigationOfCastingAbility))]
 public class CastigationOfCastingAbility : UnitTargetAbility {
 
 	public MarkOfCastigationStatus modifier;
