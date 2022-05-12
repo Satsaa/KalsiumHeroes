@@ -16,15 +16,15 @@ MonoBehaviour:
   <source>k__BackingField: {fileID: 0}
   <removed>k__BackingField: 0
   <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
   baseContainer:
     assetReference:
       m_AssetGUID: 5917dcf2b5a3899408677521a316c666
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  <master>k__BackingField: {fileID: 0}
   <container>k__BackingField: {fileID: 0}
-  virtualized: 0
   sprite:
     assetReference:
       m_AssetGUID: 
@@ -35,7 +35,7 @@ MonoBehaviour:
   screenOffset: {x: 0, y: 0}
   pixelOffset: {x: 0, y: 0}
   sendUnit: 1
-  clampToScreen: 0
+  clampToScreen: 1
   clampMin: {x: 0, y: 0}
   clampMax: {x: 1, y: 1}
   scaleMode: 2
@@ -63,5 +63,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  rect: {fileID: 0}
+  roundPosition: 0
+  rt: {fileID: 0}
   updatePosition: 1

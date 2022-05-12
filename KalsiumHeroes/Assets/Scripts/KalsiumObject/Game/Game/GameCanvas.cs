@@ -32,6 +32,7 @@ public class GameCanvas : MonoBehaviour {
 	}
 
 	protected virtual void LateUpdate() {
+		orderedItems.RemoveAll(v => !v.rt || !v.distanceFrom);
 		orderedItems.Sort(
 			(a, b) => (b.distanceFrom.position - Camera.main.transform.position).sqrMagnitude
 			.CompareTo((a.distanceFrom.position - Camera.main.transform.position).sqrMagnitude)
@@ -42,16 +43,9 @@ public class GameCanvas : MonoBehaviour {
 
 	}
 
-	public void AddOrderedElement(RectTransform rt, Transform distanceFrom) {
+	public void SetOrderedWorldElement(RectTransform rt, Transform distanceFrom) {
+		rt.SetParent(worldElements);
 		orderedItems.Add(new(rt, distanceFrom));
-	}
-
-	public bool RemoveOrderedElement(RectTransform rt) {
-		var index = orderedItems.FindIndex(v => v.rt = rt);
-		if (index >= 0) {
-			orderedItems.RemoveAt(index);
-		}
-		return index >= 0;
 	}
 
 }

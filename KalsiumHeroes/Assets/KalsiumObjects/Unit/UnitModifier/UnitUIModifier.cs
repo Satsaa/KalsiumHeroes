@@ -36,6 +36,9 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 	[Tooltip("Scale curve. Note that time is not normalized but based on linear distance.")]
 	public AnimationCurve scaleCurve = AnimationCurve.EaseInOut(25, 1, 50, 0.1f);
 
+	[Tooltip("Round global position to prevent flickering or other artifacts.")]
+	public bool roundPosition;
+
 	public enum ScaleMode {
 		[Tooltip("No scaling!?!?")]
 		None,
@@ -50,7 +53,7 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 	}
 
 
-	[SerializeField, HideInInspector] RectTransform rect;
+	[SerializeField, HideInInspector] RectTransform rt;
 	[SerializeField, HideInInspector] protected bool updatePosition = true;
 
 	public virtual void OnLateUpdate() {
@@ -60,31 +63,9 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 				pixelOffset +
 				screenOffset * new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
 
-			rect.position = pos;
+			rt.position = pos;
 
-			if (clampToScreen) {
-
-				var clampRect = ((RectTransform)rect.parent).rect;
-				clampRect = new Rect(
-					clampRect.x + clampMin.x * clampRect.width,
-					clampRect.y + clampMin.y * clampRect.height,
-					clampRect.width * (clampMax.x - clampMin.x),
-					clampRect.height * (clampMax.y - clampMin.y)
-				);
-
-				var clamp = rect.localPosition;
-
-				var minPosition = clampRect.min - rect.rect.min;
-				var maxPosition = clampRect.max - rect.rect.max;
-
-				clamp.x = Mathf.Clamp(rect.localPosition.x, minPosition.x, maxPosition.x);
-				clamp.y = Mathf.Clamp(rect.localPosition.y, minPosition.y, maxPosition.y);
-
-				rect.localPosition = clamp;
-
-			}
-
-			if (scaleMode > 0) {
+			if (scaleMode > ScaleMode.None) {
 
 				var t = scaleMode switch {
 					ScaleMode.Distance => Vector3.Distance(Camera.main.transform.position, master.transform.position + trackingOffset),
@@ -99,21 +80,46 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 
 			}
 
+			if (clampToScreen) {
+
+				var clampRect = ((RectTransform)rt.parent).rect;
+				clampRect = new Rect(
+					clampRect.x + clampMin.x * clampRect.width,
+					clampRect.y + clampMin.y * clampRect.height,
+					clampRect.width * (clampMax.x - clampMin.x),
+					clampRect.height * (clampMax.y - clampMin.y)
+				);
+
+				var rect = rt.rect;
+
+				var scaledRect = rect.Scale(rt.localScale.xy());
+				scaledRect.position -= scaledRect.position + scaledRect.size * rt.pivot - (rect.position + rect.size * rt.pivot); // Pivot + scale; case fix
+
+				var clamp = rt.localPosition;
+				var minPosition = clampRect.min - scaledRect.min;
+				var maxPosition = clampRect.max - scaledRect.max;
+
+				clamp.x = Mathf.Clamp(rt.localPosition.x, minPosition.x, maxPosition.x);
+				clamp.y = Mathf.Clamp(rt.localPosition.y, minPosition.y, maxPosition.y);
+
+				rt.localPosition = clamp;
+
+			}
+
+			if (roundPosition) {
+				rt.position = rt.position.Round();
+			}
+
 		}
 	}
 
 	protected override void OnShow() {
 		base.OnShow();
-		rect = container.GetComponent<RectTransform>();
-		Game.gameCanvas.AddOrderedElement(rect, unit.transform);
+		rt = container.GetComponent<RectTransform>();
+		Game.gameCanvas.SetOrderedWorldElement(rt, unit.transform);
 		if (sendUnit) {
 			ValueReceiver.SendValue(container, unit);
 		}
-	}
-
-	protected override void OnHide() {
-		Game.gameCanvas.RemoveOrderedElement(rect);
-		base.OnHide();
 	}
 
 }
