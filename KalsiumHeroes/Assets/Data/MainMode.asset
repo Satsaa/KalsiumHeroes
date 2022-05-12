@@ -52,6 +52,6 @@ MonoBehaviour:
   - {x: 11, y: 4, z: -15}
   - {x: 10, y: 4, z: -14}
   - {x: 11, y: 3, z: -14}
-  minDraftCount: 1
+  minDraftCount: 5
   maxDraftCount: 10
   maxDraftCost: 50

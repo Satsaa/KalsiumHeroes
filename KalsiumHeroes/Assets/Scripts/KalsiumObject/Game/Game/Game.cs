@@ -23,6 +23,7 @@ public class Game : Singleton<Game> {
 	public static TileGrid grid => instance._grid;
 	public static ObjectDict<KalsiumObject> dataObjects => instance._dataObjects;
 	public static Hooks<IGameHook> hooks => instance._hooks;
+	public static GameCanvas gameCanvas => instance._gameCanvas;
 
 	[SerializeField, ShowEditor] GameEvents _events;
 	[SerializeField, ShowEditor] Rounds _rounds;
@@ -30,6 +31,7 @@ public class Game : Singleton<Game> {
 	[SerializeField, ShowEditor] TileGrid _grid;
 	[SerializeField] ObjectDict<KalsiumObject> _dataObjects = new();
 	[SerializeField] Hooks<IGameHook> _hooks = new();
+	[SerializeField] GameCanvas _gameCanvas;
 
 	[field: SerializeField] public bool inited { get; private set; }
 	[field: SerializeField] public bool started { get; private set; }

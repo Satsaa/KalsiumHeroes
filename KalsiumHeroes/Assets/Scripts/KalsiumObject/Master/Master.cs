@@ -74,10 +74,9 @@ public abstract class Master<TSelf, THook, TActor, TModifier> : Master<TSelf, TH
 		protected override void OnShow() {
 			base.OnShow();
 			if (baseContainer.value && !master.removed) {
-				Canvas canvas;
 				// Create containers containing RectTransforms on the Canvas of the Master.
-				container = baseContainer.GetComponent<RectTransform>() && (canvas = master.gameObject.GetComponentInChildren<Canvas>())
-					? ObjectUtil.Instantiate(baseContainer, canvas.transform)
+				container = baseContainer.GetComponent<RectTransform>()
+					? ObjectUtil.Instantiate(baseContainer, Game.gameCanvas.canvas.transform)
 					: ObjectUtil.Instantiate(baseContainer, master.transform);
 				container.transform.localRotation = baseContainer.transform.localRotation;
 			}

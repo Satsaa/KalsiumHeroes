@@ -8,8 +8,12 @@ using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using Serialization;
 using System.Reflection;
+using Muc.Editor;
 
 public class Test : MonoBehaviour {
+
+	[ShowEditor]
+	public TestItem testItem;
 
 	public KalsiumObject source;
 	public Unit unit;
@@ -52,7 +56,7 @@ namespace Editors {
 	using System.Collections.Generic;
 	using UnityEngine;
 	using UnityEditor;
-	using Object = UnityEngine.Object;
+	using Object = Object;
 	using static Muc.Editor.PropertyUtil;
 	using static Muc.Editor.EditorUtil;
 

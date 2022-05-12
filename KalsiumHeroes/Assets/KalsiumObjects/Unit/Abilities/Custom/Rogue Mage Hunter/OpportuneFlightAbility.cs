@@ -25,15 +25,14 @@ public class OpportuneFlightAbility : TileTargetAbility {
 	}
 
 	void DoMove(Tile tile) {
-		var target = unit;
 		var dir = unit.tile.GetDir(tile);
 		unit.SetDir(dir, true);
 		for (int i = 0; i < moveDistance.current; i++) {
-			if (target.CanMoveInDir(dir, out Tile next)) {
-				ExecuteMoveOff(target, target.tile);
-				ExecuteMoveOver(target, target.tile, next);
-				target.SetTile(next, true);
-				ExecuteMoveOn(target, next);
+			if (unit.CanMoveInDir(dir, out Tile next)) {
+				ExecuteMoveOff(unit, unit.tile);
+				ExecuteMoveOver(unit, unit.tile, next);
+				unit.SetTile(next, true);
+				ExecuteMoveOn(unit, next);
 			} else {
 				break;
 			}

@@ -20,7 +20,7 @@ public abstract class TargetAbility : Ability {
 	public class Range : ToggleAttribute<int> {
 		Range() : base(1) { }
 		public override string identifier => "Attribute_TargetAbility_Range";
-		public override string Format(bool isSource) => enabled ? Lang.GetStr("Infinite") : base.Format(isSource);
+		public override string Format(bool isSource) => !enabled ? Lang.GetStr("Infinite") : base.Format(isSource);
 	}
 
 	[Serializable]
@@ -49,17 +49,12 @@ public abstract class TargetAbility : Ability {
 	/// <summary> Utility method that returns a list of Tiles that satisfy the range values in TargetAbilityData. </summary>
 	protected IEnumerable<Tile> GetDefaultRangeTiles() {
 		var tile = unit.tile;
-		IEnumerable<Tile> res;
-		if (range.enabled) {
-			if (rangeMode == RangeMode.Distance) {
-				res = Game.grid.Radius(tile, range.current);
-			} else {
-				res = Pathing.GetDistanceField(tile, range.current, Pathers.For(rangeMode)).tiles.Keys;
-			}
-		} else {
-			res = Game.grid.tiles.Values;
-		}
-
+		IEnumerable<Tile> res =
+			range.enabled
+				? rangeMode == RangeMode.Distance
+					? Game.grid.Radius(tile, range.current)
+					: Pathing.GetDistanceField(tile, range.current, Pathers.For(rangeMode)).tiles.Keys
+				: Game.grid.tiles.Values;
 		if (requiresVision.current) res = res.Where(h => Game.grid.HasSight(tile, h));
 
 		return res;

@@ -22,7 +22,7 @@ public abstract class KalsiumObject : ScriptableObject, IIdentifiable {
 			if (Tooltips.instance.TooltipExists(identifierTooltip)) {
 				return _tooltip = identifierTooltip;
 			}
-			var current = this.GetType();
+			var current = GetType();
 			while (true) {
 				var converted = current.FullName;
 				converted = removeData.Replace(converted, "");

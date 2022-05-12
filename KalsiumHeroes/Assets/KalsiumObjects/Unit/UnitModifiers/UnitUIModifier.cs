@@ -90,6 +90,7 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 					ScaleMode.CameraHeight => Camera.main.transform.position.y,
 					ScaleMode.HeightDifference => Camera.main.transform.position.y - (master.transform.position.y + trackingOffset.y),
 					ScaleMode.TileHeightDifference => Camera.main.transform.position.y - unit.tile.center.y,
+					ScaleMode.None => 1,
 					_ => throw new ArgumentOutOfRangeException("Invalid enum value.", nameof(scaleMode)),
 				};
 				var scale = scaleCurve.Evaluate(t);
@@ -103,9 +104,15 @@ public class UnitUIModifier : UnitModifier, IOnLateUpdate {
 	protected override void OnShow() {
 		base.OnShow();
 		rect = container.GetComponent<RectTransform>();
+		Game.gameCanvas.AddOrderedElement(rect, unit.transform);
 		if (sendUnit) {
 			ValueReceiver.SendValue(container, unit);
 		}
+	}
+
+	protected override void OnHide() {
+		Game.gameCanvas.RemoveOrderedElement(rect);
+		base.OnHide();
 	}
 
 }

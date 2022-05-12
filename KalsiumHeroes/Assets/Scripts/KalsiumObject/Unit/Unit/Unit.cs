@@ -65,7 +65,6 @@ public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnSta
 	[field: SerializeField] public Tile tile { get; private set; }
 	[field: SerializeField] public TileDir tileDir { get; private set; }
 	[field: SerializeField] public int spawnRound { get; private set; }
-	public Canvas canvas;
 	public Team team;
 
 	public bool isCurrent => Game.rounds.unit == this;
@@ -103,7 +102,6 @@ public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnSta
 		base.OnShow();
 		actor.transform.SetPositionAndRotation(tile.center, Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z));
 		transform.SetParent(actor.transform, false);
-		Debug.Assert(canvas = gameObject.GetComponentInChildren<Canvas>());
 	}
 
 	public void Heal(float heal) {
@@ -241,8 +239,8 @@ public class Unit : Master<Unit, IUnitHook, UnitActor, UnitModifier>, IOnTurnSta
 	}
 
 	public void SetDir(TileDir tileDir, bool reorientate) {
+		if (reorientate && shown) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 		if (tileDir == this.tileDir) {
-			if (reorientate && shown) actor.transform.rotation = Quaternion.Euler(actor.transform.eulerAngles.x, tileDir.ToAngle(), actor.transform.eulerAngles.z);
 			return;
 		}
 		if (removed) {
