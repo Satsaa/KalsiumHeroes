@@ -9,6 +9,7 @@ import * as afs from '../lib/atomicFS'
 import deepClone from '../lib/deepClone'
 
 import { GameEvent } from './commands'
+import { Connection } from './connection'
 
 export default class Game {
   // public data: GameData
@@ -16,7 +17,7 @@ export default class Game {
   public code: string
   public events: GameEvent[] = []
   public players: {[team: string]: WebSocket} = Object.create(null);
-  /** All connected players are viewers. */
+  /** All connected players are also viewers. */
   public viewers: WebSocket[] = [];
 
   /**

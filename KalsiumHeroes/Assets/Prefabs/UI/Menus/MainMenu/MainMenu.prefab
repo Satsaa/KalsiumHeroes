@@ -74,17 +74,10 @@ MonoBehaviour:
     width: 1
     height: 1
   renderPrefab: {fileID: 5875539806677854870, guid: 4688eb6b46c0f284cb80724c0c43c9f6, type: 3}
-  shareRenderPrefab: 1
-  renderScale: 0.25
-  antialiasing: 1
-  format: 2
-  debthBits: 16
-  enableMipMaps: 0
-  autoGenerateMips: 0
-  dynamicScaling: 0
-  filterMode: 1
-  anisoLevel: 0
+  resolutionScale: 1
+  maxResolution: {x: Infinity, y: Infinity}
   renderObject: {fileID: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &2337873481590647676
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +721,7 @@ GameObject:
   - component: {fileID: 3297345019345340720}
   - component: {fileID: 3297345019345340721}
   m_Layer: 5
-  m_Name: Exit Game
+  m_Name: Exit Application
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -839,8 +832,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3297345019345340721}
-        m_TargetAssemblyTypeName: ExitGame, Assembly-CSharp
-        m_MethodName: DoExitGame
+        m_TargetAssemblyTypeName: ExitApplication, Assembly-CSharp
+        m_MethodName: DoExitApplication
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1300,7 +1293,7 @@ MonoBehaviour:
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
   m_enableExtraPadding: 1
-  checkPaddingRequired: 1
+  checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
@@ -2151,7 +2144,7 @@ RectTransform:
   - {fileID: 3297345020154931928}
   - {fileID: 2157200882273859063}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2179,7 +2172,7 @@ MonoBehaviour:
   <alwaysVisible>k__BackingField: 0
   <allowCloseKey>k__BackingField: 0
   <destroy>k__BackingField: 0
-  visible: 0
+  <visible>k__BackingField: 0
 --- !u!225 &3297345020336114266
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2423,7 +2416,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popupPreset: {fileID: 11400000, guid: d41b3ee37f3a7c64699d3be513d83985, type: 2}
   codeInputPrefab: {fileID: 7592392062591246403, guid: 1c4ed4b21d89cdf45a4adc7f315d31bb, type: 3}
-  team: {fileID: 11400000, guid: 6c391f20280845440a524a515985bdc9, type: 2}
+  teams:
+  - {fileID: 11400000, guid: 6c391f20280845440a524a515985bdc9, type: 2}
+  - {fileID: 11400000, guid: d1a266c2c1fa9c94399e720945e0c31c, type: 2}
 --- !u!114 &3297345020419914865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2889,17 +2884,10 @@ MonoBehaviour:
     width: 1
     height: 1
   renderPrefab: {fileID: 5875539806677854870, guid: 4688eb6b46c0f284cb80724c0c43c9f6, type: 3}
-  shareRenderPrefab: 1
-  renderScale: 0.25
-  antialiasing: 1
-  format: 2
-  debthBits: 16
-  enableMipMaps: 0
-  autoGenerateMips: 0
-  dynamicScaling: 0
-  filterMode: 1
-  anisoLevel: 0
+  resolutionScale: 1
+  maxResolution: {x: Infinity, y: Infinity}
   renderObject: {fileID: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &6933592938319004687
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,17 +3017,10 @@ MonoBehaviour:
     width: 1
     height: 1
   renderPrefab: {fileID: 5875539806677854870, guid: 4688eb6b46c0f284cb80724c0c43c9f6, type: 3}
-  shareRenderPrefab: 1
-  renderScale: 0.25
-  antialiasing: 1
-  format: 2
-  debthBits: 16
-  enableMipMaps: 0
-  autoGenerateMips: 0
-  dynamicScaling: 0
-  filterMode: 1
-  anisoLevel: 0
+  resolutionScale: 1
+  maxResolution: {x: Infinity, y: Infinity}
   renderObject: {fileID: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &7619411501389781813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3115,17 +3096,10 @@ MonoBehaviour:
     width: 1
     height: 1
   renderPrefab: {fileID: 5875539806677854870, guid: 4688eb6b46c0f284cb80724c0c43c9f6, type: 3}
-  shareRenderPrefab: 0
-  renderScale: 1
-  antialiasing: 1
-  format: 10
-  debthBits: 0
-  enableMipMaps: 1
-  autoGenerateMips: 1
-  dynamicScaling: 0
-  filterMode: 2
-  anisoLevel: 16
+  resolutionScale: 1
+  maxResolution: {x: Infinity, y: Infinity}
   renderObject: {fileID: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!114 &4601877302758470088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3214,17 +3188,10 @@ MonoBehaviour:
     width: 1
     height: 1
   renderPrefab: {fileID: 5875539806677854870, guid: 4688eb6b46c0f284cb80724c0c43c9f6, type: 3}
-  shareRenderPrefab: 1
-  renderScale: 0.25
-  antialiasing: 1
-  format: 2
-  debthBits: 16
-  enableMipMaps: 0
-  autoGenerateMips: 0
-  dynamicScaling: 0
-  filterMode: 1
-  anisoLevel: 0
+  resolutionScale: 1
+  maxResolution: {x: Infinity, y: Infinity}
   renderObject: {fileID: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &9145722898478048335
 GameObject:
   m_ObjectHideFlags: 0

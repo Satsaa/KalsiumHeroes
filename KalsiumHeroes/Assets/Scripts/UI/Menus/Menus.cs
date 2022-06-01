@@ -19,7 +19,7 @@ public class Menus : Singleton<Menus> {
 	/// Due to reusage of Menus this may result in unexpected behaviour.
 	/// Use the Hide(index) for removal of a specific instance of a Menu.
 	/// </summary>
-	public static void Hide(Menu target) => instance._Hide(target);
+	public static bool Hide(Menu target) => instance._Hide(target);
 
 	/// <summary> Removes the Menu at index. </summary>
 	public static void Hide(int index) => instance._Hide(index);
@@ -37,13 +37,13 @@ public class Menus : Singleton<Menus> {
 		}
 	}
 
-	private void _Hide(Menu target) {
+	private bool _Hide(Menu target) {
 		var mi = menus.FindLastIndex(v => v == target);
 		if (mi != -1) {
 			Hide(mi);
-		} else {
-			throw new ArgumentException("Menu not found.", nameof(target));
+			return true;
 		}
+		return false;
 	}
 
 	private void _Hide(int index, bool collapse = true) {
@@ -163,7 +163,7 @@ namespace Editors {
 	using System.Collections.Generic;
 	using UnityEngine;
 	using UnityEditor;
-	using Object = UnityEngine.Object;
+	using Object = Object;
 	using static Muc.Editor.PropertyUtil;
 	using static Muc.Editor.EditorUtil;
 

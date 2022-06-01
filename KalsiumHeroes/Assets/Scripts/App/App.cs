@@ -54,12 +54,18 @@ public class App : Singleton<App> {
 			: await client.Post(new GameCreate() { code = code });
 	}
 
-	public async Task<bool> JoinGame(string code, IEnumerable<Team> teams) {
+	public async Task<Result> JoinGame(string code, IEnumerable<Team> teams) {
+		Result prev = null;
+		var sameResults = true;
 		foreach (var team in teams) {
-			var join = await client.Post(new GameJoin() { code = code, team = null }); // Team1
-			if (!join.succeeded) return true;
+			var join = await JoinGame(code, team);
+			if (join.succeeded) return join;
+			prev ??= join;
+			if (prev.result != join.result || prev.message != join.message) {
+				sameResults = false;
+			}
 		}
-		return false;
+		return sameResults ? prev : new Result() { result = ResultType.Fail, message = "Server_FailedJoinMultipleReasons" };
 	}
 
 	public async Task<Result> JoinGame(string code, Team team) {
@@ -94,6 +100,26 @@ public class App : Singleton<App> {
 		return await client.Post(new GameJoin() { code = code, team = team.identifier });
 	}
 
+	public async Task<Result> LeaveGame(string code) {
+		var leave = await client.Post(new GameLeave() { code = code });
+		if (leave.succeeded) {
+			var res = new TaskCompletionSource<bool>();
+			var gameScene = SceneManager.GetSceneByPath(this.gameScene);
+			if (gameScene.isLoaded) {
+				var unload = SceneManager.UnloadSceneAsync(this.gameScene);
+				unload.completed += (op) => {
+					res.SetResult(true);
+				};
+				await res.Task;
+			}
+			return leave;
+		}
+		return leave;
+	}
+
+	public async Task<Result> DeleteGame(string code) {
+		return await client.Post(new GameDelete() { code = code });
+	}
 
 	/// <summary> Shows the loading spinner </summary>
 	public LoadingSpinner ShowSpinner(string message, Task task) {

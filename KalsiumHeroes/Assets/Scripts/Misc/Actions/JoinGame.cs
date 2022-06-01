@@ -12,14 +12,14 @@ public class JoinGame : MonoBehaviour {
 
 	[SerializeField] PopupPreset popupPreset;
 	[SerializeField] TMP_InputField codeInputPrefab;
-	[SerializeField] Team team;
+	[SerializeField] Team[] teams;
 
 	public void DoJoinGame() {
 
 		var codeInputField = Instantiate(codeInputPrefab);
 
 		var msgBox = popupPreset.Show(Lang.GetStr("Popup_JoinGame_Title"), Lang.GetStr("Popup_JoinGame_Message"),
-			new PopupPreset.Option(Lang.GetStr("Join"), () => OnJoin(codeInputField.text, team), PopupOption.Flags.Default),
+			new PopupPreset.Option(Lang.GetStr("Join"), () => OnJoin(codeInputField.text, teams), PopupOption.Flags.Default),
 			new PopupPreset.Option(Lang.GetStr("Cancel"), null, PopupOption.Flags.Cancel)
 		);
 
@@ -33,8 +33,8 @@ public class JoinGame : MonoBehaviour {
 		joinOption.SetInteractable(!String.IsNullOrWhiteSpace(code));
 	}
 
-	async void OnJoin(string code, Team team) {
-		var task = App.app.JoinGame(code, team);
+	async void OnJoin(string code, Team[] teams) {
+		var task = App.app.JoinGame(code, teams);
 		var spinner = App.app.ShowSpinner($"Joining with code {code}", task);
 		try {
 			var res = await task;

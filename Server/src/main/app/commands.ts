@@ -8,7 +8,7 @@ type Implements<T, U extends T> = {}
 // List all events
 export type Command =
   GameEvent | GameEventList | GameCreate | GenerateCode | GenerateCodeResult | GameDelete |
-  GameDisconnect | GameJoin | RequestEvents | GameSpectate | Result
+  GameDisconnect | GameJoin | GameLeave | RequestEvents | GameSpectate | Result
 
 export interface GameEvent {
   command: 'GameEvent'
@@ -63,6 +63,15 @@ export interface GameJoin {
     type: 'GameJoin'
     code: string
     team: string
+  }
+}
+
+export interface GameLeave {
+  command: 'GameLeave'
+  data: {
+    guid: string
+    type: 'GameLeave'
+    code: string
   }
 }
 

@@ -119,7 +119,7 @@ export default class Server {
     this.connections.delete(ws)
     if (connection) {
       // Remove spectator
-      for (const spectateCode of connection.spectates) {
+      for (const spectateCode of connection.viewing) {
         const spectate = this.games[spectateCode]
         if (spectate) {
           spectate.viewers.filter(v => v === ws)
@@ -225,7 +225,7 @@ export default class Server {
             game.players[cmd.data.team] = ws
             connection.playedGames.push([cmd.data.code, cmd.data.team])
             if (!game.viewers.includes(ws)) game.viewers.push(ws)
-            if (connection.spectates.includes(cmd.data.code)) connection.spectates.push(cmd.data.code)
+            if (connection.viewing.includes(cmd.data.code)) connection.viewing.push(cmd.data.code)
             this.sendEvents(ws, game)
 
             return this.success(ws, cmd)
@@ -235,7 +235,7 @@ export default class Server {
             const game = this.games[cmd.data.code]
             if (!game) return this.gameNotFound(ws, cmd)
             if (!game.viewers.includes(ws)) game.viewers.push(ws)
-            if (connection.spectates.includes(cmd.data.code)) connection.spectates.push(cmd.data.code)
+            if (connection.viewing.includes(cmd.data.code)) connection.viewing.push(cmd.data.code)
             this.sendEvents(ws, game)
             return this.success(ws, cmd)
           }
@@ -252,17 +252,29 @@ export default class Server {
             if (!game) return this.gameNotFound(ws, cmd)
 
             for (const viewer of game.viewers) {
-              if (viewer.readyState !== WebSocket.OPEN) continue
+              if (viewer.readyState !== WebSocket.OPEN || viewer === ws) continue
               this.sendCmd(viewer, {
                 command: 'GameDisconnect',
                 data: {
                   type: 'GameDisconnect',
                   code: game.code,
-                  message: 'Server_GameDeletedDisconnect',
+                  message: 'Server_DisconnectGameDeleted',
                 },
               })
             }
             delete this.games[cmd.data.code]
+            return this.success(ws, cmd)
+          }
+
+          case 'GameLeave': {
+            const game = this.games[cmd.data.code]
+            if (!game) return this.gameNotFound(ws, cmd)
+
+
+            connection.playedGames.find(v => v[0] === cmd.data.code)
+            if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            connection.viewing.filter(v => v === cmd.data.code)
+
             return this.success(ws, cmd)
           }
 

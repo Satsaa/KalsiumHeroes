@@ -26,6 +26,11 @@ public static class ClientEvents {
 	}
 
 	[Serializable]
+	public class GameLeave : ClientEvent {
+		public string code;
+	}
+
+	[Serializable]
 	public class GameSpectate : ClientEvent {
 		public string code;
 	}
@@ -52,7 +57,7 @@ public static class ClientEvents {
 			for (int i = 0; i < types.Length; i++) {
 				var type = types[i];
 				var json = jsons[i];
-				var ge = JsonUtility.FromJson(json, Event.eventTypes[type]) as GameEvent;
+				var ge = JsonUtility.FromJson(json, eventTypes[type]) as GameEvent;
 				Game.events.AddEvent(ge);
 			}
 		}

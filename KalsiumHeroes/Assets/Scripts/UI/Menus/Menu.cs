@@ -35,8 +35,8 @@ public class Menu : MonoBehaviour {
 	[field: SerializeField, HideInInspector]
 	public bool destroy { get; set; }
 
-	[SerializeField, HideInInspector]
-	protected bool visible;
+	[field: SerializeField, HideInInspector]
+	public bool visible { get; protected set; }
 
 
 	public static bool CompareType(Menu a, Menu b) {

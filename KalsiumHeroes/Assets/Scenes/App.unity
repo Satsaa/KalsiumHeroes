@@ -1488,7 +1488,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bba6b1b45592884eaa2c3bec41efadb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testItem: {fileID: 0}
   source: {fileID: 0}
   unit: {fileID: 0}
   newTogAtt:
