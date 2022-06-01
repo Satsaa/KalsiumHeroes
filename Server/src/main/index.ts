@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import Bot from './app/app'
+import App from './app/app'
 import { Manager, ManagerOptions } from './manager'
 import { getArgs } from './argRules'
 import logger from './logger'
@@ -31,7 +31,7 @@ if (args.args.manager && !process.send) {
     throw e
   })
 
-  const bot = new Bot({ masters: [61365582] })
+  const app = new App({})
 }
 
 function logError(error: any) {

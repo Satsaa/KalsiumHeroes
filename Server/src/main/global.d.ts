@@ -1,4 +1,7 @@
 
+type code = string
+type team = string
+
 type AdvancedResult<T = undefined> = {
   success: false
   code: string

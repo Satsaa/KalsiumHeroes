@@ -12,6 +12,7 @@ import deepClone from '../lib/deepClone'
 import * as commands from './commands'
 import { Command, ResultType } from './commands'
 import Game from './game'
+import { Connection } from './connection'
 
 export interface Events {
   raw: (json: any) => void
@@ -35,7 +36,8 @@ export default class Server {
   public removeListener: StrictEventEmitter<EventEmitter, Events>['removeListener']
   public emit: StrictEventEmitter<EventEmitter, Events>['emit']
 
-  private games: {[code: string]: Game} = {}
+  private games: {[code: code]: Game} = {}
+  private connections: Map<WebSocket, Connection> = new Map<WebSocket, Connection>()
 
   /**
    * Server
@@ -45,7 +47,7 @@ export default class Server {
     this.opts = {
       port: 8080,
       local: true,
-      pingInterval: 30000,
+      pingInterval: 10000,
       ...deepClone(options),
     }
 
@@ -66,7 +68,21 @@ export default class Server {
     const addr = wss.address() as WebSocket.AddressInfo
 
     wss.on('connection', this.onConnection.bind(this))
-    console.log(`Hosting: ${addr.family} ${addr.address} ${addr.port}`)
+
+    const now = Date.now()
+
+    const interval = setInterval(() => {
+      for (const connection of this.connections.values()) {
+        if (connection.lastActivity < now - this.opts.pingInterval) return connection.ws.terminate()
+        connection.ws.ping()
+      }
+    }, this.opts.pingInterval)
+
+    wss.on('close', () => {
+      clearInterval(interval)
+    })
+
+    console.log(`Hosting: ${addr ? `${addr.family} ${addr.address} ${addr.port}` : 'Local'}`)
   }
 
   public codeGen(length = 4): string {
@@ -87,6 +103,41 @@ export default class Server {
 
   private onConnection(this: Server, ws: WebSocket, req: http.IncomingMessage): void {
     ws.on('message', this.onMessage.bind(this, ws))
+    ws.on('pong', this.onPong.bind(this, ws))
+    ws.on('close', this.onClose.bind(this, ws))
+
+    const connection = new Connection(ws)
+    this.connections.set(ws, connection)
+  }
+  private onPong(ws: WebSocket) {
+    const connection = this.connections.get(ws)
+    if (!connection) return ws.terminate()
+    connection.lastActivity = Date.now()
+  }
+  private onClose(ws: WebSocket) {
+    const connection = this.connections.get(ws)
+    this.connections.delete(ws)
+    if (connection) {
+      // Remove spectator
+      for (const spectateCode of connection.spectates) {
+        const spectate = this.games[spectateCode]
+        if (spectate) {
+          spectate.viewers.filter(v => v === ws)
+        }
+      }
+      // Remove player
+      for (const playedGameCodeAndTeam of connection.playedGames) {
+        const playedGameCode = playedGameCodeAndTeam[0]
+        const playedGameTeam = playedGameCodeAndTeam[1]
+        const playedGame = this.games[playedGameCode]
+        if (playedGame) {
+          const playerWs = playedGame.players[playedGameTeam]
+          if (playerWs === ws) {
+            delete playedGame.players[playedGameTeam]
+          }
+        }
+      }
+    }
   }
 
   private sendCmd(ws: WebSocket, cmd: commands.Command) {
@@ -102,8 +153,12 @@ export default class Server {
   }
 
   private onMessage(this: Server, ws: WebSocket, message: string): void {
+    const connection = this.connections.get(ws)
+    if (!connection) return ws.terminate()
+    connection.lastActivity = Date.now()
+
     if (typeof message !== 'string') {
-      this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'Message must be a string' } })
+      this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'ServerInternal_MessageNotString' } })
       return
     }
     try {
@@ -155,14 +210,22 @@ export default class Server {
             const game = this.games[cmd.data.code]
             if (!game) return this.gameNotFound(ws, cmd)
 
-            // Other live ws occupying team
-            const teamWs = game.players[cmd.data.team]
-            if (teamWs && teamWs !== ws && teamWs.readyState === WebSocket.OPEN) {
-              return this.fail(ws, cmd, 'Team occupied')
+            // Other live ws occupying team?
+            const playerWs = game.players[cmd.data.team]
+            if (playerWs && playerWs !== ws && playerWs.readyState === WebSocket.OPEN) {
+              return this.fail(ws, cmd, 'Server_SlotOccupied')
+            }
+            if (playerWs === ws) {
+              return this.fail(ws, cmd, 'Server_AlreadyInSameGame')
+            }
+            if (connection.playedGames.length > 0) {
+              return this.fail(ws, cmd, 'Server_AlreadyInOtherGame')
             }
 
             game.players[cmd.data.team] = ws
+            connection.playedGames.push([cmd.data.code, cmd.data.team])
             if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            if (connection.spectates.includes(cmd.data.code)) connection.spectates.push(cmd.data.code)
             this.sendEvents(ws, game)
 
             return this.success(ws, cmd)
@@ -172,6 +235,7 @@ export default class Server {
             const game = this.games[cmd.data.code]
             if (!game) return this.gameNotFound(ws, cmd)
             if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            if (connection.spectates.includes(cmd.data.code)) connection.spectates.push(cmd.data.code)
             this.sendEvents(ws, game)
             return this.success(ws, cmd)
           }
@@ -194,7 +258,7 @@ export default class Server {
                 data: {
                   type: 'GameDisconnect',
                   code: game.code,
-                  message: 'GameDeleted',
+                  message: 'Server_GameDeletedDisconnect',
                 },
               })
             }
@@ -203,14 +267,14 @@ export default class Server {
           }
 
           default: {
-            return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: `Unknown or unexpected command: "${cmd.command}"` } })
+            return this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: 'ServerInternal_UnknownCommand' } })
           }
         }
       } catch (error) {
-        this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: 'Message caused a server error' } })
+        this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: (cmd as any).guid ?? '', message: 'ServerInternal_InternalError' } })
       }
     } catch (error) {
-      this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'Malformed message' } })
+      this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Error, to: '', message: 'ServerInternal_MalformedMessage' } })
     }
   }
 
@@ -222,13 +286,13 @@ export default class Server {
     this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message } })
   }
   private alreadyUsed(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
-    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Code already used' } })
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Server_CodeAlreadyInUse' } })
   }
   private incorrectGameEventId(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
-    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Incorrect game event id. You might need to resync.' } })
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Server_GameEventIdDesynced' } })
   }
   private gameNotFound(ws: WebSocket, cmd: Command & {data: { guid: string }}) {
-    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Game not found' } })
+    this.sendCmd(ws, { command: 'Result', data: { type: 'Result', result: ResultType.Fail, to: cmd.data.guid, message: 'Server_GameNotFound' } })
   }
   private sendEvents(ws: WebSocket, game: Game) {
     const cmd: commands.GameEventList = {

@@ -42,11 +42,17 @@ export default class App {
     const port = secretKey.getKey(configPath, 'server', 'port')
     const local = secretKey.getKey(configPath, 'server', 'local') !== undefined
 
-    this.server = new Server({
+
+    const newLocal = {
       dataRoot: './data/',
-      port: typeof port === 'string' ? parseInt(port) : undefined,
+      port: typeof port === 'string' ?
+        parseInt(port) :
+        typeof port === 'number' ?
+          port :
+          undefined,
       local,
-    })
+    }
+    this.server = new Server(newLocal)
 
     this.data = new Data('./data/', ['games', 'users'])
   }
