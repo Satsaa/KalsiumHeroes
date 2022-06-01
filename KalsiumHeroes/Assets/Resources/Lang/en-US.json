@@ -7,6 +7,8 @@
 	"Tooltip_Spell": "Spells are a type of ability, they are disabled by silence.",
 	"Tooltip_Edge": "Edges connect tiles to each other and they can modify what happens when that edge is crossed.",
 	"Test": "Test {Test}",
+	"Popup_DeleteGame_Title": "Delete Game",
+	"Popup_DeleteGame_Message": "Enter a game's <link=tt_Text:@Tooltip_GameCode>game code</link> to delete it.",
 	"Popup_JoinGame_Title": "Join Game",
 	"Popup_JoinGame_Message": "Enter a game's <link=tt_Text:@Tooltip_GameCode>game code</link> to join it.",
 	"Popup_CreateGame_Title": "Create Game",
