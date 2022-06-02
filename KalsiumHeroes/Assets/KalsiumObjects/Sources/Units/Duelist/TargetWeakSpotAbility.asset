@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0659f0fa5f70fce42b214920caf01d1b, type: 3}
   m_Name: TargetWeakSpotAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: TargetWeakSpotAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Ability_TargetWeakSpot
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   abilityType:
     _values:
     - cache: 0
@@ -76,6 +89,7 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  isCasting: 0
   range:
     _values:
     - cache: 0
@@ -102,9 +116,10 @@ MonoBehaviour:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 40
+      <raw>k__BackingField: 400
       <isModified>k__BackingField: 0
       _original: 0
+  damageType: 1
   defenseReduction:
     _values:
     - cache: 0
@@ -112,5 +127,4 @@ MonoBehaviour:
       <raw>k__BackingField: 10
       <isModified>k__BackingField: 0
       _original: 0
-  damageType: 1
   defenseReductionModifier: {fileID: 11400000, guid: 75e230c1978789f459c51ddccd6a0bcc, type: 2}

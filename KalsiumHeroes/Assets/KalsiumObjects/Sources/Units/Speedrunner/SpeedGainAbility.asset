@@ -16,15 +16,15 @@ MonoBehaviour:
   <source>k__BackingField: {fileID: 0}
   <removed>k__BackingField: 0
   <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
   baseContainer:
     assetReference:
       m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  <master>k__BackingField: {fileID: 0}
   <container>k__BackingField: {fileID: 0}
-  virtualized: 0
   sprite:
     assetReference:
       m_AssetGUID: 
@@ -98,4 +98,4 @@ MonoBehaviour:
       <isModified>k__BackingField: 0
       _original: 0
   speedGainStatus: {fileID: 11400000, guid: de7a0bea84f3d5d4e8e753f1a061c087, type: 2}
-  teamType: 8
+  teamType: -1

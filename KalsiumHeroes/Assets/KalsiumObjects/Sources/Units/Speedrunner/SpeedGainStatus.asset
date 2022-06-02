@@ -12,11 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 264846751f6a2f64e9e0d6be900d2978, type: 3}
   m_Name: SpeedGainStatus
   m_EditorClassIdentifier: 
-  createType:
-    _name: SpeedGainStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Status_SpeedGain
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   debuffType:
     _values:
     - cache: 0
@@ -35,7 +49,7 @@ MonoBehaviour:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 0
+      <raw>k__BackingField: 1
       <isModified>k__BackingField: 0
       _original: 0
   dispellable:

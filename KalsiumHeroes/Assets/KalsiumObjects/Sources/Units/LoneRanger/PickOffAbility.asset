@@ -12,11 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443dfc7a5dcd61e488ef89606d8246d4, type: 3}
   m_Name: PickOffAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: PickOffAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=null
   identifier: Ability_PickOff
-  container: {fileID: 0}
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   abilityType:
     _values:
     - cache: 0
@@ -75,6 +89,7 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  isCasting: 0
   range:
     _values:
     - cache: 0
@@ -101,11 +116,11 @@ MonoBehaviour:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 30
+      <raw>k__BackingField: 300
       <isModified>k__BackingField: 0
       _original: 0
   damageType: 1
-  multiplyingTypes: 0
+  multiplyingTypes: 4
   multipliers:
   - 0
   - 0.2

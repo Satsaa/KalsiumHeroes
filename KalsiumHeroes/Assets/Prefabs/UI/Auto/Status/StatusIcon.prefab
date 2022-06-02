@@ -33,7 +33,7 @@ RectTransform:
   - {fileID: 7649333591330585509}
   - {fileID: 6208172977490267525}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -51,8 +51,8 @@ GameObject:
   - component: {fileID: 7649333591330585509}
   - component: {fileID: 5128829355587200771}
   - component: {fileID: 6345290309932106396}
-  - component: {fileID: 8086421438767185182}
   - component: {fileID: 4722145930124858270}
+  - component: {fileID: 4847895180403003090}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -118,29 +118,6 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8086421438767185182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4394817371925585347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fc1621db044c814e82c9a031a7b12e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeConstraint1:
-    _name: 
-  typeConstraint2:
-    _name: 
-  colors:
-    list:
-    - key: 0
-      value: {r: 0, g: 1, b: 0.003575325, a: 1}
-    - key: 1
-      value: {r: 1, g: 0, b: 0, a: 1}
-    keyCollision: 0
 --- !u!114 &4722145930124858270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,8 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
-    _name: 
-  typeConstraint2:
     _name: 
   selector:
     field:
@@ -183,12 +158,70 @@ MonoBehaviour:
       m_Calls: []
   data: {fileID: 0}
   listenered: 0
+  inverse: 0
   onUpdate:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6345290309932106396}
         m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
         m_MethodName: set_fillAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4847895180403003090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4394817371925585347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad00ed153185c0e428adffd46176e45a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeConstraint1:
+    _name: Status, Assembly-CSharp
+  selector:
+    field:
+      <attributeName>k__BackingField: positive
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  onColor: {r: 0.058304977, g: 0.8207547, b: 0, a: 1}
+  offColor: {r: 0.80784315, g: 0, b: 0, a: 1}
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6345290309932106396}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Graphic, UnityEngine.UI
+        m_MethodName: set_color
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -289,8 +322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeConstraint1:
     _name: 
-  typeConstraint2:
-    _name: 
   selector:
     field:
       <attributeName>k__BackingField: sprite
@@ -340,7 +371,7 @@ GameObject:
   - component: {fileID: 4753280705123106759}
   - component: {fileID: 5269574632948622968}
   - component: {fileID: 7718506020369613943}
-  - component: {fileID: 2079905750664701083}
+  - component: {fileID: 918934927034854612}
   m_Layer: 5
   m_Name: Background_Dark
   m_TagString: Untagged
@@ -406,7 +437,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2079905750664701083
+--- !u!114 &918934927034854612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -415,25 +446,60 @@ MonoBehaviour:
   m_GameObject: {fileID: 9216495840610404585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fc1621db044c814e82c9a031a7b12e9, type: 3}
+  m_Script: {fileID: 11500000, guid: ad00ed153185c0e428adffd46176e45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeConstraint1:
-    _name: 
-  typeConstraint2:
-    _name: 
-  colors:
-    list:
-    - key: 0
-      value: {r: 0.02745098, g: 0.20784314, b: 0.02745098, a: 1}
-    - key: 1
-      value: {r: 0.25490198, g: 0, b: 0, a: 1}
-    keyCollision: 0
+    _name: Status, Assembly-CSharp
+  selector:
+    field:
+      <attributeName>k__BackingField: positive
+      <attributeType>k__BackingField:
+        _name: 
+    fallbackValue: 0
+    fallbackOther: 0
+    fallbackEnabled: 1
+    overrideValue:
+      value: 0
+      enabled: 0
+    overrideOther:
+      value: 0
+      enabled: 0
+    swap: 0
+  onValue:
+    m_PersistentCalls:
+      m_Calls: []
+  onOther:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnabled:
+    m_PersistentCalls:
+      m_Calls: []
+  data: {fileID: 0}
+  listenered: 0
+  onColor: {r: 0.02893783, g: 0.3962264, b: 0, a: 1}
+  offColor: {r: 0.25490198, g: 0, b: 0, a: 1}
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7718506020369613943}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Graphic, UnityEngine.UI
+        m_MethodName: set_color
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &6565506240250657010
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 4043331150635913134}
     m_Modifications:
     - target: {fileID: 953216441400472951, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
@@ -541,6 +607,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae2e5395c3365984f914fa7e7cdc3971, type: 3}
 --- !u!224 &6208172977490267525 stripped
 RectTransform:

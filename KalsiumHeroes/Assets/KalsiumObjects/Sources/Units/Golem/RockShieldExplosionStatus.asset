@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd6b45caeae26e4da399aaca7f66dba, type: 3}
   m_Name: RockShieldExplosionStatus
   m_EditorClassIdentifier: 
-  createType:
-    _name: DefenseChangeStatus, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Status_RockShieldExplosion
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   debuffType:
     _values:
     - cache: 0
@@ -65,10 +78,10 @@ MonoBehaviour:
       <isModified>k__BackingField: 0
       _original: 0
   tickMode: 1
-  defenseReduction:
+  defenseChange:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 20
+      <raw>k__BackingField: 5
       <isModified>k__BackingField: 0
       _original: 0

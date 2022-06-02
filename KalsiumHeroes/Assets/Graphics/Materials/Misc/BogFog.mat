@@ -15,7 +15,7 @@ MonoBehaviour:
   version: 6
 --- !u!21 &2100000
 Material:
-  serializedVersion: 7
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -24,7 +24,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 15d40d91fda9a8d4a91d6a5d9dbdc411, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -110,7 +111,7 @@ Material:
     - _DitherStrength: 0
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FogPower: 0.6
+    - _FogPower: 1.01
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -133,15 +134,15 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_7d2a4d7c3351408ab00bef25adfb03f8: {r: 0.10746703, g: 0.1387347, b: 0.14150938, a: 1}
-    - Vector2_76ce2f626dae4293bdad08edabe683ee: {r: 0.92, g: 1.05, b: 0, a: 0}
-    - Vector2_b88203ad998d4c0fb61f206e5d4c2312: {r: 0.9, g: 0.68, b: 0, a: 0}
-    - Vector2_e6f3626f1e2944f4a169a9c18a58a81e: {r: 0.92, g: 1.17, b: 0, a: 0}
+    - Vector2_76ce2f626dae4293bdad08edabe683ee: {r: 0.87, g: 1, b: 0, a: 0}
+    - Vector2_b88203ad998d4c0fb61f206e5d4c2312: {r: 0.94, g: 0.98, b: 0, a: 0}
+    - Vector2_e6f3626f1e2944f4a169a9c18a58a81e: {r: 0.77, g: 1, b: 0, a: 0}
     - Vector3_6261a30c523340aab5b10851c3d202db: {r: 0.25, g: 0.36, b: 0.25, a: 0}
     - _BaseColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Fog: {r: 0.18307228, g: 0.20754719, b: 0.19775723, a: 0}
-    - _NoiseMoveSpeed: {r: 0.2, g: 0.4, b: 0.2, a: 0}
+    - _NoiseMoveSpeed: {r: 0.1, g: 0.3, b: -0.25, a: 0}
     - _NoiseMoveSpeed2: {r: 0.08, g: 0.2, b: -0.2, a: 0}
     - _NoiseScale: {r: 0.4, g: 0, b: 1.25, a: 0}
     - _NoiseScale2: {r: 0.1, g: 0, b: 0.4, a: 0}

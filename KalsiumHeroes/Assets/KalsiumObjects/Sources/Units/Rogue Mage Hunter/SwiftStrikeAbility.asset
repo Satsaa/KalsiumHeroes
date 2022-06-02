@@ -12,12 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96ba31909c362144a19cf16b6f2ac26, type: 3}
   m_Name: SwiftStrikeAbility
   m_EditorClassIdentifier: 
-  createType:
-    _name: SwiftStrikeAbility, Assembly-CSharp, Version=5.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   identifier: Ability_SwiftStrike
-  container: {fileID: 0}
-  sprite: {fileID: 0}
+  <source>k__BackingField: {fileID: 0}
+  <removed>k__BackingField: 0
+  <shown>k__BackingField: 0
+  <master>k__BackingField: {fileID: 0}
+  virtualized: 0
+  baseContainer:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  <container>k__BackingField: {fileID: 0}
+  sprite:
+    assetReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   abilityType:
     _values:
     - cache: 0
@@ -76,6 +89,7 @@ MonoBehaviour:
       <raw>k__BackingField: 0
       <isModified>k__BackingField: 0
       _original: 0
+  isCasting: 0
   range:
     _values:
     - cache: 0
@@ -102,7 +116,7 @@ MonoBehaviour:
     _values:
     - cache: 0
       isCached: 0
-      <raw>k__BackingField: 30
+      <raw>k__BackingField: 300
       <isModified>k__BackingField: 0
       _original: 0
   damageType: 1
