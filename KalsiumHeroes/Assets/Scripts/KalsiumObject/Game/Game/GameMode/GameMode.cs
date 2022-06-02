@@ -7,11 +7,10 @@ using Serialization;
 using UnityEngine;
 
 [KeepRefToken]
-public abstract class GameMode : StoredScriptableObject, IIdentifiable {
+public abstract class GameMode : ScriptableObject, IIdentifiable {
 
 	public string identifier;
 	string IIdentifiable.identifier => identifier;
-	public override string storageName => identifier;
 
 	public string version = "0.0.0";
 

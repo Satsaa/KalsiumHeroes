@@ -1211,7 +1211,7 @@ MonoBehaviour:
   _library: {fileID: 1363905731}
   _input: {fileID: 1363905734}
   _gameModes:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 674cc85c201bc894781f3228627c8fa4, type: 2}
   initDisplay: {fileID: 1946788572}
   defaultMenu: {fileID: 3297345020336114265, guid: 0b3ec27671243864780138946eb9a700, type: 3}
   gameScene:

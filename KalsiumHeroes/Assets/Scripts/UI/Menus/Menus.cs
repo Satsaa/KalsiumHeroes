@@ -32,7 +32,7 @@ public class Menus : Singleton<Menus> {
 
 
 	public void TryClose() {
-		if (menus.Count > 0 && menus[^0].allowCloseKey) {
+		if (menus.Count > 0 && menus.Last().allowCloseKey) {
 			Pop();
 		}
 	}

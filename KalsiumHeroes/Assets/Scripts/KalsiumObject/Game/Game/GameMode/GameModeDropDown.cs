@@ -4,9 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-/// <summary>
-/// Contains a list of data sources
-/// </summary>
 public class GameModeDropDown : TMP_Dropdown {
 
 	new protected void Start() {

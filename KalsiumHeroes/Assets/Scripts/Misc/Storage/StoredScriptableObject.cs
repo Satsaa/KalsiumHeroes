@@ -20,7 +20,6 @@ public abstract class StoredScriptableObject : ScriptableObject {
 	/// <summary> Load the storage object and populate this object </summary>
 	public void Load() {
 		if (Application.isPlaying || !Application.isEditor) {
-			Debug.Log("Load");
 			Storage.LoadObject(storageName, this);
 		}
 	}
@@ -28,7 +27,6 @@ public abstract class StoredScriptableObject : ScriptableObject {
 	/// <summary> Save the storage object with this object </summary>
 	public void Save() {
 		if (Application.isPlaying || !Application.isEditor) {
-			Debug.Log("Save");
 			Storage.SaveObject(storageName, this);
 		}
 	}

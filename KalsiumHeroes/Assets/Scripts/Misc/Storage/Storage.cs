@@ -20,6 +20,7 @@ public static class Storage {
 
 	public static void SaveObject(string path, object obj) {
 		path = $"{Application.persistentDataPath}/{path}.json";
+		Debug.Log($"Save -> {path}");
 
 		// serialize JSON directly to a file
 		using (StreamWriter file = File.CreateText(path)) {
@@ -29,6 +30,7 @@ public static class Storage {
 
 	public static void LoadObject(string path, object target) {
 		path = $"{Application.persistentDataPath}/{path}.json";
+		Debug.Log($"Load -> {path}");
 
 		if (!File.Exists(path)) return;
 

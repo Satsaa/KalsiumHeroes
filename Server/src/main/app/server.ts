@@ -271,8 +271,8 @@ export default class Server {
             if (!game) return this.gameNotFound(ws, cmd)
 
 
-            connection.playedGames.find(v => v[0] === cmd.data.code)
-            if (!game.viewers.includes(ws)) game.viewers.push(ws)
+            connection.playedGames.filter(v => v[0] === cmd.data.code)
+            if (game.viewers.includes(ws)) game.viewers.filter(v => v === ws)
             connection.viewing.filter(v => v === cmd.data.code)
 
             return this.success(ws, cmd)

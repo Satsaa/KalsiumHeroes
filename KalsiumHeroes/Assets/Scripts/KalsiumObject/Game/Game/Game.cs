@@ -104,7 +104,6 @@ public class Game : Singleton<Game> {
 	public void StartGame() {
 		if (started) throw new InvalidOperationException($"Duplicate call to {nameof(StartGame)}.");
 		if (!inited) throw new InvalidOperationException($"{nameof(Init)} must be called before calling {nameof(StartGame)}");
-		mode.Save();
 		started = true;
 		_rounds.OnGameStart();
 		using (var scope = new Hooks.Scope()) Game.hooks.ForEach<IOnGameStart>(scope, v => v.OnGameStart());

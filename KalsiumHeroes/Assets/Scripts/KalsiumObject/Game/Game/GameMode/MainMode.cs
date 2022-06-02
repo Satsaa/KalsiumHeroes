@@ -10,8 +10,8 @@ public class MainMode : GameMode {
 	public int maxDraftCount = 10;
 	public int maxDraftCost = 50;
 
-	public override bool ValidateDraft(IEnumerable<Unit> unitDatas, out string failMessage) {
-		var count = unitDatas.Count();
+	public override bool ValidateDraft(IEnumerable<Unit> draftUnits, out string failMessage) {
+		var count = draftUnits.Count();
 		if (count < minDraftCount) {
 			failMessage = Lang.GetStr("Draft_MinCountNotReached");
 			return false;
@@ -22,7 +22,7 @@ public class MainMode : GameMode {
 		}
 
 		int cost = 0;
-		foreach (var unitData in unitDatas) {
+		foreach (var unitData in draftUnits) {
 			cost += unitData.draftCost;
 		}
 
