@@ -56,7 +56,7 @@ export default class Data extends EventEmitter {
     return undefined
   }
   /** Sets the data variable to `value` */
-  public setData<T>(group: string | number, name: string, value: T) {
+  public setData<T extends { [x: string]: any }>(group: string | number, name: string, value: T) {
     if (!this.data[group]) this.data[group] = {}
     this.data[group][name] = value
     return value
